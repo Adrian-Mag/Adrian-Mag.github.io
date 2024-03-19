@@ -1,0 +1,27 @@
+/* style.css */
+.pdf-list {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.pdf-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pdf-list li {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pdf-list li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pdf-list span {
+    display: block;
+    margin-bottom: 5px;
+}
+/* Add more CSS rules as needed */
