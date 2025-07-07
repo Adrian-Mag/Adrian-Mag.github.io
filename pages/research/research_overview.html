@@ -30,79 +30,72 @@
         <section class="page-header">
             <div class="container">
                 <h1>Research Overview</h1>
-                <p>Exploring Earth's internal structure through computational seismology</p>
+                <p>Bringing mathematics back in seismolgical tomography</p>
             </div>
         </section>
 
         <section class="research-content">
             <div class="container">
-                <div class="research-intro">
-                    <h2>Research Focus</h2>
-                    <p>My research investigates the fundamental properties of Earth's interior using advanced seismological techniques and computational methods. I focus on understanding how seismic waves propagate through complex geological structures and what this reveals about our planet's deep processes.</p>
-                </div>
 
                 <div class="research-areas">
-                    <h2>Current Research Areas</h2>
+                    <h2>Featured Theory Topics</h2>
 
-                    <div class="research-area">
-                        <h3>Seismic Wave Propagation</h3>
-                        <p>Investigating how seismic waves travel through heterogeneous media, with particular focus on wave attenuation mechanisms and velocity structures in the Earth's mantle and core.</p>
-                        <ul>
-                            <li>Full waveform modeling and inversion techniques</li>
-                            <li>3D wave propagation simulations</li>
-                            <li>Attenuation tomography methods</li>
-                        </ul>
+                    <div class="research-area clickable-area">
+                        <a href="sola-dli.html" style="text-decoration:none;color:inherit;display:block;">
+                            <h3>SOLA-DLI Methods</h3>
+                            <p>Subtractive Optimally Localized Averaging method combined with Deterministic Linear Inferences: combining the two frameworks in the absence of data noise.</p>
+                            <span style="color:#6791BE;font-weight:600;">Learn more &rarr;</span>
+                        </a>
                     </div>
 
-                    <div class="research-area">
-                        <h3>Earth's Internal Structure</h3>
-                        <p>Using seismic observations to constrain models of Earth's interior, from the upper mantle to the inner core, to understand geodynamic processes and planetary evolution.</p>
-                        <ul>
-                            <li>Core-mantle boundary investigations</li>
-                            <li>Inner core anisotropy studies</li>
-                            <li>Mantle transition zone properties</li>
-                        </ul>
+                    <div class="research-area clickable-area">
+                        <a href="https://github.com/da380/pygeoinf" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+                            <h3>Probabilistic Linear Inference (PLI) Methods</h3>
+                            <p>Bayesian and probabilistic approaches to linear inference problems in geophysic.</p>
+                            <span style="color:#6791BE;font-weight:600;">Learn more &rarr;</span>
+                        </a>
                     </div>
 
-                    <div class="research-area">
-                        <h3>Computational Methods</h3>
-                        <p>Developing and applying advanced computational techniques for processing large seismic datasets and performing high-resolution numerical simulations.</p>
-                        <ul>
-                            <li>Machine learning applications in seismology</li>
-                            <li>High-performance computing for wave propagation</li>
-                            <li>Data processing and analysis pipelines</li>
-                        </ul>
+                    <div class="research-area clickable-area">
+                        <a href="math-details.html" style="text-decoration:none;color:inherit;display:block;">
+                            <h3>Mathematical Details</h3>
+                            <p>Mathematical foundations, derivations, and theoretical background for inverse and inference problems in seismology.</p>
+                            <span style="color:#6791BE;font-weight:600;">Learn more &rarr;</span>
+                        </a>
                     </div>
+
+
                 </div>
 
                 <div class="methods-tools">
-                    <h2>Methods & Tools</h2>
+                    <h2>Codes</h2>
                     <div class="tools-grid">
                         <div class="tool-category">
-                            <h3>Seismic Analysis</h3>
+                            <h3>SOLA-DLI Inversion Code</h3>
                             <ul>
-                                <li>ObsPy (Python)</li>
-                                <li>SAC (Seismic Analysis Code)</li>
-                                <li>GMT (Generic Mapping Tools)</li>
-                                <li>TauP Toolkit</li>
+                                <li>
+                                    <a href="https://github.com/Adrian-Mag/SOLA_DLI" target="_blank" rel="noopener" class="pub-link">GitHub: SOLA_DLI</a>
+                                    <span>Python package for SOLA-DLI in the absence of data noise.</span>
+                                </li>
                             </ul>
                         </div>
                         <div class="tool-category">
-                            <h3>Numerical Modeling</h3>
+                            <h3>Probabilistic Linear Inference</h3>
                             <ul>
-                                <li>SPECFEM3D</li>
-                                <li>AxiSEM3D</li>
-                                <li>MATLAB/Python numerical computing</li>
-                                <li>Finite element methods</li>
+                                <li>
+                                    <a href="https://github.com/da380/pygeoinf" target="_blank" rel="noopener" class="pub-link">GitHub: pygeoinf</a>
+                                    <span>Package for Probabilistic and Bayesian linear inverse and inference methods for geophysical inference.<br>
+                                    <em>Created by David Al-Attar and Daniel Heathcote. I am a contributor to this project.</em></span>
+                                </li>
                             </ul>
                         </div>
                         <div class="tool-category">
-                            <h3>Data Processing</h3>
+                            <h3>Sensitivity Kernels</h3>
                             <ul>
-                                <li>NumPy/SciPy ecosystem</li>
-                                <li>Pandas for data analysis</li>
-                                <li>Matplotlib/Seaborn visualization</li>
-                                <li>HPC cluster computing</li>
+                                <li>
+                                    <a href="https://github.com/Adrian-Mag/AxiSEM3D_Kernels" target="_blank" rel="noopener" class="pub-link">GitHub: AxiSEM3D_Kernels</a>
+                                    <span>Computation and visualization of sensitivity kernels for seismic tomography based on AxiSEM3D.</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -113,7 +106,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Adrian Mag. All rights reserved.</p>
+            <p>&copy; 2025 Adrian Mag. Unless otherwise stated, notes and text may be reused with attribution. Code is open source under the license in each repository. Published papers are subject to journal copyright.</p>
         </div>
     </footer>
 </body>
