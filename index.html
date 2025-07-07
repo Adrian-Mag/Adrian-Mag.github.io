@@ -3,28 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>Adrian Mag - Seismology Research</title>
     <link rel="stylesheet" href="css/styles.css">
+    <meta name="description" content="Adrian Mag's academic website showcasing seismology research, publications, and conference presentations.">
 </head>
 <body>
     <header>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="pages/research/research_overview.html">Research</a>
-                <div class="dropdown-content">
-                    <a href="pages/research/papers.html">Papers</a>
-                    <a href="pages/research/posters/posters.html">Posters</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="pages/research/research_overview.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="pages/research/papers.html">Publications</a>
+                        <a href="pages/research/posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="pages/cv.html">CV</a></li>
+                <li><a href="pages/contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>Adrian Mag</h1>
+                <h2>PhD Candidate in Seismology</h2>
+                <p class="subtitle">Bringing mathematics back in seismolgical tomography</p>
+                <div class="cta-buttons">
+                    <a href="pages/research/research_overview.html" class="btn btn-primary">Research Overview</a>
+                    <a href="LongCV.pdf" class="btn btn-secondary" download>Download CV</a>
                 </div>
-            </li>
-            <li><a href="pages/contacts.html">Contacts</a></li>
-        </ul>
-    </header> 
-    
-    <section>
-        <h1>IN WORK</h1>
-    </section>
-    
+            </div>
+        </section>
+
+        <section class="highlights">
+            <div class="container">
+                <h2>Recent Highlights</h2>
+                <div class="highlight-grid">
+                    <div class="highlight-item">
+                        <h3>Conference Presentations</h3>
+                        <p>Presented at British Seismological Meeting 2024 and UK-SEDI 2024</p>
+                        <a href="pages/research/posters/posters.html">View Presentations →</a>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Research Focus</h3>
+                        <p>Investigating seismic wave propagation and Earth's internal structure</p>
+                        <a href="pages/research/research_overview.html">Learn More →</a>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Academic Affiliation</h3>
+                        <p>University of Oxford, Department of Earth Sciences</p>
+                        <a href="pages/about.html">About Me →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
         Footer
     </footer>
