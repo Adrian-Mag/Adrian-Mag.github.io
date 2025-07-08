@@ -27,11 +27,10 @@
     </header>
 
     <main>
-        <section class="page-header">
-            <div class="page-header-bg"></div>
-            <div class="container page-header-content">
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../media/backgrounds/cygnus.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
                 <h1>Research Overview</h1>
-                <p>Bringing mathematics back in seismolgical tomography</p>
             </div>
         </section>
 
@@ -107,7 +106,16 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Adrian Mag. Unless otherwise stated, notes and text may be reused with attribution. Code is open source under the license in each repository. Published papers are subject to journal copyright.</p>
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
         </div>
     </footer>
 </body>

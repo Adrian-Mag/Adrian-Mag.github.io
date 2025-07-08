@@ -1,27 +1,54 @@
-/* style.css */
-.pdf-list {
-    font-family: 'Times New Roman', Times, serif;
+
+/* Posters/Presentations grid styles */
+.presentations-content .container {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
-.pdf-list ul {
-    list-style: none;
-    padding: 0;
+.poster-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.2rem;
+    justify-content: center;
+    align-items: stretch;
 }
 
-.pdf-list li {
-    margin-bottom: 10px;
+ .poster-card {
+    background: #4a4f56;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(103,145,190,0.13);
+    padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+    max-width: 260px;
+    min-width: 220px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s cubic-bezier(.4,0,.2,1), transform 0.2s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+}
+
+.poster-card:hover {
+    box-shadow: 0 8px 32px rgba(103,145,190,0.18);
+    transform: translateY(-4px) scale(1.03);
+    background: #4a6da3;
+}
+
+.poster-thumb {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1.1rem;
+    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
+    background: #222;
+}
+
+.poster-card h3 {
+    color: #8ec6ff;
+    font-size: 1.18rem;
+    font-weight: 600;
+    margin: 0.5rem 0 0 0;
     text-align: center;
+    letter-spacing: 0.01em;
 }
-
-.pdf-list li a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.pdf-list span {
-    display: block;
-    margin-bottom: 5px;
-}
-/* Add more CSS rules as needed */

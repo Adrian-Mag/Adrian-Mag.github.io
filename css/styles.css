@@ -1,3 +1,12 @@
+/* Contact links container for Contact page */
+.contact-links {
+    margin-top: 1.5rem;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0.7rem 0.7rem 0.7rem 1.1rem;
+    display: inline-block;
+    box-shadow: none;
+}
 .clickable-area {
     transition: box-shadow 0.2s cubic-bezier(.4,0,.2,1), transform 0.2s cubic-bezier(.4,0,.2,1);
     cursor: pointer;
@@ -255,10 +264,23 @@ main {
     overflow: hidden;
 }
 
+
 .btn-primary {
-    background: linear-gradient(90deg, #6791BE 0%, #4a6da3 100%);
-    color: #fff;
-    border: none;
+    background: linear-gradient(90deg, #6791BE 0%, #4a6da3 100%) !important;
+    background-color: #4a6da3 !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:visited {
+    color: #fff !important;
+    background: linear-gradient(90deg, #6791BE 0%, #4a6da3 100%) !important;
+    background-color: #4a6da3 !important;
+}
+
+.github-btn {
+    margin-right: 0.7em;
 }
 
 .btn-primary:hover, .btn-primary:focus {
@@ -399,7 +421,6 @@ main {
     width: 100%;
     height: 100%;
     z-index: 1;
-    background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('/media/backgrounds/cygnus.jpg') center center/cover no-repeat;
     filter: brightness(0.95) blur(1.2px);
 }
 
@@ -841,7 +862,7 @@ z-index: 2;
 .cv-item {
     margin-bottom: 2rem;
     padding: 20px;
-    background: #3a3e43;
+    background: #4a4f56;
     border-radius: 8px;
 }
 
@@ -916,6 +937,37 @@ z-index: 2;
     padding: 5px 0;
     color: rgba(255,255,255,0.8);
     font-size: 0.9rem;
+}
+
+/* Contact link styles */
+.contact-link {
+    color: #8ec6ff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+}
+
+.contact-link:hover {
+    color: #ffffff;
+    background: rgba(103, 145, 190, 0.15);
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(103, 145, 190, 0.3);
+}
+
+.contact-link:visited {
+    color: #8ec6ff;
+}
+
+.contact-link:visited:hover {
+    color: #ffffff;
+}
+
+.github-btn {
+    margin-right: 0.7em;
 }
 
 /* Responsive design */
