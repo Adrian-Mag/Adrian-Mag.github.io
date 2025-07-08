@@ -1,0 +1,92 @@
+/* pli-methods.css: Page-specific styles for PLI Methods page */
+
+.page-header {
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0 60px 0;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(103,145,190,0.13);
+    background: none;
+}
+
+.page-header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../media/backgrounds/cygnus.jpg') center 70%/cover no-repeat;
+    filter: brightness(0.95) blur(1.2px);
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.03em;
+    text-shadow: 0 8px 32px rgba(44,56,80,0.28), 0 2px 0 #4a6da3;
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    background: rgba(60,62,70,0.32);
+    border-radius: 10px;
+    padding: 0.3em 1.2em;
+    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
+    display: inline-block;
+}
+
+.page-header p {
+    color: #fff;
+    font-size: 1.3rem;
+    background: rgba(44,56,80,0.32);
+    border-radius: 8px;
+    padding: 0.5em 1.2em;
+    margin-top: 0.5em;
+    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
+    display: inline-block;
+}
+
+.research-content {
+    padding: 40px 0 60px 0;
+}
+
+.research-intro {
+    background: rgba(44, 56, 80, 0.85);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 40px 32px;
+    margin-bottom: 2rem;
+}
+
+.research-intro h2 {
+    color: #6791BE;
+    font-size: 2rem;
+    font-weight: 800;
+    border-left: 4px solid #6791BE;
+    padding-left: 0.6em;
+    margin-bottom: 1.2em;
+    margin-top: 0;
+    letter-spacing: 0.01em;
+}
+
+.research-intro p {
+    margin-bottom: 1.5em;
+}
+
+@media (max-width: 768px) {
+    .research-intro {
+        padding: 24px 10px;
+    }
+    .page-header {
+        padding: 40px 0 20px 0;
+    }
+    .page-header h1 {
+        font-size: 2rem;
+    }
+}
