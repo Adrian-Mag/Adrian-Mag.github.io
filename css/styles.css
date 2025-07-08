@@ -106,12 +106,15 @@ header nav ul li a:hover {
     padding: 12px 20px;
     margin: 0;
     border-radius: 0;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.dropdown-content a:hover{
+.dropdown-content a:hover,
+.dropdown-content a:focus {
     background: #f8f9fa;
-    transform: none;
+    color: #1a2a3a;
+    outline: none;
+    text-decoration: none;
 }
 
 .dropdown:hover .dropdown-content,
