@@ -3,55 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
-    <link rel="stylesheet" href="../../../../css/BSM24.css">
+    <title>BSM24 Poster - Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/posters.css">
     <link rel="stylesheet" href="../../../../css/BSM24.css">
+    <meta name="description" content="Poster presented at British Seismological Meeting 2024 by Adrian Mag.">
 </head>
 <body>
     <header>
-        <ul>
-            <li><a href="/index.html">Home</a></li>
-            <li class="dropdown">
-                <a href="/pages/research/research_overview.html">Research</a>
-                <div class="dropdown-content">
-                    <a href="/pages/research/papers.html">Papers</a>
-                    <a href="/pages/research/posters/posters.html">Posters</a>
-                </div>
-            </li>
-            <li><a href="/pages/contacts.html">Contacts</a></li>
-        </ul>
-        <h1>British Seismological Meeting 2024</h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/pages/about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="/pages/research/research_overview.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="/pages/research/papers.html">Publications</a>
+                        <a href="/pages/research/posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="/pages/cv.html">CV</a></li>
+                <li><a href="/pages/contacts.html">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-
-    <div class="pdf-container">
-        <a href="/media/research/posters/BSM24/BSM24_Adrian_Poster.pdf">
-            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM24_Adrian_Poster.png" alt="">
-        </a>
-        <a class="pdf-link" href="/media/research/posters/BSM24/BSM24_Adrian_Poster.pdf">View Poster PDF</a>
-    </div>
-
-    <div class="pdf-container">
-        <p class="pdf-description">
-            Details on the theory behind the solution.
-        </p>
-        <a href="/media/research/posters/BSM24/BSM_Poster_additional_theory.pdf">
-            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM_Poster_additional_theory.png" alt="PDF 1 Thumbnail">
-        </a>
-        <a class="pdf-link" href="/media/research/posters/BSM24/BSM_Poster_additional_theory.pdf">View PDF</a>
-    </div>
-
-    <div class="pdf-container">
-        <p class="pdf-description">
-            More examples.
-        </p>
-        <a href="/media/research/posters/BSM24/BSM_Poster_additional_examples.pdf">
-            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM_Poster_additional_examples.png" alt="PDF 1 Thumbnail">
-        </a>
-        <a class="pdf-link" href="/media/research/posters/BSM24/BSM_Poster_additional_examples.pdf">View PDF</a>
-    </div>
-</body>
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('/media/backgrounds/homepage_background.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>British Seismological Meeting 2024</h1>
+                <p>Poster: "Constraining Earth model properties through Backus-Gilbert SOLA inferences"</p>
+            </div>
+        </section>
+        <section class="presentations-content research-content">
+            <div class="container">
+                <div class="poster-details-grid">
+                    <div class="poster-card-pdf">
+                        <a href="/media/research/posters/BSM24/BSM24_Adrian_Poster.pdf" target="_blank">
+                            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM24_Adrian_Poster.png" alt="BSM24 Poster Thumbnail">
+                        </a>
+                        <div class="pdf-description">Main Poster PDF</div>
+                    </div>
+                    <div class="poster-card-pdf">
+                        <a href="/media/research/posters/BSM24/BSM_Poster_additional_theory.pdf" target="_blank">
+                            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM_Poster_additional_theory.png" alt="Additional Theory PDF Thumbnail">
+                        </a>
+                        <div class="pdf-description">Details on the theory behind the solution.</div>
+                    </div>
+                    <div class="poster-card-pdf">
+                        <a href="/media/research/posters/BSM24/BSM_Poster_additional_examples.pdf" target="_blank">
+                            <img class="pdf-thumbnail" src="/media/research/posters/BSM24/BSM_Poster_additional_examples.png" alt="Additional Examples PDF Thumbnail">
+                        </a>
+                        <div class="pdf-description">More examples.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
     <footer>
         <div class="container">
             <p>
@@ -62,10 +70,9 @@
                     Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
                     Background images are by Adrian Mag and also published on Unsplash.<br>
                     Other images may be subject to separate copyright.
-                    Poster images are by Adrian Mag and also published on Unsplash.<br>
-                    Other images may be subject to separate copyright.
                 </span>
             </p>
         </div>
     </footer>
+</body>
 </html>
