@@ -34,6 +34,31 @@
                 <h1>Research Overview</h1>
             </div>
         </section>
+        <script>
+        // Fade-in animation for .research-area cards when in viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.research-area');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach((entry, i) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            entry.target.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1)';
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                cards.forEach(card => observer.observe(card));
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                cards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+            }
+        });
+        </script>
 
         <section class="research-content">
             <div class="container">

@@ -26,8 +26,7 @@
     position: relative;
     opacity: 0;
     transform: translateY(30px);
-    animation: highlightFadeIn 0.8s cubic-bezier(.4,0,.2,1) forwards;
-    animation-delay: var(--highlight-delay, 0s);
+    /* Animation now triggered by JS for fade-in on scroll */
     font-size: 1rem;
 }
 

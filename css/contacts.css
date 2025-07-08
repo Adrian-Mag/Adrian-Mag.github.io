@@ -1,0 +1,54 @@
+/* contacts.css: Page-specific styles for Contact page (moved from styles.css) */
+
+.contact-content {
+    padding: 80px 0;
+    background-color: #3a3e43;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%233a3e43"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.13"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10" fill="none"/></svg>');
+    background-repeat: repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-box {
+    background: #4a4f56;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(103,145,190,0.13);
+    padding: 2.5rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-links {
+    margin-top: 1.5rem;
+    background: transparent;
+    border-radius: 8px;
+    padding: 0.7rem 0.7rem 0.7rem 1.1rem;
+    display: inline-block;
+    box-shadow: none;
+}
+
+.contact-link {
+    color: #8ec6ff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+}
+
+.contact-link:hover {
+    color: #ffffff;
+    background: rgba(103, 145, 190, 0.15);
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(103, 145, 190, 0.3);
+}
+
+.contact-link:visited {
+    color: #8ec6ff;
+}
+
+.contact-link:visited:hover {
+    color: #ffffff;
+}
