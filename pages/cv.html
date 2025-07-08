@@ -27,16 +27,17 @@
     </header>
 
     <main>
-        <section class="page-header">
-            <div class="container">
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
                 <h1>Curriculum Vitae</h1>
                 <div class="cv-download">
-                    <a href="#" class="btn btn-primary">Download PDF CV</a>
+                    <a href="../LongCV.pdf" class="btn btn-primary" download>Download PDF CV</a>
                 </div>
             </div>
         </section>
 
-        <section class="cv-content">
+        <section class="cv-content research-content">
             <div class="container">
                 <div class="cv-grid">
                     <div class="cv-main">
@@ -44,38 +45,24 @@
                             <h2>Education</h2>
                             <div class="cv-item">
                                 <div class="cv-item-header">
-                                    <h3>PhD in Earth Sciences</h3>
-                                    <span class="cv-date">2021 - Present</span>
+                                    <h3>PhD in Deep Earth Imaging</h3>
+                                    <span class="cv-date">2022 – Present</span>
                                 </div>
-                                <p class="cv-institution">University of Oxford, Department of Earth Sciences</p>
+                                <p class="cv-institution">University of Oxford, Oxford, UK</p>
                                 <p class="cv-description">
-                                    Thesis: "Seismic Wave Propagation and Attenuation in Earth's Interior"<br>
-                                    Supervisor: [Supervisor Name]<br>
-                                    Focus: Computational seismology, wave propagation, Earth structure
+                                    Thesis: <em>“Imaging the multi-scale topography of the Earth’s core”</em><br>
+                                    Advisors: Dr. Paula Koelemeijer, Dr. Christophe Zaroli, Dr. Andrew Walker
                                 </p>
                             </div>
 
                             <div class="cv-item">
                                 <div class="cv-item-header">
-                                    <h3>Master of Science in Geophysics</h3>
-                                    <span class="cv-date">2019 - 2021</span>
+                                    <h3>MSci in Geophysics</h3>
+                                    <span class="cv-date">2018 – 2022</span>
                                 </div>
-                                <p class="cv-institution">[Previous University]</p>
+                                <p class="cv-institution">University College London, London, UK</p>
                                 <p class="cv-description">
-                                    Distinction/First Class Honours<br>
-                                    Dissertation: "[Previous research topic]"
-                                </p>
-                            </div>
-
-                            <div class="cv-item">
-                                <div class="cv-item-header">
-                                    <h3>Bachelor of Science in Physics</h3>
-                                    <span class="cv-date">2016 - 2019</span>
-                                </div>
-                                <p class="cv-institution">[Previous University]</p>
-                                <p class="cv-description">
-                                    First Class Honours<br>
-                                    Final Year Project: "[Undergraduate project]"
+                                    First-Class Honours (Average: 82%)
                                 </p>
                             </div>
                         </div>
@@ -84,68 +71,56 @@
                             <h2>Research Experience</h2>
                             <div class="cv-item">
                                 <div class="cv-item-header">
-                                    <h3>PhD Researcher</h3>
-                                    <span class="cv-date">2021 - Present</span>
+                                    <h3>PhD Researcher in Deep Earth Imaging</h3>
+                                    <span class="cv-date">2022 – Present</span>
                                 </div>
-                                <p class="cv-institution">University of Oxford</p>
+                                <p class="cv-institution">University of Oxford, Oxford, UK</p>
                                 <ul class="cv-list">
-                                    <li>Developed advanced computational methods for seismic wave modeling</li>
-                                    <li>Conducted high-resolution tomographic imaging of Earth's interior</li>
-                                    <li>Applied machine learning techniques to large seismic datasets</li>
-                                    <li>Collaborated with international research teams on core-mantle studies</li>
-                                </ul>
-                            </div>
-
-                            <div class="cv-item">
-                                <div class="cv-item-header">
-                                    <h3>Research Assistant</h3>
-                                    <span class="cv-date">2020 - 2021</span>
-                                </div>
-                                <p class="cv-institution">[Previous Institution]</p>
-                                <ul class="cv-list">
-                                    <li>Analyzed seismic data from regional earthquake networks</li>
-                                    <li>Developed data processing workflows for automated analysis</li>
-                                    <li>Contributed to research publications in peer-reviewed journals</li>
+                                    <li>Developed 3D finite-frequency sensitivity kernel computations at global scale using the AxiSEM3D wave solver.</li>
+                                    <li>Extended the SOLA inversion framework to constrain new classes of Earth properties and established formal connections with related methods (Deterministic Linear Inference, MOLA).</li>
+                                    <li>Maintain a Python package for solving general linear inverse problems using the SOLA-DLI framework.</li>
+                                    <li>Contribute to a scientific Python library for probabilistic linear inferences by implementing abstract function spaces, linear operators, measures, and their interrelations.</li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="cv-section">
-                            <h2>Conference Presentations</h2>
+                            <h2>Conferences and Presentations</h2>
                             <div class="cv-item">
-                                <h3>British Seismological Meeting 2024</h3>
-                                <p class="cv-description">
-                                    "3D Seismic Velocity Structure of the Core-Mantle Boundary Region"<br>
-                                    Edinburgh, UK (Poster Presentation)
-                                </p>
+                                <span class="cv-date">2025</span>
+                                <p class="cv-description"><strong>Poster</strong>: "Combining SOLA and Deterministic Linear Inferences", Inge Lehman Symposium, Copenhagen, Denmark</p>
                             </div>
                             <div class="cv-item">
-                                <h3>UK-SEDI 2024</h3>
-                                <p class="cv-description">
-                                    "Anisotropic Properties of the Inner Core: Evidence from PKP Wave Analysis"<br>
-                                    Cambridge, UK (Poster Presentation)
-                                </p>
+                                <span class="cv-date">2025</span>
+                                <p class="cv-description"><strong>Poster</strong>: "Constraining Earth model properties through Backus-Gilbert SOLA inferences and normal modes", MODES/Deep Earth Meeting, Oxford-Cambridge, UK</p>
                             </div>
                             <div class="cv-item">
-                                <h3>PGRIP 2023</h3>
-                                <p class="cv-description">
-                                    "[Presentation Title]"<br>
-                                    [Location] (Poster Presentation)
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Awards & Honors</h2>
-                            <div class="cv-item">
-                                <h3>Oxford Graduate Scholarship</h3>
-                                <span class="cv-date">2021 - 2024</span>
-                                <p class="cv-description">Full funding for PhD studies including tuition and stipend</p>
-                            </div>
-                            <div class="cv-item">
-                                <h3>Best Poster Award</h3>
                                 <span class="cv-date">2024</span>
-                                <p class="cv-description">[Conference name] for outstanding research presentation</p>
+                                <p class="cv-description"><strong>Poster</strong>: "Graph Networks for Protein Folding", Gordon Research Conference</p>
+                            </div>
+                            <div class="cv-item">
+                                <span class="cv-date">2024</span>
+                                <p class="cv-description"><strong>Poster</strong>: "Constraining Earth model properties through Backus-Gilbert SOLA inferences", UKSEDI, Leeds, UK</p>
+                            </div>
+                            <div class="cv-item">
+                                <span class="cv-date">2024</span>
+                                <p class="cv-description"><strong>Poster</strong>: "Constraining Earth model properties through Backus-Gilbert SOLA inferences", BSM, Reading, UK</p>
+                            </div>
+                            <div class="cv-item">
+                                <span class="cv-date">2023</span>
+                                <p class="cv-description"><strong>Poster</strong>: "Mapping the Topography of Earth’s Core: Relationships Between Topography Variations and Seismic Waveforms", PGRIP 2023, Edinburgh, UK</p>
+                            </div>
+                        </div>
+
+                        <div class="cv-section">
+                            <h2>Honors & Awards</h2>
+                            <div class="cv-item">
+                                <span class="cv-date">2023</span>
+                                <p class="cv-description">Grant for SPIN workshop</p>
+                            </div>
+                            <div class="cv-item">
+                                <span class="cv-date">2022</span>
+                                <p class="cv-description">Travel grant for SEDI conference</p>
                             </div>
                         </div>
                     </div>
@@ -156,42 +131,42 @@
                             <div class="skills-category">
                                 <h3>Programming</h3>
                                 <ul class="skills-list">
-                                    <li>Python (Advanced)</li>
-                                    <li>MATLAB (Advanced)</li>
-                                    <li>Fortran (Intermediate)</li>
-                                    <li>C/C++ (Intermediate)</li>
-                                    <li>Shell Scripting</li>
+                                    <li>Python (Intermediate)</li>
+                                    <li>C++ (Beginner)</li>
+                                    <li>MATLAB (Beginner)</li>
                                 </ul>
                             </div>
                             <div class="skills-category">
-                                <h3>Seismology Software</h3>
+                                <h3>Software Development</h3>
                                 <ul class="skills-list">
-                                    <li>ObsPy</li>
-                                    <li>SAC</li>
-                                    <li>SPECFEM3D</li>
-                                    <li>AxiSEM3D</li>
-                                    <li>TauP</li>
-                                    <li>GMT</li>
+                                    <li>Version control (Git)</li>
+                                    <li>CI/CD (GitHub Actions)</li>
+                                    <li>Testing (pytest)</li>
+                                    <li>Documentation (Sphinx)</li>
+                                    <li>Package development (setuptools, poetry)</li>
                                 </ul>
                             </div>
                             <div class="skills-category">
-                                <h3>Data Analysis</h3>
+                                <h3>Scientific Computing</h3>
                                 <ul class="skills-list">
-                                    <li>NumPy/SciPy</li>
-                                    <li>Pandas</li>
-                                    <li>Scikit-learn</li>
-                                    <li>Matplotlib</li>
-                                    <li>Jupyter</li>
+                                    <li>Designed extensible scientific libraries modeling functional spaces and operators; applied in inverse problems and numerical PDEs</li>
+                                    <li>Numerical methods: FEM, FDM</li>
                                 </ul>
                             </div>
                             <div class="skills-category">
-                                <h3>HPC & Tools</h3>
+                                <h3>Mathematics</h3>
                                 <ul class="skills-list">
-                                    <li>SLURM</li>
-                                    <li>MPI</li>
-                                    <li>Git/GitHub</li>
+                                    <li>Linear algebra, ODE/PDEs, functional analysis, measure theory</li>
+                                    <li>Bayesian inversions and inferences</li>
+                                </ul>
+                            </div>
+                            <div class="skills-category">
+                                <h3>DevOps / Other</h3>
+                                <ul class="skills-list">
                                     <li>LaTeX</li>
-                                    <li>Linux/Unix</li>
+                                    <li>Linux</li>
+                                    <li>Jupyter</li>
+                                    <li>Markdown</li>
                                 </ul>
                             </div>
                         </div>
@@ -200,17 +175,7 @@
                             <h2>Languages</h2>
                             <ul class="skills-list">
                                 <li>English (Fluent)</li>
-                                <li>[Native Language]</li>
-                                <li>[Additional Language]</li>
-                            </ul>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Professional Service</h2>
-                            <ul class="cv-list-simple">
-                                <li>Peer reviewer for journals</li>
-                                <li>Conference session organizer</li>
-                                <li>Graduate student representative</li>
+                                <li>Romanian (Native)</li>
                             </ul>
                         </div>
                     </div>
@@ -221,7 +186,15 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Adrian Mag. All rights reserved.</p>
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.<br>
+                    Code samples are open source (MIT License unless otherwise stated).<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
         </div>
     </footer>
 </body>
