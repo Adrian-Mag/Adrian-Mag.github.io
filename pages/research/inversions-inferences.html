@@ -32,7 +32,6 @@
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../media/backgrounds/orion.jpg') center 70%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>What are Inversions and Inferences?</h1>
-                <p>An accessible introduction for a wide audience</p>
             </div>
         </section>
         <section class="about-content">
@@ -45,22 +44,97 @@
                             Image credit: <a href="https://earthhow.com/inside-earth-crust-core-mantle/" target="_blank" rel="noopener">earthhow.com</a>
                         </figcaption>
                     </figure>
-                    <p>We can't dig a hole to the center of the Earth. In fact, we've only ever drilled a few kilometers down—just a tiny scratch on the surface. So how do we know anything about what's happening thousands of kilometers below our feet?</p>
 
-                    <p>This is one of the big questions in geophysics, the science that studies the physical properties of the Earth. And one of the cleverest ways we explore the deep Earth is through a method called <strong>seismic tomography</strong>. It's kind of like taking an X-ray or a CT scan of the planet, using waves from earthquakes instead of light or radiation.</p>
+                    <div class="intro-toggle-btns">
+                        <button class="intro-toggle-btn" onclick="showIntro('everyone')" id="btn-everyone">For Everyone</button>
+                        <button class="intro-toggle-btn" onclick="showIntro('scientist')" id="btn-scientist">For Scientists <br>(That Find Math Boring)</button>
+                        <button class="intro-toggle-btn" onclick="showIntro('math')" id="btn-math">For Scientists <br>(That Get Excited by Sobolev Spaces)</button>
+                    </div>
 
-                    <p><strong>But there's a problem:</strong> we can only measure what happens at the surface. We record how fast earthquake waves arrive, how they travel, and how they change. But we can't see directly what's inside. So scientists work backwards from the measurements to figure out what the inside of the Earth must be like.</p>
+                    <div id="intro-everyone" class="intro-section">
+                        <p>We can't dig a hole to the center of the Earth. In fact, we've only ever drilled a few kilometers down—just a tiny scratch on the surface. So how do we know anything about what's happening thousands of kilometers below our feet?</p>
+                        <p>This is one of the big questions in geophysics, the science that studies the physical properties of the Earth. And one of the cleverest ways we explore the deep Earth is through a method called <strong>seismic tomography</strong>. It's kind of like taking an X-ray or a CT scan of the planet, using waves from earthquakes instead of light or radiation.</p>
+                        <p><strong>But there's a problem:</strong> we can only measure what happens at the surface. We record how fast earthquake waves arrive, how they travel, and how they change. But we can't see directly what's inside. So scientists work backwards from the measurements to figure out what the inside of the Earth must be like.</p>
+                        <p>To do that, we use two powerful ideas: <strong>inversion</strong> and <strong>inference</strong>. They sound similar, but they are actually quite different.</p>
+                        <p><strong>Inversion</strong> is like trying to solve a mystery by building a complete picture of what happened. Scientists use the data from the surface to guess what kind of internal structure would cause waves to behave the way they do. The goal is to find one possible model of the Earth’s interior that fits all the measurements and assumptions we have. Of course, there may be more than one model that works—so inversions often need us to make subjective choices to get to a final, unique, picture.</p>
+                        <p><strong>Inference</strong>, on the other hand, doesn’t try to build the whole picture. Instead, it focuses on answering a specific question. For example: “What’s the average temperature under this region?” or “How deep is this particular boundary?” Even if we can't tell exactly what's inside, we might still be able to say something useful about one key property. This is what inference does—it looks for reliable answers to specific questions, even when the full story remains uncertain.</p>
+                        <p>To put it simply: <em>inversion tries to reconstruct the full puzzle; inference tries to answer a question without needing every piece</em>.</p>
+                        <p>Both of these methods are essential for exploring our planet. They help us learn about how Earth works—from the movement of continents, to where earthquakes happen, to how heat flows through the deep interior. Even though we can't go there ourselves, we can still learn a lot by listening carefully to what the Earth tells us.</p>
+                    </div>
 
-                    <p>To do that, we use two powerful ideas: <strong>inversion</strong> and <strong>inference</strong>. They sound similar, but they are actually quite different.</p>
+                    <div id="intro-scientist" class="intro-section" style="display:none;">
+                        <p><strong>For scientists (no math):</strong> Inversion and inference are two ways we use data to learn about the Earth's interior. Inversion tries to build a full model of what's inside, using all the data and some assumptions to fill in the gaps. Inference, instead, focuses on answering specific questions—like the average temperature or the depth of a boundary—without needing to know every detail. Both are crucial, but inference is often more robust when the data are limited or the problem is ambiguous.</p>
+                        <p>In practice, inversion can be sensitive to the choices we make (like how we discretize the Earth or what regularization we use), while inference is about extracting reliable, interpretable answers to targeted questions. Inference methods are especially valuable when we want to avoid over-interpreting noisy or incomplete data.</p>
+                    </div>
 
-                    <p><strong>Inversion</strong> is like trying to solve a mystery by building a complete picture of what happened. Scientists use the data from the surface to guess what kind of internal structure would cause waves to behave the way they do. The goal is to find one possible model of the Earth’s interior that fits all the measurements and assumptions we have. Of course, there may be more than one model that works—so inversions often need us to make subjective choices to get to a final, unique, picture.</p>
+                    <div id="intro-math" class="intro-section" style="display:none;">
+                        <p><strong>For mathematicians:</strong> Inversion seeks a model \( m \in \mathcal{M} \) such that \( Gm = d \), where \( G: \mathcal{M} \to \mathcal{D} \) is the forward operator and \( d \in \mathcal{D} \) is the observed data. The inverse problem is often ill-posed: solutions may not exist, may not be unique, or may not depend continuously on the data. Regularization and discretization are used to obtain stable solutions.</p>
+                        <p>Inference, by contrast, is about estimating functionals \( \langle m, \phi \rangle \) for some test function \( \phi \), or more generally, about quantifying properties of the solution space (e.g., averages, variances, credible intervals). In the Bayesian setting, inference is about the posterior distribution on \( \mathcal{M} \) given data \( d \), and the focus is on expectations or credible sets for quantities of interest, rather than on a single model.</p>
+                        <ul>
+                            <li>Forward problem: \( \mathbf{d} = \mathbf{Gm} \)</li>
+                            <li>Inverse problem: \( \mathbf{m} = \mathbf{G}^{-1}\mathbf{d} \) (if possible)</li>
+                            <li>Inference: \( \langle m, \phi \rangle \) for some property \( \phi \)</li>
+                        </ul>
+                        <p>Display math example:</p>
+                        <p>$$
+                            \min_{\mathbf{m}} \| \mathbf{Gm} - \mathbf{d} \|^2 + \lambda \| \mathbf{Lm} \|^2
+                        $$</p>
+                    </div>
 
-                    <p><strong>Inference</strong>, on the other hand, doesn’t try to build the whole picture. Instead, it focuses on answering a specific question. For example: “What’s the average temperature under this region?” or “How deep is this particular boundary?” Even if we can't tell exactly what's inside, we might still be able to say something useful about one key property. This is what inference does—it looks for reliable answers to specific questions, even when the full story remains uncertain.</p>
-
-                    <p>To put it simply: <em>inversion tries to reconstruct the full puzzle; inference tries to answer a question without needing every piece</em>.</p>
-
-                    <p>Both of these methods are essential for exploring our planet. They help us learn about how Earth works—from the movement of continents, to where earthquakes happen, to how heat flows through the deep interior. Even though we can't go there ourselves, we can still learn a lot by listening carefully to what the Earth tells us.</p>
-
+                    <script>
+                    function showIntro(which) {
+                        document.getElementById('intro-everyone').style.display = (which === 'everyone') ? '' : 'none';
+                        document.getElementById('intro-scientist').style.display = (which === 'scientist') ? '' : 'none';
+                        document.getElementById('intro-math').style.display = (which === 'math') ? '' : 'none';
+                        document.getElementById('btn-everyone').classList.toggle('active', which === 'everyone');
+                        document.getElementById('btn-scientist').classList.toggle('active', which === 'scientist');
+                        document.getElementById('btn-math').classList.toggle('active', which === 'math');
+                        if (window.MathJax) { MathJax.typesetPromise(); }
+                    }
+                    </script>
+                    <style>
+                        .intro-toggle-btns {
+                            display: flex;
+                            justify-content: center;
+                            align-items: stretch;
+                            gap: 0.5em;
+                            margin-bottom: 2em;
+                        }
+                        .intro-toggle-btn {
+                            background: #4a6da3;
+                            color: #fff;
+                            border: none;
+                            border-radius: 18px;
+                            padding: 0.9em 2.1em;
+                            margin: 0 0.1em;
+                            font-size: 1.08em;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: background 0.18s, transform 0.18s;
+                            min-width: 330px;
+                            max-width: 400px;
+                            text-align: center;
+                            white-space: normal;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .intro-toggle-btn.active, .intro-toggle-btn:focus {
+                            background: #6791BE;
+                            color: #fff;
+                            transform: translateY(-2px) scale(1.04);
+                            outline: none;
+                        }
+                        @media (max-width: 600px) {
+                            .intro-toggle-btn {
+                                min-width: 120px;
+                                max-width: 100%;
+                                font-size: 1em;
+                                padding: 0.6em 0.5em;
+                            }
+                        }
+                    </style>
                 </article>
             </div>
         </section>
