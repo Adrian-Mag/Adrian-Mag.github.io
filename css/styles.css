@@ -92,8 +92,8 @@ header nav ul li a:hover {
     text-shadow: 0 2px 12px rgba(103,145,190,0.13);
 }
 
-/* Dropdown Content (Hidden by Default) */
 
+/* Dropdown Content (Hidden by Default) */
 .dropdown-content{
     display: none;
     position: absolute;
@@ -122,9 +122,18 @@ header nav ul li a:hover {
     transform: none;
 }
 
-.dropdown:hover .dropdown-content{
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
     display: block;
     animation: fadeIn 0.3s ease;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .dropdown > a:focus + .dropdown-content,
+    .dropdown > a:active + .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
 }
 
 @keyframes fadeIn {
