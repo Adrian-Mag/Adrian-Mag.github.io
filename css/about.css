@@ -1,3 +1,37 @@
+/* Supervisor website button style */
+.supervisors-list {
+    list-style: none;
+    margin: 0 0 1.2em 0;
+    padding: 0;
+}
+.supervisors-list li {
+    margin-bottom: 0.7em;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+}
+.supervisors-list .contact-link {
+    color: #8ec6ff;
+    background: rgba(103,145,190,0.10);
+    border-radius: 6px;
+    padding: 0.28em 0.95em;
+    font-size: 1.02em;
+    font-weight: 500;
+    margin-left: 0.5em;
+    text-decoration: none;
+    transition: all 0.22s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 2px 8px rgba(103,145,190,0.08);
+    display: inline-block;
+}
+.supervisors-list .contact-link:hover, .supervisors-list .contact-link:focus {
+    color: #fff;
+    background: #6791BE;
+    transform: translateY(-2px) scale(1.06);
+    text-shadow: 0 2px 8px rgba(103,145,190,0.18);
+    box-shadow: 0 4px 18px rgba(103,145,190,0.18);
+    outline: none;
+}
 /* about.html page-specific styles */
 
 .about-content {
