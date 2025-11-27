@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What are Inversions and Inferences?</title>
+    <title>What are Linear Inversions and Inferences?</title>
     <link rel="stylesheet" href="../../css/styles.css">
     <link rel="stylesheet" href="../../css/research_overview.css">
-    <meta name="description" content="An accessible introduction to inversions and inferences in seismology, with math rendered using MathJax.">
+    <meta name="description" content="An accessible introduction to linear inversions and inferences in seismology, with math rendered using MathJax.">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
         <section class="page-header" style="position: relative; overflow: hidden;">
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../media/backgrounds/orion.jpg') center 70%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
-                <h1>What are Inversions and Inferences?</h1>
+                <h1>What are Linear Inversions and Inferences?</h1>
             </div>
         </section>
         <section class="about-content">
@@ -47,48 +47,45 @@
 
                     <div class="intro-toggle-btns">
                         <button class="intro-toggle-btn" onclick="showIntro('everyone')" id="btn-everyone">For Everyone</button>
-                        <button class="intro-toggle-btn" onclick="showIntro('scientist')" id="btn-scientist">For Scientists <br>(That Find Math Boring)</button>
-                        <button class="intro-toggle-btn" onclick="showIntro('math')" id="btn-math">For Scientists <br>(That Get Excited by Sobolev Spaces)</button>
+                        <button class="intro-toggle-btn" onclick="showIntro('scientist')" id="btn-scientist">For Scientists</button>
                     </div>
 
                     <div id="intro-everyone" class="intro-section">
                         <p>We can't dig a hole to the center of the Earth. In fact, we've only ever drilled a few kilometers down—just a tiny scratch on the surface. So how do we know anything about what's happening thousands of kilometers below our feet?</p>
                         <p>This is one of the big questions in geophysics, the science that studies the physical properties of the Earth. And one of the cleverest ways we explore the deep Earth is through a method called <strong>seismic tomography</strong>. It's kind of like taking an X-ray or a CT scan of the planet, using waves from earthquakes instead of light or radiation.</p>
                         <p><strong>But there's a problem:</strong> we can only measure what happens at the surface. We record how fast earthquake waves arrive, how they travel, and how they change. But we can't see directly what's inside. So scientists work backwards from the measurements to figure out what the inside of the Earth must be like.</p>
-                        <p>To do that, we use two powerful ideas: <strong>inversion</strong> and <strong>inference</strong>. They sound similar, but they are actually quite different.</p>
-                        <p><strong>Inversion</strong> is like trying to solve a mystery by building a complete picture of what happened. Scientists use the data from the surface to guess what kind of internal structure would cause waves to behave the way they do. The goal is to find one possible model of the Earth’s interior that fits all the measurements and assumptions we have. Of course, there may be more than one model that works—so inversions often need us to make subjective choices to get to a final, unique, picture.</p>
-                        <p><strong>Inference</strong>, on the other hand, doesn’t try to build the whole picture. Instead, it focuses on answering a specific question. For example: “What’s the average temperature under this region?” or “How deep is this particular boundary?” Even if we can't tell exactly what's inside, we might still be able to say something useful about one key property. This is what inference does—it looks for reliable answers to specific questions, even when the full story remains uncertain.</p>
+                        <p>To do that, we use two powerful ideas: <strong>linear inversion</strong> and <strong>linear inference</strong>. They sound similar, but they are actually quite different.</p>
+                        <p><strong>Linear inversion</strong> is like trying to solve a mystery by building a complete picture of what happened. Scientists use the data from the surface to guess what kind of internal structure would cause waves to behave the way they do. The goal is to find one possible model of the Earth's interior that fits all the measurements and assumptions we have. Of course, there may be more than one model that works—so inversions often need us to make subjective choices to get to a final, unique, picture.</p>
+                        <p><strong>Linear inference</strong>, on the other hand, doesn't try to build the whole picture. Instead, it focuses on answering a specific question. For example: "What's the average temperature under this region?" or "How deep is this particular boundary?" Even if we can't tell exactly what's inside, we might still be able to say something useful about one key property. This is what inference does—it looks for reliable answers to specific questions, even when the full story remains uncertain.</p>
                         <p>To put it simply: <em>inversion tries to reconstruct the full puzzle; inference tries to answer a question without needing every piece</em>.</p>
                         <p>Both of these methods are essential for exploring our planet. They help us learn about how Earth works—from the movement of continents, to where earthquakes happen, to how heat flows through the deep interior. Even though we can't go there ourselves, we can still learn a lot by listening carefully to what the Earth tells us.</p>
                     </div>
 
                     <div id="intro-scientist" class="intro-section" style="display:none;">
-                        <h3>Why tomography is a hard inverse problem (seismologist level)</h3>
-
                         <p>We cannot directly sample the deep Earth beyond a few kilometres, yet seismic waves generated by earthquakes or controlled sources traverse the whole planet and are recorded at the surface. Recovering a description of the interior from these surface records is therefore an inverse problem. Below we outline the logical steps and the key mathematical facts you need to understand the difference between <em>inversion</em> and <em>inference</em>, and the practical remedies used to stabilize solutions. This discussion places the emphasis on the continuous (function-space) viewpoint while remaining accessible to practitioners.</p>
 
                         <h4>Model and data (function-space viewpoint)</h4>
-                        <p>A natural and physically faithful model is to treat the Earth as a continuum: the model \(m\) is a function (e.g. a velocity field, density, or elastic-parameter field) belonging to a model space \(\mathcal{M}\). In practice \(\mathcal{M}\) is chosen as a separable Hilbert space (for example, an \(L^2\) or Sobolev space) that encodes the regularity and boundary behaviour expected of the physical parameter:</p>
+                        <p>A natural and physically faithful perspective is to treat the Earth as a continuum: the model \(m\) is a function (e.g. a velocity field, density, or elastic-parameter field) belonging to a model space \(\mathcal{M}\). In practice \(\mathcal{M}\) is chosen as a separable Banach space or separable Hilbert space (for example, an \(L^2\) or Sobolev space) that encodes the regularity and boundary behaviour expected of the physical parameter:</p>
                         <p>$$m \in \mathcal{M} \quad\text{(function-space model)}.$$</p>
                         <p>The measurements collected at the surface are finite in number:</p>
                         <p>$$\mathbf{d} \in \mathbb{R}^{N_d} \quad\text{(observed travel times, amplitudes, waveforms, \dots)}.$$</p>
 
-                        <p>After linearization about a background model (Born approximation or Fréchet derivative), the forward relation is written abstractly as a bounded linear operator</p>
-                        <p>$$\mathbf{d} \approx G[m] + \boldsymbol{\eta}, \qquad G : \mathcal{M} \to \mathbb{R}^{N_d},$$</p>
-                        <p>where \(\boldsymbol{\eta}\) denotes measurement and modelling error. Emphasizing the operator \(G\) makes the continuous nature of the problem explicit: \(G\) maps a function (infinite-dimensional object) to a finite vector of observations.</p>
+                        <p>Between models and data there exists a mapping \(G\) that we call the <em>forward operator</em>. In this document we will assume that \(G\) is linear and bounded. Mathematically, we write:</p>
+                        <p>$$\mathbf{d} = G(m) + \boldsymbol{\eta}, \qquad G : \mathcal{M} \mapsto \mathbb{R}^{N_d},$$</p>
+                        <p>where \(\boldsymbol{\eta}\) denotes measurement and modelling error.</p>
 
                         <h4>Inversion vs inference (practical meaning)</h4>
-                        <p>Both inversion and inference can be formulated either deterministically (via variational principles) or probabilistically (via Bayesian updates). The essential difference lies in the <em>object of interest</em>:</p>
+                        <p>Both inversion and inference can be formulated either deterministically or probabilistically. The essential difference lies in the <em>object of interest</em>. In both cases we assume that there exists a model \(\bar{m}\) that best describes reality.</p>
 
                         <ul>
-                            <li><strong>Inversion.</strong> The goal of inversion is to recover information about the <em>entire</em> model. In the deterministic setting one typically computes a point estimate \(\tilde{m}\in\mathcal{M}\) by solving a variational problem, for example
-                            $$\tilde{m} = \arg\min_{m\in\mathcal{M}} \|G[m]-\mathbf{d}\|_{\mathbf{C}_d^{-1}}^2 + \lambda\,\mathcal{R}(m),$$
-                            where \(\mathcal{R}\) is a regularizer. In the probabilistic setting one specifies a prior measure \(\mu_{\mathcal{M}}^0\) on \(\mathcal{M}\) and updates it with the likelihood to obtain a posterior \(\mu_{\mathcal{M}}^{\tilde{\mathbf{d}}}\). Thus "inversion" denotes the task of producing a model-level answer (a point, a set, or a distribution on \(\mathcal{M}\)).</li>
-
-                            <li><strong>Inference.</strong> The goal of inference is to estimate a <em>quantity of interest</em> (a functional) \(\mathcal{T}:\mathcal{M}\to \mathcal{P}\) (\(\mathcal{P}\) is the property space, usually an Euclidean space) of the model (e.g. an average, a depth, a travel-time anomaly), together with an assessment of its uncertainty. This can be done deterministically (e.g. place deterministic bounds on the model and data space, then use \(\mathcal{T}\) and \(G\) to map the resulting compact sets around up to the property space) or probabilistically (compute the pushforward distribution \(\mathcal{T}_*\mu_{\mathcal{M}}^{\tilde{\mathbf{d}}}\) of the posterior and report credible intervals). Inference thus focuses on what can be reliably said about \(\mathcal{T}(m)\), rather than on reconstructing the full \(m\).</li>
+                            <li><strong>Inversion.</strong> The goal of an inversion is to find this model \(\bar{m}\).</li>
+                            <li><strong>Inference.</strong> The goal of an inference is to find one or more properties of this true model \(\bar{m}\). More specifically, we define a <em>property mapping</em> \(\mathcal{T}:\mathcal{M} \mapsto \mathcal{P}\) that acts on models to extract some property:
+                            $$p = \mathcal{T}(m).$$
+                            These properties live in a <em>property space</em> \(\mathcal{P}\). The goal of an inference is to find the property of the true model:
+                            $$\bar{p} = \mathcal{T}(\bar{m}).$$</li>
                         </ul>
 
-                        <p>Note that the two tasks are closely related: inversion can be used as a route to inference (e.g. compute \(\mathcal{T}(\tilde{m})\)), but direct inference about \(\mathcal{T}(m)\) can be more robust and cheaper—especially when only a small set of features is of interest. In both deterministic and probabilistic approaches the choice of regularizer or prior crucially affects stability and the interpretation of uncertainties.</p>
+                        <p>Note that the two tasks are closely related: inversion can be used as a route to inference, but direct inference about \(\mathcal{T}(m)\) can be more robust and cheaper—especially when only a small set of properties is of interest. In both deterministic and probabilistic approaches the choice of regularizer or prior crucially affects stability and the interpretation of uncertainties.</p>
 
                         <h4>Why the continuous inverse problem is hard (ill-posedness)</h4>
                         <p>In the continuous setting three related difficulties typically arise:</p>
@@ -97,46 +94,14 @@
                             <li><em>Instability (unbounded inverse):</em> even when a solution exists, the inverse mapping \(G^{-1}\) (from data space to model space) is often unbounded: arbitrarily small perturbations of the data can create large perturbations in the recovered model. This instability is a fundamental operator-theoretic effect in infinite dimensions.</li>
                             <li><em>Modeling error and nonlinearity:</em> the true physics is nonlinear and modelling simplifications (background approximations, incomplete physics) add bias that must be controlled in any interpretation.</li>
                         </ol>
-                        <p>Because of these features, regularization is not optional in the continuum case: it is the mechanism that converts an ill-posed problem into a well-posed one by restricting the admissible models or penalizing unstable directions.</p>
-
-                        <h4>Canonical continuous regularization (Tikhonov / penalized variational form)</h4>
-                        <p>A standard deterministic formulation in the function-space setting is the Tikhonov variational problem: choose a symmetric, positive (semi)definite smoothing operator (or penalty) \(L:\mathcal{M}\to\mathcal{X}\) (with \(\mathcal{X}\) a suitable Hilbert space), a reference model \(m_0\in\mathcal{M}\), and a data-weight \(\mathbf{C}_d\) to define the objective</p>
-                        <p>$$\hat{m}_\lambda = \arg\min_{m\in\mathcal{M}} \|G[m]-d\|_{\mathbf{C}_d^{-1}}^2 + \lambda\,\|L(m-m_0)\|_{\mathcal{X}}^2,$$</p>
-                        <p>where \(\lambda>0\) is the regularization parameter. Under mild assumptions (boundedness of \(G\), coercivity induced by the penalty when \(\lambda>0\)) this variational problem admits a unique solution in \(\mathcal{M}\); the solution depends continuously on the data, so stability is recovered at the expense of bias (controlled by \(\lambda\)).</p>
-
-                        <h4>Minimum-norm and pseudoinverse in the continuum</h4>
-                        <p>When one seeks the minimum-energy solution among functions satisfying the exact data constraint \(G[m]=\tilde{\mathbf{d}}\), the continuous analogue of the finite-dimensional minimum-norm solution is the element of the preimage \(G^{-1}(\{\tilde{\mathbf{d}}\})\) with smallest \(\mathcal{M}\)-norm. Formally, if such a minimizer exists, it is characterized by orthogonality to the kernel of \(G\) and can be written using the Moore–Penrose pseudoinverse \(G^+\) on the closure of the image of \(G\):</p>
-                        <p>$$\tilde{m}_{\mathrm{mn}} = G^+ d.$$</p>
-                        <p>In infinite dimensions the pseudoinverse may be unbounded if \(\operatorname{Im}(G)\) is not closed, which is another manifestation of ill-posedness and reinforces the need for regularization.</p>
-
-                        <h4>Spectral view and spectral filtering</h4>
-                        <p>If the forward operator (or an appropriate compact approximation) admits a singular-value decomposition, one can view instability as arising from small singular values that amplify noise when inverted. Regularization can be implemented as spectral filtering: attenuate or truncate modes corresponding to small singular values to stabilize the inversion. This viewpoint clarifies parameter choice and the trade-off between resolution and variance.</p>
-
-                        <h4>Uncertainty and inference in the continuous setting (brief)</h4>
-                        <p>For inference one typically adopts an explicit noise model and, if desired, a prior model for \(m\). In the linear–Gaussian continuous case, placing a Gaussian prior with covariance operator \(C_0\) and assuming Gaussian observational noise with covariance \(\mathbf{C}_d\) leads formally to a Gaussian posterior; the posterior mean solves the same variational problem as Tikhonov regularization with \(C_0^{-1}\) playing the role of the penalty. In infinite dimensions care is required in choosing \(C_0\) (trace-class or appropriate Cameron–Martin structure) so that the posterior is a well-defined measure; see the literature for the rigorous measure-theoretic treatment. Practically, the posterior covariance provides uncertainty quantification for linear functionals of \(m\) and highlights which features are resolved.</p>
-
-                        <h4>Practical takeaways for seismologists (continuum emphasis)</h4>
-                        <ul>
-                            <li>Treat the forward map \(G:\mathcal{M}\to\mathbb{R}^{N_d}\) as fundamental: ask whether \(\operatorname{Im}(G)\) is closed and which directions in \(\mathcal{M}\) are poorly informed.</li>
-                            <li>Regularize in the function space (choose \(L\) to reflect physical smoothness or expected discontinuities).</li>
-                            <li>Use spectral diagnostics (singular-value decay, resolution kernels) to understand the bias–variance trade-off.</li>
-                            <li>When providing uncertainty statements, be explicit about the modelling assumptions (prior, noise model) and aware of infinite-dimensional subtleties; if necessary consult infinite-dimensional Bayesian theory.</li>
-                            <li>Distinguish clearly between producing a point estimate (inversion) and making an uncertainty-quantified statement (inference).</li>
-                        </ul>
-                    </div>
-
-                    <div id="intro-math" class="intro-section" style="display:none;">
-                        <p><strong>IN WORK</strong></p>
                     </div>
 
                     <script>
                     function showIntro(which) {
                         document.getElementById('intro-everyone').style.display = (which === 'everyone') ? '' : 'none';
                         document.getElementById('intro-scientist').style.display = (which === 'scientist') ? '' : 'none';
-                        document.getElementById('intro-math').style.display = (which === 'math') ? '' : 'none';
                         document.getElementById('btn-everyone').classList.toggle('active', which === 'everyone');
                         document.getElementById('btn-scientist').classList.toggle('active', which === 'scientist');
-                        document.getElementById('btn-math').classList.toggle('active', which === 'math');
                         if (window.MathJax) { MathJax.typesetPromise(); }
                     }
                     </script>
