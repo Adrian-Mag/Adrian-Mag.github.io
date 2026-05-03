@@ -60,3 +60,142 @@
     font-size: 1.1rem;
     margin-bottom: 2rem;
 }
+
+/* ── Math article content ─────────────────────────────── */
+
+.math-article {
+    max-width: 1080px;
+    margin: 0 auto;
+    line-height: 1.85;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 700px) {
+    .math-article {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .math-article > h2 {
+        font-size: 1.4rem;
+        padding: 0.35em 0.75em;
+    }
+
+    .math-article h3 {
+        font-size: 1.15rem;
+    }
+
+    .math-article h4 {
+        font-size: 1rem;
+    }
+
+    .research-content {
+        padding: 40px 0;
+    }
+}
+
+.math-article > h2 {
+    color: #fff;
+    background: #6791BE;
+    padding: 0.4em 1em;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    margin-top: 3.5rem;
+    font-size: 1.8rem;
+    display: inline-block;
+    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
+}
+
+.math-article > h2:first-child {
+    margin-top: 0;
+}
+
+.math-article h3 {
+    color: #a0c4e8;
+    font-size: 1.3rem;
+    margin: 2.2rem 0 0.75rem 0;
+    border-left: 4px solid #4a6da3;
+    padding-left: 0.75em;
+}
+
+.math-article h4 {
+    color: #c8dff5;
+    font-size: 1.1rem;
+    margin: 1.6rem 0 0.5rem 0;
+    padding-left: 0.5em;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.math-article h5 {
+    color: #e0ebf5;
+    font-size: 1rem;
+    margin: 1.3rem 0 0.3rem 0;
+    font-weight: 700;
+}
+
+.math-article p {
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.88);
+}
+
+.math-article ul,
+.math-article ol {
+    margin: 0.75rem 0 0.75rem 2em;
+    color: rgba(255,255,255,0.85);
+}
+
+.math-article li {
+    margin-bottom: 0.5em;
+}
+
+.math-article blockquote {
+    background: rgba(74,109,163,0.18);
+    border-left: 4px solid #4a6da3;
+    padding: 0.8em 1.4em;
+    margin: 1.2em 0;
+    border-radius: 0 8px 8px 0;
+    color: rgba(255,255,255,0.92);
+    font-style: italic;
+}
+
+.math-article blockquote ul {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.math-article .table-container {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.math-article table {
+    border-collapse: collapse;
+    color: rgba(255,255,255,0.9);
+    min-width: 280px;
+}
+
+.math-article th {
+    background: rgba(74,109,163,0.35);
+    border: 1px solid rgba(103,145,190,0.4);
+    padding: 0.6em 1.8em;
+    text-align: center;
+}
+
+.math-article td {
+    border: 1px solid rgba(103,145,190,0.25);
+    padding: 0.45em 1.8em;
+    text-align: center;
+}
+
+.math-article tr:nth-child(even) td {
+    background: rgba(103,145,190,0.07);
+}
+
+/* Let wide display equations scroll horizontally */
+mjx-container[jax="CHTML"][display="true"] {
+    overflow-x: auto;
+    padding: 0.5rem 0;
+}

@@ -1,0 +1,1599 @@
+\documentclass[11pt]{article}
+
+% Basic packages
+\usepackage[margin=1in]{geometry}
+% *Better typography*
+\usepackage[final]{microtype}
+\usepackage[T1]{fontenc}
+
+% *Math & AMS*
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
+\usepackage{bm}
+
+% *References & citations*
+\usepackage{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+% *Drawing commutative diagrams*
+\usepackage{tikz-cd}
+\usepackage{caption}
+
+\geometry{margin=1in}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+\newtheorem{definition}{Definition}[section]
+
+% Spaces & maps
+\newcommand{\modelspace}{\mathcal{M}}
+\newcommand{\dataspace}{\mathcal{D}}
+\newcommand{\propertyspace}{\mathcal{P}}
+\newcommand{\Gd}{\mathbf{G}}
+\newcommand{\Tau}{\mathcal{T}}
+% For nicer formatting (optional but useful)
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+
+\title{A Thought Experiment: Guessing the Hidden Switches}
+\author{}
+\date{}
+\maketitle
+
+\section{A Thought Experiment: Guessing the Hidden Switches}
+
+Imagine the following game.
+
+There is a room with two hidden switches, called \(A\) and \(B\). Each switch can be either off (\(0\)) or on (\(1\)). So the true situation in the room is one of four possibilities:
+\[
+00,\quad 01,\quad 10,\quad 11.
+\]
+
+You cannot see the switches.
+
+In another room, there is a lightbulb connected to the switches. The bulb works like this:
+
+\begin{itemize}
+    \item If both switches are the same (both off or both on), the bulb is on.
+    \item If the switches are different, the bulb is off.
+\end{itemize}
+
+So:
+\[
+00 \text{ or } 11 \Rightarrow \text{bulb is on (1)}, \quad
+01 \text{ or } 10 \Rightarrow \text{bulb is off (0)}.
+\]
+
+Even if you could see the bulb, you would not know the exact switch configuration --- you would only narrow it down to two possibilities.
+
+\vspace{3mm}
+
+\subsection{The Unreliable Reporter}
+
+Unfortunately, you cannot see the bulb directly.
+
+Instead, a person looks at the bulb and tells you whether it is on (\(1\)) or off (\(0\)).
+
+This person is not completely trustworthy, but their behaviour is known to you:
+
+\begin{itemize}
+    \item With probability \(p_{\text{trust}}\), they tell the truth.
+    \item With probability \(1 - p_{\text{trust}}\), they lie.
+\end{itemize}
+
+The value of \(p_{\text{trust}}\) is given to you as part of the rules of the game.
+
+So even if the bulb is actually on, you might be told it is off, and vice versa.
+
+\vspace{3mm}
+
+\subsection{The Goal}
+
+The game works as follows:
+
+\begin{itemize}
+    \item The switches are set in some unknown configuration.
+    \item The reporter observes the bulb and announces a value \(d \in \{0,1\}\).
+    \item Based on this report, you must choose a guess for the true switch configuration.
+\end{itemize}
+
+If your guess is correct, you win a large amount of money.
+
+\vspace{2mm}
+
+So your task is not just to understand the system, but to make the best possible decision based on the information available to you.
+
+\vspace{3mm}
+
+\subsection{First Attempt: No Prior Knowledge}
+
+Suppose you refuse to make any assumptions about how the switches are set. All you have is the report \(d\).
+
+If the reporter says \(1\), you might think:
+
+\begin{quote}
+``The bulb is probably on, but the reporter might be lying, so I am not completely sure.''
+\end{quote}
+
+This gives you a sense of how likely the bulb is to be on or off.
+
+Now you try to translate this back to the switches.
+
+If the bulb is on, the switches must be either \(00\) or \(11\).
+If the bulb is off, the switches must be either \(01\) or \(10\).
+
+So your knowledge only tells you which \emph{pair} of possibilities you are in.
+
+But within each pair, you cannot tell the difference.
+
+\vspace{3mm}
+
+\subsection{Adding Prior Knowledge: The Smudged Note}
+
+Now suppose you have access to a small piece of additional information.
+
+Before the game begins, you manage to obtain a piece of paper that supposedly contains the true switch configuration. Unfortunately, the writing is smudged and partially illegible.
+
+You cannot read the exact configuration, but you get a vague impression:
+
+\begin{itemize}
+    \item some configurations appear more plausible,
+    \item others appear less plausible.
+\end{itemize}
+
+You interpret this impression as prior information and translate it into numerical values. In other words, you assign probabilities to the possible configurations.
+
+\vspace{2mm}
+
+\begin{quote}
+The purpose of this ``smudged note'' is to introduce prior knowledge that distinguishes between the different configurations.
+\end{quote}
+
+Without it, all configurations would be treated symmetrically. With it, you have a reason to prefer some configurations over others even before observing any data.
+
+\vspace{3mm}
+
+\subsection{The Key Idea}
+
+At this point, you must decide how to play the game.
+
+Before the experiment:
+\begin{itemize}
+    \item you specify what you believe about the switch configuration (your prior),
+    \item you use the given value of \(p_{\text{trust}}\) to understand how the reporter behaves,
+    \item and you determine how you will update your beliefs for every possible report.
+\end{itemize}
+
+After the experiment:
+\begin{itemize}
+    \item you hear a report \(d\),
+    \item and you apply the rule you prepared in advance.
+\end{itemize}
+
+\vspace{2mm}
+
+\begin{quote}
+All the reasoning happens before the experiment.
+The observation only tells you which update to apply.
+\end{quote}
+
+This way of reasoning is known as \textbf{Bayesian thinking}.
+
+\section{Playing the Game}
+
+We now actually play the game.
+
+Before the reporter speaks, we must decide how to distribute our belief among the four possible switch configurations. Suppose our initial belief is:
+\[
+\mathbb P(00)=0.4,\qquad
+\mathbb P(01)=0.1,\qquad
+\mathbb P(10)=0.1,\qquad
+\mathbb P(11)=0.4.
+\]
+
+Suppose further that the reporter is trustworthy with probability
+\[
+p_{\mathrm{trust}} = 0.8.
+\]
+
+\vspace{2mm}
+
+\subsection{The reporter says \(0\)}
+
+Suppose now that the reporter announces
+\[
+d_{\mathrm{obs}} = 0.
+\]
+
+We ask:
+
+\begin{quote}
+What is the probability that the switches are in a given configuration, given that we heard \(0\)?
+\end{quote}
+
+To answer this, we begin by considering the entire system at once.
+
+\vspace{2mm}
+
+\subsection{Looking at the joint possibilities}
+
+Let us first consider the event that the switches are in configuration \(00\) and the reporter says \(0\).
+
+We already believe that
+\[
+\mathbb P(00) = 0.4.
+\]
+If the switches are \(00\), then the bulb is on. Since the reporter is truthful with probability \(0.8\), the probability that they report \(0\) in this case is \(0.2\).
+
+Thus,
+\[
+\mathbb P(00 \text{ and } 0) = 0.4 \cdot 0.2 = 0.08.
+\]
+
+We repeat this reasoning for all configurations:
+\[
+\mathbb P(01 \text{ and } 0) = 0.1 \cdot 0.8 = 0.08,
+\]
+\[
+\mathbb P(10 \text{ and } 0) = 0.1 \cdot 0.8 = 0.08,
+\]
+\[
+\mathbb P(11 \text{ and } 0) = 0.4 \cdot 0.2 = 0.08.
+\]
+
+\vspace{2mm}
+
+\subsection{How likely was the report?}
+
+To find the total probability of hearing \(0\), we add up all the joint possibilities:
+\[
+\mathbb P(0)
+=
+0.08 + 0.08 + 0.08 + 0.08
+=
+0.32.
+\]
+
+This answers the question:
+
+\begin{quote}
+How likely was it, overall, that we would hear \(0\)?
+\end{quote}
+
+\vspace{2mm}
+
+\subsection{Conditioning on what we heard}
+
+Now we return to the original question:
+
+\begin{quote}
+What is the probability that the switches are in a given configuration, given that we heard \(0\)?
+\end{quote}
+
+For example,
+\[
+\mathbb P(00 \mid 0)
+=
+\frac{\mathbb P(00 \text{ and } 0)}{\mathbb P(0)}
+=
+\frac{0.08}{0.32}
+=
+0.25.
+\]
+
+Similarly,
+\[
+\mathbb P(01 \mid 0)=0.25,\qquad
+\mathbb P(10 \mid 0)=0.25,\qquad
+\mathbb P(11 \mid 0)=0.25.
+\]
+
+So after hearing \(0\), all four configurations are equally likely.
+
+\vspace{2mm}
+
+\subsection{What we have done}
+
+The procedure we followed is:
+
+\begin{itemize}
+    \item First, compute the probability of each \emph{joint event}
+    \[
+    (\text{switch configuration}) \quad \text{and} \quad (\text{reported value}).
+    \]
+    \item Then, compute the total probability of the observed report.
+    \item Finally, divide each joint probability by the total to obtain the updated probabilities.
+\end{itemize}
+
+In symbols, this is:
+\[
+\mathbb P(m \mid d)
+=
+\frac{\mathbb P(m \text{ and } d)}{\mathbb P(d)}.
+\]
+
+\vspace{2mm}
+
+\subsection{What this means}
+
+This reasoning shows that we do not directly guess the switch configuration.
+
+Instead, we:
+
+\begin{itemize}
+    \item consider all possible combined situations of switches and reports,
+    \item determine how likely each of these situations is,
+    \item and then restrict our attention to those situations that are consistent with what we actually observed.
+\end{itemize}
+
+\vspace{2mm}
+
+\subsection{What the game teaches us}
+
+The important lesson is that the key object is the collection of all possible joint situations and their probabilities.
+
+Once these are known, the update rule follows automatically:
+\begin{quote}
+We first compute probabilities for all conceivable situations, and then we restrict and renormalize based on what we actually observe.
+\end{quote}
+
+This is the core idea behind Bayesian updating.
+
+
+\section{Playing the game \ldots{} measure theoretically}
+
+The previous method is a perfectly fine way of solving this game in our simple setting. However, it does not extend well once we move to continuous probabilities. The reason is that we were implicitly assigning probabilities to individual outcomes and conditioning on specific cases. In more complicated situations, this approach breaks down.
+
+This may not be immediately clear, so we will now play the same game again, but in a more systematic way. This time, we will introduce some new language and notation. It may feel like an unnecessary complication at first, but it will allow us to handle much more general problems later on.
+
+\vspace{2mm}
+
+\subsection{Our prior information}
+
+The set of all possible switch configurations forms our \emph{model space}:
+\begin{equation}
+    \modelspace = \{00, 01, 10, 11\}.
+\end{equation}
+
+Each element of this set is called an \emph{outcome}. In the previous section, we wrote
+\[
+\mathbb P(00)=0.4,\qquad
+\mathbb P(01)=0.1,\qquad
+\mathbb P(10)=0.1,\qquad
+\mathbb P(11)=0.4.
+\]
+
+This notation suggests that we are assigning probabilities directly to individual outcomes. While this works in this simple example, it is not a good idea in general. In more complicated situations, there may be infinitely many outcomes --- in fact, there may be \emph{uncountably} many. In such cases, assigning a nonzero probability to each individual outcome would lead to contradictions, since the total probability must always add up to \(1\).
+
+\vspace{2mm}
+
+For this reason, probability theory is formulated differently. Instead of assigning probabilities to individual outcomes, we assign probabilities to \emph{sets of outcomes}.
+
+So we rewrite our prior information as
+\[
+\mathbb P(\{00\})=0.4,\qquad
+\mathbb P(\{01\})=0.1,\qquad
+\mathbb P(\{10\})=0.1,\qquad
+\mathbb P(\{11\})=0.4.
+\]
+
+At first glance, this looks like a cosmetic change, but it is actually a fundamental shift in perspective.
+
+\vspace{2mm}
+
+A set of outcomes is called an \emph{event}. So instead of asking
+
+\begin{quote}
+What is the probability that the outcome is \(00\)?
+\end{quote}
+
+we now ask
+
+\begin{quote}
+What is the probability that the outcome lies in the set \(\{00\}\)?
+\end{quote}
+
+These two questions happen to be equivalent in this simple example, but the second formulation is much more flexible.
+
+\vspace{2mm}
+
+Once we allow ourselves to ask about events, we should think of them as \emph{questions} about the system.
+
+For example:
+\begin{itemize}
+    \item The event \(\{00\}\) corresponds to the question:
+    \begin{quote}
+    ``Are the switches in configuration \(00\)?''
+    \end{quote}
+\end{itemize}
+
+But if we are allowed to ask this question, we should also be able to ask related questions.
+
+\vspace{2mm}
+
+\paragraph{Negation (complements).}
+
+If we can ask
+\begin{quote}
+``Is the configuration in \(\{00\}\)?''
+\end{quote}
+then it is natural to also ask
+\begin{quote}
+``Is the configuration \emph{not} in \(\{00\}\)?''
+\end{quote}
+
+This corresponds to the complement event
+\[
+\{00\}^c = \{01,10,11\}.
+\]
+
+So the ability to ask a question automatically gives us the ability to ask its negation.
+
+\vspace{2mm}
+
+\paragraph{Combination (unions).}
+
+Similarly, if we can ask
+\begin{quote}
+``Is the configuration in \(\{00\}\)?'' \quad and \quad ``Is the configuration in \(\{01\}\)?''
+\end{quote}
+then we should also be able to ask
+\begin{quote}
+``Is the configuration in \(\{00\}\) \emph{or} \(\{01\}\)?''
+\end{quote}
+
+This corresponds to the union
+\[
+\{00\} \cup \{01\} = \{00,01\}.
+\]
+
+So the ability to ask individual questions naturally leads to the ability to combine them.
+
+\vspace{2mm}
+
+\paragraph{Certainty and impossibility.}
+
+Finally, there are two extreme questions that should always be allowed:
+
+\begin{itemize}
+    \item The question
+    \begin{quote}
+    ``Is the configuration in \(\modelspace\)?''
+    \end{quote}
+    is always true, so its probability must be \(1\).
+
+    \item The question
+    \begin{quote}
+    ``Is the configuration in the empty set \(\emptyset\)?''
+    \end{quote}
+    is always false, so its probability must be \(0\).
+\end{itemize}
+
+\vspace{2mm}
+
+\paragraph{Conclusion.}
+
+This shows that once we start assigning probabilities to events, we must ensure that the collection of events is stable under natural logical operations:
+
+\begin{itemize}
+    \item negation (complements),
+    \item combination (unions),
+    \item and it must contain the always-true and always-false events.
+\end{itemize}
+
+Starting from the basic events
+\[
+\{00\},\ \{01\},\ \{10\},\ \{11\},
+\]
+we are therefore led to consider all events that can be formed by combining these using these operations. In this simple example, this ultimately leads to considering all subsets of \(\modelspace\).
+\vspace{2mm}
+
+This idea is so important that it has a name.
+
+\begin{quote}
+A \emph{sigma algebra} (or \(\sigma\)--algebra) is a collection of subsets of a space that is closed under complements and countable unions.
+\end{quote}
+
+More precisely, a collection \(\Sigma\) of subsets of \(\modelspace\) is called a \(\sigma\)--algebra if:
+
+\begin{itemize}
+    \item \(\modelspace \in \Sigma\),
+    \item if \(A \in \Sigma\), then its complement \(A^c \in \Sigma\),
+    \item if \(A_1, A_2, A_3, \ldots \in \Sigma\), then
+    \[
+    \bigcup_{i=1}^\infty A_i \in \Sigma.
+    \]
+\end{itemize}
+
+\vspace{2mm}
+
+In our example, since there are only finitely many outcomes, the natural choice is to take \(\Sigma_{\modelspace}\) to be the collection of all subsets of \(\modelspace\).
+
+\vspace{2mm}
+The sigma algebra basically contains all the sets that we may ask questions about. From now on, we will only assign probabilities to sets that belong to this collection.
+
+\vspace{2mm}
+
+But now we want to formalize the mathematical object that answers these questions.
+
+If someone asks:
+\begin{quote}
+``What is the probability that the outcome lies in this event?''
+\end{quote}
+then we need something that provides an answer. This object is called a \emph{measure}.
+
+\vspace{2mm}
+
+We denote measures in general by \(\mu\). In our case, the prior information about the model space is described by a specific measure, which we call the \emph{prior model measure} and denote by
+\[
+\mu_{\modelspace}^0.
+\]
+
+This measure assigns a number between \(0\) and \(1\) to every event in \(\Sigma_{\modelspace}\), in a consistent way.
+
+\vspace{2mm}
+
+In our example, we defined the prior probabilities of the individual outcomes as
+\[
+\mu_{\modelspace}^0(\{00\})=0.4,\qquad
+\mu_{\modelspace}^0(\{01\})=0.1,\qquad
+\mu_{\modelspace}^0(\{10\})=0.1,\qquad
+\mu_{\modelspace}^0(\{11\})=0.4.
+\]
+
+From these values, the measure automatically determines the probability of \emph{every} event.
+
+\vspace{2mm}
+
+For example:
+
+\[
+\mu_{\modelspace}^0(\{00,01\}) = 0.4 + 0.1 = 0.5,
+\]
+\[
+\mu_{\modelspace}^0(\{01,10,11\}) = 0.1 + 0.1 + 0.4 = 0.6,
+\]
+\[
+\mu_{\modelspace}^0(\emptyset) = 0, \qquad
+\mu_{\modelspace}^0(\modelspace) = 1.
+\]
+
+\vspace{2mm}
+
+To make this completely explicit, we list the value of the measure on all possible events:
+
+\begin{center}
+\begin{tabular}{c|c}
+Event \(A\) & \(\mu_{\modelspace}^0(A)\) \\
+\hline
+\(\emptyset\) & \(0\) \\
+\(\{00\}\) & \(0.4\) \\
+\(\{01\}\) & \(0.1\) \\
+\(\{10\}\) & \(0.1\) \\
+\(\{11\}\) & \(0.4\) \\
+\(\{00,01\}\) & \(0.5\) \\
+\(\{00,10\}\) & \(0.5\) \\
+\(\{00,11\}\) & \(0.8\) \\
+\(\{01,10\}\) & \(0.2\) \\
+\(\{01,11\}\) & \(0.5\) \\
+\(\{10,11\}\) & \(0.5\) \\
+\(\{00,01,10\}\) & \(0.6\) \\
+\(\{00,01,11\}\) & \(0.9\) \\
+\(\{00,10,11\}\) & \(0.9\) \\
+\(\{01,10,11\}\) & \(0.6\) \\
+\(\modelspace\) & \(1\)
+\end{tabular}
+\end{center}
+
+\vspace{2mm}
+
+This table may look overwhelming at first, but the important point is simple:
+
+\begin{quote}
+Once we specify the probabilities of the basic events (the atoms, which cannot be broken down further), the measure determines the probability of every possible event, because all other events are built from these basic ones.
+\end{quote}
+
+In other words, the measure \(\mu_{\modelspace}^0\) completely describes our prior belief about the system.
+
+\subsection{The data space and the behaviour of the reporter}
+
+So far, we have described our uncertainty about the switch configuration using the model space \(\modelspace\) together with a probability measure \(\mu_{\modelspace}^0\).
+
+However, the game does not directly reveal the switch configuration. Instead, we receive a report about a lightbulb connected to these switches from the unreliable observer. The possible reports form a new space, which we call the \emph{data space}:
+\begin{equation}
+    \dataspace = \{0,1\}.
+\end{equation}
+
+Just as in the model space, we consider a collection of allowed events on \(\dataspace\), which we denote by \(\Sigma_{\dataspace}\). In this simple example, this is simply the collection of all subsets of \(\dataspace\).
+
+Just as before, we do not assign probabilities directly to individual outcomes, but to sets of outcomes. In this simple example, the collection of allowed events is again all subsets of \(\dataspace\). Thus, we can ask questions such as:
+\begin{quote}
+What is the probability that the reported value lies in the set \(\{1\}\)?
+What is the probability that the report lies in \(\{0,1\}\)?
+\end{quote}
+
+At this point, however, we face an important difference compared to the model space.
+
+\vspace{2mm}
+
+In the model space, we were able to directly assign probabilities to events using the prior information. But in the data space, the situation is different:
+
+\begin{quote}
+The probability of what we hear from the reporter depends on what the true switch configuration is.
+\end{quote}
+
+So we cannot assign a single probability measure to \(\dataspace\) independently of the model. Instead, we must describe how the reporter behaves for each possible configuration of the switches.
+
+\vspace{2mm}
+
+Let us fix a particular switch configuration \(m \in \modelspace\). If the switches are in state \(m\), then we know what the true state of the lightbulb is. From this, we can determine the probability of each possible report, because we know how trustworthy the reporter is.
+
+Thus, for each \(m \in \modelspace\), we obtain a probability measure on \(\dataspace\). Concretely, for each event \(B \in \Sigma_{\dataspace}\):
+\[
+\mathbb P(\text{report lies in } B \mid \text{switches are in state } m).
+\]
+This gives a complete probabilistic description of the reporter's behavior when the true configuration is \(m\).
+
+\vspace{2mm}
+
+It is useful to think of this as a machine:
+
+\begin{itemize}
+    \item You input a switch configuration \(m\),
+    \item and the machine outputs a probability distribution over all possible reports.
+\end{itemize}
+
+So instead of assigning a single probability measure to the data space, we now have a rule that assigns a probability measure to the data space for every possible configuration of the switches.
+
+\vspace{2mm}
+
+This kind of object is so important that it has a precise mathematical definition.
+
+\begin{quote}
+A \emph{kernel} from \((\modelspace, \Sigma_{\modelspace})\) to \((\dataspace, \Sigma_{\dataspace})\) is a rule \(K\) such that:
+\begin{itemize}
+    \item for each \(m \in \modelspace\), the mapping
+    \[
+    B \mapsto K(m,B)
+    \]
+    defines a probability measure on \((\dataspace, \Sigma_{\dataspace})\),
+    \item for each event \(B \in \Sigma_{\dataspace}\), the mapping
+    \[
+    m \mapsto K(m,B)
+    \]
+    is a measurable function on \(\modelspace\).
+\end{itemize}
+\end{quote}
+
+\vspace{2mm}
+
+In our setting, this kernel describes the behaviour of the reporter. For each possible switch configuration \(m\), it assigns a probability measure on the data space, telling us how likely different reports are.
+
+\vspace{2mm}
+
+This object also has a standard name in bayesian probability theory.
+
+\begin{quote}
+The kernel between the model and data space \(K(m,\cdot)\) is called the \emph{likelihood}. It describes how likely different observations are, given that the true state of the system is \(m\).
+\end{quote}
+
+\vspace{2mm}
+
+In other words, the likelihood answers the question:
+
+\begin{quote}
+``If the switches were in configuration \(m\), what would we expect to observe?''
+\end{quote}
+
+It is important to note that the likelihood is not something we compute from data. It is part of our modelling assumptions: it encodes how we believe the hidden state of the system produces observable data.
+
+\vspace{2mm}
+
+Thus, the likelihood is simply the kernel that describes the behaviour of the reporter.
+
+
+
+\subsection{What do we expect to observe?}
+
+We now ask a very natural question:
+
+\begin{quote}
+Given everything we currently believe, what do we expect the reporter to say?
+\end{quote}
+
+In other words, we want to assign probabilities to events in the data space. That is, we are looking for a probability measure on \((\dataspace, \Sigma_{\dataspace})\).
+
+\vspace{2mm}
+
+\subsubsection{Starting with a simple event}
+
+Let us begin with a very simple question:
+
+\begin{quote}
+What is the probability that the report lies in the event \(\{0\}\)?
+\end{quote}
+
+To answer this, we must take into account all possible switch configurations.
+
+\vspace{2mm}
+
+We proceed as follows.
+
+If the switch configuration were fixed at some value \(m \in \modelspace\), then the probability that the report lies in \(\{0\}\) would be given by
+\[
+L(m,\{0\}).
+\]
+
+However, the true configuration is not known. Instead, it is described by our prior measure \(\mu_{\modelspace}^0\).
+
+\vspace{2mm}
+
+Since \(\modelspace = \{00,01,10,11\}\), we can combine the contributions from all possible configurations explicitly:
+
+\[
+\mathbb P(\text{report lies in } \{0\})
+=
+L(00,\{0\})\,\mu_{\modelspace}^0(\{00\})
++
+L(01,\{0\})\,\mu_{\modelspace}^0(\{01\})
+\]
+\[
++
+L(10,\{0\})\,\mu_{\modelspace}^0(\{10\})
++
+L(11,\{0\})\,\mu_{\modelspace}^0(\{11\}).
+\]
+
+\vspace{2mm}
+
+\subsubsection{Generalizing to arbitrary events}
+
+Now suppose we are interested in a more general event \(B \subseteq \dataspace\), for example \(B = \{1\}\) or \(B = \{0,1\}\).
+
+The same reasoning applies.
+
+\vspace{2mm}
+
+If the switch configuration were fixed at some value \(m \in \modelspace\), then the probability that the report lies in \(B\) would be given by
+\[
+L(m,B).
+\]
+
+Since the true configuration is not known, we again combine the contributions of all possible configurations:
+
+\[
+\mathbb P(\text{report lies in } B)
+=
+L(00,B)\,\mu_{\modelspace}^0(\{00\})
++
+L(01,B)\,\mu_{\modelspace}^0(\{01\})
+\]
+\[
++
+L(10,B)\,\mu_{\modelspace}^0(\{10\})
++
+L(11,B)\,\mu_{\modelspace}^0(\{11\}).
+\]
+
+\vspace{2mm}
+
+This defines a probability measure on the data space.
+
+\vspace{2mm}
+
+\subsubsection{From sums to integrals}
+
+The expressions above are written as sums because our model space has only finitely many elements.
+
+However, the idea behind them is more general:
+
+\begin{quote}
+Take all possible configurations, weight each by how plausible it is, and account for how likely it is to produce the event \(B\).
+\end{quote}
+
+When the model space becomes larger --- possibly even infinite --- we can no longer write such sums explicitly. Instead, we use an integral to express the same idea:
+
+\[
+\mu_{\dataspace}(B)
+=
+\int_{\modelspace}
+L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+\vspace{2mm}
+
+In the discrete case, this integral is simply the sum we wrote above. In more general settings, the same symbol is used to represent the corresponding ``weighted combination'' over all possible configurations.
+
+\subsubsection{What have we constructed?}
+
+We have now constructed a probability measure \(\mu_{\dataspace}\) on the data space. This measure answers the question:
+
+\begin{quote}
+``Given everything we currently believe, what observations do we expect to see?''
+\end{quote}
+
+It combines two pieces of information:
+
+\begin{itemize}
+    \item our belief about which configurations are likely,
+    \item our understanding of how each configuration produces observations.
+\end{itemize}
+
+This measure is sometimes called the \emph{predictive distribution}, because it describes what we expect to observe before any data is collected.
+
+
+\subsection{Combining model and data: the joint description}
+
+So far, we have constructed two key pieces of information:
+
+\begin{itemize}
+    \item a probability measure \(\mu_{\modelspace}^0\) describing our belief about the switch configuration,
+    \item a kernel \(L(m,\cdot)\) describing how each configuration produces observable data.
+\end{itemize}
+
+These two objects allow us to answer questions about the model and about the data separately. However, they are closely connected: the data is generated from the model.
+
+This suggests a natural question:
+
+\begin{quote}
+Can we describe the entire experiment --- both the hidden switch configuration and the observed report --- within a single probabilistic framework?
+\end{quote}
+
+The answer is yes.
+
+\vspace{2mm}
+
+\subsubsection{The joint system}
+
+Instead of thinking about the model and the data separately, we now consider them together.
+
+A complete description of the experiment consists of:
+\begin{itemize}
+    \item a switch configuration \(m \in \modelspace\),
+    \item a reported value \(d \in \dataspace\).
+\end{itemize}
+
+So the set of all possible situations is
+\[
+\modelspace \times \dataspace.
+\]
+
+We now want to assign probabilities to events in this larger space.
+
+\vspace{2mm}
+
+\subsubsection{Building the joint measure}
+
+Let us start with a general question:
+
+\begin{quote}
+What is the probability that the switch configuration lies in an event \(A \subseteq \modelspace\), and that the report lies in an event \(B \subseteq \dataspace\)?
+\end{quote}
+
+To answer this, we reason as follows.
+
+\vspace{2mm}
+
+Suppose first that the switch configuration were fixed at some value \(m \in \modelspace\). In that case, the probability that the report lies in \(B\) is given by
+\[
+L(m,B).
+\]
+
+However, the true configuration is not known. Instead, it is described by our prior measure \(\mu_{\modelspace}^0\). Therefore, we must take into account all possible configurations in the event \(A\), weighting each by how plausible it is.
+
+\vspace{2mm}
+
+This leads us to combine the contributions of all configurations \(m \in A\) by integration:
+\[
+\mathbb P(\text{configuration lies in } A \text{ and report lies in } B)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+\vspace{2mm}
+
+This expression defines a function on pairs of events \(A \subseteq \modelspace\) and \(B \subseteq \dataspace\). We use it to introduce a new object:
+
+\[
+J(A \times B)
+:=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+\vspace{2mm}
+
+The function \(J\) is called the \emph{joint measure}. It assigns a probability to every event involving both the model and the data.
+
+\subsubsection{What does the joint measure mean?}
+
+The quantity
+\[
+J(A \times B)
+\]
+answers the question:
+
+\begin{quote}
+``What is the probability that the switches are in a configuration in \(A\), and that the report lies in \(B\)?''
+\end{quote}
+
+So the joint measure describes the probability of all possible combinations of hidden states and observations.
+
+\vspace{2mm}
+
+\subsubsection{Marginals: looking at one part at a time}
+
+Once we have a joint measure, we can recover the probabilities of the model and the data separately.
+
+This is done by \emph{marginalizing}, which simply means summing (or integrating) over the part we are not interested in.
+
+\vspace{2mm}
+
+\paragraph{Model marginal.}
+
+If we ignore the data and only look at the model, we obtain:
+\[
+J(A \times \dataspace)
+=
+\int_A L(m,\dataspace)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+Since \(L(m,\dataspace)=1\), this simplifies to:
+\[
+J(A \times \dataspace)
+=
+\mu_{\modelspace}^0(A).
+\]
+
+So the joint measure recovers the prior measure on the model space.
+
+\vspace{2mm}
+
+\paragraph{Data marginal.}
+
+If we ignore the model and only look at the data, we obtain:
+\[
+J(\modelspace \times B)
+=
+\int_{\modelspace} L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+This is exactly the probability measure on the data space that we constructed earlier.
+
+\vspace{2mm}
+
+\subsubsection{Why the joint measure is important}
+
+The joint measure combines everything we know about the system:
+
+\begin{itemize}
+    \item our belief about the model,
+    \item our understanding of how the model generates data.
+\end{itemize}
+
+It describes all possible situations and how likely they are.
+
+\vspace{2mm}
+
+The key point is:
+
+\begin{quote}
+Once the joint measure is known, all other quantities --- including what we expect to observe and how we should update our beliefs after an observation --- can be derived from it.
+\end{quote}
+
+In particular, the rule that tells us how to update our belief about the model after observing data is already hidden inside the joint measure. Our next goal will be to extract this rule.
+
+
+\subsection{Updating our belief: towards the posterior kernel}
+
+We now return to the central question of the game.
+
+\vspace{2mm}
+
+The reporter performs the experiment and announces a value
+\[
+d_{\mathrm{obs}} \in \dataspace.
+\]
+
+At that moment, we must answer:
+
+\begin{quote}
+Given that we have observed \(d_{\mathrm{obs}}\), what can we say about the true switch configuration?
+\end{quote}
+
+\vspace{2mm}
+
+In the previous section, we constructed a joint measure \(J\) that assigns probabilities to events involving both the model and the data. This object contains all the information we have about the system.
+
+However, what we need now is different.
+
+\vspace{2mm}
+
+We are looking for a rule that takes an observation \(d \in \dataspace\) and produces a probability measure on the model space. In other words, we seek a mapping
+\[
+d \;\longmapsto\; \kappa(d,\cdot),
+\]
+where \(\kappa(d,\cdot)\) is a probability measure on \((\modelspace, \Sigma_{\modelspace})\).
+
+For each event \(A \subseteq \modelspace\), the quantity
+\[
+\kappa(d,A)
+\]
+should represent:
+
+\begin{quote}
+``the probability that the switch configuration lies in \(A\), given that the report is \(d\).''
+\end{quote}
+
+\vspace{2mm}
+
+This object plays a role similar to the likelihood, but in the opposite direction. While the likelihood tells us how the data depends on the model, this new object should tell us how the model depends on the data.
+
+\vspace{2mm}
+
+At this point, however, we do not yet know how to construct such a mapping.
+
+\vspace{2mm}
+
+\subsubsection{A guiding principle}
+
+We do know one thing: whatever this mapping is, it must be consistent with the joint description \(J\).
+
+To make this precise, let us consider events in both the model space and the data space.
+
+\vspace{2mm}
+
+Let \(A \in \Sigma_{\modelspace}\) be an event in the model space, and let \(B \in \Sigma_{\dataspace}\) be an event in the data space.
+
+We are interested in the probability of the combined event:
+\begin{quote}
+the switch configuration lies in \(A\), and the report lies in \(B\).
+\end{quote}
+
+\vspace{2mm}
+
+On one hand, we already know how to compute this using the joint measure:
+\[
+J(A \times B)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+\vspace{2mm}
+
+On the other hand, suppose we had a mapping \(\kappa(d,\cdot)\) that assigns to each observation \(d\) a probability measure on the model space.
+
+Then we could reason differently.
+
+We could first consider the probability that the report lies in \(B\), and then, for each possible observation \(d \in B\), consider the probability that the configuration lies in \(A\), given that the report takes that value.
+
+This leads to the expression:
+\[
+J(A \times B)
+=
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd).
+\]
+
+\vspace{2mm}
+
+Since both expressions describe the same probability, they must be equal. Therefore, any acceptable mapping \(\kappa\) must satisfy:
+\[
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm),
+\qquad
+\text{for all } A \in \Sigma_{\modelspace},\ B \in \Sigma_{\dataspace}.
+\]
+
+\vspace{2mm}
+
+This identity expresses the consistency requirement between the joint description and the rule we are trying to construct.
+
+
+\subsubsection{The core identity: where Bayesian updating really lives}
+
+Let us pause and examine the identity
+\[
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm),
+\qquad
+\text{for all } A \in \Sigma_{\modelspace},\ B \in \Sigma_{\dataspace}.
+\]
+
+\vspace{2mm}
+
+This relation is the mathematical core of Bayesian updating.
+
+To make this more transparent, we rewrite it with the main objects highlighted:
+\[
+\int_B
+\underbrace{\kappa(d,A)}_{\text{posterior kernel}}
+\,
+\underbrace{\mu_{\dataspace}(\mathrm dd)}_{\text{predictive data measure}}
+=
+\int_A
+\underbrace{L(m,B)}_{\text{likelihood kernel}}
+\,
+\underbrace{\mu_{\modelspace}^0(\mathrm dm)}_{\text{prior measure}}.
+\]
+
+\vspace{2mm}
+
+All the familiar ingredients are already present:
+\begin{itemize}
+    \item the prior,
+    \item the likelihood,
+    \item the predictive distribution,
+    \item and the posterior kernel.
+\end{itemize}
+
+But the crucial point is this:
+
+\begin{quote}
+This identity must hold for \emph{all} events \(A\) and \(B\).
+\end{quote}
+
+\vspace{2mm}
+
+\paragraph{Why this determines the posterior kernel.}
+
+Because this equality holds for every possible choice of \(A\) and \(B\), it imposes very strong constraints on the mapping \(\kappa(d,\cdot)\).
+
+In fact, under mild regularity assumptions (for example, when working on so-called Polish spaces), this condition determines the kernel \(\kappa\) uniquely, up to sets of data with zero probability.
+
+\vspace{2mm}
+
+So although \(\kappa\) was introduced as an unknown object, it is in fact completely determined by the prior measure and the likelihood kernel.
+
+\vspace{2mm}
+
+\paragraph{A surprising fact.}
+
+At this point, it is important to notice something subtle:
+
+\begin{quote}
+We have not used any actual observation yet.
+\end{quote}
+
+Everything we have done so far is based purely on prior information:
+\begin{itemize}
+    \item what we believe about the model,
+    \item how the model produces data.
+\end{itemize}
+
+From this alone, we have already determined the entire mapping
+\[
+d \;\longmapsto\; \kappa(d,\cdot).
+\]
+
+\vspace{2mm}
+
+The role of the experiment is only to provide a specific value \(d_{\mathrm{obs}}\), at which this mapping is evaluated.
+
+\vspace{2mm}
+
+\paragraph{A common misconception.}
+
+It is tempting to think of conditioning in the following way:
+
+\begin{quote}
+``We observe a value \(d\), and then restrict ourselves to the part of the joint space where the data equals \(d\).''
+\end{quote}
+
+However, this idea is misleading.
+
+In many important cases, the event \(\{d\}\) has probability zero, so this kind of conditioning is not well-defined.
+
+\vspace{2mm}
+
+The correct way to think about conditioning is different.
+
+\begin{quote}
+We do not condition on individual points, but on collections of events — that is, on a \(\sigma\)--algebra.
+\end{quote}
+
+This is precisely what the identity above encodes: it does not refer to a single observation, but requires consistency across \emph{all events} \(A\) and \(B\) (all the elements of BOTH sigma algebras!).
+
+\vspace{2mm}
+
+\paragraph{What is really happening.}
+
+The identity tells us:
+
+\begin{quote}
+The joint description of the system can be decomposed in two consistent ways:
+\begin{itemize}
+    \item first choose the model, then generate the data,
+    \item or first consider the data, and then describe the model.
+\end{itemize}
+\end{quote}
+
+The posterior kernel \(\kappa\) is the unique object that makes these two viewpoints agree.
+
+\vspace{2mm}
+
+
+
+\subsubsection{Solving the rule in the concrete discrete case}
+
+We now return to our concrete example, where the data space is
+\[
+\dataspace=\{0,1\}.
+\]
+In this finite setting, the consistency identity becomes especially transparent.
+
+For each event \(A \subseteq \modelspace\) and each event \(B \subseteq \dataspace\), we require
+\[
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+Since \(\dataspace=\{0,1\}\), it is enough to look at the two basic data events \(B=\{0\}\) and \(B=\{1\}\). In particular, for each \(d \in \{0,1\}\), the identity becomes
+\[
+\kappa(d,A)\,\mu_{\dataspace}(\{d\})
+=
+\int_A L(m,\{d\})\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+Now we use the fact that the predictive data measure was already computed from the prior and the reporter model:
+\[
+\mu_{\dataspace}(\{d\})
+=
+\int_{\modelspace} L(m,\{d\})\,\mu_{\modelspace}^0(\mathrm dm).
+\]
+
+Therefore,
+\[
+\kappa(d,A)
+=
+\frac{\displaystyle \int_A L(m,\{d\})\,\mu_{\modelspace}^0(\mathrm dm)}
+{\displaystyle \int_{\modelspace} L(m,\{d\})\,\mu_{\modelspace}^0(\mathrm dm)}.
+\]
+
+This is the posterior kernel in our finite example. It tells us, for each possible report \(d\), how to assign probabilities to events in the model space.
+
+\vspace{2mm}
+
+Let us now plug in the concrete numbers from our game:
+\[
+\mu_{\modelspace}^0(\{00\})=0.4,\qquad
+\mu_{\modelspace}^0(\{01\})=0.1,\qquad
+\mu_{\modelspace}^0(\{10\})=0.1,\qquad
+\mu_{\modelspace}^0(\{11\})=0.4,
+\]
+and the reporter is truthful with probability \(p_{\mathrm{trust}}=0.8\).
+
+If the reporter says \(0\), then
+\[
+L(00,\{0\})=0.2,\qquad
+L(01,\{0\})=0.8,\qquad
+L(10,\{0\})=0.8,\qquad
+L(11,\{0\})=0.2.
+\]
+So the total probability of the event \(\{0\}\) is
+\[
+\mu_{\dataspace}(\{0\})
+=
+0.4\cdot 0.2
++
+0.1\cdot 0.8
++
+0.1\cdot 0.8
++
+0.4\cdot 0.2
+=
+0.32.
+\]
+
+Hence the posterior kernel at \(0\) is
+\[
+\kappa(0,\{00\})
+=
+\frac{0.4\cdot 0.2}{0.32}
+=
+0.25,
+\]
+\[
+\kappa(0,\{01\})
+=
+\frac{0.1\cdot 0.8}{0.32}
+=
+0.25,
+\]
+\[
+\kappa(0,\{10\})
+=
+\frac{0.1\cdot 0.8}{0.32}
+=
+0.25,
+\]
+\[
+\kappa(0,\{11\})
+=
+\frac{0.4\cdot 0.2}{0.32}
+=
+0.25.
+\]
+
+So after observing the report \(0\), all four configurations are equally likely.
+
+\vspace{2mm}
+
+If instead the reporter says \(1\), then the same formula gives
+\[
+\kappa(1,\{00\})
+=
+\frac{0.4\cdot 0.8}{0.68}
+\approx 0.4706,
+\qquad
+\kappa(1,\{01\})
+=
+\frac{0.1\cdot 0.2}{0.68}
+\approx 0.0294,
+\]
+\[
+\kappa(1,\{10\})
+=
+\frac{0.1\cdot 0.2}{0.68}
+\approx 0.0294,
+\qquad
+\kappa(1,\{11\})
+=
+\frac{0.4\cdot 0.8}{0.68}
+\approx 0.4706.
+\]
+
+Thus the rule \(\kappa(d,\cdot)\) is completely determined before any observation is made, and once the actual report \(d_{\mathrm{obs}}\) arrives, the posterior measure is simply
+\[
+\mu_{\modelspace}^{\mathrm{post}}(\cdot)=\kappa(d_{\mathrm{obs}},\cdot).
+\]
+
+In this way, the concrete game has been solved: the prior measure and the reporter model determine the posterior kernel, and the observed report selects the corresponding posterior measure.
+
+\subsection{The continuous case: Bayes in density form}
+
+We now repeat the same reasoning in a continuous setting.
+
+The idea is exactly the same as before:
+we start from the core consistency identity
+\[
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd)
+=
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm),
+\qquad
+A \in \Sigma_{\modelspace},\ B \in \Sigma_{\dataspace},
+\]
+and then we assume that the measures involved admit Radon--Nikodym derivatives with respect to suitable reference measures.
+
+\vspace{2mm}
+
+\subsubsection{Reference measures and densities}
+
+Assume that there are reference measures \(\lambda_{\modelspace}\) on \(\modelspace\) and \(\lambda_{\dataspace}\) on \(\dataspace\), and that the prior and the likelihood kernel can be written in density form as
+\[
+\mu_{\modelspace}^0(\mathrm dm)
+=
+\pi(m)\,\lambda_{\modelspace}(\mathrm dm),
+\qquad
+L(m,\mathrm dd)
+=
+\ell(d\mid m)\,\lambda_{\dataspace}(\mathrm dd).
+\]
+
+Here:
+\begin{itemize}
+    \item \(\pi(m)\) is the prior density on the model space,
+    \item \(\ell(d\mid m)\) is the density of the data distribution given the model \(m\).
+\end{itemize}
+
+In the same spirit, we look for a posterior kernel of the form
+\[
+\kappa(d,\mathrm dm)
+=
+p(m\mid d)\,\lambda_{\modelspace}(\mathrm dm),
+\]
+where \(p(m\mid d)\) is the posterior density on the model space, given the observation \(d\).
+
+\vspace{2mm}
+
+\subsubsection{The joint density}
+
+Using the prior density and the likelihood density, the joint measure on \(\modelspace \times \dataspace\) has the density
+\[
+j(m,d)
+=
+\ell(d\mid m)\,\pi(m)
+\]
+with respect to the product reference measure
+\[
+\lambda_{\modelspace}\otimes \lambda_{\dataspace}.
+\]
+
+This means that the probability of a model-data pair is obtained by multiplying:
+\begin{itemize}
+    \item how plausible the model \(m\) is a priori,
+    \item how likely the data \(d\) is if \(m\) were true.
+\end{itemize}
+
+\vspace{2mm}
+
+\subsubsection{The predictive data density}
+
+If we integrate out the model variable, we obtain the density of the data measure:
+\[
+\mu_{\dataspace}(\mathrm dd)
+=
+p_{\dataspace}(d)\,\lambda_{\dataspace}(\mathrm dd),
+\]
+where
+\[
+p_{\dataspace}(d)
+=
+\int_{\modelspace} \ell(d\mid m)\,\pi(m)\,\lambda_{\modelspace}(\mathrm dm).
+\]
+
+This is the continuous analogue of summing over all possible configurations in the discrete case.
+
+\vspace{2mm}
+
+\subsubsection{The posterior density}
+
+Now we return to the consistency identity and insert the density forms.
+
+The left-hand side becomes
+\[
+\int_B \kappa(d,A)\,\mu_{\dataspace}(\mathrm dd)
+=
+\int_B \left(\int_A p(m\mid d)\,\lambda_{\modelspace}(\mathrm dm)\right)
+p_{\dataspace}(d)\,\lambda_{\dataspace}(\mathrm dd).
+\]
+
+The right-hand side becomes
+\[
+\int_A L(m,B)\,\mu_{\modelspace}^0(\mathrm dm)
+=
+\int_A \left(\int_B \ell(d\mid m)\,\lambda_{\dataspace}(\mathrm dd)\right)
+\pi(m)\,\lambda_{\modelspace}(\mathrm dm).
+\]
+
+Since these expressions must agree for all events \(A\) and \(B\), the corresponding densities must match almost everywhere. This gives
+\[
+p(m\mid d)\,p_{\dataspace}(d)
+=
+\ell(d\mid m)\,\pi(m).
+\]
+
+Therefore, whenever \(p_{\dataspace}(d)>0\), we obtain the familiar Bayesian formula
+\[
+p(m\mid d)
+=
+\frac{\ell(d\mid m)\,\pi(m)}
+{\displaystyle \int_{\modelspace} \ell(d\mid m')\,\pi(m')\,\lambda_{\modelspace}(\mathrm dm')}.
+\]
+
+\vspace{2mm}
+
+\subsubsection{What this means}
+
+This is the continuous version of the update rule we derived in the discrete case.
+
+The posterior density is obtained by:
+\begin{itemize}
+    \item multiplying the prior density by the likelihood density,
+    \item then renormalizing so that the total probability is \(1\).
+\end{itemize}
+
+So the familiar density form of Bayes' rule is nothing more than the continuous version of the same consistency principle we used before:
+\[
+\text{joint probability} = \text{prior} \times \text{likelihood}
+\]
+and
+\[
+\text{posterior} = \frac{\text{prior} \times \text{likelihood}}{\text{predictive data density}}.
+\]
+
+
+\subsection{A natural alternative viewpoint: shifting the noise}
+
+At this point, one might raise the following objection.
+
+\vspace{2mm}
+
+In many situations, the data has already been observed. Suppose we hear a report \(d_{\mathrm{obs}}\), and we understand the behaviour of the noise (the unreliable reporter). Then we can describe what the \emph{true} underlying data might have been.
+
+For example, if the reporter says \(1\), we know that the true bulb state is likely to be \(1\), but could also be \(0\), depending on how often the reporter lies.
+
+\vspace{2mm}
+
+In other words, the observed value \(d_{\mathrm{obs}}\) together with the noise model allows us to construct a probability measure on the data space, describing what the true value of the bulb might be.
+
+One might therefore argue:
+
+\begin{quote}
+``This distribution already contains all the information we have about the data. Should we not use it directly when reasoning about the model?''
+\end{quote}
+
+\vspace{2mm}
+
+This is a very natural idea.
+
+It suggests the following approach:
+
+\begin{itemize}
+    \item first construct a probability measure on the data space, representing what the true data might be,
+    \item then transfer this uncertainty back to the model space using the forward map \(G\).
+\end{itemize}
+
+This corresponds to a kind of ``pullback'' of uncertainty from the data space to the model space.
+
+\vspace{2mm}
+
+\subsubsection{What this approach captures}
+
+This method has a clear interpretation.
+
+It answers the question:
+
+\begin{quote}
+``Given what we have observed, what are the possible true data values, and which models are compatible with them?''
+\end{quote}
+
+In particular, it naturally reflects the non-uniqueness of the inverse problem: several models may correspond to the same underlying data.
+
+\vspace{2mm}
+
+\subsubsection{Where it differs from Bayesian updating}
+
+However, this approach does not fully take into account all the information available in the problem.
+
+The key difference is the following:
+
+\begin{quote}
+The pullback approach starts from a distribution on the data space and transfers it to the model space, whereas the Bayesian approach starts from a joint description of model and data and derives the update rule from it.
+\end{quote}
+
+In the pullback approach, the distribution over possible true data values is treated as the primary object. In contrast, in the Bayesian framework, this distribution is itself derived from the prior and the likelihood through the joint measure.
+
+\vspace{2mm}
+
+As a consequence, the pullback method does not encode how likely different models were \emph{before} the observation. It focuses only on consistency with the observed data, rather than combining prior plausibility with data compatibility.
+
+\vspace{2mm}
+
+\subsubsection{Why this matters}
+
+The Bayesian approach answers a different question:
+
+\begin{quote}
+``Given everything we believed before, and given what we have observed, how should we update our belief about the model?''
+\end{quote}
+
+This requires combining:
+\begin{itemize}
+    \item prior belief about the model,
+    \item and the likelihood of the observation under each model.
+\end{itemize}
+
+This combination is encoded in the joint measure, and the posterior kernel is obtained by enforcing consistency with that joint description.
+
+\vspace{2mm}
+
+\subsubsection{Summary}
+
+Both viewpoints start from the same ingredients --- the observed data and the noise model --- but they organize the information differently.
+
+\begin{itemize}
+    \item The pullback approach constructs uncertainty on the data space and transfers it to the model space.
+    \item The Bayesian approach constructs a joint model of the entire system and derives the update rule from it.
+\end{itemize}
+
+The difference between these approaches will become more apparent when we study their behaviour in more complex settings.
+
+
+
+
+\end{document}
