@@ -50,7 +50,7 @@ def main() -> None:
     ax.plot(x, m_bar.evaluate(x), color=PALETTE["true"], lw=2.6,
             label=r"true model $\bar{m}(z)$")
     ax.plot(x, mean_func.evaluate(x), color=PALETTE["mako_dark"], lw=2.2,
-            label=rf"posterior mean $\bar{{m}}_N^{{\tilde{{d}}}}(z)$ ($N={N_CELLS}$)")
+            label=rf"posterior mean $\tilde{{m}}_N^{{\tilde{{d}}}}(z)$ ($N={N_CELLS}$)")
     ax.set_title("Naive Bayesian posterior mean: looks fine")
     ax.set_xlabel(r"depth $z$")
     ax.set_ylabel("model value")

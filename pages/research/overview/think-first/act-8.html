@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act VIII: Return to the Toy Problem — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act VIII: The Verdict — Think First, Discretize Later — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
     <link rel="stylesheet" href="../../../../css/concept-popup.css">
@@ -58,8 +58,8 @@
         <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
-                <h1>Act VIII: Return to the Toy Problem</h1>
-                <p>Solving the opening example again &mdash; this time with the order corrected.</p>
+                <h1>Act VIII: The Verdict</h1>
+                <p>Same problem, two workflows &mdash; the full story, side by side.</p>
                 <p class="tfdl-supp">
                     Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
                 </p>
@@ -74,8 +74,8 @@
                 <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
                 <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
                 <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
-                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
-                <a class="act-chip is-active" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> The Repair</a>
+                <a class="act-chip is-active" href="act-8.html"><span class="act-chip-num">8</span> The Verdict</a>
                 <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -84,350 +84,333 @@
             <div class="container">
 
                 <div class="tfdl-chapter">
-                    <h3>Re-solving the Opening Example</h3>
-                </div>
-
-                <div class="tfdl-section-heading">
-                    <h4>The original naive workflow</h4>
+                    <h3>The Verdict: Same Problem, Two Workflows</h3>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        We now return to the toy inverse problem from the beginning. The data equation
-                        was \(\obs = G m + \noise\), where the unknown model was a function on
-                        \(\Omega=[0,L]\), the data lived in \(\D=\R^K\), and the observational noise was
-                        Gaussian: \(\noise\sim\N(0,\Cd)\).
+                        Act VII said: <em>the cure works.</em> Act VIII says:
+                        <em>now compare the whole story.</em>
                     </p>
                     <p>
-                        In Act I, we discretized immediately. The result seemed reasonable at first: the
-                        posterior mean looked acceptable. But Act II revealed the trouble. When we
-                        sampled the posterior, the uncertainty behaved badly under refinement.
-                    </p>
-                    <p>
-                        The purpose of this final act is to solve the same problem again, but with the
-                        order corrected.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Basis first</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The naive workflow began by choosing a mesh and hat functions
-                        \(\{\phi_1,\ldots,\phi_N\}\). The model was approximated by
-                        \(m_N(x) = \sum_{j=1}^N [\mathbf{u}]_j\phi_j(x)\). This step is not wrong by itself. The
-                        problem was that the basis became the starting point of the formulation. The
-                        unknown was no longer treated as a function \(m\in\M\). It was treated as a
-                        coefficient vector \(\mathbf{u}\in\R^N\).
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-warning">
-                    <span class="tfdl-callout-label">Warning</span>
-                    <p>
-                        A basis should represent the unknown after the model space is chosen. It should
-                        not choose the model space by stealth.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Diagonal covariance</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        After introducing coefficients, the naive workflow placed the prior
-                        \(\mathbf{u}\sim\N(0,\sigma^2 \mathbf{I}_N)\) directly on the coefficient vector. For
-                        fixed \(N\), this is a valid finite-dimensional Gaussian distribution. But as
-                        \(N\) changes, the prior changes too. These are not automatically approximations
-                        of a single probability measure on functions.
-                    </p>
-                    <p>
-                        The trace of the prior covariance is \(\Tr(\sigma^2 \mathbf{I}_N) = \sigma^2 N\), so
-                        \(\Tr(\sigma^2 \mathbf{I}_N)\to\infty\) as \(N\to\infty\). This was the hidden reservoir
-                        of instability. Every mesh refinement introduced new independent variance.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Euclidean transpose</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The naive workflow also used the transpose \(\Gb^{\T}\) as though it were
-                        automatically the adjoint. But the adjoint is defined by
-                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\). With non-orthonormal hat
-                        functions, the discrete adjoint is
-                        \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\), not simply \(\Gb^{\T}\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Unstable refinement</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        For \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), the posterior covariance satisfies
-                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K)\), because the data can constrain at most \(K\)
-                        independent directions. As \(N\to\infty\) with \(K\) fixed,
-                        \(\Tr(\mathbf{C}_N^{\obs})\to\infty\). The data informed some directions, but the number of
-                        uninformed directions grew with the mesh. Each new direction carried variance of
-                        size \(\sigma^2\).
-                    </p>
-                    <p>
-                        The posterior mean looked fine because means can hide variance. The samples
-                        showed the truth.
+                        We arrange the exhibits side by side. Same domain, same
+                        kernels, same data, same hat basis, same forward matrix.
+                        The only difference is the order of operations. The
+                        mathematics does the rest.
                     </p>
                 </div>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
-                        The naive workflow did not approximate one continuous inverse problem. It
-                        created a new finite-dimensional Bayesian problem at every resolution.
+                        This act introduces almost no new mathematics. It is a
+                        courtroom verdict: the evidence is already on the table.
                     </p>
                 </div>
+
+                <!-- F8a: Same problem, two workflows -->
 
                 <div class="tfdl-section-heading">
-                    <h4>The corrected workflow</h4>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>We now rebuild the same example in the proper order.</p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Choose the model space</h5>
+                    <h4>F8a &mdash; Same problem, two workflows</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        First choose the model space. For example, \(\M=L^2(\Omega)\) if we want
-                        square-integrable models, or \(\M=H^s(\Omega)\) if we want to encode a
-                        particular degree of Sobolev regularity. The important point is that the
-                        unknown is now a function-space object: \(m\in\M\).
+                        The naive workflow starts with the mesh and invents the
+                        prior at each resolution. The corrected workflow starts
+                        with the function space and discretizes last. The diagram
+                        below shows the two pipelines in parallel.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Choose the data space</h5>
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowF8a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(52,122,162,0.5)"/>
+                            </marker>
+                            <marker id="arrowF8aR" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(239,111,108,0.5)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Left column: Naive workflow -->
+                        <rect x="10" y="10" width="340" height="360" rx="8" fill="rgba(239,111,108,0.05)" stroke="rgba(239,111,108,0.2)" stroke-width="1"/>
+                        <text x="180" y="32" text-anchor="middle" fill="rgba(239,111,108,0.8)" font-size="13" font-weight="700">Naive workflow</text>
+                        <text x="180" y="48" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">discretize first, think later</text>
+
+                        <rect x="30" y="60" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
+                        <text x="180" y="80" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">mesh + basis (hat functions)</text>
+                        <line x1="180" y1="95" x2="180" y2="115" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
+
+                        <rect x="30" y="120" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
+                        <text x="180" y="140" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">coefficient vector u in R^N</text>
+                        <line x1="180" y1="155" x2="180" y2="175" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
+
+                        <rect x="30" y="180" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
+                        <text x="180" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">prior: C_N = σ²I_N (invented)</text>
+                        <line x1="180" y1="215" x2="180" y2="235" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
+
+                        <rect x="30" y="240" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
+                        <text x="180" y="260" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">adjoint: G^T (transpose)</text>
+                        <line x1="180" y1="275" x2="180" y2="295" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
+
+                        <rect x="30" y="300" width="300" height="30" rx="5" fill="rgba(239,111,108,0.15)" stroke="rgba(239,111,108,0.35)"/>
+                        <text x="180" y="320" text-anchor="middle" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">posterior: Tr(C_N^y) → ∞</text>
+
+                        <text x="180" y="355" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">refinement changes the problem</text>
+
+                        <!-- Right column: Corrected workflow -->
+                        <rect x="370" y="10" width="340" height="360" rx="8" fill="rgba(109,210,172,0.05)" stroke="rgba(109,210,172,0.2)" stroke-width="1"/>
+                        <text x="540" y="32" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="13" font-weight="700">Corrected workflow</text>
+                        <text x="540" y="48" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="10">think first, discretize later</text>
+
+                        <rect x="390" y="60" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
+                        <text x="540" y="80" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">model space M, data space D</text>
+                        <line x1="540" y1="95" x2="540" y2="115" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
+
+                        <rect x="390" y="120" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
+                        <text x="540" y="140" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">forward map G: M → D</text>
+                        <line x1="540" y1="155" x2="540" y2="175" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
+
+                        <rect x="390" y="180" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
+                        <text x="540" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">prior: C₀ = α(κ²I−Δ)⁻ˢ (operator)</text>
+                        <line x1="540" y1="215" x2="540" y2="235" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
+
+                        <rect x="390" y="240" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
+                        <text x="540" y="260" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">adjoint: M⁻¹G^T W_D (geometry-aware)</text>
+                        <line x1="540" y1="275" x2="540" y2="295" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
+
+                        <rect x="390" y="300" width="300" height="30" rx="5" fill="rgba(109,210,172,0.15)" stroke="rgba(109,210,172,0.35)"/>
+                        <text x="540" y="320" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">posterior: Tr(C^y) ≤ Tr(C₀) &lt; ∞</text>
+
+                        <text x="540" y="355" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="9">refinement approximates the same problem</text>
+
+                        <!-- VS divider -->
+                        <text x="360" y="195" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="16" font-weight="700">vs</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F8a &mdash; Same problem, two workflows.</strong>
+                        Left: the naive pipeline starts with the mesh, invents a
+                        diagonal prior, uses the transpose as adjoint, and produces
+                        a posterior whose trace diverges. Right: the corrected
+                        pipeline starts with function spaces, defines the forward
+                        map and prior operator, uses the geometry-aware adjoint,
+                        and produces a posterior with bounded trace. The same
+                        data and basis enter both pipelines; the order of
+                        operations is the only difference.
+                    </figcaption>
+                </figure>
+
+                <!-- F8b: Naive vs corrected posterior samples -->
+
+                <div class="tfdl-section-heading">
+                    <h4>F8b &mdash; Naive versus corrected posterior samples</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The data space is \(\D=\R^K\). We choose an inner product on \(\D\). In the
-                        simplest case, \(\inner{a}{b}_{\D}=a^{\top}b\). More generally,
-                        \(\inner{a}{b}_{\D}=a^{\top} \Wb_D b\). The natural data misfit is
-                        \(\norm{\obs-G m}_{\Cd^{-1}}^2 = (\obs-G m)^{\top} \Cd^{-1}(\obs-G m)\).
+                        Same \(N = 30\) hats, same \(K = 20\) data, same true model.
+                        The posterior means may look superficially similar. The
+                        posterior <em>measures</em> are radically different.
+                    </p>
+                    <p>
+                        On the left, the naive posterior samples oscillate wildly
+                        &mdash; the cloud is uncontrolled. On the right, the
+                        corrected posterior samples stay close to the mean
+                        &mdash; the cloud is bounded by the prior.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Choose the forward operator</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        Next define the forward map: \(G:\M\to\D\). For the toy problem,
-                        \([G m]_i = \int_\Omega K_i(x)\,m(x)\,dx\). This map is chosen before
-                        discretization. The adjoint is also defined at the function-space level:
-                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\). Only after bases are chosen
-                        do we obtain the discrete representation
-                        \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Choose the prior measure</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        Now choose the prior as a probability measure on \(\M\): \(m\sim\prior\). For a
-                        Gaussian prior, \(\prior=\N(m_0,C_0)\), where \(C_0:\M\to\M\) is a covariance
-                        operator satisfying \(\Tr(C_0)<\infty\).
-                    </p>
-                    <p>
-                        A useful choice is a covariance built from a differential operator:
-                        \(C_0 = \alpha(\kappa^2 I-\Delta)^{-s}\). Here \(\alpha>0\) controls the overall
-                        variance scale, \(\kappa>0\) controls the correlation length scale, \(s>0\)
-                        controls smoothness, and the boundary conditions for \(\Delta\) encode boundary
-                        behaviour.
-                    </p>
-                    <p>
-                        The trace condition \(\sum_{j=1}^{\infty}\lambda_j<\infty\) ensures that the
-                        prior has finite expected energy:
-                        \(\E\norm{m-m_0}_{\M}^2 = \Tr(C_0) < \infty\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Only then discretize</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        Only now do we choose a mesh and basis:
-                        \(\M_N = \operatorname{span}\{\phi_1,\ldots,\phi_N\} \subset \M\). The
-                        coefficients \(\mathbf{u}\) are coordinates of a function in \(\M_N\). They are
-                        not the primary unknown. The primary unknown remains \(m\in\M\).
-                    </p>
-                    <p>
-                        We discretize each continuous object:
-                        \(G \leadsto \Gb\), \(G^{\adj} \leadsto G^{\adj}_{\mathrm{disc}}\),
-                        \(C_0 \leadsto \mathbf{C}_{0,N}\). The discrete prior covariance is obtained by
-                        discretizing \(C_0\), not by choosing an unrelated diagonal matrix. The discrete
-                        posterior then approximates the continuous posterior
-                        \(\post=\N(m^{\obs},C^{\obs})\).
-                    </p>
-                </div>
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig8b_naive_vs_corrected_samples.png"
+                         alt="Side-by-side naive vs corrected posterior samples">
+                    <figcaption>
+                        <strong>F8b &mdash; Same data, same basis, different posterior.</strong>
+                        Left: naive posterior &mdash; the mean tracks the truth but
+                        the samples fluctuate wildly, and the \(\pm 1\sigma\) band
+                        (coral) is broad. Right: corrected posterior &mdash; the
+                        mean is similar, but the samples are controlled and the
+                        \(\pm 1\sigma\) band (green) is narrow. The difference is
+                        not in the mean; it is in the <em>measure</em>.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
-                        In the corrected workflow, the mesh is a microscope. In the naive workflow, the
-                        mesh was the lawgiver.
+                        The posterior mean can hide the pathology. The posterior
+                        samples expose it. A plot of the mean alone is not a
+                        verification of correctness.
                     </p>
                 </div>
+
+                <!-- F8c: Naive vs corrected refinement grid -->
 
                 <div class="tfdl-section-heading">
-                    <h4>Comparison</h4>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Posterior means</h5>
+                    <h4>F8c &mdash; Naive versus corrected under refinement</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        In both workflows, we can compute a posterior mean. The difference is not merely
-                        cosmetic. In the corrected formula, \(C_0\) is a covariance operator on the
-                        model space, \(G^{\adj}\) is determined by the inner products, the discretized
-                        covariance approximates the continuous covariance, and the posterior mean
-                        approximates a function-space posterior mean.
+                        The most revealing experiment: refine the mesh and watch
+                        both posteriors react. The top row (naive) shows the
+                        uncertainty band inflating as \(N\) grows; the bottom row
+                        (corrected) shows the band settling to a fixed width.
                     </p>
                     <p>
-                        The two posterior means may look superficially similar in plots, especially at
-                        coarse resolution. But only the corrected mean belongs to a posterior measure
-                        with a coherent continuous limit.
+                        Same \(N\), same data, in each column. Two completely
+                        different behaviours. This is the clearest demonstration
+                        of why the order of operations matters.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Posterior samples</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        In the naive workflow, as \(N\) increases, new coefficient directions receive
-                        independent prior variance. Many of these directions are weakly constrained or
-                        invisible to the data. Consequently, samples can become increasingly oscillatory
-                        or unstable.
-                    </p>
-                    <p>
-                        In the corrected workflow, the continuous covariance controls how much variance
-                        is available in each direction. High-index directions receive decaying variance.
-                        Refinement adds controlled detail rather than uncontrolled noise.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Posterior variance</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The naive posterior covariance satisfies
-                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K)\), hence the total posterior variance diverges.
-                        In the corrected workflow, \(\Tr(C_0)<\infty\) and
-                        \(0\leq C^{\obs}\leq C_0\), so \(\Tr(C^{\obs})\leq\Tr(C_0)<\infty\).
-                    </p>
-                    <p>
-                        This is the heart of the cure: finite trace \(\Rightarrow\) controlled uncertainty.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Mesh refinement</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        In the naive workflow, mesh refinement changes the prior:
-                        \(\N(0,\sigma^2 \mathbf{I}_N)\) changes with \(N\). Each new basis function receives
-                        variance \(\sigma^2\), so refinement injects new uncertainty.
-                    </p>
-                    <p>
-                        In the corrected workflow, mesh refinement improves the approximation of fixed
-                        objects: \(\M_N\to\M\), \(\Gb_N\to G\), \(\mathbf{C}_{0,N}\to C_0\),
-                        \(\post_N\to\post\). The posterior at resolution \(N\) is no longer a separate
-                        model. It is an approximation to the same function-space posterior.
-                    </p>
-                </div>
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig8c_refinement_grid.png"
+                         alt="Naive vs corrected posterior under mesh refinement at N = 21, 35, 50">
+                    <figcaption>
+                        <strong>F8c &mdash; Posterior under mesh refinement.</strong>
+                        Columns share the same \(N\) (21, 35, 50). <em>Top row
+                        (naive):</em> the \(\pm 1\sigma\) band (coral) inflates as
+                        the mesh is refined &mdash; the maximum pointwise standard
+                        deviation climbs from \(8.8\) to \(13.8\). <em>Bottom row
+                        (corrected):</em> the band (green) barely changes &mdash;
+                        the maximum standard deviation stays near \(0.05\) &mdash;
+                        and the mean tracks the truth at every resolution. Same
+                        data, same basis; the only difference is the order of
+                        operations.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-intuition">
                     <span class="tfdl-callout-label">Intuition</span>
                     <p>
-                        In the naive workflow, refinement keeps building new rooms in the house and
-                        forgetting to install walls. In the corrected workflow, refinement sharpens the
-                        blueprint that was already there.
+                        In the naive workflow, refinement keeps building new rooms
+                        and forgetting to install walls. In the corrected workflow,
+                        refinement sharpens the blueprint that was already there.
                     </p>
                 </div>
 
+                <!-- F8d: Same basis, different meaning -->
+
                 <div class="tfdl-section-heading">
-                    <h4>What the example teaches</h4>
+                    <h4>F8d &mdash; Same basis, different meaning</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The toy example teaches a simple lesson, but not a small one. A discretization
-                        can play two very different roles. It can approximate a continuous inverse
-                        problem that has already been formulated, or it can quietly define a
-                        finite-dimensional problem in place of the continuous one.
+                        The hat functions are the same in both workflows. The forward
+                        matrix entries are the same. The data are the same. The
+                        posterior mean formula looks the same. But the mathematical
+                        meaning is different.
                     </p>
                     <p>
-                        The same hat functions may appear in both workflows. The same forward matrix
-                        entries may be computed. The same data may be used. The same posterior mean
-                        formula may seem to appear. But the mathematical meaning is different.
-                    </p>
-                    <p>
-                        The first workflow gives a sequence of finite-dimensional Bayesian problems. The
-                        second gives a sequence of approximations to one Bayesian inverse problem.
+                        In the naive workflow, the coefficients <em>are</em> the model.
+                        In the corrected workflow, the coefficients <em>represent</em>
+                        a function in \(\M\). The distinction sounds philosophical
+                        until you see the samples.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <table class="tfdl-translation-table">
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Naive workflow</th>
+                                <th>Corrected workflow</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Basis functions</td>
+                                <td>hat functions \(\phi_j\)</td>
+                                <td>hat functions \(\phi_j\) (same)</td>
+                            </tr>
+                            <tr>
+                                <td>Forward matrix</td>
+                                <td>\(G_{ij} = [G\phi_j]_i\)</td>
+                                <td>\(G_{ij} = [G\phi_j]_i\) (same)</td>
+                            </tr>
+                            <tr>
+                                <td>Data</td>
+                                <td>\(\obs = G\bar{m} + \noise\)</td>
+                                <td>\(\obs = G\bar{m} + \noise\) (same)</td>
+                            </tr>
+                            <tr>
+                                <td>Adjoint</td>
+                                <td>\(G^{\T}\) (transpose)</td>
+                                <td>\(M^{-1} G^{\T} W_D\) (geometry-aware)</td>
+                            </tr>
+                            <tr>
+                                <td>Prior covariance</td>
+                                <td>\(\sigma^2 I_N\) (invented per \(N\))</td>
+                                <td>\(C_{0,N} \approx C_0\) (from operator)</td>
+                            </tr>
+                            <tr>
+                                <td>Prior trace</td>
+                                <td>\(\sigma^2 N \to \infty\)</td>
+                                <td>\(\Tr(C_0) < \infty\)</td>
+                            </tr>
+                            <tr>
+                                <td>Posterior trace</td>
+                                <td>\(\to \infty\) (diverges)</td>
+                                <td>\(\leq \Tr(C_0) < \infty\) (bounded)</td>
+                            </tr>
+                            <tr>
+                                <td>Refinement</td>
+                                <td>changes the problem</td>
+                                <td>approximates the same problem</td>
+                            </tr>
+                            <tr>
+                                <td>Coefficients are</td>
+                                <td>the model</td>
+                                <td>a representation of the model</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <figcaption>
+                        <strong>F8d &mdash; Same basis, different meaning.</strong>
+                        The numerical basis, forward matrix, and data are identical
+                        in both workflows. The difference is in what the
+                        coefficients <em>mean</em>: free parameters in \(\R^N\)
+                        (naive) or coordinates of a function in \(\M\) (corrected).
+                        This single distinction changes the adjoint, the prior, the
+                        posterior trace, and the behaviour under refinement.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-checkpoint">
                     <span class="tfdl-callout-label">Checkpoint</span>
                     <p>
-                        The same numerical basis can either approximate a coherent function-space
-                        problem or define a sequence of unrelated finite-dimensional problems.
-                        The difference is the order in which the modelling choices are made.
+                        The same numerical basis can either approximate a coherent
+                        function-space problem or define a sequence of unrelated
+                        finite-dimensional problems. The difference is the order
+                        in which the modelling choices are made.
                     </p>
                 </div>
 
+                <!-- F8e: Final summary card -->
+
                 <div class="tfdl-section-heading">
-                    <h4>Final summary</h4>
+                    <h4>F8e &mdash; Final summary</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The opening mistake was not obvious because every finite-dimensional operation
-                        looked valid. The diagonal prior was a valid covariance matrix. The posterior
-                        mean was computable. The plot looked plausible.
+                        The opening mistake was not obvious because every
+                        finite-dimensional operation looked valid. The diagonal
+                        prior was a valid covariance matrix. The posterior mean
+                        was computable. The plot looked plausible.
                     </p>
                     <p>
-                        But the posterior samples exposed the missing structure. The prior did not have
-                        a continuous meaning. The covariance did not have bounded trace. The adjoint was
-                        treated as a transpose. Refinement changed the problem rather than improving the
-                        approximation.
+                        But the posterior samples exposed the missing structure.
+                        The prior did not have a continuous meaning. The covariance
+                        did not have bounded trace. The adjoint was treated as a
+                        transpose. Refinement changed the problem rather than
+                        improving the approximation.
                     </p>
-                    <p>
-                        The corrected formulation fixes the order:
-                    </p>
+                    <p>The corrected formulation fixes the order:</p>
                     <p style="text-align: center; font-size: 1.2em; font-weight: bold; padding: 1em 0;">
                         Think first, discretize later.
                     </p>
@@ -442,23 +425,63 @@
                         <li>Discretize the already-defined objects.</li>
                     </ol>
                     <p>
-                        Only then do the posterior mean, covariance, samples, and refinement behaviour
-                        belong to one coherent mathematical story.
+                        Only then do the posterior mean, covariance, samples, and
+                        refinement behaviour belong to one coherent mathematical
+                        story.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Summary card -->
+                        <rect x="10" y="10" width="700" height="180" rx="12" fill="rgba(109,210,172,0.06)" stroke="rgba(109,210,172,0.2)" stroke-width="1.5"/>
+
+                        <text x="360" y="40" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="14" font-weight="700">The verdict</text>
+
+                        <!-- Two columns -->
+                        <text x="180" y="70" text-anchor="middle" fill="rgba(239,111,108,0.7)" font-size="12" font-weight="600">Naive: discretize first</text>
+                        <text x="180" y="90" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">C_N = σ²I_N → Tr → ∞</text>
+                        <text x="180" y="108" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">G* = G^T (wrong)</text>
+                        <text x="180" y="126" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">refinement changes the problem</text>
+                        <text x="180" y="144" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">samples diverge</text>
+                        <text x="180" y="162" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">no continuous limit</text>
+
+                        <text x="540" y="70" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Corrected: think first</text>
+                        <text x="540" y="90" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">C_{0,N} ≈ C_0 → Tr &lt; ∞</text>
+                        <text x="540" y="108" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">G* = M⁻¹G^T W_D (correct)</text>
+                        <text x="540" y="126" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">refinement approximates</text>
+                        <text x="540" y="144" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">samples controlled</text>
+                        <text x="540" y="162" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">posterior_N → posterior</text>
+
+                        <!-- Divider -->
+                        <line x1="360" y1="60" x2="360" y2="175" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+                        <!-- Bottom message -->
+                        <text x="360" y="185" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9" font-style="italic">matrices should be shadows cast by mathematical objects, not the objects themselves</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F8e &mdash; The final summary card.</strong>
+                        The two workflows, side by side, one last time. The naive
+                        workflow produces a sequence of unrelated finite-dimensional
+                        problems. The corrected workflow produces a sequence of
+                        approximations to one function-space posterior. The
+                        difference is not in the matrices &mdash; it is in the
+                        order of operations.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
                         The final answer is not that matrices are bad.
-                        The final answer is that matrices should be shadows cast by mathematical
-                        objects, not the objects themselves.
+                        The final answer is that matrices should be shadows cast
+                        by mathematical objects, not the objects themselves.
                     </p>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>
                 <div class="act-prevnext">
-                    <a class="act-prevnext-btn" href="act-7.html"><span class="arrow">&larr;</span> Act VII: Putting Together</a>
+                    <a class="act-prevnext-btn" href="act-7.html"><span class="arrow">&larr;</span> Act VII: The Repair</a>
                     <a class="act-prevnext-btn next" href="summary.html">Summary &amp; Appendices <span class="arrow">&rarr;</span></a>
                 </div>
 

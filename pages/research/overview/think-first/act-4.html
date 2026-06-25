@@ -74,8 +74,8 @@
                 <a class="act-chip is-active" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
                 <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
                 <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
-                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
-                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> The Repair</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> The Verdict</a>
                 <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -133,6 +133,157 @@
                         allowed to do with those objects.
                     </p>
                 </div>
+
+                <div class="tfdl-interactive">
+                    <div class="tfdl-interactive-header">
+                        <strong>F4a &mdash; The structure ladder.</strong>
+                        Click any rung to see what that level of structure
+                        makes possible. Each rung inherits everything below it.
+                    </div>
+                    <div class="tfdl-ladder" id="f4a-ladder">
+                        <div class="tfdl-ladder-rung" data-level="0">
+                            <div class="tfdl-ladder-level">Set</div>
+                            <div class="tfdl-ladder-tools">membership: \(m \in \M\)</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="1">
+                            <div class="tfdl-ladder-level">Topological space</div>
+                            <div class="tfdl-ladder-tools">continuity, convergence (without distance)</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="2">
+                            <div class="tfdl-ladder-level">Metric space</div>
+                            <div class="tfdl-ladder-tools">distance: \(d(m_1, m_2)\)</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="3">
+                            <div class="tfdl-ladder-level">Vector space</div>
+                            <div class="tfdl-ladder-tools">perturbations, linear combinations: \(m + \delta m\)</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="4">
+                            <div class="tfdl-ladder-level">Normed space</div>
+                            <div class="tfdl-ladder-tools">size: \(\|m\|\), Lipschitz continuity</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="5">
+                            <div class="tfdl-ladder-level">Banach space</div>
+                            <div class="tfdl-ladder-tools">complete limits: Cauchy \(\Rightarrow\) convergent</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="6">
+                            <div class="tfdl-ladder-level">Inner-product space</div>
+                            <div class="tfdl-ladder-tools">angles, orthogonality, projections: \(\langle u, v \rangle\)</div>
+                        </div>
+                        <div class="tfdl-ladder-rung" data-level="7">
+                            <div class="tfdl-ladder-level">Hilbert space</div>
+                            <div class="tfdl-ladder-tools">adjoints, spectral theory, Gaussian measures, covariance operators</div>
+                        </div>
+                    </div>
+                    <div class="tfdl-ladder-detail" id="f4a-detail"></div>
+                </div>
+                <script>
+                (function() {
+                    var rungs = document.querySelectorAll('#f4a-ladder .tfdl-ladder-rung');
+                    var detail = document.getElementById('f4a-detail');
+                    var levelContent = [
+                        {
+                            title: 'Set',
+                            summary: 'A set is just a collection of objects. The only question you can ask is: does this model belong to the admissible set?',
+                            examples: [
+                                {q: 'What can you do?', a: 'Check membership: \(m \in \M\). Nothing else.'},
+                                {q: 'Inverse problem role', a: 'Defines what counts as a model. Without a set, there is nothing to estimate.'},
+                                {q: 'What is missing?', a: 'No notion of distance, no notion of size, no way to say one model is "close" to another. You cannot define continuity, perturbations, or convergence.'}
+                            ]
+                        },
+                        {
+                            title: 'Topological space',
+                            summary: 'A topology specifies which subsets are "open". This gives notions of continuity and convergence without requiring a distance.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Define continuous maps: \(G: \M \to \D\) is continuous if preimages of open sets are open. Talk about convergence: \(m_n \to m\) if every open neighbourhood of \(m\) eventually contains \(m_n\).'},
+                                {q: 'Inverse problem role', a: 'The forward map \(G\) must be continuous for the inverse problem to be well-posed in any sense. Continuity is the minimal requirement.'},
+                                {q: 'What is missing?', a: 'No distance, no angles, no linear structure. You cannot quantify how far two models are, or add them.'}
+                            ]
+                        },
+                        {
+                            title: 'Metric space',
+                            summary: 'A metric assigns a non-negative distance \(d(m_1, m_2)\) to every pair. This makes continuity and convergence quantitative.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Measure distance: \(d(m_1, m_2)\). Define error bounds: \(\|m - m_\text{true}\| \leq \varepsilon\). Quantify convergence rates.'},
+                                {q: 'Inverse problem role', a: 'Allows you to define misfit: \(\|G(m) - d\|\). Allows you to ask whether an iterative method converges to the true model.'},
+                                {q: 'What is missing?', a: 'No way to add models or scale them. No notion of "direction". You cannot form \(m + \delta m\) or talk about linear operators.'}
+                            ]
+                        },
+                        {
+                            title: 'Vector space',
+                            summary: 'A vector space allows addition and scalar multiplication. You can form perturbations \(m + \delta m\) and linear combinations \(\alpha m_1 + \beta m_2\).',
+                            examples: [
+                                {q: 'What can you do?', a: 'Form perturbations: \(m + \delta m\). Define linear operators: \(G(m_1 + m_2) = Gm_1 + Gm_2\). Linearise: \(G(m + \delta m) \approx Gm + G\delta m\).'},
+                                {q: 'Inverse problem role', a: 'The forward map can be linearised. Perturbations \(\delta m\) are the objects of sensitivity analysis. Without vector structure, there is no Jacobian, no gradient, no Newton step.'},
+                                {q: 'What is missing?', a: 'No notion of size. You can add models but cannot say which is "bigger". No guarantee that limits exist.'}
+                            ]
+                        },
+                        {
+                            title: 'Normed space',
+                            summary: 'A norm \(\|m\|\) assigns a size to each model. This enables Lipschitz continuity, bounded operators, and error estimates.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Measure size: \(\|m\|\). Define bounded operators: \(\|Gm\| \leq C\|m\|\). Quantify perturbation size: \(\|\delta m\|\).'},
+                                {q: 'Inverse problem role', a: 'The misfit \(\|Gm - d\|\) becomes a concrete number. Regularisation terms like \(\|m\|^2\) can be defined. Operator norms bound the sensitivity of the forward map.'},
+                                {q: 'What is missing?', a: 'No guarantee that Cauchy sequences converge. The space may have "holes" — limits that should exist but do not.'}
+                            ]
+                        },
+                        {
+                            title: 'Banach space',
+                            summary: 'A Banach space is a complete normed space. Every Cauchy sequence converges to an element of the space. There are no holes.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Take limits safely. Define iterative methods (Landweber, conjugate gradient) that converge. Use fixed-point theorems. Define series expansions.'},
+                                {q: 'Inverse problem role', a: 'Ensures that iterative solvers converge to an actual model in the space, not to something "outside". The posterior mean and covariance are well-defined as limits.'},
+                                {q: 'What is missing?', a: 'No notion of angles or orthogonality. You cannot project onto subspaces, define adjoints, or talk about eigenfunctions. The spectral theory needed for covariance operators is unavailable.'}
+                            ]
+                        },
+                        {
+                            title: 'Inner-product space',
+                            summary: 'An inner product \(\langle u, v \rangle\) gives angles, orthogonality, and projections. It is the structure that makes geometry work.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Define orthogonality: \(\langle u, v \rangle = 0\). Project onto subspaces. Define adjoints via \(\langle Gu, v \rangle = \langle u, G^*v \rangle\). Decompose into orthogonal modes.'},
+                                {q: 'Inverse problem role', a: 'The adjoint \(G^*\) is defined by the inner product. Orthogonal decompositions enable spectral methods. The Gram matrix \(M_{ij} = \langle \phi_i, \phi_j \rangle\) encodes geometry.'},
+                                {q: 'What is missing?', a: 'Completeness is not guaranteed. Infinite orthonormal expansions may not converge. The spectral theorem for covariance operators requires completeness.'}
+                            ]
+                        },
+                        {
+                            title: 'Hilbert space',
+                            summary: 'A Hilbert space is a complete inner-product space. It is the setting for adjoints, spectral theory, Gaussian measures, and covariance operators.',
+                            examples: [
+                                {q: 'What can you do?', a: 'Define the adjoint operator \(G^*\) rigorously. Use the spectral theorem: \(C_0 = \sum_j \lambda_j e_j \otimes e_j\). Define Gaussian measures \(\N(m_0, C_0)\) with trace-class covariance. Use Karhunen–Loève expansions.'},
+                                {q: 'Inverse problem role', a: 'This is the full setting for the function-space Bayesian inverse problem. The prior is a Gaussian measure on a Hilbert space. The posterior is another measure on the same space. The adjoint, the Gram matrices, and the covariance operators all live here.'},
+                                {q: 'Why this is the target', a: 'Everything in this essay — the adjoint identity, the Gram matrix, the trace-class condition, the Gaussian prior — requires Hilbert space structure. Working in a Hilbert space from the start ensures that discretization inherits the right geometry, rather than inventing a new one at each mesh size.'}
+                            ]
+                        }
+                    ];
+
+                    function renderDetail(level) {
+                        var info = levelContent[level];
+                        var html = '<div class="tfdl-ladder-detail-title">' + info.title + '</div>';
+                        html += '<div class="tfdl-ladder-detail-summary">' + info.summary + '</div>';
+                        for (var i = 0; i < info.examples.length; i++) {
+                            html += '<div class="tfdl-ladder-detail-row">';
+                            html += '<div class="tfdl-ladder-detail-q">' + info.examples[i].q + '</div>';
+                            html += '<div class="tfdl-ladder-detail-a">' + info.examples[i].a + '</div>';
+                            html += '</div>';
+                        }
+                        detail.innerHTML = html;
+                        if (window.MathJax && MathJax.typesetPromise) {
+                            MathJax.typesetPromise([detail]);
+                        }
+                    }
+
+                    rungs.forEach(function(rung) {
+                        rung.addEventListener('click', function() {
+                            var level = parseInt(this.dataset.level);
+                            rungs.forEach(function(r, i) {
+                                if (i <= level) r.classList.add('active');
+                                else r.classList.remove('active');
+                            });
+                            renderDetail(level);
+                        });
+                    });
+                    rungs[7].click();
+                })();
+                </script>
 
                 <div class="tfdl-section-heading">
                     <h4>Sets</h4>
@@ -545,6 +696,117 @@
                     </p>
                 </div>
 
+                <div class="tfdl-interactive">
+                    <div class="tfdl-interactive-header">
+                        <strong>F4b &mdash; Different norms see different things.</strong>
+                        Choose a perturbation \(\delta m\). The same function
+                        looks small under \(\|\cdot\|_{L^2}\) but large under
+                        \(\|\cdot\|_{H^1}\) when it oscillates rapidly &mdash;
+                        because \(H^1\) also measures the derivative.
+                    </div>
+                    <div class="tfdl-perturbation-selector" id="f4b-selector">
+                        <button class="tfdl-pert-btn active" data-pert="low">sin(2πx) — low freq</button>
+                        <button class="tfdl-pert-btn" data-pert="high">sin(20πx) — high freq</button>
+                        <button class="tfdl-pert-btn" data-pert="bump">localized bump</button>
+                    </div>
+                    <svg id="f4b-plot" viewBox="0 0 600 220" class="tfdl-interactive-svg"
+                         preserveAspectRatio="xMidYMid meet"></svg>
+                    <div class="tfdl-norm-bars" id="f4b-bars"></div>
+                </div>
+                <script>
+                (function() {
+                    var svg = document.getElementById('f4b-plot');
+                    var barsDiv = document.getElementById('f4b-bars');
+                    var btns = document.querySelectorAll('#f4b-selector .tfdl-pert-btn');
+                    var N = 200, x = [];
+                    for (var i = 0; i < N; i++) x.push(i / (N - 1));
+
+                    var W = 600, H = 220, margin = {top: 15, right: 15, bottom: 30, left: 40};
+                    var pw = W - margin.left - margin.right;
+                    var ph = H - margin.top - margin.bottom;
+
+                    function pert(pertType) {
+                        var vals = [];
+                        for (var i = 0; i < N; i++) {
+                            var xx = x[i];
+                            if (pertType === 'low') {
+                                vals.push(Math.sin(2 * Math.PI * xx));
+                            } else if (pertType === 'high') {
+                                vals.push(Math.sin(20 * Math.PI * xx));
+                            } else {
+                                var cx = 0.5, sigma = 0.05;
+                                vals.push(Math.exp(-Math.pow(xx - cx, 2) / (2 * sigma * sigma)));
+                            }
+                        }
+                        return vals;
+                    }
+
+                    function norms(vals) {
+                        var dx = 1.0 / (N - 1);
+                        var l2sq = 0, derivsq = 0;
+                        for (var i = 0; i < N; i++) {
+                            l2sq += vals[i] * vals[i] * dx;
+                            if (i > 0) {
+                                var d = (vals[i] - vals[i - 1]) / dx;
+                                derivsq += d * d * dx;
+                            }
+                        }
+                        return { l2: Math.sqrt(l2sq), h1: Math.sqrt(l2sq + derivsq) };
+                    }
+
+                    var yMax = 2.0;
+                    function xScale(v) { return margin.left + v * pw; }
+                    function yScale(v) { return margin.top + (1 - (v + yMax) / (2 * yMax)) * ph; }
+
+                    function pathFromVals(vals) {
+                        var d = '';
+                        for (var i = 0; i < N; i++) {
+                            d += (i === 0 ? 'M' : 'L') + xScale(x[i]).toFixed(1) + ' ' + yScale(vals[i]).toFixed(1) + ' ';
+                        }
+                        return d;
+                    }
+
+                    function draw(pertType) {
+                        var vals = pert(pertType);
+                        var nm = norms(vals);
+                        var maxNorm = Math.max(nm.l2, nm.h1, 0.01);
+
+                        // Grid
+                        var bg = '';
+                        for (var gv = -2; gv <= 2; gv++) {
+                            var gy = yScale(gv);
+                            bg += '<line x1="' + margin.left + '" y1="' + gy.toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2,3"/>';
+                            if (gv !== 0) bg += '<text x="' + (margin.left - 6) + '" y="' + (gy + 3).toFixed(1) + '" fill="rgba(255,255,255,0.5)" font-size="10" text-anchor="end">' + gv + '</text>';
+                        }
+                        bg += '<text x="' + (W / 2) + '" y="' + (H - 4) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle">x</text>';
+
+                        svg.innerHTML = bg +
+                            '<line x1="' + margin.left + '" y1="' + yScale(0).toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + yScale(0).toFixed(1) + '" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>' +
+                            '<path d="' + pathFromVals(vals) + '" fill="none" stroke="rgb(52,122,162)" stroke-width="2"/>';
+
+                        // Bars
+                        var l2Pct = (nm.l2 / maxNorm * 100).toFixed(0);
+                        var h1Pct = (nm.h1 / maxNorm * 100).toFixed(0);
+                        barsDiv.innerHTML =
+                            '<div class="tfdl-norm-bar-row"><span class="tfdl-norm-bar-label">‖·‖<sub>L²</sub></span>' +
+                            '<div class="tfdl-norm-bar-track"><div class="tfdl-norm-bar-fill tfdl-norm-bar-fill-l2" style="width:' + l2Pct + '%"></div></div>' +
+                            '<span class="tfdl-norm-bar-value">' + nm.l2.toFixed(3) + '</span></div>' +
+                            '<div class="tfdl-norm-bar-row"><span class="tfdl-norm-bar-label">‖·‖<sub>H¹</sub></span>' +
+                            '<div class="tfdl-norm-bar-track"><div class="tfdl-norm-bar-fill tfdl-norm-bar-fill-h1" style="width:' + h1Pct + '%"></div></div>' +
+                            '<span class="tfdl-norm-bar-value">' + nm.h1.toFixed(3) + '</span></div>';
+                    }
+
+                    btns.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            btns.forEach(function(b) { b.classList.remove('active'); });
+                            this.classList.add('active');
+                            draw(this.dataset.pert);
+                        });
+                    });
+                    draw('low');
+                })();
+                </script>
+
                 <div class="tfdl-subsection-heading">
                     <h5>Convergence</h5>
                 </div>
@@ -776,6 +1038,102 @@
                     </p>
                 </div>
 
+                <div class="tfdl-interactive">
+                    <div class="tfdl-interactive-header">
+                        <strong>F4c &mdash; Sobolev spaces as smoothness filters.</strong>
+                        Drag the slider to change the Sobolev order \(s\).
+                        Each Fourier mode \(\sin(j\pi x)\) is weighted by
+                        \((1+j^2)^{-s/2}\). As \(s\) increases, high-frequency
+                        modes are suppressed &mdash; the space demands more smoothness.
+                    </div>
+                    <div class="tfdl-slider-container">
+                        <label for="f4c-slider">
+                            <span class="tfdl-slider-label">s = <span id="f4c-s-value">0</span></span>
+                            <span class="tfdl-slider-sublabel">(\(H^0 = L^2\) &harr; \(H^4\))</span>
+                        </label>
+                        <input type="range" id="f4c-slider" min="0" max="4" value="0" step="0.1"
+                               class="tfdl-slider">
+                    </div>
+                    <svg id="f4c-plot" viewBox="0 0 600 260" class="tfdl-interactive-svg"
+                         preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+                <script>
+                (function() {
+                    var svg = document.getElementById('f4c-plot');
+                    var slider = document.getElementById('f4c-slider');
+                    var sLabel = document.getElementById('f4c-s-value');
+                    if (!svg || !slider) return;
+
+                    var modes = [1, 2, 3, 5, 8, 12, 20];
+                    var makoBase = [
+                        [64,65,131],
+                        [58,88,153],
+                        [53,111,160],
+                        [52,132,165],
+                        [52,155,169],
+                        [60,177,172],
+                        [80,198,172]
+                    ];
+                    function makoColor(k, alpha) {
+                        var c = makoBase[k];
+                        return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(2) + ')';
+                    }
+                    var N = 200, x = [];
+                    for (var i = 0; i < N; i++) x.push(i / (N - 1));
+
+                    var W = 600, H = 260, margin = {top: 15, right: 15, bottom: 35, left: 45};
+                    var pw = W - margin.left - margin.right;
+                    var ph = H - margin.top - margin.bottom;
+                    var yMax = 1.3;
+
+                    function xScale(v) { return margin.left + v * pw; }
+                    function yScale(v) { return margin.top + (1 - (v + yMax) / (2 * yMax)) * ph; }
+
+                    function pathFromVals(vals) {
+                        var d = '';
+                        for (var i = 0; i < N; i++) {
+                            d += (i === 0 ? 'M' : 'L') + xScale(x[i]).toFixed(1) + ' ' + yScale(vals[i]).toFixed(1) + ' ';
+                        }
+                        return d;
+                    }
+
+                    function draw(s) {
+                        var bg = '';
+                        for (var gv = -1; gv <= 1; gv++) {
+                            var gy = yScale(gv);
+                            bg += '<line x1="' + margin.left + '" y1="' + gy.toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2,3"/>';
+                            if (gv !== 0) bg += '<text x="' + (margin.left - 6) + '" y="' + (gy + 3).toFixed(1) + '" fill="rgba(255,255,255,0.5)" font-size="10" text-anchor="end">' + gv + '</text>';
+                        }
+                        bg += '<text x="' + (W / 2) + '" y="' + (H - 4) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle">x</text>';
+                        bg += '<text x="12" y="' + (H / 2) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" transform="rotate(-90 12 ' + (H/2) + ')">amplitude</text>';
+
+                        var paths = '';
+                        for (var k = 0; k < modes.length; k++) {
+                            var j = modes[k];
+                            var weight = Math.pow(1 + j * j, -s / 2);
+                            var amp = weight / Math.pow(1 + 1, -s / 2); // normalize so j=1 has amp=1
+                            var vals = [];
+                            for (var i = 0; i < N; i++) {
+                                vals.push(amp * Math.sin(j * Math.PI * x[i]));
+                            }
+                            var opacity = Math.max(0.15, Math.min(1, amp * 1.5));
+                            var sw = Math.max(0.8, Math.min(2.5, amp * 2.5));
+                            paths += '<path d="' + pathFromVals(vals) + '" fill="none" stroke="' + makoColor(k, opacity) + '" stroke-width="' + sw.toFixed(1) + '"/>';
+                            // Label
+                            var labelX = xScale(1.02);
+                            var labelY = yScale(amp * Math.sin(j * Math.PI * 0.98));
+                            paths += '<text x="' + labelX.toFixed(0) + '" y="' + labelY.toFixed(0) + '" fill="' + makoColor(k, 0.5) + '" font-size="9">j=' + j + '</text>';
+                        }
+
+                        svg.innerHTML = bg + paths;
+                        sLabel.textContent = s.toFixed(1);
+                    }
+
+                    slider.addEventListener('input', function() { draw(parseFloat(this.value)); });
+                    draw(0);
+                })();
+                </script>
+
                 <div class="tfdl-section-heading">
                     <h4>Boundary conditions</h4>
                 </div>
@@ -805,6 +1163,117 @@
                         They are part of the mathematical model and, often, part of the prior.
                     </p>
                 </div>
+
+                <div class="tfdl-interactive">
+                    <div class="tfdl-interactive-header">
+                        <strong>F4d &mdash; Boundary conditions change the space.</strong>
+                        Select a boundary condition to see the first four
+                        eigenfunctions of \(-\Delta\). The eigenfunctions &mdash;
+                        and therefore any covariance built from them &mdash;
+                        depend on this choice.
+                    </div>
+                    <div class="tfdl-ingredient-grid">
+                        <div class="tfdl-ingredient-card">
+                            <label>Boundary condition</label>
+                            <select id="f4d-bc">
+                                <option value="dirichlet">Dirichlet: f(0)=f(L)=0</option>
+                                <option value="neumann">Neumann: f'(0)=f'(L)=0</option>
+                                <option value="mixed">Mixed: f(0)=0, f'(L)=0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <svg id="f4d-plot" viewBox="0 0 600 240" class="tfdl-interactive-svg"
+                         preserveAspectRatio="xMidYMid meet"></svg>
+                </div>
+                <script>
+                (function() {
+                    var svg = document.getElementById('f4d-plot');
+                    var select = document.getElementById('f4d-bc');
+                    if (!svg || !select) return;
+
+                    var N = 200, x = [];
+                    for (var i = 0; i < N; i++) x.push(i / (N - 1));
+
+                    var W = 600, H = 240, margin = {top: 15, right: 15, bottom: 35, left: 45};
+                    var pw = W - margin.left - margin.right;
+                    var ph = H - margin.top - margin.bottom;
+                    var yMax = 1.2;
+
+                    function xScale(v) { return margin.left + v * pw; }
+                    function yScale(v) { return margin.top + (1 - (v + yMax) / (2 * yMax)) * ph; }
+
+                    function pathFromVals(vals) {
+                        var d = '';
+                        for (var i = 0; i < N; i++) {
+                            d += (i === 0 ? 'M' : 'L') + xScale(x[i]).toFixed(1) + ' ' + yScale(vals[i]).toFixed(1) + ' ';
+                        }
+                        return d;
+                    }
+
+                    var makoBase4 = [
+                        [59,85,152],
+                        [52,122,162],
+                        [53,158,170],
+                        [74,194,173]
+                    ];
+                    function makoColor4(k, alpha) {
+                        var c = makoBase4[k];
+                        return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(2) + ')';
+                    }
+
+                    function eigenfunctions(bc, j) {
+                        var vals = [];
+                        for (var i = 0; i < N; i++) {
+                            var xx = x[i];
+                            var v;
+                            if (bc === 'dirichlet') {
+                                v = Math.sin(j * Math.PI * xx);
+                            } else if (bc === 'neumann') {
+                                v = Math.cos(j * Math.PI * xx);
+                                if (j === 0) v = 1; // constant mode
+                            } else { // mixed: f(0)=0, f'(L)=0
+                                // eigenfunctions: sin((j - 0.5) * pi * x), j=1,2,...
+                                v = Math.sin((j - 0.5) * Math.PI * xx);
+                            }
+                            vals.push(v);
+                        }
+                        return vals;
+                    }
+
+                    function eigenvalues(bc, j) {
+                        if (bc === 'dirichlet') return (j * Math.PI).toFixed(2);
+                        if (bc === 'neumann') return (j * Math.PI).toFixed(2);
+                        return ((j - 0.5) * Math.PI).toFixed(2);
+                    }
+
+                    function draw(bc) {
+                        var bg = '';
+                        for (var gv = -1; gv <= 1; gv++) {
+                            var gy = yScale(gv);
+                            bg += '<line x1="' + margin.left + '" y1="' + gy.toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2,3"/>';
+                            if (gv !== 0) bg += '<text x="' + (margin.left - 6) + '" y="' + (gy + 3).toFixed(1) + '" fill="rgba(255,255,255,0.5)" font-size="10" text-anchor="end">' + gv + '</text>';
+                        }
+                        bg += '<line x1="' + margin.left + '" y1="' + yScale(0).toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + yScale(0).toFixed(1) + '" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                        bg += '<text x="' + (W / 2) + '" y="' + (H - 4) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle">x</text>';
+
+                        var paths = '';
+                        var startJ = (bc === 'neumann') ? 0 : 1;
+                        for (var k = 0; k < 4; k++) {
+                            var j = startJ + k;
+                            var vals = eigenfunctions(bc, j);
+                            paths += '<path d="' + pathFromVals(vals) + '" fill="none" stroke="' + makoColor4(k, 0.9) + '" stroke-width="2"/>';
+                            // Label at right edge
+                            var labelY = yScale(vals[N - 2]);
+                            paths += '<text x="' + xScale(1.02).toFixed(0) + '" y="' + labelY.toFixed(0) + '" fill="' + makoColor4(k, 0.6) + '" font-size="9">λ=' + eigenvalues(bc, j) + '²</text>';
+                        }
+
+                        svg.innerHTML = bg + paths;
+                    }
+
+                    select.addEventListener('change', function() { draw(this.value); });
+                    draw('dirichlet');
+                })();
+                </script>
 
                 <div class="tfdl-section-heading">
                     <h4>Choosing a model space</h4>

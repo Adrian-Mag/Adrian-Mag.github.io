@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act VII: Putting the Pieces Together — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act VII: The Repair — Think First, Discretize Later — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
     <link rel="stylesheet" href="../../../../css/concept-popup.css">
@@ -58,8 +58,8 @@
         <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
-                <h1>Act VII: Putting the Pieces Together</h1>
-                <p>The function-space posterior, the corrected workflow, and why the pathologies melt away.</p>
+                <h1>Act VII: The Repair</h1>
+                <p>The corrected computation on the same toy problem &mdash; and why the pathologies melt away.</p>
                 <p class="tfdl-supp">
                     Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
                 </p>
@@ -74,8 +74,8 @@
                 <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
                 <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
                 <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
-                <a class="act-chip is-active" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
-                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip is-active" href="act-7.html"><span class="act-chip-num">7</span> The Repair</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> The Verdict</a>
                 <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -84,393 +84,370 @@
             <div class="container">
 
                 <div class="tfdl-chapter">
-                    <h3>The Function-Space Bayesian Inverse Problem</h3>
-                </div>
-
-                <div class="tfdl-section-heading">
-                    <h4>The chosen ingredients</h4>
+                    <h3>The Repair: Corrected Computation on the Same Toy Problem</h3>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        We now return from the detour. The pieces are on the table: model space, data
-                        space, forward map, noise model, prior measure, and the geometry needed to
-                        define the adjoint.
+                        Act VI gave us the ingredients: a trace-class covariance operator,
+                        the Hilbert adjoint, and the function-space posterior. Now we put
+                        them to work on the same toy problem from Acts I and II.
                     </p>
                     <p>
-                        The central lesson is that these objects must be chosen before discretization.
-                        Only then does a matrix become a representation of something meaningful, rather
-                        than an accidental substitute for the problem itself.
-                    </p>
-                    <p>
-                        The function-space Bayesian inverse problem begins with the data equation
-                        \(\obs = G m + \noise\). This equation now has a precise meaning because each
-                        symbol has a mathematical home:
-                        \(m\in\M\), \(\obs\in\D\), \(G:\M\to\D\),
-                        \(\noise\sim\N(0,\Cd)\), \(m\sim\prior\).
+                        Same domain \(\Omega = [0,1]\), same Gaussian kernels, same \(K = 20\)
+                        data, same hat basis, same forward matrix \(\Gb\). The only thing
+                        that changes is the order of operations: we think first,
+                        discretize later.
                     </p>
                 </div>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
-                        The same equation that looked innocent in Act I now has a full mathematical
-                        skeleton. That skeleton is what prevents the discretization from inventing a
-                        different creature.
+                        This is not a new problem. It is the same problem, solved in the
+                        correct order. The broken machine is rebuilt with the correct parts.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Model space</h5>
+                <!-- F7a: Corrected prior samples -->
+
+                <div class="tfdl-section-heading">
+                    <h4>F7a &mdash; The corrected prior</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The unknown model lives in a chosen Hilbert space: \(\M = H^s(\Omega)\) or
-                        another chosen Hilbert space. The precise choice depends on the problem. The
-                        model space tells us which objects count as admissible models, what convergence
-                        means, what perturbations are small, what inner product defines the adjoint,
-                        and what kind of Gaussian prior can live on the space.
+                        In Act I, the prior was \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\) &mdash; a
+                        diagonal matrix invented at each resolution. Now the prior comes
+                        from a covariance operator:
+                        \[ C_0 = \alpha(\kappa^2 I - \Delta)^{-s}, \]
+                        discretized on the same hat basis: \(C_{0,N} \approx C_0\).
                     </p>
-                </div>
-
-                <div class="tfdl-callout callout-warning">
-                    <span class="tfdl-callout-label">Warning</span>
                     <p>
-                        A basis does not choose the model space for us. A basis represents a space after
-                        the modelling decision has already been made.
+                        We are not inventing a covariance matrix anymore. We are
+                        discretizing a covariance operator. The eigenvalue spectrum tells
+                        the difference immediately: the naive spectrum is flat
+                        (\(\sigma^2\) in every direction), while the Bessel spectrum
+                        decays &mdash; ensuring \(\Tr(C_0) < \infty\).
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Data space</h5>
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig7a_corrected_prior.png"
+                         alt="Naive vs Bessel prior samples with eigenvalue decay">
+                    <figcaption>
+                        <strong>F7a &mdash; The corrected prior on the same basis.</strong>
+                        Left: naive prior samples from \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\)
+                        &mdash; uncorrelated, same variance in every direction. Right:
+                        samples from \(C_{0,N} \approx \alpha(\kappa^2 I - \Delta)^{-s}\)
+                        &mdash; smooth, correlated, with variance concentrated in low
+                        modes. Bottom: eigenvalue spectra. The naive spectrum is flat;
+                        the Bessel spectrum decays, ensuring \(\Tr(C_0) < \infty\).
+                    </figcaption>
+                </figure>
+
+                <!-- F7b: Corrected posterior samples -->
+
+                <div class="tfdl-section-heading">
+                    <h4>F7b &mdash; The corrected posterior samples</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The data space is finite-dimensional: \(\D = \R^K\). Since \(\D\) is
-                        finite-dimensional, several technical issues become easier. Nevertheless, the
-                        data space still has geometry. The statistically natural data misfit is
-                        \(\norm{\obs-G m}_{\Cd^{-1}}^2 = (\obs-G m)^{\top} \Cd^{-1}(\obs-G m)\).
+                        In Act II (F2b), the posterior mean looked plausible but the samples
+                        fluctuated wildly. Now we draw samples from the corrected posterior
+                        \(m_N^{(s)} \sim \mu_N^{\obs}\) using the Bessel prior.
+                    </p>
+                    <p>
+                        Same data, same \(N = 30\) hats, same true model. But the posterior
+                        cloud has stopped screaming. The mean still tracks the truth; the
+                        samples no longer oscillate wildly; the \(\pm 1\sigma\) band is
+                        narrow and controlled.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Forward map</h5>
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig7b_corrected_posterior_samples.png"
+                         alt="Corrected posterior samples with mean and ±1σ band">
+                    <figcaption>
+                        <strong>F7b &mdash; The corrected posterior: the cloud is controlled.</strong>
+                        True model (amber), posterior mean (green), posterior samples
+                        (light curves), and \(\pm 1\sigma\) band (green fill). Compare
+                        with F2b: the mean still tracks the truth, but the samples no
+                        longer oscillate wildly. The posterior uncertainty is concentrated
+                        where the data are uninformative, and bounded by the prior.
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The posterior mean may look similar to the naive case. The posterior
+                        <em>measure</em> does not. The samples tell the story that the
+                        mean hides.
+                    </p>
+                </div>
+
+                <!-- F7c: Corrected refinement slider -->
+
+                <div class="tfdl-section-heading">
+                    <h4>F7c &mdash; Corrected refinement: the uncertainty settles</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        The forward map sends models to predicted data: \(G : \M \to \D\). The map \(G\)
-                        must be meaningful on the chosen model space. For example, if
-                        \(\M=L^2(\Omega)\) and \(K_i\in L^2(\Omega)\), then
-                        \(|[G m]_i| \leq \norm{K_i}_{L^2}\norm{m}_{L^2}\), so each component of \(G\)
-                        is a continuous linear functional on \(L^2(\Omega)\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Noise model</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The observational noise is Gaussian: \(\noise \sim \N(0,\Cd)\). Conditional on
-                        the model \(m\), the data are distributed as \(\obs\mid m \sim \N(G m,\Cd)\).
-                        The likelihood is
-                        \(\pi(\obs\mid m) \propto \exp\left( -\frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2 \right)\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Prior measure</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The prior is a probability measure on the model space:
-                        \(\prior = \N(m_0,C_0)\). For this to define a Gaussian measure on \(\M\), the
-                        covariance operator must be linear, symmetric, positive, and trace class:
-                        \(\Tr(C_0)<\infty\).
+                        In Act II (F2e), the refinement slider showed the naive posterior's
+                        uncertainty band inflating as \(N\) increased. Now we run the same
+                        experiment with the corrected prior.
                     </p>
                     <p>
-                        This is the step that repairs the naive prior. We no longer assign an
-                        independent variance \(\sigma^2\) to every coefficient introduced by the mesh.
-                        Instead, we choose a covariance operator that defines a genuine probability
-                        measure on functions.
+                        As \(N\) increases, the uncertainty should stabilize rather than
+                        inflate. Refinement no longer opens new trapdoors of variance.
+                        It reveals finer pieces of the same probability measure.
                     </p>
                 </div>
+
+                <div class="tfdl-interactive">
+                    <div class="tfdl-interactive-header">
+                        <strong>F7c &mdash; Corrected refinement slider.</strong>
+                        Drag the slider to change the number of basis functions \(N\).
+                        The posterior mean barely moves, and the uncertainty band
+                        <em>stays controlled</em> &mdash; the posterior converges.
+                    </div>
+                    <div class="tfdl-slider-container">
+                        <label for="f7c-slider">
+                            <span class="tfdl-slider-label">N = <span id="f7c-n-value">21</span></span>
+                            <span class="tfdl-slider-sublabel">(\(K=20\) data points, Bessel prior)</span>
+                        </label>
+                        <input type="range" id="f7c-slider" min="21" max="50" value="21" step="1"
+                               class="tfdl-slider">
+                    </div>
+                    <svg id="f7c-plot" viewBox="0 0 600 320" class="tfdl-interactive-svg"
+                         preserveAspectRatio="xMidYMid meet"></svg>
+                    <div class="tfdl-interactive-footer">
+                        <span class="tfdl-legend-item">
+                            <span class="tfdl-legend-line tfdl-legend-true"></span>
+                            true model \(\bar{m}(z)\)
+                        </span>
+                        <span class="tfdl-legend-item">
+                            <span class="tfdl-legend-line tfdl-legend-mean"></span>
+                            posterior mean \(m_N^{\obs}(z)\)
+                        </span>
+                        <span class="tfdl-legend-item">
+                            <span class="tfdl-legend-band tfdl-legend-band-sw"></span>
+                            \(\pm 1\sigma\) band
+                        </span>
+                    </div>
+                </div>
+                <script src="../../../../media/research/think-first/fig7c_refinement_data.js"></script>
+                <script>
+                (function() {
+                    var svg = document.getElementById('f7c-plot');
+                    if (!svg || !window.F7C_DATA) return;
+
+                    var data = window.F7C_DATA;
+                    var x = data.x;
+                    var mTrue = data.true_model;
+                    var W = 600, H = 320;
+                    var margin = {top: 20, right: 20, bottom: 40, left: 50};
+                    var pw = W - margin.left - margin.right;
+                    var ph = H - margin.top - margin.bottom;
+
+                    var allMeans = [];
+                    var allStds = [];
+                    for (var key in data.posterior) {
+                        allMeans = allMeans.concat(data.posterior[key].mean);
+                        allStds = allStds.concat(data.posterior[key].std);
+                    }
+                    var yMin = Math.min(-1, Math.min.apply(null, mTrue) - 1);
+                    var yMax = Math.max(3, Math.max.apply(null, allMeans) + Math.max.apply(null, allStds) + 1);
+
+                    var xScale = function(v) { return margin.left + (v - x[0]) / (x[x.length-1] - x[0]) * pw; };
+                    var yScale = function(v) { return margin.top + (1 - (v - yMin) / (yMax - yMin)) * ph; };
+
+                    function pathFromVals(vals) {
+                        var d = '';
+                        for (var i = 0; i < vals.length; i++) {
+                            d += (i === 0 ? 'M' : 'L') + xScale(x[i]).toFixed(1) + ' ' + yScale(vals[i]).toFixed(1) + ' ';
+                        }
+                        return d;
+                    }
+                    function bandPath(mean, std) {
+                        var upper = '', lower = '';
+                        for (var i = 0; i < mean.length; i++) {
+                            var xu = xScale(x[i]).toFixed(1);
+                            upper += (i === 0 ? 'M' : 'L') + xu + ' ' + yScale(mean[i] + std[i]).toFixed(1) + ' ';
+                        }
+                        for (var i = mean.length - 1; i >= 0; i--) {
+                            var xl = xScale(x[i]).toFixed(1);
+                            lower += 'L' + xl + ' ' + yScale(mean[i] - std[i]).toFixed(1) + ' ';
+                        }
+                        return upper + lower + 'Z';
+                    }
+
+                    var bg = '';
+                    for (var gv = Math.ceil(yMin); gv <= Math.floor(yMax); gv += 1) {
+                        var gy = yScale(gv);
+                        bg += '<line x1="' + margin.left + '" y1="' + gy.toFixed(1) + '" x2="' + (W - margin.right) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2,3"/>';
+                        bg += '<text x="' + (margin.left - 8) + '" y="' + (gy + 4).toFixed(1) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">' + gv + '</text>';
+                    }
+                    for (var gv = 0; gv <= 1; gv += 0.25) {
+                        var gx = xScale(gv);
+                        bg += '<line x1="' + gx.toFixed(1) + '" y1="' + margin.top + '" x2="' + gx.toFixed(1) + '" y2="' + (H - margin.bottom) + '" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2,3"/>';
+                        bg += '<text x="' + gx.toFixed(1) + '" y="' + (H - margin.bottom + 18) + '" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle">' + gv.toFixed(2) + '</text>';
+                    }
+                    bg += '<text x="' + (W / 2) + '" y="' + (H - 4) + '" fill="rgba(255,255,255,0.5)" font-size="12" text-anchor="middle">depth z</text>';
+                    bg += '<text x="14" y="' + (H / 2) + '" fill="rgba(255,255,255,0.5)" font-size="12" text-anchor="middle" transform="rotate(-90 14 ' + (H/2) + ')">model value</text>';
+
+                    var truePath = pathFromVals(mTrue);
+
+                    svg.innerHTML = bg +
+                        '<path id="f7c-band" d="" fill="rgba(116,198,157,0.18)" stroke="none"/>' +
+                        '<path id="f7c-mean" d="" fill="none" stroke="#74c69d" stroke-width="2.2"/>' +
+                        '<path d="' + truePath + '" fill="none" stroke="#f4a259" stroke-width="2.6"/>' +
+                        '<text id="f7c-std-label" x="' + (W - margin.right - 8) + '" y="' + (margin.top + 14) + '" fill="rgba(255,255,255,0.5)" font-size="11" text-anchor="end"></text>';
+
+                    function update(n) {
+                        var pd = data.posterior[String(n)];
+                        if (!pd) return;
+                        document.getElementById('f7c-mean').setAttribute('d', pathFromVals(pd.mean));
+                        document.getElementById('f7c-band').setAttribute('d', bandPath(pd.mean, pd.std));
+                        var maxStd = Math.max.apply(null, pd.std);
+                        document.getElementById('f7c-std-label').textContent = 'max σ = ' + maxStd.toFixed(3);
+                        document.getElementById('f7c-n-value').textContent = n;
+                    }
+
+                    var slider = document.getElementById('f7c-slider');
+                    slider.addEventListener('input', function() { update(parseInt(this.value)); });
+                    update(21);
+                })();
+                </script>
 
                 <div class="tfdl-callout callout-intuition">
                     <span class="tfdl-callout-label">Intuition</span>
                     <p>
-                        The prior covariance is the instrument panel of the random function. It controls
-                        amplitude, smoothness, correlation length, and boundary behaviour.
+                        Refinement no longer opens new trapdoors of variance.
+                        It reveals finer pieces of the same probability measure.
                     </p>
                 </div>
+
+                <!-- F7d: Trace comparison -->
 
                 <div class="tfdl-section-heading">
-                    <h4>The posterior</h4>
+                    <h4>F7d &mdash; Trace comparison: naive versus corrected</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        Once the ingredients are chosen, the posterior is no longer a numerical guess.
-                        It is a probability measure on the same model space as the prior. Bayes'
-                        theorem in function space:
-                        \[ \frac{d\post}{d\prior}(m) = \frac{1}{Z(\obs)} \exp(-\Phi(m;\obs)), \]
-                        where \(Z(\obs) = \int_{\M} \exp(-\Phi(m;\obs)) \,d\prior(m)\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Gaussian conditioning in function space</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        In the linear Gaussian case, the posterior is again Gaussian:
-                        \(\post = \N(m^{\obs},C^{\obs})\). The data covariance induced by the prior and noise is
-                        \(G C_0 G^{\adj} + \Cd\), a finite-dimensional covariance on the data space.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Posterior covariance</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        \[ C^{\obs} = C_0 - C_0 G^{\adj} \left( G C_0 G^{\adj} + \Cd \right)^{-1} G C_0. \]
-                        Each symbol now refers to an operator between chosen spaces. The update term is
-                        the amount of prior covariance removed by the data. Since the data space is
-                        finite-dimensional, the update can only affect finitely many data-informed
-                        directions.
+                        The mathematical verdict in one plot. For the naive prior,
+                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N - K)\) &mdash; the
+                        total posterior variance grows linearly with \(N\).
                     </p>
                     <p>
-                        Because the prior covariance is trace class, the posterior covariance remains
-                        controlled: \(0 \leq C^{\obs} \leq C_0\), and therefore
-                        \(\Tr(C^{\obs})\leq \Tr(C_0)<\infty\). This is the mathematical antidote to the
-                        divergence seen in the naive posterior.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Posterior mean</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        \[ m^{\obs} = m_0 + C_0 G^{\adj} \left( G C_0 G^{\adj} + \Cd \right)^{-1} (\obs - G m_0). \]
-                        The residual \(\obs-G m_0\) lives in the data space. The inverse weights it by
-                        the combined uncertainty from the prior and the noise. The adjoint \(G^{\adj}\)
-                        then pulls this data-space information back into the model space. Finally,
-                        \(C_0\) shapes the update according to the prior covariance.
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-lesson">
-                    <span class="tfdl-callout-label">Lesson</span>
-                    <p>
-                        The posterior mean is the prior mean plus a data-driven correction. The adjoint
-                        decides how data residuals enter model space, and the covariance decides which
-                        model directions are allowed to respond.
-                    </p>
-                </div>
-
-                <div class="tfdl-section-heading">
-                    <h4>Discretization after formulation</h4>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        We now discretize, but the order has changed. We are no longer using
-                        discretization to define the inverse problem. We are using discretization to
-                        approximate an inverse problem that already exists.
+                        For the corrected prior, \(0 \leq C^{\obs} \leq C_0\), so
+                        \(\Tr(C^{\obs}) \leq \Tr(C_0) < \infty\). The total posterior
+                        variance is bounded, no matter how fine the mesh.
                     </p>
                     <p>
-                        Choose finite-dimensional approximation spaces \(\M_N \subset \M\). A discrete
-                        model is \(m_N(x) = \sum_{j=1}^N [\mathbf{u}]_j\phi_j(x)\). The key difference from the
-                        naive approach is conceptual: \(\M_N\) approximates \(\M\). It does not replace
-                        \(\M\) as the starting point of the problem.
-                    </p>
-                    <p>
-                        The guiding principle is: <em>discrete object = representation of continuous
-                        object</em>. The prior covariance should be obtained from the continuous
-                        covariance operator, not invented independently at each resolution.
+                        This is the heart of the cure: finite trace \(\Rightarrow\)
+                        controlled uncertainty.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Respecting inner products</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The model-space Gram matrix is \([\Mb]_{ij} = \inner{\phi_i}{\phi_j}_{\M}\). The
-                        mass or Gram matrix is the coordinate expression of the model-space geometry.
-                        The discrete adjoint must respect both geometries:
-                        \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\).
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-warning">
-                    <span class="tfdl-callout-label">Warning</span>
-                    <p>
-                        Replacing \(G^{\adj}_{\mathrm{disc}}\) by \(\Gb^{\T}\) is valid only in the special case
-                        where the chosen coordinates are orthonormal for the chosen inner products.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Respecting covariance operators</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The discrete covariance must approximate the continuous covariance operator
-                        \(C_0\). If \(C_0\) is defined through a differential operator, such as
-                        \(C_0 = \alpha(\kappa^2 I-\Delta)^{-s}\), then the discrete covariance should
-                        come from a discretization of that operator and its inverse power. The
-                        important point is that \(\mathbf{C}_{0,N}\) is not chosen merely because it is a
-                        positive matrix. It is chosen because it approximates \(C_0\).
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>Respecting boundary conditions</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        If the prior covariance is built from a differential operator, then boundary
-                        conditions are part of the prior. The discretization must respect the same
-                        boundary conditions.
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-lesson">
-                    <span class="tfdl-callout-label">Lesson</span>
-                    <p>
-                        Boundary conditions do not enter at the edge of the code. They enter at the
-                        definition of the covariance operator.
-                    </p>
-                </div>
-
-                <div class="tfdl-section-heading">
-                    <h4>Why the initial problems melt away</h4>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>The prior has a continuous meaning</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        In the function-space construction, we choose \(m\sim\N(m_0,C_0)\) first. The
-                        discrete priors are then approximations of this same prior. Increasing \(N\) no
-                        longer introduces a new Bayesian model with more independent variance. Instead,
-                        it improves the approximation of the same continuous prior.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>The covariance has bounded trace</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        In the corrected formulation, we require \(\Tr(C_0)<\infty\), so
-                        \(\E\norm{m-m_0}_{\M}^2 = \Tr(C_0) < \infty\). The posterior covariance
-                        satisfies \(0\leq C^{\obs}\leq C_0\), and therefore
-                        \(\Tr(C^{\obs})\leq \Tr(C_0)<\infty\). The posterior uncertainty is controlled by
-                        construction.
-                    </p>
-                </div>
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig7d_trace_comparison.png"
+                         alt="Posterior trace comparison: naive diverges, corrected converges">
+                    <figcaption>
+                        <strong>F7d &mdash; Posterior trace: naive diverges, corrected converges.</strong>
+                        The naive posterior trace (coral) grows linearly with \(N\),
+                        tracking the lower bound \(\sigma^2(N-K)\) (amber, dashed).
+                        The corrected posterior trace (green) levels off &mdash;
+                        bounded by \(\Tr(C_0) < \infty\). Log scale reveals the
+                        four-order-of-magnitude gap between the two workflows.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-proposition">
                     <span class="tfdl-callout-label">Proposition</span>
                     <p>
-                        Let \(\M\) be a Hilbert space, let \(C_0\) be a positive symmetric trace-class
-                        covariance operator on \(\M\), and let \(G:\M\to\D\) be a bounded linear map
-                        into the finite-dimensional data space \(\D=\R^K\). Suppose \(\Cd\) is symmetric
-                        positive definite. Then the posterior covariance
+                        Let \(C_0\) be a positive symmetric trace-class covariance
+                        operator on \(\M\), and let \(G:\M\to\D\) be a bounded linear
+                        map into the finite-dimensional data space \(\D=\R^K\). Then the
+                        posterior covariance
                         \(C^{\obs} = C_0 - C_0 G^{\adj} (G C_0 G^{\adj} + \Cd)^{-1} G C_0\)
-                        is positive and trace class, with \(\Tr(C^{\obs})\leq\Tr(C_0)\).
+                        is positive and trace class, with
+                        \(\Tr(C^{\obs}) \leq \Tr(C_0) < \infty\).
                     </p>
                 </div>
 
-                <div class="callout-proof">
-                    <p>
-                        The posterior covariance is obtained by conditioning a joint Gaussian measure.
-                        Conditioning reduces uncertainty in the positive-operator sense, so
-                        \(0\leq C^{\obs}\leq C_0\). Since \(C_0\) is trace class and \(C^{\obs}\) is positive
-                        and dominated by \(C_0\), it is also trace class and satisfies
-                        \(\Tr(C^{\obs})\leq \Tr(C_0)\).
-                    </p>
-                </div>
+                <!-- F7e: Translation table / workflow summary -->
 
-                <div class="tfdl-subsection-heading">
-                    <h5>The adjoint is geometry-aware</h5>
+                <div class="tfdl-section-heading">
+                    <h4>F7e &mdash; From operator to matrix: the translation table</h4>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        In the function-space formulation, the adjoint is defined by
-                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\). After discretization, this
-                        becomes \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\). The discrete posterior
-                        formulas are built from the adjoint determined by the spaces, not from a raw
-                        transpose. The model-space geometry now travels with the computation.
+                        Every discrete object has a continuous parent. The discretization
+                        inherits meaning from the continuous formulation, not the reverse.
+                        The table below maps each function-space object to its discrete
+                        representation.
                     </p>
                 </div>
 
-                <div class="tfdl-subsection-heading">
-                    <h5>Samples remain controlled under refinement</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        Unlike the naive prior, refinement does not add independent variance of fixed
-                        size to every new direction. New directions receive the amount of variance
-                        prescribed by the continuous covariance operator. For a trace-class covariance,
-                        the total remaining variance in high modes becomes small.
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-intuition">
-                    <span class="tfdl-callout-label">Intuition</span>
-                    <p>
-                        Refinement no longer opens new trapdoors of variance. It reveals finer pieces
-                        of the same probability measure.
-                    </p>
-                </div>
-
-                <div class="tfdl-subsection-heading">
-                    <h5>The posterior converges</h5>
-                </div>
-
-                <div class="tfdl-prose">
-                    <p>
-                        The continuous posterior \(\post=\N(m^{\obs},C^{\obs})\) is the target. The discrete
-                        posteriors \(\post_N\) should approximate it. In a well-designed discretization,
-                        one expects convergence in an appropriate sense:
-                        \(\post_N \to \post\) as \(N\to\infty\).
-                    </p>
-                    <p>
-                        This was missing in the naive workflow. There, the sequence
-                        \(\post_1,\post_2,\post_3,\ldots\) was not clearly approximating anything. In
-                        the corrected workflow, the continuous posterior is defined first, and the
-                        discrete posteriors are judged by how well they approximate it.
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-lesson">
-                    <span class="tfdl-callout-label">Lesson</span>
-                    <p>
-                        The cure is not a cleverer matrix.
-                        The cure is choosing the mathematical object first and discretizing it second.
-                    </p>
-                </div>
+                <figure class="tfdl-diagram">
+                    <table class="tfdl-translation-table">
+                        <thead>
+                            <tr>
+                                <th>Function-space object</th>
+                                <th>Discrete representation</th>
+                                <th>Naive shortcut (wrong)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>\(m \in \M\)</td>
+                                <td>\(\mathbf{u} \in \R^N\) represents \(m_N = \sum_j u_j \phi_j\)</td>
+                                <td>coefficients <em>are</em> the model</td>
+                            </tr>
+                            <tr>
+                                <td>\(G: \M \to \D\)</td>
+                                <td>\(G_{ij} = [G\phi_j]_i\)</td>
+                                <td>same matrix &mdash; but wrong adjoint</td>
+                            </tr>
+                            <tr>
+                                <td>\(G^{\adj}: \D \to \M\)</td>
+                                <td>\(G^{\adj}_{\mathrm{disc}} = M^{-1} G^{\T} W_D\)</td>
+                                <td>\(G^{\T}\) (ignores geometry)</td>
+                            </tr>
+                            <tr>
+                                <td>\(C_0: \M \to \M\)</td>
+                                <td>\(C_{0,N}\) from discretizing \(C_0\)</td>
+                                <td>\(\sigma^2 I_N\) (invents covariance)</td>
+                            </tr>
+                            <tr>
+                                <td>\(\Tr(C_0) < \infty\)</td>
+                                <td>\(\Tr(C_{0,N}) \to \Tr(C_0)\)</td>
+                                <td>\(\Tr(\sigma^2 I_N) = \sigma^2 N \to \infty\)</td>
+                            </tr>
+                            <tr>
+                                <td>\(\post = \N(m^{\obs}, C^{\obs})\)</td>
+                                <td>\(\post_N \approx \post\) (converges)</td>
+                                <td>\(\post_N\) diverges with \(N\)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <figcaption>
+                        <strong>F7e &mdash; Operator-to-discretization translation table.</strong>
+                        Each function-space object has a discrete representation,
+                        but the mapping is not a naive symbol substitution. The
+                        adjoint \(G^{\adj}\) becomes \(M^{-1}G^{\T} W_D\), not
+                        \(G^{\T}\). The covariance \(C_0\) becomes \(C_{0,N}\)
+                        from discretizing the operator, not \(\sigma^2 I_N\). The
+                        third column shows what goes wrong when the shortcut is
+                        taken.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-section-heading">
                     <h4>The corrected workflow</h4>
@@ -502,42 +479,19 @@
                     <p>This order protects the problem from accidental modelling choices.</p>
                 </div>
 
-                <div class="tfdl-section-heading">
-                    <h4>The moral of Act VII</h4>
-                </div>
-
-                <div class="tfdl-prose">
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
                     <p>
-                        The opening example looked harmless because every finite-dimensional step was
-                        legal. But legal finite-dimensional algebra does not guarantee a coherent
-                        infinite-dimensional inverse problem.
-                    </p>
-                    <p>
-                        The corrected formulation changes the foundation. We first choose
-                        \(\M, \D, G, \Cd, \prior\). Then we define \(\post = \N(m^{\obs},C^{\obs})\). Only then
-                        do we discretize.
-                    </p>
-                    <p>
-                        The posterior mean, covariance, samples, and refinement behaviour now belong to
-                        one mathematical story. The plot no longer has to hide a monster under the
-                        mean.
-                    </p>
-                </div>
-
-                <div class="tfdl-callout callout-checkpoint">
-                    <span class="tfdl-callout-label">Checkpoint</span>
-                    <p>
-                        The final return to the toy problem is now straightforward. We will solve the
-                        same opening example again, but this time the prior will be a genuine
-                        function-space Gaussian, the adjoint will respect the chosen geometry, and mesh
-                        refinement will approximate the posterior rather than rewriting the problem.
+                        The cure is not a cleverer matrix.
+                        The cure is choosing the mathematical object first and
+                        discretizing it second.
                     </p>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>
                 <div class="act-prevnext">
                     <a class="act-prevnext-btn" href="act-6.html"><span class="arrow">&larr;</span> Act VI: The Prior</a>
-                    <a class="act-prevnext-btn next" href="act-8.html">Act VIII: Return to Toy <span class="arrow">&rarr;</span></a>
+                    <a class="act-prevnext-btn next" href="act-8.html">Act VIII: The Verdict <span class="arrow">&rarr;</span></a>
                 </div>
 
             </div>
@@ -572,6 +526,167 @@
         }
         window.addEventListener("scroll", onScroll, { passive: true });
         onScroll();
+    })();
+    </script>
+
+    <script>
+    (function () {
+        "use strict";
+
+        var makoBase = [
+            [59,85,152], [52,122,162], [53,158,170],
+            [74,194,173], [109,210,172], [173,226,191]
+        ];
+        function makoColor(k, alpha) {
+            var c = makoBase[k % makoBase.length];
+            return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(2) + ')';
+        }
+
+        function seededRandom(seed) {
+            var s = seed;
+            return function() {
+                s = (s * 1103515245 + 12345) & 0x7fffffff;
+                return s / 0x7fffffff;
+            };
+        }
+
+        function seededGaussian(rng) {
+            var u = rng(), v = rng();
+            while (u < 1e-10) u = rng();
+            return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+        }
+
+        function clearSVG(svg) {
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+        }
+
+        function svgEl(tag, attrs) {
+            var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            for (var k in attrs) e.setAttribute(k, attrs[k]);
+            return e;
+        }
+
+        /* ── F7e: Naive vs Function-Space Refinement ── */
+        var f7eSlider = document.getElementById('f7e-n');
+        var f7eVal = document.getElementById('f7e-n-val');
+        var f7eResample = document.getElementById('f7e-resample');
+        var f7eNaivePlot = document.getElementById('f7e-naive-plot');
+        var f7eCorrectPlot = document.getElementById('f7e-correct-plot');
+        var f7eNaiveTrace = document.getElementById('f7e-naive-trace');
+        var f7eCorrectTrace = document.getElementById('f7e-correct-trace');
+        var f7eSeed = 98765;
+
+        var sigma = 0.5;
+        var sPrior = 2.0;
+
+        function drawRefinementPanel(svg, traceDiv, N, isNaive, seed) {
+            clearSVG(svg);
+            var W = 300, H = 200;
+            var padL = 30, padR = 10, padT = 10, padB = 30;
+            var plotW = W - padL - padR, plotH = H - padT - padB;
+            var nPoints = Math.max(N * 2, 80);
+            var nModes = N;
+
+            var rng = seededRandom(seed);
+            var xVals = [];
+            for (var i = 0; i <= nPoints; i++) xVals.push(i / nPoints);
+
+            /* Generate 2 sample paths */
+            var samples = [];
+            for (var k = 0; k < 2; k++) {
+                var path = [];
+                for (var i = 0; i <= nPoints; i++) {
+                    var x = xVals[i];
+                    var val = 0;
+                    for (var j = 1; j <= nModes; j++) {
+                        var lam, ej;
+                        if (isNaive) {
+                            lam = sigma * sigma;
+                            ej = Math.sqrt(2) * Math.sin(j * Math.PI * x);
+                        } else {
+                            lam = Math.pow(1 + j * j, -sPrior);
+                            ej = Math.sqrt(2) * Math.sin(j * Math.PI * x);
+                        }
+                        val += Math.sqrt(lam) * seededGaussian(rng) * ej;
+                    }
+                    path.push(val);
+                }
+                samples.push(path);
+            }
+
+            /* Find y-range */
+            var yMin = Infinity, yMax = -Infinity;
+            for (var k = 0; k < samples.length; k++) {
+                for (var i = 0; i <= nPoints; i++) {
+                    yMin = Math.min(yMin, samples[k][i]);
+                    yMax = Math.max(yMax, samples[k][i]);
+                }
+            }
+            var yRange = Math.max(yMax - yMin, 0.1);
+            var yPad = yRange * 0.15;
+            yMin -= yPad; yMax += yPad;
+
+            function xToPx(x) { return padL + x * plotW; }
+            function yToPx(y) { return padT + (1 - (y - yMin) / (yMax - yMin)) * plotH; }
+
+            /* Axes */
+            svg.appendChild(svgEl('line', {x1: padL, y1: H-padB, x2: W-padR, y2: H-padB, stroke: 'rgba(255,255,255,0.1)', 'stroke-width': 1}));
+            svg.appendChild(svgEl('line', {x1: padL, y1: padT, x2: padL, y2: H-padB, stroke: 'rgba(255,255,255,0.1)', 'stroke-width': 1}));
+            svg.appendChild(svgEl('text', {x: W/2, y: H-5, 'text-anchor': 'middle', fill: 'rgba(255,255,255,0.4)', 'font-size': 9, 'font-family': 'serif'}, 'x'));
+
+            /* Zero line */
+            var zeroY = yToPx(0);
+            svg.appendChild(svgEl('line', {x1: padL, y1: zeroY, x2: W-padR, y2: zeroY, stroke: 'rgba(255,255,255,0.1)', 'stroke-width': 0.5, 'stroke-dasharray': '3,3'}));
+
+            /* Draw sample paths */
+            var colors = isNaive
+                ? ['rgba(239,111,108,0.6)', 'rgba(239,111,108,0.4)']
+                : [makoColor(1, 0.6), makoColor(3, 0.5)];
+            for (var k = 0; k < samples.length; k++) {
+                var pts = [];
+                for (var i = 0; i <= nPoints; i++) {
+                    pts.push(xToPx(xVals[i]) + ',' + yToPx(samples[k][i]));
+                }
+                svg.appendChild(svgEl('polyline', {
+                    points: pts.join(' '),
+                    fill: 'none',
+                    stroke: colors[k],
+                    'stroke-width': 1.5
+                }));
+            }
+
+            /* Trace text */
+            var traceVal;
+            if (isNaive) {
+                traceVal = sigma * sigma * N;
+                traceDiv.textContent = 'Tr(C_N) = σ²N = ' + traceVal.toFixed(2);
+                traceDiv.style.color = 'rgba(239,111,108,0.85)';
+            } else {
+                traceVal = 0;
+                for (var j = 1; j <= nModes; j++) traceVal += Math.pow(1 + j*j, -sPrior);
+                traceDiv.textContent = 'Tr(C_{0,N}) ≈ ' + traceVal.toFixed(2) + ' → Tr(C₀)';
+                traceDiv.style.color = 'rgba(109,210,172,0.85)';
+            }
+        }
+
+        function drawF7e() {
+            var N = parseInt(f7eSlider.value);
+            f7eVal.textContent = N;
+            drawRefinementPanel(f7eNaivePlot, f7eNaiveTrace, N, true, f7eSeed);
+            drawRefinementPanel(f7eCorrectPlot, f7eCorrectTrace, N, false, f7eSeed + 1);
+        }
+
+        if (f7eSlider) {
+            f7eSlider.addEventListener('input', drawF7e);
+            if (f7eResample) {
+                f7eResample.addEventListener('click', function() {
+                    f7eSeed = Math.floor(Math.random() * 100000);
+                    drawF7e();
+                });
+            }
+            drawF7e();
+        }
+
     })();
     </script>
 </body>

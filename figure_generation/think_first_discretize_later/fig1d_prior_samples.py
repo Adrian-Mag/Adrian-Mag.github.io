@@ -1,8 +1,9 @@
 """Figure F1d - prior samples as coefficients and as function reconstructions.
 
-Two panels: (a) samples from the naive prior (sigma^2 I) shown as coefficient
-vectors, and (b) the same samples reconstructed as functions via the hat basis.
-Also shows the prior mean (zero) and the true model for reference.
+Two panels: (a) samples from the naive prior (sigma^2 i) shown as an imshow
+heatmap (rows = samples, columns = coefficient indices — coefficient world),
+and (b) the same samples reconstructed as functions via the hat basis
+(function world). Also shows the true model for reference.
 """
 
 from __future__ import annotations
@@ -32,36 +33,32 @@ def main() -> None:
     box = ps.hat_coeff_space(N_CELLS)
     fs = box.function_space
 
-    # Draw coefficient samples from the naive prior: u ~ N(0, sigma^2 I_N)
     rng = np.random.default_rng(42)
     coeff_samples = rng.normal(0.0, SIGMA, size=(N_SAMPLES, N_CELLS))
 
-    # Reconstruct functions from coefficients
     func_samples = np.asarray(
         [np.asarray(fs.from_components(c).evaluate(x), dtype=float)
          for c in coeff_samples],
         dtype=float,
     )
 
-    nodes = np.linspace(ps.DOMAIN[0], ps.DOMAIN[1], N_CELLS)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5),
+                             gridspec_kw={"width_ratios": [1.0, 1.3]})
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # (a) Coefficient samples
+    # (a) Coefficient samples as imshow — coefficient world
     ax = axes[0]
-    colors = mako_light_n(N_SAMPLES)
-    for s in range(N_SAMPLES):
-        ax.plot(np.arange(N_CELLS), coeff_samples[s], color=colors[s],
-                alpha=0.7, lw=1.5, marker="o", ms=3)
-    ax.axhline(0, color=PALETTE["muted"], lw=1.5, linestyle="--",
-               label=r"prior mean $0$")
-    ax.set_title(rf"(a) Prior coefficient samples $[\mathbf{{u}}]_j$ ($\sigma={SIGMA}$, $N={N_CELLS}$)")
+    im = ax.imshow(coeff_samples, aspect="auto", cmap=PALETTE["mako"],
+                   origin="upper", interpolation="nearest")
+    ax.set_title(rf"(a) Prior coefficient samples $[\mathbf{{u}}^{{(s)}}]_j$ ($\sigma={SIGMA}$)")
     ax.set_xlabel(r"coefficient index $j$")
-    ax.set_ylabel("coefficient value")
-    ax.legend()
+    ax.set_ylabel(r"sample index $s$")
+    cbar = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.02)
+    cbar.set_label("coefficient value", color=PALETTE.get("muted", "#dce6f5"))
+    cbar.ax.tick_params(colors=PALETTE.get("muted", "#dce6f5"))
 
-    # (b) Function reconstructions
+    # (b) Function reconstructions — function world
     ax = axes[1]
+    colors = mako_light_n(N_SAMPLES)
     for s in range(N_SAMPLES):
         ax.plot(x, func_samples[s], color=colors[s], alpha=0.5, lw=1.2)
     ax.plot(x, m_bar.evaluate(x), color=PALETTE["true"], lw=2.6,

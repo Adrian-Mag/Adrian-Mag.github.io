@@ -74,8 +74,8 @@
                 <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
                 <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
                 <a class="act-chip is-active" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
-                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
-                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> The Repair</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> The Verdict</a>
                 <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -218,6 +218,70 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Three-layer infographic: reference measure + density = probability measure -->
+
+                        <!-- Layer 1: Reference measure ν -->
+                        <rect x="20" y="20" width="200" height="70" rx="8" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.25)" stroke-width="1.5"/>
+                        <text x="120" y="42" text-anchor="middle" fill="rgba(52,122,162,0.85)" font-size="13" font-weight="700">Reference measure</text>
+                        <text x="120" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="16" font-family="serif">ν</text>
+                        <text x="120" y="80" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">the background volume</text>
+
+                        <!-- Plus sign -->
+                        <text x="250" y="60" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="20" font-weight="300">+</text>
+
+                        <!-- Layer 2: Density ρ -->
+                        <rect x="280" y="20" width="200" height="70" rx="8" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.25)" stroke-width="1.5"/>
+                        <text x="380" y="42" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="13" font-weight="700">Density</text>
+                        <text x="380" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="16" font-family="serif">ρ</text>
+                        <text x="380" y="80" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">the reweighting function</text>
+
+                        <!-- Equals sign -->
+                        <text x="510" y="60" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="20" font-weight="300">=</text>
+
+                        <!-- Layer 3: Probability measure μ -->
+                        <rect x="540" y="20" width="160" height="70" rx="8" fill="rgba(109,210,172,0.1)" stroke="rgba(109,210,172,0.25)" stroke-width="1.5"/>
+                        <text x="620" y="42" text-anchor="middle" fill="rgba(109,210,172,0.85)" font-size="13" font-weight="700">Probability measure</text>
+                        <text x="620" y="62" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="16" font-family="serif">μ</text>
+                        <text x="620" y="80" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">the actual prior</text>
+
+                        <!-- Central formula -->
+                        <rect x="100" y="110" width="520" height="40" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                        <text x="360" y="136" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="16" font-family="serif">
+                            dμ = ρ dν
+                        </text>
+
+                        <!-- Finite-dimensional case -->
+                        <rect x="20" y="165" width="330" height="100" rx="8" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.35)" stroke-width="1.5"/>
+                        <text x="185" y="185" text-anchor="middle" fill="rgba(120,170,200,1)" font-size="11" font-weight="600">Finite dimensions</text>
+                        <text x="185" y="210" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="13" font-family="serif">
+                            dμ(u) = ρ(u) du
+                        </text>
+                        <text x="185" y="230" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">ν = Lebesgue measure (invisible but present)</text>
+                        <text x="185" y="250" text-anchor="middle" fill="rgba(120,170,200,0.7)" font-size="9">the reference measure is so familiar it vanishes</text>
+
+                        <!-- Function-space case -->
+                        <rect x="370" y="165" width="330" height="100" rx="8" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.35)" stroke-width="1.5"/>
+                        <text x="535" y="185" text-anchor="middle" fill="rgba(239,111,108,0.95)" font-size="11" font-weight="600">Function space</text>
+                        <text x="535" y="210" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="13" font-family="serif">
+                            dμ(m) = ρ(m) dm  ???
+                        </text>
+                        <text x="535" y="230" text-anchor="middle" fill="rgba(239,111,108,0.85)" font-size="10">no infinite-dimensional Lebesgue measure exists</text>
+                        <text x="535" y="250" text-anchor="middle" fill="rgba(239,111,108,0.7)" font-size="9">the density has no background to lean on</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F6a &mdash; Density is not probability.</strong>
+                        A probability measure \(\mu\) is the fundamental object.
+                        A density \(\rho\) is always a density <em>with respect to</em>
+                        a reference measure \(\nu\): \(d\mu = \rho\,d\nu\). In finite
+                        dimensions, Lebesgue measure plays this role invisibly. In
+                        function space, there is no infinite-dimensional Lebesgue
+                        measure, so the prior must be specified as a measure
+                        directly.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-subsection-heading">
                     <h5>The role of Lebesgue measure in finite dimensions</h5>
                 </div>
@@ -256,6 +320,64 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowF6h" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(52,122,162,0.5)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Left: Prior cloud (unchanged) -->
+                        <rect x="10" y="10" width="200" height="240" rx="8" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.25)" stroke-width="1"/>
+                        <text x="110" y="30" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="12" font-weight="600">Prior</text>
+                        <text x="110" y="46" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="serif">m ~ μ₀</text>
+
+                        <!-- Scatter of function samples, all equal weight -->
+                        <path d="M 30 130 Q 55 100 80 120 Q 105 145 130 105 Q 155 135 190 120" fill="none" stroke="rgba(52,122,162,0.4)" stroke-width="1.5"/>
+                        <path d="M 30 120 Q 55 140 80 110 Q 105 95 130 135 Q 155 110 190 130" fill="none" stroke="rgba(52,122,162,0.35)" stroke-width="1.5"/>
+                        <path d="M 30 140 Q 55 115 80 135 Q 105 110 130 140 Q 155 120 190 115" fill="none" stroke="rgba(52,122,162,0.3)" stroke-width="1.5"/>
+                        <path d="M 30 110 Q 55 130 80 100 Q 105 140 130 115 Q 155 145 190 125" fill="none" stroke="rgba(52,122,162,0.25)" stroke-width="1.5"/>
+                        <text x="110" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">cloud of random functions</text>
+                        <text x="110" y="195" text-anchor="middle" fill="rgba(52,122,162,0.6)" font-size="9">all samples equally probable</text>
+                        <text x="110" y="225" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="9">μ₀ assigns mass — no density needed</text>
+
+                        <!-- Arrow -->
+                        <line x1="215" y1="130" x2="295" y2="130" stroke="rgba(52,122,162,0.5)" stroke-width="2" marker-end="url(#arrowF6h)"/>
+                        <text x="255" y="122" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="9">reweight by L(m)</text>
+
+                        <!-- Right: Posterior — prior cloud reweighted by likelihood -->
+                        <rect x="300" y="10" width="200" height="240" rx="8" fill="rgba(109,210,172,0.1)" stroke="rgba(109,210,172,0.3)" stroke-width="1"/>
+                        <text x="400" y="30" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Posterior</text>
+                        <text x="400" y="46" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="serif">dμ^y = L(m) dμ₀</text>
+
+                        <!-- Reweighted cloud: bright functions near peak, faded elsewhere -->
+                        <!-- Bright (high posterior) -->
+                        <path d="M 320 125 Q 345 115 370 122 Q 395 128 420 118 Q 445 125 490 122" fill="none" stroke="rgba(109,210,172,0.8)" stroke-width="2"/>
+                        <path d="M 320 130 Q 345 120 370 128 Q 395 125 420 120 Q 445 130 490 125" fill="none" stroke="rgba(109,210,172,0.6)" stroke-width="1.5"/>
+                        <!-- Faded (low posterior) -->
+                        <path d="M 320 145 Q 345 160 370 150 Q 395 165 420 155 Q 445 160 490 150" fill="none" stroke="rgba(109,210,172,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+                        <path d="M 320 105 Q 345 90 370 100 Q 395 85 420 95 Q 445 90 490 100" fill="none" stroke="rgba(109,210,172,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+
+                        <!-- Brightness indicator -->
+                        <circle cx="400" cy="122" r="4" fill="rgba(109,210,172,0.9)"/>
+                        <text x="410" y="118" fill="rgba(109,210,172,0.8)" font-size="9">high posterior mass</text>
+                        <circle cx="330" cy="145" r="3" fill="rgba(109,210,172,0.3)"/>
+                        <text x="338" y="160" fill="rgba(109,210,172,0.5)" font-size="9">low posterior mass</text>
+
+                        <text x="400" y="195" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">prior cloud tilted by likelihood</text>
+                        <text x="400" y="225" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="9">not a density w.r.t. dm —</text>
+                        <text x="400" y="240" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="9">a measure reweighted by L(m)</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F6h &mdash; The posterior reweights the prior, not Lebesgue volume.</strong>
+                        The prior \(\prior\) assigns mass to model-space sets.
+                        The posterior \(\post\) is the prior measure reweighted by
+                        the likelihood: \(d\post = L\,d\prior\). No Lebesgue density is
+                        involved — the prior is the reference measure.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
@@ -263,6 +385,64 @@
                         In function space, that quiet support disappears.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Left panel: finite-dimensional Gaussian density -->
+                        <rect x="10" y="10" width="330" height="240" rx="8" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.25)" stroke-width="1"/>
+                        <text x="175" y="30" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="12" font-weight="600">Finite dimensions: density</text>
+
+                        <!-- Axes -->
+                        <line x1="50" y1="210" x2="310" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="50" y1="210" x2="50" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="315" y="213" fill="rgba(255,255,255,0.5)" font-size="9">u₁</text>
+                        <text x="45" y="45" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">u₂</text>
+
+                        <!-- Concentric ellipses (contours) -->
+                        <ellipse cx="175" cy="130" rx="25" ry="18" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.5)" stroke-width="1.5"/>
+                        <ellipse cx="175" cy="130" rx="50" ry="36" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.35)" stroke-width="1"/>
+                        <ellipse cx="175" cy="130" rx="80" ry="58" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.3)" stroke-width="1"/>
+                        <ellipse cx="175" cy="130" rx="115" ry="83" fill="rgba(52,122,162,0.02)" stroke="rgba(52,122,162,0.1)" stroke-width="1"/>
+
+                        <!-- Mean point -->
+                        <circle cx="175" cy="130" r="3" fill="rgba(244,162,89,0.9)"/>
+                        <text x="182" y="128" fill="rgba(244,162,89,0.8)" font-size="10">ū</text>
+
+                        <!-- Formula -->
+                        <text x="175" y="240" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="10" font-family="serif">ρ(u) ∝ exp(−½(u−ū)⊤C⁻¹(u−ū))</text>
+
+                        <!-- Right panel: function-space measure -->
+                        <rect x="380" y="10" width="330" height="240" rx="8" fill="rgba(109,210,172,0.08)" stroke="rgba(109,210,172,0.25)" stroke-width="1"/>
+                        <text x="545" y="30" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Function space: measure</text>
+
+                        <!-- Axes -->
+                        <line x1="420" y1="210" x2="680" y2="210" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="420" y1="210" x2="420" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="685" y="213" fill="rgba(255,255,255,0.5)" font-size="9">x</text>
+                        <text x="415" y="45" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">m(x)</text>
+
+                        <!-- Random function samples -->
+                        <path d="M 420 140 Q 445 110 470 130 Q 495 160 520 115 Q 545 145 570 120 Q 595 150 620 125 Q 645 140 680 135" fill="none" stroke="rgba(109,210,172,0.5)" stroke-width="1.5"/>
+                        <path d="M 420 135 Q 445 155 470 125 Q 495 100 520 140 Q 545 115 570 155 Q 595 125 620 145 Q 645 120 680 140" fill="none" stroke="rgba(109,210,172,0.4)" stroke-width="1.5"/>
+                        <path d="M 420 145 Q 445 120 470 150 Q 495 125 520 155 Q 545 130 570 110 Q 595 145 620 130 Q 645 155 680 125" fill="none" stroke="rgba(109,210,172,0.35)" stroke-width="1.5"/>
+                        <path d="M 420 130 Q 445 145 470 115 Q 495 150 520 125 Q 545 155 570 135 Q 595 110 620 150 Q 645 125 680 145" fill="none" stroke="rgba(109,210,172,0.3)" stroke-width="1.5"/>
+
+                        <!-- Mean function -->
+                        <path d="M 420 135 Q 500 125 545 130 Q 595 135 680 132" fill="none" stroke="rgba(244,162,89,0.7)" stroke-width="2" stroke-dasharray="4,3"/>
+                        <text x="545" y="100" text-anchor="middle" fill="rgba(244,162,89,0.6)" font-size="9">m₀(x)</text>
+
+                        <!-- Formula -->
+                        <text x="545" y="240" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="10" font-family="serif">m ~ μ₀ = N(m₀, C₀)</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F6b &mdash; Finite-dimensional density versus function-space measure.</strong>
+                        In finite dimensions (left), a Gaussian is visualized by its
+                        density contours with respect to Lebesgue measure. In
+                        function space (right), the prior is better understood
+                        through the random functions it generates. There is no
+                        infinite-dimensional Lebesgue measure to carry the density.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-section-heading">
                     <h4>What changes on function spaces</h4>
@@ -437,6 +617,32 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: The Trace-Class Gate</span>
+                    </div>
+                    <div class="tfdl-trace-gate">
+                        <div class="tfdl-trace-gate-controls">
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">p (decay rate)</span><span class="tfdl-slider-sublabel" id="f6c-p-val">1.5</span></label>
+                                <input type="range" id="f6c-p" class="tfdl-slider" min="0.3" max="4.0" step="0.1" value="1.5">
+                            </div>
+                        </div>
+                        <svg id="f6c-plot" class="tfdl-interactive-svg" viewBox="0 0 420 280"
+                            preserveAspectRatio="xMidYMid meet"></svg>
+                    </div>
+                    <div class="tfdl-trace-gate-status" id="f6c-status"></div>
+                    <figcaption>
+                        <strong>F6c &mdash; The trace-class gate.</strong>
+                        Eigenvalues \(\lambda_j = j^{-p}\) and their running sum
+                        \(\sum_{j=1}^{N} \lambda_j\). When \(p \leq 1\), the trace
+                        diverges — the operator is not trace class and cannot define
+                        a Gaussian measure on the Hilbert space. When \(p > 1\), the
+                        running sum converges. Trace class is a visible gatekeeper,
+                        not a cryptic condition.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>Why trace class matters</h4>
                 </div>
@@ -486,6 +692,69 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 4 panels: N=5, N=20, N=100, N=500 -->
+                        <!-- Panel 1: N=5 -->
+                        <rect x="10" y="10" width="165" height="200" rx="6" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.25)" stroke-width="1"/>
+                        <text x="92" y="28" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="11" font-weight="600">N = 5</text>
+                        <text x="92" y="42" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">Tr = 5σ²</text>
+                        <!-- Axes -->
+                        <line x1="25" y1="170" x2="165" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="25" y1="170" x2="25" y2="55" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Sample path: mild wiggles -->
+                        <path d="M 25 130 L 50 110 L 75 140 L 100 105 L 125 135 L 150 115 L 165 125" fill="none" stroke="rgba(52,122,162,0.7)" stroke-width="1.5"/>
+                        <text x="92" y="195" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">mild perturbation</text>
+
+                        <!-- Panel 2: N=20 -->
+                        <rect x="185" y="10" width="165" height="200" rx="6" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.25)" stroke-width="1"/>
+                        <text x="267" y="28" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="11" font-weight="600">N = 20</text>
+                        <text x="267" y="42" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">Tr = 20σ²</text>
+                        <line x1="200" y1="170" x2="340" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="200" y1="170" x2="200" y2="55" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Sample path: more wiggles -->
+                        <path d="M 200 130 L 210 100 L 220 145 L 230 90 L 240 150 L 250 85 L 260 155 L 270 80 L 280 160 L 290 90 L 300 145 L 310 95 L 320 150 L 330 100 L 340 135" fill="none" stroke="rgba(52,122,162,0.7)" stroke-width="1.5"/>
+                        <text x="267" y="195" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">growing roughness</text>
+
+                        <!-- Panel 3: N=100 -->
+                        <rect x="360" y="10" width="165" height="200" rx="6" fill="rgba(239,111,108,0.04)" stroke="rgba(239,111,108,0.25)" stroke-width="1"/>
+                        <text x="442" y="28" text-anchor="middle" fill="rgba(239,111,108,0.8)" font-size="11" font-weight="600">N = 100</text>
+                        <text x="442" y="42" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">Tr = 100σ²</text>
+                        <line x1="375" y1="170" x2="515" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="375" y1="170" x2="375" y2="55" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Sample path: violent -->
+                        <path d="M 375 130 L 378 85 L 381 160 L 384 75 L 387 165 L 390 70 L 393 170 L 396 65 L 399 175 L 402 70 L 405 170 L 408 65 L 411 175 L 414 70 L 417 165 L 420 75 L 423 160 L 426 80 L 429 155 L 432 85 L 435 150 L 438 80 L 441 165 L 444 75 L 447 170 L 450 70 L 453 175 L 456 65 L 459 170 L 462 75 L 465 165 L 468 80 L 471 155 L 474 85 L 477 150 L 480 80 L 483 160 L 486 75 L 489 165 L 492 70 L 495 170 L 498 80 L 501 155 L 504 85 L 507 150 L 510 90 L 513 145 L 515 130" fill="none" stroke="rgba(239,111,108,0.7)" stroke-width="1"/>
+                        <text x="442" y="195" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">violent oscillation</text>
+
+                        <!-- Panel 4: N=500 -->
+                        <rect x="535" y="10" width="175" height="200" rx="6" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.3)" stroke-width="1"/>
+                        <text x="622" y="28" text-anchor="middle" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">N = 500</text>
+                        <text x="622" y="42" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">Tr = 500σ² → ∞</text>
+                        <line x1="550" y1="170" x2="700" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <line x1="550" y1="170" x2="550" y2="55" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <!-- Sample path: noise-like fill -->
+                        <rect x="552" y="60" width="146" height="110" fill="rgba(239,111,108,0.08)"/>
+                        <text x="622" y="120" text-anchor="middle" fill="rgba(239,111,108,0.6)" font-size="9">noise-like</text>
+                        <text x="622" y="135" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">no convergence</text>
+                        <text x="622" y="195" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">total variance → ∞</text>
+
+                        <!-- Bottom: trace formula -->
+                        <rect x="10" y="225" width="700" height="45" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                        <text x="360" y="245" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-family="serif">
+                            Tr(σ² I_N) = σ² N → ∞   as   N → ∞
+                        </text>
+                        <text x="360" y="262" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">the continuous analogue of the naive failure from Act II</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F6d &mdash; Identity covariance explosion.</strong>
+                        Prior samples \(m_N(x) = \sum_{j=1}^{N} \sigma\,\xi_j\,e_j(x)\)
+                        with identity covariance. As \(N\) grows, all modes receive
+                        equal variance and samples become increasingly violent.
+                        The trace \(\Tr(\sigma^2 I_N) = \sigma^2 N \to \infty\)
+                        directly echoes the naive posterior pathology from Act II.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>What the covariance really chooses</h4>
                 </div>
@@ -515,6 +784,34 @@
                         A covariance operator says how a random function breathes.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: Covariance Operator as Spectral Filter</span>
+                    </div>
+                    <div class="tfdl-spectral-filter">
+                        <div class="tfdl-spectral-filter-controls">
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">s (smoothness)</span><span class="tfdl-slider-sublabel" id="f6e-s-val">2.0</span></label>
+                                <input type="range" id="f6e-s" class="tfdl-slider" min="0" max="6" step="0.5" value="2.0">
+                            </div>
+                            <button id="f6e-resample" class="tfdl-prior-sampler-btn">Resample</button>
+                        </div>
+                        <div class="tfdl-spectral-filter-plot">
+                            <img id="f6e-img" class="tfdl-interactive-img" src="../../../../media/research/think-first/f6e_s2.0.png" alt="KL samples" style="width:100%;max-width:420px;">
+                        </div>
+                    </div>
+                    <div class="tfdl-spectral-filter-info" id="f6e-info"></div>
+                    <figcaption>
+                        <strong>F6e &mdash; Covariance operator as a spectral filter.</strong>
+                        The Karhunen-Loève expansion
+                        \(m(x) = m_0 + \sum_j \sqrt{\lambda_j}\,\xi_j\,e_j(x)\)
+                        with \(\lambda_j = (\kappa^2 + \rho_j)^{-s}\), where \(\rho_j\) are the eigenvalues of \(-\Delta\). As \(s\) increases,
+                        high-frequency modes are damped more strongly and samples
+                        become smoother. The covariance operator is a knob panel
+                        controlling roughness.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-chapter">
                     <h3>How to Build Covariances</h3>
@@ -597,6 +894,49 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: Laplacian Prior Sampler</span>
+                    </div>
+                    <div class="tfdl-prior-sampler">
+                        <div class="tfdl-prior-sampler-controls">
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">α (amplitude)</span><span class="tfdl-slider-sublabel" id="f6f-alpha-val">1.0</span></label>
+                                <input type="range" id="f6f-alpha" class="tfdl-slider" min="0.5" max="3.0" step="0.5" value="1.0">
+                            </div>
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">κ (length scale)</span><span class="tfdl-slider-sublabel" id="f6f-kappa-val">1.0</span></label>
+                                <input type="range" id="f6f-kappa" class="tfdl-slider" min="0.5" max="5.0" step="0.5" value="1.0">
+                            </div>
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">s (smoothness)</span><span class="tfdl-slider-sublabel" id="f6f-s-val">2.0</span></label>
+                                <input type="range" id="f6f-s" class="tfdl-slider" min="0.5" max="6.0" step="0.5" value="2.0">
+                            </div>
+                            <div class="tfdl-prior-sampler-bc-row">
+                                <label for="f6f-bc">Boundary conditions:</label>
+                                <select id="f6f-bc">
+                                    <option value="dirichlet" selected>Dirichlet: m(0)=m(L)=0</option>
+                                    <option value="neumann">Neumann: m′(0)=m′(L)=0</option>
+                                    <option value="mixed">Mixed: m(0)=0, m′(L)=0</option>
+                                </select>
+                            </div>
+                            <button id="f6f-resample" class="tfdl-prior-sampler-btn">Resample</button>
+                        </div>
+                        <div class="tfdl-prior-sampler-plot">
+                            <img id="f6f-img" class="tfdl-interactive-img" src="../../../../media/research/think-first/f6f_1.0_1.0_2.0_dirichlet.png" alt="Laplacian prior samples" style="width:100%;max-width:420px;">
+                        </div>
+                    </div>
+                    <figcaption>
+                        <strong>F6f &mdash; Laplacian covariance as a smoothing prior.</strong>
+                        The covariance \(C_0 = \alpha(\kappa^2 I - \Delta)^{-s}\)
+                        has three knobs: \(\alpha\) controls amplitude, \(\kappa\)
+                        controls correlation length, and \(s\) controls smoothness.
+                        Boundary conditions (Dirichlet, Neumann, mixed) change the
+                        eigenfunctions and therefore the prior. The same formula
+                        with different boundary conditions is not the same prior.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>Covariances from kernels</h4>
                 </div>
@@ -660,6 +1000,117 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowF6g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(52,122,162,0.6)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Left column: Kernel view -->
+                        <rect x="10" y="10" width="330" height="250" rx="8" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.25)" stroke-width="1"/>
+                        <text x="175" y="32" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="13" font-weight="700">Kernel view</text>
+                        <text x="175" y="48" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">k(x, x′) = Cov(m(x), m(x′))</text>
+
+                        <!-- Kernel heatmap: 6×6 grid simulating squared exponential kernel -->
+                        <!-- Diagonal bright, fading with distance -->
+                        <!-- We'll use individual rects with varying opacity -->
+                        <!-- Row 0 -->
+                        <rect x="50" y="65" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+                        <rect x="80" y="65" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="110" y="65" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="140" y="65" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <rect x="170" y="65" width="30" height="30" fill="rgba(244,162,89,0.02)"/>
+                        <rect x="200" y="65" width="30" height="30" fill="rgba(244,162,89,0.01)"/>
+                        <!-- Row 1 -->
+                        <rect x="50" y="95" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="80" y="95" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+                        <rect x="110" y="95" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="140" y="95" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="170" y="95" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <rect x="200" y="95" width="30" height="30" fill="rgba(244,162,89,0.02)"/>
+                        <!-- Row 2 -->
+                        <rect x="50" y="125" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="80" y="125" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="110" y="125" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+                        <rect x="140" y="125" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="170" y="125" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="200" y="125" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <!-- Row 3 -->
+                        <rect x="50" y="155" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <rect x="80" y="155" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="110" y="155" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="140" y="155" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+                        <rect x="170" y="155" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="200" y="155" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <!-- Row 4 -->
+                        <rect x="50" y="185" width="30" height="30" fill="rgba(244,162,89,0.02)"/>
+                        <rect x="80" y="185" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <rect x="110" y="185" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="140" y="185" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="170" y="185" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+                        <rect x="200" y="185" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <!-- Row 5 -->
+                        <rect x="50" y="215" width="30" height="30" fill="rgba(244,162,89,0.01)"/>
+                        <rect x="80" y="215" width="30" height="30" fill="rgba(244,162,89,0.02)"/>
+                        <rect x="110" y="215" width="30" height="30" fill="rgba(244,162,89,0.05)"/>
+                        <rect x="140" y="215" width="30" height="30" fill="rgba(244,162,89,0.25)"/>
+                        <rect x="170" y="215" width="30" height="30" fill="rgba(244,162,89,0.4)"/>
+                        <rect x="200" y="215" width="30" height="30" fill="rgba(244,162,89,0.7)"/>
+
+                        <!-- Axis labels -->
+                        <text x="140" y="255" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">x′ →</text>
+                        <text x="40" y="155" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9" transform="rotate(-90 40 155)">x</text>
+
+                        <text x="175" y="275" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">bright diagonal = high correlation</text>
+
+                        <!-- Right column: Operator view -->
+                        <rect x="380" y="10" width="330" height="250" rx="8" fill="rgba(109,210,172,0.08)" stroke="rgba(109,210,172,0.25)" stroke-width="1"/>
+                        <text x="545" y="32" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="13" font-weight="700">Operator view</text>
+                        <text x="545" y="48" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">(C₀f)(x) = ∫ k(x,x′) f(x′) dx′</text>
+
+                        <!-- Input function f(x') -->
+                        <path d="M 410 180 Q 430 130 450 160 Q 470 190 490 140 Q 510 170 530 155" fill="none" stroke="rgba(244,162,89,0.7)" stroke-width="2"/>
+                        <text x="470" y="210" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">f(x′)</text>
+
+                        <!-- Integral operator box -->
+                        <rect x="440" y="60" width="120" height="50" rx="6" fill="rgba(109,210,172,0.08)" stroke="rgba(109,210,172,0.3)" stroke-width="1.5"/>
+                        <text x="500" y="82" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="14" font-weight="700" font-family="serif">C₀</text>
+                        <text x="500" y="98" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">integral operator</text>
+
+                        <!-- Arrow up from f to C₀ -->
+                        <line x1="470" y1="130" x2="470" y2="115" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF6g)"/>
+
+                        <!-- Output C₀f(x) -->
+                        <path d="M 560 170 Q 580 140 600 155 Q 620 170 640 145 Q 660 160 680 150" fill="none" stroke="rgba(109,210,172,0.8)" stroke-width="2"/>
+                        <text x="620" y="200" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="11" font-weight="600">C₀f(x)</text>
+
+                        <!-- Arrow from C₀ to output -->
+                        <line x1="560" y1="85" x2="580" y2="130" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF6g)"/>
+
+                        <text x="545" y="240" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">feed in a direction, get the covariance response</text>
+
+                        <!-- Bottom bridge: spectral decomposition -->
+                        <rect x="10" y="280" width="700" height="70" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                        <text x="360" y="302" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">Spectral bridge</text>
+                        <text x="360" y="325" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="13" font-family="serif">
+                            k(x, x′) = Σⱼ λⱼ eⱼ(x) eⱼ(x′)
+                        </text>
+                        <text x="360" y="343" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">two languages for the same covariance object</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F6g &mdash; Kernel view versus operator view.</strong>
+                        The kernel view (left) describes covariance through a
+                        spatial correlation function \(k(x,x')\). The operator
+                        view (right) treats covariance as an integral operator
+                        \(C_0\) that maps a test function \(f\) to its covariance
+                        response \(C_0 f\). The spectral decomposition
+                        \(k(x,x') = \sum_j \lambda_j e_j(x) e_j(x')\) bridges both
+                        perspectives.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>The moral of Act VI</h4>
                 </div>
@@ -702,7 +1153,7 @@
                 <div class="act-prevnext-spacer"></div>
                 <div class="act-prevnext">
                     <a class="act-prevnext-btn" href="act-5.html"><span class="arrow">&larr;</span> Act V: Data &amp; Adjoint</a>
-                    <a class="act-prevnext-btn next" href="act-7.html">Act VII: Putting Together <span class="arrow">&rarr;</span></a>
+                    <a class="act-prevnext-btn next" href="act-7.html">Act VII: The Repair <span class="arrow">&rarr;</span></a>
                 </div>
 
             </div>
@@ -737,6 +1188,213 @@
         }
         window.addEventListener("scroll", onScroll, { passive: true });
         onScroll();
+    })();
+    </script>
+
+    <script>
+    (function () {
+        "use strict";
+
+        /* ── Shared utilities ── */
+        var makoBase = [
+            [59,85,152],
+            [52,122,162],
+            [53,158,170],
+            [74,194,173],
+            [109,210,172],
+            [173,226,191],
+            [224,243,215]
+        ];
+        function makoColor(k, alpha) {
+            var c = makoBase[k % makoBase.length];
+            return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(2) + ')';
+        }
+
+        function gaussianRandom() {
+            var u = 0, v = 0;
+            while (u === 0) u = Math.random();
+            while (v === 0) v = Math.random();
+            return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+        }
+
+        function clearSVG(svg) {
+            while (svg.firstChild) svg.removeChild(svg.firstChild);
+        }
+
+        function svgEl(tag, attrs, text) {
+            var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            for (var k in attrs) e.setAttribute(k, attrs[k]);
+            if (text !== undefined) e.textContent = text;
+            return e;
+        }
+
+        /* ── F6c: Trace-Class Gate ── */
+        var f6cPlot = document.getElementById('f6c-plot');
+        var f6cSlider = document.getElementById('f6c-p');
+        var f6cVal = document.getElementById('f6c-p-val');
+        var f6cStatus = document.getElementById('f6c-status');
+
+        function drawF6c() {
+            var p = parseFloat(f6cSlider.value);
+            f6cVal.textContent = p.toFixed(1);
+            clearSVG(f6cPlot);
+
+            var W = 420, H = 280;
+            var padL = 40, padR = 20, padT = 20, padB = 40;
+            var plotW = W - padL - padR, plotH = H - padT - padB;
+            var N = 50;
+
+            var lambdas = [];
+            for (var j = 1; j <= N; j++) lambdas.push(Math.pow(j, -p));
+
+            var maxLambda = lambdas[0];
+            var runningSum = [lambdas[0]];
+            for (var j = 1; j < N; j++) runningSum.push(runningSum[j-1] + lambdas[j]);
+
+            var maxSum = runningSum[N-1];
+            var isTraceClass = p > 1;
+            var displayMax = isTraceClass ? Math.max(maxSum * 1.2, 3) : Math.max(maxSum * 0.4, 5);
+
+            /* Axes */
+            var axisColor = 'rgba(255,255,255,0.1)';
+            f6cPlot.appendChild(svgEl('line', {x1: padL, y1: H-padB, x2: W-padR, y2: H-padB, stroke: axisColor, 'stroke-width': 1}));
+            f6cPlot.appendChild(svgEl('line', {x1: padL, y1: padT, x2: padL, y2: H-padB, stroke: axisColor, 'stroke-width': 1}));
+
+            /* Axis labels */
+            f6cPlot.appendChild(svgEl('text', {x: W/2, y: H-8, 'text-anchor': 'middle', fill: 'rgba(255,255,255,0.5)', 'font-size': 10, 'font-family': 'serif'}, 'j'));
+            f6cPlot.appendChild(svgEl('text', {x: 12, y: H/2, 'text-anchor': 'middle', fill: 'rgba(255,255,255,0.5)', 'font-size': 10, 'font-family': 'serif', transform: 'rotate(-90 12 ' + (H/2) + ')'}, 'λⱼ / Σλⱼ'));
+
+            /* Eigenvalue bars */
+            var barW = plotW / N * 0.6;
+            var barGap = plotW / N;
+            for (var j = 0; j < N; j++) {
+                var bh = (lambdas[j] / maxLambda) * plotH * 0.45;
+                var bx = padL + j * barGap + (barGap - barW) / 2;
+                var by = H - padB - bh;
+                f6cPlot.appendChild(svgEl('rect', {
+                    x: bx, y: by, width: barW, height: bh,
+                    fill: makoColor(1, 0.5),
+                    stroke: makoColor(1, 0.7),
+                    'stroke-width': 0.5
+                }));
+            }
+
+            /* Running sum line */
+            var sumColor = isTraceClass ? 'rgba(109,210,172,0.8)' : 'rgba(239,111,108,0.8)';
+            var sumPoints = [];
+            for (var j = 0; j < N; j++) {
+                var sx = padL + j * barGap + barGap / 2;
+                var sy = H - padB - (runningSum[j] / displayMax) * plotH;
+                sumPoints.push(sx + ',' + sy);
+            }
+            f6cPlot.appendChild(svgEl('polyline', {
+                points: sumPoints.join(' '),
+                fill: 'none',
+                stroke: sumColor,
+                'stroke-width': 2
+            }));
+
+            /* Divergence line (if not trace class) */
+            if (!isTraceClass) {
+                f6cPlot.appendChild(svgEl('line', {
+                    x1: padL, y1: padT + 5,
+                    x2: W - padR, y2: padT + 5,
+                    stroke: 'rgba(239,111,108,0.3)',
+                    'stroke-width': 1,
+                    'stroke-dasharray': '4,3'
+                }));
+                f6cPlot.appendChild(svgEl('text', {
+                    x: W - padR - 5, y: padT + 2,
+                    'text-anchor': 'end', fill: 'rgba(239,111,108,0.5)',
+                    'font-size': 9
+                }, '→ ∞'));
+            }
+
+            /* Status text */
+            if (f6cStatus) {
+                if (isTraceClass) {
+                    f6cStatus.textContent = '✓ Trace class: Σλⱼ converges (p = ' + p.toFixed(1) + ' > 1)';
+                    f6cStatus.style.color = 'rgba(109,210,172,0.85)';
+                } else {
+                    f6cStatus.textContent = '✗ Not trace class: Σλⱼ → ∞ (p = ' + p.toFixed(1) + ' ≤ 1)';
+                    f6cStatus.style.color = 'rgba(239,111,108,0.85)';
+                }
+            }
+        }
+
+        if (f6cSlider) {
+            f6cSlider.addEventListener('input', drawF6c);
+            drawF6c();
+        }
+
+        /* ── F6e: Spectral Filter (pre-computed via intervalinf) ── */
+        var f6eImg = document.getElementById('f6e-img');
+        var f6eSlider = document.getElementById('f6e-s');
+        var f6eVal = document.getElementById('f6e-s-val');
+        var f6eResample = document.getElementById('f6e-resample');
+        var f6eInfo = document.getElementById('f6e-info');
+
+        function drawF6e() {
+            var s = parseFloat(f6eSlider.value);
+            f6eVal.textContent = s.toFixed(1);
+            if (f6eImg) {
+                f6eImg.src = '../../../../media/research/think-first/f6e_s' + s.toFixed(1) + '.png';
+            }
+            if (f6eInfo) {
+                var trace = 0;
+                for (var j = 1; j <= 80; j++) {
+                    var rho_j = (j * Math.PI) * (j * Math.PI);
+                    trace += Math.pow(1 + rho_j, -s);
+                }
+                var traceStr = s > 0.5 ? trace.toFixed(4) : '→ ∞';
+                f6eInfo.textContent = 'λⱼ = (κ² + ρⱼ)⁻ˢ, s = ' + s.toFixed(1) + ', Tr(C₀) ≈ ' + traceStr;
+            }
+        }
+
+        if (f6eSlider) {
+            f6eSlider.addEventListener('input', drawF6e);
+            if (f6eResample) {
+                f6eResample.style.display = 'none';
+            }
+            drawF6e();
+        }
+
+        /* ── F6f: Laplacian Prior Sampler (pre-computed via intervalinf) ── */
+        var f6fImg = document.getElementById('f6f-img');
+        var f6fAlpha = document.getElementById('f6f-alpha');
+        var f6fAlphaVal = document.getElementById('f6f-alpha-val');
+        var f6fKappa = document.getElementById('f6f-kappa');
+        var f6fKappaVal = document.getElementById('f6f-kappa-val');
+        var f6fS = document.getElementById('f6f-s');
+        var f6fSVal = document.getElementById('f6f-s-val');
+        var f6fBC = document.getElementById('f6f-bc');
+        var f6fResample = document.getElementById('f6f-resample');
+
+        function drawF6f() {
+            var alpha = parseFloat(f6fAlpha.value);
+            var kappa = parseFloat(f6fKappa.value);
+            var s = parseFloat(f6fS.value);
+            var bc = f6fBC.value;
+            f6fAlphaVal.textContent = alpha.toFixed(1);
+            f6fKappaVal.textContent = kappa.toFixed(1);
+            f6fSVal.textContent = s.toFixed(1);
+            if (f6fImg) {
+                var key = alpha.toFixed(1) + '_' + kappa.toFixed(1) + '_' + s.toFixed(1) + '_' + bc;
+                f6fImg.src = '../../../../media/research/think-first/f6f_' + key + '.png';
+            }
+        }
+
+        if (f6fAlpha) {
+            f6fAlpha.addEventListener('input', drawF6f);
+            f6fKappa.addEventListener('input', drawF6f);
+            f6fS.addEventListener('input', drawF6f);
+            f6fBC.addEventListener('change', drawF6f);
+            if (f6fResample) {
+                f6fResample.style.display = 'none';
+            }
+            drawF6f();
+        }
+
     })();
     </script>
 </body>

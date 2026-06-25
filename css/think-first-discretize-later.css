@@ -244,6 +244,276 @@
     max-width: 880px;
 }
 
+/* ── Conceptual diagrams (inline SVG) ── */
+
+.tfdl-diagram {
+    max-width: 820px;
+    margin: 2.5rem auto;
+    text-align: center;
+}
+
+.tfdl-diagram svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tfdl-diagram figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ── Interactive modelling-ingredients widget ── */
+
+.tfdl-ingredient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.tfdl-ingredient-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(52,122,162,0.15);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+}
+
+.tfdl-ingredient-card label {
+    display: block;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.4rem;
+}
+
+.tfdl-ingredient-card select {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    background: rgba(30,34,40,0.6);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(52,122,162,0.2);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.tfdl-ingredient-card select:focus {
+    outline: none;
+    border-color: rgba(52,122,162,0.5);
+}
+
+.tfdl-report {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 2rem;
+}
+
+.tfdl-report-ok {
+    background: rgba(116,198,157,0.08);
+    border: 1px solid rgba(116,198,157,0.2);
+    color: rgba(116,198,157,0.9);
+}
+
+.tfdl-report-warn {
+    background: rgba(239,111,108,0.08);
+    border: 1px solid rgba(239,111,108,0.2);
+    color: rgba(239,111,108,0.9);
+}
+
+.tfdl-report-item {
+    padding: 0.2rem 0;
+}
+
+.tfdl-report-icon {
+    display: inline-block;
+    width: 1.2em;
+    text-align: center;
+    margin-right: 0.3rem;
+}
+
+/* ── Structure ladder ── */
+
+.tfdl-ladder {
+    max-width: 700px;
+    margin: 1rem auto;
+}
+
+.tfdl-ladder-rung {
+    display: flex;
+    align-items: stretch;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.tfdl-ladder-rung:hover {
+    background: rgba(52,122,162,0.06);
+}
+
+.tfdl-ladder-rung.active {
+    background: rgba(52,122,162,0.1);
+}
+
+.tfdl-ladder-level {
+    flex: 0 0 160px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: rgba(109,210,172,0.7);
+    border-right: 2px solid rgba(52,122,162,0.15);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tfdl-ladder-rung.active .tfdl-ladder-level {
+    color: rgba(173,226,191,1);
+    border-right-color: rgba(109,210,172,0.5);
+}
+
+.tfdl-ladder-tools {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
+}
+
+.tfdl-ladder-rung.active .tfdl-ladder-tools {
+    color: rgba(255,255,255,0.85);
+}
+
+.tfdl-ladder-detail {
+    max-width: 700px;
+    margin: 1rem auto 0 auto;
+    padding: 1rem 1.2rem;
+    background: rgba(52,122,162,0.06);
+    border: 1px solid rgba(52,122,162,0.15);
+    border-radius: 8px;
+    min-height: 80px;
+}
+
+.tfdl-ladder-detail-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: rgba(109,210,172,0.9);
+    margin-bottom: 0.5rem;
+}
+
+.tfdl-ladder-detail-summary {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+}
+
+.tfdl-ladder-detail-row {
+    margin-bottom: 0.6rem;
+}
+
+.tfdl-ladder-detail-q {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(52,122,162,0.8);
+    margin-bottom: 0.2rem;
+}
+
+.tfdl-ladder-detail-a {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+    padding-left: 0.8rem;
+    border-left: 2px solid rgba(52,122,162,0.15);
+}
+
+/* ── Norm comparison bars ── */
+
+.tfdl-norm-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.8rem 0;
+}
+
+.tfdl-norm-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.tfdl-norm-bar-label {
+    flex: 0 0 60px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    text-align: right;
+}
+
+.tfdl-norm-bar-track {
+    flex: 1;
+    height: 18px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tfdl-norm-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.tfdl-norm-bar-fill-l2 {
+    background: linear-gradient(90deg, rgba(59,85,152,0.5), rgba(59,85,152,0.8));
+}
+
+.tfdl-norm-bar-fill-h1 {
+    background: linear-gradient(90deg, rgba(74,194,173,0.5), rgba(74,194,173,0.8));
+}
+
+.tfdl-norm-bar-value {
+    flex: 0 0 70px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Perturbation selector ── */
+
+.tfdl-perturbation-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.6rem 0;
+    flex-wrap: wrap;
+}
+
+.tfdl-pert-btn {
+    padding: 0.4rem 0.8rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(52,122,162,0.15);
+    border-radius: 4px;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tfdl-pert-btn:hover {
+    background: rgba(52,122,162,0.1);
+    color: rgba(255,255,255,0.8);
+}
+
+.tfdl-pert-btn.active {
+    background: rgba(52,122,162,0.15);
+    border-color: rgba(52,122,162,0.4);
+    color: rgba(109,210,172,0.95);
+}
+
 /* ── Prose blocks (math-heavy sections) ───────────────── */
 
 .tfdl-prose {
@@ -459,10 +729,12 @@ mjx-container[jax="CHTML"][display="true"] {
 }
 
 .tfdl-subsection-heading h5 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.82);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.88);
     margin-bottom: 0.2em;
+    padding-bottom: 0.15em;
+    border-bottom: 1px solid rgba(103,145,190,0.25);
 }
 
 /* ── Ordered lists inside prose ── */
@@ -593,4 +865,480 @@ mjx-container[jax="CHTML"][display="true"] {
         padding: 10px 18px;
         font-size: 0.88rem;
     }
+}
+
+/* ── Interactive figures ── */
+
+.tfdl-interactive {
+    max-width: 760px;
+    margin: 2rem auto;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(103,145,190,0.15);
+    border-radius: 8px;
+}
+
+.tfdl-interactive-header {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.tfdl-slider-container {
+    margin: 0.8rem 0 1rem 0;
+}
+
+.tfdl-slider-container label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.tfdl-slider-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+}
+
+.tfdl-slider-sublabel {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+}
+
+.tfdl-slider {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(52,122,162,0.2);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+.tfdl-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #347aa2;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.tfdl-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #347aa2;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.tfdl-interactive-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tfdl-interactive-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.tfdl-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.tfdl-legend-line {
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+}
+
+.tfdl-legend-true {
+    background: #f4a259;
+}
+
+.tfdl-legend-mean {
+    background: #3a8a99;
+}
+
+.tfdl-legend-band {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+}
+
+.tfdl-legend-band-sw {
+    background: rgba(52,122,162,0.25);
+    border: 1px solid rgba(52,122,162,0.3);
+}
+
+/* ── Act V: Data Ellipse (F5d) ── */
+
+.tfdl-data-ellipse {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.tfdl-data-ellipse-controls {
+    flex: 0 0 200px;
+    min-width: 180px;
+}
+
+.tfdl-data-ellipse svg {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+/* ── Act V: Gram Matrix Demo (F5c) ── */
+
+.tfdl-gram-matrix-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.tfdl-gram-matrix-demo svg {
+    flex: 0 0 auto;
+    max-width: 400px;
+}
+
+.tfdl-gram-matrix-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.tfdl-gram-matrix-wrapper svg {
+    max-width: 220px;
+}
+
+.tfdl-gram-matrix-hint {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    min-height: 1.2em;
+    transition: color 0.2s;
+}
+
+.f5c-cell {
+    transition: fill 0.15s;
+}
+
+.f5c-cell:hover {
+    stroke: rgba(109,210,172,0.6) !important;
+    stroke-width: 2 !important;
+}
+
+/* ── Act V: Adjoint Calculator (F5e) ── */
+
+.tfdl-adjoint-calc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.tfdl-adjoint-calc-controls {
+    flex: 0 0 280px;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.tfdl-adjoint-calc-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.tfdl-adjoint-calc-row label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+}
+
+.tfdl-adjoint-calc-row select {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    background: rgba(30,34,40,0.6);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(52,122,162,0.2);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.tfdl-adjoint-calc-row select:focus {
+    outline: none;
+    border-color: rgba(52,122,162,0.5);
+}
+
+.tfdl-adjoint-calc-plot {
+    flex: 1 1 300px;
+    max-width: 520px;
+}
+
+.tfdl-adjoint-calc-warning {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 1.4em;
+}
+
+/* ── Act V: Translation Table (F5h) ── */
+
+.tfdl-translation-table {
+    margin: 1rem auto;
+    max-width: 560px;
+    overflow-x: auto;
+}
+
+.tfdl-translation-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.tfdl-translation-table th {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: rgba(109,210,172,0.85);
+    border-bottom: 2px solid rgba(52,122,162,0.2);
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.tfdl-translation-table td {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(52,122,162,0.15);
+    color: rgba(255,255,255,0.75);
+    font-family: 'Latin Modern Math', 'Times New Roman', serif;
+}
+
+.tfdl-translation-table td:first-child {
+    color: rgba(120,170,200,1);
+    font-weight: 600;
+    border-left: 2px solid rgba(52,122,162,0.3);
+}
+
+.tfdl-translation-table td:nth-child(2) {
+    color: rgba(244,162,89,0.8);
+}
+
+.tfdl-translation-table tr:hover td {
+    background: rgba(52,122,162,0.04);
+}
+
+/* ── Act VI: Trace-Class Gate (F6c) ── */
+
+.tfdl-trace-gate {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.tfdl-trace-gate-controls {
+    flex: 0 0 200px;
+    min-width: 180px;
+}
+
+.tfdl-trace-gate svg {
+    flex: 1 1 300px;
+    max-width: 460px;
+}
+
+.tfdl-trace-gate-status {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 1.4em;
+}
+
+/* ── Act VI: Spectral Filter (F6e) ── */
+
+.tfdl-spectral-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.tfdl-spectral-filter-controls {
+    flex: 0 0 180px;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tfdl-spectral-filter-plot {
+    flex: 1 1 300px;
+    max-width: 460px;
+}
+
+.tfdl-spectral-filter-info {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    min-height: 1.2em;
+}
+
+/* ── Act VI: Laplacian Prior Sampler (F6f) ── */
+
+.tfdl-prior-sampler {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.tfdl-prior-sampler-controls {
+    flex: 0 0 220px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.tfdl-prior-sampler-bc-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.tfdl-prior-sampler-bc-row label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+}
+
+.tfdl-prior-sampler-bc-row select {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    background: rgba(30,34,40,0.6);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(52,122,162,0.2);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.tfdl-prior-sampler-bc-row select:focus {
+    outline: none;
+    border-color: rgba(52,122,162,0.5);
+}
+
+.tfdl-prior-sampler-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(52,122,162,0.15);
+    color: rgba(109,210,172,0.9);
+    border: 1px solid rgba(52,122,162,0.3);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.tfdl-prior-sampler-btn:hover {
+    background: rgba(52,122,162,0.25);
+}
+
+.tfdl-prior-sampler-plot {
+    flex: 1 1 300px;
+    max-width: 460px;
+}
+
+/* ── Act VII: Refinement Comparison (F7e) ── */
+
+.tfdl-refinement-compare {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tfdl-refinement-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tfdl-refinement-controls .tfdl-slider-container {
+    flex: 1 1 250px;
+    min-width: 200px;
+}
+
+.tfdl-refinement-panels {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tfdl-refinement-panel {
+    flex: 1 1 300px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tfdl-refinement-panel-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.tfdl-refinement-panel svg {
+    width: 100%;
+    max-width: 350px;
+}
+
+.tfdl-refinement-trace {
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 1.2em;
+}
+
+/* ── Act VII: Translation Warning (F7h) ── */
+
+.tfdl-translation-warning {
+    margin: 0.8rem auto 0;
+    max-width: 600px;
+    padding: 0.6rem 1rem;
+    background: rgba(239,111,108,0.06);
+    border: 1px solid rgba(239,111,108,0.15);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: rgba(239,111,108,0.8);
+    font-weight: 600;
 }

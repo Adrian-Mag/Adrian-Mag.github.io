@@ -74,8 +74,8 @@
                 <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
                 <a class="act-chip is-active" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
                 <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
-                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
-                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> The Repair</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> The Verdict</a>
                 <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -233,6 +233,39 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: The Data Ellipse</span>
+                    </div>
+                    <div class="tfdl-data-ellipse">
+                        <div class="tfdl-data-ellipse-controls">
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">σ₁</span><span class="tfdl-slider-sublabel" id="f5d-s1-val">1.0</span></label>
+                                <input type="range" id="f5d-s1" class="tfdl-slider" min="0.3" max="2.5" step="0.1" value="1.0">
+                            </div>
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">σ₂</span><span class="tfdl-slider-sublabel" id="f5d-s2-val">0.8</span></label>
+                                <input type="range" id="f5d-s2" class="tfdl-slider" min="0.3" max="2.5" step="0.1" value="0.8">
+                            </div>
+                            <div class="tfdl-slider-container">
+                                <label><span class="tfdl-slider-label">ρ (correlation)</span><span class="tfdl-slider-sublabel" id="f5d-rho-val">0.0</span></label>
+                                <input type="range" id="f5d-rho" class="tfdl-slider" min="-0.9" max="0.9" step="0.1" value="0.0">
+                            </div>
+                        </div>
+                        <svg id="f5d-plot" class="tfdl-interactive-svg" viewBox="0 0 360 320"
+                            preserveAspectRatio="xMidYMid meet"></svg>
+                    </div>
+                    <figcaption>
+                        <strong>F5d &mdash; The data ellipse.</strong>
+                        The noise covariance \(\Cd\) defines an ellipse in data
+                        space. Its shape depends on the variances \(\sigma_1^2,
+                        \sigma_2^2\) and the correlation \(\rho\). The misfit
+                        contours \(r^{\T}\Cd^{-1}r = \text{const}\) are concentric
+                        ellipses aligned with the covariance. Residuals are judged
+                        relative to the noise geometry, not by raw Euclidean length.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-subsection-heading">
                     <h5>Whitened and unwhitened data</h5>
                 </div>
@@ -249,6 +282,87 @@
                         of coordinates in data space. The underlying statistical model is the same.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Left panel: unwhitened data space -->
+                        <rect x="10" y="10" width="340" height="260" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="180" y="30" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="12" font-weight="600">Unwhitened data space</text>
+                        <text x="180" y="46" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">noise ellipse is tilted</text>
+
+                        <!-- Axes -->
+                        <line x1="50" y1="230" x2="320" y2="230" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <line x1="50" y1="230" x2="50" y2="60" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="325" y="233" fill="rgba(255,255,255,0.5)" font-size="9">d₁</text>
+                        <text x="45" y="55" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">d₂</text>
+
+                        <!-- Tilted covariance ellipse -->
+                        <ellipse cx="180" cy="145" rx="70" ry="35" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.5)" stroke-width="1.5" transform="rotate(-25 180 145)"/>
+
+                        <!-- Residual vector r -->
+                        <line x1="180" y1="145" x2="250" y2="100" stroke="rgba(244,162,89,0.8)" stroke-width="2" marker-end="url(#arrowR5g1)"/>
+                        <defs>
+                            <marker id="arrowR5g1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(244,162,89,0.8)"/>
+                            </marker>
+                        </defs>
+                        <text x="225" y="115" fill="rgba(244,162,89,0.9)" font-size="11" font-weight="600">r</text>
+
+                        <!-- Misfit contours (tilted) -->
+                        <ellipse cx="180" cy="145" rx="40" ry="20" fill="none" stroke="rgba(52,122,162,0.15)" stroke-width="1" stroke-dasharray="2,3" transform="rotate(-25 180 145)"/>
+                        <ellipse cx="180" cy="145" rx="100" ry="50" fill="none" stroke="rgba(52,122,162,0.1)" stroke-width="1" stroke-dasharray="2,3" transform="rotate(-25 180 145)"/>
+
+                        <text x="180" y="265" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">r⊤ C_D⁻¹ r ≠ ‖r‖² (anisotropic metric)</text>
+
+                        <!-- Arrow between panels -->
+                        <line x1="355" y1="140" x2="380" y2="140" stroke="rgba(109,210,172,0.5)" stroke-width="2" marker-end="url(#arrowWhite5g)"/>
+                        <defs>
+                            <marker id="arrowWhite5g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.5)"/>
+                            </marker>
+                        </defs>
+                        <text x="367" y="130" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">L⁻¹</text>
+
+                        <!-- Right panel: whitened data space -->
+                        <rect x="370" y="10" width="340" height="260" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="540" y="30" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Whitened data space</text>
+                        <text x="540" y="46" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">noise ellipse is a circle</text>
+
+                        <!-- Axes -->
+                        <line x1="410" y1="230" x2="680" y2="230" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <line x1="410" y1="230" x2="410" y2="60" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="685" y="233" fill="rgba(255,255,255,0.5)" font-size="9">d̃₁</text>
+                        <text x="405" y="55" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">d̃₂</text>
+
+                        <!-- Circular covariance -->
+                        <circle cx="540" cy="145" r="50" fill="rgba(109,210,172,0.1)" stroke="rgba(109,210,172,0.5)" stroke-width="1.5"/>
+
+                        <!-- Whitened residual vector r̃ -->
+                        <line x1="540" y1="145" x2="585" y2="105" stroke="rgba(109,210,172,0.8)" stroke-width="2" marker-end="url(#arrowR5g2)"/>
+                        <defs>
+                            <marker id="arrowR5g2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.8)"/>
+                            </marker>
+                        </defs>
+                        <text x="565" y="120" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">r̃</text>
+
+                        <!-- Circular misfit contours -->
+                        <circle cx="540" cy="145" r="28" fill="none" stroke="rgba(52,122,162,0.15)" stroke-width="1" stroke-dasharray="2,3"/>
+                        <circle cx="540" cy="145" r="72" fill="none" stroke="rgba(52,122,162,0.1)" stroke-width="1" stroke-dasharray="2,3"/>
+
+                        <text x="540" y="265" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">‖r̃‖² = r⊤ C_D⁻¹ r (isotropic metric)</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F5g &mdash; Whitening as coordinate change.</strong>
+                        In the original data space (left), the noise covariance
+                        \(\Cd\) produces a tilted ellipse, and the misfit
+                        \(r^{\T}\Cd^{-1}r\) is measured by an anisotropic metric.
+                        After whitening \(\widetilde{r} = L^{-1}r\) (right), the
+                        ellipse becomes a circle, and the same misfit is just
+                        \(\|\widetilde{r}\|_2^2\). The statistical model is
+                        unchanged; only the coordinates differ.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-section-heading">
                     <h4>The data misfit</h4>
@@ -328,6 +442,87 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowF5a1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(52,122,162,0.7)"/>
+                            </marker>
+                            <marker id="arrowF5a2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.7)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Central balance equation -->
+                        <text x="360" y="25" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-weight="600" font-family="serif">
+                            ⟨Gm, d⟩_D  =  ⟨m, G*d⟩_M
+                        </text>
+
+                        <!-- Left side: push forward -->
+                        <rect x="10" y="50" width="340" height="210" rx="8" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.15)" stroke-width="1"/>
+                        <text x="180" y="70" text-anchor="middle" fill="rgba(52,122,162,0.7)" font-size="11" font-weight="600">Push forward into D</text>
+
+                        <!-- m in M -->
+                        <circle cx="60" cy="140" r="5" fill="rgba(52,122,162,0.8)"/>
+                        <text x="60" y="160" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="12" font-weight="600">m</text>
+                        <text x="60" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ M</text>
+
+                        <!-- Arrow G -->
+                        <line x1="75" y1="140" x2="180" y2="140" stroke="rgba(52,122,162,0.6)" stroke-width="2" marker-end="url(#arrowF5a1)"/>
+                        <text x="127" y="132" text-anchor="middle" fill="rgba(52,122,162,0.7)" font-size="12" font-weight="600">G</text>
+
+                        <!-- Gm in D -->
+                        <circle cx="195" cy="140" r="5" fill="rgba(244,162,89,0.8)"/>
+                        <text x="195" y="160" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="12" font-weight="600">Gm</text>
+                        <text x="195" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ D</text>
+
+                        <!-- Pair with d -->
+                        <line x1="200" y1="145" x2="280" y2="145" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <circle cx="290" cy="145" r="5" fill="rgba(244,162,89,0.6)"/>
+                        <text x="290" y="165" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="12" font-weight="600">d</text>
+                        <text x="290" y="180" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ D</text>
+
+                        <text x="180" y="220" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">pair Gm with d in data space</text>
+                        <text x="180" y="240" text-anchor="middle" fill="rgba(52,122,162,0.5)" font-size="11" font-family="serif">⟨Gm, d⟩_D</text>
+
+                        <!-- Right side: pull back -->
+                        <rect x="370" y="50" width="340" height="210" rx="8" fill="rgba(109,210,172,0.08)" stroke="rgba(109,210,172,0.15)" stroke-width="1"/>
+                        <text x="540" y="70" text-anchor="middle" fill="rgba(109,210,172,0.7)" font-size="11" font-weight="600">Pull back into M</text>
+
+                        <!-- d in D -->
+                        <circle cx="420" cy="140" r="5" fill="rgba(244,162,89,0.6)"/>
+                        <text x="420" y="160" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="12" font-weight="600">d</text>
+                        <text x="420" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ D</text>
+
+                        <!-- Arrow G* -->
+                        <line x1="435" y1="140" x2="540" y2="140" stroke="rgba(109,210,172,0.6)" stroke-width="2" marker-end="url(#arrowF5a2)"/>
+                        <text x="487" y="132" text-anchor="middle" fill="rgba(109,210,172,0.7)" font-size="12" font-weight="600">G*</text>
+
+                        <!-- G*d in M -->
+                        <circle cx="555" cy="140" r="5" fill="rgba(109,210,172,0.8)"/>
+                        <text x="555" y="160" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">G*d</text>
+                        <text x="555" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ M</text>
+
+                        <!-- Pair with m -->
+                        <line x1="560" y1="145" x2="640" y2="145" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <circle cx="650" cy="145" r="5" fill="rgba(52,122,162,0.8)"/>
+                        <text x="650" y="165" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="12" font-weight="600">m</text>
+                        <text x="650" y="180" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ M</text>
+
+                        <text x="540" y="220" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">pair m with G*d in model space</text>
+                        <text x="540" y="240" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="11" font-family="serif">⟨m, G*d⟩_M</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F5a &mdash; The adjoint is defined by a balance.</strong>
+                        The defining identity \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\)
+                        says: you can either push \(m\) forward into data space and
+                        pair it with \(d\), or pull \(d\) back into model space and
+                        pair it with \(m\). The adjoint is the operator that makes
+                        both sides agree. It is not born by flipping a matrix; it is
+                        born from the two geometries.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-subsection-heading">
                     <h5>Why inner products determine the adjoint</h5>
                 </div>
@@ -381,6 +576,74 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Left column: Euclidean coordinates -->
+                        <rect x="10" y="10" width="340" height="280" rx="8" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                        <text x="180" y="35" text-anchor="middle" fill="rgba(109,210,172,0.85)" font-size="14" font-weight="700">Euclidean coordinates</text>
+                        <text x="180" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">orthonormal bases: M = I, W_D = I</text>
+
+                        <!-- Inner products -->
+                        <text x="180" y="85" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
+                            ⟨u, v⟩ = u⊤v
+                        </text>
+                        <text x="180" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
+                            ⟨a, b⟩ = a⊤b
+                        </text>
+
+                        <!-- Divider -->
+                        <line x1="60" y1="130" x2="300" y2="130" stroke="rgba(52,122,162,0.15)" stroke-width="1"/>
+
+                        <!-- Result -->
+                        <text x="180" y="165" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="16" font-weight="600" font-family="serif">
+                            G* = G⊤
+                        </text>
+
+                        <!-- Checkmark -->
+                        <text x="180" y="200" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="11">transpose = adjoint ✓</text>
+
+                        <!-- Caption -->
+                        <text x="180" y="240" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">the coincidence of orthonormal worlds</text>
+                        <text x="180" y="258" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">useful — but dangerous to generalise</text>
+
+                        <!-- Right column: General geometry -->
+                        <rect x="370" y="10" width="340" height="280" rx="8" fill="rgba(239,111,108,0.04)" stroke="rgba(239,111,108,0.2)" stroke-width="1"/>
+                        <text x="540" y="35" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="14" font-weight="700">General geometry</text>
+                        <text x="540" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">non-orthonormal bases: M ≠ I, W_D ≠ I</text>
+
+                        <!-- Inner products -->
+                        <text x="540" y="85" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
+                            ⟨u, v⟩_M = u⊤ M v
+                        </text>
+                        <text x="540" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
+                            ⟨a, b⟩_D = a⊤ W_D b
+                        </text>
+
+                        <!-- Divider -->
+                        <line x1="420" y1="130" x2="660" y2="130" stroke="rgba(239,111,108,0.15)" stroke-width="1"/>
+
+                        <!-- Result -->
+                        <text x="540" y="165" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="15" font-weight="600" font-family="serif">
+                            G*_disc = M⁻¹G⊤W_D
+                        </text>
+
+                        <!-- Warning -->
+                        <text x="540" y="200" text-anchor="middle" fill="rgba(239,111,108,0.6)" font-size="11">transpose ≠ adjoint ✗</text>
+
+                        <!-- Caption -->
+                        <text x="540" y="240" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">Gram matrices carry the geometry</text>
+                        <text x="540" y="258" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">ignoring them silently changes the problem</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F5b &mdash; Transpose versus adjoint.</strong>
+                        In Euclidean coordinates with orthonormal bases (left), the
+                        adjoint coincides with the transpose. In general geometry
+                        (right), the adjoint acquires Gram matrix factors
+                        \(\Mb^{-1}\) and \(\Wb_D\). The transpose only wins in
+                        Euclidean costume.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>The role of Gram matrices</h4>
                 </div>
@@ -424,6 +687,30 @@
                         coordinates.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: Gram Matrix as Geometry Memory</span>
+                    </div>
+                    <div class="tfdl-gram-matrix-demo">
+                        <svg id="f5c-plot" class="tfdl-interactive-svg" viewBox="0 0 360 200"
+                            preserveAspectRatio="xMidYMid meet"></svg>
+                        <div class="tfdl-gram-matrix-wrapper">
+                            <svg id="f5c-matrix" class="tfdl-interactive-svg" viewBox="0 0 200 200"
+                                preserveAspectRatio="xMidYMid meet"></svg>
+                            <div class="tfdl-gram-matrix-hint" id="f5c-hint">Hover over matrix entries to highlight basis function pairs</div>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <strong>F5c &mdash; The Gram matrix is geometry memory.</strong>
+                        Three overlapping hat functions \(\phi_1, \phi_2, \phi_3\)
+                        on an interval. The Gram matrix \(M_{ij} = \int \phi_i\phi_j\,dx\)
+                        has nonzero off-diagonal entries because neighbouring hats
+                        overlap. The coefficient dot product \(\mathbf{u}^{\T}\mathbf{v}\)
+                        ignores this overlap; the function-space inner product
+                        \(\mathbf{u}^{\T}\Mb\mathbf{v}\) remembers it.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-subsection-heading">
                     <h5>The data-space Gram matrix</h5>
@@ -478,6 +765,55 @@
                     </p>
                 </div>
 
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-interactive-header">
+                        <span class="tfdl-interactive-title">Interactive: Adjoint Calculator</span>
+                    </div>
+                    <div class="tfdl-adjoint-calc">
+                        <div class="tfdl-adjoint-calc-controls">
+                            <div class="tfdl-adjoint-calc-row">
+                                <label for="f5e-m">Model Gram matrix M:</label>
+                                <select id="f5e-m">
+                                    <option value="identity">Identity (orthonormal)</option>
+                                    <option value="mass" selected>Mass matrix (hat functions)</option>
+                                    <option value="anisotropic">Anisotropic (stretched)</option>
+                                </select>
+                            </div>
+                            <div class="tfdl-adjoint-calc-row">
+                                <label for="f5e-w">Data Gram matrix W_D:</label>
+                                <select id="f5e-w">
+                                    <option value="identity">Identity (Euclidean)</option>
+                                    <option value="weighted" selected>Weighted (unequal variances)</option>
+                                    <option value="correlated">Correlated (tilted)</option>
+                                </select>
+                            </div>
+                            <div class="tfdl-adjoint-calc-row">
+                                <label for="f5e-g">Forward matrix G:</label>
+                                <select id="f5e-g">
+                                    <option value="row" selected>Row sampler [1, 0.5]</option>
+                                    <option value="col">Column sampler [1; 0.3]</option>
+                                    <option value="mixed">Mixed [0.8, 0.6; 0.2, 0.9]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="tfdl-adjoint-calc-plot">
+                            <svg id="f5e-plot" class="tfdl-interactive-svg" viewBox="0 0 500 360"
+                                preserveAspectRatio="xMidYMid meet"></svg>
+                        </div>
+                    </div>
+                    <div class="tfdl-adjoint-calc-warning" id="f5e-warning"></div>
+                    <figcaption>
+                        <strong>F5e &mdash; Interactive adjoint calculator.</strong>
+                        Choose the model Gram matrix \(\Mb\), the data Gram matrix
+                        \(\Wb_D\), and the forward matrix \(\Gb\). The plot shows
+                        the data vector \(d\) (amber) and two pullback arrows in
+                        model space: \(G^{\T} d\) (coral, wrong) and
+                        \(\Mb^{-1}\Gb^{\T}\Wb_D d\) (green, correct). When both
+                        Gram matrices are identity, the arrows coincide. Otherwise,
+                        they point in visibly different directions.
+                    </figcaption>
+                </figure>
+
                 <div class="tfdl-section-heading">
                     <h4>The geometry-aware discretization</h4>
                 </div>
@@ -501,6 +837,49 @@
                         The object to discretize is \(G^{\adj}\), not the symbol \(\Gb^{\T}\).
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <div class="tfdl-translation-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Function-space object</th>
+                                    <th>Discrete representation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>\(G\)</td>
+                                    <td>\(\Gb\)</td>
+                                </tr>
+                                <tr>
+                                    <td>\(G^{\adj}\)</td>
+                                    <td>\(\Mb^{-1}\Gb^{\T}\Wb_D\)</td>
+                                </tr>
+                                <tr>
+                                    <td>\(\inner{\cdot}{\cdot}_{\M}\)</td>
+                                    <td>\(\Mb\)</td>
+                                </tr>
+                                <tr>
+                                    <td>\(\inner{\cdot}{\cdot}_{\D}\)</td>
+                                    <td>\(\Wb_D\)</td>
+                                </tr>
+                                <tr>
+                                    <td>\(C_0\)</td>
+                                    <td>\(C_{0,N}\)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption>
+                        <strong>F5h &mdash; Translation table: function-space to discrete.</strong>
+                        The target is the operator formula on the left. The
+                        discrete ingredients on the right are what enter a
+                        computation. The adjoint \(G^{\adj}\) becomes
+                        \(\Mb^{-1}\Gb^{\T}\Wb_D\), not \(\Gb^{\T}\), unless both
+                        Gram matrices are identity.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-subsection-heading">
                     <h5>What stays invariant</h5>
@@ -541,6 +920,85 @@
                         continuous problem.
                     </p>
                 </div>
+
+                <figure class="tfdl-diagram">
+                    <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Top: Data space with residual -->
+                        <rect x="10" y="10" width="700" height="120" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="360" y="28" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="12" font-weight="600">Data space D</text>
+
+                        <!-- Residual vector r -->
+                        <line x1="200" y1="90" x2="340" y2="50" stroke="rgba(244,162,89,0.8)" stroke-width="2.5" marker-end="url(#arrowR5f)"/>
+                        <defs>
+                            <marker id="arrowR5f" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(244,162,89,0.8)"/>
+                            </marker>
+                        </defs>
+                        <text x="260" y="60" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="13" font-weight="600">r = d̃ − Gm</text>
+
+                        <!-- Data point -->
+                        <circle cx="200" cy="90" r="4" fill="rgba(244,162,89,0.9)"/>
+                        <text x="195" y="105" text-anchor="end" fill="rgba(244,162,89,0.6)" font-size="10">d̃</text>
+                        <!-- Predicted -->
+                        <circle cx="340" cy="50" r="3" fill="rgba(255,255,255,0.4)"/>
+                        <text x="348" y="48" fill="rgba(255,255,255,0.35)" font-size="10">Gm</text>
+
+                        <!-- Pullback arrows down to model space -->
+                        <line x1="270" y1="115" x2="160" y2="165" stroke="rgba(239,111,108,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                        <line x1="270" y1="115" x2="560" y2="165" stroke="rgba(52,122,162,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+                        <!-- Bottom-left: Wrong pullback G^T r -->
+                        <rect x="10" y="150" width="340" height="180" rx="6" fill="rgba(239,111,108,0.04)" stroke="rgba(239,111,108,0.2)" stroke-width="1"/>
+                        <text x="180" y="170" text-anchor="middle" fill="rgba(239,111,108,0.8)" font-size="12" font-weight="600">Wrong pullback: G⊤ r</text>
+                        <text x="180" y="186" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">ignores Gram matrices</text>
+
+                        <!-- Model space axes (skewed to show non-Euclidean geometry) -->
+                        <line x1="60" y1="295" x2="320" y2="295" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <line x1="60" y1="295" x2="90" y2="210" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="325" y="298" fill="rgba(255,255,255,0.5)" font-size="9">e₁</text>
+                        <text x="85" y="205" fill="rgba(255,255,255,0.5)" font-size="9">e₂</text>
+
+                        <!-- Wrong direction arrow -->
+                        <line x1="180" y1="250" x2="120" y2="220" stroke="rgba(239,111,108,0.8)" stroke-width="2.5" marker-end="url(#arrowWrong5f)"/>
+                        <defs>
+                            <marker id="arrowWrong5f" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(239,111,108,0.8)"/>
+                            </marker>
+                        </defs>
+                        <text x="130" y="245" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">G⊤ r</text>
+                        <text x="180" y="315" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">residual pushed in the wrong direction</text>
+
+                        <!-- Bottom-right: Correct pullback M⁻¹G⊤W_D r -->
+                        <rect x="370" y="150" width="340" height="180" rx="6" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                        <text x="540" y="170" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Correct pullback: M⁻¹G⊤W_D r</text>
+                        <text x="540" y="186" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">geometry-aware adjoint</text>
+
+                        <!-- Model space axes (same skew) -->
+                        <line x1="420" y1="295" x2="680" y2="295" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <line x1="420" y1="295" x2="450" y2="210" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <text x="685" y="298" fill="rgba(255,255,255,0.5)" font-size="9">e₁</text>
+                        <text x="445" y="205" fill="rgba(255,255,255,0.5)" font-size="9">e₂</text>
+
+                        <!-- Correct direction arrow (visibly different angle) -->
+                        <line x1="540" y1="250" x2="590" y2="225" stroke="rgba(109,210,172,0.8)" stroke-width="2.5" marker-end="url(#arrowCorrect5f)"/>
+                        <defs>
+                            <marker id="arrowCorrect5f" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.8)"/>
+                            </marker>
+                        </defs>
+                        <text x="600" y="245" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">G* r</text>
+                        <text x="540" y="315" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="9">residual pulled back respecting both geometries</text>
+                    </svg>
+                    <figcaption>
+                        <strong>F5f &mdash; Residual pullback: transpose vs. adjoint.</strong>
+                        The residual \(r = \obs - G m\) lives in data space. Pulling it
+                        back into model space via \(G^{\T}\) (left) ignores the Gram
+                        matrices and pushes the update in the wrong direction. The
+                        geometry-aware adjoint \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T}\Wb_D\)
+                        (right) respects both inner products and produces a visibly
+                        different model-space direction.
+                    </figcaption>
+                </figure>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
@@ -620,6 +1078,505 @@
         }
         window.addEventListener("scroll", onScroll, { passive: true });
         onScroll();
+    })();
+    </script>
+
+    <script>
+    (function () {
+        "use strict";
+
+        /* ── Mako palette ── */
+        var makoBase = [
+            [64,65,131], [58,88,153], [53,111,160], [52,122,162],
+            [52,155,169], [60,177,172], [80,198,172]
+        ];
+        function makoRgba(k, a) {
+            var c = makoBase[k % makoBase.length];
+            return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a.toFixed(2) + ')';
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           F5c — Gram Matrix as Geometry Memory
+           ═══════════════════════════════════════════════════════ */
+        var f5cPlot = document.getElementById('f5c-plot');
+        var f5cMatrix = document.getElementById('f5c-matrix');
+        var f5cHint = document.getElementById('f5c-hint');
+
+        if (f5cPlot && f5cMatrix) {
+            var hatColors = [makoRgba(2, 0.8), makoRgba(4, 0.8), makoRgba(6, 0.8)];
+            var hatColorsFaded = [makoRgba(2, 0.15), makoRgba(4, 0.15), makoRgba(6, 0.15)];
+
+            /* Hat functions on [0,1]: φ₁ peak at 1/4, φ₂ peak at 1/2, φ₃ peak at 3/4 */
+            var peaks = [0.25, 0.5, 0.75];
+            var width = 0.25;
+
+            function hatVal(x, peak) {
+                var d = Math.abs(x - peak);
+                if (d > width) return 0;
+                return 1 - d / width;
+            }
+
+            function hatPath(peak, y0, y1, x0, x1) {
+                var pts = [];
+                var N = 60;
+                for (var i = 0; i <= N; i++) {
+                    var x = x0 + (x1 - x0) * i / N;
+                    var xv = (x - x0) / (x1 - x0);
+                    var yv = hatVal(xv, peak);
+                    var py = y1 - yv * (y1 - y0 - 20);
+                    pts.push(x.toFixed(1) + ',' + py.toFixed(1));
+                }
+                return 'M ' + pts.join(' L ');
+            }
+
+            /* Gram matrix for L² inner product of hat functions */
+            /* M_ij = ∫ φ_i φ_j dx. For hats with width w, peak separation d:
+               diagonal: 2w/3, off-diagonal (d=w): w/6, further: 0 */
+            var M = [
+                [0.167, 0.042, 0.0],
+                [0.042, 0.167, 0.042],
+                [0.0, 0.042, 0.167]
+            ];
+
+            function drawF5cPlot(highlight) {
+                var W = 360, H = 200;
+                var x0 = 30, x1 = 340, y0 = 20, y1 = 170;
+                var svg = '';
+
+                /* Axes */
+                svg += '<line x1="' + x0 + '" y1="' + y1 + '" x2="' + x1 + '" y2="' + y1 + '" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                svg += '<line x1="' + x0 + '" y1="' + y1 + '" x2="' + x0 + '" y2="' + y0 + '" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                svg += '<text x="' + (x1+5) + '" y="' + (y1+3) + '" fill="rgba(255,255,255,0.5)" font-size="9">x</text>';
+                svg += '<text x="' + x0 + '" y="' + (y0-5) + '" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">φ</text>';
+
+                /* Hat functions */
+                for (var i = 0; i < 3; i++) {
+                    var col, op;
+                    if (highlight && highlight.indexOf(i) >= 0) {
+                        col = hatColors[i];
+                        op = 1;
+                    } else if (highlight) {
+                        col = hatColorsFaded[i];
+                        op = 0.3;
+                    } else {
+                        col = hatColors[i];
+                        op = 0.7;
+                    }
+                    svg += '<path d="' + hatPath(peaks[i], y0, y1, x0, x1) + '" fill="none" stroke="' + col + '" stroke-width="2" opacity="' + op + '"/>';
+                    /* Label */
+                    var lx = x0 + peaks[i] * (x1 - x0);
+                    svg += '<text x="' + lx.toFixed(0) + '" y="' + (y1+14) + '" text-anchor="middle" fill="' + col + '" font-size="10" opacity="' + op + '">φ' + (i+1) + '</text>';
+                }
+
+                /* Overlap shading if two are highlighted */
+                if (highlight && highlight.length === 2) {
+                    var i0 = highlight[0], i1 = highlight[1];
+                    if (Math.abs(peaks[i0] - peaks[i1]) < width * 2) {
+                        var overlapPath = '';
+                        var N = 60;
+                        for (var i = 0; i <= N; i++) {
+                            var xv = i / N;
+                            var yv = Math.min(hatVal(xv, peaks[i0]), hatVal(xv, peaks[i1]));
+                            var px = x0 + xv * (x1 - x0);
+                            var py = y1 - yv * (y1 - y0 - 20);
+                            if (i === 0) overlapPath += 'M ' + px.toFixed(1) + ',' + y1 + ' L ' + px.toFixed(1) + ',' + py.toFixed(1);
+                            else overlapPath += ' L ' + px.toFixed(1) + ',' + py.toFixed(1);
+                        }
+                        overlapPath += ' L ' + x1 + ',' + y1 + ' Z';
+                        svg += '<path d="' + overlapPath + '" fill="rgba(244,162,89,0.2)"/>';
+                    }
+                }
+
+                f5cPlot.innerHTML = svg;
+            }
+
+            function drawF5cMatrix(highlight) {
+                var W = 200, H = 200;
+                var cellSize = 45;
+                var ox = 25, oy = 25;
+                var svg = '';
+
+                /* Column labels */
+                for (var j = 0; j < 3; j++) {
+                    var cx = ox + j * cellSize + cellSize / 2;
+                    svg += '<text x="' + cx + '" y="' + (oy - 8) + '" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">φ' + (j+1) + '</text>';
+                }
+                /* Row labels */
+                for (var i = 0; i < 3; i++) {
+                    var ry = oy + i * cellSize + cellSize / 2 + 4;
+                    svg += '<text x="' + (ox - 8) + '" y="' + ry + '" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10">φ' + (i+1) + '</text>';
+                }
+
+                /* Cells */
+                for (var i = 0; i < 3; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        var cx = ox + j * cellSize;
+                        var cy = oy + i * cellSize;
+                        var isHL = highlight && highlight[0] === i && highlight[1] === j;
+                        var val = M[i][j];
+                        var intensity = val / 0.2;
+
+                        var fillCol;
+                        if (isHL) {
+                            fillCol = makoRgba(4, 0.3 + intensity * 0.4);
+                        } else {
+                            fillCol = makoRgba(3, 0.05 + intensity * 0.15);
+                        }
+
+                        svg += '<rect x="' + cx + '" y="' + cy + '" width="' + cellSize + '" height="' + cellSize + '" fill="' + fillCol + '" stroke="rgba(52,122,162,0.2)" stroke-width="1" data-i="' + i + '" data-j="' + j + '" class="f5c-cell" style="cursor:pointer"/>';
+                        svg += '<text x="' + (cx + cellSize/2) + '" y="' + (cy + cellSize/2 + 4) + '" text-anchor="middle" fill="' + (isHL ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)') + '" font-size="11" pointer-events="none">' + val.toFixed(2) + '</text>';
+                    }
+                }
+
+                /* Label */
+                svg += '<text x="100" y="' + (oy + 3 * cellSize + 20) + '" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11" font-family="serif">M = ∫ φᵢ φⱼ dx</text>';
+
+                f5cMatrix.innerHTML = svg;
+
+                /* Attach hover handlers */
+                var cells = f5cMatrix.querySelectorAll('.f5c-cell');
+                cells.forEach(function (cell) {
+                    cell.addEventListener('mouseenter', function () {
+                        var i = parseInt(this.getAttribute('data-i'));
+                        var j = parseInt(this.getAttribute('data-j'));
+                        drawF5cPlot([i, j]);
+                        drawF5cMatrix([i, j]);
+                        if (f5cHint) {
+                            if (i === j) {
+                                f5cHint.textContent = 'M' + (i+1) + (i+1) + ' = ' + M[i][j].toFixed(2) + ' (diagonal: self-overlap)';
+                            } else if (M[i][j] > 0) {
+                                f5cHint.textContent = 'M' + (i+1) + (j+1) + ' = ' + M[i][j].toFixed(2) + ' (neighbouring overlap ≠ 0)';
+                            } else {
+                                f5cHint.textContent = 'M' + (i+1) + (j+1) + ' = 0 (no overlap)';
+                            }
+                        }
+                    });
+                    cell.addEventListener('mouseleave', function () {
+                        drawF5cPlot(null);
+                        drawF5cMatrix(null);
+                        if (f5cHint) f5cHint.textContent = 'Hover over matrix entries to highlight basis function pairs';
+                    });
+                });
+            }
+
+            drawF5cPlot(null);
+            drawF5cMatrix(null);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           F5d — The Data Ellipse
+           ═══════════════════════════════════════════════════════ */
+        var f5dPlot = document.getElementById('f5d-plot');
+        var f5dS1 = document.getElementById('f5d-s1');
+        var f5dS2 = document.getElementById('f5d-s2');
+        var f5dRho = document.getElementById('f5d-rho');
+        var f5dS1Val = document.getElementById('f5d-s1-val');
+        var f5dS2Val = document.getElementById('f5d-s2-val');
+        var f5dRhoVal = document.getElementById('f5d-rho-val');
+
+        if (f5dPlot && f5dS1 && f5dS2 && f5dRho) {
+            function drawF5d() {
+                var s1 = parseFloat(f5dS1.value);
+                var s2 = parseFloat(f5dS2.value);
+                var rho = parseFloat(f5dRho.value);
+                f5dS1Val.textContent = s1.toFixed(1);
+                f5dS2Val.textContent = s2.toFixed(1);
+                f5dRhoVal.textContent = rho.toFixed(1);
+
+                var W = 360, H = 320;
+                var cx = 180, cy = 150;
+                var scale = 50;
+                var svg = '';
+
+                /* Axes */
+                svg += '<line x1="30" y1="280" x2="330" y2="280" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                svg += '<line x1="30" y1="280" x2="30" y2="30" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                svg += '<text x="335" y="283" fill="rgba(255,255,255,0.5)" font-size="9">d₁</text>';
+                svg += '<text x="25" y="25" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">d₂</text>';
+
+                /* Covariance matrix C_D = [[s1², ρ s1 s2], [ρ s1 s2, s2²]] */
+                var v1 = s1 * s1, v2 = s2 * s2, cov = rho * s1 * s2;
+                var det = v1 * v2 - cov * cov;
+                if (det < 0.001) det = 0.001;
+
+                /* Eigenvalues of C_D */
+                var tr = v1 + v2;
+                var disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
+                var lam1 = tr / 2 + disc;
+                var lam2 = tr / 2 - disc;
+                /* Eigenvector angle */
+                var theta;
+                if (Math.abs(cov) < 0.001) {
+                    theta = 0;
+                } else {
+                    theta = Math.atan2(lam1 - v1, cov);
+                }
+                var thetaDeg = theta * 180 / Math.PI;
+
+                /* Draw covariance ellipse (1σ) */
+                var rx = scale * Math.sqrt(lam1);
+                var ry = scale * Math.sqrt(lam2);
+                svg += '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx.toFixed(1) + '" ry="' + ry.toFixed(1) + '" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.5)" stroke-width="1.5" transform="rotate(' + thetaDeg.toFixed(1) + ' ' + cx + ' ' + cy + ')"/>';
+
+                /* Draw 2σ ellipse */
+                svg += '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + (rx*2).toFixed(1) + '" ry="' + (ry*2).toFixed(1) + '" fill="none" stroke="rgba(244,162,89,0.2)" stroke-width="1" stroke-dasharray="3,3" transform="rotate(' + thetaDeg.toFixed(1) + ' ' + cx + ' ' + cy + ')"/>';
+
+                /* Misfit contours: r^T C_D^{-1} r = c → same shape as C_D */
+                /* C_D^{-1} has eigenvalues 1/lam1, 1/lam2 → contours have semi-axes sqrt(c*lam1), sqrt(c*lam2) */
+                for (var c = 1; c <= 3; c++) {
+                    var mrx = scale * Math.sqrt(c * lam1);
+                    var mry = scale * Math.sqrt(c * lam2);
+                    var op = 0.18 - c * 0.04;
+                    svg += '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + mrx.toFixed(1) + '" ry="' + mry.toFixed(1) + '" fill="none" stroke="rgba(52,122,162,' + op.toFixed(2) + ')" stroke-width="1" stroke-dasharray="2,3" transform="rotate(' + thetaDeg.toFixed(1) + ' ' + cx + ' ' + cy + '"/>';
+                }
+
+                /* Residual vector r */
+                var rx_pt = cx + 55, ry_pt = cy - 40;
+                svg += '<defs><marker id="arrowF5d" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(244,162,89,0.8)"/></marker></defs>';
+                svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + rx_pt + '" y2="' + ry_pt + '" stroke="rgba(244,162,89,0.8)" stroke-width="2" marker-end="url(#arrowF5d)"/>';
+                svg += '<text x="' + (rx_pt+5) + '" y="' + (ry_pt-5) + '" fill="rgba(244,162,89,0.9)" font-size="11" font-weight="600">r</text>';
+
+                /* Center point */
+                svg += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="rgba(255,255,255,0.4)"/>';
+                svg += '<text x="' + (cx-8) + '" y="' + (cy+14) + '" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">0</text>';
+
+                /* Labels */
+                svg += '<text x="180" y="305" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">C_D ellipse (amber) &amp; misfit contours r⊤C_D⁻¹r (blue)</text>';
+
+                f5dPlot.innerHTML = svg;
+            }
+
+            f5dS1.addEventListener('input', drawF5d);
+            f5dS2.addEventListener('input', drawF5d);
+            f5dRho.addEventListener('input', drawF5d);
+            drawF5d();
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           F5e — Interactive Adjoint Calculator
+           ═══════════════════════════════════════════════════════ */
+        var f5ePlot = document.getElementById('f5e-plot');
+        var f5eM = document.getElementById('f5e-m');
+        var f5eW = document.getElementById('f5e-w');
+        var f5eG = document.getElementById('f5e-g');
+        var f5eWarning = document.getElementById('f5e-warning');
+
+        if (f5ePlot && f5eM && f5eW && f5eG) {
+            function getMatrices() {
+                var mType = f5eM.value;
+                var wType = f5eW.value;
+                var gType = f5eG.value;
+
+                /* Forward matrix G — determines K (data dim) and N (model dim) */
+                var G;
+                if (gType === 'row') {
+                    G = [[1, 0.5]];           /* K=1, N=2 */
+                } else if (gType === 'col') {
+                    G = [[1], [0.3]];          /* K=2, N=1 */
+                } else {
+                    G = [[0.8, 0.6], [0.2, 0.9]]; /* K=2, N=2 */
+                }
+                var K = G.length, N = G[0].length;
+
+                /* Model Gram matrix M (N×N) */
+                var M;
+                if (N === 1) {
+                    if (mType === 'identity') M = [[1]];
+                    else if (mType === 'mass') M = [[0.4]];
+                    else M = [[0.6]];
+                } else {
+                    if (mType === 'identity') {
+                        M = [[1, 0], [0, 1]];
+                    } else if (mType === 'mass') {
+                        M = [[0.4, 0.1], [0.1, 0.4]];
+                    } else {
+                        M = [[0.6, 0.05], [0.05, 0.2]];
+                    }
+                }
+
+                /* Data Gram matrix W_D (K×K) */
+                var W;
+                if (K === 1) {
+                    if (wType === 'identity') W = [[1]];
+                    else if (wType === 'weighted') W = [[1.5]];
+                    else W = [[1.2]];
+                } else {
+                    if (wType === 'identity') {
+                        W = [[1, 0], [0, 1]];
+                    } else if (wType === 'weighted') {
+                        W = [[1.5, 0], [0, 0.5]];
+                    } else {
+                        W = [[1.2, 0.3], [0.3, 0.8]];
+                    }
+                }
+
+                return { M: M, W: W, G: G, mType: mType, wType: wType, gType: gType, K: K, N: N };
+            }
+
+            function matMul(A, B) {
+                var m = A.length, n = B[0].length, k = B.length;
+                var C = [];
+                for (var i = 0; i < m; i++) {
+                    C[i] = [];
+                    for (var j = 0; j < n; j++) {
+                        var s = 0;
+                        for (var l = 0; l < k; l++) s += A[i][l] * B[l][j];
+                        C[i][j] = s;
+                    }
+                }
+                return C;
+            }
+
+            function matTranspose(A) {
+                var m = A.length, n = A[0].length;
+                var T = [];
+                for (var i = 0; i < n; i++) {
+                    T[i] = [];
+                    for (var j = 0; j < m; j++) T[i][j] = A[j][i];
+                }
+                return T;
+            }
+
+            function matInv2(A) {
+                var det = A[0][0] * A[1][1] - A[0][1] * A[1][0];
+                if (Math.abs(det) < 1e-10) return [[1, 0], [0, 1]];
+                var invDet = 1 / det;
+                return [
+                    [A[1][1] * invDet, -A[0][1] * invDet],
+                    [-A[1][0] * invDet, A[0][0] * invDet]
+                ];
+            }
+
+            function matVec(A, v) {
+                var m = A.length, n = v.length;
+                var r = [];
+                for (var i = 0; i < m; i++) {
+                    var s = 0;
+                    for (var j = 0; j < n; j++) s += A[i][j] * v[j];
+                    r[i] = s;
+                }
+                return r;
+            }
+
+            function drawF5e() {
+                var p = getMatrices();
+                var M = p.M, W = p.W, G = p.G;
+                var K = p.K, N = p.N;
+
+                /* Fixed data vector d (K-dimensional) */
+                var d;
+                if (K === 1) d = [1.0];
+                else d = [0.8, 0.5];
+
+                /* G^T d (wrong pullback) */
+                var GT = matTranspose(G);
+                var GTr = matVec(GT, d);
+
+                /* M^{-1} G^T W_D d (correct pullback) */
+                var Minv = (N === 2) ? matInv2(M) : [[1 / M[0][0]]];
+                var Wd = matVec(W, d);
+                var GTWd = matVec(GT, Wd);
+                var adjointResult = matVec(Minv, GTWd);
+
+                /* Draw */
+                var W_svg = 500, H_svg = 360;
+                var cx = 250, cy = 180;
+                var svg = '';
+
+                /* Axes */
+                svg += '<line x1="40" y1="320" x2="460" y2="320" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                svg += '<line x1="40" y1="320" x2="40" y2="40" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+
+                if (N === 1) {
+                    /* ── 1D model space: show two arrows along a single axis ── */
+                    svg += '<text x="250" y="30" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">N = 1 (scalar model space)</text>';
+                    svg += '<text x="465" y="323" fill="rgba(255,255,255,0.5)" font-size="9">m₁</text>';
+
+                    /* Dynamic scale: fit both values in [40, 460] */
+                    var maxVal1D = Math.max(Math.abs(GTr[0]), Math.abs(adjointResult[0]), 0.5);
+                    var scale1D = 180 / maxVal1D;
+
+                    var wrongLen = GTr[0] * scale1D;
+                    var adjLen = adjointResult[0] * scale1D;
+
+                    /* Axis line through centre */
+                    svg += '<line x1="50" y1="180" x2="450" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+                    svg += '<circle cx="250" cy="180" r="3" fill="rgba(255,255,255,0.4)"/>';
+
+                    /* Coral arrow: G^T d */
+                    svg += '<defs><marker id="arrowF5eWrong" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(239,111,108,0.8)"/></marker></defs>';
+                    var wEnd = cx + wrongLen;
+                    svg += '<line x1="' + cx + '" y1="150" x2="' + wEnd.toFixed(1) + '" y2="150" stroke="rgba(239,111,108,0.8)" stroke-width="2.5" marker-end="url(#arrowF5eWrong)"/>';
+                    svg += '<text x="' + (wEnd + 8).toFixed(1) + '" y="154" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">G⊤d = ' + GTr[0].toFixed(3) + '</text>';
+
+                    /* Green arrow: M^{-1} G^T W_D d */
+                    svg += '<defs><marker id="arrowF5eCorrect" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.8)"/></marker></defs>';
+                    var cEnd = cx + adjLen;
+                    svg += '<line x1="' + cx + '" y1="210" x2="' + cEnd.toFixed(1) + '" y2="210" stroke="rgba(109,210,172,0.8)" stroke-width="2.5" marker-end="url(#arrowF5eCorrect)"/>';
+                    svg += '<text x="' + (cEnd + 8).toFixed(1) + '" y="214" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">M⁻¹G⊤W_D d = ' + adjointResult[0].toFixed(3) + '</text>';
+
+                    /* Data vector info */
+                    svg += '<text x="250" y="280" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11">d = [' + d.map(function(x) { return x.toFixed(2); }).join(', ') + ']</text>';
+                } else {
+                    /* ── 2D model space: draw arrows ── */
+                    svg += '<text x="465" y="323" fill="rgba(255,255,255,0.5)" font-size="9">m₁</text>';
+                    svg += '<text x="35" y="35" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">m₂</text>';
+
+                    /* Dynamic scale: fit both arrows in plot area */
+                    var maxMag = 0;
+                    for (var i = 0; i < N; i++) {
+                        maxMag = Math.max(maxMag, Math.abs(GTr[i]), Math.abs(adjointResult[i]));
+                    }
+                    maxMag = Math.max(maxMag, 0.3);
+                    var scale = 130 / maxMag;
+
+                    /* G^T d (wrong) */
+                    var wEndX = cx + GTr[0] * scale;
+                    var wEndY = cy - GTr[1] * scale;
+                    svg += '<defs><marker id="arrowF5eWrong" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(239,111,108,0.8)"/></marker></defs>';
+                    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + wEndX.toFixed(1) + '" y2="' + wEndY.toFixed(1) + '" stroke="rgba(239,111,108,0.8)" stroke-width="2.5" marker-end="url(#arrowF5eWrong)"/>';
+                    svg += '<text x="' + (wEndX + 8).toFixed(1) + '" y="' + (wEndY - 5).toFixed(1) + '" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">G⊤d</text>';
+
+                    /* M^{-1} G^T W_D d (correct) */
+                    var cEndX = cx + adjointResult[0] * scale;
+                    var cEndY = cy - adjointResult[1] * scale;
+                    svg += '<defs><marker id="arrowF5eCorrect" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.8)"/></marker></defs>';
+                    svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + cEndX.toFixed(1) + '" y2="' + cEndY.toFixed(1) + '" stroke="rgba(109,210,172,0.8)" stroke-width="2.5" marker-end="url(#arrowF5eCorrect)"/>';
+                    svg += '<text x="' + (cEndX + 8).toFixed(1) + '" y="' + (cEndY + 15).toFixed(1) + '" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">M⁻¹G⊤W_D d</text>';
+
+                    /* Origin */
+                    svg += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="rgba(255,255,255,0.4)"/>';
+
+                    /* Data vector display */
+                    svg += '<text x="250" y="50" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11">d = [' + d.map(function(x) { return x.toFixed(2); }).join(', ') + ']</text>';
+                }
+
+                /* Legend */
+                svg += '<rect x="40" y="340" width="12" height="3" fill="rgba(239,111,108,0.8)"/>';
+                svg += '<text x="58" y="344" fill="rgba(239,111,108,0.7)" font-size="9">G⊤d (transpose)</text>';
+                svg += '<rect x="200" y="340" width="12" height="3" fill="rgba(109,210,172,0.8)"/>';
+                svg += '<text x="218" y="344" fill="rgba(109,210,172,0.7)" font-size="9">M⁻¹G⊤W_D d (adjoint)</text>';
+
+                f5ePlot.innerHTML = svg;
+
+                /* Warning message */
+                if (f5eWarning) {
+                    var isIdentity = (p.mType === 'identity' && p.wType === 'identity');
+                    if (isIdentity) {
+                        f5eWarning.textContent = 'M = I and W_D = I: transpose equals adjoint. The arrows coincide.';
+                        f5eWarning.style.color = 'rgba(109,210,172,0.8)';
+                    } else {
+                        f5eWarning.textContent = 'Transpose equals adjoint only when M = I and W_D = I. The arrows differ.';
+                        f5eWarning.style.color = 'rgba(239,111,108,0.8)';
+                    }
+                }
+            }
+
+            f5eM.addEventListener('change', drawF5e);
+            f5eW.addEventListener('change', drawF5e);
+            f5eG.addEventListener('change', drawF5e);
+            drawF5e();
+        }
     })();
     </script>
 </body>

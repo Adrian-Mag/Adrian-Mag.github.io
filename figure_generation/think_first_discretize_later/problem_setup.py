@@ -59,7 +59,7 @@ from pygeoinf.linear_bayesian import LinearBayesianInversion
 DOMAIN: tuple[float, float] = (0.0, 1.0)
 N_D: int = 20                      # number of data (integral measurements)
 KERNEL_WIDTH: float = 0.07          # Gaussian sensitivity-kernel width
-NOISE_FRAC: float = 0.02           # data noise as a fraction of max|d|
+NOISE_FRAC: float = 0.10           # data noise as a fraction of max|d|
 SEED: int = 0
 
 BasisKind = Literal["box", "hat"]

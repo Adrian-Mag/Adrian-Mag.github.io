@@ -1,7 +1,8 @@
-"""Figure F1b - basis functions and discretized true model.
+"""Figure F1b - basis functions, coefficient vector, and discretized model.
 
-Two panels: (a) the hat basis functions at the chosen resolution, and (b) the
-true model overlaid with its discretized (projected) approximation.
+Three panels: (a) the hat basis functions, (b) the coefficient vector of the
+true model shown as a 1-row imshow strip (coefficient world), and (c) the true
+model overlaid with its discretized reconstruction (function world).
 """
 
 from __future__ import annotations
@@ -29,13 +30,12 @@ def main() -> None:
     box = ps.hat_coeff_space(N_CELLS)
     fs = box.function_space
 
-    # Project true model onto the basis: coefficients = coordinate_inclusion(m_bar)
-    # Equivalently, evaluate hat functions at nodes for nodal interpolation.
     nodes = np.linspace(ps.DOMAIN[0], ps.DOMAIN[1], N_CELLS)
     coeffs = np.asarray(m_bar.evaluate(nodes), dtype=float)
     m_disc = fs.from_components(coeffs)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+    fig, axes = plt.subplots(1, 3, figsize=(16, 4.2),
+                             gridspec_kw={"width_ratios": [1.2, 1.0, 1.2]})
 
     # (a) Hat basis functions — mako gradient
     ax = axes[0]
@@ -47,15 +47,24 @@ def main() -> None:
     ax.set_xlabel(r"depth $z$")
     ax.set_ylabel(r"$\phi_j(z)$")
 
-    # (b) True model vs discretized model
+    # (b) Coefficient vector as 1-row imshow — coefficient world
     ax = axes[1]
+    im = ax.imshow(coeffs.reshape(1, -1), aspect="auto", cmap=PALETTE["mako"],
+                   origin="upper", interpolation="nearest")
+    ax.set_title(r"(b) Coefficients $[\mathbf{u}]_j$")
+    ax.set_xlabel(r"coefficient index $j$")
+    ax.set_yticks([])
+    cbar = fig.colorbar(im, ax=ax, shrink=0.7, pad=0.02)
+    cbar.set_label("coefficient value", color=PALETTE.get("muted", "#dce6f5"))
+    cbar.ax.tick_params(colors=PALETTE.get("muted", "#dce6f5"))
+
+    # (c) True model vs discretized model — function world
+    ax = axes[2]
     ax.plot(x, m_bar.evaluate(x), color=PALETTE["true"], lw=2.6,
             label=r"true model $\bar{m}(z)$")
     ax.plot(x, m_disc.evaluate(x), color=PALETTE["mako_dark"], lw=2.2,
             linestyle="--", label=rf"discretized $m_N(z)$ ($N={N_CELLS}$)")
-    ax.scatter(nodes, coeffs, color=PALETTE["mako_light"], s=30, zorder=5,
-               label=r"coefficients $[\mathbf{u}]_j$")
-    ax.set_title(r"(b) True model and its discretization")
+    ax.set_title(r"(c) True model and its discretization")
     ax.set_xlabel(r"depth $z$")
     ax.set_ylabel("model value")
     ax.legend()
