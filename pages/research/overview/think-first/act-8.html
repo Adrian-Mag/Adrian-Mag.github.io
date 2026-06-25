@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act VIII: Return to the Toy Problem — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act VIII of Think First, Discretize Later: Re-solving the toy problem with the corrected workflow.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Hh: '\\mathcal{H}', B: '\\mathcal{B}',
+                N: '\\mathcal{N}', R: '\\mathbb{R}', E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}', Tr: '\\operatorname{Tr}', Id: 'I',
+                prior: '\\mu_0', post: '\\mu^{\\obs}', noise: '\\boldsymbol{\\eta}', obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}', Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}', Gb: '\\mathbf{G}', vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*', T: '{\\top}', Cd: '{\\mathbf{C}_d}', Wb: '\\mathbf{W}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act VIII: Return to the Toy Problem</h1>
+                <p>Solving the opening example again &mdash; this time with the order corrected.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip is-active" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-b">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>Re-solving the Opening Example</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The original naive workflow</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now return to the toy inverse problem from the beginning. The data equation
+                        was \(\obs = G m + \noise\), where the unknown model was a function on
+                        \(\Omega=[0,L]\), the data lived in \(\D=\R^K\), and the observational noise was
+                        Gaussian: \(\noise\sim\N(0,\Cd)\).
+                    </p>
+                    <p>
+                        In Act I, we discretized immediately. The result seemed reasonable at first: the
+                        posterior mean looked acceptable. But Act II revealed the trouble. When we
+                        sampled the posterior, the uncertainty behaved badly under refinement.
+                    </p>
+                    <p>
+                        The purpose of this final act is to solve the same problem again, but with the
+                        order corrected.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Basis first</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The naive workflow began by choosing a mesh and hat functions
+                        \(\{\phi_1,\ldots,\phi_N\}\). The model was approximated by
+                        \(m_N(x) = \sum_{j=1}^N [\mathbf{u}]_j\phi_j(x)\). This step is not wrong by itself. The
+                        problem was that the basis became the starting point of the formulation. The
+                        unknown was no longer treated as a function \(m\in\M\). It was treated as a
+                        coefficient vector \(\mathbf{u}\in\R^N\).
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A basis should represent the unknown after the model space is chosen. It should
+                        not choose the model space by stealth.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Diagonal covariance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        After introducing coefficients, the naive workflow placed the prior
+                        \(\mathbf{u}\sim\N(0,\sigma^2 \mathbf{I}_N)\) directly on the coefficient vector. For
+                        fixed \(N\), this is a valid finite-dimensional Gaussian distribution. But as
+                        \(N\) changes, the prior changes too. These are not automatically approximations
+                        of a single probability measure on functions.
+                    </p>
+                    <p>
+                        The trace of the prior covariance is \(\Tr(\sigma^2 \mathbf{I}_N) = \sigma^2 N\), so
+                        \(\Tr(\sigma^2 \mathbf{I}_N)\to\infty\) as \(N\to\infty\). This was the hidden reservoir
+                        of instability. Every mesh refinement introduced new independent variance.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Euclidean transpose</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The naive workflow also used the transpose \(\Gb^{\T}\) as though it were
+                        automatically the adjoint. But the adjoint is defined by
+                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\). With non-orthonormal hat
+                        functions, the discrete adjoint is
+                        \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\), not simply \(\Gb^{\T}\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Unstable refinement</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), the posterior covariance satisfies
+                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K)\), because the data can constrain at most \(K\)
+                        independent directions. As \(N\to\infty\) with \(K\) fixed,
+                        \(\Tr(\mathbf{C}_N^{\obs})\to\infty\). The data informed some directions, but the number of
+                        uninformed directions grew with the mesh. Each new direction carried variance of
+                        size \(\sigma^2\).
+                    </p>
+                    <p>
+                        The posterior mean looked fine because means can hide variance. The samples
+                        showed the truth.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The naive workflow did not approximate one continuous inverse problem. It
+                        created a new finite-dimensional Bayesian problem at every resolution.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The corrected workflow</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>We now rebuild the same example in the proper order.</p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Choose the model space</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        First choose the model space. For example, \(\M=L^2(\Omega)\) if we want
+                        square-integrable models, or \(\M=H^s(\Omega)\) if we want to encode a
+                        particular degree of Sobolev regularity. The important point is that the
+                        unknown is now a function-space object: \(m\in\M\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Choose the data space</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The data space is \(\D=\R^K\). We choose an inner product on \(\D\). In the
+                        simplest case, \(\inner{a}{b}_{\D}=a^{\top}b\). More generally,
+                        \(\inner{a}{b}_{\D}=a^{\top} \Wb_D b\). The natural data misfit is
+                        \(\norm{\obs-G m}_{\Cd^{-1}}^2 = (\obs-G m)^{\top} \Cd^{-1}(\obs-G m)\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Choose the forward operator</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Next define the forward map: \(G:\M\to\D\). For the toy problem,
+                        \([G m]_i = \int_\Omega K_i(x)\,m(x)\,dx\). This map is chosen before
+                        discretization. The adjoint is also defined at the function-space level:
+                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\). Only after bases are chosen
+                        do we obtain the discrete representation
+                        \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Choose the prior measure</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Now choose the prior as a probability measure on \(\M\): \(m\sim\prior\). For a
+                        Gaussian prior, \(\prior=\N(m_0,C_0)\), where \(C_0:\M\to\M\) is a covariance
+                        operator satisfying \(\Tr(C_0)<\infty\).
+                    </p>
+                    <p>
+                        A useful choice is a covariance built from a differential operator:
+                        \(C_0 = \alpha(\kappa^2 I-\Delta)^{-s}\). Here \(\alpha>0\) controls the overall
+                        variance scale, \(\kappa>0\) controls the correlation length scale, \(s>0\)
+                        controls smoothness, and the boundary conditions for \(\Delta\) encode boundary
+                        behaviour.
+                    </p>
+                    <p>
+                        The trace condition \(\sum_{j=1}^{\infty}\lambda_j<\infty\) ensures that the
+                        prior has finite expected energy:
+                        \(\E\norm{m-m_0}_{\M}^2 = \Tr(C_0) < \infty\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Only then discretize</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Only now do we choose a mesh and basis:
+                        \(\M_N = \operatorname{span}\{\phi_1,\ldots,\phi_N\} \subset \M\). The
+                        coefficients \(\mathbf{u}\) are coordinates of a function in \(\M_N\). They are
+                        not the primary unknown. The primary unknown remains \(m\in\M\).
+                    </p>
+                    <p>
+                        We discretize each continuous object:
+                        \(G \leadsto \Gb\), \(G^{\adj} \leadsto G^{\adj}_{\mathrm{disc}}\),
+                        \(C_0 \leadsto \mathbf{C}_{0,N}\). The discrete prior covariance is obtained by
+                        discretizing \(C_0\), not by choosing an unrelated diagonal matrix. The discrete
+                        posterior then approximates the continuous posterior
+                        \(\post=\N(m^{\obs},C^{\obs})\).
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        In the corrected workflow, the mesh is a microscope. In the naive workflow, the
+                        mesh was the lawgiver.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Comparison</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Posterior means</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In both workflows, we can compute a posterior mean. The difference is not merely
+                        cosmetic. In the corrected formula, \(C_0\) is a covariance operator on the
+                        model space, \(G^{\adj}\) is determined by the inner products, the discretized
+                        covariance approximates the continuous covariance, and the posterior mean
+                        approximates a function-space posterior mean.
+                    </p>
+                    <p>
+                        The two posterior means may look superficially similar in plots, especially at
+                        coarse resolution. But only the corrected mean belongs to a posterior measure
+                        with a coherent continuous limit.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Posterior samples</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In the naive workflow, as \(N\) increases, new coefficient directions receive
+                        independent prior variance. Many of these directions are weakly constrained or
+                        invisible to the data. Consequently, samples can become increasingly oscillatory
+                        or unstable.
+                    </p>
+                    <p>
+                        In the corrected workflow, the continuous covariance controls how much variance
+                        is available in each direction. High-index directions receive decaying variance.
+                        Refinement adds controlled detail rather than uncontrolled noise.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Posterior variance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The naive posterior covariance satisfies
+                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K)\), hence the total posterior variance diverges.
+                        In the corrected workflow, \(\Tr(C_0)<\infty\) and
+                        \(0\leq C^{\obs}\leq C_0\), so \(\Tr(C^{\obs})\leq\Tr(C_0)<\infty\).
+                    </p>
+                    <p>
+                        This is the heart of the cure: finite trace \(\Rightarrow\) controlled uncertainty.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Mesh refinement</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In the naive workflow, mesh refinement changes the prior:
+                        \(\N(0,\sigma^2 \mathbf{I}_N)\) changes with \(N\). Each new basis function receives
+                        variance \(\sigma^2\), so refinement injects new uncertainty.
+                    </p>
+                    <p>
+                        In the corrected workflow, mesh refinement improves the approximation of fixed
+                        objects: \(\M_N\to\M\), \(\Gb_N\to G\), \(\mathbf{C}_{0,N}\to C_0\),
+                        \(\post_N\to\post\). The posterior at resolution \(N\) is no longer a separate
+                        model. It is an approximation to the same function-space posterior.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        In the naive workflow, refinement keeps building new rooms in the house and
+                        forgetting to install walls. In the corrected workflow, refinement sharpens the
+                        blueprint that was already there.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What the example teaches</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The toy example teaches a simple lesson, but not a small one. A discretization
+                        can play two very different roles. It can approximate a continuous inverse
+                        problem that has already been formulated, or it can quietly define a
+                        finite-dimensional problem in place of the continuous one.
+                    </p>
+                    <p>
+                        The same hat functions may appear in both workflows. The same forward matrix
+                        entries may be computed. The same data may be used. The same posterior mean
+                        formula may seem to appear. But the mathematical meaning is different.
+                    </p>
+                    <p>
+                        The first workflow gives a sequence of finite-dimensional Bayesian problems. The
+                        second gives a sequence of approximations to one Bayesian inverse problem.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        The same numerical basis can either approximate a coherent function-space
+                        problem or define a sequence of unrelated finite-dimensional problems.
+                        The difference is the order in which the modelling choices are made.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Final summary</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The opening mistake was not obvious because every finite-dimensional operation
+                        looked valid. The diagonal prior was a valid covariance matrix. The posterior
+                        mean was computable. The plot looked plausible.
+                    </p>
+                    <p>
+                        But the posterior samples exposed the missing structure. The prior did not have
+                        a continuous meaning. The covariance did not have bounded trace. The adjoint was
+                        treated as a transpose. Refinement changed the problem rather than improving the
+                        approximation.
+                    </p>
+                    <p>
+                        The corrected formulation fixes the order:
+                    </p>
+                    <p style="text-align: center; font-size: 1.2em; font-weight: bold; padding: 1em 0;">
+                        Think first, discretize later.
+                    </p>
+                    <p>More explicitly:</p>
+                    <ol>
+                        <li>Choose the model space \(\M\).</li>
+                        <li>Choose the data space \(\D\).</li>
+                        <li>Define the forward map \(G:\M\to\D\).</li>
+                        <li>Specify the noise covariance \(\Cd\).</li>
+                        <li>Choose the prior measure \(\prior=\N(m_0,C_0)\).</li>
+                        <li>Define the posterior measure \(\post\).</li>
+                        <li>Discretize the already-defined objects.</li>
+                    </ol>
+                    <p>
+                        Only then do the posterior mean, covariance, samples, and refinement behaviour
+                        belong to one coherent mathematical story.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The final answer is not that matrices are bad.
+                        The final answer is that matrices should be shadows cast by mathematical
+                        objects, not the objects themselves.
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="act-7.html"><span class="arrow">&larr;</span> Act VII: Putting Together</a>
+                    <a class="act-prevnext-btn next" href="summary.html">Summary &amp; Appendices <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

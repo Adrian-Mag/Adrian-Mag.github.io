@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act VI: The Prior Is Not Just a Matrix — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act VI of Think First, Discretize Later: Why the prior must be a probability measure on a function space, not just a matrix.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Hh: '\\mathcal{H}', B: '\\mathcal{B}',
+                N: '\\mathcal{N}', R: '\\mathbb{R}', E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}', Tr: '\\operatorname{Tr}', Id: 'I',
+                prior: '\\mu_0', post: '\\mu^{\\obs}', noise: '\\boldsymbol{\\eta}', obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}', Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}', Gb: '\\mathbf{G}', vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*', T: '{\\top}', Cd: '{\\mathbf{C}_d}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act VI: The Prior Is Not Just a Matrix</h1>
+                <p>A prior must be a probability measure on a function space, with a trace-class covariance operator.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip is-active" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-b">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>A Detour Through Measure Theory</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Why probabilities are measures</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now reach the last major ingredient of the function-space Bayesian inverse
+                        problem: the prior.
+                    </p>
+                    <p>
+                        In the naive discretized problem, the prior was introduced as a covariance
+                        matrix, \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\). For every fixed \(N\), this is a valid
+                        covariance matrix on \(\R^N\). But the failure of Act II showed us that this is
+                        not enough. A prior for a function space inverse problem must be a probability
+                        measure on a function space.
+                    </p>
+                    <p>
+                        This forces us to step briefly into measure theory. The reason is simple:
+                        probability is not fundamentally about densities. Probability is fundamentally
+                        about assigning mass to events.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Events</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let \(X\) be a space of possible outcomes. In our setting, \(X = \M\). An event
+                        is a subset of \(X\). For example,
+                        \(A = \{m\in\M : \norm{m}_{\M}\leq 1\}\).
+                        If \(m\) is random, then we may ask for the probability
+                        \(\mathbb{P}(m\in A)\).
+                    </p>
+                    <p>
+                        In function space, events can be more subtle. We might ask whether a random
+                        function has small norm, whether it is positive on a subinterval, whether its
+                        derivative is bounded in some weak sense, or whether it lies near a reference
+                        model. The prior must assign probabilities to such events.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Sigma-algebras</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Not every subset of an infinite-dimensional space can be assigned a probability
+                        in a consistent way. Instead, we choose a collection of admissible events called
+                        a sigma-algebra. A sigma-algebra \(\mathcal{A}\) on a set \(X\) is a collection
+                        of subsets of \(X\) such that:
+                    </p>
+                    <ol>
+                        <li>\(X\in\mathcal{A}\);</li>
+                        <li>if \(A\in\mathcal{A}\), then \(X\setminus A\in\mathcal{A}\);</li>
+                        <li>if \(A_1,A_2,A_3,\ldots\in\mathcal{A}\), then \(\bigcup_{n=1}^{\infty} A_n \in \mathcal{A}\).</li>
+                    </ol>
+                    <p>
+                        For a topological space, a common choice is the Borel sigma-algebra, generated
+                        by the open sets. If \(\M\) is a Hilbert space, we usually take its Borel
+                        sigma-algebra and define probability measures on it.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        A sigma-algebra is the list of questions the probability measure agrees to
+                        answer.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Probability measures</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A probability measure on \((X,\mathcal{A})\) is a map
+                        \(\mu:\mathcal{A}\to[0,1]\) such that \(\mu(X)=1\) and, for any countable
+                        collection of disjoint events, \(\mu\left(\bigcup A_n\right) = \sum \mu(A_n)\).
+                    </p>
+                    <p>
+                        In Bayesian inverse problems, the prior is a probability measure \(\prior\) on
+                        the model space \(\M\). The posterior is another probability measure \(\post\)
+                        on the same space, obtained by updating the prior using the data.
+                    </p>
+                    <p>
+                        Thus, at the most fundamental level, we should write
+                        \(m\sim\prior\), not \(\mathbf{u}\sim\N(0,\sigma^2 \mathbf{I}_N)\), unless
+                        \(\mathbf{u}\) is truly the unknown object and the problem is genuinely
+                        finite-dimensional.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        A prior is a probability measure on possible models.
+                        A covariance matrix is only one finite-dimensional way of describing part of
+                        such a measure.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Why densities are not fundamental</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In finite-dimensional probability, we often describe a distribution by a
+                        density. But a density is not a probability measure by itself. A density is
+                        always a density with respect to some reference measure.
+                    </p>
+                    <p>
+                        If \(\mu\) is absolutely continuous with respect to \(\nu\), then there exists a
+                        density \(\rho\) such that \(d\mu = \rho\,d\nu\). The density \(\rho\) is the
+                        Radon-Nikodym derivative \(d\mu/d\nu\).
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A density is always relative to a background measure. Without the background
+                        measure, the density is only half a sentence.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The role of Lebesgue measure in finite dimensions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In \(\R^N\), the usual background measure is Lebesgue measure. When we write
+                        \(\mathbf{u}\sim\N(\bar{\mathbf{u}},C)\), we mean that the probability measure
+                        has a density with respect to Lebesgue measure. The hidden reference measure is
+                        Lebesgue measure. It is so familiar that it becomes invisible.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Why there is no infinite-dimensional Lebesgue measure</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In infinite-dimensional function spaces, there is no analogue of Lebesgue
+                        measure with the same useful properties. There is no translation-invariant,
+                        locally finite measure that plays the role of volume on an infinite-dimensional
+                        Hilbert space.
+                    </p>
+                    <p>
+                        This changes everything. If there is no infinite-dimensional Lebesgue measure,
+                        then we cannot define a function-space prior by writing a density with respect
+                        to such a measure. Therefore, in function space, it is safer and more
+                        fundamental to define the prior directly as a measure: \(\prior\).
+                    </p>
+                    <p>
+                        The posterior is then often defined by specifying its density relative to the
+                        prior:
+                        \[ \frac{d\post}{d\prior}(m) = \frac{1}{Z(\obs)} \exp(-\Phi(m;\obs)). \]
+                        Here the prior is the reference measure. The likelihood reweights it.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        In finite dimensions, Lebesgue measure quietly carries the density formalism.
+                        In function space, that quiet support disappears.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What changes on function spaces</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>A prior must be a measure</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In a function-space inverse problem, the prior must be a probability measure on
+                        the model space: \(\prior \in \mathcal{P}(\M)\). The prior must be defined
+                        before discretization. A discretized prior should then be an approximation of
+                        this measure, not a new probability model invented at each resolution.
+                    </p>
+                    <p>
+                        This is exactly where the naive prior failed. The sequence
+                        \(\N(0,\sigma^2 \mathbf{I}_N)\) is a perfectly legal sequence of finite-dimensional
+                        Gaussian measures, but it does not define a sensible Gaussian probability
+                        measure on a Hilbert space whose covariance is \(\sigma^2 I\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Gaussian measures on infinite-dimensional spaces</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A Gaussian measure on a Hilbert space \(\M\) is a probability measure such that
+                        every continuous linear functional applied to the random model is a
+                        finite-dimensional Gaussian random variable. A Gaussian measure is characterized
+                        by its mean \(m_0\) and covariance operator \(C_0\): \(\mu = \N(m_0,C_0)\).
+                    </p>
+                    <p>
+                        The covariance is characterized by
+                        \(\Cov(\ell_1(m),\ell_2(m)) = \inner{C_0 h_1}{h_2}_{\M}\), where
+                        \(\ell_j(m)=\inner{m}{h_j}_{\M}\).
+                    </p>
+                    <p>
+                        In finite dimensions, almost any symmetric positive semidefinite matrix gives a
+                        Gaussian covariance. In infinite dimensions, the covariance operator must
+                        satisfy stronger conditions. Most importantly, it must be trace class if the
+                        Gaussian is to live on the Hilbert space itself.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Typical samples versus pointwise intuition</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In function spaces, typical samples may be less regular than the covariance
+                        kernel or mean function suggests at first glance. A Brownian path is continuous
+                        but almost surely nowhere classically differentiable.
+                    </p>
+                    <p>When choosing a prior, we should ask:</p>
+                    <ol>
+                        <li>Do typical samples belong to the intended model space?</li>
+                        <li>Do they have physically plausible roughness?</li>
+                        <li>Do they satisfy the intended boundary conditions?</li>
+                        <li>Does the prior uncertainty remain controlled under discretization?</li>
+                    </ol>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        In function space, writing down a density without specifying the underlying
+                        measure is usually smoke without a fireplace.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>Gaussian Priors on Function Spaces</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Mean and covariance</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A Gaussian prior on the model space is written
+                        \(m \sim \N(m_0,C_0)\). The mean describes the central model before observing
+                        the data. The covariance describes the allowed uncertainty around that mean.
+                    </p>
+                    <p>
+                        A useful way to think about a Gaussian prior is through a random perturbation:
+                        \(m = m_0+\xi\), where \(\xi \sim \N(0,C_0)\).
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        The prior mean says where the cloud is centred.
+                        The covariance operator says what shape the cloud has in function space.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Covariance as an operator</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In a Hilbert space, covariance is an operator: \(C_0 : \M \to \M\). It satisfies
+                        \(\E\left[ \inner{\xi}{f}_{\M} \inner{\xi}{g}_{\M} \right] = \inner{C_0 f}{g}_{\M}\)
+                        for all \(f,g\in\M\). The variance in direction \(f\) is
+                        \(\operatorname{Var}(\inner{\xi}{f}_{\M}) = \inner{C_0 f}{f}_{\M}\).
+                    </p>
+                    <p>
+                        If \(C_0\) has eigenpairs \(C_0 e_j = \lambda_j e_j\), then the prior can be
+                        represented by the Karhunen-Loeve expansion
+                        \(m = m_0 + \sum_{j=1}^{\infty} \sqrt{\lambda_j}\,\xi_j e_j\), where
+                        \(\xi_j\sim\N(0,1)\) are independent standard normal random variables. The
+                        eigenvalue \(\lambda_j\) is the variance assigned to direction \(e_j\).
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Required properties</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Not every linear operator is a valid covariance operator. To define a Gaussian
+                        measure on a Hilbert space, the covariance must satisfy several important
+                        properties.
+                    </p>
+                    <p>
+                        <strong>Linearity:</strong> \(C_0(\alpha f+\beta g) = \alpha C_0 f+\beta C_0 g\).
+                    </p>
+                    <p>
+                        <strong>Symmetry:</strong> \(\inner{C_0 f}{g}_{\M} = \inner{f}{C_0 g}_{\M}\).
+                        This is the operator version of the symmetry of a covariance matrix.
+                    </p>
+                    <p>
+                        <strong>Positivity:</strong> \(\inner{C_0 f}{f}_{\M} \geq 0\). This is required
+                        because \(\inner{C_0 f}{f}_{\M} = \operatorname{Var}(\inner{\xi}{f}_{\M})\),
+                        and variances cannot be negative.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Trace class</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In infinite-dimensional Hilbert spaces, positivity and symmetry are not enough.
+                        The covariance must also be trace class:
+                        \(\Tr(C_0) < \infty\). If \(C_0 e_j = \lambda_j e_j\) for an orthonormal
+                        basis, then \(\Tr(C_0) = \sum_{j=1}^{\infty}\lambda_j\). Trace class means
+                        \(\sum_{j=1}^{\infty}\lambda_j < \infty\).
+                    </p>
+                    <p>
+                        This condition says that the total variance assigned by the prior is finite.
+                        The eigenvalues must decay quickly enough that the Gaussian perturbation has
+                        finite expected squared norm in the model space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A positive symmetric operator may still fail to define a Gaussian measure on
+                        the Hilbert space if its trace is infinite.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Why trace class matters</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Finite expected energy</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The expected squared norm is
+                        \(\E\norm{m-m_0}_{\M}^2 = \sum_{j=1}^{\infty}\lambda_j = \Tr(C_0)\).
+                        This is the infinite-dimensional version of the finite-dimensional identity
+                        \(\E\norm{\mathbf{u}-\bar{\mathbf{u}}}_2^2 = \Tr(C)\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The failure of the identity covariance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Consider the tempting covariance \(C_0 = \sigma^2 I\). If \(\M\) is
+                        infinite-dimensional, every eigenvalue is \(\lambda_j=\sigma^2\), and
+                        \(\Tr(\sigma^2 I) = \sum_{j=1}^{\infty}\sigma^2 = \infty\).
+                    </p>
+                    <p>
+                        This means that the formal Gaussian perturbation does not have finite expected
+                        squared norm in \(\M\): \(\E\norm{\xi}_{\M}^2 = \infty\).
+                    </p>
+                    <p>
+                        This is exactly the continuous analogue of the failure we saw in the naive
+                        discretization: \(\Tr(\sigma^2 \mathbf{I}_N)=\sigma^2 N\to\infty\). In finite
+                        dimensions, \(\sigma^2 \mathbf{I}_N\) is harmless for fixed \(N\). In infinite
+                        dimensions, \(\sigma^2 I\) is not a valid covariance operator for a Gaussian
+                        measure living on the Hilbert space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        A covariance operator must produce actual random functions in the chosen model
+                        space. That requirement is far stronger than being a positive matrix after
+                        discretization.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What the covariance really chooses</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The covariance operator chooses more than variance. It chooses the regularity,
+                        correlation, length scale, and boundary behaviour of prior samples. If the
+                        eigenvalues decay rapidly, high-frequency modes are strongly suppressed, and
+                        samples are smoother. If the eigenvalues decay slowly, high-frequency modes
+                        retain more energy, and samples are rougher.
+                    </p>
+                    <p>The covariance operator encodes statements such as:</p>
+                    <ol>
+                        <li>how large model perturbations are expected to be;</li>
+                        <li>how correlated nearby points are;</li>
+                        <li>how smooth or rough samples should be;</li>
+                        <li>what boundary behaviour samples should satisfy;</li>
+                        <li>which directions are plausible and which are unlikely.</li>
+                    </ol>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        A covariance matrix says how a finite vector wiggles.
+                        A covariance operator says how a random function breathes.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>How to Build Covariances</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Covariances from differential operators</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The Laplacian</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The Laplacian is the differential operator \(\Delta\). On an interval,
+                        \(\Delta f = f''\). The negative Laplacian, \(-\Delta\), is often positive
+                        under appropriate boundary conditions. Its eigenfunctions provide natural
+                        spatial modes: \(-\Delta e_j = \rho_j e_j\), where
+                        \(0\leq \rho_1\leq \rho_2\leq\cdots\), \(\rho_j\to\infty\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Shifted elliptic operators</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A common construction uses the shifted elliptic operator
+                        \(A = \kappa^2 I - \Delta\), where \(\kappa>0\) sets a length scale. A
+                        covariance operator can then be defined as
+                        \(C_0 = \alpha (\kappa^2 I - \Delta)^{-s}\), where \(\alpha>0\) sets the
+                        overall variance scale and \(s>0\) controls smoothness.
+                    </p>
+                    <p>
+                        The covariance eigenvalues are
+                        \(\lambda_j = \alpha(\kappa^2+\rho_j)^{-s}\). As \(j\) increases, \(\rho_j\)
+                        grows, so \(\lambda_j\) decays. High-frequency modes receive less prior
+                        variance.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Bessel-type priors</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Priors of the form \(C_0 = \alpha (\kappa^2 I - \Delta)^{-s}\) are often called
+                        Bessel-type priors or Matérn-type constructions. They connect the covariance
+                        operator, the smoothness of samples, and the differential geometry of the
+                        domain through the Laplacian.
+                    </p>
+                    <p>
+                        In one dimension, the eigenvalues of \(-\Delta\) typically grow like
+                        \(\rho_j \sim j^2\), so \(\lambda_j \sim j^{-2s}\). The trace condition
+                        \(\sum \lambda_j < \infty\) requires \(2s > 1\), i.e., \(s > \frac{1}{2}\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The role of boundary conditions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The operator \(-\Delta\) is not fully defined until its domain and boundary
+                        conditions are specified. These choices change the eigenfunctions and
+                        eigenvalues, and therefore change the covariance operator. This means that
+                        boundary conditions are part of the prior.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A Laplacian without boundary conditions is not yet a covariance recipe. It is
+                        only the beginning of one.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Covariances from kernels</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Another common way to build covariances is through covariance functions, also
+                        called kernels. A covariance function \(k:\Omega\times\Omega\to\R\) is defined
+                        by \(k(x,x') = \Cov(m(x),m(x'))\).
+                    </p>
+                    <p>
+                        A covariance kernel can define an integral operator:
+                        \((C_0 f)(x) = \int_\Omega k(x,x')\,f(x')\,dx'\). Under suitable assumptions
+                        on \(k\), it is symmetric and positive.
+                    </p>
+                    <p>
+                        A kernel \(k\) is positive definite if, for every finite set of points and
+                        every vector \(\mathbf{a}\), the matrix \(K_{ij}=k(x_i,x_j)\) satisfies
+                        \(\mathbf{a}^{\top} K\mathbf{a}\geq 0\). However, a positive-definite kernel still
+                        needs to be checked against the chosen function space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A kernel that gives valid finite-dimensional covariance matrices still needs
+                        to be checked against the chosen function space.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Operator view versus kernel view</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The kernel view is useful when prior information is naturally spatial: variance
+                        at each point, correlation decay, stationarity, smoothness of the covariance
+                        function. The operator view is useful when prior information is naturally
+                        geometric or spectral: which modes to damp, boundary conditions, differential
+                        operators, finite trace.
+                    </p>
+                    <p>
+                        Under suitable conditions, the kernel and operator views describe the same
+                        covariance. Spectrally, if \(C_0 e_j=\lambda_j e_j\), then the kernel may be
+                        written formally as
+                        \(k(x,x') = \sum_{j=1}^{\infty} \lambda_j e_j(x)e_j(x')\).
+                    </p>
+                    <p>
+                        The correct object is a covariance operator that defines a valid prior measure
+                        on the chosen model space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The prior covariance is a modelling object first and a computational object
+                        second.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The moral of Act VI</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The naive prior failed because it treated covariance as a matrix attached to a
+                        mesh. In function space, this is the wrong starting point.
+                    </p>
+                    <p>
+                        A prior must be a probability measure on the model space: \(m\sim\prior\). If
+                        the prior is Gaussian, then it is described by a mean and a covariance
+                        operator: \(\prior=\N(m_0,C_0)\). That covariance must be linear, symmetric,
+                        positive, and trace class. The trace condition is the mathematical gatekeeper
+                        that prevents the prior from assigning infinite total variance to the model.
+                    </p>
+                    <p>
+                        The identity covariance failed because \(\Tr(\sigma^2 I)=\infty\) in infinite
+                        dimensions. The finite-dimensional symptom was
+                        \(\Tr(\sigma^2 \mathbf{I}_N)=\sigma^2 N\to\infty\).
+                    </p>
+                    <p>
+                        To build meaningful covariances, we may use differential operators, kernels, or
+                        spectral constructions. But in every case, the covariance must define a valid
+                        Gaussian measure on the chosen model space, and it must be discretized as an
+                        approximation of that continuous object.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        We now have all the pieces: model space, data space, forward map, adjoint,
+                        noise model, and prior measure. The next act puts them together and returns to
+                        the opening toy problem, where the pathologies of the naive posterior disappear
+                        once the formulation is done in the right order.
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="act-5.html"><span class="arrow">&larr;</span> Act V: Data &amp; Adjoint</a>
+                    <a class="act-prevnext-btn next" href="act-7.html">Act VII: Putting Together <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

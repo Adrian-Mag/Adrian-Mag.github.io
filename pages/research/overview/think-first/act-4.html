@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act IV: A Guided Detour Through Functional Analysis — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act IV of Think First, Discretize Later: A guided climb through functional analysis, from sets to Hilbert spaces.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Hh: '\\mathcal{H}', B: '\\mathcal{B}',
+                N: '\\mathcal{N}', R: '\\mathbb{R}', E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}', Tr: '\\operatorname{Tr}', Id: 'I',
+                prior: '\\mu_0', post: '\\mu^{\\obs}', noise: '\\boldsymbol{\\eta}', obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}', Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}', Gb: '\\mathbf{G}', vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*', T: '{\\top}', Cd: '{\\mathbf{C}_d}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act IV: A Guided Detour Through Functional Analysis</h1>
+                <p>From sets to Hilbert spaces &mdash; each layer of structure makes more of the inverse problem meaningful.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip is-active" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-b">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>A Zoo of Spaces</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Why there are so many spaces</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We have reached the point where the inverse problem can no longer be treated as
+                        a matrix problem wearing a function-shaped hat. We must decide where the unknown
+                        model lives. This forces us into the world of functional analysis.
+                    </p>
+                    <p>
+                        At first glance, functional analysis looks like a zoo. There are sets,
+                        topological spaces, metric spaces, vector spaces, normed spaces, Banach spaces,
+                        inner-product spaces, Hilbert spaces, Sobolev spaces, spaces of distributions,
+                        spaces of continuous functions, spaces of measures, and many others.
+                    </p>
+                    <p>
+                        This abundance is not mathematical decoration. Each type of space carries a
+                        different kind of structure. Each structure allows us to ask different
+                        questions.
+                    </p>
+                    <p>For inverse problems, the relevant questions include:</p>
+                    <ol>
+                        <li>What objects are admissible models?</li>
+                        <li>What does it mean for two models to be close?</li>
+                        <li>What does it mean for a sequence of models to converge?</li>
+                        <li>Can we add perturbations to a model?</li>
+                        <li>Can we measure the size of a perturbation?</li>
+                        <li>Can we define angles, orthogonality, projections, and adjoints?</li>
+                        <li>Can we place a Gaussian prior on the space?</li>
+                    </ol>
+                    <p>
+                        Different spaces answer these questions with different levels of richness. The
+                        path through this chapter is therefore not a catalogue for its own sake. It is
+                        a guided climb: each step adds just enough structure to make more of the inverse
+                        problem meaningful.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        A space is not only a container for objects. It is a rulebook for what we are
+                        allowed to do with those objects.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Sets</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Membership</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The simplest mathematical structure is a set. A set is just a collection of
+                        objects. If \(X\) is a set and \(x\) is one of its elements, we write
+                        \(x \in X\).
+                    </p>
+                    <p>
+                        For example, we might write \(m \in \M\) to say that \(m\) is an admissible model.
+                    </p>
+                    <p>
+                        At the level of sets, the only basic question is membership:
+                        \(\text{Is this object allowed or not?}\)
+                        A set tells us which objects belong to our model universe, but nothing more.
+                    </p>
+                    <p>
+                        For example, suppose
+                        \[ \M = \{m:\Omega\to\R\}. \]
+                        This says that every real-valued function on \(\Omega\) is admissible. But it
+                        does not tell us whether one function is close to another, whether a sequence
+                        of functions converges, whether small perturbations make sense, or whether
+                        Gaussian probability measures can be placed on \(\M\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>No geometry yet</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A bare set has no geometry. There is no distance, no notion of size, no notion
+                        of angle, and no notion of convergence.
+                    </p>
+                    <p>
+                        If \(m_1,m_2\in \M\), a set alone does not allow us to ask whether \(m_1\) is
+                        close to \(m_2\), nor whether \(m_n \to m\).
+                    </p>
+                    <p>
+                        This is too little structure for inverse problems. In inverse problems, we need
+                        to compare models, perturb models, approximate models, and study the behaviour
+                        of sequences of approximations.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        A set tells us what objects are allowed. It does not tell us how those objects
+                        relate to one another.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Topological spaces</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Open sets</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The next layer of structure is topology. A topological space is a set \(X\)
+                        together with a collection of subsets called open sets. We write this collection
+                        as \(\mathcal{T}\). The pair \((X,\mathcal{T})\) is called a topological space.
+                    </p>
+                    <p>
+                        The open sets tell us what it means for points to be near one another, but in a
+                        very flexible way. A topology does not necessarily come from a distance. It only
+                        tells us which subsets count as neighbourhoods.
+                    </p>
+                    <p>The collection \(\mathcal{T}\) must satisfy:</p>
+                    <ol>
+                        <li>\(\varnothing \in \mathcal{T}\) and \(X\in\mathcal{T}\);</li>
+                        <li>arbitrary unions of open sets are open;</li>
+                        <li>finite intersections of open sets are open.</li>
+                    </ol>
+                    <p>
+                        These rules are abstract, but the goal is familiar: topology lets us talk about
+                        continuity and convergence without first committing to a particular formula for
+                        distance.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Continuity</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        If \(X\) and \(Y\) are topological spaces, a map \(F:X\to Y\) is continuous if
+                        the inverse image of every open set in \(Y\) is open in \(X\). That is, if
+                        \(U\subset Y\) is open, then \(F^{-1}(U) = \{x\in X : F(x)\in U\}\) must be open
+                        in \(X\).
+                    </p>
+                    <p>
+                        For inverse problems, continuity matters because the forward map should not
+                        behave like a mathematical trapdoor. If two models are close, their predicted
+                        data should also be close:
+                        \[ m_n \to m \quad\Longrightarrow\quad G m_n \to G m. \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Convergence without distances</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A topology gives a notion of convergence. We can say that a sequence
+                        \(x_1,x_2,x_3,\ldots\) converges to \(x\) if, eventually, the sequence lies
+                        in every neighbourhood of \(x\).
+                    </p>
+                    <p>
+                        The important point is that convergence can be discussed without a distance
+                        function. This is useful in many areas of analysis, especially when dealing with
+                        weak convergence, distributions, and probability measures.
+                    </p>
+                    <p>
+                        However, for the present story, topology alone is still too sparse. We will
+                        want to measure sizes of perturbations, define covariance operators, and discuss
+                        Gaussian priors. For this, it is usually helpful to have more structure.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Topology tells us when things approach each other, but it does not necessarily
+                        tell us how far apart they are.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Metric spaces</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Distances</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A metric space is a set \(X\) equipped with a distance function
+                        \(d:X\times X\to [0,\infty)\). For \(x,y,z\in X\), the metric must satisfy:
+                    </p>
+                    <ol>
+                        <li>\(d(x,y)\geq 0\);</li>
+                        <li>\(d(x,y)=0\) if and only if \(x=y\);</li>
+                        <li>\(d(x,y)=d(y,x)\);</li>
+                        <li>\(d(x,z)\leq d(x,y)+d(y,z)\).</li>
+                    </ol>
+                    <p>
+                        The last condition is the triangle inequality. A metric allows us to quantify
+                        closeness: \(d(x,y) \ll 1\).
+                    </p>
+                    <p>
+                        In inverse problems, metrics let us ask whether reconstructed models are close
+                        to one another, whether approximations converge, and whether the posterior
+                        changes continuously when the data are perturbed.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Convergence by distance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In a metric space, convergence has a very concrete meaning:
+                        \(x_n \to x\) if \(d(x_n,x)\to 0\).
+                    </p>
+                    <p>
+                        For example, if \(X=C([0,L])\), we may define the uniform distance
+                        \(d(f,g) = \sup_{x\in[0,L]} |f(x)-g(x)|\). Then \(f_n \to f\) means uniform
+                        convergence.
+                    </p>
+                    <p>
+                        Alternatively, if \(X=L^2(\Omega)\), we may define
+                        \(d(f,g) = \left( \int_\Omega |f(x)-g(x)|^2\,dx \right)^{1/2}\). Then
+                        convergence means convergence in mean-square size.
+                    </p>
+                    <p>
+                        These two notions of convergence are different. Choosing a space means choosing
+                        which distinctions matter.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        There is no single universal notion of closeness between functions. The chosen
+                        space decides what kind of closeness is being measured.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Vector spaces</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Addition and scalar multiplication</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A vector space is a set \(V\) whose elements can be added and multiplied by
+                        scalars. If \(u,v\in V\) and \(\alpha,\beta\in\R\), then
+                        \(\alpha u+\beta v \in V\).
+                    </p>
+                    <p>
+                        Examples include \(\R^N\), \(L^2(\Omega)\), \(C([0,L])\), \(H^1(\Omega)\).
+                    </p>
+                    <p>
+                        If \(m_1\) and \(m_2\) are models, vector space structure lets us form
+                        \(m_1+m_2\), \(\alpha m_1\), \(m_1-m_2\). The difference \(m_1-m_2\) is
+                        especially important &mdash; it represents a perturbation, an update, or an error.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Perturbations</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In inverse problems, we often reason in terms of perturbations:
+                        \(m = m_0+\delta m\). Here \(m_0\) is a reference model and \(\delta m\) is an
+                        update. This expression only makes sense if the model space has a linear
+                        structure.
+                    </p>
+                    <p>
+                        Linear structure is also what allows us to describe Gaussian priors by adding a
+                        random perturbation to a mean: \(m = m_0 + \xi\), where \(\xi\) is a centred
+                        random element.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Vector spaces are natural when models can be nudged, corrected, averaged, and
+                        superposed.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Linear inverse problems</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A linear inverse problem is built around a linear forward map
+                        \(G:\M\to\D\). Linearity means
+                        \(G(\alpha m_1+\beta m_2) = \alpha G m_1+\beta G m_2\).
+                    </p>
+                    <p>
+                        This structure is powerful. It allows us to understand how perturbations in the
+                        model produce perturbations in the data: \(\delta y = G \delta m\). It also
+                        allows Gaussian priors and Gaussian noise to produce Gaussian posteriors,
+                        provided the rest of the formulation is coherent.
+                    </p>
+                    <p>
+                        But vector spaces alone are still not enough. They let us add models, but they
+                        do not tell us how large a model is, how far apart two models are, or what it
+                        means for an infinite sequence of approximations to converge. For that, we need
+                        norms.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Manifolds</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>When the unknown does not live in a vector space</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Not every meaningful model space is naturally a vector space. Sometimes the
+                        unknown lives on a curved space called a manifold.
+                    </p>
+                    <p>Examples include:</p>
+                    <ol>
+                        <li>directions on a sphere;</li>
+                        <li>rotations in three dimensions;</li>
+                        <li>positive-definite matrices;</li>
+                        <li>shapes or interfaces;</li>
+                        <li>diffeomorphisms;</li>
+                        <li>fields constrained to have fixed magnitude.</li>
+                    </ol>
+                    <p>
+                        In such cases, adding two models may not make sense. The model space is curved,
+                        not linear.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Tangent spaces</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Even when the model space is a manifold, local perturbations often live in a
+                        linear space called a tangent space. If \(m\) is a point on a manifold
+                        \(\mathcal{M}\), the tangent space at \(m\) is written \(T_m\mathcal{M}\).
+                        Elements of \(T_m\mathcal{M}\) represent infinitesimal perturbations around
+                        \(m\).
+                    </p>
+                    <p>
+                        In this document, we will not go in that direction. Our goal is already rich
+                        enough: to understand why even linear inverse problems can go wrong if we
+                        discretize before choosing the function-space formulation.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-remark">
+                    <span class="tfdl-callout-label">Remark</span>
+                    <p>
+                        Manifolds are important, but this document stays in the linear world.
+                        Our unknowns will live in vector spaces.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>Adding Structure One Layer at a Time</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>From set to vector space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now rebuild the model space slowly. The aim is to understand why each layer
+                        of structure is useful and what it buys us.
+                    </p>
+                    <p>
+                        A bare set tells us which objects are allowed. A vector space tells us that
+                        objects can be added, scaled, and perturbed. This is the first major step toward
+                        linear inverse problems.
+                    </p>
+                    <p>
+                        Linear combinations allow us to construct approximations by basis expansion:
+                        \(m_N = \sum_{j=1}^N [\mathbf{u}]_j\phi_j\), form averages \(\bar{m} = \E[m]\), and study
+                        fluctuations \(m-\bar{m}\). These operations are essential in Gaussian Bayesian
+                        inversion.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Linear spaces are the natural habitat of additive perturbations.
+                        If our inference problem is about updates, differences, and superposition,
+                        linear structure is not decoration. It is the grammar.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>From vector space to normed space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A vector space lets us add and scale. But it still does not tell us how large a
+                        model is. To measure size, we introduce a norm.
+                    </p>
+                    <p>
+                        A normed space is a vector space \(V\) equipped with a function
+                        \(\norm{\cdot}:V\to[0,\infty)\) such that, for all \(u,v\in V\) and
+                        \(\alpha\in\R\):
+                    </p>
+                    <ol>
+                        <li>\(\norm{u}\geq 0\);</li>
+                        <li>\(\norm{u}=0\) if and only if \(u=0\);</li>
+                        <li>\(\norm{\alpha u}=|\alpha|\,\norm{u}\);</li>
+                        <li>\(\norm{u+v}\leq \norm{u}+\norm{v}\).</li>
+                    </ol>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Measuring size</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In \(L^2(\Omega)\),
+                        \(\norm{m}_{L^2} = \left( \int_\Omega |m(x)|^2\,dx \right)^{1/2}\).
+                        This norm measures the root-mean-square size of a function.
+                    </p>
+                    <p>
+                        In \(H^1(\Omega)\),
+                        \(\norm{m}_{H^1} = \left( \int_\Omega |m(x)|^2\,dx + \int_\Omega |m'(x)|^2\,dx \right)^{1/2}\).
+                        This norm measures both the size of the function and the size of its derivative.
+                    </p>
+                    <p>
+                        Thus, choosing a norm is not neutral. It decides which features of a model are
+                        expensive.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Convergence</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A norm automatically defines a distance: \(d(m_1,m_2) = \norm{m_1-m_2}\).
+                        Therefore, it gives a notion of convergence: \(m_n \to m\) if
+                        \(\norm{m_n-m}\to 0\).
+                    </p>
+                    <p>
+                        This is crucial for discretization. When we say that finite-dimensional
+                        approximations converge to a function-space model, we must mean convergence in
+                        some norm: \(\norm{m_N-m}_{\M}\to 0\). Different norms give different meanings
+                        to this statement.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A discretization cannot be called convergent until we say which norm or topology
+                        defines convergence.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>From normed space to Banach space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Normed spaces are useful, but one more property is often essential:
+                        completeness. A complete normed vector space is called a Banach space.
+                    </p>
+                    <p>
+                        A sequence \((m_n)\) in a normed space is called Cauchy if, for every
+                        \(\varepsilon>0\), there exists an index \(N_\varepsilon\) such that
+                        \(\norm{m_n-m_k} < \varepsilon\) whenever \(n,k\geq N_\varepsilon\).
+                    </p>
+                    <p>
+                        A normed space is complete if every Cauchy sequence has a limit in the space.
+                        Completeness prevents sequences from slipping out of the space through invisible
+                        cracks.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Completeness means that if a sequence behaves as though it is converging, the
+                        limit has not been exiled from the space.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>From Banach space to inner-product space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A Banach space gives us size and convergence. But for many parts of linear
+                        inverse theory, we want more: angles, orthogonality, projections, and adjoints.
+                        These come from an inner product.
+                    </p>
+                    <p>
+                        An inner product on a real vector space \(V\) is a map
+                        \(\inner{\cdot}{\cdot}:V\times V\to\R\) such that, for \(u,v,w\in V\) and
+                        \(\alpha,\beta\in\R\):
+                    </p>
+                    <ol>
+                        <li>\(\inner{u}{v}=\inner{v}{u}\);</li>
+                        <li>\(\inner{\alpha u+\beta v}{w} = \alpha\inner{u}{w}+\beta\inner{v}{w}\);</li>
+                        <li>\(\inner{u}{u}\geq 0\);</li>
+                        <li>\(\inner{u}{u}=0\) if and only if \(u=0\).</li>
+                    </ol>
+                    <p>An inner product defines a norm by \(\norm{u} = \sqrt{\inner{u}{u}}\).</p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Angles and orthogonality</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In \(L^2(\Omega)\),
+                        \(\inner{f}{g}_{L^2} = \int_\Omega f(x)g(x)\,dx\).
+                        Two elements are orthogonal if \(\inner{u}{v} = 0\).
+                    </p>
+                    <p>
+                        Orthogonality is indispensable in approximation theory. The best approximation
+                        to \(m\in\M\) in a subspace \(\M_N\) is characterized by:
+                        \(\inner{m-P_Nm}{v_N}_{\M}=0\) for all \(v_N\in\M_N\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Projection</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The orthogonal projection \(P_Nm\) is the element of \(\M_N\) closest to \(m\):
+                        \(P_Nm = \operatorname*{arg\,min}_{v_N\in\M_N} \norm{m-v_N}_{\M}\).
+                        The error \(m-P_Nm\) is orthogonal to the approximation space.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>From inner-product space to Hilbert space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        An inner-product space becomes a Hilbert space when it is complete with respect
+                        to the norm induced by the inner product. Thus, a Hilbert space is an
+                        inner-product space in which every Cauchy sequence converges.
+                    </p>
+                    <p>Hilbert spaces are especially useful because they provide:</p>
+                    <ol>
+                        <li>a norm for measuring size;</li>
+                        <li>a topology for discussing convergence;</li>
+                        <li>an inner product for geometry;</li>
+                        <li>orthogonality;</li>
+                        <li>projections onto closed subspaces;</li>
+                        <li>adjoints of bounded linear operators;</li>
+                        <li>spectral theory for many important operators;</li>
+                        <li>a natural language for covariance operators;</li>
+                        <li>a convenient setting for Gaussian measures.</li>
+                    </ol>
+                    <p>
+                        For linear inverse problems, the adjoint is particularly important. If
+                        \(G:\M\to\D\) is a bounded linear map between Hilbert spaces, its adjoint
+                        \(G^{\adj}:\D\to\M\) is defined by
+                        \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\).
+                    </p>
+                    <p>
+                        This definition depends on the inner products of both spaces. It is not merely
+                        a transpose. The transpose appears only after coordinates and Euclidean
+                        geometries have been chosen.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Hilbert spaces are not the only possible model spaces, but they are often the
+                        simplest setting where geometry, projection, adjoints, and Gaussian priors can
+                        speak the same language.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>Hilbert Spaces We Actually Use</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>\(L^2\) spaces</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The space \(L^2(\Omega)\) consists of square-integrable functions:
+                        \[ L^2(\Omega) = \left\{ f : \Omega \to \R : \int_\Omega |f(x)|^2\,dx < \infty \right\}. \]
+                        The inner product is
+                        \(\inner{f}{g}_{L^2} = \int_\Omega f(x)g(x)\,dx\), and the norm is
+                        \(\norm{f}_{L^2} = \left( \int_\Omega |f(x)|^2\,dx \right)^{1/2}\).
+                    </p>
+                    <p>
+                        For the toy inverse problem, the \(L^2\) setting is natural if
+                        \(K_i\in L^2(\Omega)\). Then, by Cauchy-Schwarz,
+                        \(|[G(m)]_i| \leq \norm{K_i}_{L^2} \norm{m}_{L^2}\).
+                    </p>
+                    <p>
+                        However, \(L^2(\Omega)\) does not directly encode smoothness, and pointwise
+                        values are not fundamental. If the data require pointwise values, \(L^2\) may
+                        not be the right model space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        Choosing \(L^2\) says that average-square size matters. It does not say that
+                        functions are smooth, continuous, or pointwise meaningful.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Sobolev spaces</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Weak derivatives</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Sobolev spaces add controlled derivatives to the story. A function \(f\) has a
+                        weak derivative \(g\) if integration by parts behaves as though \(g\) were the
+                        derivative of \(f\):
+                        \(\int_\Omega f(x)\varphi'(x)\,dx = -\int_\Omega g(x)\varphi(x)\,dx\)
+                        for every sufficiently smooth test function \(\varphi\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Smoothness as square-integrability of derivatives</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For an integer \(k\geq 0\), the Sobolev space \(H^k(\Omega)\) is
+                        \[ H^k(\Omega) = \left\{ f \in L^2(\Omega) : D^\alpha f \in L^2(\Omega),\ |\alpha|\leq k \right\}. \]
+                        The \(H^k\) norm is
+                        \(\norm{f}_{H^k}^2 = \sum_{|\alpha|\leq k} \norm{D^\alpha f}_{L^2}^2\).
+                    </p>
+                    <p>
+                        In Bayesian inversion, this connects directly to the prior. A prior covariance
+                        operator can be chosen so that samples have a particular Sobolev regularity.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Sobolev spaces turn smoothness into bookkeeping. The derivatives that must be
+                        square-integrable are the entries in the ledger.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Boundary conditions</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Boundary conditions are often treated as numerical details. In a function-space
+                        formulation, they are part of the mathematical model.
+                    </p>
+                    <p>
+                        Dirichlet conditions fix the value of the function at the boundary, e.g.
+                        \(f(0)=0\), \(f(L)=0\). Neumann conditions fix the derivative, e.g.
+                        \(f'(0)=0\), \(f'(L)=0\). Mixed conditions combine different types at different
+                        parts of the boundary.
+                    </p>
+                    <p>
+                        If a prior covariance is built from a differential operator like
+                        \(\kappa^2 I - \Delta\), then the boundary conditions used to define \(\Delta\)
+                        affect the covariance, and therefore affect the prior measure.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        Boundary conditions are not numerical decoration.
+                        They are part of the mathematical model and, often, part of the prior.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Choosing a model space</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        There is no universal answer. The model space is a modelling decision. It must
+                        reflect the physical problem, the data, the forward map, and the kind of prior
+                        information we are willing to assert.
+                    </p>
+                    <p>
+                        The key questions are: What physical quantities should be finite? How smooth
+                        should the model be? What boundary behaviour is meaningful? What should count
+                        as a small perturbation?
+                    </p>
+                    <p>
+                        The chosen geometry determines which perturbations are considered mild and which
+                        are considered large. This matters for regularization, prior modelling,
+                        posterior covariance, and adjoints.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Choosing a model space is choosing what kind of object the unknown is, what
+                        kind of perturbations are meaningful, and what kind of uncertainty can be
+                        placed on the problem.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The moral of Act IV</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The functional-analytic detour was not a luxury expedition. It was necessary
+                        cartography.
+                    </p>
+                    <p>
+                        We began with sets, which only provide membership. We added topology, which
+                        allows continuity and convergence. We added metrics and norms, which measure
+                        distance and size. We added completeness, producing Banach spaces. We added
+                        inner products, giving angles, orthogonality, projections, and adjoints. With
+                        completeness and an inner product together, we arrived at Hilbert spaces.
+                    </p>
+                    <p>
+                        For linear Bayesian inverse problems, Hilbert spaces are often the sweet spot.
+                        They are structured enough to support the geometry we need, but familiar enough
+                        to connect cleanly to computation.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        The next act turns from the model space to the data space and the forward
+                        operator. In particular, we will see why the adjoint \(G^{\adj}\) is determined by
+                        the inner products on both spaces, and why replacing it by a transpose can
+                        quietly change the problem.
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="act-3.html"><span class="arrow">&larr;</span> Act III: What Problem?</a>
+                    <a class="act-prevnext-btn next" href="act-5.html">Act V: Data &amp; Adjoint <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

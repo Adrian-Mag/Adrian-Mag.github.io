@@ -1,0 +1,140 @@
+/* concept-popup.css — modal dialog for "?" concept popups */
+
+.concept-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20,22,26,0.72);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    padding: 20px;
+}
+
+.concept-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.concept-dialog {
+    background: #3a3e43;
+    border: 1.5px solid rgba(103,145,190,0.30);
+    border-radius: 16px;
+    box-shadow: 0 16px 64px rgba(0,0,0,0.40);
+    max-width: 560px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(12px) scale(0.97);
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+
+.concept-overlay.is-open .concept-dialog {
+    transform: translateY(0) scale(1);
+}
+
+.concept-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px 12px 24px;
+    border-bottom: 1px solid rgba(103,145,190,0.18);
+}
+
+.concept-dialog-title {
+    color: #a0c4e8;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.concept-close-btn {
+    background: rgba(74,109,163,0.20);
+    border: none;
+    color: rgba(255,255,255,0.70);
+    font-size: 1.5rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.concept-close-btn:hover,
+.concept-close-btn:focus {
+    background: rgba(74,109,163,0.40);
+    color: #fff;
+    outline: 2px solid rgba(160,196,232,0.50);
+}
+
+.concept-dialog-content {
+    padding: 20px 24px 28px 24px;
+    line-height: 1.75;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.88);
+}
+
+.concept-dialog-content p {
+    margin-bottom: 0.8rem;
+}
+
+.concept-dialog-content p:last-child {
+    margin-bottom: 0;
+}
+
+.concept-dialog-content strong {
+    color: #c8dff5;
+}
+
+.concept-dialog-content em {
+    color: rgba(255,255,255,0.70);
+}
+
+.concept-dialog-content .concept-tier {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6791BE;
+    background: rgba(74,109,163,0.18);
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+}
+
+/* Let wide display equations scroll horizontally inside the dialog */
+.concept-dialog-content mjx-container[jax="CHTML"][display="true"] {
+    overflow-x: auto;
+    padding: 0.4rem 0;
+}
+
+@media (max-width: 600px) {
+    .concept-dialog {
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 12px;
+    }
+
+    .concept-dialog-header {
+        padding: 14px 18px 10px 18px;
+    }
+
+    .concept-dialog-content {
+        padding: 16px 18px 22px 18px;
+        font-size: 0.95rem;
+    }
+}

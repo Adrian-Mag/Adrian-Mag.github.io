@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act II: Something Is Wrong — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act II of Think First, Discretize Later: Sampling the naive posterior reveals that uncertainty explodes under mesh refinement.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Hh: '\\mathcal{H}', B: '\\mathcal{B}',
+                N: '\\mathcal{N}', R: '\\mathbb{R}', E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}', Tr: '\\operatorname{Tr}', Id: 'I',
+                prior: '\\mu_0', post: '\\mu^{\\obs}', noise: '\\boldsymbol{\\eta}', obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}', Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}', Gb: '\\mathbf{G}', vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*', T: '{\\top}', Cd: '{\\mathbf{C}_d}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act II: Something Is Wrong</h1>
+                <p>The posterior mean looks fine, but the posterior samples tell a different story.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip is-active" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-b">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>Sampling the Naive Posterior</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Why the mean is not the whole posterior</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In the previous act, the posterior mean looked respectable. It passed the first
+                        visual test: it had the right broad shape, it responded to the data, and it did
+                        not immediately look like numerical wreckage.
+                    </p>
+                    <p>
+                        But a Bayesian inverse problem does not produce only a mean. It produces a
+                        probability measure. The mean is only one summary of that measure, and a
+                        dangerous summary when viewed alone. A posterior mean can look calm while the
+                        posterior distribution around it is thrashing like a stormy sea.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>A posterior is a probability measure</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The finite-dimensional posterior obtained in the naive discretization is
+                        \[ \mathbf{u}\mid \obs \sim \N(\bar{\mathbf{u}}_N^{\obs},\mathbf{C}_N^{\obs}). \]
+                        This is a probability measure on \(\R^N\). Once we reconstruct functions
+                        using the hat basis, it also induces a probability measure on the finite element
+                        space
+                        \[ \M_N = \operatorname{span}\{\phi_1,\ldots,\phi_N\}. \]
+                    </p>
+                    <p>
+                        That is, a random coefficient vector
+                        \[ \mathbf{u} = \begin{pmatrix} [\mathbf{u}]_1 \\ \vdots \\ [\mathbf{u}]_N \end{pmatrix} \]
+                        produces a random function
+                        \[ m_N(x) = \sum_{j=1}^N [\mathbf{u}]_j\phi_j(x). \]
+                    </p>
+                    <p>
+                        The posterior mean is the function
+                        \[ \bar{m}_N^{\obs}(x) = \sum_{j=1}^N [\bar{\mathbf{u}}_N^{\obs}]_j\phi_j(x). \]
+                        But the posterior itself consists of all possible functions generated by
+                        sampling
+                        \[ \mathbf{u} \sim \N(\bar{\mathbf{u}}_N^{\obs},\mathbf{C}_N^{\obs}). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The posterior mean asks: "Where is the centre of the cloud?"
+                        The posterior measure asks: "What is the whole cloud doing?"
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Uncertainty lives in the samples</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        To understand whether the posterior is sensible, we must inspect more than the
+                        mean. We must ask what typical posterior samples look like.
+                    </p>
+                    <p>
+                        A sample from the posterior is a possible model compatible with three things:
+                    </p>
+                    <ol>
+                        <li>the observed data;</li>
+                        <li>the assumed noise model;</li>
+                        <li>the assumed prior.</li>
+                    </ol>
+                    <p>
+                        If the samples look physically plausible, then the posterior uncertainty may be
+                        telling a coherent story. If the samples fluctuate wildly, then something is
+                        wrong, even if the mean still looks acceptable.
+                    </p>
+                    <p>
+                        This distinction is essential. A mean can smooth away pathologies. Samples do
+                        not. Samples are less polite. They show the posterior with its socks off.
+                    </p>
+                </div>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig2b_posterior_samples.svg"
+                         alt="Naive Bayesian posterior on a hat basis, posterior mean and samples, showing large spread.">
+                    <figcaption>
+                        <strong>F2b &mdash; Posterior samples on hats.</strong> The posterior
+                        mean is plausible, but the samples fluctuate wildly around it.
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-section-heading">
+                    <h4>How to sample a finite-dimensional Gaussian</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The mathematical recipe</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let
+                        \[ \mathbf{u} \sim \N(\bar{\mathbf{u}},\mathbf{C}), \]
+                        where
+                        \[ \bar{\mathbf{u}} \in \R^N, \qquad \mathbf{C} \in \R^{N\times N}. \]
+                        Assume first that \(\mathbf{C}\) is symmetric positive definite. Then we may factorize
+                        \[ \mathbf{C} = L\mathbf{L}^{\top}, \]
+                        for example using a Cholesky factorization. Now draw
+                        \[ \boldsymbol{\xi} \sim \N(0,\mathbf{I}_N), \]
+                        and set
+                        \[ \mathbf{u} = \bar{\mathbf{u}} + \mathbf{L}\boldsymbol{\xi}. \]
+                    </p>
+                    <p>
+                        This gives the desired distribution. Indeed,
+                        \[ \E[\mathbf{u}] = \E[\bar{\mathbf{u}} + \mathbf{L}\boldsymbol{\xi}] = \bar{\mathbf{u}} + \mathbf{L}\E[\boldsymbol{\xi}] = \bar{\mathbf{u}}, \]
+                        and
+                        \[ \Cov(\mathbf{u}) = \Cov(\mathbf{L}\boldsymbol{\xi}) = \mathbf{L}\Cov(\boldsymbol{\xi})\mathbf{L}^{\top} = \mathbf{L} \mathbf{I}_N \mathbf{L}^{\top} = \mathbf{C}. \]
+                    </p>
+                    <p>
+                        If \(\mathbf{C}\) is positive semidefinite rather than positive definite, we may use an
+                        eigenvalue decomposition
+                        \[ \mathbf{C} = \mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^{\top}, \]
+                        where
+                        \[ \boldsymbol{\Lambda} = \operatorname{diag}(\lambda_1,\ldots,\lambda_N), \qquad \lambda_j \geq 0. \]
+                        Then a covariance square-root is
+                        \[ \mathbf{C}^{1/2} = \mathbf{Q}\boldsymbol{\Lambda}^{1/2}\mathbf{Q}^{\top}, \]
+                        and we may sample using
+                        \[ \mathbf{u} = \bar{\mathbf{u}} + \mathbf{C}^{1/2}\boldsymbol{\xi}. \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The practical recipe</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>For the naive posterior, the sampling procedure is as follows.</p>
+                    <ol>
+                        <li>Compute the posterior mean \(\bar{\mathbf{u}}_N^{\obs}\).</li>
+                        <li>Compute the posterior covariance \(\mathbf{C}_N^{\obs}\).</li>
+                        <li>Factorize \(\mathbf{C}_N^{\obs}\), for example by Cholesky or by an eigenvalue decomposition.</li>
+                        <li>Draw independent standard normal vectors
+                            \[ \boldsymbol{\xi}^{(s)} \sim \N(0,\mathbf{I}_N), \qquad s=1,\ldots,S. \]</li>
+                        <li>Form coefficient samples
+                            \[ \mathbf{u}^{(s)} = \bar{\mathbf{u}}_N^{\obs} + \mathbf{L}\boldsymbol{\xi}^{(s)}. \]</li>
+                        <li>Reconstruct sample functions using the hat basis:
+                            \[ m_N^{(s)}(x) = \sum_{j=1}^N [\mathbf{u}^{(s)}]_j\phi_j(x). \]</li>
+                    </ol>
+                    <p>Here \(S\) is the number of posterior samples we want to inspect.</p>
+                </div>
+
+                <div class="tfdl-callout callout-remark">
+                    <span class="tfdl-callout-label">Remark</span>
+                    <p>
+                        In exact arithmetic, the posterior covariance is symmetric positive
+                        semidefinite. In floating-point arithmetic, tiny negative eigenvalues may appear
+                        because of round-off error. A practical implementation often symmetrizes the
+                        matrix,
+                        \[ \mathbf{C}_N^{\obs} \leftarrow \tfrac{1}{2}(\mathbf{C}_N^{\obs} + (\mathbf{C}_N^{\obs})^{\top}), \]
+                        and discards eigenvalues that are negative only up to numerical precision.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What the samples reveal</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The samples fluctuate wildly</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        After drawing posterior samples, we reconstruct the corresponding functions
+                        \[ m_N^{(s)}(x) = \sum_{j=1}^N [\mathbf{u}^{(s)}]_j\phi_j(x). \]
+                        Now the problem begins to show itself.
+                    </p>
+                    <p>
+                        The posterior mean may track the main features of the true model, but the
+                        samples can vary dramatically around it. They may contain rapid oscillations,
+                        large local deviations, or high-frequency behaviour that the data never
+                        justified.
+                    </p>
+                    <p>
+                        The plot now tells a different story. The mean says:
+                        \[ \text{"Everything is fine."} \]
+                        The samples say:
+                        \[ \text{"We have been ignoring the basement."} \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The data are too few</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The reason is structural. The data vector has only \(K\) entries:
+                        \[ \obs \in \R^K. \]
+                        The coefficient vector has \(N\) entries:
+                        \[ \mathbf{u} \in \R^N. \]
+                        If \(N > K\), then there are more unknown coefficients than observations.
+                    </p>
+                    <p>
+                        The forward matrix
+                        \[ \Gb \in \R^{K\times N} \]
+                        can have rank at most \(K\):
+                        \[ \operatorname{rank}(\Gb) \leq K. \]
+                        Therefore, if \(N>K\), the nullspace of \(\Gb\) has dimension at least
+                        \[ \dim \operatorname{null}(\Gb) = N-\operatorname{rank}(\Gb) \geq N-K. \]
+                    </p>
+                    <p>
+                        Every vector \(\mathbf{v} \in \operatorname{null}(\Gb)\) satisfies
+                        \[ \Gb\mathbf{v} = 0. \]
+                        So moving in the direction \(\mathbf{v}\) does not change the predicted data.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The number of basis functions is too large</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Increasing the number of basis functions increases the number of unknowns. But
+                        unless the number of observations increases in a compatible way, it also
+                        increases the number of directions that the data cannot see.
+                    </p>
+                    <p>
+                        This is not automatically a problem. Infinite-dimensional inverse problems
+                        always contain directions that are weakly observed or unobserved. The real
+                        question is: what controls those directions?
+                    </p>
+                    <p>
+                        In a coherent Bayesian formulation, the prior controls them in a way that is
+                        consistent with a probability measure on a function space. In the naive
+                        formulation, the prior is merely
+                        \[ \mathbf{C}_N = \sigma^2 \mathbf{I}_N. \]
+                        So every new coefficient receives a fresh independent amount of variance
+                        \(\sigma^2\).
+                    </p>
+                    <p>
+                        The mesh is refined. More basis functions appear. More independent prior
+                        wiggles are introduced. The data cannot see most of them. The posterior inherits
+                        them.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        The problem is not simply that \(N>K\). The problem is that the unseen directions
+                        are filled with variance that has not been designed to have a meaningful
+                        continuous limit.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The underdetermined system</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>More unknown coefficients than observations</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In the naive discretized problem,
+                        \[ \obs = \Gb\mathbf{u} + \noise, \]
+                        the matrix \(\Gb\) maps from \(\R^N\) to \(\R^K\). When \(N>K\), the
+                        system is underdetermined. There are more coefficient directions than data
+                        directions.
+                    </p>
+                    <p>
+                        The likelihood can constrain only directions that influence the data. These are
+                        directions in the row space of \(\Gb\). Directions in the nullspace of \(\Gb\) are
+                        invisible to the likelihood.
+                    </p>
+                    <p>
+                        If \(\mathbf{v} \in \operatorname{null}(\Gb)\), then
+                        \[ \Gb(\mathbf{u}+\alpha \mathbf{v}) = \Gb\mathbf{u} + \alpha \Gb\mathbf{v} = \Gb\mathbf{u} \]
+                        for every scalar \(\alpha \in \R\).
+                    </p>
+                    <p>
+                        Thus, all coefficient vectors along the affine line
+                        \[ \mathbf{u} + \alpha\mathbf{v}, \qquad \alpha \in \R, \]
+                        produce exactly the same noiseless data prediction.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Invisible directions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let
+                        \[ \mathcal{N}(\Gb) = \{\mathbf{v}\in\R^N : \Gb\mathbf{v}=0\} \]
+                        denote the nullspace of \(\Gb\).
+                    </p>
+                    <p>
+                        For any \(\mathbf{v}\in \mathcal{N}(\Gb)\), the data contain no information about the
+                        component of \(\mathbf{u}\) in the direction \(\mathbf{v}\). Therefore, the posterior
+                        variance in that direction is controlled entirely by the prior.
+                    </p>
+                    <p>
+                        To see this clearly, consider the naive prior
+                        \[ \mathbf{C}_N = \sigma^2 \mathbf{I}_N. \]
+                        The posterior covariance is
+                        \[ \mathbf{C}_N^{\obs} = \sigma^2 \mathbf{I}_N - \sigma^4 \Gb^{\T} \left( \sigma^2 \Gb\Gb^{\T} + \Cd \right)^{-1} \Gb. \]
+                        If \(\mathbf{v}\in\mathcal{N}(\Gb)\), then \(\Gb\mathbf{v}=0\), and hence
+                        \[ \mathbf{C}_N^{\obs}\mathbf{v} = \sigma^2 \mathbf{v}. \]
+                        So every nullspace direction remains a posterior covariance eigenvector with
+                        eigenvalue \(\sigma^2\).
+                    </p>
+                    <p>
+                        In words: the data remove none of the prior variance in directions they cannot
+                        see.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Directions unconstrained by the data</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let \(r_N = \operatorname{rank}(\Gb)\). Then \(r_N \leq K\).
+                        The nullspace has dimension \(N-r_N\).
+                        On this nullspace, the posterior covariance keeps the value \(\sigma^2\) in each
+                        orthonormal direction.
+                    </p>
+                    <p>
+                        Therefore, at least \(N-K\) directions retain posterior variance \(\sigma^2\).
+                    </p>
+                    <p>
+                        This is the first precise sign that something is wrong. Refining the mesh adds
+                        new directions. The data cannot constrain them. The naive prior gives them all
+                        the same amount of variance. The posterior uncertainty grows a tail made of
+                        unseen degrees of freedom.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        The data illuminate only a finite number of directions.
+                        The remaining directions sit in the dark, and the naive prior lets them grow teeth.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>The Divergence of the Naive Posterior</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The quantity we should monitor</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Expected posterior energy</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        One diagnostic is the expected squared size of a posterior sample:
+                        \[ \E_{\post_N}\norm{m_N}^2. \]
+                        If the posterior mean is not zero, then this decomposes into
+                        \[ \E_{\post_N}\norm{m_N}^2 = \norm{\bar{m}_N^{\obs}}^2 + \E_{\post_N}\norm{m_N-\bar{m}_N^{\obs}}^2. \]
+                        The first term measures the size of the posterior mean. The second term
+                        measures the posterior spread.
+                    </p>
+                    <p>
+                        In coefficient space, with the Euclidean norm, this becomes
+                        \[ \E_{\post_N}\norm{\mathbf{u}}_2^2 = \norm{\bar{\mathbf{u}}_N^{\obs}}_2^2 + \Tr(\mathbf{C}_N^{\obs}). \]
+                    </p>
+                    <p>
+                        Thus, the trace of the posterior covariance measures the total posterior
+                        variance in coefficient space.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Pointwise variance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Another diagnostic is the pointwise posterior variance:
+                        \[ \operatorname{Var}_{\post_N}(m_N(x)). \]
+                        Since
+                        \[ m_N(x) = \sum_{j=1}^N [\mathbf{u}]_j\phi_j(x), \]
+                        we may define the vector of basis functions evaluated at \(x\):
+                        \[ \boldsymbol{\phi}(x) = \begin{pmatrix} \phi_1(x) \\ \vdots \\ \phi_N(x) \end{pmatrix}. \]
+                        Then
+                        \[ m_N(x) = \boldsymbol{\phi}(x)^{\top}\mathbf{u}. \]
+                        Therefore,
+                        \[ \operatorname{Var}_{\post_N}(m_N(x)) = \boldsymbol{\phi}(x)^{\top} \mathbf{C}_N^{\obs} \boldsymbol{\phi}(x). \]
+                    </p>
+                    <p>
+                        This tells us how uncertain the posterior is at each point \(x\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Integrated variance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We can also integrate the pointwise variance over the physical domain:
+                        \[ \int_{\Omega} \operatorname{Var}_{\post_N}(m_N(x))\,dx. \]
+                        Using the expression above,
+                        \[ \int_{\Omega} \operatorname{Var}_{\post_N}(m_N(x))\,dx = \int_{\Omega} \boldsymbol{\phi}(x)^{\top} \mathbf{C}_N^{\obs} \boldsymbol{\phi}(x)\,dx. \]
+                        This can be written as
+                        \[ \Tr(\Mb \mathbf{C}_N^{\obs}), \]
+                        where
+                        \[ [\Mb]_{ij} = \int_{\Omega}\phi_i(x)\phi_j(x)\,dx \]
+                        is the finite element mass matrix.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-remark">
+                    <span class="tfdl-callout-label">Remark</span>
+                    <p>
+                        The coefficient-space trace \(\Tr(\mathbf{C}_N^{\obs})\) and the
+                        function-space quantity \(\Tr(\Mb \mathbf{C}_N^{\obs})\) are not the same object.
+                        This distinction is one of the clues that geometry matters. For the moment,
+                        however, we follow the naive workflow on its own terms and inspect the
+                        coefficient-space posterior it has created.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What happens as the mesh is refined</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Increasing the number of basis functions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Mesh refinement means that we increase the number of basis functions:
+                        \[ N \to \infty. \]
+                        The finite-dimensional spaces
+                        \[ \M_N = \operatorname{span}\{\phi_1,\ldots,\phi_N\} \]
+                        become richer. They can represent finer and finer variations in the model.
+                    </p>
+                    <p>
+                        This sounds like progress. In a well-designed numerical method, increasing \(N\)
+                        should improve the approximation of a fixed continuous problem.
+                    </p>
+                    <p>
+                        But here we did not begin with a fixed continuous prior measure. We began with
+                        the sequence of finite-dimensional priors
+                        \[ \mathbf{u}_N \sim \N(0,\sigma^2 \mathbf{I}_N). \]
+                        Each time \(N\) changes, we have a new Gaussian distribution on a new coordinate
+                        space. We have not shown that these distributions approximate any probability
+                        measure on functions.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The expected variance grows</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For the naive prior, \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\).
+                        The posterior covariance is
+                        \[ \mathbf{C}_N^{\obs} = \sigma^2 \mathbf{I}_N - \sigma^4 \Gb^{\T} \left( \sigma^2 \Gb\Gb^{\T} + \Cd \right)^{-1} \Gb. \]
+                    </p>
+                    <p>
+                        The data can reduce variance only in directions that affect the data. Since
+                        \(\operatorname{rank}(\Gb) \leq K\), there are at least \(N-K\) directions that the
+                        data cannot constrain. In each of these directions, the posterior variance
+                        remains exactly \(\sigma^2\).
+                    </p>
+                    <p>
+                        Consequently,
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2 (N-K). \]
+                        As \(N\) increases while \(K\) is fixed,
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \to \infty. \]
+                    </p>
+                    <p>
+                        This means that the total posterior variance in coefficient space grows without
+                        bound.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The posterior does not converge to a sensible limit</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        If the posterior covariance grows in total variance as the mesh is refined, then
+                        the sequence of posteriors is not settling down to a meaningful limiting
+                        posterior. Instead of approximating a fixed probability measure on functions, we
+                        are generating a sequence of increasingly large finite-dimensional probability
+                        clouds.
+                    </p>
+                    <p>
+                        The data may continue to control a small number of visible directions. But the
+                        number of invisible directions keeps increasing, and the naive prior keeps
+                        feeding each of them the same variance.
+                    </p>
+                    <p>
+                        The posterior mean may still look acceptable because it lies mostly in the
+                        directions informed by the data. The posterior samples reveal the full story:
+                        there is too much uncertainty in directions that were introduced by the
+                        discretization rather than by a coherent continuous model.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Refinement should reveal the limit of the problem.
+                        Here, refinement reveals that the problem was never properly posed.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>A mathematical diagnosis</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The covariance trace</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For a centred Gaussian vector
+                        \[ \mathbf{u} \sim \N(0,\mathbf{C}_N), \]
+                        the expected squared Euclidean norm is
+                        \[ \E\norm{\mathbf{u}}_2^2 = \Tr(\mathbf{C}_N). \]
+                        Indeed,
+                        \[ \E\norm{\mathbf{u}}_2^2 = \E[\mathbf{u}^{\top}\mathbf{u}] = \E[\Tr(\mathbf{u}\mathbf{u}^{\top})] = \Tr(\E[\mathbf{u}\mathbf{u}^{\top}]) = \Tr(\mathbf{C}_N). \]
+                    </p>
+                    <p>
+                        For a non-centred Gaussian
+                        \[ \mathbf{u} \sim \N(\bar{\mathbf{u}},\mathbf{C}_N), \]
+                        we have
+                        \[ \E\norm{\mathbf{u}}_2^2 = \norm{\bar{\mathbf{u}}}_2^2 + \Tr(\mathbf{C}_N). \]
+                    </p>
+                    <p>
+                        Thus, the trace measures the total variance of the Gaussian cloud.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Why \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\) is dangerous</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For the naive coefficient prior, \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\). Therefore,
+                        \[ \Tr(\mathbf{C}_N) = \Tr(\sigma^2 \mathbf{I}_N) = \sigma^2\Tr(\mathbf{I}_N) = \sigma^2 N. \]
+                    </p>
+                    <p>
+                        So the prior expected coefficient energy is
+                        \[ \E\norm{\mathbf{u}}_2^2 = \sigma^2 N. \]
+                        As \(N\) grows, this quantity grows linearly.
+                    </p>
+                    <p>
+                        The posterior improves this only in directions seen by the data. Since the data
+                        space has dimension \(K\), the data can remove variance from at most \(K\)
+                        independent directions. At least \(N-K\) directions keep their prior variance.
+                    </p>
+                    <p>
+                        Therefore,
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The limit is unbounded</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Taking the refinement limit, \(N \to \infty\), with \(K\) fixed, we obtain
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \to \infty. \]
+                        In particular,
+                        \[ \E_{\post_N} \norm{\mathbf{u}}_2^2 = \norm{\bar{\mathbf{u}}_N^{\obs}}_2^2 + \Tr(\mathbf{C}_N^{\obs}) \to \infty, \]
+                        provided the posterior mean does not cancel this behaviour in some artificial
+                        way. Since the covariance term alone diverges, the posterior spread is already
+                        unbounded.
+                    </p>
+                    <p>
+                        This is the mathematical version of what the samples showed visually.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-proposition">
+                    <span class="tfdl-callout-label">Proposition</span>
+                    <p>
+                        Let \(\Gb\in\R^{K\times N}\) and let the prior covariance be
+                        \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), with \(\sigma>0\). Assume the observational noise covariance
+                        \(\Cd\) is symmetric positive definite. Then the posterior covariance
+                        \[ \mathbf{C}_N^{\obs} = \sigma^2 \mathbf{I}_N - \sigma^4 \Gb^{\T} \left( \sigma^2 \Gb\Gb^{\T} + \Cd \right)^{-1} \Gb \]
+                        satisfies
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
+                        Hence, if \(K\) is fixed and \(N\to\infty\), then
+                        \[ \Tr(\mathbf{C}_N^{\obs})\to\infty. \]
+                    </p>
+                </div>
+
+                <div class="callout-proof">
+                    <p>
+                        Since \(\operatorname{rank}(\Gb)\leq K\), the nullspace of \(\Gb\) has dimension at
+                        least \(N-K\). Let
+                        \[ \{\mathbf{v}_1,\ldots,\mathbf{v}_{N-r}\} \]
+                        be an orthonormal basis for \(\operatorname{null}(\Gb)\), where
+                        \(r=\operatorname{rank}(\Gb)\). For each such vector,
+                        \(\Gb\mathbf{v}_j = 0\).
+                        Therefore,
+                        \[ \mathbf{C}_N^{\obs}\mathbf{v}_j = \sigma^2\mathbf{v}_j. \]
+                        Thus \(\mathbf{C}_N^{\obs}\) has at least \(N-r\) eigenvalues equal to \(\sigma^2\). Since
+                        \(r\leq K\), it has at least \(N-K\) such eigenvalues. Hence
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The core mistake</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The problem is not that Gaussian priors are bad. The problem is not that finite
+                        elements are bad. The problem is not even that the posterior mean was computed
+                        incorrectly.
+                    </p>
+                    <p>
+                        The problem is that we chose the prior after discretization, directly on the
+                        coefficient vector, without asking whether the resulting sequence of priors has
+                        a meaningful function-space limit.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        The prior was not chosen as a probability measure on a function space.
+                        It was chosen as a sequence of unrelated finite-dimensional matrices.
+                    </p>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        A matrix \(\mathbf{C}_N \in \R^{N\times N}\) can be a perfectly valid covariance matrix in
+                        \(\R^N\) for every fixed \(N\). But this does not mean that the sequence
+                        \(C_1,C_2,C_3,\ldots\) defines a valid covariance operator on a function space.
+                    </p>
+                    <p>
+                        The continuous question is not merely:
+                        \[ \text{Is } \mathbf{C}_N \text{ positive definite for each } N? \]
+                        The continuous question is:
+                        \[ \text{Do these finite-dimensional distributions approximate a coherent probability measure on functions?} \]
+                    </p>
+                    <p>
+                        For the naive diagonal prior with fixed variance per coefficient, the answer is
+                        no.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What this means philosophically</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The discretized problem replaced the original problem</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        At the beginning, we pretended to have a continuous inverse problem. But we did
+                        not fully define it. We did not specify the model space. We did not specify a
+                        prior measure on that space. We did not specify the geometry needed to define
+                        the correct adjoint.
+                    </p>
+                    <p>
+                        Instead, we discretized first and formulated the Bayesian problem on the
+                        coefficient vector:
+                        \[ \mathbf{u} \in \R^N. \]
+                        So the actual problem we solved was not the continuous inverse problem. It was a
+                        finite-dimensional problem created by the discretization.
+                    </p>
+                    <p>
+                        The mesh did not approximate the model. The mesh became the model.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Refinement did not improve the approximation</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In a healthy numerical method, refinement means that the discrete solution gets
+                        closer to the solution of the original problem. But here, refinement changes the
+                        probabilistic model itself.
+                    </p>
+                    <p>
+                        For each \(N\), we choose
+                        \[ \mathbf{u}_N \sim \N(0,\sigma^2 \mathbf{I}_N). \]
+                        When \(N\) increases, this is not a better approximation of the same prior. It is
+                        a different prior on a different space, with more independent random
+                        coefficients.
+                    </p>
+                    <p>
+                        Thus, refinement does not only increase resolution. It also injects additional
+                        prior variance.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Refinement changed the problem</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The posterior for \(N=10\) and the posterior for \(N=50\) are not merely two
+                        approximations of the same infinite-dimensional posterior. Under the naive
+                        construction, they are posteriors for two different Bayesian models.
+                    </p>
+                    <p>
+                        The notation \(\post_N\) should therefore make us nervous. It is not automatically
+                        a convergent sequence. It is only a sequence of probability measures produced by
+                        a sequence of finite-dimensional choices.
+                    </p>
+                    <p>
+                        To know whether \(\post_N \to \post\) for some meaningful function-space posterior
+                        \(\post\), we must first define \(\post\). That requires choosing the model space,
+                        data space, forward map, noise model, and prior measure before discretizing.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        A discretization is not innocent.
+                        If the continuous problem has not been defined, the discretization becomes the model.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The moral of Act II</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The naive posterior did not fail because the algebra was wrong. The algebra was
+                        perfectly competent. That is what makes the failure instructive.
+                    </p>
+                    <p>
+                        The failure came from asking finite-dimensional linear algebra to make
+                        infinite-dimensional modelling choices on our behalf.
+                    </p>
+                    <p>
+                        We started with a function but placed the prior on coefficients. We refined the
+                        mesh but did not refine an approximation to a fixed prior measure. We used the
+                        posterior mean as evidence of success while ignoring the posterior samples. Once
+                        we sampled, the hidden degrees of freedom marched out carrying little banners
+                        that read:
+                        \[ \text{You forgot the function space.} \]
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        The next act begins by stepping back from the computation. Before we choose a
+                        basis, before we build a matrix, and before we sample anything, we must ask:
+                        what is the mathematical problem we are actually trying to solve?
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="act-1.html"><span class="arrow">&larr;</span> Act I: Familiar Problem</a>
+                    <a class="act-prevnext-btn next" href="act-3.html">Act III: What Problem? <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

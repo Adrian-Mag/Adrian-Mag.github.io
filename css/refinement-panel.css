@@ -1,0 +1,168 @@
+/* refinement-panel.css — interactive Plotly panel controls */
+
+.tfdl-panel-controls {
+    max-width: 880px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 16px 20px;
+    background: rgba(44,56,80,0.35);
+    border-radius: 12px;
+    border: 1px solid rgba(103,145,190,0.15);
+}
+
+/* ── Slider ──────────────────────────────────────────── */
+
+.tfdl-slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tfdl-slider-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #a0c4e8;
+    min-width: 70px;
+    text-align: right;
+    letter-spacing: 0.02em;
+}
+
+.tfdl-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 180px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(103,145,190,0.25);
+    outline: none;
+    cursor: pointer;
+}
+
+.tfdl-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #6791BE;
+    border: 2px solid #a0c4e8;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tfdl-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 8px rgba(103,145,190,0.40);
+}
+
+.tfdl-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #6791BE;
+    border: 2px solid #a0c4e8;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.tfdl-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+
+.tfdl-slider:focus {
+    outline: 2px solid rgba(160,196,232,0.50);
+    outline-offset: 4px;
+}
+
+/* ── Toggles ─────────────────────────────────────────── */
+
+.tfdl-toggle-wrap {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tfdl-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(103,145,190,0.20);
+    background: rgba(58,62,67,0.50);
+    color: rgba(255,255,255,0.50);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: inherit;
+}
+
+.tfdl-toggle.is-on {
+    color: rgba(255,255,255,0.90);
+    border-color: rgba(103,145,190,0.35);
+    background: rgba(74,109,163,0.20);
+}
+
+.tfdl-toggle:hover {
+    border-color: rgba(103,145,190,0.40);
+}
+
+.tfdl-toggle:focus {
+    outline: 2px solid rgba(160,196,232,0.50);
+    outline-offset: 2px;
+}
+
+.tfdl-toggle-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.35;
+    transition: opacity 0.18s ease;
+}
+
+.tfdl-toggle.is-on .tfdl-toggle-dot {
+    opacity: 1;
+}
+
+/* ── Plotly containers ───────────────────────────────── */
+
+.tfdl-plotly-container {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.tfdl-plotly-main {
+    width: 100%;
+    min-height: 320px;
+}
+
+.tfdl-plotly-summary {
+    width: 100%;
+    min-height: 180px;
+    margin-top: 8px;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 600px) {
+    .tfdl-panel-controls {
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px 14px;
+    }
+
+    .tfdl-slider {
+        width: 140px;
+    }
+
+    .tfdl-toggle {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+}

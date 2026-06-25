@@ -1,0 +1,21 @@
+{
+  "backend": "pypdf",
+  "backend_attempts": [
+    {
+      "backend": "pypdf",
+      "chars": 4226
+    }
+  ],
+  "image_heavy_low_text_pages": [],
+  "low_text_pages": [],
+  "metadata": {
+    "/CreationDate": "D:20260501142155+01'00",
+    "/Creator": "Inkscape 1.2.2 (https://inkscape.org)",
+    "/Producer": "cairo 1.17.7 (https://cairographics.org)"
+  },
+  "ocr_available": false,
+  "page_count": 1,
+  "sha256": "b4f936437bae7f68b5a91cfe63f719675451cfa2cf5932ca40bc234af7da9cea",
+  "source": "/home/adrian/PhD/Adrian-Mag.github.io/media/research/posters/poster_EGU_26.pdf",
+  "total_words": 611
+}

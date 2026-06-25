@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act III: What Problem Are We Actually Solving? — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act III of Think First, Discretize Later: Stepping back to define the function-space inverse problem before discretizing.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Hh: '\\mathcal{H}', B: '\\mathcal{B}',
+                N: '\\mathcal{N}', R: '\\mathbb{R}', E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}', Tr: '\\operatorname{Tr}', Id: 'I',
+                prior: '\\mu_0', post: '\\mu^{\\obs}', noise: '\\boldsymbol{\\eta}', obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}', Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}', Gb: '\\mathbf{G}', vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*', T: '{\\top}', Cd: '{\\mathbf{C}_d}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act III: What Problem Are We Actually Solving?</h1>
+                <p>Before choosing basis functions or matrices, we must define the mathematical objects whose relationship we want to infer.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip is-active" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-a">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>Stepping Back</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The real question</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The previous act ended with an unpleasant discovery. The naive posterior did
+                        not fail because the Gaussian conditioning formula was wrong. It failed because
+                        we had never properly said what problem the discretization was supposed to
+                        approximate.
+                    </p>
+                    <p>
+                        We began with a function, replaced it by coefficients, put a Gaussian prior on
+                        those coefficients, and hoped that mesh refinement would behave like
+                        mathematical progress. It did not. The posterior mean looked acceptable, but
+                        the posterior measure itself became increasingly unreasonable.
+                    </p>
+                    <p>
+                        So now we pause. Before choosing basis functions, matrices, quadrature rules,
+                        or numerical solvers, we ask a more basic question:
+                        \[ \text{What is the inverse problem?} \]
+                    </p>
+                    <p>
+                        This question is not a request for code. It is a request for modelling choices.
+                        The unknown must live somewhere. The data must live somewhere. The forward map
+                        must connect those two places. The noise model must describe observational
+                        uncertainty. The prior must be a probability measure on the unknown itself, not
+                        merely a convenient matrix attached to a discretization.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        A Bayesian inverse problem is not born when we assemble a matrix.
+                        It is born when we specify the mathematical objects whose relationship we want
+                        to infer.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>What is the unknown object?</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The first question is deceptively simple:
+                        \[ \text{What is } m? \]
+                        In the toy example, \(m\) is a function on a physical domain
+                        \[ \Omega = [0,L]. \]
+                        But saying that \(m\) is a function is not enough. There are many kinds of
+                        functions. Some are continuous, some are merely square-integrable, some have
+                        weak derivatives, some satisfy boundary conditions, and some are so irregular
+                        that pointwise values are not even meaningful.
+                    </p>
+                    <p>
+                        Thus, we must decide what class of objects we are willing to regard as possible
+                        models. For example, we might choose
+                        \[ m \in L^2(\Omega), \]
+                        if we only want square-integrability. Or we might choose
+                        \[ m \in H^1(\Omega), \]
+                        if we want one weak derivative to be square-integrable. Or we might choose a
+                        more regular Sobolev space if smoothness is part of our prior information.
+                    </p>
+                    <p>
+                        At this stage, the precise choice is not yet the point. The point is that there
+                        must be a choice.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        The unknown object is not a vector of coefficients. Coefficients are only a
+                        coordinate representation after a basis has been chosen.
+                    </p>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The model space determines what counts as an admissible model, what convergence
+                        means, what it means for two models to be close, and what kinds of uncertainty
+                        can be placed on the model.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>What kind of data do we observe?</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The second question is: \(\text{What is } \obs?\)
+                        In the toy problem, the data are finitely many real numbers:
+                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_K \end{pmatrix} \in \R^K. \]
+                        Thus, a natural data space is
+                        \[ \D = \R^K. \]
+                    </p>
+                    <p>
+                        This looks simple, and in many ways it is. Finite-dimensional spaces are
+                        mathematically friendly. All norms on \(\R^K\) induce the same topology,
+                        linear maps into and out of \(\R^K\) are easier to control, and
+                        completeness is automatic.
+                    </p>
+                    <p>
+                        But even in finite dimensions, the geometry matters. The data covariance
+                        \(\Cd\) determines how residuals are weighted. The quantity
+                        \[ \obs - G m \]
+                        is not merely a vector of errors. It is a vector of errors measured relative to
+                        the uncertainty in the observations.
+                    </p>
+                    <p>
+                        A natural data misfit is therefore
+                        \[ \frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2 = \frac{1}{2} (\obs-G m)^{\top} \Cd^{-1}(\obs-G m). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        The data space tells us what observations are. The noise covariance tells us
+                        how loudly each component of the data is allowed to complain.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>What is the forward map?</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The third question is: \(\text{How does } m \text{ produce data?}\)
+                        This is the role of the forward map
+                        \[ G : \M \to \D. \]
+                        In the toy example,
+                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,K. \]
+                    </p>
+                    <p>
+                        The forward map is the mathematical description of the experiment. It tells us
+                        which features of the model are visible to the data. If the forward map is
+                        smoothing, averaging, or compact, then the inverse problem will usually be
+                        ill-posed in a deterministic sense. Small changes in data may correspond to
+                        large changes in some model directions.
+                    </p>
+                    <p>
+                        Before discretizing, we must know what kind of map \(G\) is. Is it linear? Is it
+                        continuous? Is it bounded between the chosen model and data spaces? Does it
+                        make sense for every \(m\in\M\)?
+                    </p>
+                    <p>
+                        For a linear inverse problem, we require at least
+                        \[ G(\alpha m_1+\beta m_2) = \alpha G m_1 + \beta G m_2. \]
+                        For a well-behaved function-space formulation, we usually also want \(G\) to be
+                        continuous:
+                        \[ m_n \to m \text{ in } \M \quad \Longrightarrow \quad G m_n \to G m \text{ in } \D. \]
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A matrix is not the forward operator. A matrix is a representation of the
+                        forward operator after choosing coordinates in the model and data spaces.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>What does prior information mean?</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The fourth question is: \(\text{What do we know before observing the data?}\)
+                    </p>
+                    <p>
+                        Prior information may include expected amplitude, smoothness, length scale,
+                        boundary behaviour, correlations, sign constraints, or physical plausibility.
+                        In a Bayesian formulation, this information is encoded by a prior probability
+                        measure \(\prior\) on the model space \(\M\).
+                    </p>
+                    <p>
+                        Thus, instead of placing a Gaussian directly on coefficients, we write
+                        \[ m \sim \prior. \]
+                    </p>
+                    <p>
+                        If the prior is Gaussian, we may write
+                        \[ \prior = \N(m_0,C_0), \]
+                        where \(m_0\) is the prior mean and \(C_0\) is a covariance operator on the model
+                        space.
+                    </p>
+                    <p>
+                        The word <em>operator</em> matters. In function space, covariance is not merely a
+                        matrix. It is a mathematical object that must act coherently on functions. It
+                        must encode a genuine probability measure on the model space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Prior information is not a numerical stabilizer sprinkled on top of a matrix
+                        problem. It is part of the definition of the inverse problem.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The ingredients of a well-posed Bayesian inverse problem</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now assemble the pieces. A Bayesian inverse problem should be formulated
+                        before discretization by specifying the following ingredients.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Model space</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The model space is the mathematical home of the unknown:
+                        \[ m \in \M. \]
+                        The choice of \(\M\) determines which objects are admissible models. It also
+                        determines the meaning of convergence, continuity, size, regularity, and
+                        eventually the geometry needed to define adjoints.
+                    </p>
+                    <p>
+                        Typical choices include Hilbert spaces such as
+                        \[ L^2(\Omega), \qquad H^1(\Omega), \qquad H^s(\Omega), \]
+                        possibly with boundary conditions built into the space.
+                    </p>
+                    <p>We should choose \(\M\) by asking modelling questions:</p>
+                    <ol>
+                        <li>What kind of object is physically meaningful?</li>
+                        <li>How much regularity should the model have?</li>
+                        <li>What boundary behaviour is appropriate?</li>
+                        <li>What perturbations should count as small?</li>
+                        <li>What kind of prior measure can live on this space?</li>
+                    </ol>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Data space</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The data space is the mathematical home of the observations:
+                        \[ \obs \in \D. \]
+                        In the toy problem, \(\D = \R^K\).
+                        This finite-dimensional choice is convenient, but it does not remove all
+                        modelling decisions. We still need to decide how data residuals are measured.
+                    </p>
+                    <p>
+                        If the observational noise covariance is \(\Cd\), then the natural data norm is
+                        \[ \norm{d}_{\Cd^{-1}}^2 = d^{\top} \Cd^{-1}d. \]
+                        This norm weights residuals according to observational uncertainty. A residual
+                        in a highly uncertain datum should not be punished as severely as an equal-sized
+                        residual in a very accurate datum.
+                    </p>
+                    <p>
+                        Thus, even when \(\D\) is finite-dimensional, the data geometry carries meaning.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Forward map</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The forward map connects models to predicted data:
+                        \[ G : \M \to \D. \]
+                        For the linear case,
+                        \[ G(\alpha m_1+\beta m_2) = \alpha G m_1+\beta G m_2. \]
+                        In the integral-kernel example,
+                        \[ [G(m)]_i = \int_\Omega K_i(x)\,m(x)\,dx. \]
+                    </p>
+                    <p>
+                        The forward map must be compatible with the model space. For instance, the
+                        integral above must be well-defined for every \(m\in\M\). If the kernels \(K_i\)
+                        are square-integrable and \(\M = L^2(\Omega)\), then each datum is well-defined
+                        by the Cauchy-Schwarz inequality:
+                        \[ \left| \int_\Omega K_i(x)\,m(x)\,dx \right| \leq \norm{K_i}_{L^2(\Omega)} \norm{m}_{L^2(\Omega)}. \]
+                    </p>
+                    <p>
+                        This compatibility is exactly the sort of issue that disappears from view if we
+                        start with a matrix.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Noise model</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The noise model describes the relationship between the true predicted data and
+                        the observed data:
+                        \[ \noise \sim \N(0,\Cd). \]
+                        The data equation is
+                        \[ \obs = G m + \noise. \]
+                    </p>
+                    <p>
+                        Equivalently, conditional on \(m\), the data are distributed as
+                        \[ \obs \mid m \sim \N(G m,\Cd). \]
+                    </p>
+                    <p>
+                        For finite-dimensional data, this gives the likelihood
+                        \[ \pi(\obs\mid m) \propto \exp\left( -\frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2 \right). \]
+                    </p>
+                    <p>
+                        It is useful to define the data-misfit potential
+                        \[ \Phi(m;\obs) = \frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2. \]
+                        Then
+                        \[ \pi(\obs\mid m) \propto \exp(-\Phi(m;\obs)). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Prior measure</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The prior measure describes uncertainty about the model before the data are
+                        observed:
+                        \[ m \sim \prior. \]
+                    </p>
+                    <p>
+                        This is where the naive construction failed. We did not choose a measure on
+                        \(\M\). We chose matrices
+                        \[ \mathbf{C}_N=\sigma^2 \mathbf{I}_N \]
+                        on coefficient spaces \(\R^N\).
+                        Each fixed matrix was a valid covariance matrix in finite dimensions, but the
+                        sequence did not define a coherent function-space prior.
+                    </p>
+                    <p>
+                        In the function-space formulation, the prior is chosen directly on \(\M\):
+                        \[ \prior \in \mathcal{P}(\M), \]
+                        where \(\mathcal{P}(\M)\) denotes the set of probability measures on \(\M\).
+                    </p>
+                    <p>
+                        For a Gaussian prior, we write
+                        \[ \prior = \N(m_0,C_0). \]
+                        Here \(C_0\) must be a valid covariance operator for a Gaussian measure on the
+                        chosen model space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A covariance matrix answers a finite-dimensional question.
+                        A covariance operator answers a function-space question.
+                        Confusing the two is how the naive posterior slipped through the trapdoor.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The posterior measure</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Once the ingredients are specified, the posterior can be written in a way that
+                        does not depend on any particular discretization.
+                    </p>
+                    <p>
+                        For Gaussian observational noise, define
+                        \[ \Phi(m;\obs) = \frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2. \]
+                        The posterior measure \(\post\) is then formally given by
+                        \[ \frac{d\post}{d\prior}(m) = \frac{1}{Z(\obs)} \exp(-\Phi(m;\obs)), \]
+                        where
+                        \[ Z(\obs) = \int_{\M} \exp(-\Phi(m;\obs)) \,d\prior(m) \]
+                        is the normalizing constant.
+                    </p>
+                    <p>
+                        This formula is one of the cleanest ways to write Bayes' theorem in function
+                        space. It says that the posterior is obtained by reweighting the prior
+                        according to how well each model predicts the observed data.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        The prior says which models are possible before the experiment.
+                        The likelihood tilts that probability toward models that explain the data.
+                        The posterior is the tilted measure.
+                    </p>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For this expression to define a probability measure, we need
+                        \[ 0 < Z(\obs) < \infty. \]
+                        If this holds, then \(\post\) is a well-defined probability measure on the same
+                        model space \(\M\) as the prior.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The order matters</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>We can now state the central rule.</p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Choose
+                        \[ \M,\qquad \D,\qquad G,\qquad \prior \]
+                        before choosing a mesh, basis, quadrature rule, or matrix representation.
+                    </p>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The order matters because each numerical object should approximate a
+                        mathematical object that already exists.
+                    </p>
+                    <p>
+                        A mesh should approximate the domain. A finite-dimensional subspace should
+                        approximate the model space. A matrix should represent the forward map. A
+                        discrete covariance should approximate the covariance operator. A discrete
+                        posterior should approximate the function-space posterior.
+                    </p>
+                    <p>
+                        The wrong order is
+                        \[ \text{basis} \quad\Rightarrow\quad \text{coefficients} \quad\Rightarrow\quad \text{matrix prior} \quad\Rightarrow\quad \text{posterior}. \]
+                    </p>
+                    <p>
+                        The better order is
+                        \[ \text{model space} \quad\Rightarrow\quad \text{prior measure} \quad\Rightarrow\quad \text{forward map} \quad\Rightarrow\quad \text{posterior} \quad\Rightarrow\quad \text{discretization}. \]
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        Discretization should enter as an approximation of a problem that already has a
+                        meaning without the discretization.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Well-posedness</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In deterministic inverse problems, well-posedness is often associated with
+                        three requirements: existence, uniqueness, and stability. In Bayesian inverse
+                        problems, these ideas are modified. We no longer demand that there is a unique
+                        model matching the data. Instead, we ask whether the posterior distribution is
+                        well-defined, meaningful, and stable.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Existence</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Existence means that the posterior measure exists.
+                        Using the Radon-Nikodym form
+                        \[ \frac{d\post}{d\prior}(m) = \frac{1}{Z(\obs)} \exp(-\Phi(m;\obs)), \]
+                        existence requires the normalizing constant
+                        \[ Z(\obs) = \int_{\M} \exp(-\Phi(m;\obs)) \,d\prior(m) \]
+                        to satisfy
+                        \[ 0 < Z(\obs) < \infty. \]
+                    </p>
+                    <p>
+                        The upper bound ensures that the posterior can be normalized. The lower bound
+                        ensures that the data are not assigned zero probability under the model in a way
+                        that destroys the conditioning.
+                    </p>
+                    <p>
+                        For the linear Gaussian problem with finite-dimensional data, this condition is
+                        usually benign when \(G\) is continuous, \(\Cd\) is positive definite, and the
+                        prior is a genuine probability measure on \(\M\).
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Existence means that Bayes' theorem produces an actual probability measure, not
+                        just a decorative formula.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Uniqueness in the probabilistic sense</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In an infinite-dimensional inverse problem, we should not usually expect a
+                        unique model \(m\) that explains the data. There may be infinitely many models
+                        that fit the observations to within noise.
+                    </p>
+                    <p>
+                        Bayesian uniqueness means something different. It means that, once we have
+                        specified
+                        \[ \M,\qquad \D,\qquad G,\qquad \Cd,\qquad \prior, \]
+                        the posterior measure is uniquely determined.
+                    </p>
+                    <p>
+                        That is, the object of inference is not "the one true coefficient vector,"
+                        but rather
+                        \[ \post = \mathbb{P}(m\in\cdot \mid \obs). \]
+                    </p>
+                    <p>
+                        There may be many plausible models, but there is one posterior distribution
+                        describing their plausibility relative to the chosen assumptions.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Bayesian inversion does not always collapse uncertainty into a single answer.
+                        It gives uncertainty a precise shape.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Stability with respect to data</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Stability means that small changes in the observed data should produce small
+                        changes in the posterior.
+                    </p>
+                    <p>
+                        Suppose we observe two nearby data vectors \(\obs,\obs' \in \D\).
+                        They produce two posterior measures \(\mu^{\obs}\) and \(\mu^{\obs'}\).
+                        A Bayesian inverse problem is stable if
+                        \[ \obs \approx \obs' \quad\Longrightarrow\quad \mu^{\obs} \approx \mu^{\obs'}. \]
+                    </p>
+                    <p>
+                        To make this precise, one chooses a distance between probability measures, such
+                        as the Hellinger distance. The exact metric is less important here than the
+                        principle: the posterior should not change violently when the data are perturbed
+                        slightly.
+                    </p>
+                    <p>
+                        For linear Gaussian inverse problems with finite-dimensional data, stability is
+                        often obtained when the forward map is continuous and the likelihood potential
+                        depends continuously on the data.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A stable posterior does not mean the inverse problem has become magically
+                        well-conditioned in the deterministic sense. It means the probability measure
+                        responds continuously to perturbations in the data.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Convergence under discretization</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Finally, the discretized posteriors should converge to the function-space
+                        posterior.
+                    </p>
+                    <p>
+                        Let \(\M_N \subset \M\) be a sequence of finite-dimensional approximation spaces,
+                        and let \(\post_N\) denote the posterior obtained by discretizing the
+                        already-formulated function-space problem.
+                    </p>
+                    <p>
+                        A good discretization should satisfy, in an appropriate sense,
+                        \[ \post_N \to \post \qquad \text{as} \qquad N\to\infty. \]
+                    </p>
+                    <p>
+                        This is very different from merely defining a new posterior for every \(N\).
+                        The limiting posterior \(\post\) must already exist. The discretizations are then
+                        judged by whether they approximate it.
+                    </p>
+                    <p>
+                        The naive construction failed precisely here. It produced a sequence
+                        \(\post_1,\post_2,\post_3,\ldots\) without first defining a target posterior
+                        \(\post\) on function space.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        Convergence under discretization is only meaningful after the continuous problem
+                        has been posed.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The moral of Act III</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now know what went wrong in the naive workflow. The order was upside down.
+                    </p>
+                    <p>
+                        We used discretization to define the model space. We used a matrix to define
+                        the prior. We used a transpose without first specifying the geometry. Then we
+                        expected refinement to behave as if there were a continuous problem underneath.
+                    </p>
+                    <p>
+                        The cure is to reverse the order.
+                    </p>
+                    <p>
+                        First choose the mathematical ingredients:
+                        \[ \M,\qquad \D,\qquad G,\qquad \Cd,\qquad \prior. \]
+                        Then define the posterior measure:
+                        \[ \frac{d\post}{d\prior}(m) = \frac{1}{Z(\obs)} \exp\left( -\frac{1}{2} \norm{\obs-G m}_{\Cd^{-1}}^2 \right). \]
+                        Only after this do we discretize.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        The next act is a detour through functional analysis. We need to understand
+                        what kinds of spaces are available, what structure they carry, and why Hilbert
+                        spaces so often become the natural habitat for linear Bayesian inverse
+                        problems.
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="act-2.html"><span class="arrow">&larr;</span> Act II: Something Is Wrong</a>
+                    <a class="act-prevnext-btn next" href="act-4.html">Act IV: Functional Analysis <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

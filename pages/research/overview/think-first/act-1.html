@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act I: A Familiar Problem — Think First, Discretize Later — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css">
+    <meta name="description" content="Act I of Think First, Discretize Later: A simple inverse problem that looks fine on the surface but hides a silent trap.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                Hh: '\\mathcal{H}',
+                B: '\\mathcal{B}',
+                N: '\\mathcal{N}',
+                R: '\\mathbb{R}',
+                E: '\\mathbb{E}',
+                Cov: '\\operatorname{Cov}',
+                Tr: '\\operatorname{Tr}',
+                Id: 'I',
+                prior: '\\mu_0',
+                post: '\\mu^{\\obs}',
+                noise: '\\boldsymbol{\\eta}',
+                obs: '\\tilde{\\mathbf{d}}', trueobs: '\\bar{\\mathbf{d}}',
+                Gadj: 'G^{*}',
+                Mb: '\\mathbf{M}',
+                Gb: '\\mathbf{G}',
+                vd: '\\mathbf{d}',
+                norm: ['\\left\\lVert #1 \\right\\rVert', 1],
+                inner: ['\\left\\langle #1, #2 \\right\\rangle', 2],
+                adj: '*',
+                T: '{\\top}',
+                Cd: '{\\mathbf{C}_d}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header tfdl-hero" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act I: A Familiar Problem</h1>
+                <p>A simple inverse problem that looks fine &mdash; until you look deeper.</p>
+                <p class="tfdl-supp">
+                    Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="act-nav" id="act-nav" aria-label="Act navigation">
+            <div class="container act-nav-inner">
+                <a class="act-chip is-active" href="act-1.html"><span class="act-chip-num">1</span> Familiar Problem</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Something Is Wrong</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> What Problem?</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> Functional Analysis</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Data &amp; Adjoint</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> The Prior</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Putting Together</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Return to Toy</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="act act-band-a">
+            <div class="container">
+
+                <div class="tfdl-chapter">
+                    <h3>A Simple Inverse Problem</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The continuous story we have not yet taken seriously</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We begin with a deliberately modest inverse problem. There is an unknown object,
+                        which we call the <em>model</em>, and there are finitely many noisy observations
+                        of that model. The observations do not reveal the model directly. Instead, each
+                        datum is obtained by applying a known measurement rule to the model and then
+                        corrupting the result with noise.
+                    </p>
+                    <p>
+                        At first, we will treat this problem in the most computationally convenient way:
+                        we will discretize the model immediately, represent it using basis functions,
+                        turn the forward map into a matrix, and compute a finite-dimensional Gaussian
+                        posterior. This is the obvious route. It is also the route that will eventually
+                        betray us.
+                    </p>
+                    <p>
+                        The purpose of this first act is not to do things correctly. The purpose is to
+                        do something plausible, watch it appear to work, and then prepare the stage for
+                        the moment when the cracks start to show.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The unknown model</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let the physical domain be an interval
+                        \[ \Omega = [0,L]. \]
+                        The unknown model is a function
+                        \[ m : \Omega \to \R. \]
+                        For example, \(m(x)\) might describe a material property as a function of depth,
+                        position, or time. At this stage we will not ask too carefully what kind of
+                        function \(m\) is allowed to be. Is it continuous? Square-integrable? Smooth?
+                        Does it satisfy boundary conditions? Does it have derivatives?
+                    </p>
+                    <p>
+                        For now, we only say
+                        \[ m \in \text{some space of functions on } \Omega. \]
+                    </p>
+                    <p>
+                        This vagueness is intentional. It reflects the way many inverse problems first
+                        appear in practice. We know that there is a function we want to infer, and we
+                        know that our data depend on it. The exact mathematical home of that function is
+                        often postponed until later.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        The phrase "some space of functions" is not harmless. It is a modelling
+                        choice waiting to happen. If we do not make it explicitly, the discretization
+                        will make it for us.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The observations</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Suppose we have \(K\) observations,
+                        \[ [\obs]_1,\ldots,[\obs]_K \in \R. \]
+                        We collect them into a data vector
+                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_K \end{pmatrix} \in \R^K. \]
+                    </p>
+                    <p>
+                        Each observation is a noisy measurement of the unknown function. A typical
+                        example has the form
+                        \[ [\obs]_i = \int_{\Omega} K_i(x)\,m(x)\,dx + [\noise]_i, \qquad i=1,\ldots,K, \]
+                        where \(K_i\) is a known sensitivity kernel and \([\noise]_i\) is observational noise.
+                    </p>
+                    <p>
+                        The sensitivity kernel \(K_i\) tells us which parts of the model influence the
+                        \(i\)th datum. If \(K_i\) is concentrated near some point, then the datum is mostly
+                        sensitive to the model near that point. If \(K_i\) is broad, then the datum blends
+                        information over a wider region.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        Each datum is a weighted average of the model, plus noise. The kernels
+                        \(K_i\) are the weights. They decide what the experiment can see and what it
+                        must leave hidden.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The forward operator</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We define the forward operator
+                        \[ G : \M \to \R^K \]
+                        componentwise by
+                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,K. \]
+                        Here \(\M\) denotes the model space, although we have not yet chosen it
+                        carefully. This is one of the central tensions of the story: we already know
+                        how to write down the measurements, but we have not yet decided what
+                        mathematical universe the unknown belongs to.
+                    </p>
+                    <p>
+                        The map \(G\) is linear:
+                        \[ G(\alpha m_1 + \beta m_2) = \alpha G(m_1) + \beta G(m_2), \]
+                        for scalars \(\alpha,\beta \in \R\) and models \(m_1,m_2 \in \M\).
+                    </p>
+                    <p>
+                        This linearity is important. It means that we are studying a <em>linear
+                        inverse problem</em>. The difficulty will not come from nonlinearity. The difficulty
+                        will come from a quieter source: the interaction between infinite-dimensional
+                        unknowns, finite-dimensional data, priors, and discretization.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-remark">
+                    <span class="tfdl-callout-label">Remark</span>
+                    <p>
+                        We adopt the following typographic conventions throughout these notes.
+                    </p>
+                    <ul>
+                        <li><strong>Finite-dimensional objects.</strong> Boldface letters denote
+                        finite-dimensional vectors and matrices (coefficient/representation objects).
+                        For example \(\mathbf{v}\in\R^N\) and
+                        \(\mathbf{A}\in\R^{N\times N}\).</li>
+                        <li><strong>Infinite-dimensional objects.</strong> Non-bold (lightface) letters
+                        denote infinite-dimensional operators or functions acting on the model Hilbert
+                        space \(\M\); e.g.\ \(G:\M\to\D\), \(C_0:\M\to\M\).</li>
+                        <li><strong>Components / entries.</strong> The components of a vector or the
+                        entries of a matrix are written with square brackets and subscripts:
+                        \([\mathbf v]_i = v_i\), \([\mathbf A]_{ij} = A_{ij}\).
+                        When an object is represented in a particular basis \(\{\phi_k\}_{k=1}^N\) we
+                        always mean the coordinates with respect to that basis.</li>
+                        <li><strong>Adjoints and transposes.</strong> We reserve \(^{\top}\) for the
+                        Euclidean transpose of a finite matrix and \(^{*}\) for the Hilbert adjoint of
+                        an operator. Discrete adjoints that incorporate mass/weight matrices will be
+                        written explicitly.</li>
+                        <li><strong>Infinite sequences.</strong> When working with infinite coefficient
+                        sequences we use index notation \((\alpha_i)_{i\ge1}\); for finite coefficient
+                        vectors we write \(\mathbf\alpha=(\alpha_1,\dots,\alpha_N)^{\top}\) so that
+                        \([\mathbf\alpha]_i=\alpha_i\).</li>
+                    </ul>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Gaussian observational noise</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We assume that the noise vector
+                        \[ \noise = \begin{pmatrix} [\noise]_1 \\ \vdots \\ [\noise]_K \end{pmatrix} \]
+                        is Gaussian:
+                        \[ \noise \sim \N(0,\Cd), \]
+                        where \(\Cd \in \R^{K \times K}\) is symmetric positive definite.
+                    </p>
+                    <p>
+                        The covariance matrix \(\Cd\) encodes the size and correlation structure of the
+                        observational errors. If
+                        \[ \Cd = \sigma_D^2 \mathbf{I}_K, \]
+                        then the noise components are independent and have the same variance
+                        \(\sigma_D^2\). More generally, off-diagonal entries of \(\Cd\) allow different
+                        data errors to be correlated.
+                    </p>
+                    <p>
+                        Thus, the data model is
+                        \[ \obs = G(m) + \noise, \qquad \noise \sim \N(0,\Cd). \]
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The inverse problem in its most innocent form</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The data equation</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The inverse problem begins with the equation
+                        \[ \obs = G m + \noise. \]
+                        Here
+                        \[ \obs \in \D, \qquad m \in \M, \qquad \noise \sim \N(0,\Cd), \]
+                        where, for this first example,
+                        \[ \D = \R^K. \]
+                    </p>
+                    <p>
+                        This equation is compact, but it contains almost the entire drama. The unknown
+                        \(m\) belongs to a function space. The data \(\obs\) belong to a finite-dimensional
+                        space. The forward map \(G\) compresses a function into finitely many numbers.
+                        Noise is then added.
+                    </p>
+                    <p>
+                        The inverse problem asks us to travel in the opposite direction:
+                        \[ \obs \quad \leadsto \quad m. \]
+                        But the arrow is not reversible. Many different functions can give essentially
+                        the same data, especially once noise is present.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>What we want to infer</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        In a deterministic inverse problem, we might ask for a single best model
+                        \(m^\dagger\) satisfying
+                        \[ G m^\dagger \approx \obs. \]
+                        In a Bayesian inverse problem, we ask for something richer: a probability
+                        distribution over possible models after observing the data.
+                    </p>
+                    <p>
+                        That is, we want the posterior measure
+                        \[ \post = \mathbb{P}(m \in \cdot \mid \obs). \]
+                    </p>
+                    <p>
+                        This posterior should tell us not only which models fit the data well, but also
+                        how uncertain we remain. The posterior mean may summarize the central tendency,
+                        but the posterior covariance, credible intervals, and samples reveal the spread.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The output of a Bayesian inverse problem is not just a curve. It is a
+                        probability measure on possible curves.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Why the problem is indirect</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The difficulty is that the data are finite and indirect. Each datum is only a
+                        projection, average, or blurred measurement of the model. If the model is a
+                        function, then it has infinitely many degrees of freedom, while the data vector
+                        has only \(K\) components.
+                    </p>
+                    <p>
+                        Even before noise enters, the equation
+                        \[ \obs = G m \]
+                        usually has many solutions or no exact solution. With noise, exact equality is
+                        not the right goal anyway. Instead, we must combine three ingredients:
+                    </p>
+                    <ol>
+                        <li>the information supplied by the data;</li>
+                        <li>the uncertainty in the observations;</li>
+                        <li>prior information about plausible models.</li>
+                    </ol>
+                    <p>
+                        The Bayesian framework gives us a systematic way to combine these ingredients.
+                        But only if the ingredients themselves are chosen coherently.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        The data do not show us the model directly.
+                        They show us shadows of the model cast through the forward operator.
+                    </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>Discretizing First</h3>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>Choosing hat functions</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Now we take the computational shortcut. Instead of first deciding what the
+                        function space \(\M\) really is, we immediately introduce a finite-dimensional
+                        basis. This is natural, practical, and familiar. It is also the seed of the
+                        problem.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>A mesh on the physical domain</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let
+                        \[ 0 = x_1 < x_2 < \cdots < x_N = L \]
+                        be a mesh on \(\Omega = [0,L]\). For simplicity, we may imagine a uniform mesh
+                        with spacing
+                        \[ h = \frac{L}{N-1}. \]
+                    </p>
+                    <p>
+                        The mesh converts the continuous domain into finitely many nodes. We will
+                        represent the unknown model by its coefficients relative to basis functions
+                        associated with these nodes.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Piecewise-linear basis functions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Let
+                        \[ \{\phi_j\}_{j=1}^N \]
+                        be the standard piecewise-linear hat functions associated with the mesh. Thus
+                        \[ \phi_j(x_i) = \delta_{ij}, \]
+                        and each \(\phi_j\) is supported only near the node \(x_j\).
+                    </p>
+                    <p>
+                        The hat functions form a basis for the finite-dimensional space
+                        \[ \M_N = \operatorname{span}\{\phi_1,\ldots,\phi_N\}. \]
+                        Every function in \(\M_N\) is continuous and piecewise linear.
+                    </p>
+                    <p>
+                        At this point, the discretization feels like a harmless approximation. We are
+                        not solving for an arbitrary function anymore. We are solving for a function
+                        inside \(\M_N\).
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The finite-dimensional approximation</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We write
+                        \[ m_N(x) = \sum_{j=1}^{N} [\mathbf{u}]_j \phi_j(x). \]
+                        The unknown function has now been replaced by the coefficient vector
+                        \[ \mathbf{u} = \begin{pmatrix} [\mathbf{u}]_1 \\ \vdots \\ [\mathbf{u}]_N \end{pmatrix} \in \R^N. \]
+                    </p>
+                    <p>
+                        The coefficient \([\mathbf{u}]_j\) controls the amplitude of the \(j\)th hat function. Since
+                        \(\phi_j(x_i)=\delta_{ij}\), for nodal hat functions the coefficient \([\mathbf{u}]_j\) is also
+                        the value of the approximate function at node \(x_j\):
+                        \[ m_N(x_j) = [\mathbf{u}]_j. \]
+                    </p>
+                    <p>
+                        This makes the representation easy to interpret. It also quietly encourages us
+                        to think of \(\mathbf{u}\) as the actual unknown, rather than as a coordinate vector
+                        representing a function.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-warning">
+                    <span class="tfdl-callout-label">Warning</span>
+                    <p>
+                        A coefficient vector is not the same thing as a function. The vector
+                        \(\mathbf{u}\) becomes a function only after we choose the basis that interprets it.
+                    </p>
+                </div>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig1b_basis.svg"
+                         alt="Hat basis functions and the discretized true model at N=30 nodes.">
+                    <figcaption>
+                        <strong>F1b &mdash; Basis and discretization.</strong> The \(N=30\) hat
+                        functions \(\phi_j\) and the true model \(\bar{m}\) projected onto
+                        them, with nodal coefficients \([\mathbf{u}]_j\).
+                    </figcaption>
+                </figure>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig1_setup.svg"
+                         alt="The true depth model, twenty smooth sensitivity kernels, and the resulting noisy data.">
+                    <figcaption>
+                        <strong>F1 &mdash; The setup.</strong> The true model \(\bar{m}\),
+                        the sensitivity kernels \(K_i\), and the twenty noisy data points.
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-section-heading">
+                    <h4>Turning the forward map into a matrix</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Data predicted by basis functions</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        For each basis function \(\phi_j\), we can compute its contribution to each datum:
+                        \[ [\Gb]_{ij} = G_i \phi_j. \]
+                        In the integral-kernel example, this means
+                        \[ [\Gb]_{ij} = \int_{\Omega} K_i(x)\,\phi_j(x)\,dx. \]
+                    </p>
+                    <p>
+                        Therefore, if
+                        \[ m_N(x) = \sum_{j=1}^{N} [\mathbf{u}]_j\phi_j(x), \]
+                        then linearity gives
+                        \[ [G(m_N)]_i = \sum_{j=1}^N [\mathbf{u}]_j G_i\phi_j = \sum_{j=1}^N [\Gb]_{ij}[\mathbf{u}]_j. \]
+                        In vector form,
+                        \[ G(m_N) = \Gb\mathbf{u}, \]
+                        where
+                        \[ \Gb \in \R^{K \times N}. \]
+                    </p>
+                </div>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig1c_gmatrix.svg"
+                         alt="The discrete forward matrix G shown as a heatmap.">
+                    <figcaption>
+                        <strong>F1c &mdash; The discrete forward matrix.</strong> Each entry
+                        \([\Gb]_{ij}\) measures how strongly the \(j\)th hat function
+                        contributes to the \(i\)th datum.
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The naive matrix problem</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The continuous-looking inverse problem has now become the finite-dimensional
+                        linear model
+                        \[ \obs = \Gb \mathbf{u} + \noise, \]
+                        with
+                        \[ \noise \sim \N(0,\Cd). \]
+                    </p>
+                    <p>
+                        This is a standard Bayesian linear regression problem. Everything appears to be
+                        finite-dimensional. Everything appears to be familiar. We have a design matrix
+                        \(\Gb\), unknown coefficients \(\mathbf{u}\), data \(\obs\), and Gaussian noise.
+                    </p>
+                    <p>
+                        At this stage, it is tempting to forget the function \(m\) entirely and simply
+                        declare victory over the infinite-dimensional problem. The beast has been put
+                        in a matrix-shaped cage.
+                    </p>
+                    <p>
+                        But we will soon find out the beast cannot be contained &mdash; it is after all an
+                        infinite-dimensional beast.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>A Gaussian prior on coefficients</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The tempting choice</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        To complete the Bayesian formulation, we need a prior distribution on the
+                        unknown coefficients. The most tempting choice is
+                        \[ \mathbf{u} \sim \N(0,\sigma^2 \mathbf{I}_N). \]
+                        Equivalently,
+                        \[ \mathbf{C}_N = \sigma^2 \mathbf{I}_N. \]
+                    </p>
+                    <p>
+                        This says that the coefficients are independent, centred Gaussian random
+                        variables:
+                        \[ [\mathbf{u}]_j \sim \N(0,\sigma^2), \qquad j=1,\ldots,N, \]
+                        with no prior correlation between different nodes.
+                    </p>
+                    <p>
+                        More generally, we may allow a nonzero prior mean
+                        \[ \mathbf{u}_0 \in \R^N \]
+                        and write
+                        \[ \mathbf{u} \sim \N(\mathbf{u}_0,\mathbf{C}_N). \]
+                        For the naive example, however, the important case is
+                        \[ \mathbf{C}_N = \sigma^2 \mathbf{I}_N. \]
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Why this looks reasonable at first glance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The prior \(\N(0,\sigma^2 \mathbf{I}_N)\) looks reasonable for several reasons.
+                    </p>
+                    <p>
+                        First, it is simple. It introduces only one scale parameter, \(\sigma\), which
+                        controls the typical size of the coefficients.
+                    </p>
+                    <p>
+                        Second, it is symmetric in the coefficients. No node is preferred over any
+                        other node.
+                    </p>
+                    <p>
+                        Third, it is computationally convenient. The covariance matrix is diagonal, easy
+                        to store, easy to invert, and easy to sample from.
+                    </p>
+                    <p>
+                        Fourth, it resembles a familiar finite-dimensional default: when we do not know
+                        much about a vector, we often place an isotropic Gaussian prior on it.
+                    </p>
+                    <p>
+                        These arguments are not silly. In a genuinely finite-dimensional problem, they
+                        may be defensible. The trouble begins when this prior is used as a stand-in for
+                        a probability distribution over functions and then carried through mesh
+                        refinement.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-intuition">
+                    <span class="tfdl-callout-label">Intuition</span>
+                    <p>
+                        A diagonal prior says that every coefficient is allowed to wiggle independently.
+                        As the mesh becomes finer, we add more wiggles. Unless their size is controlled
+                        in a way that depends on the function space, the wiggles do not politely vanish.
+                        They accumulate.
+                    </p>
+                </div>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig1d_prior_samples.svg"
+                         alt="Prior coefficient samples and their function reconstructions.">
+                    <figcaption>
+                        <strong>F1d &mdash; Prior samples.</strong> Draws from the naive prior
+                        \(\mathbf{u}\sim\N(0,\sigma^2\mathbf{I}_N)\), shown both as
+                        coefficient vectors and as reconstructed functions \(m_N^{(s)}(z)\).
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-section-heading">
+                    <h4>The naive posterior</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Finite-dimensional Gaussian conditioning</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        We now have the finite-dimensional Bayesian linear model
+                        \[ \mathbf{u} \sim \N(\mathbf{u}_0,\mathbf{C}_N), \]
+                        and
+                        \[ \obs\mid \mathbf{u} \sim \N(\Gb\mathbf{u},\Cd). \]
+                    </p>
+                    <p>
+                        Because both the prior and the noise are Gaussian, the posterior distribution
+                        of \(\mathbf{u}\) given \(\obs\) is also Gaussian:
+                        \[ \mathbf{u}\mid \obs \sim \N(\bar{\mathbf{u}}_N^{\obs},\mathbf{C}_N^{\obs}). \]
+                    </p>
+                    <p>
+                        This is one of the great computational conveniences of linear Gaussian inverse
+                        problems. The posterior is available in closed form. No sampling method is
+                        needed to obtain the posterior mean or covariance.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Posterior covariance</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The posterior covariance is
+                        \[ \mathbf{C}_N^{\obs} = \mathbf{C}_N - \mathbf{C}_N \Gb^{\T} \left( \Gb \mathbf{C}_N \Gb^{\T} + \Cd \right)^{-1} \Gb \mathbf{C}_N. \]
+                    </p>
+                    <p>
+                        The matrix
+                        \[ \Gb \mathbf{C}_N \Gb^{\T} + \Cd \]
+                        is the covariance of the predicted data, including both prior uncertainty
+                        pushed through the forward model and observational noise.
+                    </p>
+                    <p>
+                        The term
+                        \[ \mathbf{C}_N \Gb^{\T} \left( \Gb \mathbf{C}_N \Gb^{\T} + \Cd \right)^{-1} \Gb \mathbf{C}_N \]
+                        is the amount of prior covariance removed by observing the data. In directions
+                        where the data are informative, the posterior uncertainty shrinks. In directions
+                        that the data cannot see, the posterior remains close to the prior.
+                    </p>
+                    <p>
+                        This last sentence is the fuse. If the prior is badly behaved in the unseen
+                        directions, then the posterior inherits that bad behaviour.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Posterior mean</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The posterior mean is
+                        \[ \bar{\mathbf{u}}_N^{\obs} = \mathbf{u}_0 + \mathbf{C}_N \Gb^{\T} \left( \Gb \mathbf{C}_N \Gb^{\T} + \Cd \right)^{-1} \left( \obs - \Gb\mathbf{u}_0 \right). \]
+                    </p>
+                    <p>
+                        The term \(\obs - \Gb\mathbf{u}_0\) is the data residual relative to the prior mean.
+                        The operator
+                        \[ \mathbf{C}_N \Gb^{\T} \left( \Gb \mathbf{C}_N \Gb^{\T} + \Cd \right)^{-1} \]
+                        maps this residual back into coefficient space.
+                    </p>
+                    <p>
+                        For the zero-mean isotropic prior \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), this becomes
+                        \[ \bar{\mathbf{u}}_N^{\obs} = \sigma^2 \Gb^{\T} \left( \sigma^2 \Gb\Gb^{\T} + \Cd \right)^{-1} \obs. \]
+                    </p>
+                    <p>
+                        Everything here is finite-dimensional and computable. We can assemble \(\Gb\),
+                        choose \(\mathbf{C}_N\) and \(\Cd\), compute the posterior mean, and reconstruct a function
+                        from the coefficient vector.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>The first plot: it looks fine</h4>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Reconstructing the posterior mean</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Once the posterior mean coefficients \(\bar{\mathbf{u}}_N^{\obs}\) are computed, we convert
+                        them back into a function:
+                        \[ \bar{m}_N^{\obs}(x) = \sum_{j=1}^N \bar{u}_{N,j}^{\obs} \phi_j(x). \]
+                    </p>
+                    <p>
+                        This reconstructed posterior mean is the curve we would naturally plot against
+                        the true model. It is smooth enough to look respectable, flexible enough to
+                        follow the main features of the truth, and stable enough that nothing appears
+                        obviously broken.
+                    </p>
+                    <p>
+                        In a practical workflow, this is often the first moment of relief: the code
+                        runs, the matrix dimensions agree, the posterior mean has the right shape, and
+                        the curve seems to pass the eye test.
+                    </p>
+                </div>
+
+                <figure class="tfdl-figure">
+                    <img src="../../../../media/research/think-first/fig2_naive_hat.svg"
+                         alt="Naive Bayesian posterior mean on a hat basis, closely tracking the true model.">
+                    <figcaption>
+                        <strong>F2 &mdash; Naive recovery on hats.</strong> The posterior
+                        mean under a \(\sigma_m^2\mathbf{I}\) prior tracks \(\bar{m}\).
+                        Nothing looks wrong &mdash; yet.
+                    </figcaption>
+                </figure>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>Comparing the mean with the truth</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        Suppose the true model is \(m_{\mathrm{true}}\). Then the synthetic data are
+                        generated by
+                        \[ \obs = G m_{\mathrm{true}} + \noise. \]
+                        After computing \(\bar{m}_N^{\obs}\), we compare
+                        \[ \bar{m}_N^{\obs}(x) \quad \text{with} \quad m_{\mathrm{true}}(x). \]
+                    </p>
+                    <p>
+                        If the observations are informative enough and the noise level is moderate, the
+                        posterior mean may recover the broad features of the truth. Peaks may appear in
+                        approximately the right places. Long-wavelength structure may be captured.
+                        The result may look scientifically plausible.
+                    </p>
+                    <p>
+                        This is the dangerous part. The posterior mean can look sensible even when the
+                        posterior distribution is not.
+                    </p>
+                </div>
+
+                <div class="tfdl-subsection-heading">
+                    <h5>The false comfort of a plausible curve</h5>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>
+                        The posterior mean is only one summary of the posterior. It does not tell us
+                        whether typical posterior samples are reasonable. It does not tell us whether
+                        posterior uncertainty is controlled under mesh refinement. It does not tell us
+                        whether the finite-dimensional posterior is approaching a meaningful
+                        infinite-dimensional object.
+                    </p>
+                    <p>
+                        A plausible mean can therefore hide a pathological posterior.
+                    </p>
+                    <p>
+                        The reason is simple: the data constrain only a finite number of directions. If
+                        the number of basis functions \(N\) is larger than the number of observations \(K\),
+                        then there are directions in coefficient space that are weakly constrained or
+                        entirely invisible to the data. In those directions, the posterior covariance is
+                        controlled mostly by the prior. If the prior was chosen without reference to a
+                        continuous function-space model, there is no reason to expect that uncertainty
+                        to behave sensibly as \(N\) increases.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-checkpoint">
+                    <span class="tfdl-callout-label">Checkpoint</span>
+                    <p>
+                        At this stage, the posterior mean may look acceptable.
+                        The trap is that a reasonable-looking mean can hide an unreasonable posterior measure.
+                    </p>
+                </div>
+
+                <div class="tfdl-section-heading">
+                    <h4>What we have done so far</h4>
+                </div>
+
+                <div class="tfdl-prose">
+                    <p>Let us summarize the naive workflow.</p>
+                    <ol>
+                        <li>We began with an unknown function \(m\) on a domain \(\Omega\).</li>
+                        <li>We introduced data through a linear forward map \(G\).</li>
+                        <li>We discretized the model immediately using hat functions.</li>
+                        <li>We replaced the function \(m\) by coefficients \(\mathbf{u}\).</li>
+                        <li>We replaced the forward operator by a matrix \(\Gb\).</li>
+                        <li>We placed a Gaussian prior directly on the coefficients.</li>
+                        <li>We computed the finite-dimensional Gaussian posterior.</li>
+                        <li>We reconstructed and plotted the posterior mean.</li>
+                    </ol>
+                    <p>
+                        Nothing in this list looks outrageous. That is precisely why the example is
+                        useful. The mistake is not dramatic. It does not announce itself by crashing the
+                        code or producing nonsense immediately. It hides behind a plausible curve.
+                    </p>
+                </div>
+
+                <div class="tfdl-callout callout-lesson">
+                    <span class="tfdl-callout-label">Lesson</span>
+                    <p>
+                        The first act ends with a posterior mean that looks alright.
+                        The second act begins by asking what the posterior itself is doing.
+                    </p>
+                </div>
+
+                <div class="act-prevnext-spacer"></div>
+                <div class="act-prevnext">
+                    <a class="act-prevnext-btn" href="../think-first-discretize-later.html"><span class="arrow">&larr;</span> Overview</a>
+                    <a class="act-prevnext-btn next" href="act-2.html">Act II: Something Is Wrong <span class="arrow">&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var header = document.querySelector("header");
+        var progressBar = document.getElementById("reading-progress-bar");
+
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

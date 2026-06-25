@@ -1,0 +1,82 @@
+Speaker 1   00:01
+Okay, so I want to have on my website a page,
+
+Speaker 2   00:06
+Um, where I discuss the topic of think First discretize later.
+
+Speaker 1   00:17
+The point of this page will be to.
+
+Speaker 2   00:23
+Explain to a.
+
+Speaker 1   00:27
+Audience that has some knowledge of mathematics, but not a lot like they don't know. Function analysis they don't know much of real analysis. They're just, you know, casual people that know calculus and some linear algebra, and that kind of stuff some integral stuff. Um, some of the dangers of discretizing too early in an inversion.
+
+The plan is to use the interval INF, um, package. And Pi join. To do that. I think I want to start with. So, the point is, I will need to create some codes that will generate the results and, more importantly, the visualization, the graphs, and various other visualizations, um, that will be, um, on that on that, um?
+
+On that slide. On that. Sorry on that on that. Page. Um.
+
+Speaker 2   01:31
+I will. I want to start with a.
+
+Speaker 1   01:34
+An example of a inverse problem.
+
+The models or functions. In 1D on an interval. Um, I have a model space. I have a data space. The. The mapping between them is a solar operator. Um, so basically just a bunch of integrals. And. Um, I will first solve it in the naive way. Which is, I choose a very trivial discretization made from box cars with unit height.
+
+Um, um, I, you know, I expand my model in that basis, and then I plug that into the continuous equation for the forward operator. Um and. From there, I get a discretized forward operator, which is just a matrix. That is the object that a lot of people are familiar with.
+
+And then I'll say, okay, we are now interested in, let's say, a list Norm list squares solution. Um, which minimizes. The norm of the problem? Um. Uh, sorry, the norm of the model. And then I'll say, oh, I've discretized G. I have the G Matrix. I know that the solution for this should be something like, um GT, parentheses g GT, everything negative one.
+
+Um, applied on the observed data. Um, um, if I have noise, then there's. Plus CD as well. From the data noise covariance. Um, and obviously that is wrong because you can't just use the transpose those are actually adjoints. And if your basis is not orthonormal then, um? You cannot just use the transpose.
+
+As a matter of fact, I'll, you know, I'll go through with this simple solution. I'll show that you get. Um, something you'll get a solution. You'll plot most people at this point will be like, yeah, fine. Everything looks fine. I don't get what's wrong with this. Um, an ethernet is done.
+
+I will. Um, start explaining how this was a naive, um. Approach. First of all.
+
+Speaker 2   04:15
+I will ask, okay, what? What is the model space really?
+
+Speaker 1   04:19
+Um, because we've discretized it. It's now just a finite space, but initially it wasn't. It was a function space. There are many types of function spaces. Which one do we choose? And then, I'll explain, you know, is it? Is it an L2 space? Do you want it to be a Hilbert L2 space, because, um, if yes, well, members?
+
+Of that space are actually equivalence classes. You cannot evaluate them at a point, and at that point, we need to also kind of explain what our equivalence classes. Why is that the case? Um, we cannot just explain that in the on the main page because I would end up with a very long main page, so I'm thinking maybe.
+
+Add some way for people to click on something like a question mark or or on a button with a question being like, you know, what do you mean? This is an equivalence class, um, that will create a small pop-up, um window, that explains what is an equivalence class, and this will be a theme in the page.
+
+I want to have this, like, pop-up, um. Mini windows that users can click on. Um, and I will anticipate. We'll anticipate questions that they might have and put clickable elements that will give this pop-up windows with extra. Explanations. Okay, you know, so it could be. It could be layback functions, but you know, that'll be weird.
+
+Maybe you want them to be continuous, but if it's continuous, then it's no longer a Hilbert space. Um, it is, you know, it's a bannock space, and then we enter into whole discussion about what our Bannock spaces water healer spaces. Why does it matter to have an inner product and how doing code the geometry through norms?
+
+Into a space. Um, then you know, what does it mean? Um. To change the norm. Um, so a whole discussion about that that the point here is to show the the reader that choosing a model space is not trivial. It's it's rather complex task and really want to drive this point that?
+
+The the choice of the model space and every sub choice, such as Norm and inner product and topology, and all of that. And measure, and and all of that stuff is, um. It's basically plow information that we include into our problem and we, if we just go to the discretized space.
+
+A lot of these choices will not matter anymore, because you know in in finite dimensional spaces, all spaces have the same topology, for example. Um, um, you know, all Norms are equivalent and and so on. Um, so the choice is really split when we work with function spaces that's going to be a very long discussion, and it must be comp accompanied by.
+
+Lots and lots of visuals. That will give readers. A good intuition of all these Notions, which are not necessarily simple Notions and simple ideas and topics. Um, but yeah, there will be a long, long, long, long discussion about the choice of the model space. Almost a function space, and then a discussion about.
+
+Okay, now we chose one model space. We need to discretize, um. Then, how do we disputize? And um, then we introduced the analysis and synthesis operators that extract coefficients and form back functions from coefficients. And we explain how these are used to get the mass operator on the discretized space that must be used in the inner product on the finite dimensional space in order to maintain, um.
+
+Maintain correct adjoints. Then we talk about how to get the address of G because the adjoint is not just G transpose, but it should be the the mass operator to the negative one power composed with the G Matrix transposed, and so on, and show how all of these things change the the solution on paper, and obviously eventually the solution that we compute?
+
+Um, but not just that, I didn't want to go forward and say, we don't even need to digitize a priority. We can go ahead with GS, just, you know, a bunch of integral. Integral functionals and the adjoint can be computed just fine, and this is where interval in will be very useful because it it natively uses function classes that are not just vectors.
+
+They can represent functions genuine functions. They can be evaluated at any point. Um and yeah, this page will also be a bit of a of an advert for interval infant for pyjo inf. So, obviously, we'll showcase how easy. Um, it would be, for example, to use interval inf to to create such functions and such operators.
+
+Um, um. But yeah, and then we explained in this case because we don't digitalize a priority. We just want to make sure that our operators represent the true operators well enough, and for this kind of operator, like a solo operator, a bunch of integrals, all we really care about is the numerical quadrature, the integration method.
+
+Um, you know, it's traps. It is quad, whatever it is, and we can tune in that method to be as accurate as we want it to be. Um. Um. Yes, and um. What else I mean? Yeah, and then we solve the problem in the quote-unquote non-discretized model space case, and then we show that you get a really nice result.
+
+And in the end, people might say, okay, what's what's really wrong with, you know, my initial, my initial solution? And that's when we really need to explain that we started with a vague problem. We didn't know what the model space was. So, now that we know that the model space is whatever we chose it to be.
+
+Eventually, probably a symbol of space or an outer space. Um, we bring up the fact that a well-disotized problem is one that converges to the original continuous problem under, um, infinite refinement. And if we try to do that on the original, poorly digitalized problem, we see that we do.
+
+Um, converts to our original problem. In fact, we don't even know what initially. We didn't even know what we would converge to because we never specified the continuous version of the problem. Um, but yeah, that's roughly the idea right now. But obviously, this idea needs to be further developed.
+
+I will attach a couple more, um, PDFs that go more in the theory of what I've just discussed, and uh, you will have a look over this transcript and over all of those.
+
+Over all of these. Other notes that I give you and kind of the driver will be a poster called the thing first discretized later, which is actually already uploaded on the website, and there should be a link between the uploaded version on the website and this other page on the website.
+
+Kind of like supplementary material for this. For this for this poster basically.
