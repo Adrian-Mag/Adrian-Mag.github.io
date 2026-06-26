@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3f: Back to Finite Land — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3f of Bayes, Measure-Theoretically: Applying the integral Bayes formula to the finite switch problem, bringing everything back to finite land.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3f: Back to Finite Land</h1>
+                <p>Applying the integral Bayes formula to the finite switch problem &mdash; bringing everything home.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html" aria-current="page"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The integral Bayes formula, applied to the switch problem</h2>
+
+                    <p>In <a href="part-3e.html">Part&nbsp;3e</a>, we derived the
+                    measure-theoretic Bayes formula:</p>
+
+                    \[\int_B \mu_{\M\mid D=d}(A)\,\muD(dd)=\int_A L(m,B)\,\muMzero(dm).\]
+
+                    <p>This is an identity between two disintegrations of the same joint law.
+                    It works in both finite and continuous spaces. Now we apply it to the
+                    finite switch problem &mdash; the same problem we started with in
+                    <a href="part-1.html">Part&nbsp;1</a> and solved with ratios in
+                    <a href="part-2.html">Part&nbsp;2</a>.</p>
+
+                    <p>The goal is to see that the measure-theoretic formula, when specialized
+                    to finite spaces, reproduces exactly the elementary Bayes' rule. The
+                    integrals become sums, the kernels become conditional probability tables,
+                    and the posterior kernel becomes the normalized column.</p>
+
+                    <h2>Recall the setup</h2>
+
+                    <p>The model space is \(\M=\{00,01,10,11\}\) with prior
+                    \(\muMzero\). The data space is \(\D=\{0,1\}\). The likelihood kernel
+                    is \(L(m,B)=\mathbb{P}(D\in B\mid M=m)\).</p>
+
+                    <p>The joint measure is:</p>
+
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm).\]
+
+                    <p>In the finite case, the integral is a sum:</p>
+
+                    \[\Pi(A\times B)=\sum_{m\in A} L(m,B)\,\muMzero(\{m\}).\]
+
+                    <p>The predictive data measure is:</p>
+
+                    \[\muD(B)=\Pi(\M\times B)=\sum_{m\in\M} L(m,B)\,\muMzero(\{m\}).\]
+
+                    <p>We computed these in <a href="part-3d.html">Part&nbsp;3d</a>:</p>
+
+                    \[\muD(\{0\})=0.32, \qquad \muD(\{1\})=0.68.\]
+
+                    <h2>Solving for the posterior kernel</h2>
+
+                    <p>The posterior-side disintegration gives:</p>
+
+                    \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd).\]
+
+                    <p>Because \(\D=\{0,1\}\), we can take \(B=\{d\}\) for each
+                    \(d\in\D\). The integral becomes a single term:</p>
+
+                    \[\Pi(A\times\{d\})=\mu_{\M\mid D=d}(A)\,\muD(\{d\}).\]
+
+                    <p>Since \(\muD(\{0\})=0.32>0\) and \(\muD(\{1\})=0.68>0\), we may
+                    divide:</p>
+
+                    \[\mu_{\M\mid D=d}(A)=\frac{\Pi(A\times\{d\})}{\muD(\{d\})}=\frac{\int_A L(m,\{d\})\,\muMzero(dm)}{\int_{\M} L(m,\{d\})\,\muMzero(dm)}.\]
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">The formula in finite land</span>
+                        <p>
+                            This is the integral Bayes formula applied to the finite case. The
+                            numerator is an integral over \(A\) &mdash; in finite land, a
+                            weighted sum. The denominator is the evidence \(Z(d)\) &mdash;
+                            also a sum. The ratio is exactly the normalized column of the
+                            joint table.
+                        </p>
+                    </div>
+
+                    <h2>Computing the posterior probabilities</h2>
+
+                    <h3>Case \(d=0\): the reporter says &ldquo;0&rdquo;</h3>
+
+                    <p>For \(A=\{00\}\):</p>
+
+                    \[\mu_{\M\mid D=0}(\{00\})=\frac{L(00,\{0\})\,\muMzero(\{00\})}{\muD(\{0\})}=\frac{0.2\cdot 0.4}{0.32}=\frac{0.08}{0.32}=\frac{1}{4}.\]
+
+                    <p>By symmetry, the same holds for all model states:</p>
+
+                    \[\mu_{\M\mid D=0}(\{00\})=\mu_{\M\mid D=0}(\{01\})=\mu_{\M\mid D=0}(\{10\})=\mu_{\M\mid D=0}(\{11\})=\frac{1}{4}.\]
+
+                    <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform. No
+                    information is gained.</p>
+
+                    <h3>Case \(d=1\): the reporter says &ldquo;1&rdquo;</h3>
+
+                    <p>For \(A=\{00\}\):</p>
+
+                    \[\mu_{\M\mid D=1}(\{00\})=\frac{L(00,\{1\})\,\muMzero(\{00\})}{\muD(\{1\})}=\frac{0.8\cdot 0.4}{0.68}=\frac{0.32}{0.68}=\frac{8}{17}.\]
+
+                    <p>For \(A=\{11\}\):</p>
+
+                    \[\mu_{\M\mid D=1}(\{11\})=\frac{L(11,\{1\})\,\muMzero(\{11\})}{\muD(\{1\})}=\frac{0.8\cdot 0.4}{0.68}=\frac{8}{17}.\]
+
+                    <p>For \(A=\{01\}\):</p>
+
+                    \[\mu_{\M\mid D=1}(\{01\})=\frac{L(01,\{1\})\,\muMzero(\{01\})}{\muD(\{1\})}=\frac{0.2\cdot 0.1}{0.68}=\frac{0.02}{0.68}=\frac{1}{34}.\]
+
+                    <p>By symmetry, \(\mu_{\M\mid D=1}(\{10\})=\frac{1}{34}\) as well.</p>
+
+                    <p>So when the reporter says &ldquo;1&rdquo;, the posterior concentrates on
+                    the matching states \(\{00,11\}\):</p>
+
+                    \[\mu_{\M\mid D=1}(\{00\})=\mu_{\M\mid D=1}(\{11\})=\frac{8}{17}\approx 0.471,\]
+                    \[\mu_{\M\mid D=1}(\{01\})=\mu_{\M\mid D=1}(\{10\})=\frac{1}{34}\approx 0.029.\]
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Column headers -->
+                            <text x="180" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 0 (uniform)</text>
+                            <text x="420" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 1 (peaked)</text>
+                            <!-- Row labels -->
+                            <text x="80" y="60" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <text x="80" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <text x="80" y="160" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <text x="80" y="210" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- d=0 column: all 1/4 -->
+                            <rect x="110" y="40" width="140" height="40" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="180" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12" font-weight="600">1/4</text>
+                            <rect x="110" y="90" width="140" height="40" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="180" y="115" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12" font-weight="600">1/4</text>
+                            <rect x="110" y="140" width="140" height="40" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="180" y="165" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12" font-weight="600">1/4</text>
+                            <rect x="110" y="190" width="140" height="40" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="180" y="215" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12" font-weight="600">1/4</text>
+                            <!-- d=1 column: 8/17, 1/34, 1/34, 8/17 -->
+                            <rect x="350" y="40" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">8/17</text>
+                            <rect x="350" y="90" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="115" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">1/34</text>
+                            <rect x="350" y="140" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="165" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">1/34</text>
+                            <rect x="350" y="190" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="215" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">8/17</text>
+                            <!-- Title -->
+                            <text x="300" y="265" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Posterior kernel &#956;_{M|D=d} &mdash; same numbers as Part 2, derived from the integral formula</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3f-1 &mdash; The posterior kernel for the switch
+                            problem.</strong> Left: when \(d=0\), the posterior is uniform
+                            &mdash; no information is gained. Right: when \(d=1\), the
+                            posterior concentrates on the matching states \(\{00,11\}\).
+                            These are exactly the same numbers we computed in
+                            <a href="part-2.html">Part&nbsp;2</a>, now derived from the
+                            measure-theoretic Bayes formula.
+                        </figcaption>
+                    </figure>
+
+                    <h2>Plugging in the actual observation</h2>
+
+                    <p>We have now constructed the full posterior kernel
+                    \(d\longmapsto \mu_{\M\mid D=d}\). Only at this point do we use the actual
+                    observed report. If the reporter announces \(\dobs\in\D\), then the
+                    posterior measure on the model space is:</p>
+
+                    \[\mu^{\mathrm{post}}_{\M}(\cdot)=\mu_{\M\mid D=\dobs}(\cdot).\]
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            The observation selects a measure from the posterior kernel. It does
+                            not create the update rule from scratch. The kernel was already
+                            constructed by disintegration; the observation merely picks the
+                            appropriate slice.
+                        </p>
+                    </div>
+
+                    <h2>The full circle</h2>
+
+                    <p>Let us trace the journey:</p>
+
+                    <ol>
+                        <li><strong><a href="part-1.html">Part&nbsp;1</a>:</strong> We posed
+                        the switch problem &mdash; a finite game with hidden states and a
+                        noisy reporter.</li>
+                        <li><strong><a href="part-2.html">Part&nbsp;2</a>:</strong> We solved
+                        it with the elementary ratio formula
+                        \(\mathbb{P}(m\mid d)=\mathbb{P}(m,d)/\mathbb{P}(d)\) &mdash; column
+                        normalization of the joint table.</li>
+                        <li><strong><a href="part-3a.html">Parts&nbsp;3a&ndash;3b</a>:</strong>
+                        We saw that the elementary formula breaks when conditioning events have
+                        probability zero (Borel&ndash;Kolmogorov paradox).</li>
+                        <li><strong><a href="part-3c.html">Part&nbsp;3c</a>:</strong> We
+                        defined conditional expectation via integrals, avoiding division by
+                        zero. Conditional probability falls out as conditional expectation of
+                        indicator functions.</li>
+                        <li><strong><a href="part-3d.html">Part&nbsp;3d</a>:</strong> We
+                        bundled eventwise conditional probabilities into conditional
+                        probability measures via disintegration.</li>
+                        <li><strong><a href="part-3e.html">Part&nbsp;3e</a>:</strong> We
+                        derived Bayes' formula as the equality of two disintegrations of the
+                        same joint law. The familiar density form appeared as a special
+                        case.</li>
+                        <li><strong>Part&nbsp;3f:</strong> We applied the integral formula back
+                        to the finite switch problem. The integrals became sums, the kernels
+                        became tables, and the answer is exactly the same as in
+                        Part&nbsp;2.</li>
+                    </ol>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">The payoff</span>
+                        <p>
+                            The measure-theoretic machinery &mdash; conditional expectation,
+                            disintegration, posterior kernels &mdash; reproduces the elementary
+                            answer in finite land, but it also works in continuous spaces
+                            where the elementary formula breaks down. We climbed to infinite
+                            land, built a more general framework, and descended back to find
+                            that the familiar answer was there all along.
+                        </p>
+                    </div>
+
+                    <p>The story ends where it began &mdash; in finite land &mdash; but we now
+                    carry the tools to go beyond it.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3e.html"><span class="arrow">&larr;</span> Part 3e: Bayesian Inversion</a>
+                        <a class="part-prevnext-btn" href="part-4.html">Part 4: Summary <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

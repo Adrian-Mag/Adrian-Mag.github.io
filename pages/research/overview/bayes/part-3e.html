@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3e: Bayesian Inversion — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3e of Bayes, Measure-Theoretically: Bayesian inversion — prior, likelihood kernel, joint law, Bayes as equality of two disintegrations, density form, and additive noise.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3e: Bayesian Inversion</h1>
+                <p>Bayes' formula as the equality of two disintegrations of the same joint law.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html" aria-current="page"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The inversion problem</h2>
+
+                    <p>In <a href="part-3d.html">Part&nbsp;3d</a>, we saw that the joint law
+                    \(\Pi\) on \(\M\times\D\) admits two disintegrations:</p>
+
+                    \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd) \qquad\text{(posterior: model given data)},\]
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(likelihood: data given model)}.\]
+
+                    <p>In Bayesian inversion, we usually specify the problem in the opposite
+                    direction from what we want. We do not start by knowing the posterior. We
+                    start with:</p>
+
+                    <ol>
+                        <li>A <em>prior</em> on models, \(\muMzero(dm)\).</li>
+                        <li>A <em>data-given-model kernel</em>,
+                        \(L(m,B)=\mathbb{P}(D\in B\mid M=m)\).</li>
+                    </ol>
+
+                    <p>The kernel \(L\) says: if the model takes the value \(m\), then the
+                    data is distributed according to the measure \(L(m,\cdot)\) on \(\D\). This is
+                    also a conditional probability measure, but in the <em>forward</em>
+                    direction &mdash; from model to data.</p>
+
+                    <p>From these two ingredients, the joint law is determined:</p>
+
+                    \[\Pi(dm,dd)=L(m,dd)\,\muMzero(dm).\]
+
+                    <p>For model event \(A\) and data event \(B\):</p>
+
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm).\]
+
+                    <p>This is the <em>forward</em> disintegration &mdash; the generative
+                    direction. But the same joint law also admits the <em>posterior</em>
+                    disintegration:</p>
+
+                    \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd).\]
+
+                    <p>Since both expressions equal \(\Pi(A\times B)\), we obtain the
+                    <em>central measure-theoretic Bayes formula</em>:</p>
+
+                    \[\boxed{\;\int_B \mu_{\M\mid D=d}(A)\,\muD(dd)=\int_A L(m,B)\,\muMzero(dm)\;}\]
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Bayes as an identity</span>
+                        <p>
+                            This is <em>not</em> the density formula. Not yet
+                            &ldquo;posterior \(\propto\) likelihood \(\times\) prior.&rdquo;
+                            This is Bayes as an identity between two ways of decomposing the
+                            same joint probability. The left side disintegrates with respect
+                            to the data marginal; the right side disintegrates with respect to
+                            the model marginal. Both describe the same joint measure.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF3e1a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.5)"/>
+                                </marker>
+                                <marker id="arrowF3e1b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(244,162,89,0.5)"/>
+                                </marker>
+                            </defs>
+                            <!-- Prior -->
+                            <ellipse cx="80" cy="60" rx="55" ry="35" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.25)" stroke-width="1.5"/>
+                            <text x="80" y="55" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Prior</text>
+                            <text x="80" y="72" text-anchor="middle" fill="rgba(160,120,190,0.7)" font-size="10">&#956;&#8304;_M</text>
+                            <!-- L kernel -->
+                            <rect x="180" y="35" width="100" height="50" rx="8" fill="rgba(103,145,190,0.1)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="230" y="55" text-anchor="middle" fill="rgba(103,145,190,0.8)" font-size="11" font-weight="600">L(m,B)</text>
+                            <text x="230" y="72" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">likelihood kernel</text>
+                            <!-- Joint Pi -->
+                            <rect x="340" y="35" width="100" height="50" rx="8" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="390" y="55" text-anchor="middle" fill="rgba(120,180,120,0.8)" font-size="11" font-weight="600">Joint &#928;</text>
+                            <text x="390" y="72" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">&#928; = L &#956;&#8304;_M</text>
+                            <!-- Arrows top row -->
+                            <line x1="140" y1="60" x2="175" y2="60" stroke="rgba(103,145,190,0.5)" stroke-width="2" marker-end="url(#arrowF3e1a)"/>
+                            <line x1="285" y1="60" x2="335" y2="60" stroke="rgba(103,145,190,0.5)" stroke-width="2" marker-end="url(#arrowF3e1a)"/>
+                            <!-- Posterior -->
+                            <rect x="340" y="130" width="100" height="50" rx="8" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="390" y="150" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="10" font-weight="600">&#956;_{M|D=d}</text>
+                            <text x="390" y="167" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">posterior kernel</text>
+                            <!-- mu_D -->
+                            <rect x="180" y="130" width="100" height="50" rx="8" fill="rgba(244,162,89,0.08)" stroke="rgba(244,162,89,0.25)"/>
+                            <text x="230" y="150" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="600">&#956;_D</text>
+                            <text x="230" y="167" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">predictive</text>
+                            <!-- Arrows bottom row (reverse direction) -->
+                            <line x1="335" y1="155" x2="285" y2="155" stroke="rgba(244,162,89,0.5)" stroke-width="2" marker-end="url(#arrowF3e1b)"/>
+                            <line x1="175" y1="155" x2="140" y2="155" stroke="rgba(244,162,89,0.5)" stroke-width="2" marker-end="url(#arrowF3e1b)"/>
+                            <!-- Vertical equality -->
+                            <text x="390" y="105" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="14" font-weight="700">=</text>
+                            <line x1="390" y1="90" x2="390" y2="125" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+                            <!-- Labels -->
+                            <text x="80" y="155" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">forward direction</text>
+                            <text x="80" y="170" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">model &#8594; data</text>
+                            <text x="520" y="155" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">inverse direction</text>
+                            <text x="520" y="170" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">data &#8594; model</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3e-1 &mdash; Bayes as two disintegrations.</strong> The
+                            forward direction (top) builds the joint from the prior and
+                            likelihood kernel. The inverse direction (bottom) decomposes the
+                            same joint into the posterior kernel and predictive measure. Bayes'
+                            formula is the statement that both decompositions describe the same
+                            \(\Pi\).
+                        </figcaption>
+                    </figure>
+
+                    <h2>The density form as a special case</h2>
+
+                    <p>The familiar formula &ldquo;posterior \(\propto\) likelihood \(\times\)
+                    prior&rdquo; appears only when the data-given-model kernel has a density
+                    with respect to a reference measure.</p>
+
+                    <p>Assume there exists a reference measure \(\lambda\) on
+                    \((\D,\SigmaD)\) such that \(L(m,\cdot)\ll\lambda\) for \(\muMzero\)-a.e.\(m\).
+                    Then the Radon&ndash;Nikodým derivative</p>
+
+                    \[L(d\mid m):=\frac{dL(m,\cdot)}{d\lambda}(d)\]
+
+                    <p>exists \(\lambda\)-a.e.and is jointly measurable in \((m,d)\). The
+                    joint law then admits the density representation:</p>
+
+                    \[\Pi(dm,dd)=L(d\mid m)\,\lambda(dd)\,\muMzero(dm).\]
+
+                    <h3>Identification of the data marginal</h3>
+
+                    <p>Integrating the joint density over \(\M\) yields:</p>
+
+                    \[\muD(dd)=Z(d)\,\lambda(dd), \qquad Z(d):=\int_{\M} L(d\mid m)\,\muMzero(dm).\]
+
+                    <p>The function \(Z(d)\) is the <em>evidence</em> (or marginal likelihood)
+                    &mdash; the same quantity that appeared as the denominator in our finite
+                    example.</p>
+
+                    <h3>Comparing the two disintegrations</h3>
+
+                    <p>Substituting the density form of \(\muD\) into the posterior
+                    disintegration:</p>
+
+                    \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,Z(d)\,\lambda(dd).\]
+
+                    <p>On the other hand, combining the forward disintegration with the density
+                    representation of \(L(m,\cdot)\):</p>
+
+                    \[\Pi(A\times B)=\int_B\left(\int_A L(d\mid m)\,\muMzero(dm)\right)\lambda(dd).\]
+
+                    <p>Since these two expressions represent the same measure for all measurable
+                    \(B\), it follows that for \(\lambda\)-a.e.\(d\):</p>
+
+                    \[\mu_{\M\mid D=d}(A)\,Z(d)=\int_A L(d\mid m)\,\muMzero(dm), \qquad A\in\SigmaM.\]
+
+                    <h3>Bayes' relation in density form</h3>
+
+                    <p>If \(Z(d)\in(0,\infty)\) for \(\muD\)-a.e.\(d\), then the posterior
+                    measure is uniquely determined as:</p>
+
+                    \[\boxed{\;\mu_{\M\mid D=d}(dm)=\frac{L(d\mid m)\,\muMzero(dm)}{Z(d)}\;}\]
+
+                    <p>Equivalently, before normalization:</p>
+
+                    \[\mu_{\M\mid D=d}(dm)\;\propto\;L(d\mid m)\,\muMzero(dm).\]
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Key point</span>
+                        <p>
+                            The familiar formula &ldquo;posterior \(\propto\) likelihood
+                            \(\times\) prior&rdquo; is <em>not</em> the foundation. It is the
+                            coordinate/density version of the deeper measure identity. It is
+                            valid only when suitable Radon&ndash;Nikodým derivatives exist.
+                        </p>
+                    </div>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">Remark on reference measures</span>
+                        <p>
+                            The likelihood \(L(d\mid m)\) depends on the choice of reference
+                            measure \(\lambda\) and is therefore not an invariant object. The
+                            posterior kernel \(\mu_{\M\mid D=d}\), by contrast, is defined up to
+                            \(\muD\)-null sets and does not depend on any reference measure. In
+                            the total absence of a dominating reference, the posterior kernel
+                            still exists as a regular conditional distribution; only the simple
+                            density formula need not hold.
+                        </p>
+                    </div>
+
+                    <h2>The likelihood from forward models with additive noise</h2>
+
+                    <p>In many inverse problems, the data-generating mechanism has a specific
+                    structure: a deterministic forward map perturbed by additive noise. We now
+                    show how the likelihood kernel arises naturally in this setting.</p>
+
+                    <h3>Setup</h3>
+
+                    <p>Assume:</p>
+                    <ul>
+                        <li>\(M\sim\muMzero\) on \((\M,\SigmaM)\) &mdash; the prior;</li>
+                        <li>\(\eta\sim\mu_\eta\) on \((\D,\SigmaD)\) &mdash; the noise distribution;</li>
+                        <li>\(M\) and \(\eta\) are independent;</li>
+                        <li>The data is generated by \(D=G(M)+\eta\), where
+                        \(G:\M\to\D\) is a measurable forward map.</li>
+                    </ul>
+
+                    <p>The joint law of \((M,D)\) is the pushforward of the product measure
+                    \(\muMzero\otimes\mu_\eta\) under the map
+                    \(\Phi(m,\xi)=(m,\,G(m)+\xi)\):</p>
+
+                    \[\Pi=\Phi_\#(\muMzero\otimes\mu_\eta).\]
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF3e2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.5)"/>
+                                </marker>
+                            </defs>
+                            <!-- M -->
+                            <ellipse cx="70" cy="80" rx="45" ry="35" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.25)" stroke-width="1.5"/>
+                            <text x="70" y="75" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">M</text>
+                            <text x="70" y="92" text-anchor="middle" fill="rgba(160,120,190,0.7)" font-size="10">&#956;&#8304;_M</text>
+                            <!-- G(m) -->
+                            <rect x="150" y="60" width="80" height="40" rx="6" fill="rgba(103,145,190,0.1)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="190" y="85" text-anchor="middle" fill="rgba(103,145,190,0.8)" font-size="11" font-weight="600">G(m)</text>
+                            <!-- eta -->
+                            <ellipse cx="190" cy="130" rx="40" ry="25" fill="rgba(200,120,80,0.08)" stroke="rgba(200,120,80,0.25)" stroke-width="1.5"/>
+                            <text x="190" y="128" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="10" font-weight="600">&#951; ~ &#956;_&#951;</text>
+                            <text x="190" y="142" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">noise</text>
+                            <!-- + -->
+                            <text x="260" y="88" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="16" font-weight="700">+</text>
+                            <!-- D -->
+                            <rect x="290" y="60" width="80" height="40" rx="8" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="330" y="85" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="600">D</text>
+                            <!-- Arrow to joint -->
+                            <line x1="120" y1="80" x2="145" y2="80" stroke="rgba(103,145,190,0.5)" stroke-width="2" marker-end="url(#arrowF3e2)"/>
+                            <line x1="235" y1="80" x2="285" y2="80" stroke="rgba(103,145,190,0.5)" stroke-width="2" marker-end="url(#arrowF3e2)"/>
+                            <!-- Joint Pi -->
+                            <rect x="420" y="55" width="120" height="50" rx="8" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="480" y="75" text-anchor="middle" fill="rgba(120,180,120,0.8)" font-size="11" font-weight="600">Joint &#928;</text>
+                            <text x="480" y="92" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">&#928; = &#934;_#(&#956;&#8304;_M &#8853; &#956;_&#951;)</text>
+                            <!-- Arrow -->
+                            <line x1="375" y1="80" x2="415" y2="80" stroke="rgba(120,180,120,0.5)" stroke-width="2" marker-end="url(#arrowF3e2)"/>
+                        </svg>
+                        <figcaption>
+                            <strong>F3e-2 &mdash; Additive noise forward model.</strong> The
+                            data \(D\) is generated by applying the forward map \(G\) to the
+                            model \(M\) and adding independent noise \(\eta\). The joint law is
+                            the pushforward of the product measure under
+                            \(\Phi(m,\xi)=(m, G(m)+\xi)\).
+                        </figcaption>
+                    </figure>
+
+                    <h3>The data-given-model kernel</h3>
+
+                    <p>Fixing \(M=m\), the forward map value \(G(M)\) becomes the deterministic
+                    element \(G(m)\). The only remaining randomness in \(D\) comes from the noise
+                    \(\eta\). Hence:</p>
+
+                    \[D\mid(M=m)\;\overset{d}{=}\;G(m)+\eta.\]
+
+                    <p>Translating the event \(\{D\in B\}\) back to an event in terms of
+                    \(\eta\):</p>
+
+                    \[\{D\in B\}=\{G(m)+\eta\in B\}=\{\eta\in B-G(m)\},\]
+
+                    <p>where \(B-G(m):=\{\xi\in\D:\xi+G(m)\in B\}\). Taking probabilities under
+                    the noise law yields:</p>
+
+                    \[L(m,B)=\mu_\eta\!\bigl(B-G(m)\bigr), \qquad B\in\SigmaD.\]
+
+                    <p>In pushforward notation: \(L(m,\cdot)=(T_{G(m)})_\#\mu_\eta\), where
+                    \(T_y(\xi)=\xi+y\). The data-given-model kernel is simply the noise
+                    distribution shifted by the forward response.</p>
+
+                    <h3>The likelihood as a shifted noise density</h3>
+
+                    <p>Assume the noise law \(\mu_\eta\) is absolutely continuous with respect to
+                    a reference measure \(\lambda\) (e.g.Lebesgue measure on
+                    \(\mathbb{R}^{N_d}\)), with density \(\rho_\eta(\xi)=d\mu_\eta/d\lambda(\xi)\).</p>
+
+                    <p>Testing \(L(m,\cdot)\) against a bounded measurable function \(f\) and performing
+                    the change of variable \(d=G(m)+\xi\):</p>
+
+                    \[\int_\D f(d)\,L(m,dd)=\int_\D f(d)\,\rho_\eta\!\bigl(d-G(m)\bigr)\,\lambda(dd).\]
+
+                    <p>By the Radon&ndash;Nikodým theorem, the likelihood is:</p>
+
+                    \[L(d\mid m)=\frac{dL(m,\cdot)}{d\lambda}(d)=\rho_\eta\!\bigl(d-G(m)\bigr).\]
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            The likelihood is the noise density evaluated at the <em>residual</em>
+                            \(d-G(m)\) &mdash; the mismatch between the observed data and the
+                            forward-model prediction. A model \(m\) that predicts the data well
+                            (small residual) yields a high likelihood; a model that predicts
+                            poorly (large residual) yields a low likelihood.
+                        </p>
+                    </div>
+
+                    <h3>The posterior for additive noise</h3>
+
+                    <p>Substituting the likelihood into Bayes' relation, the posterior measure
+                    is:</p>
+
+                    \[\mu_{\M\mid D=d}(dm)=\frac{\rho_\eta\!\bigl(d-G(m)\bigr)\,\muMzero(dm)}{Z(d)},\]
+
+                    <p>where the evidence is:</p>
+
+                    \[Z(d)=\int_{\M}\rho_\eta\!\bigl(d-G(m)\bigr)\,\muMzero(dm).\]
+
+                    <p>This is the measure-theoretic Bayes' formula for inverse problems with
+                    additive noise. It requires no division by point probabilities. The
+                    denominator \(Z(d)\) is an integral over the model space &mdash; it is
+                    finite and positive under standard assumptions, even when the data space is
+                    continuous and \(\muD(\{d\})=0\).</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: finite case -->
+                            <rect x="10" y="20" width="270" height="140" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1.5"/>
+                            <text x="145" y="42" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="700">Finite case</text>
+                            <circle cx="80" cy="80" r="8" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="80" y="105" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">d=0</text>
+                            <text x="80" y="120" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&#956;_D({0}) = 0.32</text>
+                            <text x="80" y="135" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&gt; 0 &#10003;</text>
+                            <circle cx="200" cy="80" r="8" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="200" y="105" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">d=1</text>
+                            <text x="200" y="120" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&#956;_D({1}) = 0.68</text>
+                            <text x="200" y="135" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&gt; 0 &#10003;</text>
+                            <text x="145" y="155" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">column normalization works</text>
+
+                            <!-- Right: continuous case -->
+                            <rect x="310" y="20" width="280" height="140" rx="8" fill="rgba(200,120,80,0.06)" stroke="rgba(200,120,80,0.2)" stroke-width="1.5"/>
+                            <text x="450" y="42" text-anchor="middle" fill="rgba(200,120,80,0.9)" font-size="12" font-weight="700">Continuous case</text>
+                            <path d="M 340 130 Q 380 40 420 80 Q 460 120 500 50 Q 540 90 570 130" fill="none" stroke="rgba(200,120,80,0.4)" stroke-width="2"/>
+                            <text x="450" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">&#956;_D(d)</text>
+                            <line x1="420" y1="80" x2="420" y2="135" stroke="rgba(244,162,89,0.6)" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <circle cx="420" cy="80" r="5" fill="rgba(244,162,89,0.8)"/>
+                            <text x="420" y="70" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="10" font-weight="600">d_obs</text>
+                            <text x="510" y="115" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="10">&#956;_D({d_obs}) = 0</text>
+                            <text x="510" y="130" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">kernel still works &#10003;</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3e-3 &mdash; Finite vs.continuous data spaces.</strong>
+                            In the finite case, each data point has positive predictive
+                            probability, so column normalization works. In continuous spaces,
+                            \(\muD(\{\dobs\})=0\), but the posterior kernel is still
+                            well-defined &mdash; it was constructed by disintegration, not by
+                            dividing by point probabilities.
+                        </figcaption>
+                    </figure>
+
+                    <h2>What we have achieved</h2>
+
+                    <p>Let us take stock. We started in <a href="part-2.html">finite land</a>
+                    with a simple ratio formula. We then climbed to the measure-theoretic
+                    level:</p>
+
+                    <ul>
+                        <li><a href="part-3c.html">Part&nbsp;3c</a>: Conditional expectation
+                        defines conditional probability via integrals, avoiding division by
+                        zero.</li>
+                        <li><a href="part-3d.html">Part&nbsp;3d</a>: Disintegration bundles
+                        eventwise conditional probabilities into conditional probability
+                        measures.</li>
+                        <li><strong>Part&nbsp;3e</strong>: Bayes' formula emerges as the
+                        equality of two disintegrations of the same joint law. The familiar
+                        density form is a special case.</li>
+                    </ul>
+
+                    <p>The measure-theoretic view keeps the underlying objects visible:</p>
+
+                    \[\text{prior measure}, \qquad \text{likelihood kernel}, \qquad \text{joint measure}, \qquad \text{posterior kernel}.\]
+
+                    <p>This is the language needed for regular conditional probabilities and for
+                    Bayesian inverse problems on general spaces.</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">Warning</span>
+                        <p>
+                            In continuous spaces, \(\muD(\{\dobs\})=0\). The density formula
+                            \(\pi(m\mid d)\) is not the foundation &mdash; it is a representation
+                            of the posterior-kernel construction relative to chosen reference
+                            measures. The kernel form works in both finite and continuous
+                            settings.
+                        </p>
+                    </div>
+
+                    <p>In <a href="part-3f.html">Part&nbsp;3f</a>, we will take the integral
+                    Bayes formula we have just derived and apply it back to the finite switch
+                    problem &mdash; bringing everything home to where we started.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3d.html"><span class="arrow">&larr;</span> Part 3d: Disintegration</a>
+                        <a class="part-prevnext-btn" href="part-3f.html">Part 3f: Back to Finite Land <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3c: Conditional Expectation — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3c of Bayes, Measure-Theoretically: Conditional expectation, conditional probability, and conditioning on random variables via sigma-algebras.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3c: Conditional Expectation</h1>
+                <p>Conditioning on &sigma;-algebras, conditional probability, and the resolution of the Borel&ndash;Kolmogorov paradox.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html" aria-current="page"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">A word before we begin</span>
+                        <p>
+                            The next few parts are the most mathematically demanding. We are going to introduce <em>conditional expectation</em>,
+                            <em>disintegration</em>, and <em>Bayesian inversion</em> in
+                            measure-theoretic language. These concepts take effort to absorb, but
+                            they will click into place &mdash; trust the process.
+                        </p>
+                        <p>
+                            One stylistic choice: even though our switch problem lives in
+                            <em>finite</em> land, we will write definitions using
+                            <em>integrals</em> rather than sums. This is deliberate. Integrals are
+                            the more general notation: they work in both finite and continuous
+                            spaces, and they lead to cleaner derivations. If you want to stay in
+                            finite land, just mentally replace every integral by a weighted sum
+                            &mdash; everything will follow exactly the same.
+                        </p>
+                        <p>
+                            The payoff for battling the infinite case now: by the end of
+                            <a href="part-3f.html">Part&nbsp;3f</a>, we will take the full
+                            measure-theoretic Bayes formula and apply it back to the finite switch
+                            problem, bringing everything home to where we started.
+                        </p>
+                    </div>
+
+                    <h2>Conditioning on a &sigma;-algebra: the switch problem</h2>
+
+                    <p>In <a href="part-3b.html">Part&nbsp;3b</a>, we saw that conditioning on
+                    individual events breaks down when the conditioning event has probability zero.
+                    The Borel&ndash;Kolmogorov paradox showed that different ways of
+                    &ldquo;shrinking&rdquo; toward a measure-zero set can give different answers.</p>
+
+                    <p>The resolution is to condition on a <em>&sigma;-algebra</em> rather than on
+                    a set. To understand what this means, we will use a coarser &sigma;-algebra on
+                    the switch problem's model space.</p>
+
+                    <h3>A coarser &sigma;-algebra on \(\M\)</h3>
+
+                    <p>Recall that the full &sigma;-algebra on the model space is
+                    \(\SigmaM=2^{\M}\) &mdash; every subset is an event. But we can also work with
+                    a <em>coarser</em> &sigma;-algebra, one that cannot distinguish between certain
+                    outcomes.</p>
+
+                    <p>Define:</p>
+
+                    \[\mathcal{G}=\{\varnothing,\;\{00,01\},\;\{10,11\},\;\M\}.\]
+
+                    <p>This &sigma;-algebra cannot distinguish between:</p>
+
+                    <ul>
+                        <li>outcomes \(00\) and \(01\) (both in \(\{00,01\}\)),</li>
+                        <li>outcomes \(10\) and \(11\) (both in \(\{10,11\}\)).</li>
+                    </ul>
+
+                    <p>So \(\mathcal{G}\) represents the information: <em>&ldquo;I only know
+                    whether the first switch is off (\(00\) or \(01\)) or on (\(10\) or
+                    \(11\)).&rdquo;</em></p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">A &sigma;-algebra is a collection of distinctions</span>
+                        <p>
+                            A &sigma;-algebra is not only a collection of events. It is a
+                            collection of <em>distinctions we are allowed to make</em>.
+                            \(\mathcal{G}\) can ask: <em>&ldquo;is the first switch off or
+                            on?&rdquo;</em> But it cannot ask:
+                            <em>&ldquo;is the state exactly \(00\)?&rdquo;</em> because
+                            \(\{00\}\notin\mathcal{G}\).
+                        </p>
+                        <p>
+                            The test is simple:
+                            \(A\in\mathcal{G}\) if and only if the coarse observer can
+                            decide whether \(A\) happened. This will make
+                            \(\mathcal{G}\)-measurability feel natural later: a
+                            \(\mathcal{G}\)-measurable function is one that never uses
+                            more information than \(\mathcal{G}\) allows.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Full sigma-algebra -->
+                            <rect x="10" y="20" width="270" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1.5"/>
+                            <text x="145" y="42" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="700">Full &sigma;-algebra &#931;_M = 2^M</text>
+                            <!-- Four distinguishable points -->
+                            <circle cx="80" cy="90" r="16" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="80" y="94" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">00</text>
+                            <circle cx="140" cy="90" r="16" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="140" y="94" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">01</text>
+                            <circle cx="200" cy="90" r="16" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="200" y="94" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">10</text>
+                            <circle cx="250" cy="90" r="16" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="250" y="94" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">11</text>
+                            <text x="145" y="130" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">all 16 subsets are events</text>
+                            <text x="145" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">every question is answerable</text>
+                            <text x="145" y="170" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">can distinguish all 4 states</text>
+
+                            <!-- Coarse sigma-algebra -->
+                            <rect x="310" y="20" width="280" height="160" rx="8" fill="rgba(244,162,89,0.06)" stroke="rgba(244,162,89,0.2)" stroke-width="1.5"/>
+                            <text x="450" y="42" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="11" font-weight="700">Coarse &sigma;-algebra G</text>
+                            <!-- Two groups -->
+                            <ellipse cx="380" cy="90" rx="40" ry="25" fill="rgba(244,162,89,0.12)" stroke="rgba(244,162,89,0.4)" stroke-width="1.5"/>
+                            <circle cx="365" cy="90" r="14" fill="rgba(244,162,89,0.25)" stroke="rgba(244,162,89,0.5)"/>
+                            <text x="365" y="94" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-weight="600">00</text>
+                            <circle cx="395" cy="90" r="14" fill="rgba(244,162,89,0.25)" stroke="rgba(244,162,89,0.5)"/>
+                            <text x="395" y="94" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-weight="600">01</text>
+                            <text x="380" y="130" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="9">{00, 01}</text>
+                            <text x="380" y="145" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">1st switch off</text>
+
+                            <ellipse cx="510" cy="90" rx="40" ry="25" fill="rgba(120,180,120,0.12)" stroke="rgba(120,180,120,0.4)" stroke-width="1.5"/>
+                            <circle cx="495" cy="90" r="14" fill="rgba(120,180,120,0.25)" stroke="rgba(120,180,120,0.5)"/>
+                            <text x="495" y="94" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-weight="600">10</text>
+                            <circle cx="525" cy="90" r="14" fill="rgba(120,180,120,0.25)" stroke="rgba(120,180,120,0.5)"/>
+                            <text x="525" y="94" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-weight="600">11</text>
+                            <text x="510" y="130" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="9">{10, 11}</text>
+                            <text x="510" y="145" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">1st switch on</text>
+
+                            <text x="450" y="170" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">can only distinguish 2 groups</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3c-1 &mdash; A coarser &sigma;-algebra on \(\M\).</strong>
+                            The full &sigma;-algebra \(\SigmaM=2^{\M}\) can distinguish all four
+                            states. The coarser \(\mathcal{G}\) can only tell whether the first
+                            switch is on or off. Outcomes within each group are
+                            <em>indistinguishable</em>.
+                        </figcaption>
+                    </figure>
+
+                    <h3>Conditional expectation: averaging over indistinguishable outcomes</h3>
+
+                    <p>Before we condition on a &sigma;-algebra, let us recall what the
+                    <em>ordinary</em> expectation \(\mathbb{E}[X]\) does. It averages \(X\) over
+                    <em>all</em> outcomes, weighted by their probabilities. It is the answer to the
+                    question: <em>If I know nothing, what is my best guess for \(X\)?</em></p>
+
+                    <p>Let \(X:\M\to\mathbb{R}\) be a random variable on the model space. For
+                    concreteness, suppose:</p>
+
+                    \[X(00)=0,\quad X(01)=2,\quad X(10)=1,\quad X(11)=3.\]
+
+                    <p>The ordinary expectation is the prior-weighted average over all four
+                    outcomes:</p>
+
+                    \[\mathbb{E}[X]=\sum_{m\in\M}\muMzero(\{m\})\,X(m)
+                    =0.4\cdot 0+0.1\cdot 2+0.1\cdot 1+0.4\cdot 3=1.5.\]
+
+                    <p>This is a single number. It is the best guess for \(X\) when we have
+                    <em>no information</em> at all &mdash; when we cannot distinguish any outcome
+                    from any other. In &sigma;-algebra language, this is conditioning on the
+                    <em>coarsest possible</em> &sigma;-algebra
+                    \(\{\varnothing,\M\}\), which cannot distinguish anything. Ordinary
+                    expectation is conditional expectation with no information.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Expectation as compression</span>
+                        <p>
+                            If you must replace \(X\) by one number, and you know nothing,
+                            then \(\mathbb{E}[X]\) is the value that preserves the average. It
+                            is a <em>one-number compression</em> of \(X\) &mdash; the best
+                            you can do when the only visible events are
+                            \(\{\varnothing,\M\}\).
+                        </p>
+                    </div>
+
+                    <p>Now suppose we have <em>partial</em> information. Specifically, suppose we
+                    know which group the outcome belongs to in the coarser &sigma;-algebra
+                    \(\mathcal{G}=\{\varnothing,\{00,01\},\{10,11\},\M\}\), but we cannot distinguish
+                    outcomes within each group. What is our best guess for \(X\) now?</p>
+
+                    <p>The answer is the <em>conditional expectation</em>
+                    \(\mathbb{E}[X\mid\mathcal{G}]\). It is no longer a single number &mdash; it is
+                    a <em>random variable</em>, because the best guess depends on which group we
+                    find ourselves in. Ordinary expectation compressed \(X\) to one number
+                    because we could not distinguish anything. Conditional expectation compresses
+                    \(X\) to <em>one value per visible information cell</em>, because we can
+                    distinguish groups but not individuals within them.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Two design rules</span>
+                        <p>
+                            We want a replacement \(Y\) for \(X\) that satisfies two rules:
+                        </p>
+                        <p>
+                            <strong>1. \(Y\) must be \(\mathcal{G}\)-measurable.</strong>
+                            It can only use the information visible to \(\mathcal{G}\). It
+                            cannot secretly distinguish \(00\) from \(01\) if
+                            \(\mathcal{G}\) cannot.
+                        </p>
+                        <p>
+                            <strong>2. \(Y\) must preserve all visible totals.</strong>
+                            On every event the coarse observer can actually see, the total
+                            weighted value of \(Y\) must equal that of \(X\).
+                        </p>
+                        <p>
+                            Conditional expectation is the visible replacement of \(X\) that
+                            preserves all visible totals.
+                        </p>
+                    </div>
+
+                    <p>Formally: the conditional expectation
+                    \(\mathbb{E}[X\mid\mathcal{G}]\) is the (essentially unique)
+                    \(\mathcal{G}\)-measurable random variable \(Y\) such that:</p>
+
+                    \[\int_H Y\,d\muMzero = \int_H X\,d\muMzero \qquad\text{for every } H\in\mathcal{G}.\]
+
+                    <p>If you just felt a slight panic at the sight of an integral &mdash; don't
+                    worry. In our finite setting, an integral against a measure is simply a
+                    <em>weighted sum</em>. The condition above just says:</p>
+
+                    \[\sum_{m\in H} Y(m)\,\muMzero(\{m\}) = \sum_{m\in H} X(m)\,\muMzero(\{m\}) \qquad\text{for every } H\in\mathcal{G}.\]
+
+                    <p>That is: the total weighted value of \(Y\) on each group must equal the total
+                    weighted value of \(X\) on that same group. We write it as an integral because the
+                    same definition works in continuous spaces, where sums become integrals &mdash;
+                    but the idea is identical: <em>match the totals on each
+                    indistinguishable group</em>.</p>
+
+                    <p>This is a statement about <em>integrals</em>, not about ratios. There is no
+                    normalization, no division by \(\muMzero(H)\). The conditional expectation is the
+                    \(\mathcal{G}\)-measurable function whose integrals over \(\mathcal{G}\)-sets
+                    match those of \(X\). Existence and uniqueness (up to null sets) follow from the
+                    Radon&ndash;Nikodým theorem.</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">Why no normalization?</span>
+                        <p>
+                            If the definition involved dividing by \(\muMzero(H)\), we would be
+                            back to the same problem: in continuous spaces, \(\muMzero(H)\) can be
+                            zero. The integral condition avoids this entirely. It only requires that
+                            the <em>total mass</em> of \(Y\) and \(X\) agree on each
+                            \(\mathcal{G}\)-set &mdash; no division anywhere.
+                        </p>
+                    </div>
+
+                    <p>In our finite example, this integral condition is easy to solve. Because
+                    \(Y\) must be \(\mathcal{G}\)-measurable, it must be constant on each group.
+                    Why? Recall that \(\mathcal{G}\)-measurable means that for every
+                    interval \(I\subset\mathbb{R}\), the set of outcomes where
+                    \(Y\in I\) must belong to \(\mathcal{G}\). In our
+                    case, \(\mathcal{G}=\{\varnothing,\{00,01\},\{10,11\},\M\}\). If \(Y\) took
+                    different values on \(00\) and \(01\) &mdash; say \(Y(00)=a\) and
+                    \(Y(01)=b\) with \(a\neq b\) &mdash; then the preimage of a small interval
+                    around \(a\) would contain \(00\) but not \(01\), i.e. \(\{00\}\). But
+                    \(\{00\}\notin\mathcal{G}\). So \(Y\) cannot distinguish \(00\) from \(01\);
+                    it must assign them the same value. The same argument applies to
+                    \(\{10,11\}\). In general, a \(\mathcal{G}\)-measurable function is constant
+                    on the <em>atoms</em> (finest indivisible sets) of \(\mathcal{G}\).</p>
+
+                    <p>On \(\{00,01\}\), the condition \(\int_{\{00,01\}} Y\,d\muMzero = \int_{\{00,01\}} X\,d\muMzero\)
+                    becomes:</p>
+
+                    \[Y\cdot\muMzero(\{00,01\}) = \muMzero(\{00\})\cdot X(00)+\muMzero(\{01\})\cdot X(01).\]
+
+                    <p>Since \(\muMzero(\{00,01\})=0.5>0\), we <em>can</em> divide here (it is a
+                    consequence of the definition, not the definition itself):</p>
+
+                    \[Y\big|_{\{00,01\}}=\frac{0.4\cdot 0+0.1\cdot 2}{0.5}=0.4.\]
+
+                    <p>Similarly, on \(\{10,11\}\):</p>
+
+                    \[Y\big|_{\{10,11\}}=\frac{0.1\cdot 1+0.4\cdot 3}{0.5}=2.6.\]
+
+                    <p>Therefore:</p>
+
+                    \[\mathbb{E}[X\mid\mathcal{G}](m)=\begin{cases}0.4,&m\in\{00,01\},\\ 2.6,&m\in\{10,11\}.\end{cases}\]
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">But what if the group has measure zero?</span>
+                        <p>
+                            A sharp-eyed reader will ask: <em>&ldquo;You divided by
+                            \(\muMzero(\{00,01\})\). What if that were zero? Aren't you back to
+                            dividing by nothing?&rdquo;</em>
+                        </p>
+                        <p>
+                            No &mdash; and this is the beauty of the definition. The integral
+                            equality is <em>meant to stay an equality</em>. If
+                            \(\muMzero(H)=0\) for some \(H\in\mathcal{G}\), then every subset of
+                            \(H\) also has measure zero, so the right-hand side
+                            \(\sum_{m\in H} X(m)\,\muMzero(\{m\})\) is zero too. The equation
+                            reads \(0=0\), which is trivially true for <em>any</em> value of \(Y\)
+                            on that group. The conditional expectation is simply not determined
+                            on null sets &mdash; and it doesn't need to be, because those outcomes
+                            never occur.
+                        </p>
+                        <p>
+                            The definition sidesteps division by zero entirely, like a spy
+                            ducking under laser beams. The integral condition never asks us to
+                            divide; it only asks us to <em>match totals</em>. When the total is
+                            zero, there is nothing to match.
+                        </p>
+                    </div>
+
+                    <p>Notice the progression: \(\mathbb{E}[X]=1.5\) is a single number (no
+                    information), while \(\mathbb{E}[X\mid\mathcal{G}]\) is a random variable that
+                    takes different values on different groups (partial information). If we
+                    conditioned on the <em>full</em> &sigma;-algebra \(\SigmaM\), we would recover
+                    \(X\) itself (complete information).</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            The ordinary expectation \(\mathbb{E}[X]\) averages over all outcomes
+                            &mdash; the best guess when you know nothing. The conditional expectation
+                            \(\mathbb{E}[X\mid\mathcal{G}]\) is defined by an integral condition: it
+                            is the \(\mathcal{G}\)-measurable function whose integrals over
+                            \(\mathcal{G}\)-sets match those of \(X\). In the discrete case this
+                            simplifies to the familiar average within each group, but the definition
+                            itself involves no normalization &mdash; and that is precisely why it
+                            continues to work in continuous spaces where division would fail.
+                        </p>
+                    </div>
+
+                    <h3>From conditional expectation to conditional probability</h3>
+
+                    <p>So far \(X\) could be any numerical quantity. But we are
+                    interested in <em>probabilities</em>, not arbitrary averages.
+                    The bridge is simple: probability is already an expectation
+                    in disguise.</p>
+
+                    <p>Given an event \(A\in\SigmaM\), its indicator function
+                    \(\mathbf{1}_A:\M\to\{0,1\}\) is a random variable: it
+                    equals \(1\) on \(A\) and \(0\) outside. An indicator is
+                    a <em>question turned into a random variable</em>: it asks
+                    &ldquo;did \(A\) happen?&rdquo; and outputs yes (1) or no
+                    (0). The expectation of this indicator is just the
+                    probability of \(A\):</p>
+
+                    \[\mathbb{E}[\mathbf{1}_A]=\mathbb{P}(A).\]
+
+                    <p>So if expectation of an indicator gives probability, then
+                    <em>conditional</em> expectation of an indicator should give
+                    <em>conditional</em> probability. We apply the machine to
+                    yes/no variables: condition on \(\mathcal{G}\). By the same
+                    integral definition, the conditional expectation
+                    \(\mathbb{E}[\mathbf{1}_A\mid\mathcal{G}]\) is the
+                    \(\mathcal{G}\)-measurable random variable satisfying:</p>
+
+                    \[\int_H \mathbb{E}[\mathbf{1}_A\mid\mathcal{G}]\,d\muMzero = \int_H \mathbf{1}_A\,d\muMzero = \muMzero(A\cap H) \qquad\text{for every } H\in\mathcal{G}.\]
+
+                    <p>We <em>define</em> the conditional probability of \(A\) given
+                    \(\mathcal{G}\) by:</p>
+
+                    \[\mathbb{P}(A\mid\mathcal{G}):=\mathbb{E}[\mathbf{1}_A\mid\mathcal{G}].\]
+
+                    <p>This is the <em>measure-theoretic definition of conditional probability</em>.
+                    It is defined by the integral condition
+                    \(\int_H \mathbb{P}(A\mid\mathcal{G})\,d\muMzero = \muMzero(A\cap H)\), not
+                    by dividing by \(\muMzero(H)\). No limiting procedure, no normalization.
+                    It is simply conditional expectation applied to an indicator function.</p>
+
+                    <p>Concretely, in our example, let \(A=\{00,11\}\) (the event that both switches
+                    agree). Then \(\mathbf{1}_A(00)=1\), \(\mathbf{1}_A(01)=0\),
+                    \(\mathbf{1}_A(10)=0\), \(\mathbf{1}_A(11)=1\). On the group
+                    \(\{00,01\}\), the integral condition gives:</p>
+
+                    \[\mathbb{P}(A\mid\mathcal{G})\big|_{\{00,01\}}\cdot\muMzero(\{00,01\})
+                    =\muMzero(A\cap\{00,01\})=\muMzero(\{00\})=0.4,\]
+
+                    <p>so (since \(\muMzero(\{00,01\})=0.5>0\)):</p>
+
+                    \[\mathbb{P}(A\mid\mathcal{G})\big|_{\{00,01\}}
+    =\frac{0.4}{0.5}=0.8.\]
+
+                    <p>On the group \(\{10,11\}\):</p>
+
+                    \[\mathbb{P}(A\mid\mathcal{G})\big|_{\{10,11\}}\cdot\muMzero(\{10,11\})
+    =\muMzero(A\cap\{10,11\})=\muMzero(\{11\})=0.4,\]
+
+                    <p>so:</p>
+
+                    \[\mathbb{P}(A\mid\mathcal{G})\big|_{\{10,11\}}
+    =\frac{0.4}{0.5}=0.8.\]
+
+                    <p>So \(\mathbb{P}(A\mid\mathcal{G})=0.8\) everywhere &mdash; knowing the first
+                    switch does not change the probability that both switches agree. The division by
+                    \(0.5\) here is a <em>consequence</em> of the integral definition in the discrete
+                    case, not the definition itself. In continuous spaces, where the group
+                    probability may be zero, the integral condition still works &mdash; no division is
+                    needed.</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Key idea</span>
+                        <p>
+                            Conditional probability is conditional expectation of an indicator
+                            function: \(\mathbb{P}(A\mid\mathcal{G})=\mathbb{E}[\mathbf{1}_A\mid\mathcal{G}]\),
+                            defined by the integral condition
+                            \(\int_H \mathbb{P}(A\mid\mathcal{G})\,d\mathbb{P}=\mathbb{P}(A\cap H)\).
+                            This is the bridge from the abstract notion of conditioning on a
+                            &sigma;-algebra to the concrete probabilities we need for Bayesian
+                            inference. It works in discrete and continuous spaces alike, because
+                            it is built on integrals, not division.
+                        </p>
+                    </div>
+
+                    <h3>From &sigma;-algebras to conditioning on a random variable</h3>
+
+                    <p>So far we have conditioned on an abstract &sigma;-algebra
+                    \(\mathcal{G}\). But in probability and Bayesian inference,
+                    information usually arrives through a <em>random
+                    variable</em>. In our switch problem, the observation is
+                    the reporter's output:</p>
+
+                    \[D:\M\to\D=\{0,1\}.\]
+
+                    <p>If we observe \(D\), what information have we actually
+                    learned? We have not learned the full model state \(m\). We
+                    have only learned the value \(D(m)\). Therefore, after
+                    observing \(D\), two model states \(m_1\) and \(m_2\) are
+                    indistinguishable whenever</p>
+
+                    \[D(m_1)=D(m_2).\]
+
+                    <p>So the information contained in \(D\) is exactly the
+                    information that can separate model states according to
+                    their data value, but no further.</p>
+
+                    <p>To turn this into a &sigma;-algebra, take any data event
+                    \(B\subseteq\D\). For example, \(B=\{1\}\) asks:
+                    <em>did the reporter output 1?</em> This is a question in
+                    data space. To make it an event in model space, we pull it
+                    back through \(D\):</p>
+
+                    \[D^{-1}(B)=\{m\in\M:D(m)\in B\}.\]
+
+                    <p>This is the event: <em>the model state is one whose
+                    generated data lies in \(B\)</em>. Preimages are the
+                    translation device from questions about data to events in
+                    the original probability space.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowPullback" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.5)"/>
+                                </marker>
+                            </defs>
+                            <!-- Data space -->
+                            <rect x="400" y="20" width="160" height="160" rx="8" fill="rgba(244,162,89,0.06)" stroke="rgba(244,162,89,0.2)" stroke-width="1.5"/>
+                            <text x="480" y="42" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="700">Data space D</text>
+                            <!-- B = {1} -->
+                            <rect x="440" y="60" width="80" height="40" rx="4" fill="rgba(244,162,89,0.2)" stroke="rgba(244,162,89,0.5)" stroke-width="1.5"/>
+                            <text x="480" y="85" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="12" font-weight="600">B = {1}</text>
+                            <text x="480" y="130" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">data question</text>
+                            <text x="480" y="145" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">&ldquo;did D output 1?&rdquo;</text>
+                            <!-- Model space -->
+                            <rect x="20" y="20" width="280" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1.5"/>
+                            <text x="160" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="700">Model space M</text>
+                            <!-- D^{-1}(B) = states producing 1 -->
+                            <rect x="50" y="60" width="220" height="40" rx="4" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.5)" stroke-width="1.5"/>
+                            <text x="160" y="85" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="10" font-weight="600">D&#8315;&#185;(B) = {m : D(m) = 1}</text>
+                            <text x="160" y="130" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">model event</text>
+                            <text x="160" y="145" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">&ldquo;states that produce data 1&rdquo;</text>
+                            <!-- Pullback arrow -->
+                            <path d="M 395 80 Q 350 60 300 80" fill="none" stroke="rgba(103,145,190,0.5)" stroke-width="2" marker-end="url(#arrowPullback)"/>
+                            <text x="350" y="55" text-anchor="middle" fill="rgba(103,145,190,0.7)" font-size="9" font-weight="600">pull back</text>
+                            <text x="350" y="68" text-anchor="middle" fill="rgba(103,145,190,0.5)" font-size="8">through D&#8315;&#185;</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3c-2 &mdash; Preimages translate data
+                            questions into model events.</strong> The data
+                            lives in \(\D\), but probability is assigned to
+                            events in \(\M\). Preimages \(D^{-1}(B)\) are how
+                            data-questions become model-events.
+                        </figcaption>
+                    </figure>
+
+                    <p>The &sigma;-algebra generated by \(D\) is the collection
+                    of all such pullback events:</p>
+
+                    \[\sigma(D)=\{D^{-1}(B):B\in\SigmaD\}.\]
+
+                    <p>In words: \(\sigma(D)\) is the set of all events whose
+                    truth can be decided by looking only at \(D\). This
+                    &sigma;-algebra partitions \(\M\) into the sets where
+                    \(D=0\) and where \(D=1\) &mdash; the
+                    &ldquo;indistinguishable classes&rdquo; given the report.</p>
+
+                    <p>So conditioning on the random variable \(D\) means
+                    conditioning on the information it reveals:</p>
+
+                    \[\mathbb{E}[X\mid D]:=\mathbb{E}[X\mid\sigma(D)].\]
+
+                    <p>The same applies to probabilities. For an event \(A\), we
+                    define</p>
+
+                    \[\mathbb{P}(A\mid D):=\mathbb{E}[\mathbf{1}_A\mid\sigma(D)].\]
+
+                    <p>This object is \(\sigma(D)\)-measurable, so it is only
+                    allowed to depend on the outcome through the observed value
+                    of \(D\). If two model states produce the same data, then
+                    \(\mathbb{P}(A\mid D)\) must assign them the same value.
+                    Otherwise it would be using information that \(D\) does not
+                    contain. In other words, \(\sigma(D)\)-measurable means:
+                    <em>cannot distinguish points with the same
+                    \(D\)-value</em>.</p>
+
+                    <p>Therefore there exists a function
+                    \(k_A:\D\to[0,1]\) such that</p>
+
+                    \[\mathbb{P}(A\mid D)=k_A(D).\]
+
+                    <p>This is the <em>Doob&ndash;Dynkin lemma</em>: any
+                    quantity measurable with respect to \(\sigma(D)\) can be
+                    written as a function of \(D\). In plain language: if a
+                    quantity only uses the information in \(D\), then it must be
+                    expressible as a function of the observed data value.</p>
+
+                    <p>Once the observed data value is \(\dobs\), the conditional
+                    probability is obtained by <em>evaluation</em>:</p>
+
+                    \[\mathbb{P}(A\mid D=\dobs):=k_A(\dobs).\]
+
+                    <p>The important point is that the conditioning was not
+                    performed by dividing by \(\mathbb{P}(D=\dobs)\). The
+                    conditioning was performed at the level of the &sigma;-algebra
+                    \(\sigma(D)\). The final evaluation at \(\dobs\) comes only
+                    after the conditional probability has already been
+                    constructed as a function of the data.</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Key point</span>
+                        <p>
+                            The conditioning is performed at the level of the &sigma;-algebra
+                            \(\sigma(D)\). Evaluating at \(\dobs\) is merely the final step. This
+                            is why the measure-theoretic approach handles continuous data spaces:
+                            the conditional distribution is defined by disintegration, not by
+                            dividing by the probability of a point.
+                        </p>
+                    </div>
+
+                    <h2>Conditioning on \(m_1=2\): BK ambiguity versus &sigma;-algebra conditioning</h2>
+
+                    <p>We now illustrate the power of the &sigma;-algebra approach with a concrete
+                    example on \(\mathbb{R}^2\). This example revisits the Borel&ndash;Kolmogorov
+                    paradox from <a href="part-3b.html">Part&nbsp;3b</a>, but now we have the tools
+                    to resolve it.</p>
+
+                    <h3>Setup</h3>
+
+                    <p>Let \((M_1,M_2)\) be a random vector on \(\mathbb{R}^2\) with a smooth joint
+                    density \(\rho(m_1,m_2)\) with respect to Lebesgue measure &mdash; the standard
+                    notion of &ldquo;volume&rdquo; in \(\mathbb{R}^2\), which assigns to each
+                    rectangle its area and extends to more general sets. Saying that
+                    \(\rho\) is a density with respect to Lebesgue measure simply means that
+                    probabilities are obtained by integrating \(\rho\) over sets:
+                    \(\mathbb{P}((M_1,M_2)\in A)=\int_A\rho\,dm_1\,dm_2\). Let
+                    \(A\subset\mathbb{R}^2\) be any measurable set. We wish to condition on
+                    \(m_1=2\). The set
+                    \(S:=\{(m_1,m_2)\in\mathbb{R}^2:m_1=2\}\) has probability zero, so naive
+                    conditioning on \(S\) is ill-defined.</p>
+
+                    <h3>The BK constructions revisited</h3>
+
+                    <p>In Part&nbsp;3b, we saw two ways to &ldquo;approach&rdquo; the set \(S\)
+                    via limits. Let us now write down what those limits actually produce.</p>
+
+                    <p><strong>Vertical strips.</strong> Define
+                    \(S^{(v)}_\varepsilon:=(2-\varepsilon,\,2+\varepsilon)\times\mathbb{R}\) and
+                    the approximate conditional probability
+                    \(\mathbb{P}^{(v)}_\varepsilon(A):=\mathbb{P}(A\cap S^{(v)}_\varepsilon)/\mathbb{P}(S^{(v)}_\varepsilon)\).
+                    By the Lebesgue differentiation theorem, the limit exists and equals:</p>
+
+                    \[\lim_{\varepsilon\to 0}\mathbb{P}^{(v)}_\varepsilon(A)
+                    =\frac{\int_{\mathbb{R}}\mathbf{1}_A(2,m_2)\,\rho(2,m_2)\,dm_2}{\int_{\mathbb{R}}\rho(2,m_2)\,dm_2}.\]
+
+                    <p>This defines a probability measure on the line \(m_1=2\) with density
+                    proportional to \(\rho(2,m_2)\). The limit exists &mdash; but it already
+                    depends on a geometric choice: the use of vertical strips.</p>
+
+                    <p><strong>Tilted tubes.</strong> Now define
+                    \(S^{(t)}_\varepsilon:=\{(m_1,m_2):|m_1-2|<\varepsilon|m_2|\}\) and the
+                    corresponding approximate conditional probability. A direct asymptotic
+                    expansion shows:</p>
+
+                    \[\lim_{\varepsilon\to 0}\mathbb{P}^{(t)}_\varepsilon(A)
+                    =\frac{\int_{\mathbb{R}}|m_2|\,\mathbf{1}_A(2,m_2)\,\rho(2,m_2)\,dm_2}{\int_{\mathbb{R}}|m_2|\,\rho(2,m_2)\,dm_2}.\]
+
+                    <p>This is a <em>different</em> probability measure on the same line
+                    \(m_1=2\), obtained by weighting the density with \(|m_2|\). Both limits
+                    condition on the same measure-zero set, yet they produce different conditional
+                    distributions. This is the Borel&ndash;Kolmogorov paradox: the answer depends
+                    on the geometry of the limiting procedure, which probability theory does not
+                    specify.</p>
+
+                    <h3>The resolution: conditioning via \(\sigma(M_1)\)</h3>
+
+                    <p>Now let us do it properly. Define the data random variable
+                    \(D:=M_1\). This induces the &sigma;-algebra:</p>
+
+                    \[\sigma(D)=\sigma(M_1)=\{B\times\mathbb{R}:B\in\mathcal{B}(\mathbb{R})\}.\]
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">What are Borel sets?</span>
+                        <p>
+                            \(\mathcal{B}(\mathbb{R})\) is the collection of <em>Borel sets</em>
+                            &mdash; the sets you can build from intervals by taking countable
+                            unions, countable intersections, and complements. Think of them as
+                            &ldquo;any set you might reasonably want to measure on the real
+                            line.&rdquo; Intervals, open sets, closed sets, single points, and
+                            finite unions of intervals are all Borel sets. In practice, every
+                            set we encounter in probability is Borel, so you can read
+                            \(B\in\mathcal{B}(\mathbb{R})\) as &ldquo;any reasonable subset of
+                            \(\mathbb{R}\).&rdquo;
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: R^2 with vertical strips -->
+                            <rect x="10" y="20" width="340" height="220" rx="8" fill="rgba(52,122,162,0.04)" stroke="rgba(52,122,162,0.15)" stroke-width="1.5"/>
+                            <text x="180" y="42" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="700">Model space &#8477;&#178;</text>
+                            <!-- Axes -->
+                            <line x1="40" y1="200" x2="330" y2="200" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="40" y1="200" x2="40" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <text x="335" y="203" fill="rgba(255,255,255,0.3)" font-size="9">m&#8321;</text>
+                            <text x="35" y="57" fill="rgba(255,255,255,0.3)" font-size="9">m&#8322;</text>
+                            <!-- Wide strip -->
+                            <rect x="80" y="60" width="80" height="140" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.35)" stroke-width="1"/>
+                            <!-- Medium strip -->
+                            <rect x="180" y="60" width="40" height="140" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.45)" stroke-width="1"/>
+                            <!-- Thin strip -->
+                            <rect x="250" y="60" width="15" height="140" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.6)" stroke-width="1"/>
+                            <!-- Dashed lines connecting strip boundaries to real line -->
+                            <line x1="80" y1="200" x2="80" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="160" y1="200" x2="160" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="180" y1="200" x2="180" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="220" y1="200" x2="220" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="250" y1="200" x2="250" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <line x1="265" y1="200" x2="265" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2,2"/>
+                            <!-- Labels for strips -->
+                            <text x="120" y="135" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8321;</text>
+                            <text x="200" y="135" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8322;</text>
+                            <text x="257" y="135" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8323;</text>
+
+                            <!-- Right: real line with corresponding intervals -->
+                            <rect x="380" y="20" width="210" height="220" rx="8" fill="rgba(200,120,80,0.04)" stroke="rgba(200,120,80,0.15)" stroke-width="1.5"/>
+                            <text x="485" y="42" text-anchor="middle" fill="rgba(200,120,80,0.9)" font-size="11" font-weight="700">&#8477; (m&#8321; axis)</text>
+                            <!-- Real line -->
+                            <line x1="400" y1="135" x2="570" y2="135" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                            <!-- Tick marks -->
+                            <line x1="400" y1="130" x2="400" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="570" y1="130" x2="570" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <!-- Wide interval B1 -->
+                            <rect x="410" y="125" width="50" height="20" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.35)" stroke-width="1"/>
+                            <text x="435" y="115" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8321;</text>
+                            <!-- Medium interval B2 -->
+                            <rect x="475" y="125" width="25" height="20" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.45)" stroke-width="1"/>
+                            <text x="487" y="115" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8322;</text>
+                            <!-- Thin interval B3 -->
+                            <rect x="515" y="125" width="10" height="20" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.6)" stroke-width="1"/>
+                            <text x="520" y="115" text-anchor="middle" fill="rgba(160,196,232,0.6)" font-size="9">B&#8323;</text>
+                            <!-- Arrow from B1 on real line up to strip -->
+                            <path d="M 435 125 Q 435 80 120 60" fill="none" stroke="rgba(52,122,162,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+                            <!-- Arrow from B2 -->
+                            <path d="M 487 125 Q 487 80 200 60" fill="none" stroke="rgba(52,122,162,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+                            <!-- Arrow from B3 -->
+                            <path d="M 520 125 Q 520 80 257 60" fill="none" stroke="rgba(52,122,162,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+                            <!-- Caption text inside SVG -->
+                            <text x="485" y="180" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">Each Borel set B &#8834; &#8477;</text>
+                            <text x="485" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">lifts to a vertical strip</text>
+                            <text x="485" y="210" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">B &#215; &#8477; in &#8477;&#178;</text>
+                            <text x="485" y="230" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">thinner interval &#8594; thinner strip</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3c-3 &mdash; The &sigma;-algebra \(\sigma(M_1)\).</strong>
+                            Left: the model space \(\mathbb{R}^2\) with vertical
+                            strips \(B\times\mathbb{R}\). Right: the corresponding Borel sets
+                            \(B\) on the real line (the \(m_1\)-axis). Each interval on
+                            \(\mathbb{R}\) lifts to a vertical strip in \(\mathbb{R}^2\);
+                            smaller intervals produce thinner strips. The &sigma;-algebra
+                            \(\sigma(M_1)\) consists of <em>all</em> such strips &mdash; it
+                            encodes &ldquo;we know \(m_1\) but not \(m_2\).&rdquo;
+                        </figcaption>
+                    </figure>
+
+                    <p>This &sigma;-algebra encodes exactly the information &ldquo;the value of
+                    \(m_1\) is observed.&rdquo; For any measurable set \(A\), the conditional
+                    probability \(\mathbb{P}(A\mid\sigma(M_1))\) is defined via conditional
+                    expectation:</p>
+
+                    \[\mathbb{P}(A\mid\sigma(M_1)):=\mathbb{E}[\mathbf{1}_A\mid\sigma(M_1)].\]
+
+                    <p>By the Doob&ndash;Dynkin lemma, there exists a measurable function
+                    \(k_A:\mathbb{R}\to[0,1]\) such that
+                    \(\mathbb{P}(A\mid\sigma(M_1))(m_1,m_2)=k_A(m_1)\) almost everywhere. The
+                    defining identity of conditional expectation:</p>
+
+                    \[\int_{B\times\mathbb{R}} k_A(m_1)\,d\mathbb{P}
+                    =\mathbb{P}(A\cap(B\times\mathbb{R}))\qquad\forall\,B\in\mathcal{B}(\mathbb{R}),\]
+
+                    <p>uniquely determines \(k_A\) (a.e.). A direct computation yields:</p>
+
+                    \[k_A(m_1)=\frac{\int_{\mathbb{R}}\mathbf{1}_A(m_1,m_2)\,\rho(m_1,m_2)\,dm_2}{\int_{\mathbb{R}}\rho(m_1,m_2)\,dm_2}\quad\text{for a.e. }m_1.\]
+
+                    <p>Evaluating at \(m_1=2\) gives:</p>
+
+                    \[\mathbb{P}(A\mid M_1=2)=k_A(2)=\frac{\int_{\mathbb{R}}\mathbf{1}_A(2,m_2)\,\rho(2,m_2)\,dm_2}{\int_{\mathbb{R}}\rho(2,m_2)\,dm_2}.\]
+
+                    <p>This coincides with the vertical-strip limit &mdash; but now it is
+                    <em>uniquely determined</em> by the &sigma;-algebra \(\sigma(M_1)\) and the
+                    joint distribution. No geometric choice was involved.</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">But didn't you choose the vertical strips?</span>
+                        <p>
+                            A natural objection: <em>&ldquo;You ended up with the vertical-strip
+                            answer. So you secretly chose that geometry &mdash; you just wrapped
+                            it in fancy notation.&rdquo;</em>
+                        </p>
+                        <p>
+                            Not quite. The vertical strips are not chosen because they look nice.
+                            They are chosen because they are the <em>sets of
+                            indistinguishability</em> of the observation \(D=M_1\). Two points
+                            \((m_1,m_2)\) and \((m_1',m_2')\) with \(m_1=m_1'\) produce the
+                            <em>same</em> observed value &mdash; the observation cannot tell them
+                            apart. The &sigma;-algebra \(\sigma(M_1)\) is built from exactly
+                            these indistinguishable classes: vertical strips
+                            \(B\times\mathbb{R}\).
+                        </p>
+                        <p>
+                            If the observation were different &mdash; say \(D=M_1\cdot M_2\)
+                            &mdash; the indistinguishable classes would be <em>hyperbolic
+                            curves</em>, not vertical strips. The &sigma;-algebra \(\sigma(D)\) would
+                            reflect that geometry automatically. No manual choice is made;
+                            the observation mapping <em>determines</em> the &sigma;-algebra,
+                            and the &sigma;-algebra determines the conditioning.
+                        </p>
+                        <p>
+                            In other words: the geometry is not chosen for aesthetic reasons
+                            &mdash; it is <em>imposed</em> by what the observation can and
+                            cannot distinguish. This is what makes &sigma;-algebra
+                            conditioning <em>canonical</em>.
+                        </p>
+                    </div>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">But what about the &sigma;-algebra on the data space?</span>
+                        <p>
+                            A deeper objection: <em>&ldquo;Fine &mdash; the &sigma;-algebra
+                            \(\sigma(D)\) on the model space is determined by \(D\). But
+                            \(\sigma(D)\) is built from preimages of sets in the data space
+                            \(\D\). How do you choose the &sigma;-algebra on \(\D\)? The final
+                            answer depends on that choice too! So your answer is still not
+                            canonical.&rdquo;</em>
+                        </p>
+                        <p>
+                            This is a fair point, and the answer is that the &sigma;-algebra on
+                            the data space <em>does</em> matter &mdash; but its choice is rooted
+                            in the <em>physics of the problem</em> and the <em>coarseness of
+                            observations</em>. Can the measurement distinguish two data values
+                            that differ by arbitrarily small difference? Then singletons are effectively
+                            distinguishable, and we use the finest &sigma;-algebra (the Borel
+                            one). Or perhaps the instrument bins its output: all values in
+                            \([0,0.1)\) are reported as &ldquo;0&rdquo;, all in \([0.1,0.2)\)
+                            as &ldquo;1&rdquo;, and so on. Then the data &sigma;-algebra is
+                            <em>coarser</em> &mdash; it contains the bins, not individual
+                            points &mdash; and the induced \(\sigma(D)\) on the model space
+                            reflects that coarseness.
+                        </p>
+                        <p>
+                            In each case, the choice is <em>defensible and canonical for the
+                            physical situation</em>. It is not arbitrary &mdash; it encodes
+                            what the instrument can actually resolve. In practice, we most
+                            often assume that observations can be distinguished down to
+                            singletons (individual points in the data space), so we equip
+                            \(\D\) with the Borel &sigma;-algebra &mdash; the finest one
+                            compatible with the topology of the data space. This is the
+                            standard convention, and it is the one we adopt throughout this
+                            essay.
+                        </p>
+                        <p>
+                            To be explicit: we are dealing with <em>two</em> &sigma;-algebras
+                            here. The first is the one we choose on the data space \(\D\),
+                            based on the physics of what the instrument can resolve. The second
+                            is \(\sigma(D)\) on the model space, which is <em>automatically
+                            determined</em> by the random variable \(D\) &mdash; we do not
+                            choose it, the observation mapping constructs it for us. And \(D\)
+                            itself is chosen by us based on physical arguments: it encodes how
+                            the model produces the data. So the chain is: physics determines
+                            the data &sigma;-algebra and the observation mapping; the
+                            observation mapping determines \(\sigma(D)\); \(\sigma(D)\)
+                            determines the conditioning. Everything is rooted in the reality of
+                            the problem, and canonical with respect to that reality.
+                        </p>
+                    </div>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Key point</span>
+                        <p>
+                            The two BK constructions differ because they introduce additional
+                            geometric structure (tube shapes) that is not specified by the
+                            observation model. Conditioning via the &sigma;-algebra
+                            \(\sigma(M_1)\) is <em>canonical</em>: it is completely determined by
+                            what the data mapping \(D=M_1\) can distinguish and the joint
+                            distribution. BK ambiguity arises when conditioning on measure-zero
+                            sets via ad hoc geometric limits; conditioning via
+                            &sigma;-algebras forbids such limits and yields a unique conditional
+                            distribution (almost everywhere).
+                        </p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3b.html"><span class="arrow">&larr;</span> Part 3b: Conditioning and Its Limits</a>
+                        <a class="part-prevnext-btn" href="part-3d.html">Part 3d: Disintegration <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

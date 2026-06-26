@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3d: Disintegration — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3d of Bayes, Measure-Theoretically: Disintegration — bundling eventwise conditional probabilities into conditional probability measures.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3d: Disintegration</h1>
+                <p>From conditional expectation to conditional probability measures.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html" aria-current="page"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The loose end from conditional expectation</h2>
+
+                    <p>In <a href="part-3c.html">Part&nbsp;3c</a>, conditional
+                    expectation gave us, for each model event
+                    \(A\in\SigmaM\), a function</p>
+
+                    \[\mathbb{P}(M\in A\mid D)=k_A(D),\]
+
+                    <p>where \(k_A:\D\to[0,1]\) is measurable. Evaluating at
+                    observed data \(d\) gives the conditional probability
+                    \(\mathbb{P}(M\in A\mid D=d)=k_A(d)\).</p>
+
+                    <p>This is a powerful result, but it answers only
+                    <em>one</em> question at a time. Pick an event \(A\),
+                    get a function of \(d\). Pick another event \(A'\), get
+                    another function. Bayesian inference wants more than
+                    that: after observing \(d\), we want a <em>full posterior
+                    distribution</em> on \(\M\) &mdash; a probability measure
+                    that can answer <em>every</em> model-event question
+                    simultaneously.</p>
+
+                    <h2>One event is not enough: bundling into a measure</h2>
+
+                    <p>Here is the key idea. For each fixed \(d\), we have a
+                    collection of numbers \(k_A(d)\), one for each
+                    \(A\in\SigmaM\). What if the assignment
+                    \(A\mapsto k_A(d)\) behaves like a probability measure on
+                    \(\M\)? Then for each data value \(d\), we would have a
+                    full probability measure &mdash; not just a collection of
+                    isolated conditional probabilities, but a coherent
+                    distribution that assigns probabilities to all model
+                    events at once.</p>
+
+                    <p>Let us name this object:</p>
+
+                    \[\mu_{\M\mid D=d}(A):=k_A(d).\]
+
+                    <p>The notation is deliberate: \(\mu_{\M\mid D=d}\) is a
+                    measure (in \(A\)) that depends on the data value \(d\).
+                    For each \(d\), it is a probability measure on
+                    \((\M,\SigmaM)\). For each \(A\), the map
+                    \(d\mapsto\mu_{\M\mid D=d}(A)\) is measurable (it is just
+                    \(k_A(d)\), which we already know is measurable).</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">The conceptual ladder</span>
+                        <p>
+                            Conditional expectation gives
+                            \(\mathbb{P}(A\mid D)=k_A(D)\) for one event
+                            \(A\). Doob&ndash;Dynkin lets us write
+                            \(d\mapsto k_A(d)\). Now flip the perspective:
+                            fix \(d\) and vary \(A\). If
+                            \(A\mapsto k_A(d)\) is a measure, we have
+                            \(\mu_{\M\mid D=d}(A)\). That is disintegration:
+                            conditional expectation, bundled over all events.
+                        </p>
+                    </div>
+
+                    <p>When this bundling works &mdash; when
+                    \(A\mapsto k_A(d)\) is genuinely a probability measure for
+                    each \(d\) &mdash; we call the resulting object a
+                    <em>conditional distribution</em> or <em>posterior
+                    kernel</em>. The theorem guaranteeing that it works, under
+                    good measurable-space assumptions (e.g. standard Borel
+                    spaces), is the <em>disintegration theorem</em>. The
+                    kernel is defined \(\muD\)-almost everywhere and is unique
+                    up to \(\muD\)-null sets.</p>
+
+                    <h2>The consistency identity</h2>
+
+                    <p>Where does the joint law enter? Recall the defining
+                    property of conditional expectation from
+                    <a href="part-3c.html">Part&nbsp;3c</a>: for any data
+                    event \(B\in\SigmaD\),</p>
+
+                    \[\int_{D^{-1}(B)} \mathbb{P}(M\in A\mid D)\,d\mathbb{P}
+                    = \mathbb{P}(M\in A,\; D\in B).\]
+
+                    <p>By Doob&ndash;Dynkin,
+                    \(\mathbb{P}(M\in A\mid D)=k_A(D)=\mu_{\M\mid D=D(\omega)}(A)\).
+                    The left side is an integral over outcomes \(\omega\), but
+                    since the integrand depends on \(\omega\) only through
+                    \(D(\omega)\), we can push it down to data space. The
+                    pushforward of \(\mathbb{P}\) under \(D\) is the
+                    predictive data measure \(\muD\), so:</p>
+
+                    \[\mathbb{P}(M\in A,\; D\in B)
+                    = \int_B \mu_{\M\mid D=d}(A)\,\muD(dd).\]
+
+                    <p>The left side is the joint probability of
+                    \((A,B)\). Writing \(\Pi\) for the joint measure on
+                    \(\M\times\D\), this becomes:</p>
+
+                    \[\boxed{\;\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd)\;}\]
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">The aha</span>
+                        <p>
+                            The disintegration identity is not a new axiom
+                            lowered from the rafters. It is the defining
+                            property of conditional expectation, rewritten on
+                            data space via Doob&ndash;Dynkin. Disintegration
+                            is conditional expectation, bundled over all
+                            events and pushed onto the observed variable.
+                        </p>
+                    </div>
+
+                    <h2>The same trick in the other direction</h2>
+
+                    <p>We just bundled the model-side conditional probabilities
+                    into a posterior kernel. The same logic works in the
+                    opposite direction &mdash; from model to data.</p>
+
+                    <p>For each data event \(B\in\SigmaD\), conditional
+                    expectation gives a function of the model:</p>
+
+                    \[\mathbb{P}(D\in B\mid M)=\ell_B(M),\]
+
+                    <p>where \(\ell_B:\M\to[0,1]\) is measurable. By the same
+                    bundling move, fix \(m\) and vary \(B\): if
+                    \(B\mapsto \ell_B(m)\) is a probability measure on
+                    \(\D\), we name it</p>
+
+                    \[L(m,B):=\ell_B(m)=\mathbb{P}(D\in B\mid M=m).\]
+
+                    <p>This is the <em>likelihood kernel</em>. For each fixed
+                    \(m\), \(L(m,\cdot)\) is a probability measure on
+                    \((\D,\SigmaD)\) &mdash; it tells us how data is
+                    distributed when the model is \(m\).</p>
+
+                    <p>The same consistency argument gives the
+                    <em>forward</em> disintegration:</p>
+
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm),\]
+
+                    <p>where \(\muMzero\) is the prior &mdash; the marginal of
+                    \(\Pi\) over data space. This says: the joint probability
+                    of \((A,B)\) decomposes as the integral of the likelihood
+                    \(L(m,B)\), weighted by the prior, over all model states
+                    in \(A\).</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">The reverse ladder</span>
+                        <p>
+                            \(\mathbb{P}(B\mid M)=\ell_B(M)\) gives
+                            \(m\mapsto \ell_B(m)\) via Doob&ndash;Dynkin. Flip
+                            perspective: fix \(m\), vary \(B\). If
+                            \(B\mapsto \ell_B(m)\) is a measure, we have
+                            \(L(m,B)\). The same consistency identity then
+                            gives \(\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm)\).
+                        </p>
+                    </div>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Two directions, one mechanism</span>
+                        <p>
+                            If a joint law \(\Pi\) is already given, then
+                            \(L(m,\cdot)\) is the disintegration of \(\Pi\)
+                            with respect to the model marginal, and
+                            \(\mu_{\M\mid D=d}\) is the disintegration with
+                            respect to the data marginal. In Bayesian
+                            inversion, we often specify the prior and the
+                            likelihood kernel first, and thereby build the
+                            joint law. Either way, the same mechanism produces
+                            both kernels.
+                        </p>
+                    </div>
+
+                    <h2>The finite switch problem as a discovery lab</h2>
+
+                    <p>Let us see the bundling operation concretely. Recall
+                    the setup from <a href="part-1.html">Part&nbsp;1</a>:
+                    \(\M=\{00,01,10,11\}\) with prior \(\muMzero\), and
+                    \(\D=\{0,1\}\). The joint table is:</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>\(d=0\)</th>
+                                    <th>\(d=1\)</th>
+                                    <th>\(\muMzero(\{m\})\)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>00</strong></td><td>0.08</td><td>0.32</td><td>0.40</td></tr>
+                                <tr><td><strong>01</strong></td><td>0.08</td><td>0.02</td><td>0.10</td></tr>
+                                <tr><td><strong>10</strong></td><td>0.08</td><td>0.02</td><td>0.10</td></tr>
+                                <tr><td><strong>11</strong></td><td>0.08</td><td>0.32</td><td>0.40</td></tr>
+                                <tr><td><strong>\(\muD(\{d\})\)</strong></td><td>0.32</td><td>0.68</td><td>1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p>Each cell is \(\Pi(\{m\}\times\{d\})\). The last column
+                    gives row sums (the prior); the last row gives column sums
+                    (the predictive data measure).</p>
+
+                    <h3>Columns &rarr; posterior kernel</h3>
+
+                    <p>Fix a data value, say \(d=1\). The column
+                    \(\{0.32, 0.02, 0.02, 0.32\}\) sums to
+                    \(\muD(\{1\})=0.68\). Normalizing gives</p>
+
+                    \[\mu_{\M\mid D=1}(\{m\})=\frac{\Pi(\{m\}\times\{1\})}{\muD(\{1\})}.\]
+
+                    <p>This is the posterior distribution over models given
+                    \(d=1\): \(\{0.47, 0.03, 0.03, 0.47\}\). Repeating for
+                    \(d=0\) gives the posterior for the other observation. The
+                    column-normalization operation <em>is</em> the bundling:
+                    for each \(d\), it produces a full probability measure on
+                    \(\M\).</p>
+
+                    <h3>Rows &rarr; likelihood kernel</h3>
+
+                    <p>Now fix a model value, say \(m=00\). The row
+                    \(\{0.08, 0.32\}\) sums to \(\muMzero(\{00\})=0.40\).
+                    Normalizing gives</p>
+
+                    \[L(00,\{d\})=\frac{\Pi(\{00\}\times\{d\})}{\muMzero(\{00\})}.\]
+
+                    <p>This is the likelihood distribution over data given
+                    \(m=00\): \(\{0.2, 0.8\}\). Repeating for each \(m\) gives
+                    the likelihood kernel. The row-normalization operation is
+                    the same bundling in the other direction.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Two ways of reading the same table</span>
+                        <p>
+                            <strong>Columns</strong> (normalize by column sum)
+                            \(\Rightarrow\) posterior kernel
+                            \(\mu_{\M\mid D=d}(A)\).<br>
+                            <strong>Rows</strong> (normalize by row sum)
+                            \(\Rightarrow\) likelihood kernel \(L(m,B)\).<br>
+                            Both are disintegrations of the same joint table.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Column headers -->
+                            <text x="180" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 0</text>
+                            <text x="420" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 1</text>
+                            <!-- Row labels -->
+                            <text x="80" y="60" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <text x="80" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <text x="80" y="160" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <text x="80" y="210" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- Joint measure cells -->
+                            <rect x="110" y="40" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="65" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="40" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">0.32</text>
+                            <rect x="110" y="90" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="115" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="90" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="115" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">0.02</text>
+                            <rect x="110" y="140" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="165" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="140" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="165" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">0.02</text>
+                            <rect x="110" y="190" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="215" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="190" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="215" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">0.32</text>
+                            <!-- Column highlight (d=1) -->
+                            <rect x="350" y="40" width="140" height="190" fill="none" stroke="rgba(244,162,89,0.6)" stroke-width="2" stroke-dasharray="5,3"/>
+                            <text x="420" y="250" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">column &#8594; posterior</text>
+                            <!-- Row highlight (m=00) -->
+                            <rect x="110" y="40" width="380" height="40" fill="none" stroke="rgba(120,180,120,0.6)" stroke-width="2" stroke-dasharray="5,3"/>
+                            <text x="300" y="35" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">row &#8594; likelihood</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3d-1 &mdash; Two ways of reading the same
+                            joint table.</strong> Normalizing columns (orange
+                            dashed) gives the posterior kernel
+                            \(\mu_{\M\mid D=d}\). Normalizing rows (green dashed)
+                            gives the likelihood kernel \(L(m,\cdot)\). Both are
+                            disintegrations of the same joint measure \(\Pi\).
+                        </figcaption>
+                    </figure>
+
+                    <h2>Two decompositions of the same joint law</h2>
+
+                    <p>We now have two ways to decompose the same joint measure
+                    \(\Pi\) on \(\M\times\D\):</p>
+
+                    \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd) \qquad\text{(posterior: model given data)},\]
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(likelihood: data given model)}.\]
+
+                    <p>The first disintegrates with respect to the predictive
+                    data measure \(\muD\) and produces the posterior kernel.
+                    The second disintegrates with respect to the prior
+                    \(\muMzero\) and produces the likelihood kernel. Both are
+                    decompositions of the <em>same</em> joint measure &mdash;
+                    they are two sides of the same coin.</p>
+
+                    <p>In the finite table, this is simply the observation that
+                    you can read the table by columns or by rows. In general
+                    spaces, the disintegration theorem guarantees that both
+                    decompositions exist and are unique (almost everywhere)
+                    under standard conditions.</p>
+
+                    <p>We do not yet set these two expressions equal. That
+                    will be the subject of
+                    <a href="part-3e.html">Part&nbsp;3e</a>, where comparing
+                    them will give us Bayes' formula. For now, the point is
+                    that the joint measure admits two disintegrations &mdash;
+                    one in each direction &mdash; and both arise from the same
+                    conditional-expectation mechanism we developed in
+                    <a href="part-3c.html">Part&nbsp;3c</a>.</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">A warning about evaluation</span>
+                        <p>
+                            Conditional expectation does not magically assign
+                            a unique value at every zero-probability data
+                            point. It gives a version defined <em>almost
+                            everywhere</em> with respect to \(\muD\). To
+                            evaluate at a specific observed \(\dobs\), one
+                            often needs additional structure &mdash; such as a
+                            likelihood density, continuity, a chosen regular
+                            conditional distribution, or a geometric formula
+                            such as coarea in noiseless inverse problems.
+                        </p>
+                        <p>
+                            This is the anti-Borel&ndash;Kolmogorov charm: it
+                            keeps the exposition honest. The posterior kernel
+                            is defined \(\muD\)-a.e., and pointwise evaluation
+                            at \(\dobs\) requires regularity that must be
+                            checked, not assumed.
+                        </p>
+                    </div>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Summary</span>
+                        <p>
+                            Conditional expectation gives conditional
+                            probabilities one event at a time. Disintegration
+                            bundles them into full probability measures. The
+                            joint law \(\Pi\) admits two disintegrations:
+                            the posterior kernel \(\mu_{\M\mid D=d}\)
+                            (disintegration with respect to \(\muD\)) and the
+                            likelihood kernel \(L\) (disintegration with
+                            respect to \(\muMzero\)). Comparing them will give
+                            us Bayes' formula.
+                        </p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3c.html"><span class="arrow">&larr;</span> Part 3c: Conditional Expectation</a>
+                        <a class="part-prevnext-btn" href="part-3e.html">Part 3e: Bayesian Inversion <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

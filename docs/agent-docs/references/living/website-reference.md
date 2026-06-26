@@ -31,8 +31,18 @@ pages/
         overview/                  # Research overview + theory topics
             index.html               # (was research_overview.html)
             inversions-inferences.html
-            math-details.html
-            pli-methods.html
+            bayes/                       # Bayes, Measure-Theoretically (landing + multi-page parts)
+                bayes-measure-theoretically.html
+                part-1.html
+                part-2.html
+                part-3.html
+                part-3a.html
+                part-3b.html
+                part-3c.html
+                part-3d.html
+                part-3e.html
+                part-3f.html
+                part-4.html
             think-first/              # Think First, Discretize Later (landing + multi-page acts)
                 think-first-discretize-later.html
                 act-1.html
@@ -90,8 +100,8 @@ Every page loads **two CSS files**:
    - `pages/contacts.html` → `css/contacts.css`
    - `pages/research/overview/index.html` → `css/research_overview.css` (three levels up: `../../../css/`)
    - `pages/research/overview/inversions-inferences.html` → *(no dedicated stylesheet)*
-   - `pages/research/overview/math-details.html` → `css/math-details.css`
-   - `pages/research/overview/pli-methods.html` → `css/pli-methods.css`
+   - `pages/research/overview/bayes/bayes-measure-theoretically.html` → `css/bayes-measure-theoretically.css` (four levels up: `../../../../css/`)
+   - `pages/research/overview/bayes/part-*.html` → `css/bayes-measure-theoretically.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/think-first/think-first-discretize-later.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` + `css/refinement-panel.css`
    - `pages/research/overview/think-first/act-*.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/think-first/summary.html` → same as act pages
@@ -104,6 +114,7 @@ Every page loads **two CSS files**:
 Pages in `pages/` link CSS with `../../css/styles.css` (two levels up).
 Pages in `pages/research/overview/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/overview/think-first/` link CSS with `../../../../css/styles.css`.
+Pages in `pages/research/overview/bayes/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/publications/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/BSM24/` link CSS with `../../../../css/styles.css`.
@@ -162,8 +173,11 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/contacts.html` | Contact — email and social links |
 | `pages/research/overview/index.html` | Research overview — summary of research topics + code links |
 | `pages/research/overview/inversions-inferences.html` | Explainer: what are inversions and inferences |
-| `pages/research/overview/math-details.html` | Bayes Measure-theoretically — measure-theoretic Bayesian inference |
-| `pages/research/overview/pli-methods.html` | PLI methods research page |
+| `pages/research/overview/bayes/bayes-measure-theoretically.html` | Bayes, Measure-Theoretically — landing page with overview and multi-page nav |
+| `pages/research/overview/bayes/part-1.html` | Part 1: The Game — hidden switches, forward operator, unreliable reporter, prior |
+| `pages/research/overview/bayes/part-2.html` | Part 2: The High-School Solution — joint table, predictive probabilities, posterior rule |
+| `pages/research/overview/bayes/part-3.html` | Part 3: The Same Solution, Measure-Theoretically — measurable spaces, kernels, joint measure, posterior kernel |
+| `pages/research/overview/bayes/part-4.html` | Part 4: Summary & Notation Map — two stories side by side, dictionary |
 | `pages/research/overview/think-first/think-first-discretize-later.html` | Think First, Discretize Later — landing page with overview and multi-page nav |
 | `pages/research/overview/think-first/act-1.html` | Act I: A Familiar Problem — naive discretization and the innocent-looking posterior |
 | `pages/research/overview/think-first/act-2.html` | Act II: Something Is Wrong — sampling the posterior, invisible directions, divergent variance |
@@ -191,7 +205,7 @@ Vanilla JS (no framework) is used for page-specific interactivity. Scripts live 
 | `js/refinement-panel.js` | `overview/think-first/think-first-discretize-later.html` | Interactive Plotly panel reading `refinement_sweep.json` (N-slider, naive/Bessel toggles, summary subplot) |
 
 External JS loaded via CDN:
-- **MathJax 3** (`tex-chtml.js`) — used by `overview/math-details.html` and `overview/think-first/think-first-discretize-later.html` (and all act pages)
+- **MathJax 3** (`tex-chtml.js`) — used by `overview/bayes/bayes-measure-theoretically.html` (and all part pages) and `overview/think-first/think-first-discretize-later.html` (and all act pages)
 - **Plotly.js 2.35.2** — used by `overview/think-first/think-first-discretize-later.html`
 
 ---
@@ -209,6 +223,12 @@ linking to `act-1.html` through `act-8.html` and `summary.html`. Each multi-page
 act includes its own quick-nav bar and prev/next buttons.
 
 It is **not** in the global nav dropdown (by design — see resolved decisions in the plan).
+
+The Bayes, Measure-Theoretically page is discoverable via:
+1. **Research overview** (`overview/index.html`) → Featured Theory Topics card → `bayes/bayes-measure-theoretically.html`
+
+The landing page includes a multi-page navigation bar linking to `part-1.html`
+through `part-4.html`. Each part page includes its own nav bar and prev/next buttons.
 
 ---
 

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 2: The High-School Solution — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 2 of Bayes, Measure-Theoretically: Solving the toy problem with only multiplication, addition, and division.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 2: The High-School Solution</h1>
+                <p>Build the whole table first, then normalize each column.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html" aria-current="page"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The high-school solution: build the whole table first</h2>
+
+                    <p>We now solve the game using only elementary probability.</p>
+
+                    <p>There will be no measure theory in this section. No sigma-algebras, no
+                    kernels, no disintegration theorem, no abstract machinery quietly humming in
+                    the walls. We will use only the following three operations:</p>
+
+                    \[\text{multiply}, \qquad \text{add}, \qquad \text{divide}.\]
+
+                    <p>The purpose of this section is to show that the finite problem can be
+                    solved completely by building one table. Later, in
+                    <a href="part-3a.html">Part&nbsp;3</a>, we will reinterpret the same table
+                    using measure-theoretic language.</p>
+
+                    <h3>The rule of the section</h3>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">Warning</span>
+                        <p>
+                            Do not begin by assuming that the observed report is \(0\) or
+                            \(1\). Solve the whole problem before hearing the actual report.
+                        </p>
+                    </div>
+
+                    <p>Instead, we solve the whole problem before hearing the actual report.</p>
+
+                    <p>There are two possible reports:
+                    \[d=0, \qquad d=1.\]
+                    For each possible report, we want to know the updated probabilities of the
+                    four hidden switch configurations:
+                    \[00,\qquad 01,\qquad 10,\qquad 11.\]
+                    So the object we want is not just one posterior distribution. The object we
+                    want is the whole update rule
+                    \[d \longmapsto \mathbb{P}(m\mid d).\]</p>
+
+                    <p>Once this rule has been constructed, the actual observation \(\dobs\)
+                    merely tells us which case to select.</p>
+
+                    <p>Thus the order of operations is:</p>
+
+                    <ol>
+                        <li>compute the conditional report probabilities
+                            \(\mathbb{P}(d\mid m)\);</li>
+                        <li>combine them with the prior probabilities \(\mathbb{P}(m)\);</li>
+                        <li>build the full joint table \(\mathbb{P}(m,d)\);</li>
+                        <li>add down each column to compute \(\mathbb{P}(d)\);</li>
+                        <li>normalize each column to obtain \(\mathbb{P}(m\mid d)\);</li>
+                        <li>only then plug in the actual observation \(\dobs\).</li>
+                    </ol>
+
+                    <p>This is the finite-table version of Bayesian updating.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 720 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF2a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.4)"/>
+                                </marker>
+                            </defs>
+                            <rect x="5" y="25" width="100" height="50" rx="6" fill="rgba(160,120,190,0.1)" stroke="rgba(160,120,190,0.3)"/>
+                            <text x="55" y="48" text-anchor="middle" fill="rgba(160,120,190,0.85)" font-size="10" font-weight="600">Prior</text>
+                            <text x="55" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(m)</text>
+                            <line x1="110" y1="50" x2="135" y2="50" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2a)"/>
+                            <rect x="140" y="25" width="100" height="50" rx="6" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="190" y="48" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">Reporter</text>
+                            <text x="190" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(d|m)</text>
+                            <line x1="245" y1="50" x2="270" y2="50" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2a)"/>
+                            <rect x="275" y="25" width="100" height="50" rx="6" fill="rgba(103,145,190,0.12)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="325" y="48" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">Joint</text>
+                            <text x="325" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(m,d)</text>
+                            <line x1="380" y1="50" x2="405" y2="50" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2a)"/>
+                            <rect x="410" y="25" width="100" height="50" rx="6" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="460" y="48" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="10" font-weight="600">Predictive</text>
+                            <text x="460" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(d)</text>
+                            <line x1="515" y1="50" x2="540" y2="50" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2a)"/>
+                            <rect x="545" y="25" width="100" height="50" rx="6" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="595" y="48" text-anchor="middle" fill="rgba(120,180,120,0.85)" font-size="10" font-weight="600">Posterior</text>
+                            <text x="595" y="62" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(m|d)</text>
+                            <text x="660" y="55" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">then</text>
+                            <text x="695" y="48" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10" font-weight="600">plug in</text>
+                            <text x="695" y="62" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10" font-weight="600">d_obs</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2a &mdash; The order of operations.</strong> Prior and
+                            reporter rule combine into the joint table, whose column sums give
+                            the predictive distribution, and whose normalized columns give the
+                            posterior rule. Only at the end do we plug in \(\dobs\).
+                        </figcaption>
+                    </figure>
+
+                    <h3>Conditional report probabilities</h3>
+
+                    <p>Recall the rules of the game.</p>
+
+                    <p>The forward operator is
+                    \[G(00)=1, \qquad G(11)=1, \qquad G(01)=0, \qquad G(10)=0.\]
+                    The reporter tells the truth with probability
+                    \[\ptrust=0.8\]
+                    and lies with probability
+                    \[1-\ptrust=0.2.\]</p>
+
+                    <p>Therefore, if the true hidden state is \(m\), then the reporter says the
+                    correct bulb value \(G(m)\) with probability \(0.8\), and the opposite value
+                    with probability \(0.2\).</p>
+
+                    <p>Let us compute this explicitly for every hidden state.</p>
+
+                    <p>If \(m=00\), then \(G(00)=1\). So the truthful report is \(d=1\), and the
+                    false report is \(d=0\). Hence
+                    \[\mathbb{P}(d=1\mid m=00)=0.8,
+                    \qquad
+                    \mathbb{P}(d=0\mid m=00)=0.2.\]</p>
+
+                    <p>If \(m=01\), then \(G(01)=0\). So the truthful report is \(d=0\), and the
+                    false report is \(d=1\). Hence
+                    \[\mathbb{P}(d=0\mid m=01)=0.8,
+                    \qquad
+                    \mathbb{P}(d=1\mid m=01)=0.2.\]</p>
+
+                    <p>The same reasoning applies to \(m=10\), because \(G(10)=0\), and to
+                    \(m=11\), because \(G(11)=1\).</p>
+
+                    <p>We can summarize the reporter's behaviour in one table.</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>\(m\)</th>
+                                    <th>\(G(m)\)</th>
+                                    <th>\(\mathbb{P}(d=0\mid m)\)</th>
+                                    <th>\(\mathbb{P}(d=1\mid m)\)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>\(00\)</td><td>\(1\)</td><td>\(0.2\)</td><td>\(0.8\)</td></tr>
+                                <tr><td>\(01\)</td><td>\(0\)</td><td>\(0.8\)</td><td>\(0.2\)</td></tr>
+                                <tr><td>\(10\)</td><td>\(0\)</td><td>\(0.8\)</td><td>\(0.2\)</td></tr>
+                                <tr><td>\(11\)</td><td>\(1\)</td><td>\(0.2\)</td><td>\(0.8\)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption>Reporter probabilities for each hidden switch configuration.</figcaption>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Column headers -->
+                            <text x="180" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 0</text>
+                            <text x="420" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 1</text>
+                            <!-- Row labels -->
+                            <text x="80" y="60" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <text x="80" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <text x="80" y="160" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <text x="80" y="210" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- Heatmap cells: d=0 column (left), d=1 column (right) -->
+                            <!-- P(d=0|00)=0.2, P(d=1|00)=0.8 -->
+                            <rect x="110" y="40" width="140" height="40" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="65" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="13" font-weight="600">0.2</text>
+                            <rect x="350" y="40" width="140" height="40" fill="rgba(52,122,162,0.8)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="65" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">0.8</text>
+                            <!-- P(d=0|01)=0.8, P(d=1|01)=0.2 -->
+                            <rect x="110" y="90" width="140" height="40" fill="rgba(52,122,162,0.8)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="180" y="115" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">0.8</text>
+                            <rect x="350" y="90" width="140" height="40" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="420" y="115" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="13" font-weight="600">0.2</text>
+                            <!-- P(d=0|10)=0.8, P(d=1|10)=0.2 -->
+                            <rect x="110" y="140" width="140" height="40" fill="rgba(52,122,162,0.8)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="180" y="165" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">0.8</text>
+                            <rect x="350" y="140" width="140" height="40" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="420" y="165" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="13" font-weight="600">0.2</text>
+                            <!-- P(d=0|11)=0.2, P(d=1|11)=0.8 -->
+                            <rect x="110" y="190" width="140" height="40" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="215" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="13" font-weight="600">0.2</text>
+                            <rect x="350" y="190" width="140" height="40" fill="rgba(52,122,162,0.8)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="215" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">0.8</text>
+                            <!-- Title -->
+                            <text x="300" y="265" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Reporter probabilities P(d | m) as a heatmap</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2b &mdash; Reporter probabilities as a heatmap.</strong>
+                            Darker cells indicate higher probability. The reporter is reliable:
+                            for \(00\) and \(11\) (bulb on), \(d=1\) is more likely; for
+                            \(01\) and \(10\) (bulb off), \(d=0\) is more likely.
+                        </figcaption>
+                    </figure>
+
+                    <p>This table answers the question:</p>
+
+                    <div class="bayes-callout callout-checkpoint">
+                        <span class="bayes-callout-label">Checkpoint</span>
+                        <p>
+                            If the hidden state were \(m\), how likely would each possible
+                            report be? This table answers that question for every \(m\).
+                        </p>
+                    </div>
+
+                    <p>At this stage we have not heard the reporter yet. We are simply writing
+                    down the rules of the game.</p>
+
+                    <h3>The joint table</h3>
+
+                    <p>Now we combine the reporter probabilities with the prior probabilities.</p>
+
+                    <p>The prior distribution is
+                    \[\mathbb{P}(00)=0.4,
+                    \qquad
+                    \mathbb{P}(01)=0.1,
+                    \qquad
+                    \mathbb{P}(10)=0.1,
+                    \qquad
+                    \mathbb{P}(11)=0.4.\]</p>
+
+                    <p>For each hidden state \(m\) and each possible report \(d\), the joint
+                    probability is computed by the multiplication rule
+                    \[\mathbb{P}(m,d)
+                    =
+                    \mathbb{P}(m)\mathbb{P}(d\mid m).\]
+                    This is the probability that two things happen together:</p>
+
+                    <ul>
+                        <li>the hidden switch configuration is \(m\);</li>
+                        <li>the reporter announces \(d\).</li>
+                    </ul>
+
+                    <p>For example,
+                    \[\mathbb{P}(m=00,d=0)
+                    =
+                    \mathbb{P}(m=00)\mathbb{P}(d=0\mid m=00).\]
+                    Using the values above,
+                    \[\mathbb{P}(m=00,d=0)
+                    =
+                    0.4\cdot 0.2
+                    =
+                    0.08.\]</p>
+
+                    <p>Similarly,
+                    \[\mathbb{P}(m=00,d=1)
+                    =
+                    0.4\cdot 0.8
+                    =
+                    0.32.\]</p>
+
+                    <p>We do this for all four hidden states and both possible reports.</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>\(m\)</th>
+                                    <th>\(\mathbb{P}(m)\)</th>
+                                    <th>\(\mathbb{P}(m,d=0)\)</th>
+                                    <th>\(\mathbb{P}(m,d=1)\)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>\(00\)</td><td>\(0.4\)</td><td>\(0.08\)</td><td>\(0.32\)</td></tr>
+                                <tr><td>\(01\)</td><td>\(0.1\)</td><td>\(0.08\)</td><td>\(0.02\)</td></tr>
+                                <tr><td>\(10\)</td><td>\(0.1\)</td><td>\(0.08\)</td><td>\(0.02\)</td></tr>
+                                <tr><td>\(11\)</td><td>\(0.4\)</td><td>\(0.08\)</td><td>\(0.32\)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption>The full joint distribution of hidden state and reported value.</figcaption>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Column headers -->
+                            <text x="180" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 0</text>
+                            <text x="420" y="25" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">d = 1</text>
+                            <!-- Row labels -->
+                            <text x="80" y="60" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <text x="80" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <text x="80" y="160" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <text x="80" y="210" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- Joint heatmap: P(m,d=0) and P(m,d=1) -->
+                            <!-- 0.08 -> low, 0.32 -> high, 0.02 -> very low -->
+                            <!-- 00: 0.08, 0.32 -->
+                            <rect x="110" y="40" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="65" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="40" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="65" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">0.32</text>
+                            <!-- 01: 0.08, 0.02 -->
+                            <rect x="110" y="90" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="115" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="90" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="115" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">0.02</text>
+                            <!-- 10: 0.08, 0.02 -->
+                            <rect x="110" y="140" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="165" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="140" width="140" height="40" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="420" y="165" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12" font-weight="600">0.02</text>
+                            <!-- 11: 0.08, 0.32 -->
+                            <rect x="110" y="190" width="140" height="40" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="215" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="600">0.08</text>
+                            <rect x="350" y="190" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="420" y="215" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">0.32</text>
+                            <!-- Column sums -->
+                            <line x1="100" y1="240" x2="500" y2="240" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                            <text x="180" y="258" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">&Sigma; = 0.32</text>
+                            <text x="420" y="258" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">&Sigma; = 0.68</text>
+                            <!-- Title -->
+                            <text x="300" y="275" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Joint distribution P(m, d) as a heatmap with column sums</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2c &mdash; The joint table as a heatmap.</strong> Each
+                            cell is shaded by probability value. The \(d=0\) column is
+                            uniform (all \(0.08\), sum \(0.32\)); the \(d=1\) column is
+                            concentrated at \(00\) and \(11\) (sum \(0.68\)).
+                        </figcaption>
+                    </figure>
+
+                    <p>This table is the heart of the elementary solution.</p>
+
+                    <p>Each entry answers a question of the form:</p>
+
+                    <div class="bayes-callout callout-checkpoint">
+                        <span class="bayes-callout-label">Checkpoint</span>
+                        <p>
+                            What is the probability that the hidden state is \(m\) and the
+                            report is \(d\)? Each cell of the joint table answers this for one
+                            pair \((m, d)\).
+                        </p>
+                    </div>
+
+                    <p>For instance, the entry \(0.32\) in the row \(m=00\) and the column \(d=1\)
+                    means:
+                    \[\mathbb{P}(m=00,d=1)=0.32.\]</p>
+
+                    <p>Again, we have not yet used an actual observation. We have built a complete
+                    map of all possible joint situations before the reporter speaks.</p>
+
+                    <h3>The predictive probabilities of possible reports</h3>
+
+                    <p>The joint table contains the probability of every pair \((m,d)\). From it,
+                    we can compute the probability of each possible report.</p>
+
+                    <p>To find the probability of hearing \(d=0\), we add all joint probabilities
+                    in the \(d=0\) column:
+                    \[\begin{aligned}
+                        \mathbb{P}(d=0)
+                        &=
+                        \mathbb{P}(00,d=0)
+                        +
+                        \mathbb{P}(01,d=0)
+                        +
+                        \mathbb{P}(10,d=0)
+                        +
+                        \mathbb{P}(11,d=0)
+                        \\
+                        &=
+                        0.08+0.08+0.08+0.08
+                        \\
+                        &=
+                        0.32.
+                    \end{aligned}\]</p>
+
+                    <p>To find the probability of hearing \(d=1\), we add all joint probabilities
+                    in the \(d=1\) column:
+                    \[\begin{aligned}
+                        \mathbb{P}(d=1)
+                        &=
+                        \mathbb{P}(00,d=1)
+                        +
+                        \mathbb{P}(01,d=1)
+                        +
+                        \mathbb{P}(10,d=1)
+                        +
+                        \mathbb{P}(11,d=1)
+                        \\
+                        &=
+                        0.32+0.02+0.02+0.32
+                        \\
+                        &=
+                        0.68.
+                    \end{aligned}\]</p>
+
+                    <p>So before the reporter says anything, our model predicts
+                    \[\mathbb{P}(d=0)=0.32,
+                    \qquad
+                    \mathbb{P}(d=1)=0.68.\]</p>
+
+                    <p>These are the predictive probabilities of the possible reports. They answer
+                    the question:</p>
+
+                    <div class="bayes-callout callout-checkpoint">
+                        <span class="bayes-callout-label">Checkpoint</span>
+                        <p>
+                            Given our prior beliefs and the reporter's behaviour, what do we
+                            expect to hear? The predictive distribution \(\mathbb{P}(d)\)
+                            answers this.
+                        </p>
+                    </div>
+
+                    <p>The report \(d=1\) is more likely than \(d=0\) because the prior already
+                    favours \(00\) and \(11\), both of which produce the noise-free bulb value
+                    \(1\).</p>
+
+                    <h3>Normalize each column to get the posterior rule</h3>
+
+                    <p>We now turn the joint table into the update rule.</p>
+
+                    <p>The rule for conditioning is
+                    \[\mathbb{P}(m\mid d)
+                    =
+                    \frac{\mathbb{P}(m,d)}{\mathbb{P}(d)}.\]
+                    In words:</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            To condition on a report \(d\), take the column corresponding to
+                            \(d\) and divide every entry by the total mass of the column.
+                            This is normalization.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: d=0 column normalization -->
+                            <text x="150" y="20" text-anchor="middle" fill="rgba(103,145,190,0.8)" font-size="12" font-weight="700">d = 0 column</text>
+                            <!-- Before: all 0.08 -->
+                            <rect x="90" y="35" width="120" height="26" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="150" y="53" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">0.08</text>
+                            <rect x="90" y="66" width="120" height="26" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="150" y="84" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">0.08</text>
+                            <rect x="90" y="97" width="120" height="26" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="150" y="115" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">0.08</text>
+                            <rect x="90" y="128" width="120" height="26" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="150" y="146" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">0.08</text>
+                            <text x="150" y="170" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">&divide; 0.32</text>
+                            <!-- Arrow -->
+                            <text x="150" y="188" text-anchor="middle" fill="rgba(103,145,190,0.5)" font-size="16">&darr;</text>
+                            <!-- After: all 0.25 -->
+                            <rect x="90" y="198" width="120" height="26" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="150" y="216" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <rect x="90" y="229" width="120" height="26" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="150" y="247" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <rect x="90" y="260" width="120" height="26" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="150" y="278" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <rect x="90" y="291" width="120" height="26" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="150" y="309" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11" font-weight="600">0.25</text>
+
+                            <!-- Right: d=1 column normalization -->
+                            <text x="450" y="20" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="12" font-weight="700">d = 1 column</text>
+                            <!-- Before: 0.32, 0.02, 0.02, 0.32 -->
+                            <rect x="390" y="35" width="120" height="26" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="450" y="53" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">0.32</text>
+                            <rect x="390" y="66" width="120" height="26" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="450" y="84" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">0.02</text>
+                            <rect x="390" y="97" width="120" height="26" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.15)"/>
+                            <text x="450" y="115" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">0.02</text>
+                            <rect x="390" y="128" width="120" height="26" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
+                            <text x="450" y="146" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">0.32</text>
+                            <text x="450" y="170" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">&divide; 0.68</text>
+                            <!-- Arrow -->
+                            <text x="450" y="188" text-anchor="middle" fill="rgba(103,145,190,0.5)" font-size="16">&darr;</text>
+                            <!-- After: 8/17, 1/34, 1/34, 8/17 -->
+                            <rect x="390" y="198" width="120" height="26" fill="rgba(52,122,162,0.7)" stroke="rgba(52,122,162,0.8)"/>
+                            <text x="450" y="216" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">8/17</text>
+                            <rect x="390" y="229" width="120" height="26" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.2)"/>
+                            <text x="450" y="247" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">1/34</text>
+                            <rect x="390" y="260" width="120" height="26" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.2)"/>
+                            <text x="450" y="278" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11">1/34</text>
+                            <rect x="390" y="291" width="120" height="26" fill="rgba(52,122,162,0.7)" stroke="rgba(52,122,162,0.8)"/>
+                            <text x="450" y="309" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">8/17</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2d &mdash; Column normalization.</strong> The \(d=0\)
+                            column (left) is uniform, so normalization produces a uniform
+                            posterior. The \(d=1\) column (right) is concentrated at
+                            \(00\) and \(11\), so normalization sharpens the posterior.
+                        </figcaption>
+                    </figure>
+
+                    <p>This does two things at once.</p>
+
+                    <p>First, it restricts attention to the part of the table where the report is
+                    \(d\). Second, it rescales the probabilities so that they add up to \(1\).</p>
+
+                    <p>That rescaling step is called <em>normalization</em>.</p>
+
+                    <p>We must do this separately for the two possible reports \(d=0\) and
+                    \(d=1\).</p>
+
+                    <h4>Posterior if the report is \(d=0\)</h4>
+
+                    <p>Suppose the report under consideration is \(d=0\). We are not saying that
+                    this is the actual observation yet. We are simply computing one branch of the
+                    update rule.</p>
+
+                    <p>From the joint table,
+                    \[\mathbb{P}(00,d=0)=0.08,
+                    \quad
+                    \mathbb{P}(01,d=0)=0.08,
+                    \quad
+                    \mathbb{P}(10,d=0)=0.08,
+                    \quad
+                    \mathbb{P}(11,d=0)=0.08.\]
+                    The total probability of this report is
+                    \[\mathbb{P}(d=0)=0.32.\]</p>
+
+                    <p>Therefore,
+                    \[\mathbb{P}(00\mid d=0)
+                    =
+                    \frac{0.08}{0.32}
+                    =
+                    0.25.\]
+                    The same calculation holds for the other three hidden states:
+                    \[\mathbb{P}(01\mid d=0)
+                    =
+                    \frac{0.08}{0.32}
+                    =
+                    0.25,\]
+                    \[\mathbb{P}(10\mid d=0)
+                    =
+                    \frac{0.08}{0.32}
+                    =
+                    0.25,\]
+                    and
+                    \[\mathbb{P}(11\mid d=0)
+                    =
+                    \frac{0.08}{0.32}
+                    =
+                    0.25.\]</p>
+
+                    <p>Thus, using the ordering
+                    \[(00,01,10,11),\]
+                    we have
+                    \[\mathbb{P}(m\mid d=0)
+                    =
+                    (0.25,0.25,0.25,0.25).\]</p>
+
+                    <p>This result is slightly surprising.</p>
+
+                    <p>Before hearing any report, the prior strongly favoured \(00\) and \(11\).
+                    But if we hear \(d=0\), then the report favours \(01\) and \(10\), because
+                    those are the configurations whose noise-free bulb value is \(0\).</p>
+
+                    <p>In this particular numerical example, these two effects exactly cancel.
+                    The prior prefers \(00\) and \(11\), but the report \(d=0\) pushes back toward
+                    \(01\) and \(10\). The result is a uniform posterior distribution.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Axis -->
+                            <line x1="60" y1="170" x2="560" y2="170" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="170" x2="60" y2="30" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <!-- Uniform bars: all 0.25, height = 0.25 * 500 = 125, y = 170-125 = 45 -->
+                            <rect x="90" y="45" width="90" height="125" rx="3" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="135" y="38" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <text x="135" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <rect x="200" y="45" width="90" height="125" rx="3" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="245" y="38" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <text x="245" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <rect x="310" y="45" width="90" height="125" rx="3" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="355" y="38" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <text x="355" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <rect x="420" y="45" width="90" height="125" rx="3" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="465" y="38" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">0.25</text>
+                            <text x="465" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- Title -->
+                            <text x="300" y="15" text-anchor="middle" fill="rgba(103,145,190,0.8)" font-size="12" font-weight="700">Posterior P(m | d = 0) &mdash; uniform</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2e &mdash; Posterior after \(d=0\).</strong> The prior
+                            preference for \(00\) and \(11\) is exactly cancelled by the
+                            report \(d=0\) favouring \(01\) and \(10\). The result is a
+                            uniform posterior: every configuration is equally likely.
+                        </figcaption>
+                    </figure>
+
+                    <h4>Posterior if the report is \(d=1\)</h4>
+
+                    <p>Now suppose the report under consideration is \(d=1\). Again, this is not
+                    yet the actual observation. It is the second branch of the update rule.</p>
+
+                    <p>From the joint table,
+                    \[\mathbb{P}(00,d=1)=0.32,
+                    \quad
+                    \mathbb{P}(01,d=1)=0.02,
+                    \quad
+                    \mathbb{P}(10,d=1)=0.02,
+                    \quad
+                    \mathbb{P}(11,d=1)=0.32.\]
+                    The total probability of this report is
+                    \[\mathbb{P}(d=1)=0.68.\]</p>
+
+                    <p>Therefore,
+                    \[\mathbb{P}(00\mid d=1)
+                    =
+                    \frac{0.32}{0.68}
+                    =
+                    \frac{32}{68}
+                    =
+                    \frac{8}{17}.\]
+                    Similarly,
+                    \[\mathbb{P}(01\mid d=1)
+                    =
+                    \frac{0.02}{0.68}
+                    =
+                    \frac{2}{68}
+                    =
+                    \frac{1}{34},\]
+                    \[\mathbb{P}(10\mid d=1)
+                    =
+                    \frac{0.02}{0.68}
+                    =
+                    \frac{2}{68}
+                    =
+                    \frac{1}{34},\]
+                    and
+                    \[\mathbb{P}(11\mid d=1)
+                    =
+                    \frac{0.32}{0.68}
+                    =
+                    \frac{32}{68}
+                    =
+                    \frac{8}{17}.\]</p>
+
+                    <p>Thus, again using the ordering
+                    \[(00,01,10,11),\]
+                    we obtain
+                    \[\mathbb{P}(m\mid d=1)
+                    =
+                    \left(
+                        \frac{8}{17},
+                        \frac{1}{34},
+                        \frac{1}{34},
+                        \frac{8}{17}
+                    \right).\]</p>
+
+                    <p>Here the report reinforces the prior.</p>
+
+                    <p>The prior already favoured \(00\) and \(11\). The report \(d=1\) also
+                    favours \(00\) and \(11\), because those are precisely the configurations
+                    whose noise-free bulb value is \(1\). So after hearing \(d=1\), the posterior
+                    puts even more mass on \(00\) and \(11\).</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Axis -->
+                            <line x1="60" y1="170" x2="560" y2="170" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="170" x2="60" y2="30" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <!-- 8/17 ≈ 0.4706, height = 0.4706 * 500 ≈ 235, y = 170-235 = -65... too tall. Use scale 300 instead: 0.4706*300 ≈ 141, y=170-141=29 -->
+                            <!-- 1/34 ≈ 0.0294, height = 0.0294*300 ≈ 9, y=170-9=161 -->
+                            <rect x="90" y="29" width="90" height="141" rx="3" fill="rgba(52,122,162,0.6)" stroke="rgba(52,122,162,0.8)"/>
+                            <text x="135" y="22" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">8/17</text>
+                            <text x="135" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">00</text>
+                            <rect x="200" y="161" width="90" height="9" rx="3" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.2)"/>
+                            <text x="245" y="155" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="600">1/34</text>
+                            <text x="245" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">01</text>
+                            <rect x="310" y="161" width="90" height="9" rx="3" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.2)"/>
+                            <text x="355" y="155" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="600">1/34</text>
+                            <text x="355" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">10</text>
+                            <rect x="420" y="29" width="90" height="141" rx="3" fill="rgba(52,122,162,0.6)" stroke="rgba(52,122,162,0.8)"/>
+                            <text x="465" y="22" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="600">8/17</text>
+                            <text x="465" y="188" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">11</text>
+                            <!-- Title -->
+                            <text x="300" y="15" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="12" font-weight="700">Posterior P(m | d = 1) &mdash; concentrated</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2f &mdash; Posterior after \(d=1\).</strong> The report
+                            \(d=1\) reinforces the prior: almost all posterior mass
+                            (\(16/17 \approx 94\%\)) is on \(00\) and \(11\), the
+                            configurations with bulb on.
+                        </figcaption>
+                    </figure>
+
+                    <h3>The full elementary posterior rule</h3>
+
+                    <p>We can now summarize the whole update rule.</p>
+
+                    <p>With the ordering
+                    \[(00,01,10,11),\]
+                    the posterior distribution is
+                    \[\mathbb{P}(m\mid d=0)
+                    =
+                    \left(
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4}
+                    \right),\]
+                    and
+                    \[\mathbb{P}(m\mid d=1)
+                    =
+                    \left(
+                        \frac{8}{17},
+                        \frac{1}{34},
+                        \frac{1}{34},
+                        \frac{8}{17}
+                    \right).\]</p>
+
+                    <p>Equivalently, the update rule is
+                    \[d
+                    \longmapsto
+                    \mathbb{P}(m\mid d),\]
+                    where
+                    \[0
+                    \longmapsto
+                    \left(
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4}
+                    \right),\]
+                    and
+                    \[1
+                    \longmapsto
+                    \left(
+                        \frac{8}{17},
+                        \frac{1}{34},
+                        \frac{1}{34},
+                        \frac{8}{17}
+                    \right).\]</p>
+
+                    <p>This is the entire Bayesian update, computed before the actual report is
+                    heard.</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>\(m\)</th>
+                                    <th>\(\mathbb{P}(m\mid d=0)\)</th>
+                                    <th>\(\mathbb{P}(m\mid d=1)\)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>\(00\)</td><td>\(\frac{1}{4}\)</td><td>\(\frac{8}{17}\)</td></tr>
+                                <tr><td>\(01\)</td><td>\(\frac{1}{4}\)</td><td>\(\frac{1}{34}\)</td></tr>
+                                <tr><td>\(10\)</td><td>\(\frac{1}{4}\)</td><td>\(\frac{1}{34}\)</td></tr>
+                                <tr><td>\(11\)</td><td>\(\frac{1}{4}\)</td><td>\(\frac{8}{17}\)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption>The posterior distribution for each possible report.</figcaption>
+
+                    <p>This table is the answer to the finite inverse problem.</p>
+
+                    <div class="bayes-interactive">
+                        <div class="bayes-interactive-header">
+                            Click a button to see the corresponding posterior distribution over
+                            the four hidden switch configurations.
+                        </div>
+                        <svg id="posterior-toggle-svg" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <div class="bayes-interactive-footer">
+                            <button class="bayes-toggle-btn active" id="btn-d0" onclick="bayesTogglePosterior(0)">d = 0</button>
+                            <button class="bayes-toggle-btn" id="btn-d1" onclick="bayesTogglePosterior(1)">d = 1</button>
+                        </div>
+                    </div>
+                    <script>
+                    (function () {
+                        var data = {
+                            0: { probs: [0.25, 0.25, 0.25, 0.25], labels: ['1/4', '1/4', '1/4', '1/4'], title: 'P(m | d = 0) — uniform', color: 'rgba(52,122,162,0.4)' },
+                            1: { probs: [8/17, 1/34, 1/34, 8/17], labels: ['8/17', '1/34', '1/34', '8/17'], title: 'P(m | d = 1) — concentrated', color: 'rgba(52,122,162,0.6)' }
+                        };
+                        var labels = ['00', '01', '10', '11'];
+                        var maxBar = 150;
+                        var baseY = 190;
+                        window.bayesTogglePosterior = function (d) {
+                            var info = data[d];
+                            var svg = document.getElementById('posterior-toggle-svg');
+                            var maxP = 0.5;
+                            var html = '';
+                            html += '<line x1="60" y1="' + baseY + '" x2="560" y2="' + baseY + '" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>' +
+                                    '<line x1="60" y1="' + baseY + '" x2="60" y2="30" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>';
+                            html += '<text x="300" y="18" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="13" font-weight="700">' + info.title + '</text>';
+                            for (var i = 0; i < 4; i++) {
+                                var x = 90 + i * 110;
+                                var h = (info.probs[i] / maxP) * maxBar;
+                                var y = baseY - h;
+                                html += '<rect x="' + x + '" y="' + y + '" width="90" height="' + h + '" rx="3" fill="' + info.color + '" stroke="rgba(52,122,162,0.7)" stroke-width="1"/>';
+                                html += '<text x="' + (x + 45) + '" y="' + (y - 8) + '" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="600">' + info.labels[i] + '</text>';
+                                html += '<text x="' + (x + 45) + '" y="' + (baseY + 18) + '" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600">' + labels[i] + '</text>';
+                            }
+                            svg.innerHTML = html;
+                            document.getElementById('btn-d0').classList.toggle('active', d === 0);
+                            document.getElementById('btn-d1').classList.toggle('active', d === 1);
+                        };
+                        window.bayesTogglePosterior(0);
+                    })();
+                    </script>
+
+                    <h3>Now plug in the actual observation</h3>
+
+                    <p>Only now do we use the actually observed report.</p>
+
+                    <p>Suppose the reporter announces
+                    \[\dobs\in\{0,1\}.\]
+                    We do not recompute the joint table. We do not change the prior. We do not
+                    change the reporter model. We simply evaluate the update rule at the observed
+                    value.</p>
+
+                    <p>If
+                    \[\dobs=0,\]
+                    then
+                    \[\mathbb{P}(m\mid d=\dobs)
+                    =
+                    \mathbb{P}(m\mid d=0)
+                    =
+                    \left(
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4},
+                        \frac{1}{4}
+                    \right).\]</p>
+
+                    <p>If
+                    \[\dobs=1,\]
+                    then
+                    \[\mathbb{P}(m\mid d=\dobs)
+                    =
+                    \mathbb{P}(m\mid d=1)
+                    =
+                    \left(
+                        \frac{8}{17},
+                        \frac{1}{34},
+                        \frac{1}{34},
+                        \frac{8}{17}
+                    \right).\]</p>
+
+                    <p>In set notation, the posterior probability of an event \(A\subseteq\M\) is
+                    \[\mu^{\mathrm{post}}_{\M}(A)
+                    =
+                    \mathbb{P}(m\in A\mid d=\dobs).\]
+                    For example, if \(\dobs=1\), then
+                    \[\begin{aligned}
+                        \mu^{\mathrm{post}}_{\M}(\{00,11\})
+                        &=
+                        \mathbb{P}(m\in\{00,11\}\mid d=1)
+                        \\
+                        &=
+                        \mathbb{P}(00\mid d=1)
+                        +
+                        \mathbb{P}(11\mid d=1)
+                        \\
+                        &=
+                        \frac{8}{17}
+                        +
+                        \frac{8}{17}
+                        \\
+                        &=
+                        \frac{16}{17}.
+                    \end{aligned}\]</p>
+
+                    <p>So after hearing \(d=1\), almost all posterior mass is placed on the two
+                    switch configurations that would make the bulb truly on.</p>
+
+                    <h3>What the high-school method secretly constructed</h3>
+
+                    <p>Although the calculation used only elementary arithmetic, it constructed
+                    several important objects.</p>
+
+                    <p>First, we used the prior distribution on the model space:
+                    \[m \longmapsto \mathbb{P}(m).\]
+                    This described what we believed about the hidden switches before hearing the
+                    report.</p>
+
+                    <p>Second, we used the reporter rule:
+                    \[(m,d) \longmapsto \mathbb{P}(d\mid m).\]
+                    This described how each hidden switch configuration produces possible
+                    reports.</p>
+
+                    <p>Third, we built the joint distribution:
+                    \[(m,d) \longmapsto \mathbb{P}(m,d).\]
+                    This described the probability of every complete situation: both the hidden
+                    configuration and the report.</p>
+
+                    <p>Fourth, we computed the predictive distribution of the data:
+                    \[d \longmapsto \mathbb{P}(d).\]
+                    This described what reports we expected to hear before the reporter spoke.</p>
+
+                    <p>Finally, we constructed the posterior update rule:
+                    \[d \longmapsto \mathbb{P}(m\mid d).\]
+                    This is the rule that tells us how to update our belief about the hidden
+                    switch configuration after any possible report.</p>
+
+                    <p>So the high-school solution secretly followed the chain
+                    \[\text{prior}
+                    +
+                    \text{reporter rule}
+                    \longrightarrow
+                    \text{joint distribution}
+                    \longrightarrow
+                    \text{predictive distribution}
+                    \longrightarrow
+                    \text{posterior update rule}.\]</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 720 80" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF2g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.4)"/>
+                                </marker>
+                            </defs>
+                            <rect x="5" y="20" width="110" height="40" rx="6" fill="rgba(160,120,190,0.1)" stroke="rgba(160,120,190,0.3)"/>
+                            <text x="60" y="45" text-anchor="middle" fill="rgba(160,120,190,0.85)" font-size="10" font-weight="600">Prior P(m)</text>
+                            <text x="125" y="42" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="14">+</text>
+                            <rect x="140" y="20" width="110" height="40" rx="6" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="195" y="45" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">Reporter P(d|m)</text>
+                            <line x1="255" y1="40" x2="280" y2="40" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2g)"/>
+                            <rect x="285" y="20" width="110" height="40" rx="6" fill="rgba(103,145,190,0.12)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="340" y="45" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">Joint P(m,d)</text>
+                            <line x1="400" y1="40" x2="425" y2="40" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2g)"/>
+                            <rect x="430" y="20" width="110" height="40" rx="6" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="485" y="45" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="10" font-weight="600">Predictive P(d)</text>
+                            <line x1="545" y1="40" x2="570" y2="40" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF2g)"/>
+                            <rect x="575" y="20" width="110" height="40" rx="6" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="630" y="45" text-anchor="middle" fill="rgba(120,180,120,0.85)" font-size="10" font-weight="600">Posterior P(m|d)</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F2g &mdash; The chain constructed by the high-school
+                            method.</strong> Each arrow is one step of elementary arithmetic:
+                            multiply, add, or divide. But the structure is already Bayesian
+                            inference.
+                        </figcaption>
+                    </figure>
+
+                    <p>In this finite example, all of these objects are just tables of numbers.
+                    That is why the calculation feels so simple.</p>
+
+                    <p>But the structure is already the structure of Bayesian inference.</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Lesson</span>
+                        <p>
+                            The high-school method secretly followed the full Bayesian chain:
+                            prior + likelihood &rarr; joint &rarr; predictive &rarr; posterior.
+                            The arithmetic was elementary, but the structure was already
+                            measure-theoretic.
+                        </p>
+                    </div>
+
+                    <h3>Transition to the measure-theoretic solution</h3>
+
+                    <p>The table solution is correct.</p>
+
+                    <p>Nothing went wrong. There is no hidden error to expose, no small
+                    arithmetical monster waiting under the bed. If all Bayesian inverse problems
+                    had four hidden states and two possible reports, the story could end here.</p>
+
+                    <p>The weakness of the table method is not correctness. The weakness is
+                    scalability and language.</p>
+
+                    <p>In larger problems, the model space may contain thousands, millions, or
+                    infinitely many possible states. In continuous problems, the model space may
+                    be uncountable. Then individual point probabilities may no longer be the
+                    right primitive objects, and a finite table cannot carry the weight of the
+                    problem.</p>
+
+                    <p>So in <a href="part-3a.html">Part&nbsp;3</a> we repeat the same construction
+                    in a more durable language.</p>
+
+                    <p>The prior distribution becomes a probability measure on the model space.
+                    The reporter rule becomes a likelihood kernel from the model space to the
+                    data space. The joint table becomes a joint measure on \(\M\times\D\). The
+                    column sums become marginals. The normalized columns become a posterior
+                    kernel.</p>
+
+                    <p>The arithmetic will look different, but the idea is the same:</p>
+
+                    \[\text{build the joint description first,}
+                    \qquad
+                    \text{then extract the update rule.}\]
+
+                    <p>That is the bridge from the high-school solution to the
+                    measure-theoretic solution.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-1.html"><span class="arrow">&larr;</span> Part 1: The Game</a>
+                        <a class="part-prevnext-btn" href="part-3a.html">Part 3a: From Points to Events <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

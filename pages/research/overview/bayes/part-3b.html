@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3b: Conditioning and Its Limits — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3b of Bayes, Measure-Theoretically: Conditioning works in discrete settings and on positive-measure sets, but breaks down for zero-probability events. The Borel-Kolmogorov paradox and why sigma-algebra conditioning resolves it.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3b: Conditioning and Its Limits</h1>
+                <p>Conditioning works in the finite case, works on positive-measure sets, and breaks on points.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html" aria-current="page"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>Conditioning: the operation at the heart of Bayes</h2>
+
+                    <p>In <a href="part-3a.html">Part&nbsp;3a</a>, we saw why probability must be
+                    assigned to events rather than individual outcomes. Now we turn to
+                    <em>conditioning</em> &mdash; the operation that updates our beliefs in light of
+                    observed data.</p>
+
+                    <p>Conditioning is what Bayesian inference <em>is</em>. The posterior is a
+                    conditional distribution. So we need to understand conditioning deeply,
+                    including where it works, where it fails, and why.</p>
+
+                    <h3>Conditioning in the switch problem (discrete case)</h3>
+
+                    <p>In the switch problem, conditioning is immediate, natural, and unambiguous.
+                    For any two events \(A\in\SigmaM\) and \(B\in\SigmaD\) with
+                    \(\mathbb{P}(B)>0\), the conditional probability is defined by the elementary
+                    ratio:</p>
+
+                    \[\mathbb{P}(A\mid B) = \frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.\]
+
+                    <p>This formula simply says: <em>restrict the universe to \(B\), then
+                    renormalize to make total probability one.</em></p>
+
+                    <p>Concretely, from Part&nbsp;2 we know the joint probabilities. Using the
+                    event notation from Part&nbsp;3a, we write:</p>
+
+                    \[\mathbb{P}\bigl(\{00\}\cap\{0\}\bigr)=0.08, \qquad \mathbb{P}\bigl(\{0\}\bigr)=0.32.\]
+
+                    <p>So</p>
+
+                    \[\mathbb{P}\bigl(\{00\}\mid\{0\}\bigr)=\frac{0.08}{0.32}=\frac{1}{4}.\]
+
+                    <p>This is just column normalization. The denominator
+                    \(\mathbb{P}(\{0\})=0.32\) is positive, so the division is well-defined. The
+                    same works for the event \(\{1\}\):</p>
+
+                    \[\mathbb{P}\bigl(\{00\}\mid\{1\}\bigr)=\frac{0.32}{0.68}=\frac{8}{17}.\]
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            Conditioning via the ratio is completely routine in discrete problems
+                            because every event has positive probability. If all problems you
+                            ever considered were discrete, you could stop here: conditioning always
+                            works and there is no ambiguity.
+                        </p>
+                    </div>
+
+                    <h3>What if the data space were continuous?</h3>
+
+                    <p>Now imagine a variant of the switch problem where the reporter outputs a
+                    real-valued measurement \(d\in\mathbb{R}\) rather than a binary report. The
+                    predictive data measure \(\muD\) now has a density &mdash; a smooth curve over
+                    the real line.</p>
+
+                    <p>Conditioning on a <em>region</em> \(B\) with \(\muD(B)>0\) still works
+                    perfectly. For example, if we observe that \(d\in[0.3, 0.7]\), we can
+                    condition on this interval:</p>
+
+                    \[\mathbb{P}(m\in A\mid d\in[0.3,0.7])=\frac{\mathbb{P}(m\in A, d\in[0.3,0.7])}{\mathbb{P}(d\in[0.3,0.7])}.\]
+
+                    <p>The denominator is the probability mass in the interval, which is positive.
+                    &ldquo;Restrict and renormalize&rdquo; still applies. No problem.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <clipPath id="curveClipF3b1">
+                                    <path d="M 50 150 Q 120 40 200 80 Q 280 120 350 50 Q 420 90 500 140 Q 540 155 570 150 L 50 150 Z"/>
+                                </clipPath>
+                            </defs>
+                            <!-- Continuous density curve -->
+                            <path d="M 50 150 Q 120 40 200 80 Q 280 120 350 50 Q 420 90 500 140 Q 540 155 570 150" fill="none" stroke="rgba(244,162,89,0.5)" stroke-width="2"/>
+                            <!-- Shaded region [0.3, 0.7] — clipped to area under curve -->
+                            <rect x="180" y="0" width="160" height="150" fill="rgba(244,162,89,0.15)" clip-path="url(#curveClipF3b1)"/>
+                            <!-- Interval boundaries -->
+                            <line x1="180" y1="150" x2="180" y2="72" stroke="rgba(244,162,89,0.6)" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <line x1="340" y1="150" x2="340" y2="59" stroke="rgba(244,162,89,0.6)" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <!-- x-axis -->
+                            <line x1="30" y1="150" x2="570" y2="150" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <text x="180" y="168" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">0.3</text>
+                            <text x="340" y="168" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">0.7</text>
+                            <text x="300" y="175" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">d</text>
+                            <!-- Label -->
+                            <text x="260" y="120" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="600">B = [0.3, 0.7]</text>
+                            <text x="260" y="135" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&#956;_D(B) &gt; 0 &#10003;</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3b-1 &mdash; Conditioning on a positive-measure region.</strong>
+                            When the conditioning set \(B\) has positive probability mass,
+                            &ldquo;restrict and renormalize&rdquo; works perfectly, even in
+                            continuous spaces.
+                        </figcaption>
+                    </figure>
+
+                    <h3>The Achilles' heel: conditioning on a single observation</h3>
+
+                    <p>In practice, we do not observe that \(d\in[0.3,0.7]\). We observe a
+                    <em>specific</em> value \(d_{\mathrm{obs}}\). In continuous spaces, a single
+                    point has zero probability:</p>
+
+                    \[\muD(\{d_{\mathrm{obs}}\})=0.\]
+
+                    <p>If we try to apply the ratio formula, we get:</p>
+
+                    \[\mathbb{P}(m\in A\mid d=d_{\mathrm{obs}})=\frac{\mathbb{P}(m\in A, d=d_{\mathrm{obs}})}{\mathbb{P}(d=d_{\mathrm{obs}})}=\frac{0}{0}.\]
+
+                    <p>This is not a technical inconvenience. It is a genuine breakdown of the
+                    definition. The elementary conditioning rule no longer produces a number.</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">The problem</span>
+                        <p>
+                            Conditioning on events only works when the conditioning event has
+                            positive probability. As soon as we try to condition on a set that is
+                            &ldquo;too small&rdquo; &mdash; a single point in a continuous space
+                            &mdash; the idea of &ldquo;restrict and renormalize&rdquo; collapses.
+                            There is no mass to renormalize.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Continuous density curve -->
+                            <path d="M 50 150 Q 120 40 200 80 Q 280 120 350 50 Q 420 90 500 140 Q 540 155 570 150" fill="none" stroke="rgba(244,162,89,0.5)" stroke-width="2"/>
+                            <!-- Single point -->
+                            <line x1="280" y1="150" x2="280" y2="92" stroke="rgba(244,162,89,0.8)" stroke-width="2"/>
+                            <circle cx="280" cy="92" r="5" fill="rgba(244,162,89,0.9)"/>
+                            <text x="280" y="82" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="11" font-weight="600">d_obs</text>
+                            <!-- x-axis -->
+                            <line x1="30" y1="150" x2="570" y2="150" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <text x="300" y="175" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">d</text>
+                            <!-- Label -->
+                            <text x="510" y="55" text-anchor="middle" fill="rgba(200,120,80,0.8)" font-size="12" font-weight="600">&#956;_D({d_obs}) = 0</text>
+                            <text x="510" y="72" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="11">0/0 &mdash; cannot divide</text>
+                            <text x="510" y="88" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">the ratio formula breaks</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3b-2 &mdash; The breakdown.</strong> In a continuous data
+                            space, the observed value \(d_{\mathrm{obs}}\) has zero predictive
+                            probability. The ratio formula produces \(0/0\), and conditioning on
+                            events fails.
+                        </figcaption>
+                    </figure>
+
+                    <h3>The &ldquo;shrink the band&rdquo; instinct and the Borel&ndash;Kolmogorov paradox</h3>
+
+                    <p>A natural instinct arises: <em>Fine, I cannot condition directly on the
+                    point. Let me instead condition on a small interval around it, and then shrink
+                    the interval.</em></p>
+
+                    <p>Indeed, conditioning on \(d\in[d_{\mathrm{obs}}-\varepsilon,
+                    d_{\mathrm{obs}}+\varepsilon]\) works perfectly well for every
+                    \(\varepsilon>0\). So why not take the limit \(\varepsilon\to 0\)?</p>
+
+                    <p>This instinct is reasonable &mdash; but it hides a subtle trap.
+                    <em>Different ways of shrinking</em> toward the point can lead to
+                    <em>different</em> limiting answers.</p>
+
+                    <p>To see this concretely, consider a two-dimensional example. Suppose the
+                    hidden state is \((m_1,m_2)\in\mathbb{R}^2\) with a smooth joint density
+                    \(\rho(m_1,m_2)\), and we want to condition on \(m_1=2\). The set
+                    \(S=\{(m_1,m_2):m_1=2\}\) is a vertical line &mdash; a one-dimensional object
+                    in a two-dimensional space &mdash; and has zero probability.</p>
+
+                    <p><strong>First approach: vertical strips.</strong> Condition on
+                    \(m_1\in[2-\varepsilon, 2+\varepsilon]\) and let \(\varepsilon\to 0\). This
+                    produces a conditional density proportional to \(\rho(2, m_2)\) along the
+                    line.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Derivation</span>
+                        <p>
+                            The conditional density of \(m_2\) given the strip
+                            \(m_1\in[2-\varepsilon,\,2+\varepsilon]\) is:
+                        </p>
+                        <p>
+                            \[p_\varepsilon(m_2)=\frac{\int_{2-\varepsilon}^{2+\varepsilon}\rho(m_1,m_2)\,dm_1}{\displaystyle\int_{-\infty}^{\infty}\int_{2-\varepsilon}^{2+\varepsilon}\rho(m_1,m_2')\,dm_1\,dm_2'}.\]
+                        </p>
+                        <p>
+                            As \(\varepsilon\to 0\), by continuity of \(\rho\):
+                        </p>
+                        <p>
+                            \[\int_{2-\varepsilon}^{2+\varepsilon}\rho(m_1,m_2)\,dm_1\;\approx\;2\varepsilon\,\rho(2,m_2).\]
+                        </p>
+                        <p>
+                            The factor \(2\varepsilon\) cancels between numerator and denominator,
+                            leaving:
+                        </p>
+                        <p>
+                            \[p_\varepsilon(m_2)\;\longrightarrow\;\frac{\rho(2,m_2)}{\displaystyle\int_{-\infty}^{\infty}\rho(2,m_2')\,dm_2'}\;\propto\;\rho(2,m_2).\]
+                        </p>
+                    </div>
+
+                    <p><strong>Second approach: tilted tubes.</strong> Condition on
+                    \(|m_1-2|<\varepsilon|m_2|\) and let \(\varepsilon\to 0\). This also collapses
+                    onto the same line, but produces a conditional density proportional to
+                    \(|m_2|\,\rho(2, m_2)\).</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Derivation</span>
+                        <p>
+                            Now the conditioning set is
+                            \(|m_1-2|<\varepsilon|m_2|\), so the strip width depends on
+                            \(m_2\). The conditional density of \(m_2\) is:
+                        </p>
+                        <p>
+                            \[p_\varepsilon(m_2)=\frac{\int_{2-\varepsilon|m_2|}^{2+\varepsilon|m_2|}\rho(m_1,m_2)\,dm_1}{\displaystyle\int_{-\infty}^{\infty}\int_{2-\varepsilon|m_2'|}^{2+\varepsilon|m_2'|}\rho(m_1,m_2')\,dm_1\,dm_2'}.\]
+                        </p>
+                        <p>
+                            As \(\varepsilon\to 0\), by continuity of \(\rho\):
+                        </p>
+                        <p>
+                            \[\int_{2-\varepsilon|m_2|}^{2+\varepsilon|m_2|}\rho(m_1,m_2)\,dm_1\;\approx\;2\varepsilon\,|m_2|\,\rho(2,m_2).\]
+                        </p>
+                        <p>
+                            The factor \(2\varepsilon\) cancels, but the \(|m_2|\) factor
+                            <em>remains</em> &mdash; it depends on the integration variable and
+                            does not cancel:
+                        </p>
+                        <p>
+                            \[p_\varepsilon(m_2)\;\longrightarrow\;\frac{|m_2|\,\rho(2,m_2)}{\displaystyle\int_{-\infty}^{\infty}|m_2'|\,\rho(2,m_2')\,dm_2'}\;\propto\;|m_2|\,\rho(2,m_2).\]
+                        </p>
+                    </div>
+
+                    <p>These are <em>different</em> probability measures on the same line. Both
+                    limits condition on the same measure-zero set, yet they produce different
+                    answers. The result depends on <em>how</em> the limit is taken &mdash; on the
+                    geometry of the shrinking sets &mdash; and probability theory alone does not
+                    specify which geometry to use.</p>
+
+                    <p>This is the <strong>Borel&ndash;Kolmogorov (BK) paradox</strong>: the
+                    conditional distribution on a measure-zero set is not uniquely determined by
+                    the probability model. It depends on additional geometric structure that is
+                    not part of the model.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: vertical strips -->
+                            <rect x="10" y="20" width="270" height="180" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1.5"/>
+                            <text x="145" y="42" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="11" font-weight="700">Vertical strips</text>
+                            <!-- Axes -->
+                            <line x1="40" y1="170" x2="250" y2="170" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="40" y1="170" x2="40" y2="55" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <text x="255" y="173" fill="rgba(255,255,255,0.3)" font-size="9">m&#8321;</text>
+                            <text x="35" y="52" fill="rgba(255,255,255,0.3)" font-size="9">m&#8322;</text>
+                            <!-- Strips: wider (fainter) → narrower (denser) showing limit -->
+                            <rect x="105" y="55" width="80" height="115" fill="rgba(52,122,162,0.08)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                            <rect x="120" y="55" width="50" height="115" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.35)" stroke-width="1"/>
+                            <rect x="135" y="55" width="20" height="115" fill="rgba(52,122,162,0.25)" stroke="rgba(52,122,162,0.5)" stroke-width="1"/>
+                            <!-- Line m1=2 -->
+                            <line x1="145" y1="55" x2="145" y2="170" stroke="rgba(244,162,89,0.7)" stroke-width="2"/>
+                            <text x="145" y="50" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="9">m&#8321;=2</text>
+                            <!-- Result -->
+                            <text x="145" y="195" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&rho;(2, m&#8322;) dm&#8322;</text>
+                            <text x="145" y="210" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">limit &#8594; density &#8733; &#961;(2, m&#8322;)</text>
+
+                            <!-- Right: tilted tubes -->
+                            <rect x="310" y="20" width="280" height="180" rx="8" fill="rgba(200,120,80,0.06)" stroke="rgba(200,120,80,0.2)" stroke-width="1.5"/>
+                            <text x="450" y="42" text-anchor="middle" fill="rgba(200,120,80,0.9)" font-size="11" font-weight="700">Tilted tubes</text>
+                            <!-- Axes -->
+                            <line x1="340" y1="170" x2="560" y2="170" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="340" y1="170" x2="340" y2="55" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <text x="565" y="173" fill="rgba(255,255,255,0.3)" font-size="9">m&#8321;</text>
+                            <text x="335" y="52" fill="rgba(255,255,255,0.3)" font-size="9">m&#8322;</text>
+                            <!-- Tilted tubes as nested cones (wider=fainter, narrower=denser) -->
+                            <path d="M 395 55 L 445 170 L 495 55 Z" fill="rgba(200,120,80,0.06)" stroke="rgba(200,120,80,0.2)" stroke-width="1"/>
+                            <path d="M 415 55 L 445 170 L 475 55 Z" fill="rgba(200,120,80,0.12)" stroke="rgba(200,120,80,0.35)" stroke-width="1"/>
+                            <path d="M 432 55 L 445 170 L 458 55 Z" fill="rgba(200,120,80,0.22)" stroke="rgba(200,120,80,0.5)" stroke-width="1"/>
+                            <!-- Line m1=2 -->
+                            <line x1="445" y1="55" x2="445" y2="170" stroke="rgba(244,162,89,0.7)" stroke-width="2"/>
+                            <text x="445" y="50" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="9">m&#8321;=2</text>
+                            <!-- Result -->
+                            <text x="450" y="195" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="10">|m&#8322;| &#961;(2, m&#8322;) dm&#8322;</text>
+                            <text x="450" y="210" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">limit &#8594; density &#8733; |m&#8322;| &#961;(2, m&#8322;)</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3b-3 &mdash; The Borel&ndash;Kolmogorov paradox.</strong>
+                            Two different families of shrinking sets (vertical strips vs.\ tilted
+                            tubes) both collapse onto the line \(m_1=2\), but they produce
+                            <em>different</em> conditional distributions. The conditional on a
+                            measure-zero set depends on <em>how</em> you approach it.
+                        </figcaption>
+                    </figure>
+
+                    <h3>Why this matters for Bayesian inversion</h3>
+
+                    <p>In Bayesian inverse problems, we <em>always</em> condition on observed data.
+                    If the data space is continuous, this is <em>almost always</em> a measure-zero event.
+                    Does this mean that all of Bayesian inference is broken?</p>
+
+                    <p>No. The resolution is that a Bayesian inverse problem provides us with
+                    <em>more structure</em> than just &ldquo;a set of measure zero.&rdquo; It
+                    provides us with a <em>random variable</em> \(D\) &mdash; the data &mdash;
+                    and conditioning on \(D\) (via its &sigma;-algebra) gives a canonical answer
+                    that does not depend on any arbitrary geometric choice.</p>
+
+                    <p>The key insight is this:</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">The resolution</span>
+                        <p>
+                            Instead of conditioning on a <em>set</em> \(\{d=d_{\mathrm{obs}}\}\) of
+                            probability zero, we condition on the <em>&sigma;-algebra generated by
+                            the random variable \(D\)</em>. This &sigma;-algebra encodes the
+                            information revealed by observing \(D\), and conditioning on it
+                            produces a unique, canonical conditional distribution &mdash; no
+                            geometric choices required.
+                        </p>
+                    </div>
+
+                    <p>In the switch problem, this distinction is invisible because the data space
+                    is finite and every point has positive probability. But the machinery we build
+                    now &mdash; conditioning on &sigma;-algebras &mdash; is exactly what will
+                    make the continuous case work.</p>
+
+                    <p>In <a href="part-3c.html">Part&nbsp;3c</a> through
+                    <a href="part-3f.html">Part&nbsp;3f</a>, we will:</p>
+
+                    <ul>
+                        <li>See what conditioning on a &sigma;-algebra means, using a coarser
+                        &sigma;-algebra on the switch problem.</li>
+                        <li>Show how conditioning on the random variable \(D\) arises naturally
+                        from conditioning on \(\sigma(D)\).</li>
+                        <li>Resolve the Borel&ndash;Kolmogorov paradox: conditioning via
+                        &sigma;-algebras is canonical, while ad hoc geometric limits are not.</li>
+                        <li>Bundle eventwise conditional probabilities into conditional
+                        probability measures via disintegration.</li>
+                        <li>Derive Bayes' formula as the equality of two disintegrations of the
+                        same joint law &mdash; not as a postulate.</li>
+                        <li>Apply the integral Bayes formula back to the finite switch problem,
+                        bringing everything full circle.</li>
+                        <li>See that the posterior kernel is well-defined even when
+                        \(\muD(\{d_{\mathrm{obs}}\})=0\), because it was constructed by
+                        disintegration, not by dividing by point probabilities.</li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3a.html"><span class="arrow">&larr;</span> Part 3a: From Points to Events</a>
+                        <a class="part-prevnext-btn" href="part-3c.html">Part 3c: Conditional Expectation <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

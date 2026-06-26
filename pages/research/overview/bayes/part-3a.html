@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3a: From Points to Events — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 3a of Bayes, Measure-Theoretically: Why probability must be assigned to events, not outcomes, and why sigma-algebras are the natural language for questions about an experiment.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3a: From Points to Events</h1>
+                <p>Why probability lives on sets, not on points &mdash; and why that forces us to think about sigma-algebras.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html" aria-current="page"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>Why we need a new language</h2>
+
+                    <p>In <a href="part-2.html">Part&nbsp;2</a>, we solved the switch problem by
+                    assigning probabilities to individual hidden states. We wrote things like</p>
+
+                    \[\mathbb{P}(m=00)=0.4,\qquad \mathbb{P}(m=11)=0.4,\]
+                    \[\mathbb{P}(d=0\mid m=00)=0.2,\qquad \mathbb{P}(d=1\mid m=00)=0.8,\]
+
+                    <p>and everything worked. We built a joint table, normalized columns, and read
+                    off posterior probabilities. The arithmetic was simple and unambiguous.</p>
+
+                    <p>That approach works because the model space has only four points and the data
+                    space has only two. But it does not generalize. To see why, we need to ask what
+                    happens when the spaces are continuous.</p>
+
+                    <h3>The switch problem works with point probabilities</h3>
+
+                    <p>Let us be explicit about what we did in Part&nbsp;2. We treated each hidden
+                    state \(m\in\M\) as a basic object and attached a probability directly to it:</p>
+
+                    \[\mathbb{P}(m=00)=0.4, \quad \mathbb{P}(m=01)=0.1, \quad \mathbb{P}(m=10)=0.1, \quad \mathbb{P}(m=11)=0.4.\]
+
+                    <p>Similarly, each report value \(d\in\D\) received a conditional probability:</p>
+
+                    \[\mathbb{P}(d=0\mid m=00)=0.2, \qquad \mathbb{P}(d=1\mid m=00)=0.8,\]
+
+                    <p>and so on for the other three states. From these point probabilities we
+                    constructed the joint table \(\mathbb{P}(m,d)\), computed column sums
+                    \(\mathbb{P}(d)\), and normalized:</p>
+
+                    \[\mathbb{P}(m\mid d)=\frac{\mathbb{P}(m,d)}{\mathbb{P}(d)}.\]
+
+                    <p>Nothing could go wrong, because every point had positive probability. The
+                    denominator \(\mathbb{P}(d)\) was always \(0.32\) or \(0.68\), never zero.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            In a finite world, probability can be attached to individual outcomes.
+                            Conditioning is just division. Everything is a table.
+                        </p>
+                    </div>
+
+                    <h3>A first surprise: what if the hidden state is continuous?</h3>
+
+                    <p>Now imagine a variant of the problem. Instead of two binary switches, the
+                    hidden state is a pair of real-valued parameters:</p>
+
+                    \[m=(m_1,m_2)\in[0,1]^2.\]
+
+                    <p>The forward map and the noise model are the same in spirit &mdash; the
+                    reporter observes a noisy function of \(m\) &mdash; but the model space is now
+                    a continuum.</p>
+
+                    <p>We might try to ask the same question as before:</p>
+
+                    <div class="bayes-callout callout-checkpoint">
+                        <span class="bayes-callout-label">Question</span>
+                        <p>
+                            What is the probability that the hidden state equals a specific point
+                            \(m=(0.3, 0.7)\)?
+                        </p>
+                    </div>
+
+                    <p>The answer is:</p>
+
+                    \[\mathbb{P}(m=(0.3,0.7))=0.\]
+
+                    <p>And this is not special to \((0.3,0.7)\). <em>Every</em> individual point in
+                    \([0,1]^2\) has probability zero.</p>
+
+                    <p>At first glance, this seems deeply unsettling. After all, <em>some</em> value
+                    of \(m\) must be the true hidden state. How can every possible outcome have
+                    probability zero?</p>
+
+                    <p>The resolution is that in a continuous universe, there are uncountably many
+                    possible outcomes. If we tried to assign each one a strictly positive
+                    probability, the total would exceed one. The requirement that probabilities add
+                    up coherently forces every individual point to carry zero probability.</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: discrete case -->
+                            <rect x="10" y="20" width="270" height="180" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1.5"/>
+                            <text x="145" y="42" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="700">Discrete model space</text>
+                            <!-- Four points uniformly distributed: x = 55, 115, 175, 235 -->
+                            <circle cx="55" cy="85" r="14" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="55" y="89" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-weight="600">00</text>
+                            <text x="55" y="115" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">P = 0.4</text>
+                            <circle cx="115" cy="85" r="14" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="115" y="89" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="9" font-weight="600">01</text>
+                            <text x="115" y="115" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">P = 0.1</text>
+                            <circle cx="175" cy="85" r="14" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.4)"/>
+                            <text x="175" y="89" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="9" font-weight="600">10</text>
+                            <text x="175" y="115" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">P = 0.1</text>
+                            <circle cx="235" cy="85" r="14" fill="rgba(52,122,162,0.4)" stroke="rgba(52,122,162,0.6)"/>
+                            <text x="235" y="89" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9" font-weight="600">11</text>
+                            <text x="235" y="115" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">P = 0.4</text>
+                            <text x="145" y="150" text-anchor="middle" fill="rgba(120,180,120,0.8)" font-size="10">Each point has P &gt; 0</text>
+                            <text x="145" y="170" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">point probabilities work</text>
+                            <text x="145" y="188" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">conditioning = division</text>
+
+                            <!-- Right: continuous case -->
+                            <rect x="310" y="20" width="280" height="180" rx="8" fill="rgba(200,120,80,0.06)" stroke="rgba(200,120,80,0.2)" stroke-width="1.5"/>
+                            <text x="450" y="42" text-anchor="middle" fill="rgba(200,120,80,0.9)" font-size="12" font-weight="700">Continuous model space</text>
+                            <!-- Density blob -->
+                            <ellipse cx="430" cy="90" rx="80" ry="40" fill="rgba(200,120,80,0.12)" stroke="rgba(200,120,80,0.3)" stroke-width="1.5"/>
+                            <!-- Single point inside the blob -->
+                            <circle cx="410" cy="85" r="4" fill="rgba(244,162,89,0.9)"/>
+                            <text x="410" y="75" text-anchor="middle" fill="rgba(244,162,89,0.8)" font-size="9">m = (0.3, 0.7)</text>
+                            <!-- P = 0 label near the point -->
+                            <text x="445" y="88" text-anchor="start" fill="rgba(200,120,80,0.7)" font-size="10">P = 0</text>
+                            <!-- density label in upper right, clear of ellipse -->
+                            <text x="570" y="55" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10">density over [0,1]&sup2;</text>
+                            <!-- Bottom text, clear of ellipse (ellipse bottom ~130) -->
+                            <text x="450" y="155" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="10">Every point has P = 0</text>
+                            <text x="450" y="173" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">point probabilities fail</text>
+                            <text x="450" y="190" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">cannot condition by division</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3a-1 &mdash; The continuous shock.</strong> In the discrete
+                            switch problem, each hidden state carries positive probability. In a
+                            continuous model space, every individual point has probability zero.
+                            Probability can no longer be attached to outcomes; it must be attached
+                            to <em>sets</em> of outcomes.
+                        </figcaption>
+                    </figure>
+
+                    <p>This does not mean that &ldquo;nothing happens.&rdquo; It means that
+                    individual outcomes are no longer the right objects to which probability should
+                    be attached.</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Key shift</span>
+                        <p>
+                            Probability is not about individual outcomes. It is about
+                            <em>events</em> &mdash; sets of outcomes.
+                        </p>
+                    </div>
+
+                    <h3>Events as the new basic objects</h3>
+
+                    <p>An <em>event</em> is a set of outcomes, i.e. a subset \(A\subseteq\M\).
+                    Instead of asking</p>
+
+                    \[\text{&ldquo;What is } \mathbb{P}(m=00)\text{?&rdquo;}\]
+
+                    <p>we ask</p>
+
+                    \[\text{&ldquo;What is } \mathbb{P}(m\in A)\text{?&rdquo;}\]
+
+                    <p>In the switch problem, taking \(A=\{00\}\) gives</p>
+
+                    \[\mathbb{P}(m\in\{00\})=\mathbb{P}(m=00)=0.4.\]
+
+                    <p>At first this looks like a pointless relabeling: we took an outcome and put
+                    it &ldquo;in a box&rdquo; (a singleton set), and declared that this is
+                    progress.</p>
+
+                    <p>But the payoff appears immediately, because once we talk about events as sets,
+                    we can <em>combine</em> questions in systematic ways.</p>
+
+                    <h3>Why we need a &sigma;-algebra</h3>
+
+                    <p>Starting with singleton events in the switch problem
+                    \(\{00\},\{01\},\{10\},\{11\}\), we are naturally led to form new questions:</p>
+
+                    <p><strong>Negation.</strong> If we can ask &ldquo;is \(m\in\{00\}\)?&rdquo;,
+                    we should also be able to ask &ldquo;is \(m\notin\{00\}\)?&rdquo; In set
+                    language, this is the <em>complement</em>:</p>
+
+                    \[\{00\}^c = \{01,10,11\}.\]
+
+                    <p>If our probability assignment is to behave coherently, we need</p>
+
+                    \[\mathbb{P}(\{00\}^c) = 1 - \mathbb{P}(\{00\}) = 0.6.\]
+
+                    <p>So, starting from singleton events, the demand that we can answer
+                    &ldquo;not&rdquo; questions forces us to include complements as legitimate
+                    events.</p>
+
+                    <p><strong>Either/or.</strong> If we can ask about \(\{00\}\) and \(\{11\}\), we
+                    should also be able to ask &ldquo;is \(m\) either \(00\) or \(11\)?&rdquo; In
+                    set language, this is the <em>union</em>:</p>
+
+                    \[\{00\}\cup\{11\}=\{00,11\}.\]
+
+                    <p>For the switch problem:</p>
+
+                    \[\mathbb{P}(\{00,11\})=\mathbb{P}(\{00\})+\mathbb{P}(\{11\})=0.4+0.4=0.8.\]
+
+                    <p>And once \(\{00,11\}\) becomes a legitimate event, we should also be able to
+                    ask its negation, which introduces its complement:</p>
+
+                    \[\{00,11\}^c=\{01,10\}, \qquad \mathbb{P}(\{01,10\})=0.2.\]
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg">
+                            <!-- M space -->
+                            <ellipse cx="200" cy="120" rx="140" ry="85" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.25)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="200" y="60" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="700">M = {00, 01, 10, 11}</text>
+                            <!-- Four points -->
+                            <circle cx="160" cy="95" r="16" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="160" y="99" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">00</text>
+                            <circle cx="240" cy="95" r="16" fill="rgba(52,122,162,0.3)" stroke="rgba(52,122,162,0.5)"/>
+                            <text x="240" y="99" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">11</text>
+                            <circle cx="160" cy="150" r="16" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.35)"/>
+                            <text x="160" y="154" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">01</text>
+                            <circle cx="240" cy="150" r="16" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.35)"/>
+                            <text x="240" y="154" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600">10</text>
+
+                            <!-- Step 1: singleton {00} -->
+                            <path d="M 160 79 A 16 16 0 0 1 176 95 A 16 16 0 0 1 160 111 A 16 16 0 0 1 144 95 A 16 16 0 0 1 160 79 Z" fill="none" stroke="rgba(244,162,89,0.6)" stroke-width="2"/>
+                            <text x="420" y="70" text-anchor="start" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="600">Step 1: {00}</text>
+                            <text x="420" y="86" text-anchor="start" fill="rgba(244,162,89,0.6)" font-size="10">P = 0.4</text>
+
+                            <!-- Step 2: complement -->
+                            <path d="M 160 134 A 16 16 0 0 1 176 150 A 16 16 0 0 1 160 166 A 16 16 0 0 1 144 150 A 16 16 0 0 1 160 134 Z" fill="none" stroke="rgba(120,180,120,0.6)" stroke-width="2"/>
+                            <path d="M 240 134 A 16 16 0 0 1 256 150 A 16 16 0 0 1 240 166 A 16 16 0 0 1 224 150 A 16 16 0 0 1 240 134 Z" fill="none" stroke="rgba(120,180,120,0.6)" stroke-width="2"/>
+                            <text x="420" y="110" text-anchor="start" fill="rgba(120,180,120,0.8)" font-size="11" font-weight="600">Step 2: {00}&#8742; = {01, 10, 11}</text>
+                            <text x="420" y="126" text-anchor="start" fill="rgba(120,180,120,0.6)" font-size="10">P = 0.6 (negation)</text>
+
+                            <!-- Step 3: union {00, 11} -->
+                            <path d="M 160 79 A 16 16 0 0 1 176 95 A 16 16 0 0 1 160 111 A 16 16 0 0 1 144 95 A 16 16 0 0 1 160 79 Z" fill="none" stroke="rgba(244,162,89,0.8)" stroke-width="2.5"/>
+                            <path d="M 240 79 A 16 16 0 0 1 256 95 A 16 16 0 0 1 240 111 A 16 16 0 0 1 224 95 A 16 16 0 0 1 240 79 Z" fill="none" stroke="rgba(244,162,89,0.8)" stroke-width="2.5"/>
+                            <text x="420" y="150" text-anchor="start" fill="rgba(244,162,89,0.8)" font-size="11" font-weight="600">Step 3: {00} &#8746; {11} = {00, 11}</text>
+                            <text x="420" y="166" text-anchor="start" fill="rgba(244,162,89,0.6)" font-size="10">P = 0.8 (either/or)</text>
+
+                            <!-- Step 4: complement of union -->
+                            <path d="M 160 134 A 16 16 0 0 1 176 150 A 16 16 0 0 1 160 166 A 16 16 0 0 1 144 150 A 16 16 0 0 1 160 134 Z" fill="none" stroke="rgba(120,180,120,0.8)" stroke-width="2.5"/>
+                            <path d="M 240 134 A 16 16 0 0 1 256 150 A 16 16 0 0 1 240 166 A 16 16 0 0 1 224 150 A 16 16 0 0 1 240 134 Z" fill="none" stroke="rgba(120,180,120,0.8)" stroke-width="2.5"/>
+                            <text x="420" y="190" text-anchor="start" fill="rgba(120,180,120,0.8)" font-size="11" font-weight="600">Step 4: {00,11}&#8742; = {01, 10}</text>
+                            <text x="420" y="206" text-anchor="start" fill="rgba(120,180,120,0.6)" font-size="10">P = 0.2 (negation again)</text>
+
+                            <text x="200" y="225" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">Each step builds a new question from old ones</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3a-2 &mdash; Building events from singletons.</strong>
+                            Starting with \(\{00\}\), the operations of negation (complement) and
+                            either/or (union) generate new events. Each new event is a new question
+                            we can ask about the hidden state.
+                        </figcaption>
+                    </figure>
+
+                    <p><strong>Iterating.</strong> Nothing stops us from repeating this process.
+                    Starting with four singletons, we generate all \(2^4=16\) subsets of \(\M\)
+                    by taking complements and unions. In the finite case, this process eventually
+                    produces <em>every</em> subset, so there is no tension.</p>
+
+                    <p>But the continuous case is different. There, it turns out that we
+                    <em>cannot</em> consistently attach probabilities to every subset of the model
+                    space. Instead, we must specify <em>which</em> subsets count as legitimate
+                    events &mdash; that is, which questions we agree are meaningful to ask and
+                    answer.</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Intuition</span>
+                        <p>
+                            A &sigma;-algebra is a self-contained language of questions about the
+                            experiment. It is not an arbitrary definition &mdash; it is forced by
+                            the logic of combining questions through negation and either/or.
+                        </p>
+                    </div>
+
+                    <h3>The &sigma;-algebra: formal definition</h3>
+
+                    <p>Let \(\Omega\) be a nonempty set (in our case, \(\Omega=\M\)). A collection
+                    \(\mathcal{F}\) of subsets of \(\Omega\) is called a
+                    <em>&sigma;-algebra</em> if:</p>
+
+                    <ol>
+                        <li>\(\Omega\in\mathcal{F}\) and \(\varnothing\in\mathcal{F}\);</li>
+                        <li>if \(A\in\mathcal{F}\), then its complement
+                        \(A^c=\Omega\setminus A\) also belongs to \(\mathcal{F}\);</li>
+                        <li>if \(A_1,A_2,A_3,\dots\in\mathcal{F}\), then their union
+                        \(\bigcup_{n=1}^{\infty} A_n\in\mathcal{F}\).</li>
+                    </ol>
+
+                    <p>Each axiom has a direct interpretation:</p>
+
+                    <ul>
+                        <li>\(\varnothing\) and \(\Omega\) represent the impossible question
+                        (&ldquo;nothing happens&rdquo;) and the certain question
+                        (&ldquo;something happens&rdquo;).</li>
+                        <li>Complements correspond to <em>negating</em> a question.</li>
+                        <li>Countable unions correspond to asking whether <em>at least one</em> of
+                        countably many alternatives occurred.</li>
+                    </ul>
+
+                    <p>In the switch problem, the natural &sigma;-algebra is the full power set:</p>
+
+                    \[\SigmaM = 2^{\M} = \{\text{all subsets of } \M\}.\]
+
+                    <p>This has \(16\) elements: the empty set, four singletons, six pairs, four
+                    triples, and \(\M\) itself. Every subset is an event.</p>
+
+                    <p>In continuous spaces, we cannot take the full power set. The natural choice
+                    is the <em>Borel &sigma;-algebra</em>, which is the smallest &sigma;-algebra
+                    containing all open sets. This is the &sigma;-algebra we use when the model
+                    space is, say, \([0,1]^2\).</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF3a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(255,255,255,0.4)"/>
+                                </marker>
+                            </defs>
+                            <!-- Three panels: complement, union, empty/full -->
+                            <!-- Panel 1: complement — A inside B (Omega), A^c = B \ A -->
+                            <rect x="10" y="20" width="180" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                            <text x="100" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Complement</text>
+                            <text x="100" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">"not A"</text>
+                            <!-- B (Omega) — larger container -->
+                            <ellipse cx="100" cy="105" rx="60" ry="42" fill="rgba(120,180,120,0.08)" stroke="rgba(120,180,120,0.4)" stroke-width="1.5"/>
+                            <text x="155" y="72" text-anchor="start" fill="rgba(120,180,120,0.6)" font-size="9">&#937;</text>
+                            <!-- A inside B -->
+                            <circle cx="85" cy="100" r="20" fill="rgba(244,162,89,0.35)" stroke="rgba(244,162,89,0.7)" stroke-width="2"/>
+                            <text x="85" y="104" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">A</text>
+                            <!-- A^c region: the part of B not covered by A — indicated by shading with a path -->
+                            <path d="M 40 105 A 60 42 0 0 1 160 105 A 60 42 0 0 1 40 105 Z M 65 100 A 20 20 0 0 1 105 100 A 20 20 0 0 1 65 100 Z" fill="rgba(120,180,120,0.2)" fill-rule="evenodd" stroke="none"/>
+                            <text x="130" y="130" text-anchor="middle" fill="rgba(120,180,120,0.8)" font-size="10" font-weight="600">A&#8742;</text>
+                            <text x="100" y="160" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">if A &#8712; F,</text>
+                            <text x="100" y="174" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">then A&#8742; = &#937; \ A &#8712; F</text>
+
+                            <!-- Panel 2: union — A and B intersect, arrow to A∪B -->
+                            <rect x="210" y="20" width="180" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                            <text x="300" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Union</text>
+                            <text x="300" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">"A or B"</text>
+                            <!-- A and B overlapping -->
+                            <circle cx="270" cy="80" r="16" fill="rgba(244,162,89,0.3)" stroke="rgba(244,162,89,0.6)" stroke-width="2"/>
+                            <text x="263" y="84" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">A</text>
+                            <circle cx="298" cy="80" r="16" fill="rgba(200,120,80,0.3)" stroke="rgba(200,120,80,0.6)" stroke-width="2"/>
+                            <text x="305" y="84" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">B</text>
+                            <!-- Arrow down -->
+                            <line x1="284" y1="100" x2="284" y2="120" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrowF3a3)"/>
+                            <!-- A ∪ B: outer boundary of two overlapping circles, internal borders removed -->
+                            <path d="M 284 127.25 A 16 16 0 1 0 284 142.75 A 16 16 0 1 0 284 127.25 Z" fill="rgba(244,162,89,0.25)" stroke="rgba(244,162,89,0.6)" stroke-width="2"/>
+                            <text x="284" y="139" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">A &#8746; B</text>
+                            <text x="300" y="170" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">if A, B &#8712; F, then A &#8746; B &#8712; F</text>
+
+                            <!-- Panel 3: empty and full -->
+                            <rect x="410" y="20" width="180" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
+                            <text x="500" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Empty and full</text>
+                            <text x="500" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">"nothing" / "everything"</text>
+                            <!-- Empty set -->
+                            <circle cx="460" cy="100" r="16" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <text x="460" y="104" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">&#8709;</text>
+                            <!-- Full set -->
+                            <ellipse cx="540" cy="100" rx="22" ry="18" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.4)" stroke-width="1.5"/>
+                            <text x="540" y="104" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">&#937;</text>
+                            <text x="500" y="160" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">&#8709; &#8712; F</text>
+                            <text x="500" y="174" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">and &#937; &#8712; F</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F3a-3 &mdash; The three axioms of a &sigma;-algebra.</strong>
+                            Each axiom corresponds to a natural operation on questions: negation
+                            (complement), either/or (union), and the trivial questions (empty set
+                            and full set).
+                        </figcaption>
+                    </figure>
+
+                    <h3>The probability measure: the object that answers the questions</h3>
+
+                    <p>Once we know which questions we are allowed to ask (the &sigma;-algebra
+                    \(\mathcal{F}\)), we still need something that provides numerical answers.</p>
+
+                    <p>A <em>probability measure</em> is a function</p>
+
+                    \[\mu:\mathcal{F}\to[0,1]\]
+
+                    <p>satisfying:</p>
+
+                    <ol>
+                        <li>\(\mu(\Omega)=1\);</li>
+                        <li>for any sequence of pairwise disjoint sets
+                        \(A_1,A_2,\dots\in\mathcal{F}\),
+                        \[\mu\!\left(\bigcup_{n=1}^{\infty} A_n\right)=\sum_{n=1}^{\infty}\mu(A_n).\]</li>
+                    </ol>
+
+                    <p>The first axiom says that total probability is one. The second says that
+                    probabilities of mutually exclusive events add &mdash; the &ldquo;either/or&rdquo;
+                    principle, extended to countably many alternatives.</p>
+
+                    <p>In the switch problem, the prior is a probability measure
+                    \(\muMzero:\SigmaM\to[0,1]\). On singleton events:</p>
+
+                    \[\muMzero(\{00\})=0.4, \quad \muMzero(\{01\})=0.1, \quad \muMzero(\{10\})=0.1, \quad \muMzero(\{11\})=0.4.\]
+
+                    <p>Since every event in \(\SigmaM\) is a union of singletons, these four numbers
+                    determine the entire measure. For example:</p>
+
+                    \[\muMzero(\{00,11\})=\muMzero(\{00\})+\muMzero(\{11\})=0.8,\]
+                    \[\muMzero(\{01,10\})=\muMzero(\{01\})+\muMzero(\{10\})=0.2.\]
+
+                    <h3>The probability space</h3>
+
+                    <p>The triple \((\Omega,\mathcal{F},\mu)\) is the modern mathematical model of a
+                    probabilistic experiment. It captures:</p>
+
+                    <ul>
+                        <li><strong>\(\Omega\)</strong>: the universe &mdash; all possible outcomes.</li>
+                        <li><strong>\(\mathcal{F}\)</strong>: the questions we allow ourselves to
+                        ask (events).</li>
+                        <li><strong>\(\mu\)</strong>: the rule that assigns answers to those
+                        questions.</li>
+                    </ul>
+
+                    <p>For the switch problem, the model probability space is
+                    \((\M,\SigmaM,\muMzero)\) and the data probability space is
+                    \((\D,\SigmaD,\muD)\), where \(\SigmaD=2^{\D}\).</p>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Why this matters</span>
+                        <p>
+                            Conditioning &mdash; the heart of Bayesian inference &mdash; will turn
+                            out to be fundamentally about <em>restricting or refining the
+                            collection of questions</em> \(\mathcal{F}\), rather than about fixing
+                            individual outcomes. This viewpoint is the key to avoiding paradoxes
+                            that arise when one tries to condition directly on events of probability
+                            zero.
+                        </p>
+                    </div>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Three boxes: Omega, F, mu -->
+                            <!-- Omega -->
+                            <rect x="20" y="50" width="140" height="80" rx="8" fill="rgba(52,122,162,0.1)" stroke="rgba(52,122,162,0.3)" stroke-width="1.5"/>
+                            <text x="90" y="75" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="14" font-weight="700">&#937; = M</text>
+                            <text x="90" y="95" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">the universe</text>
+                            <text x="90" y="110" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">{00, 01, 10, 11}</text>
+
+                            <!-- F -->
+                            <rect x="220" y="50" width="140" height="80" rx="8" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)" stroke-width="1.5"/>
+                            <text x="290" y="75" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="14" font-weight="700">F = &#931;_M</text>
+                            <text x="290" y="95" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">the questions</text>
+                            <text x="290" y="110" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">2^M (all subsets)</text>
+
+                            <!-- mu -->
+                            <rect x="420" y="50" width="140" height="80" rx="8" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)" stroke-width="1.5"/>
+                            <text x="490" y="75" text-anchor="middle" fill="rgba(120,180,120,0.9)" font-size="14" font-weight="700">&#956; = &#956;&#8304;_M</text>
+                            <text x="490" y="95" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">the answers</text>
+                            <text x="490" y="110" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">P(m &#8712; A) for A &#8712; F</text>
+
+                            <!-- Arrows -->
+                            <line x1="160" y1="90" x2="220" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#arrowF3aSimple)"/>
+                            <line x1="360" y1="90" x2="420" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#arrowF3aSimple)"/>
+
+                            <!-- Labels under arrows -->
+                            <text x="190" y="82" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">asks about</text>
+                            <text x="390" y="82" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">answers</text>
+
+                            <!-- Bottom label -->
+                            <text x="300" y="155" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">The probability space (&#937;, F, &#956;) = (M, &#931;_M, &#956;&#8304;_M)</text>
+                        </svg>
+                        <defs>
+                            <marker id="arrowF3aSimple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L7,3 z" fill="rgba(255,255,255,0.2)"/>
+                            </marker>
+                        </defs>
+                        <figcaption>
+                            <strong>F3a-4 &mdash; The probability space for the switch problem.</strong>
+                            The universe \(\M\) lists all possible hidden states. The
+                            &sigma;-algebra \(\SigmaM\) lists all legitimate questions. The prior
+                            measure \(\muMzero\) assigns numerical answers to those questions.
+                        </figcaption>
+                    </figure>
+
+                    <h3>What we have gained</h3>
+
+                    <p>By re-expressing the prior as a measure on events rather than a table of
+                    point probabilities, we have not changed any numbers. The prior measure
+                    \(\muMzero\) contains exactly the same information as the prior table from
+                    Part&nbsp;2.</p>
+
+                    <p>What we have gained is a language that survives when the spaces are
+                    continuous. The measure \(\muMzero\) assigns probabilities to <em>events</em>,
+                    not to points, and this works equally well whether \(\M\) has four elements or
+                    uncountably many.</p>
+
+                    <p>In <a href="part-3b.html">Part&nbsp;3b</a>, we turn to conditioning &mdash;
+                    the operation at the heart of Bayesian inference. We will see that conditioning
+                    works perfectly in the finite switch problem, works for positive-measure sets
+                    in continuous spaces, but <em>breaks down</em> for individual observations in
+                    continuous spaces. Understanding this breakdown is essential for appreciating
+                    why the measure-theoretic formulation is not merely elegant, but necessary.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-2.html"><span class="arrow">&larr;</span> Part 2: High-School Solution</a>
+                        <a class="part-prevnext-btn" href="part-3b.html">Part 3b: Conditioning and Its Limits <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

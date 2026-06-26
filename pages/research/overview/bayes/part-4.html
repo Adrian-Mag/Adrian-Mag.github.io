@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 4: Summary &amp; Notation Map — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="Part 4 of Bayes, Measure-Theoretically: Summary of the argument and a dictionary between elementary and measure-theoretic notation.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 4: Summary &amp; Notation Map</h1>
+                <p>The two stories side by side, plus a dictionary.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html" aria-current="page"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>Summary of the argument</h2>
+
+                    <p>We have solved the same toy problem twice.</p>
+
+                    <p>The first solution used elementary finite probability. The second solution
+                    used measure-theoretic language. The answers were the same, but the second
+                    version exposed the structure that survives beyond finite tables.</p>
+
+                    <h3>The finite arithmetic story</h3>
+
+                    <p>In the finite arithmetic story, we began with two ingredients.</p>
+
+                    <p>First, we had a prior distribution on the hidden model space:
+                    \[\mathbb{P}(m).\]
+                    Second, we had the reporter rule:
+                    \[\mathbb{P}(d\mid m).\]</p>
+
+                    <p>Multiplying these gave the joint table:
+                    \[\mathbb{P}(m,d)
+                    =
+                    \mathbb{P}(m)\mathbb{P}(d\mid m).\]</p>
+
+                    <p>Adding down the data columns gave the predictive probabilities:
+                    \[\mathbb{P}(d)
+                    =
+                    \sum_{m\in\M}\mathbb{P}(m,d).\]</p>
+
+                    <p>Normalizing each column gave the posterior rule:
+                    \[\mathbb{P}(m\mid d)
+                    =
+                    \frac{\mathbb{P}(m,d)}{\mathbb{P}(d)}.\]</p>
+
+                    <p>Finally, once the actual report \(\dobs\) was heard, we selected the
+                    corresponding posterior:
+                    \[\mathbb{P}(m\mid d=\dobs).\]</p>
+
+                    <p>Thus the finite story is
+                    \[\text{prior}
+                    +
+                    \text{reporter rule}
+                    \Longrightarrow
+                    \text{joint table},\]
+                    \[\text{joint table}
+                    \Longrightarrow
+                    \text{predictive probabilities},\]
+                    \[\text{normalize each data column}
+                    \Longrightarrow
+                    \text{posterior rule},\]
+                    \[\text{observed report}
+                    \Longrightarrow
+                    \text{choose one posterior}.\]</p>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowF4a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.4)"/>
+                                </marker>
+                            </defs>
+                            <!-- Top row: elementary -->
+                            <text x="360" y="18" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="700">Elementary story</text>
+                            <rect x="10" y="30" width="100" height="36" rx="6" fill="rgba(160,120,190,0.1)" stroke="rgba(160,120,190,0.3)"/>
+                            <text x="60" y="52" text-anchor="middle" fill="rgba(160,120,190,0.85)" font-size="10" font-weight="600">P(m)</text>
+                            <text x="120" y="48" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="12">+</text>
+                            <rect x="130" y="30" width="100" height="36" rx="6" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="52" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">P(d|m)</text>
+                            <line x1="235" y1="48" x2="260" y2="48" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="265" y="30" width="100" height="36" rx="6" fill="rgba(103,145,190,0.12)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="315" y="52" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">P(m,d)</text>
+                            <line x1="370" y1="48" x2="395" y2="48" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="400" y="30" width="100" height="36" rx="6" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="450" y="52" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="10" font-weight="600">P(d)</text>
+                            <line x1="505" y1="48" x2="530" y2="48" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="535" y="30" width="100" height="36" rx="6" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="585" y="52" text-anchor="middle" fill="rgba(120,180,120,0.85)" font-size="10" font-weight="600">P(m|d)</text>
+                            <text x="645" y="52" text-anchor="start" fill="rgba(244,162,89,0.7)" font-size="10" font-weight="600">→ P(m|d_obs)</text>
+
+                            <!-- Divider -->
+                            <line x1="10" y1="85" x2="710" y2="85" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
+
+                            <!-- Bottom row: measure-theoretic -->
+                            <text x="360" y="108" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="12" font-weight="700">Measure-theoretic story</text>
+                            <rect x="10" y="120" width="100" height="36" rx="6" fill="rgba(160,120,190,0.1)" stroke="rgba(160,120,190,0.3)"/>
+                            <text x="60" y="142" text-anchor="middle" fill="rgba(160,120,190,0.85)" font-size="10" font-weight="600">μ⁰_M</text>
+                            <text x="120" y="138" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="12">+</text>
+                            <rect x="130" y="120" width="100" height="36" rx="6" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="180" y="142" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">L(m,B)</text>
+                            <line x1="235" y1="138" x2="260" y2="138" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="265" y="120" width="100" height="36" rx="6" fill="rgba(103,145,190,0.12)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="315" y="142" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="10" font-weight="600">J</text>
+                            <line x1="370" y1="138" x2="395" y2="138" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="400" y="120" width="100" height="36" rx="6" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="450" y="142" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="10" font-weight="600">μ_D</text>
+                            <line x1="505" y1="138" x2="530" y2="138" stroke="rgba(103,145,190,0.4)" stroke-width="1.5" marker-end="url(#arrowF4a)"/>
+                            <rect x="535" y="120" width="100" height="36" rx="6" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="585" y="142" text-anchor="middle" fill="rgba(120,180,120,0.85)" font-size="10" font-weight="600">κ(d,·)</text>
+                            <text x="645" y="142" text-anchor="start" fill="rgba(244,162,89,0.7)" font-size="10" font-weight="600">→ κ(d_obs,·)</text>
+
+                            <!-- Vertical correspondence arrows -->
+                            <text x="60" y="185" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">same</text>
+                            <text x="180" y="185" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">same</text>
+                            <text x="315" y="185" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">same</text>
+                            <text x="450" y="185" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">same</text>
+                            <text x="585" y="185" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">same</text>
+                            <text x="360" y="210" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">Different language, identical structure</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F4a &mdash; Side-by-side comparison.</strong> The
+                            elementary story (top) and the measure-theoretic story (bottom)
+                            follow the same chain. Each box in the top row has a direct
+                            counterpart in the bottom row. The arithmetic is the same; the
+                            language is different.
+                        </figcaption>
+                    </figure>
+
+                    <h3>The measure-theoretic story</h3>
+
+                    <p>In the measure-theoretic story, the prior distribution became a probability
+                    measure \(\muMzero\) on the measurable model space \((\M,\SigmaM)\).</p>
+
+                    <p>The reporter rule became a likelihood kernel
+                    \[L(m,B), \qquad B\in\SigmaD,\]
+                    from the model space to the data space.</p>
+
+                    <p>Together, the prior measure and likelihood kernel defined the joint measure
+                    \[J(A\times B)
+                    =
+                    \int_A L(m,B)\,\muMzero(dm).\]</p>
+
+                    <p>The predictive data measure was the data marginal of \(J\):
+                    \[\muD(B)
+                    =
+                    J(\M\times B)
+                    =
+                    \int_{\M} L(m,B)\,\muMzero(dm).\]</p>
+
+                    <p>The posterior update became a posterior kernel
+                    \[d\longmapsto \kappa(d,\cdot),\]
+                    characterized by the consistency identity
+                    \[J(A\times B)
+                    =
+                    \int_B \kappa(d,A)\,\muD(dd).\]</p>
+
+                    <p>Finally, once the observed report \(\dobs\) was known, the posterior measure
+                    was obtained by evaluation:
+                    \[\mu^{\mathrm{post}}_{\M}(\cdot)
+                    =
+                    \kappa(\dobs,\cdot).\]</p>
+
+                    <p>Thus the measure-theoretic story is
+                    \[\muMzero
+                    +
+                    L
+                    \Longrightarrow
+                    J,\]
+                    \[J
+                    \Longrightarrow
+                    \muD,\]
+                    \[J
+                    \text{ and }
+                    \muD
+                    \Longrightarrow
+                    \kappa,\]
+                    \[\dobs
+                    \Longrightarrow
+                    \kappa(\dobs,\cdot).\]</p>
+
+                    <div class="bayes-callout callout-lesson">
+                        <span class="bayes-callout-label">Lesson</span>
+                        <p>
+                            The two stories are the same story. The elementary version uses
+                            tables of numbers; the measure-theoretic version uses measures and
+                            kernels. Both follow: prior + likelihood → joint → predictive →
+                            posterior → plug in observation.
+                        </p>
+                    </div>
+
+                    <h3>Final slogan</h3>
+
+                    <div class="bayes-callout callout-intuition">
+                        <span class="bayes-callout-label">Key Idea</span>
+                        <p>
+                            In the finite case, Bayes is column normalization. In the general
+                            case, Bayes is the extraction of a posterior kernel from a joint
+                            measure. The finite table is the seed. The measure-theoretic
+                            construction is the tree.
+                        </p>
+                    </div>
+
+                    <h2>Notation map</h2>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Object</th>
+                                    <th>Elementary notation</th>
+                                    <th>Measure-theoretic notation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Hidden states</td><td>\(m\in\{00,01,10,11\}\)</td><td>\((\M,\SigmaM)\)</td></tr>
+                                <tr><td>Reports</td><td>\(d\in\{0,1\}\)</td><td>\((\D,\SigmaD)\)</td></tr>
+                                <tr><td>Prior</td><td>\(\mathbb{P}(m)\)</td><td>\(\muMzero\)</td></tr>
+                                <tr><td>Reporter rule</td><td>\(\mathbb{P}(d\mid m)\)</td><td>\(L(m,\cdot)\)</td></tr>
+                                <tr><td>Joint law</td><td>\(\mathbb{P}(m,d)\)</td><td>\(J\)</td></tr>
+                                <tr><td>Predictive law</td><td>\(\mathbb{P}(d)\)</td><td>\(\muD\)</td></tr>
+                                <tr><td>Posterior rule</td><td>\(d\mapsto\mathbb{P}(m\mid d)\)</td><td>\(d\mapsto\kappa(d,\cdot)\)</td></tr>
+                                <tr><td>Observed posterior</td><td>\(\mathbb{P}(m\mid \dobs)\)</td><td>\(\kappa(\dobs,\cdot)\)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption>Dictionary between the elementary and measure-theoretic presentations.</figcaption>
+
+                    <figure class="bayes-diagram">
+                        <svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Title -->
+                            <text x="300" y="20" text-anchor="middle" fill="rgba(160,196,232,0.9)" font-size="13" font-weight="700">The full Bayesian chain</text>
+
+                            <!-- Central vertical flow -->
+                            <defs>
+                                <marker id="arrowF4b" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(103,145,190,0.4)"/>
+                                </marker>
+                                <marker id="arrowF4bWarm" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(244,162,89,0.4)"/>
+                                </marker>
+                                <marker id="arrowF4bGreen" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="rgba(120,180,120,0.4)"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Step 1: Prior + Likelihood -->
+                            <rect x="150" y="40" width="130" height="36" rx="6" fill="rgba(160,120,190,0.1)" stroke="rgba(160,120,190,0.3)"/>
+                            <text x="215" y="62" text-anchor="middle" fill="rgba(160,120,190,0.85)" font-size="11" font-weight="600">Prior μ⁰_M</text>
+                            <text x="300" y="58" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="14">+</text>
+                            <rect x="320" y="40" width="130" height="36" rx="6" fill="rgba(52,122,162,0.12)" stroke="rgba(52,122,162,0.3)"/>
+                            <text x="385" y="62" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="11" font-weight="600">Likelihood L(m,B)</text>
+
+                            <!-- Arrow down -->
+                            <line x1="300" y1="80" x2="300" y2="105" stroke="rgba(103,145,190,0.4)" stroke-width="2" marker-end="url(#arrowF4b)"/>
+                            <text x="340" y="95" fill="rgba(255,255,255,0.35)" font-size="9">multiply / integrate</text>
+
+                            <!-- Step 2: Joint measure -->
+                            <rect x="200" y="110" width="200" height="36" rx="6" fill="rgba(103,145,190,0.12)" stroke="rgba(103,145,190,0.3)"/>
+                            <text x="300" y="132" text-anchor="middle" fill="rgba(160,196,232,0.85)" font-size="11" font-weight="600">Joint measure J on M×D</text>
+
+                            <!-- Arrow down (split) -->
+                            <line x1="250" y1="150" x2="200" y2="175" stroke="rgba(244,162,89,0.4)" stroke-width="1.5" marker-end="url(#arrowF4bWarm)"/>
+                            <line x1="350" y1="150" x2="400" y2="175" stroke="rgba(120,180,120,0.4)" stroke-width="1.5" marker-end="url(#arrowF4bGreen)"/>
+                            <text x="190" y="168" fill="rgba(244,162,89,0.5)" font-size="9">marginalize</text>
+                            <text x="380" y="168" fill="rgba(120,180,120,0.5)" font-size="9">disintegrate</text>
+
+                            <!-- Step 3a: Predictive -->
+                            <rect x="100" y="180" width="160" height="36" rx="6" fill="rgba(244,162,89,0.1)" stroke="rgba(244,162,89,0.3)"/>
+                            <text x="180" y="202" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="11" font-weight="600">Predictive μ_D</text>
+
+                            <!-- Step 3b: Posterior kernel -->
+                            <rect x="340" y="180" width="160" height="36" rx="6" fill="rgba(120,180,120,0.1)" stroke="rgba(120,180,120,0.3)"/>
+                            <text x="420" y="202" text-anchor="middle" fill="rgba(120,180,120,0.85)" font-size="11" font-weight="600">Posterior κ(d,·)</text>
+
+                            <!-- Arrow down from posterior -->
+                            <line x1="420" y1="220" x2="420" y2="245" stroke="rgba(103,145,190,0.4)" stroke-width="2" marker-end="url(#arrowF4b)"/>
+                            <text x="460" y="237" fill="rgba(255,255,255,0.35)" font-size="9">plug in d_obs</text>
+
+                            <!-- Step 4: Observed posterior -->
+                            <rect x="320" y="250" width="200" height="36" rx="6" fill="rgba(120,180,120,0.15)" stroke="rgba(120,180,120,0.4)" stroke-width="1.5"/>
+                            <text x="420" y="272" text-anchor="middle" fill="rgba(120,180,120,0.9)" font-size="11" font-weight="700">μ_post_M = κ(d_obs,·)</text>
+
+                            <!-- Consistency identity link -->
+                            <path d="M 180 216 Q 300 290 420 286" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+                            <text x="300" y="305" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9">consistency: ∫_B κ(d,A) μ_D(dd) = J(A×B)</text>
+
+                            <!-- Bottom labels -->
+                            <text x="180" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">“what reports do we expect?”</text>
+                            <text x="420" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">“what did we learn?”</text>
+                        </svg>
+                        <figcaption>
+                            <strong>F4b &mdash; The full Bayesian chain at a glance.</strong>
+                            Prior and likelihood combine into the joint measure, which splits
+                            into the predictive (by marginalization) and the posterior kernel
+                            (by disintegration). The observation selects one measure from the
+                            kernel. The consistency identity links all four objects.
+                        </figcaption>
+                    </figure>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="part-3f.html"><span class="arrow">&larr;</span> Part 3f: Back to Finite Land</a>
+                        <a class="part-prevnext-btn" href="bayes-measure-theoretically.html">Overview <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

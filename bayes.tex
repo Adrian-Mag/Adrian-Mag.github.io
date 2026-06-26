@@ -1,0 +1,1901 @@
+\documentclass[11pt]{article}
+
+% Structure-only draft for a website version of bayes_v5, Chapters/Sections 1--3.
+% Purpose: make Section 2 the elementary finite solution, then make Section 3
+% the measure-theoretic reinterpretation of exactly the same solution.
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\title{Bayesian Updating as a Posterior Kernel}
+\author{Author Name}
+\date{\today}
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\SigmaM}{\Sigma_{\M}}
+\newcommand{\SigmaD}{\Sigma_{\D}}
+\newcommand{\muMzero}{\mu^0_{\M}}
+\newcommand{\muD}{\mu_{\D}}
+\newcommand{\dobs}{d_{\mathrm{obs}}}
+\newcommand{\ptrust}{p_{\mathrm{trust}}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+% One-paragraph promise for the website page.
+% We solve a tiny Bayesian inverse problem twice.
+% First: by elementary finite probability.
+% Second: by identifying the measure-theoretic objects that the finite calculation was secretly using.
+\end{abstract}
+
+\section*{Reader contract}
+\addcontentsline{toc}{section}{Reader contract}
+
+Before we begin, it is useful to say exactly what this example is meant to do.
+
+The example is deliberately small. There are only four possible hidden states and only two possible reports. This means that, in principle, we can solve the whole problem by drawing a table and doing ordinary probability arithmetic. That is not a weakness of the example. It is the point.
+
+We will solve the same problem twice.
+
+First, in Section~\ref{sec:elementary}, we solve it in the most elementary way possible. We list all possible hidden switch configurations, all possible reports, and all joint probabilities. Then we condition on each possible report by selecting the appropriate part of the table and normalizing. No measure theory is needed. The only operations are multiplication, addition, and division.
+
+Second, in Section~\ref{sec:measure}, we solve the same problem again using the language of measure theory. The prior becomes a probability measure on the model space. The reporting mechanism becomes a likelihood kernel. The combined experiment becomes a joint measure. The Bayesian update becomes a posterior kernel.
+
+The important point is that the observed report is not used to build the theory. The theory is built before the report arrives.
+
+In other words, our goal is not merely to compute
+\[
+    \mathbb{P}(m \mid \dobs)
+\]
+for one particular observed value \(\dobs\). Our goal is to construct the whole update rule
+\[
+    d \longmapsto \mathbb{P}(m \mid d).
+\]
+Only after this rule has been constructed do we plug in the actual observation \(\dobs\).
+
+This distinction is small in the finite example, but it becomes essential later. The finite table we build in Section~\ref{sec:elementary} is the baby version of the posterior kernel constructed in Section~\ref{sec:measure}.
+
+\section{The game: hidden switches and an unreliable report}
+\label{sec:game}
+
+We begin with a small guessing game.
+
+There is a room containing two hidden switches. Each switch can be either off, denoted by \(0\), or on, denoted by \(1\). Since there are two switches, there are four possible configurations:
+\[
+    00,\qquad 01,\qquad 10,\qquad 11.
+\]
+The true configuration is hidden from us. We call it the model and denote it by \(m\).
+
+\subsection{The hidden model space}
+
+The set of all possible hidden configurations is called the model space:
+\[
+    \M = \{00,01,10,11\}.
+\]
+An element \(m\in\M\) represents one complete possible state of the hidden system. For example, \(m=01\) means that the first switch is off and the second switch is on.
+
+At this stage, we do not know which element of \(\M\) is the true one. The inverse problem is precisely to learn about this hidden \(m\) from indirect information.
+
+The word indirect matters. We will not observe the switches themselves. Instead, we observe a report about a lightbulb whose state depends on the switches.
+
+\subsection{The noise-free forward operator}
+
+The two switches control a lightbulb. The bulb turns on when the two switches are the same and turns off when the two switches are different. Thus
+\[
+    G(00)=1,\qquad G(11)=1,\qquad G(01)=0,\qquad G(10)=0.
+\]
+Here \(G\) is the forward operator. It maps a hidden model \(m\) to the ideal datum \(G(m)\), namely the bulb state we would see if there were no reporting error.
+
+So \(G(m)\) is not yet the data we actually receive. It is the noise-free datum.
+
+This distinction is important. The hidden switches determine the true bulb state, but we do not see the bulb directly. We only hear a report about it.
+
+Notice also that \(G\) is many-to-one. Both \(00\) and \(11\) produce the same bulb state:
+\[
+    G(00)=G(11)=1.
+\]
+Similarly,
+\[
+    G(01)=G(10)=0.
+\]
+Therefore, even if we could observe the bulb perfectly, we still could not identify the switch configuration uniquely. Perfect knowledge of \(G(m)\) would only narrow the possibilities down to a pair.
+
+This is the first small inverse-problem lesson: the forward map may destroy information.
+
+\subsection{The unreliable reporter}
+
+The possible reports form the data space
+\[
+    \D=\{0,1\}.
+\]
+A report \(d=1\) means that we are told the bulb is on. A report \(d=0\) means that we are told the bulb is off.
+
+However, the reporter is not completely reliable. If the true bulb state is \(G(m)\), then the reporter tells the truth with probability \(\ptrust\) and lies with probability \(1-\ptrust\). In symbols,
+\[
+    \mathbb{P}(d=G(m)\mid m)=\ptrust,
+    \qquad
+    \mathbb{P}(d\neq G(m)\mid m)=1-\ptrust.
+\]
+Thus the observation \(d\) is a noisy version of the ideal datum \(G(m)\).
+
+This is our noise model. In a physical inverse problem, the noise might come from a measurement device, discretization error, or environmental uncertainty. Here it comes from a possibly dishonest reporter. The costume is playful, but the role is serious: it describes how hidden states produce uncertain observations.
+
+\subsection{The prior information}
+
+Before the reporter says anything, we already have some information about the hidden switch configuration. Imagine that we have found a smudged note that seems to describe the switch state, but not clearly enough to determine it exactly.
+
+We translate this vague information into a prior probability distribution:
+\[
+    \mathbb{P}(00)=0.4,
+    \qquad
+    \mathbb{P}(01)=0.1,
+    \qquad
+    \mathbb{P}(10)=0.1,
+    \qquad
+    \mathbb{P}(11)=0.4.
+\]
+This prior says that, before seeing any report, we find \(00\) and \(11\) more plausible than \(01\) and \(10\).
+
+We also fix the reporter's trustworthiness:
+\[
+    \ptrust=0.8.
+\]
+So the reporter tells the truth with probability \(0.8\) and lies with probability \(0.2\).
+
+At this point all ingredients of the finite Bayesian problem have been specified:
+\[
+    \text{hidden model space } \M,
+    \qquad
+    \text{data space } \D,
+    \qquad
+    \text{forward map } G,
+\]
+together with a prior distribution on \(\M\) and a reporting rule connecting \(\M\) to \(\D\).
+
+\subsection{The task}
+
+The goal is not merely to make one guess.
+
+If the reporter eventually says \(0\), we want to know how likely each switch configuration is after hearing \(0\). If the reporter says \(1\), we want to know how likely each switch configuration is after hearing \(1\).
+
+So the real goal is to construct the full update rule
+\[
+    d \longmapsto \mathbb{P}(m\mid d).
+\]
+This rule takes a possible report \(d\in\D\) and returns an updated probability distribution over the hidden model space \(\M\).
+
+Only after this rule has been built do we plug in the actually observed report \(\dobs\). If \(\dobs=0\), we evaluate the rule at \(d=0\). If \(\dobs=1\), we evaluate it at \(d=1\).
+
+This is the key ordering:
+\[
+    \text{build the update rule first,}
+    \qquad
+    \text{plug in the observation second.}
+\]
+The observation chooses which precomputed update to use. It does not change the rules of the game.
+
+\subsection{Transition to the elementary solution}
+
+We now solve the complete finite problem using only ordinary probability arithmetic.
+
+Because there are only four possible hidden states and two possible reports, we can write down every joint possibility:
+\[
+    (m,d)\in \M\times\D.
+\]
+For each pair \((m,d)\), we compute
+\[
+    \mathbb{P}(m\text{ and }d)
+    =
+    \mathbb{P}(m)\,\mathbb{P}(d\mid m).
+\]
+Then, for each possible report \(d\), we add the appropriate joint probabilities to find \(\mathbb{P}(d)\), and divide by this total to get
+\[
+    \mathbb{P}(m\mid d)
+    =
+    \frac{\mathbb{P}(m\text{ and }d)}{\mathbb{P}(d)}.
+\]
+
+This is the high-school solution: multiply, add, normalize.
+
+It will give the correct answer. Later, we will reinterpret the same computation using measure theory.
+
+\section{The high-school solution: build the whole table first}
+\label{sec:elementary}
+
+We now solve the game using only elementary probability.
+
+There will be no measure theory in this section. No sigma-algebras, no kernels, no disintegration theorem, no abstract machinery quietly humming in the walls. We will use only the following three operations:
+
+\[
+    \text{multiply}, \qquad \text{add}, \qquad \text{divide}.
+\]
+
+The purpose of this section is to show that the finite problem can be solved completely by building one table. Later, in Section~\ref{sec:measure}, we will reinterpret the same table using measure-theoretic language.
+
+\subsection{The rule of the section}
+
+The main rule of this section is:
+
+\begin{quote}
+    Do not begin by assuming that the observed report is \(0\) or \(1\).
+\end{quote}
+
+Instead, we solve the whole problem before hearing the actual report.
+
+There are two possible reports:
+\[
+    d=0,
+    \qquad
+    d=1.
+\]
+For each possible report, we want to know the updated probabilities of the four hidden switch configurations:
+\[
+    00,\qquad 01,\qquad 10,\qquad 11.
+\]
+So the object we want is not just one posterior distribution. The object we want is the whole update rule
+\[
+    d \longmapsto \mathbb{P}(m\mid d).
+\]
+
+Once this rule has been constructed, the actual observation \(\dobs\) merely tells us which case to select.
+
+Thus the order of operations is:
+
+\begin{enumerate}[leftmargin=*]
+    \item compute the conditional report probabilities \(\mathbb{P}(d\mid m)\);
+    \item combine them with the prior probabilities \(\mathbb{P}(m)\);
+    \item build the full joint table \(\mathbb{P}(m,d)\);
+    \item add down each column to compute \(\mathbb{P}(d)\);
+    \item normalize each column to obtain \(\mathbb{P}(m\mid d)\);
+    \item only then plug in the actual observation \(\dobs\).
+\end{enumerate}
+
+This is the finite-table version of Bayesian updating.
+
+\subsection{Conditional report probabilities}
+
+Recall the rules of the game.
+
+The forward operator is
+\[
+    G(00)=1,
+    \qquad
+    G(11)=1,
+    \qquad
+    G(01)=0,
+    \qquad
+    G(10)=0.
+\]
+The reporter tells the truth with probability
+\[
+    \ptrust=0.8
+\]
+and lies with probability
+\[
+    1-\ptrust=0.2.
+\]
+
+Therefore, if the true hidden state is \(m\), then the reporter says the correct bulb value \(G(m)\) with probability \(0.8\), and the opposite value with probability \(0.2\).
+
+Let us compute this explicitly for every hidden state.
+
+If \(m=00\), then \(G(00)=1\). So the truthful report is \(d=1\), and the false report is \(d=0\). Hence
+\[
+    \mathbb{P}(d=1\mid m=00)=0.8,
+    \qquad
+    \mathbb{P}(d=0\mid m=00)=0.2.
+\]
+
+If \(m=01\), then \(G(01)=0\). So the truthful report is \(d=0\), and the false report is \(d=1\). Hence
+\[
+    \mathbb{P}(d=0\mid m=01)=0.8,
+    \qquad
+    \mathbb{P}(d=1\mid m=01)=0.2.
+\]
+
+The same reasoning applies to \(m=10\), because \(G(10)=0\), and to \(m=11\), because \(G(11)=1\).
+
+We can summarize the reporter's behaviour in one table.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+\(m\) & \(G(m)\) & \(\mathbb{P}(d=0\mid m)\) & \(\mathbb{P}(d=1\mid m)\) \\
+\midrule
+\(00\) & \(1\) & \(0.2\) & \(0.8\) \\
+\(01\) & \(0\) & \(0.8\) & \(0.2\) \\
+\(10\) & \(0\) & \(0.8\) & \(0.2\) \\
+\(11\) & \(1\) & \(0.2\) & \(0.8\) \\
+\bottomrule
+\end{tabular}
+\caption{Reporter probabilities for each hidden switch configuration.}
+\label{tab:reporter-probabilities}
+\end{table}
+
+This table answers the question:
+
+\begin{quote}
+    If the hidden state were \(m\), how likely would each possible report be?
+\end{quote}
+
+At this stage we have not heard the reporter yet. We are simply writing down the rules of the game.
+
+\subsection{The joint table}
+
+Now we combine the reporter probabilities with the prior probabilities.
+
+The prior distribution is
+\[
+    \mathbb{P}(00)=0.4,
+    \qquad
+    \mathbb{P}(01)=0.1,
+    \qquad
+    \mathbb{P}(10)=0.1,
+    \qquad
+    \mathbb{P}(11)=0.4.
+\]
+
+For each hidden state \(m\) and each possible report \(d\), the joint probability is computed by the multiplication rule
+\[
+    \mathbb{P}(m,d)
+    =
+    \mathbb{P}(m)\mathbb{P}(d\mid m).
+\]
+This is the probability that two things happen together:
+
+\begin{itemize}[leftmargin=*]
+    \item the hidden switch configuration is \(m\);
+    \item the reporter announces \(d\).
+\end{itemize}
+
+For example,
+\[
+    \mathbb{P}(m=00,d=0)
+    =
+    \mathbb{P}(m=00)\mathbb{P}(d=0\mid m=00).
+\]
+Using the values above,
+\[
+    \mathbb{P}(m=00,d=0)
+    =
+    0.4\cdot 0.2
+    =
+    0.08.
+\]
+
+Similarly,
+\[
+    \mathbb{P}(m=00,d=1)
+    =
+    0.4\cdot 0.8
+    =
+    0.32.
+\]
+
+We do this for all four hidden states and both possible reports.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+\(m\) & \(\mathbb{P}(m)\) & \(\mathbb{P}(m,d=0)\) & \(\mathbb{P}(m,d=1)\) \\
+\midrule
+\(00\) & \(0.4\) & \(0.08\) & \(0.32\) \\
+\(01\) & \(0.1\) & \(0.08\) & \(0.02\) \\
+\(10\) & \(0.1\) & \(0.08\) & \(0.02\) \\
+\(11\) & \(0.4\) & \(0.08\) & \(0.32\) \\
+\bottomrule
+\end{tabular}
+\caption{The full joint distribution of hidden state and reported value.}
+\label{tab:joint-distribution}
+\end{table}
+
+This table is the heart of the elementary solution.
+
+Each entry answers a question of the form:
+
+\begin{quote}
+    What is the probability that the hidden state is \(m\) and the report is \(d\)?
+\end{quote}
+
+For instance, the entry \(0.32\) in the row \(m=00\) and the column \(d=1\) means:
+\[
+    \mathbb{P}(m=00,d=1)=0.32.
+\]
+
+Again, we have not yet used an actual observation. We have built a complete map of all possible joint situations before the reporter speaks.
+
+\subsection{The predictive probabilities of possible reports}
+
+The joint table contains the probability of every pair \((m,d)\). From it, we can compute the probability of each possible report.
+
+To find the probability of hearing \(d=0\), we add all joint probabilities in the \(d=0\) column:
+\[
+\begin{aligned}
+    \mathbb{P}(d=0)
+    &=
+    \mathbb{P}(00,d=0)
+    +
+    \mathbb{P}(01,d=0)
+    +
+    \mathbb{P}(10,d=0)
+    +
+    \mathbb{P}(11,d=0)
+    \\
+    &=
+    0.08+0.08+0.08+0.08
+    \\
+    &=
+    0.32.
+\end{aligned}
+\]
+
+To find the probability of hearing \(d=1\), we add all joint probabilities in the \(d=1\) column:
+\[
+\begin{aligned}
+    \mathbb{P}(d=1)
+    &=
+    \mathbb{P}(00,d=1)
+    +
+    \mathbb{P}(01,d=1)
+    +
+    \mathbb{P}(10,d=1)
+    +
+    \mathbb{P}(11,d=1)
+    \\
+    &=
+    0.32+0.02+0.02+0.32
+    \\
+    &=
+    0.68.
+\end{aligned}
+\]
+
+So before the reporter says anything, our model predicts
+\[
+    \mathbb{P}(d=0)=0.32,
+    \qquad
+    \mathbb{P}(d=1)=0.68.
+\]
+
+These are the predictive probabilities of the possible reports. They answer the question:
+
+\begin{quote}
+    Given our prior beliefs and the reporter's behaviour, what do we expect to hear?
+\end{quote}
+
+The report \(d=1\) is more likely than \(d=0\) because the prior already favours \(00\) and \(11\), both of which produce the noise-free bulb value \(1\).
+
+\subsection{Normalize each column to get the posterior rule}
+
+We now turn the joint table into the update rule.
+
+The rule for conditioning is
+\[
+    \mathbb{P}(m\mid d)
+    =
+    \frac{\mathbb{P}(m,d)}{\mathbb{P}(d)}.
+\]
+In words:
+
+\begin{quote}
+    To condition on a report \(d\), take the column corresponding to \(d\) and divide every entry in that column by the total mass of the column.
+\end{quote}
+
+This does two things at once.
+
+First, it restricts attention to the part of the table where the report is \(d\). Second, it rescales the probabilities so that they add up to \(1\).
+
+That rescaling step is called normalization.
+
+We must do this separately for the two possible reports \(d=0\) and \(d=1\).
+
+\subsubsection{Posterior if the report is \(d=0\)}
+
+Suppose the report under consideration is \(d=0\). We are not saying that this is the actual observation yet. We are simply computing one branch of the update rule.
+
+From the joint table,
+\[
+    \mathbb{P}(00,d=0)=0.08,
+    \quad
+    \mathbb{P}(01,d=0)=0.08,
+    \quad
+    \mathbb{P}(10,d=0)=0.08,
+    \quad
+    \mathbb{P}(11,d=0)=0.08.
+\]
+The total probability of this report is
+\[
+    \mathbb{P}(d=0)=0.32.
+\]
+
+Therefore,
+\[
+    \mathbb{P}(00\mid d=0)
+    =
+    \frac{0.08}{0.32}
+    =
+    0.25.
+\]
+The same calculation holds for the other three hidden states:
+\[
+    \mathbb{P}(01\mid d=0)
+    =
+    \frac{0.08}{0.32}
+    =
+    0.25,
+\]
+\[
+    \mathbb{P}(10\mid d=0)
+    =
+    \frac{0.08}{0.32}
+    =
+    0.25,
+\]
+and
+\[
+    \mathbb{P}(11\mid d=0)
+    =
+    \frac{0.08}{0.32}
+    =
+    0.25.
+\]
+
+Thus, using the ordering
+\[
+    (00,01,10,11),
+\]
+we have
+\[
+    \mathbb{P}(m\mid d=0)
+    =
+    (0.25,0.25,0.25,0.25).
+\]
+
+This result is slightly surprising.
+
+Before hearing any report, the prior strongly favoured \(00\) and \(11\). But if we hear \(d=0\), then the report favours \(01\) and \(10\), because those are the configurations whose noise-free bulb value is \(0\).
+
+In this particular numerical example, these two effects exactly cancel. The prior prefers \(00\) and \(11\), but the report \(d=0\) pushes back toward \(01\) and \(10\). The result is a uniform posterior distribution.
+
+\subsubsection{Posterior if the report is \(d=1\)}
+
+Now suppose the report under consideration is \(d=1\). Again, this is not yet the actual observation. It is the second branch of the update rule.
+
+From the joint table,
+\[
+    \mathbb{P}(00,d=1)=0.32,
+    \quad
+    \mathbb{P}(01,d=1)=0.02,
+    \quad
+    \mathbb{P}(10,d=1)=0.02,
+    \quad
+    \mathbb{P}(11,d=1)=0.32.
+\]
+The total probability of this report is
+\[
+    \mathbb{P}(d=1)=0.68.
+\]
+
+Therefore,
+\[
+    \mathbb{P}(00\mid d=1)
+    =
+    \frac{0.32}{0.68}
+    =
+    \frac{32}{68}
+    =
+    \frac{8}{17}.
+\]
+Similarly,
+\[
+    \mathbb{P}(01\mid d=1)
+    =
+    \frac{0.02}{0.68}
+    =
+    \frac{2}{68}
+    =
+    \frac{1}{34},
+\]
+\[
+    \mathbb{P}(10\mid d=1)
+    =
+    \frac{0.02}{0.68}
+    =
+    \frac{2}{68}
+    =
+    \frac{1}{34},
+\]
+and
+\[
+    \mathbb{P}(11\mid d=1)
+    =
+    \frac{0.32}{0.68}
+    =
+    \frac{32}{68}
+    =
+    \frac{8}{17}.
+\]
+
+Thus, again using the ordering
+\[
+    (00,01,10,11),
+\]
+we obtain
+\[
+    \mathbb{P}(m\mid d=1)
+    =
+    \left(
+        \frac{8}{17},
+        \frac{1}{34},
+        \frac{1}{34},
+        \frac{8}{17}
+    \right).
+\]
+
+Here the report reinforces the prior.
+
+The prior already favoured \(00\) and \(11\). The report \(d=1\) also favours \(00\) and \(11\), because those are precisely the configurations whose noise-free bulb value is \(1\). So after hearing \(d=1\), the posterior puts even more mass on \(00\) and \(11\).
+
+\subsection{The full elementary posterior rule}
+
+We can now summarize the whole update rule.
+
+With the ordering
+\[
+    (00,01,10,11),
+\]
+the posterior distribution is
+\[
+    \mathbb{P}(m\mid d=0)
+    =
+    \left(
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4}
+    \right),
+\]
+and
+\[
+    \mathbb{P}(m\mid d=1)
+    =
+    \left(
+        \frac{8}{17},
+        \frac{1}{34},
+        \frac{1}{34},
+        \frac{8}{17}
+    \right).
+\]
+
+Equivalently, the update rule is
+\[
+    d
+    \longmapsto
+    \mathbb{P}(m\mid d),
+\]
+where
+\[
+    0
+    \longmapsto
+    \left(
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4}
+    \right),
+\]
+and
+\[
+    1
+    \longmapsto
+    \left(
+        \frac{8}{17},
+        \frac{1}{34},
+        \frac{1}{34},
+        \frac{8}{17}
+    \right).
+\]
+
+This is the entire Bayesian update, computed before the actual report is heard.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+\(m\) & \(\mathbb{P}(m\mid d=0)\) & \(\mathbb{P}(m\mid d=1)\) \\
+\midrule
+\(00\) & \(\frac{1}{4}\) & \(\frac{8}{17}\) \\
+\(01\) & \(\frac{1}{4}\) & \(\frac{1}{34}\) \\
+\(10\) & \(\frac{1}{4}\) & \(\frac{1}{34}\) \\
+\(11\) & \(\frac{1}{4}\) & \(\frac{8}{17}\) \\
+\bottomrule
+\end{tabular}
+\caption{The posterior distribution for each possible report.}
+\label{tab:elementary-posterior-rule}
+\end{table}
+
+This table is the answer to the finite inverse problem.
+
+\subsection{Now plug in the actual observation}
+
+Only now do we use the actually observed report.
+
+Suppose the reporter announces
+\[
+    \dobs\in\{0,1\}.
+\]
+We do not recompute the joint table. We do not change the prior. We do not change the reporter model. We simply evaluate the update rule at the observed value.
+
+If
+\[
+    \dobs=0,
+\]
+then
+\[
+    \mathbb{P}(m\mid d=\dobs)
+    =
+    \mathbb{P}(m\mid d=0)
+    =
+    \left(
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4},
+        \frac{1}{4}
+    \right).
+\]
+
+If
+\[
+    \dobs=1,
+\]
+then
+\[
+    \mathbb{P}(m\mid d=\dobs)
+    =
+    \mathbb{P}(m\mid d=1)
+    =
+    \left(
+        \frac{8}{17},
+        \frac{1}{34},
+        \frac{1}{34},
+        \frac{8}{17}
+    \right).
+\]
+
+In set notation, the posterior probability of an event \(A\subseteq\M\) is
+\[
+    \mu^{\mathrm{post}}_{\M}(A)
+    =
+    \mathbb{P}(m\in A\mid d=\dobs).
+\]
+For example, if \(\dobs=1\), then
+\[
+\begin{aligned}
+    \mu^{\mathrm{post}}_{\M}(\{00,11\})
+    &=
+    \mathbb{P}(m\in\{00,11\}\mid d=1)
+    \\
+    &=
+    \mathbb{P}(00\mid d=1)
+    +
+    \mathbb{P}(11\mid d=1)
+    \\
+    &=
+    \frac{8}{17}
+    +
+    \frac{8}{17}
+    \\
+    &=
+    \frac{16}{17}.
+\end{aligned}
+\]
+
+So after hearing \(d=1\), almost all posterior mass is placed on the two switch configurations that would make the bulb truly on.
+
+\subsection{What the high-school method secretly constructed}
+
+Although the calculation used only elementary arithmetic, it constructed several important objects.
+
+First, we used the prior distribution on the model space:
+\[
+    m \longmapsto \mathbb{P}(m).
+\]
+This described what we believed about the hidden switches before hearing the report.
+
+Second, we used the reporter rule:
+\[
+    (m,d) \longmapsto \mathbb{P}(d\mid m).
+\]
+This described how each hidden switch configuration produces possible reports.
+
+Third, we built the joint distribution:
+\[
+    (m,d) \longmapsto \mathbb{P}(m,d).
+\]
+This described the probability of every complete situation: both the hidden configuration and the report.
+
+Fourth, we computed the predictive distribution of the data:
+\[
+    d \longmapsto \mathbb{P}(d).
+\]
+This described what reports we expected to hear before the reporter spoke.
+
+Finally, we constructed the posterior update rule:
+\[
+    d \longmapsto \mathbb{P}(m\mid d).
+\]
+This is the rule that tells us how to update our belief about the hidden switch configuration after any possible report.
+
+So the high-school solution secretly followed the chain
+\[
+    \text{prior}
+    +
+    \text{reporter rule}
+    \longrightarrow
+    \text{joint distribution}
+    \longrightarrow
+    \text{predictive distribution}
+    \longrightarrow
+    \text{posterior update rule}.
+\]
+
+In this finite example, all of these objects are just tables of numbers. That is why the calculation feels so simple.
+
+But the structure is already the structure of Bayesian inference.
+
+\subsection{Transition to the measure-theoretic solution}
+
+The table solution is correct.
+
+Nothing went wrong. There is no hidden error to expose, no small arithmetical monster waiting under the bed. If all Bayesian inverse problems had four hidden states and two possible reports, the story could end here.
+
+The weakness of the table method is not correctness. The weakness is scalability and language.
+
+In larger problems, the model space may contain thousands, millions, or infinitely many possible states. In continuous problems, the model space may be uncountable. Then individual point probabilities may no longer be the right primitive objects, and a finite table cannot carry the weight of the problem.
+
+So in the next section we repeat the same construction in a more durable language.
+
+The prior distribution becomes a probability measure on the model space. The reporter rule becomes a likelihood kernel from the model space to the data space. The joint table becomes a joint measure on \(\M\times\D\). The column sums become marginals. The normalized columns become a posterior kernel.
+
+The arithmetic will look different, but the idea is the same:
+
+\[
+    \text{build the joint description first,}
+    \qquad
+    \text{then extract the update rule.}
+\]
+
+That is the bridge from the high-school solution to the measure-theoretic solution.
+
+\section{The same solution, but measure-theoretically}
+\label{sec:measure}
+
+We now solve the same problem again.
+
+Nothing about the game changes. The hidden switches are the same. The reporter is the same. The prior probabilities are the same. The actual numerical answer will also be the same.
+
+What changes is the language.
+
+In Section~\ref{sec:elementary}, we solved the problem by building tables. That worked because the model space had only four points and the data space had only two points. In this section, we describe the same construction using the language that survives when the spaces are larger, continuous, or infinite.
+
+The table arithmetic from Section~\ref{sec:elementary} will reappear in disguise:
+
+\[
+    \text{points become events},
+\]
+\[
+    \text{probability tables become measures},
+\]
+\[
+    \text{conditional probability tables become kernels}.
+\]
+
+The goal is still the same:
+
+\[
+    \text{construct the update rule first,}
+    \qquad
+    \text{plug in the observation second.}
+\]
+
+\subsection{What changes and what stays the same}
+
+Let us be clear about the purpose of this section.
+
+We are not replacing the elementary calculation with a different calculation. We are re-expressing the same calculation in a more durable mathematical language.
+
+In the finite solution, we assigned probabilities to individual switch configurations such as \(00\) or \(11\). That was harmless because there were only finitely many possibilities. In more general settings, however, it is better to think of probabilities as being assigned to sets of possibilities.
+
+So instead of asking
+\[
+    \mathbb{P}(m=00),
+\]
+we ask
+\[
+    \mathbb{P}(m\in \{00\}).
+\]
+In this finite example, these are the same question. But the second form is the one that generalizes.
+
+Similarly, instead of thinking of the reporter rule as a small conditional probability table, we will treat it as a rule that assigns a probability measure on the data space to each model value. This object is called a kernel.
+
+The elementary objects and the measure-theoretic objects correspond as follows:
+
+\begin{center}
+\begin{tabular}{c c}
+\toprule
+Elementary language & Measure-theoretic language \\
+\midrule
+hidden states \(m\) & events \(A\subseteq \M\) \\
+prior probabilities \(\mathbb{P}(m)\) & prior measure \(\muMzero\) \\
+report probabilities \(\mathbb{P}(d\mid m)\) & likelihood kernel \(L(m,B)\) \\
+joint table \(\mathbb{P}(m,d)\) & joint measure \(J\) \\
+column sums \(\mathbb{P}(d)\) & predictive data measure \(\muD\) \\
+posterior table \(\mathbb{P}(m\mid d)\) & posterior kernel \(\kappa(d,A)\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The table was not wrong. It was a local dialect. We are now translating it into the language spoken by general Bayesian inverse problems.
+
+\subsection{The model measurable space}
+
+The model space is still the set of possible hidden switch configurations:
+\[
+    \M=\{00,01,10,11\}.
+\]
+
+In the elementary solution, we treated these four elements as the basic possible states. Measure-theoretically, we also need to say which subsets of \(\M\) are allowed as events.
+
+Since \(\M\) is finite, the natural choice is the full power set:
+\[
+    \SigmaM = 2^{\M}.
+\]
+Thus every subset of \(\M\) is an event.
+
+For example,
+\[
+    \{00\},
+    \qquad
+    \{00,11\},
+    \qquad
+    \{01,10\},
+    \qquad
+    \M,
+    \qquad
+    \emptyset
+\]
+are all events in \(\SigmaM\).
+
+The event \(\{00,11\}\) means:
+\[
+    \text{the two switches are equal}.
+\]
+The event \(\{01,10\}\) means:
+\[
+    \text{the two switches are different}.
+\]
+
+The prior is now described as a probability measure
+\[
+    \muMzero:\SigmaM\to[0,1].
+\]
+It assigns probabilities to events, not merely to individual symbols.
+
+On singleton events, it is given by
+\[
+    \muMzero(\{00\})=0.4,
+    \qquad
+    \muMzero(\{01\})=0.1,
+\]
+\[
+    \muMzero(\{10\})=0.1,
+    \qquad
+    \muMzero(\{11\})=0.4.
+\]
+
+Since every event in \(\SigmaM\) is a union of singleton events, these four numbers determine the entire prior measure.
+
+For example,
+\[
+    \muMzero(\{00,11\})
+    =
+    \muMzero(\{00\})+\muMzero(\{11\})
+    =
+    0.4+0.4
+    =
+    0.8,
+\]
+and
+\[
+    \muMzero(\{01,10\})
+    =
+    \muMzero(\{01\})+\muMzero(\{10\})
+    =
+    0.1+0.1
+    =
+    0.2.
+\]
+
+Also,
+\[
+    \muMzero(\M)=1,
+    \qquad
+    \muMzero(\emptyset)=0.
+\]
+
+So the prior measure \(\muMzero\) is exactly the same prior information as before, but written as a measure on events.
+
+\subsection{The data measurable space}
+
+The data space is the set of possible reports:
+\[
+    \D=\{0,1\}.
+\]
+
+Again, because \(\D\) is finite, we take the data sigma algebra to be the full power set:
+\[
+    \SigmaD = 2^{\D}.
+\]
+Thus
+\[
+    \SigmaD
+    =
+    \{\emptyset,\{0\},\{1\},\{0,1\}\}.
+\]
+
+The event \(\{0\}\) means:
+\[
+    \text{the reporter says }0.
+\]
+The event \(\{1\}\) means:
+\[
+    \text{the reporter says }1.
+\]
+The event \(\D=\{0,1\}\) means:
+\[
+    \text{the reporter says something allowed by the game}.
+\]
+
+The data space tells us what kinds of observations can occur. The sigma algebra tells us which questions about the observation are legitimate events.
+
+\subsection{The likelihood kernel}
+
+We now encode the reporter's behaviour.
+
+In the elementary section, we used conditional probabilities such as
+\[
+    \mathbb{P}(d=0\mid m=00)
+    \qquad
+    \text{and}
+    \qquad
+    \mathbb{P}(d=1\mid m=11).
+\]
+Measure-theoretically, we package all of these probabilities into one object:
+\[
+    L(m,B)
+    =
+    \mathbb{P}(d\in B\mid m),
+    \qquad
+    B\in\SigmaD.
+\]
+
+This object is called the likelihood kernel.
+
+For each fixed hidden state \(m\in\M\), the map
+\[
+    B\longmapsto L(m,B)
+\]
+is a probability measure on \((\D,\SigmaD)\). In other words, once \(m\) is fixed, the likelihood kernel tells us the probability of every possible data event.
+
+For each fixed data event \(B\in\SigmaD\), the map
+\[
+    m\longmapsto L(m,B)
+\]
+is a measurable function on \((\M,\SigmaM)\). In this finite example, this measurability condition is automatic because every subset of \(\M\) is measurable.
+
+The likelihood kernel is just the reporter table from Section~\ref{sec:elementary}, rewritten as a kernel.
+
+For singleton data events, we have
+\[
+    L(00,\{0\})=0.2,
+    \qquad
+    L(00,\{1\})=0.8,
+\]
+\[
+    L(01,\{0\})=0.8,
+    \qquad
+    L(01,\{1\})=0.2,
+\]
+\[
+    L(10,\{0\})=0.8,
+    \qquad
+    L(10,\{1\})=0.2,
+\]
+and
+\[
+    L(11,\{0\})=0.2,
+    \qquad
+    L(11,\{1\})=0.8.
+\]
+
+For larger data events, the values are determined by additivity. For example,
+\[
+    L(m,\D)=1
+    \qquad
+    \text{for every }m\in\M,
+\]
+and
+\[
+    L(m,\emptyset)=0
+    \qquad
+    \text{for every }m\in\M.
+\]
+
+Thus \(L\) describes the same reporting mechanism as before:
+
+\[
+    \text{given a hidden state, it gives a probability measure over reports.}
+\]
+
+\subsection{The predictive data measure}
+
+Before the reporter speaks, we can ask:
+
+\begin{quote}
+    Given our prior uncertainty about \(m\), what reports do we expect to hear?
+\end{quote}
+
+This question asks for a probability measure on the data space. We call it the predictive data measure and denote it by \(\muD\).
+
+For a data event \(B\in\SigmaD\), define
+\[
+    \muD(B)
+    =
+    \int_{\M} L(m,B)\,\muMzero(dm).
+\]
+
+This formula says:
+
+\begin{quote}
+    Average the probability of the data event \(B\) over all possible hidden states, weighted by the prior.
+\end{quote}
+
+In our finite example, the integral is just a sum:
+\[
+    \muD(B)
+    =
+    \sum_{m\in\M} L(m,B)\,\muMzero(\{m\}).
+\]
+
+Let us recover the two predictive probabilities from Section~\ref{sec:elementary}.
+
+For \(B=\{0\}\),
+\[
+\begin{aligned}
+    \muD(\{0\})
+    &=
+    L(00,\{0\})\muMzero(\{00\})
+    +
+    L(01,\{0\})\muMzero(\{01\})
+    \\
+    &\qquad
+    +
+    L(10,\{0\})\muMzero(\{10\})
+    +
+    L(11,\{0\})\muMzero(\{11\})
+    \\
+    &=
+    0.2\cdot 0.4
+    +
+    0.8\cdot 0.1
+    +
+    0.8\cdot 0.1
+    +
+    0.2\cdot 0.4
+    \\
+    &=
+    0.08+0.08+0.08+0.08
+    \\
+    &=
+    0.32.
+\end{aligned}
+\]
+
+For \(B=\{1\}\),
+\[
+\begin{aligned}
+    \muD(\{1\})
+    &=
+    L(00,\{1\})\muMzero(\{00\})
+    +
+    L(01,\{1\})\muMzero(\{01\})
+    \\
+    &\qquad
+    +
+    L(10,\{1\})\muMzero(\{10\})
+    +
+    L(11,\{1\})\muMzero(\{11\})
+    \\
+    &=
+    0.8\cdot 0.4
+    +
+    0.2\cdot 0.1
+    +
+    0.2\cdot 0.1
+    +
+    0.8\cdot 0.4
+    \\
+    &=
+    0.32+0.02+0.02+0.32
+    \\
+    &=
+    0.68.
+\end{aligned}
+\]
+
+Thus
+\[
+    \muD(\{0\})=0.32,
+    \qquad
+    \muD(\{1\})=0.68.
+\]
+
+These are exactly the column sums of the joint table from Section~\ref{sec:elementary}. The notation changed, but the arithmetic did not.
+
+\subsection{The joint measure}
+
+The prior measure \(\muMzero\) describes uncertainty about the hidden model. The likelihood kernel \(L\) describes how each hidden model produces reports.
+
+Together, they determine a probability measure on the product space
+\[
+    \M\times\D.
+\]
+
+This product space contains complete outcomes of the experiment:
+\[
+    (m,d),
+\]
+where \(m\) is the hidden switch configuration and \(d\) is the reported value.
+
+We define the joint measure \(J\) first on rectangular events. If
+\[
+    A\in\SigmaM,
+    \qquad
+    B\in\SigmaD,
+\]
+then
+\[
+    J(A\times B)
+    =
+    \int_A L(m,B)\,\muMzero(dm).
+\]
+
+This is the measure-theoretic version of the joint table.
+
+It answers the question:
+
+\begin{quote}
+    What is the probability that the hidden state lies in \(A\) and the report lies in \(B\)?
+\end{quote}
+
+For example, take
+\[
+    A=\{00\},
+    \qquad
+    B=\{1\}.
+\]
+Then
+\[
+\begin{aligned}
+    J(\{00\}\times\{1\})
+    &=
+    \int_{\{00\}} L(m,\{1\})\,\muMzero(dm)
+    \\
+    &=
+    L(00,\{1\})\muMzero(\{00\})
+    \\
+    &=
+    0.8\cdot 0.4
+    \\
+    &=
+    0.32.
+\end{aligned}
+\]
+This is exactly the joint table entry
+\[
+    \mathbb{P}(m=00,d=1)=0.32.
+\]
+
+Similarly,
+\[
+    J(\{01\}\times\{1\})
+    =
+    0.2\cdot 0.1
+    =
+    0.02.
+\]
+
+So \(J\) is simply the whole joint table, but now written as a measure on events in \(\M\times\D\).
+
+The joint measure has two important marginals.
+
+First, if we ignore the data coordinate, we recover the prior:
+\[
+\begin{aligned}
+    J(A\times \D)
+    &=
+    \int_A L(m,\D)\,\muMzero(dm)
+    \\
+    &=
+    \int_A 1\,\muMzero(dm)
+    \\
+    &=
+    \muMzero(A).
+\end{aligned}
+\]
+
+Second, if we ignore the model coordinate, we recover the predictive data measure:
+\[
+\begin{aligned}
+    J(\M\times B)
+    &=
+    \int_{\M} L(m,B)\,\muMzero(dm)
+    \\
+    &=
+    \muD(B).
+\end{aligned}
+\]
+
+Thus
+\[
+    J(A\times \D)=\muMzero(A),
+    \qquad
+    J(\M\times B)=\muD(B).
+\]
+
+This is exactly what a joint description should do. Looking only at the model coordinate gives the prior. Looking only at the data coordinate gives the predictive distribution.
+
+\subsection{The posterior kernel as the real target}
+
+The joint measure describes the whole experiment before the report is heard. But once a report is heard, we want to update our belief about the hidden state.
+
+So the real target is a rule
+\[
+    d\longmapsto \kappa(d,\cdot),
+\]
+where, for each \(d\in\D\), the object
+\[
+    \kappa(d,\cdot)
+\]
+is a probability measure on \((\M,\SigmaM)\).
+
+For an event \(A\in\SigmaM\), the number
+\[
+    \kappa(d,A)
+\]
+means:
+\[
+    \text{the probability that the hidden state lies in }A
+    \text{ after observing the report }d.
+\]
+
+This is the measure-theoretic version of the posterior table from Section~\ref{sec:elementary}.
+
+In the elementary solution, the posterior rule was written as
+\[
+    d\longmapsto \mathbb{P}(m\mid d).
+\]
+Here, the same rule is written as
+\[
+    d\longmapsto \kappa(d,\cdot).
+\]
+
+The dot in \(\kappa(d,\cdot)\) is important. It reminds us that, once \(d\) is fixed, \(\kappa(d,\cdot)\) is a probability measure on model events.
+
+So for each possible report \(d\), the posterior kernel gives a full posterior distribution over \(\M\).
+
+\subsection{The consistency identity}
+
+The posterior kernel cannot be chosen arbitrarily. It must be consistent with the joint measure \(J\).
+
+The consistency requirement is
+\[
+    J(A\times B)
+    =
+    \int_B \kappa(d,A)\,\muD(dd),
+    \qquad
+    A\in\SigmaM,\; B\in\SigmaD.
+\]
+
+This identity says:
+
+\begin{quote}
+    If we average the posterior probability of \(A\) over all data values in \(B\), weighted by the predictive probability of those data values, we must recover the joint probability of \(A\) and \(B\).
+\end{quote}
+
+In other words, the posterior kernel must reconstruct the same joint law we started from.
+
+This is the measure-theoretic counterpart of the elementary fact that
+\[
+    \mathbb{P}(m,d)
+    =
+    \mathbb{P}(m\mid d)\mathbb{P}(d).
+\]
+
+Indeed, in the finite case, the consistency identity reduces to the familiar multiplication rule:
+\[
+    \mathbb{P}(m\in A,d\in B)
+    =
+    \sum_{d\in B}
+    \mathbb{P}(m\in A\mid d)\mathbb{P}(d).
+\]
+
+Thus the posterior kernel is not an extra assumption. It is the object that reverses the joint description in a way that remains consistent with the predictive data measure.
+
+\subsection{Solving the posterior kernel in the finite case}
+
+Because
+\[
+    \D=\{0,1\},
+\]
+we can solve for the posterior kernel explicitly.
+
+Take \(B=\{d\}\), where \(d\in\D\). The consistency identity becomes
+\[
+    J(A\times\{d\})
+    =
+    \int_{\{d\}} \kappa(d',A)\,\muD(dd').
+\]
+Since the data space is finite, this integral is just
+\[
+    \int_{\{d\}} \kappa(d',A)\,\muD(dd')
+    =
+    \kappa(d,A)\muD(\{d\}).
+\]
+Therefore,
+\[
+    J(A\times\{d\})
+    =
+    \kappa(d,A)\muD(\{d\}).
+\]
+
+But by the definition of the joint measure,
+\[
+    J(A\times\{d\})
+    =
+    \int_A L(m,\{d\})\,\muMzero(dm).
+\]
+Hence
+\[
+    \kappa(d,A)\muD(\{d\})
+    =
+    \int_A L(m,\{d\})\,\muMzero(dm).
+\]
+
+Since
+\[
+    \muD(\{0\})=0.32>0,
+    \qquad
+    \muD(\{1\})=0.68>0,
+\]
+we may divide by \(\muD(\{d\})\). This gives
+\[
+    \kappa(d,A)
+    =
+    \frac{
+        \int_A L(m,\{d\})\,\muMzero(dm)
+    }{
+        \muD(\{d\})
+    }.
+\]
+
+Using the definition of \(\muD\), this can also be written as
+\[
+    \kappa(d,A)
+    =
+    \frac{
+        \int_A L(m,\{d\})\,\muMzero(dm)
+    }{
+        \int_{\M} L(m,\{d\})\,\muMzero(dm)
+    }.
+\]
+
+This is Bayes' rule in kernel form for the finite example.
+
+It is exactly the same operation as normalizing a column of the elementary joint table.
+
+The numerator is the part of the \(d\)-column belonging to the model event \(A\). The denominator is the total mass of the \(d\)-column. Dividing the numerator by the denominator turns that column into a probability measure on \(\M\).
+
+Let us check this against the previous answer.
+
+For \(d=0\) and \(A=\{00\}\),
+\[
+\begin{aligned}
+    \kappa(0,\{00\})
+    &=
+    \frac{
+        \int_{\{00\}} L(m,\{0\})\,\muMzero(dm)
+    }{
+        \int_{\M} L(m,\{0\})\,\muMzero(dm)
+    }
+    \\
+    &=
+    \frac{
+        L(00,\{0\})\muMzero(\{00\})
+    }{
+        \muD(\{0\})
+    }
+    \\
+    &=
+    \frac{
+        0.2\cdot 0.4
+    }{
+        0.32
+    }
+    \\
+    &=
+    \frac{0.08}{0.32}
+    \\
+    &=
+    \frac{1}{4}.
+\end{aligned}
+\]
+
+For \(d=1\) and \(A=\{00\}\),
+\[
+\begin{aligned}
+    \kappa(1,\{00\})
+    &=
+    \frac{
+        L(00,\{1\})\muMzero(\{00\})
+    }{
+        \muD(\{1\})
+    }
+    \\
+    &=
+    \frac{
+        0.8\cdot 0.4
+    }{
+        0.68
+    }
+    \\
+    &=
+    \frac{0.32}{0.68}
+    \\
+    &=
+    \frac{8}{17}.
+\end{aligned}
+\]
+
+These are exactly the same posterior probabilities found in Section~\ref{sec:elementary}.
+
+More generally, for singleton model events, the posterior kernel is
+\[
+    \kappa(0,\{00\})
+    =
+    \kappa(0,\{01\})
+    =
+    \kappa(0,\{10\})
+    =
+    \kappa(0,\{11\})
+    =
+    \frac{1}{4},
+\]
+and
+\[
+    \kappa(1,\{00\})
+    =
+    \kappa(1,\{11\})
+    =
+    \frac{8}{17},
+\]
+while
+\[
+    \kappa(1,\{01\})
+    =
+    \kappa(1,\{10\})
+    =
+    \frac{1}{34}.
+\]
+
+Since \(\kappa(d,\cdot)\) is a probability measure, its value on larger events is obtained by additivity. For example,
+\[
+    \kappa(1,\{00,11\})
+    =
+    \kappa(1,\{00\})
+    +
+    \kappa(1,\{11\})
+    =
+    \frac{16}{17}.
+\]
+
+\subsection{Plugging in the actual observation}
+
+We have now constructed the full posterior kernel
+\[
+    d\longmapsto \kappa(d,\cdot).
+\]
+
+Only at this point do we use the actual observed report.
+
+If the reporter announces
+\[
+    \dobs\in\D,
+\]
+then the posterior measure on the model space is
+\[
+    \mu^{\mathrm{post}}_{\M}(\cdot)
+    =
+    \kappa(\dobs,\cdot).
+\]
+
+So if
+\[
+    \dobs=0,
+\]
+then
+\[
+    \mu^{\mathrm{post}}_{\M}(\cdot)
+    =
+    \kappa(0,\cdot),
+\]
+and if
+\[
+    \dobs=1,
+\]
+then
+\[
+    \mu^{\mathrm{post}}_{\M}(\cdot)
+    =
+    \kappa(1,\cdot).
+\]
+
+The observation selects a measure from the posterior kernel. It does not create the update rule from scratch.
+
+This is the same ordering as in the high-school solution:
+
+\[
+    \text{construct the whole update rule first,}
+    \qquad
+    \text{evaluate it at }\dobs\text{ second.}
+\]
+
+The notation is heavier, but the conceptual order is cleaner.
+
+\subsection{Bridge to continuous Bayes}
+
+In this finite example, everything can be written using singleton probabilities. The event \(\{0\}\) has positive predictive probability, and the event \(\{1\}\) has positive predictive probability. Therefore conditioning on \(d=0\) or \(d=1\) is just column normalization.
+
+In continuous spaces, this simple picture breaks.
+
+If the data space is continuous, then a singleton observation often has probability zero:
+\[
+    \muD(\{\dobs\})=0.
+\]
+So we cannot condition by literally dividing by the probability of the observed point. The denominator would be zero.
+
+This is one reason the measure-theoretic formulation matters.
+
+Instead of treating Bayes' rule as a formula about point probabilities, we treat it as the construction of a posterior kernel
+\[
+    d\longmapsto \kappa(d,\cdot)
+\]
+that is consistent with the joint measure:
+\[
+    J(A\times B)
+    =
+    \int_B \kappa(d,A)\,\muD(dd).
+\]
+
+When densities exist, we can often write this posterior kernel in the familiar density form. For example, one may see expressions like
+\[
+    \pi(m\mid d)
+    =
+    \frac{\pi(d\mid m)\pi_0(m)}
+    {\int \pi(d\mid m')\pi_0(m')\,dm'}.
+\]
+But this density formula is not the foundation. It is a representation of the posterior-kernel construction relative to chosen reference measures.
+
+The measure-theoretic view keeps the underlying objects visible:
+
+\[
+    \text{prior measure},
+    \qquad
+    \text{likelihood kernel},
+    \qquad
+    \text{joint measure},
+    \qquad
+    \text{posterior kernel}.
+\]
+
+This is the language needed for regular conditional probabilities and for Bayesian inverse problems on general spaces.
+
+\section{Summary of the argument}
+\label{sec:summary}
+
+We have solved the same toy problem twice.
+
+The first solution used elementary finite probability. The second solution used measure-theoretic language. The answers were the same, but the second version exposed the structure that survives beyond finite tables.
+
+\subsection{The finite arithmetic story}
+
+In the finite arithmetic story, we began with two ingredients.
+
+First, we had a prior distribution on the hidden model space:
+\[
+    \mathbb{P}(m).
+\]
+Second, we had the reporter rule:
+\[
+    \mathbb{P}(d\mid m).
+\]
+
+Multiplying these gave the joint table:
+\[
+    \mathbb{P}(m,d)
+    =
+    \mathbb{P}(m)\mathbb{P}(d\mid m).
+\]
+
+Adding down the data columns gave the predictive probabilities:
+\[
+    \mathbb{P}(d)
+    =
+    \sum_{m\in\M}\mathbb{P}(m,d).
+\]
+
+Normalizing each column gave the posterior rule:
+\[
+    \mathbb{P}(m\mid d)
+    =
+    \frac{\mathbb{P}(m,d)}{\mathbb{P}(d)}.
+\]
+
+Finally, once the actual report \(\dobs\) was heard, we selected the corresponding posterior:
+\[
+    \mathbb{P}(m\mid d=\dobs).
+\]
+
+Thus the finite story is
+\[
+    \text{prior}
+    +
+    \text{reporter rule}
+    \Longrightarrow
+    \text{joint table},
+\]
+\[
+    \text{joint table}
+    \Longrightarrow
+    \text{predictive probabilities},
+\]
+\[
+    \text{normalize each data column}
+    \Longrightarrow
+    \text{posterior rule},
+\]
+\[
+    \text{observed report}
+    \Longrightarrow
+    \text{choose one posterior}.
+\]
+
+\subsection{The measure-theoretic story}
+
+In the measure-theoretic story, the prior distribution became a probability measure
+\[
+    \muMzero
+\]
+on the measurable model space
+\[
+    (\M,\SigmaM).
+\]
+
+The reporter rule became a likelihood kernel
+\[
+    L(m,B),
+    \qquad
+    B\in\SigmaD,
+\]
+from the model space to the data space.
+
+Together, the prior measure and likelihood kernel defined the joint measure
+\[
+    J(A\times B)
+    =
+    \int_A L(m,B)\,\muMzero(dm).
+\]
+
+The predictive data measure was the data marginal of \(J\):
+\[
+    \muD(B)
+    =
+    J(\M\times B)
+    =
+    \int_{\M} L(m,B)\,\muMzero(dm).
+\]
+
+The posterior update became a posterior kernel
+\[
+    d\longmapsto \kappa(d,\cdot),
+\]
+characterized by the consistency identity
+\[
+    J(A\times B)
+    =
+    \int_B \kappa(d,A)\,\muD(dd).
+\]
+
+Finally, once the observed report \(\dobs\) was known, the posterior measure was obtained by evaluation:
+\[
+    \mu^{\mathrm{post}}_{\M}(\cdot)
+    =
+    \kappa(\dobs,\cdot).
+\]
+
+Thus the measure-theoretic story is
+\[
+    \muMzero
+    +
+    L
+    \Longrightarrow
+    J,
+\]
+\[
+    J
+    \Longrightarrow
+    \muD,
+\]
+\[
+    J
+    \text{ and }
+    \muD
+    \Longrightarrow
+    \kappa,
+\]
+\[  
+    \dobs
+    \Longrightarrow
+    \kappa(\dobs,\cdot).
+\]
+
+\subsection{Final slogan}
+
+\begin{quote}
+    In the finite case, Bayes is column normalization. In the general case, Bayes is the extraction of a posterior kernel from a joint measure.
+\end{quote}
+
+The finite table is the seed. The measure-theoretic construction is the tree.
+
+\appendix
+
+\section{Notation map}
+\begin{table}[h]
+\centering
+\begin{tabular}{l l l}
+\toprule
+Object & Elementary notation & Measure-theoretic notation \\
+\midrule
+Hidden states & \(m\in\{00,01,10,11\}\) & \((\M,\SigmaM)\) \\
+Reports & \(d\in\{0,1\}\) & \((\D,\SigmaD)\) \\
+Prior & \(\mathbb{P}(m)\) & \(\muMzero\) \\
+Reporter rule & \(\mathbb{P}(d\mid m)\) & \(L(m,\cdot)\) \\
+Joint law & \(\mathbb{P}(m,d)\) & \(J\) \\
+Predictive law & \(\mathbb{P}(d)\) & \(\muD\) \\
+Posterior rule & \(d\mapsto\mathbb{P}(m\mid d)\) & \(d\mapsto\kappa(d,\cdot)\) \\
+Observed posterior & \(\mathbb{P}(m\mid \dobs)\) & \(\kappa(\dobs,\cdot)\) \\
+\bottomrule
+\end{tabular}
+\caption{Dictionary between the elementary and measure-theoretic presentations.}
+\end{table}
+
+\end{document}

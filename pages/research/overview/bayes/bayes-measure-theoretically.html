@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayes, Measure-Theoretically — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
+    <meta name="description" content="A measure-theoretic treatment of Bayesian inference, built from a tiny toy problem solved twice: first by elementary probability, then by posterior kernels.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                SigmaM: '\\Sigma_{\\mathcal{M}}',
+                SigmaD: '\\Sigma_{\\mathcal{D}}',
+                muMzero: '\\mu^0_{\\mathcal{M}}',
+                muD: '\\mu_{\\mathcal{D}}',
+                dobs: 'd_{\\mathrm{obs}}',
+                ptrust: 'p_{\\mathrm{trust}}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Bayes, Measure-Theoretically</h1>
+                <p>A tiny inverse problem, solved twice &mdash; first by tables, then by kernels.</p>
+            </div>
+        </section>
+
+        <!-- PART NAVIGATION -->
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Game</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> High-School Solution</a>
+                <a class="part-chip" href="part-3a.html"><span class="part-chip-num">3a</span> Points &rarr; Events</a>
+                <a class="part-chip" href="part-3b.html"><span class="part-chip-num">3b</span> Conditioning</a>
+                <a class="part-chip" href="part-3c.html"><span class="part-chip-num">3c</span> Cond. Expectation</a>
+                <a class="part-chip" href="part-3d.html"><span class="part-chip-num">3d</span> Disintegration</a>
+                <a class="part-chip" href="part-3e.html"><span class="part-chip-num">3e</span> Bayesian Inversion</a>
+                <a class="part-chip" href="part-3f.html"><span class="part-chip-num">3f</span> Back to Finite</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What to expect</h2>
+
+                    <p> This short example presents a simple discrete inverse problem that we will solve using Bayesian inversion. The purpose is to introduce key concepts of measure theory and develop quickly (and informally) the measure theoretic form of the Bayesian formula. I did not write this for people that have never seen Bayesian inversion, but rather for those that dipped their toes in bayesian waters, but are still afraid of the measure theoretical sharks lurking in the deep waters.</p>
+
+                    <p>The example is deliberately small. There are only four possible hidden
+                    states and only two possible reports. This means that, in principle, we can
+                    solve the whole problem by drawing a table and doing ordinary probability
+                    arithmetic. That is not a weakness of the example. It is the point.</p>
+
+                    <p>We will solve the same problem twice.</p>
+
+                    <p>First, in <a href="part-2.html">Part&nbsp;2</a>, we solve it in the most
+                    elementary way possible. We list all possible hidden switch configurations,
+                    all possible reports, and all joint probabilities. Then we condition on each
+                    possible report by selecting the appropriate part of the table and
+                    normalizing. No measure theory is needed. The only operations are
+                    multiplication, addition, and division.</p>
+
+                    <p>Second, in <a href="part-3a.html">Part&nbsp;3</a>, we solve the same
+                    problem again using the language of measure theory. The prior becomes a
+                    probability measure on the model space. The reporting mechanism becomes a
+                    likelihood kernel. The combined experiment becomes a joint measure. The
+                    Bayesian update becomes a posterior kernel.</p>
+
+                    <p>The important point is that the observed report is not used to build the
+                    theory. The theory is built before the report arrives.</p>
+
+                    <p>In other words, our goal is not merely to compute
+                    \[\mathbb{P}(m \mid \dobs)\]
+                    for one particular observed value \(\dobs\). Our goal is to construct the
+                    whole update rule
+                    \[d \longmapsto \mathbb{P}(m \mid d).\]
+                    Only after this rule has been constructed do we plug in the actual
+                    observation \(\dobs\).</p>
+
+                    <p>This distinction is small in the finite example, but it becomes essential
+                    later. The finite table we build in Part&nbsp;2 is the baby version of the
+                    posterior kernel constructed in Part&nbsp;3.</p>
+
+                    <h2>The four parts</h2>
+
+                    <p><strong>Part&nbsp;1 &mdash; <a href="part-1.html">The Game</a>.</strong>
+                    We set up a small guessing game with two hidden switches, a lightbulb, and an
+                    unreliable reporter. We specify the model space, the data space, the forward
+                    map, the noise model, and the prior.</p>
+
+                    <p><strong>Part&nbsp;2 &mdash; <a href="part-2.html">The High-School
+                    Solution</a>.</strong>
+                    We solve the game using only multiplication, addition, and division. We build
+                    the joint table, compute predictive probabilities, normalize each column, and
+                    obtain the full posterior update rule.</p>
+
+                    <p><strong>Part&nbsp;3 &mdash; <a href="part-3a.html">From Points to Events</a>,
+                    <a href="part-3b.html">Conditioning and Its Limits</a>,
+                    <a href="part-3c.html">Conditional Expectation</a>,
+                    <a href="part-3d.html">Disintegration</a>,
+                    <a href="part-3e.html">Bayesian Inversion</a>, and
+                    <a href="part-3f.html">Back to Finite Land</a>.</strong>
+                    We re-express the same calculation in the language of measures, kernels, and
+                    sigma-algebras. The prior becomes a measure, the reporter becomes a kernel,
+                    the joint table becomes a joint measure, and the posterior becomes a kernel.
+                    We climb to measure theory and descend back to recover the finite answer.</p>
+
+                    <p><strong>Part&nbsp;4 &mdash; <a href="part-4.html">Summary &amp; Notation
+                    Map</a>.</strong>
+                    We collect the two stories side by side, state the final slogan, and provide a
+                    dictionary between the elementary and measure-theoretic notations.</p>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>
