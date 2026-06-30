@@ -585,11 +585,18 @@
     background: rgba(103,145,190,0.07);
 }
 
-/* Let wide display equations scroll horizontally */
+/* Display equations: never wider than the column; scroll if they are.
+   display:block overrides MathJax's flex layout for width="full"
+   equations (e.g. \begin{align}); that flex layout can otherwise ignore
+   overflow and push the page wider than the viewport. !important is
+   needed because MathJax injects its stylesheet after this one, so it
+   would win on equal specificity. */
 mjx-container[jax="CHTML"][display="true"] {
+    display: block !important;
     overflow-x: auto;
-    padding: 0.5rem 0;
+    overflow-y: hidden;
     max-width: 100%;
+    padding: 0.5rem 0;
 }
 
 /* ── Responsive: tablet ── */
@@ -605,5 +612,17 @@ mjx-container[jax="CHTML"][display="true"] {
 
     .bayes-callout {
         max-width: 100%;
+    }
+
+    /* Inline math: keep a long expression from forcing its line off-screen.
+       Inline math is inline-block and cannot wrap, so on a narrow screen a
+       single wide expression drags the whole line (and the text around it)
+       past the right edge. Capping its width and letting it scroll within
+       its own box keeps the line on screen. Scoped to small screens so the
+       desktop baseline alignment of inline math is left untouched. */
+    mjx-container[jax="CHTML"]:not([display="true"]) {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 }
