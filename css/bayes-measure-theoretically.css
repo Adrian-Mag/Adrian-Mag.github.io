@@ -1,5 +1,11 @@
 /* bayes-measure-theoretically page-specific styles */
 
+/* Prevent horizontal scroll on bayes pages.  Scoped here so only bayes
+   pages are affected — think-first's sticky nav is untouched. */
+body {
+    overflow-x: hidden;
+}
+
 .page-header {
     position: relative;
     overflow: hidden;
@@ -76,6 +82,14 @@
         font-size: 1rem;
         line-height: 1.75;
         padding: 0 0.5rem;
+    }
+
+    /* Scale down ALL MathJax (inline + display) so long inline
+       expressions like \(\mathbb{P}^{(v)}_\varepsilon(A):=...\)
+       actually fit on a phone screen.  MathJax CHTML uses em units,
+       so font-size scales every symbol proportionally. */
+    mjx-container[jax="CHTML"] {
+        font-size: 75% !important;
     }
 
     .math-article > h2 {
@@ -164,6 +178,10 @@
     .math-article {
         padding: 0 0.3rem;
         font-size: 0.9rem;
+    }
+
+    mjx-container[jax="CHTML"] {
+        font-size: 65% !important;
     }
 
     .math-article > h2 {
@@ -612,6 +630,12 @@ mjx-container[jax="CHTML"][display="true"] {
 
     .bayes-callout {
         max-width: 100%;
+    }
+
+    /* Scale down MathJax slightly on tablets so long inline
+       expressions don't overflow. */
+    mjx-container[jax="CHTML"] {
+        font-size: 85% !important;
     }
 
     /* Inline math: keep a long expression from forcing its line off-screen.
