@@ -68,12 +68,16 @@
     margin: 0 auto;
     line-height: 1.85;
     font-size: 1.05rem;
+    padding: 0 1rem;
+    overflow-x: hidden;
+    word-wrap: break-word;
 }
 
 @media (max-width: 700px) {
     .math-article {
         font-size: 1rem;
         line-height: 1.75;
+        padding: 0 0.5rem;
     }
 
     .math-article > h2 {
@@ -91,6 +95,105 @@
 
     .research-content {
         padding: 40px 0;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header p {
+        font-size: 1rem;
+    }
+
+    .page-header {
+        padding: 60px 0 40px 0;
+    }
+
+    .part-nav-inner {
+        gap: 0.3rem;
+    }
+
+    .part-chip {
+        font-size: 0.8rem;
+        padding: 0.3em 0.7em;
+    }
+
+    .part-prevnext {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .part-prevnext-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .bayes-callout {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .bayes-diagram {
+        margin: 1.5rem auto;
+    }
+
+    .bayes-diagram svg {
+        max-width: 100%;
+    }
+
+    .bayes-diagram figcaption {
+        font-size: 0.85rem;
+    }
+
+    .math-article ul,
+    .math-article ol {
+        margin-left: 1.2em;
+        padding-left: 0.5em;
+    }
+
+    .math-article .table-container {
+        font-size: 0.85rem;
+    }
+
+    .math-article th,
+    .math-article td {
+        padding: 0.4em 0.8em;
+    }
+}
+
+@media (max-width: 400px) {
+    .math-article {
+        padding: 0 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    .math-article > h2 {
+        font-size: 1.2rem;
+    }
+
+    .math-article h3 {
+        font-size: 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .part-chip {
+        font-size: 0.75rem;
+        padding: 0.25em 0.5em;
+    }
+
+    .part-chip-num {
+        width: 1.4em;
+        height: 1.4em;
+        font-size: 0.7em;
+    }
+
+    .bayes-callout {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -487,4 +590,21 @@
 mjx-container[jax="CHTML"][display="true"] {
     overflow-x: auto;
     padding: 0.5rem 0;
+    max-width: 100%;
+}
+
+/* ── Responsive: tablet ── */
+@media (max-width: 900px) {
+    .math-article {
+        max-width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    .bayes-diagram {
+        max-width: 100%;
+    }
+
+    .bayes-callout {
+        max-width: 100%;
+    }
 }
