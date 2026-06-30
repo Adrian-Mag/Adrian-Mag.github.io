@@ -1,11 +1,5 @@
 /* bayes-measure-theoretically page-specific styles */
 
-/* Prevent horizontal scroll on bayes pages.  Scoped here so only bayes
-   pages are affected — think-first's sticky nav is untouched. */
-body {
-    overflow-x: hidden;
-}
-
 .page-header {
     position: relative;
     overflow: hidden;
@@ -75,6 +69,27 @@ body {
     font-size: 1.05rem;
     padding: 0 1rem;
     overflow-wrap: break-word;
+    /* Prevent wide inline math from expanding the page.  Paragraphs
+       inside have their own overflow-x: auto so they scroll instead
+       of being clipped. */
+    overflow-x: hidden;
+}
+
+/* Paragraphs and list items that contain long inline MathJax
+   expressions get a horizontal scrollbar instead of pushing the
+   page wider or being clipped.  overflow-x: auto only shows a
+   scrollbar when content actually overflows, so paragraphs with
+   normal text are unaffected. */
+.math-article p,
+.math-article li,
+.math-article blockquote {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.bayes-callout {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 @media (max-width: 700px) {
@@ -84,12 +99,8 @@ body {
         padding: 0 0.5rem;
     }
 
-    /* Scale down ALL MathJax (inline + display) so long inline
-       expressions like \(\mathbb{P}^{(v)}_\varepsilon(A):=...\)
-       actually fit on a phone screen.  MathJax CHTML uses em units,
-       so font-size scales every symbol proportionally. */
     mjx-container[jax="CHTML"] {
-        font-size: 75% !important;
+        font-size: 72% !important;
     }
 
     .math-article > h2 {
@@ -111,10 +122,14 @@ body {
 
     .page-header h1 {
         font-size: 2rem;
+        max-width: 100%;
+        overflow-wrap: break-word;
     }
 
     .page-header p {
         font-size: 1rem;
+        max-width: 100%;
+        overflow-wrap: break-word;
     }
 
     .page-header {
@@ -174,6 +189,12 @@ body {
     }
 }
 
+@media (max-width: 500px) {
+    mjx-container[jax="CHTML"] {
+        font-size: 62% !important;
+    }
+}
+
 @media (max-width: 400px) {
     .math-article {
         padding: 0 0.3rem;
@@ -181,7 +202,7 @@ body {
     }
 
     mjx-container[jax="CHTML"] {
-        font-size: 65% !important;
+        font-size: 55% !important;
     }
 
     .math-article > h2 {
