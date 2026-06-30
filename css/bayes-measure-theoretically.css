@@ -92,6 +92,39 @@
     overflow-y: hidden;
 }
 
+/* ── Responsive: tablet (must come BEFORE smaller breakpoints
+   so that phone rules override tablet rules in the cascade) ── */
+@media (max-width: 900px) {
+    .math-article {
+        max-width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    .bayes-diagram {
+        max-width: 100%;
+    }
+
+    .bayes-callout {
+        max-width: 100%;
+    }
+
+    mjx-container[jax="CHTML"] {
+        font-size: 85% !important;
+    }
+
+    /* Inline math: keep a long expression from forcing its line off-screen.
+       Inline math is inline-block and cannot wrap, so on a narrow screen a
+       single wide expression drags the whole line (and the text around it)
+       past the right edge. Capping its width and letting it scroll within
+       its own box keeps the line on screen. Scoped to small screens so the
+       desktop baseline alignment of inline math is left untouched. */
+    mjx-container[jax="CHTML"]:not([display="true"]) {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
 @media (max-width: 700px) {
     .math-article {
         font-size: 1rem;
@@ -636,38 +669,4 @@ mjx-container[jax="CHTML"][display="true"] {
     overflow-y: hidden;
     max-width: 100%;
     padding: 0.5rem 0;
-}
-
-/* ── Responsive: tablet ── */
-@media (max-width: 900px) {
-    .math-article {
-        max-width: 100%;
-        padding: 0 1.5rem;
-    }
-
-    .bayes-diagram {
-        max-width: 100%;
-    }
-
-    .bayes-callout {
-        max-width: 100%;
-    }
-
-    /* Scale down MathJax slightly on tablets so long inline
-       expressions don't overflow. */
-    mjx-container[jax="CHTML"] {
-        font-size: 85% !important;
-    }
-
-    /* Inline math: keep a long expression from forcing its line off-screen.
-       Inline math is inline-block and cannot wrap, so on a narrow screen a
-       single wide expression drags the whole line (and the text around it)
-       past the right edge. Capping its width and letting it scroll within
-       its own box keeps the line on screen. Scoped to small screens so the
-       desktop baseline alignment of inline math is left untouched. */
-    mjx-container[jax="CHTML"]:not([display="true"]) {
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
 }
