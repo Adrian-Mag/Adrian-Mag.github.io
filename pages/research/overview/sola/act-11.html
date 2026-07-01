@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 11: What SOLA Is Good For — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 11 of My Take on SOLA: What SOLA is genuinely good at after examining all three pillars, what it cannot do without a prior, and the final slogan.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: '\\mathrm{L}', Lprob: 'L',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 11: What SOLA Is Good For</h1>
+                <p>Strengths, limitations, and the generative view of SOLA's role.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+                <a class="part-chip" href="act-11.html" aria-current="page"><span class="part-chip-num">11</span> What SOLA Is Good For</a>
+                <a class="part-chip" href="summary.html"><span class="part-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>After Three Pillars</h2>
+
+                    <p>We have now examined all three pillars on which the case for SOLA
+                    rests.</p>
+
+                    <p>The first pillar was <em>no prior information</em>. Act 7 showed that
+                    without model-side assumptions, the gap between the resolved property
+                    \(\mathcal{A}(\bar m)\)
+                    and the true target property
+                    \(\Tau(\bar m)\)
+                    is unbounded. A good-looking resolving-kernel plot does not, by itself,
+                    close that gap. The boundary is real, and it is the same boundary that
+                    classical inversion has long since accepted.</p>
+
+                    <p>The second pillar was <em>resolution control</em>. Act 8 showed that
+                    SOLA's resolving kernels are target kernels passed through the adjoint of a
+                    resolution operator:
+                    \(R_k = \mathcal R^*T_k.\)
+                    This is useful — it gives visibility and design control — but it is not a
+                    new species of resolution. The resolution operator has not been bypassed.
+                    It has been moved to a different place in the formula.</p>
+
+                    <p>The third pillar was <em>uncertainty quantification</em>. Acts 9 and 10
+                    showed that SOLA's default uncertainty — the shifted-noise pushforward
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*)\)
+                    — is not a posterior. It is a data-space jitter centred on the observation.
+                    Without a prior, the observed data cannot be turned into a statement about
+                    the model. The generative reinterpretation — pushing the likelihood
+                    \(L(m,\cdot)\)
+                    through \(\mathbf X\) instead — gives a cleaner foundation, but it too
+                    requires a prior to produce posterior belief.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>All three pillars share the same boundary: without model-side
+                        information, SOLA can report resolved properties and their resolving
+                        kernels, but it cannot cross from there to exact target properties or
+                        posterior beliefs.</p>
+                    </div>
+
+                    <p>So where does that leave SOLA? In a perfectly good place — provided we
+                    read its outputs with the right grammar.</p>
+
+                    <h2>What SOLA Does Well</h2>
+
+                    <p>SOLA is excellent at constructing controlled linear combinations of data.
+                    Given data
+                    \(\widetilde{\mathbf d}\in\D,\)
+                    it builds a finite-dimensional map
+                    \(\mathbf X:\D\to\Pspace\)
+                    and reports
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    Because the map is linear, the output is easy to compute, easy to inspect,
+                    and easy to propagate data noise through.</p>
+
+                    <p>But the deeper strength of SOLA is not merely that it gives a formula. Its
+                    strength is that it gives resolving kernels.</p>
+
+                    <p>For each property component,
+                    \([\widetilde{\mathbf p}]_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}[\widetilde{\mathbf d}]_i,\)
+                    and, in the noiseless idealization,
+                    \([\widetilde{\mathbf p}]_k = (R_k,\bar m)_{\M},\)
+                    where
+                    \(R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\)
+                    Thus the method tells us not only the number it reports, but also the linear
+                    functional of the model that produced that number.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA does not merely output estimates. It outputs estimates together
+                        with the kernels that define what those estimates mean.</p>
+                    </div>
+
+                    <p>SOLA also gives a clear way to balance resolution against noise. The
+                    noise-aware objective
+                    \(\left\|\Tau-\mathbf XG\right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*)\)
+                    contains two competing desires:
+                    \(\text{make resolving kernels look like target kernels,}\)
+                    and
+                    \(\text{avoid amplifying data noise too much.}\)
+                    This trade-off is not hidden. It can be inspected, tuned, plotted, and
+                    discussed.</p>
+
+                    <p>SOLA is also property-focused. It does not demand that we reconstruct the
+                    whole model before asking for the quantity we care about. If the scientific
+                    question is already a linear property of the model, then SOLA tries to build
+                    that property directly from the data.</p>
+
+                    <p>And, as Act 10 showed, SOLA has a clean generative role: it transports a
+                    model-data relation into a model-property relation. The likelihood kernel
+                    \(L(m,\cdot)\)
+                    becomes
+                    \(\mathbf X_{\#}L(m,\cdot),\)
+                    a measure on property space indexed by the model. This is the right object
+                    for SOLA to act on — not a shifted-noise cloud around the observation, but
+                    the generative relation that the inverse problem is actually built from.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>SOLA is a data-to-property pipeline. Feed it a generative relation,
+                        and it gives you the same relation in property space. Feed it a jitter
+                        cloud, and it gives you a jitter cloud in property space. The pipeline
+                        is good. The question is what you feed it.</p>
+                    </div>
+
+                    <p>A fair list of SOLA's strengths is therefore:</p>
+
+                    <ul>
+                        <li>it constructs explicit linear combinations of data;</li>
+                        <li>it gives direct access to resolving kernels;</li>
+                        <li>it makes the resolution-noise trade-off visible;</li>
+                        <li>it supports property-focused estimation without requiring a full model
+                        reconstruction;</li>
+                        <li>it provides useful diagnostics for interpreting what the data can and
+                        cannot resolve;</li>
+                        <li>it cleanly transports generative model-data relations into
+                        model-property relations.</li>
+                    </ul>
+
+                    <p>These are not small virtues. They are exactly why SOLA is useful.</p>
+
+                    <h2>What SOLA Cannot Do Alone</h2>
+
+                    <p>The caution is not that SOLA is weak. The caution is that SOLA is sometimes
+                    asked to carry more meaning than its construction supplies.</p>
+
+                    <p>SOLA constructs
+                    \(\mathcal{A}:=\mathbf XG.\)
+                    The target property map is
+                    \(\Tau:\M\to\Pspace.\)
+                    The desired exact target property of the true model is
+                    \(\bar{\mathbf p} = \Tau(\bar m).\)
+                    The noiseless resolved property produced by SOLA is
+                    \(\mathcal{A}(\bar m).\)</p>
+
+                    <p>These are the same only if
+                    \(\mathcal{A}=\Tau\)
+                    on the relevant model class. If not, then the difference is
+                    \(\Tau(\bar m)-\mathcal{A}(\bar m) = (\Tau-\mathcal{A})(\bar m).\)
+                    A small resolving-target mismatch is not, by itself, a model-independent
+                    guarantee that
+                    \(\mathcal{A}(\bar m)\approx\Tau(\bar m).\)
+                    To make that implication, we need some control of \(\bar m\).</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>SOLA can estimate resolved properties without a prior. It cannot turn
+                        resolved properties into exact target properties without some assumption
+                        about the model.</p>
+                    </div>
+
+                    <p>Similarly, the propagated covariance
+                    \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*\)
+                    is the covariance of a shifted-noise pushforward. As Act 9 argued, this
+                    measure is not a posterior on the model or on the target property. Without a
+                    prior, the observed data cannot be turned into posterior belief. The
+                    shifted-noise measure answers &ldquo;what if we re-observed?&rdquo; — and
+                    that is not the question the inverse problem asks.</p>
+
+                    <p>The generative reinterpretation of Act 10 does not fix this by itself. It
+                    gives a cleaner foundation — the likelihood kernel
+                    \(L(m,\cdot)\)
+                    pushed through \(\mathbf X\) — but the likelihood is still not a posterior.
+                    To turn a likelihood into a posterior, one needs a prior. That is not a
+                    limitation of SOLA. It is a structural fact about inference.</p>
+
+                    <p>So SOLA alone should not be asked to provide:</p>
+
+                    <ul>
+                        <li>exact target properties \(\Tau(\bar m)\) when \(\mathcal{A}\neq\Tau\), without
+                        model-side assumptions;</li>
+                        <li>posterior uncertainty about \(\Tau(\bar m)\) without a prior or an
+                        equivalent model-side assumption;</li>
+                        <li>useful uncertainty from the shifted-noise pushforward alone, since it
+                        is not connected to any model-space measure;</li>
+                        <li>safe ratios or contrasts without checking the relevant resolving
+                        kernels together;</li>
+                        <li>model-independent error bounds from kernel plots alone.</li>
+                    </ul>
+
+                    <p>This is not a demotion. It is just bookkeeping. SOLA answers a precise
+                    question, and it answers it beautifully:
+                    \(\text{which resolved linear properties can I build from the available data?}\)</p>
+
+                    <p>If we want a stronger answer —
+                    \(\text{what is the exact target property of the true model?}\)
+                    — then we need stronger assumptions.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>SOLA can tell us what the data can say after we choose a way of
+                        listening. It cannot tell us what the data never heard. And it cannot
+                        tell us what to believe without a prior to update.</p>
+                    </div>
+
+                    <p>The safest language is therefore:
+                    \(\widetilde{\mathbf p} \text{ estimates } \mathcal{A}(\bar m)\)
+                    with propagated data-noise covariance
+                    \(\mathbf C_P.\)
+                    If we also want to say that
+                    \(\mathcal{A}(\bar m)\approx\Tau(\bar m),\)
+                    then we should state what model-side assumptions make that approximation
+                    reliable. If we want posterior uncertainty, we should state a prior.</p>
+
+                    <h2>Ratios and Multi-Property Diagnostics</h2>
+
+                    <p>The same caution becomes sharper when SOLA outputs are combined after the
+                    fact.</p>
+
+                    <p>Suppose we estimate two quantities, perhaps associated with two model
+                    components
+                    \(m_1,m_2\in\M,\)
+                    or with two different physical fields. Let
+                    \(\Tau_1:\M\to\mathbb R,\; \Tau_2:\M\to\mathbb R\)
+                    be the corresponding target property maps. Since their outputs are
+                    finite-dimensional, we write their one-dimensional property values as vectors:
+                    \(\mathbf p_1=\Tau_1(m_1)\in\mathbb R,\; \mathbf p_2=\Tau_2(m_2)\in\mathbb R.\)
+                    Their scalar components are
+                    \([\mathbf p_1]_1,\; [\mathbf p_2]_1.\)</p>
+
+                    <p>SOLA does not generally return these exact target properties. It returns
+                    resolved quantities defined by approximate maps
+                    \(\mathcal{A}_1:=\mathbf X_1G_1,\; \mathcal{A}_2:=\mathbf X_2G_2.\)
+                    Thus the reported quantities are, in the noiseless idealization,
+                    \(\mathcal{A}_1(m_1),\; \mathcal{A}_2(m_2).\)</p>
+
+                    <p>If we form a ratio of the SOLA outputs, we are forming something like
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1}.\)
+                    But the intended target ratio may be
+                    \(\frac{[\Tau_1(m_1)]_1}{[\Tau_2(m_2)]_1}.\)
+                    In general,
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1} \neq \frac{[\Tau_1(m_1)]_1}{[\Tau_2(m_2)]_1}.\)</p>
+
+                    <p>The issue is not only that each resolving kernel might differ from its
+                    target. The issue is that the two resolving kernels may differ from each
+                    other in ways that matter to the ratio.</p>
+
+                    <p>For example, suppose the two target kernels are meant to localize the two
+                    quantities in the same region. If the resolving kernel for the numerator is
+                    narrow, but the resolving kernel for the denominator is broad, then the ratio
+                    is mixing two different spatial averages. If one resolving kernel has side
+                    lobes and the other does not, the ratio inherits that asymmetry.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>A ratio of SOLA outputs is a ratio of resolved quantities. It is not
+                        automatically the ratio of the corresponding target quantities.</p>
+                    </div>
+
+                    <p>This does not mean ratios are forbidden. It means they require matched
+                    interpretation.</p>
+
+                    <p>A safer ratio statement would be:
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1}\)
+                    is the ratio of two resolved quantities, where the numerator is resolved
+                    through \(\mathcal{A}_1\) and the denominator is resolved through \(\mathcal{A}_2\). If
+                    \(\mathcal{A}_1\) and \(\mathcal{A}_2\) have sufficiently compatible resolving kernels for
+                    the intended scientific question, then the ratio may be meaningful.</p>
+
+                    <p>The key word is compatible.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>A ratio is a duet. If the two instruments are playing in different
+                        rooms, the harmony is mostly wishful thinking.</p>
+                    </div>
+
+                    <p>For multi-property diagnostics, the resolving kernels should therefore be
+                    inspected jointly. It is not enough to say that each individual kernel looks
+                    acceptable. We must ask whether the family of resolving kernels supports the
+                    operation we perform on the outputs.</p>
+
+                    <p>For differences, this means checking whether the two resolved quantities are
+                    comparable.</p>
+
+                    <p>For ratios, this means checking whether numerator and denominator share the
+                    required resolution.</p>
+
+                    <p>For gradients or contrasts, this means checking whether the resolving
+                    kernels reproduce the intended signed structure.</p>
+
+                    <p>For maps, this means remembering that every point may have its own
+                    kernel.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Multi-property diagnostics require multi-property resolution checks.
+                        Looking at each resolving kernel alone may miss the mismatch that
+                        matters.</p>
+                    </div>
+
+                    <h2>The Final Slogan</h2>
+
+                    <p>We can now compress the whole story:
+                    \[\boxed{\text{SOLA reshuffles generative information. It does not create it.}}\]</p>
+
+                    <p>The first half — <em>reshuffles generative information</em> — is the
+                    constructive heart of SOLA. The method takes a model-data relation and
+                    transports it to property space. It builds resolving kernels that make the
+                    transport visible. It lets the practitioner design the target question and
+                    inspect what the data can actually deliver. That is genuinely useful.</p>
+
+                    <p>The second half — <em>does not create it</em> — is the boundary. SOLA does
+                    not manufacture prior information. It does not turn a likelihood into a
+                    posterior. It does not turn a resolved property into an exact target property.
+                    It does not turn a shifted-noise jitter into model knowledge. The information
+                    that goes in — the forward map, the noise model, the target kernels — is the
+                    information that comes out, rearranged.</p>
+
+                    <p>If we want more — posterior beliefs, exact target properties, useful
+                    uncertainty about \(\Tau(\bar m)\) — we need to add something from the model
+                    side. That something may be deterministic:
+                    \(\bar m\in B\subset\M.\)
+                    It may be probabilistic:
+                    \(m\sim\muprior.\)
+                    It may come from physics, geology, smoothness, boundedness, or earlier
+                    experiments. But it should be stated, not smuggled in.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA is not a bad inverse method. It is a good reshuffling method that
+                        deserves honest labels.</p>
+                    </div>
+
+                    <p>So my take on SOLA is not that it should be discarded. Far from it. SOLA is
+                    a neat and useful method precisely because it focuses on properties, exposes
+                    resolving kernels, makes the resolution-noise trade-off visible, and
+                    transports generative relations cleanly.</p>
+
+                    <p>But its outputs should be read with the right grammar.</p>
+
+                    <p>A SOLA number is not just a number. It comes with a kernel.</p>
+
+                    <p>A SOLA error bar is not posterior uncertainty. It is propagated
+                    data-noise — a summary of a shifted-noise pushforward, not a statement about
+                    the model.</p>
+
+                    <p>A target kernel is not a promise. It is a design request.</p>
+
+                    <p>A resolving kernel is not decoration. It is the measurement.</p>
+
+                    <p>And if we want to turn resolved measurements into exact claims about the
+                    true model, we must say what we believe about the model.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The mature use of SOLA is neither blind trust nor rejection. It is
+                        careful labelling: resolved quantity, resolving kernel, generative
+                        relation, and explicit model assumptions when exact target properties or
+                        posterior beliefs are claimed.</p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-10.html"><span class="arrow">&larr;</span> Act 10: Generative SOLA</a>
+                        <a class="part-prevnext-btn" href="summary.html">Summary &amp; Appendices <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 10: Generative SOLA — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 10 of My Take on SOLA: What SOLA should push forward, the generative model-property relation, and where priors belong.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: '\\mathrm{L}', Lprob: 'L',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 10: Generative SOLA</h1>
+                <p>What SOLA should push forward, the model-property relation, and where priors belong.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html" aria-current="page"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>What Should SOLA Push Forward?</h2>
+
+                    <h3>The probabilistic model-data relation</h3>
+
+                    <p>In the previous act, we separated two ideas that are often allowed to blur
+                    together.</p>
+
+                    <p>On the one hand, we have a data-side shifted-noise object:
+                    \(N(\widetilde{\mathbf d},\mathbf C_D).\)
+                    This is a probability measure centred at the observed data. It can be pushed
+                    through the SOLA matrix \(\mathbf X\), giving
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)
+                    That calculation is mathematically valid.</p>
+
+                    <p>On the other hand, the inverse problem itself is not born from a probability
+                    cloud placed around the observation. It is born from a model-data relation. It
+                    begins with a possible model and asks what data that model could have
+                    produced.</p>
+
+                    <p>In the probabilistic setting, this model-data relation is encoded by a
+                    likelihood kernel
+                    \(L:\M\times\Sigma_{\D}\to[0,1].\)
+                    For each model \(m\in\M\),
+                    \(L(m,\cdot)\)
+                    is a probability measure on the data space \(\D\). It describes the possible
+                    observations under the hypothesis that \(m\) is the true model.</p>
+
+                    <p>Thus, for a measurable set \(B\subseteq\D\),
+                    \(L(m,B)\)
+                    is the probability of observing data in \(B\) if \(m\) were true.</p>
+
+                    <p>In the familiar additive Gaussian case,
+                    \(\widetilde{\mathbf d} = G(m)+\boldsymbol\eta,\; \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\)
+                    the likelihood kernel is
+                    \(L(m,\cdot) = N(G(m),\mathbf C_D).\)
+                    So for each model \(m\), the distribution of possible data is centred at
+                    \(G(m)\).</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The likelihood kernel is a machine that takes a model as input and
+                        outputs a probability law on data space. It answers: if this model were
+                        true, what observations should we expect?</p>
+                    </div>
+
+                    <p>This is the direction of explanation that matters:
+                    \(m \quad\longmapsto\quad \text{possible data}.\)
+                    The observation \(\widetilde{\mathbf d}\) is then compared against this family
+                    of model-indexed data distributions.</p>
+
+                    <p>This is different from starting with \(\widetilde{\mathbf d}\) and placing a
+                    cloud around it. The shifted-noise cloud is centred on what happened. The
+                    likelihood kernel describes what could happen under each possible model.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The shifted-noise measure is observation-centred. The likelihood kernel
+                        is model-centred, or generative.</p>
+                    </div>
+
+                    <p>This distinction is not merely aesthetic. Once the likelihood is written as
+                    \(m\mapsto L(m,\cdot),\)
+                    it can handle much more than additive Gaussian noise. For example, one may have
+                    model-dependent noise
+                    \(L(m,\cdot) = N(G(m),\mathbf C_D(m)),\)
+                    or data whose distribution is not naturally
+                    written as &ldquo;prediction plus additive error&rdquo;.</p>
+
+                    <p>The generative relation is the flexible object. The shifted-noise measure is
+                    only a special data-centred construction.</p>
+
+                    <h3>Pushing the relation through SOLA</h3>
+
+                    <p>Now bring SOLA back into the story.</p>
+
+                    <p>A SOLA matrix
+                    \(\mathbf X:\D\to\Pspace\)
+                    transforms data-space vectors into property-space vectors:
+                    \(\mathbf d \quad\longmapsto\quad \mathbf X\mathbf d.\)</p>
+
+                    <p>If each model \(m\) generates a probability measure on data space,
+                    \(L(m,\cdot),\)
+                    then \(\mathbf X\) pushes that measure forward to a probability measure on
+                    property space:
+                    \(\mathbf X_{\#}L(m,\cdot).\)</p>
+
+                    <p>Thus SOLA induces a new model-property relation:
+                    \(m \quad\longmapsto\quad \mathbf X_{\#}L(m,\cdot).\)</p>
+
+                    <p>This is the probabilistic version of generative SOLA.</p>
+
+                    <p>For each model \(m\), the measure
+                    \(\mathbf X_{\#}L(m,\cdot)\)
+                    describes the possible SOLA outputs that could be observed if \(m\) were the
+                    true model.</p>
+
+                    <p>In the additive Gaussian case,
+                    \(L(m,\cdot) = N(G(m),\mathbf C_D).\)
+                    Pushing this through \(\mathbf X\) gives
+                    \(\mathbf X_{\#}L(m,\cdot) = N(\mathbf XG(m),\mathbf X\mathbf C_D\mathbf X^*).\)
+                    Since
+                    \(\mathcal{A}:=\mathbf XG,\)
+                    this becomes
+                    \(\mathbf X_{\#}L(m,\cdot) = N(\mathcal{A}(m),\mathbf X\mathbf C_D\mathbf X^*).\)</p>
+
+                    <p>This is subtly but importantly different from the shifted-noise pushforward
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)
+                    The generative pushforward is indexed by the model:
+                    \(m\mapsto N(\mathcal{A}(m),\mathbf X\mathbf C_D\mathbf X^*).\)
+                    The shifted-noise pushforward is centred at the observed SOLA output:
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The same covariance \(\mathbf X\mathbf C_D\mathbf X^*\) can appear in two
+                        different stories. One story is generative and model-indexed. The other is
+                        observation-centred. The formulas may look similar, but the interpretation
+                        is not the same.</p>
+                    </div>
+
+                    <p>The generative SOLA relation answers:
+                    \[\text{if }m\text{ were true, what SOLA outputs should we expect?}\]
+                    That is a clean question. It is the property-space analogue of the original
+                    observation model.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA pushes the likelihood kernel from data space to property space. It
+                        turns a model-data relation into a model-resolved-property relation.</p>
+                    </div>
+
+                    <p>Notice the phrase &ldquo;resolved-property&rdquo;. The mean of the
+                    pushed-forward Gaussian is
+                    \(\mathcal{A}(m)=\mathbf XG(m),\)
+                    not generally
+                    \(\Tau(m).\)
+                    So even in the generative interpretation, SOLA naturally produces a relation
+                    between models and resolved properties. The target property \(\Tau(m)\) enters
+                    only when
+                    \(\mathcal{A}\approx\Tau,\)
+                    or when additional assumptions justify replacing one by the other.</p>
+
+                    <h3>The set-valued analogue</h3>
+
+                    <p>There is an exactly parallel set-valued version.</p>
+
+                    <p>Instead of assigning to each model a probability measure on data space,
+                    suppose the observation model assigns to each model a set of admissible data:
+                    \(\mathrm{L}(m)\subseteq\D.\)
+                    This means:
+                    \[\text{if }m\text{ were true, the observation should lie in }\mathrm{L}(m).\]</p>
+
+                    <p>For example, in an additive bounded-noise model, one might write
+                    \(\mathrm{L}(m) = G(m)+S_{\mathrm{noise}},\)
+                    where
+                    \(S_{\mathrm{noise}}\subseteq\D\)
+                    is the set of allowed noise values.</p>
+
+                    <p>Now apply SOLA. The finite-dimensional map
+                    \(\mathbf X:\D\to\Pspace\)
+                    sends admissible data sets to admissible property-space sets:
+                    \(\mathbf X(\mathrm{L}(m)) := \{\mathbf X\mathbf d:\mathbf d\in \mathrm{L}(m)\} \subseteq\Pspace.\)
+                    Thus SOLA induces the set-valued model-property relation
+                    \(m \quad\longmapsto\quad \mathbf X(\mathrm{L}(m)).\)</p>
+
+                    <p>In the additive bounded-noise case,
+                    \(\mathrm{L}(m) = G(m)+S_{\mathrm{noise}},\)
+                    so
+                    \(\mathbf X(\mathrm{L}(m)) = \mathbf XG(m)+\mathbf X(S_{\mathrm{noise}}).\)
+                    Using
+                    \(\mathcal{A}=\mathbf XG,\)
+                    this becomes
+                    \(\mathbf X(\mathrm{L}(m)) = \mathcal{A}(m)+\mathbf X(S_{\mathrm{noise}}).\)</p>
+
+                    <p>Again, the centre is the resolved property
+                    \(\mathcal{A}(m),\)
+                    not the exact target property
+                    \(\Tau(m).\)</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The probabilistic version pushes probability clouds through \(\mathbf
+                        X\). The set-valued version pushes admissible data sets through \(\mathbf
+                        X\). In both cases, SOLA transports the model-data relation into property
+                        space.</p>
+                    </div>
+
+                    <p>This set-valued viewpoint is useful because it makes the architecture visible
+                    without requiring probability. The fundamental object is still the relation
+                    \(m \quad\longmapsto\quad \text{possible observations}.\)
+                    SOLA then transforms the possible observations into possible resolved-property
+                    outputs.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Whether uncertainty is probabilistic or set-valued, the generative
+                        direction is the same:
+                        \(m \longmapsto \text{data possibilities} \longmapsto \text{SOLA-output possibilities}.\)</p>
+                    </div>
+
+                    <h3>The new interpretation</h3>
+
+                    <p>We can now state the conceptual replacement.</p>
+
+                    <p>The observation-centred picture says:
+                    \[\text{shifted noise on data} \quad \xrightarrow{\;\mathbf X\;} \quad \text{property uncertainty}.\]</p>
+
+                    <p>The generative picture says:
+                    \[\text{model-data relation} \quad \xrightarrow{\;\mathbf X\;} \quad \text{model-property relation}.\]</p>
+
+                    <p>The second picture is the one that belongs at the foundation.</p>
+
+                    <p>In the probabilistic case:
+                    \(m\mapsto L(m,\cdot)\)
+                    becomes
+                    \(m\mapsto \mathbf X_{\#}L(m,\cdot).\)</p>
+
+                    <p>In the set-valued case:
+                    \(m\mapsto \mathrm{L}(m)\)
+                    becomes
+                    \(m\mapsto \mathbf X(\mathrm{L}(m)).\)</p>
+
+                    <p>This is generative SOLA.</p>
+
+                    <p>It does not say that SOLA solves the whole inverse problem. It does not
+                    magically turn resolved properties into exact target properties. It does not
+                    remove the need for model-side assumptions when those assumptions are
+                    needed.</p>
+
+                    <p>What it does is give a cleaner answer to the question:
+                    \[\text{what kind of uncertainty object should SOLA act on?}\]
+                    It should act on the model-data relation.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Generative SOLA does not push forward an observation-centred shifted
+                        noise object. It pushes forward the model-data relation.</p>
+                    </div>
+
+                    <p>This interpretation also clarifies what SOLA is good at. SOLA is a map from
+                    data space to property space. Therefore it is naturally suited to transform
+                    data-side consequences of a model into property-side consequences of that same
+                    model.</p>
+
+                    <p>In short:
+                    \[\boxed{\text{SOLA reshuffles generative information}.}\]</p>
+
+                    <p>But if we want to infer the true target property
+                    \(\Tau(\bar m),\)
+                    then we need one more ingredient: information about which models are plausible
+                    before seeing the data.</p>
+
+                    <h2>But What About the Observed Data?</h2>
+
+                    <p>At this point a natural objection arises. We have spent two acts arguing that
+                    SOLA's default uncertainty is a shifted-noise pushforward, that it is not useful,
+                    and that the generative reinterpretation works with the likelihood rather than
+                    the observation. But surely the observed data \(\widetilde{\mathbf d}\) matters?
+                    Surely it carries information that should not be discarded?</p>
+
+                    <p>This is a fair challenge, and it deserves a direct answer.</p>
+
+                    <p>The observed data is not ignored — it is a realization of a random variable
+                    whose distribution is governed by the likelihood \(L(\bar m,\cdot)\). In a
+                    Bayesian framework, this random variable is the <em>predictive data
+                    variable</em>: before observing, one has a prior on models and a likelihood that
+                    maps each model to a distribution on data space. The marginal of that joint
+                    distribution on data space is the prior predictive distribution. The observed
+                    data is a single draw from the distribution determined by the true model
+                    \(\bar m\). Its role is to update the prior into a posterior.</p>
+
+                    <p>That is, in my view, the only useful way to incorporate the observed data
+                    into the analysis: as a realization of the predictive data variable, which
+                    requires a prior to turn into posterior belief. I currently do not see another
+                    useful way of understanding it. Without a prior, the observation cannot be
+                    turned into a statement about which models are more likely. It can only tell us
+                    which models are compatible — and compatibility, again, is not probability.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The observed data is a realization of a random variable governed by the
+                        likelihood. To turn it into posterior belief about the model, a prior is
+                        required. Without one, the observation cannot do that work.</p>
+                    </div>
+
+                    <p>Now, one may take a different view. One may say: &ldquo;The observed data is
+                    the closest thing we have to the true noiseless data \(G(\bar m)\). I will
+                    assume it is close, and proceed accordingly.&rdquo; That is a legitimate
+                    choice. If one adopts it, then one is effectively restricting attention to
+                    models \(m\) for which \(G(m)\approx\widetilde{\mathbf d}\). In that case, the
+                    likelihood measure \(L(m,\cdot)\) for those models is approximately
+                    \(N(\widetilde{\mathbf d},\mathbf C_D)\) — which is the shifted-noise measure.
+                    And the generative pushforward
+                    \(\mathbf X_{\#}L(m,\cdot)\)
+                    collapses to the classic SOLA pushforward
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)</p>
+
+                    <p>So the generative perspective does not contradict classic SOLA. It contains
+                    it as a special case — the case where one assumes the observation is close to
+                    the true noiseless data, and restricts the model space accordingly.</p>
+
+                    <p>I do not adhere to that assumption. The whole point of modeling noise
+                    probabilistically is that the observation is one draw from a distribution, not
+                    necessarily the closest point to the truth. But if someone wishes to make that
+                    assumption, they are free to do so. The generative framework accommodates it.
+                    It simply makes the assumption visible rather than hiding it inside a
+                    shifted-noise construction that pretends to be prior-free.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The observed data is best understood as a realization of the Bayesian
+                        predictive data variable, which requires a prior to become useful. If one
+                        instead assumes the observation is close to the true noiseless data, the
+                        generative perspective reduces to classic SOLA. That assumption is
+                        legitimate — but it should be stated, not smuggled in.</p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-9.html"><span class="arrow">&larr;</span> Act 9: What About Uncertainty?</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

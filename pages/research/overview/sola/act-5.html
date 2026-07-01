@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 5: Noise Enters the Room — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 5 of My Take on SOLA: The noisy data model, noise amplification, the resolution-noise trade-off, and the noise-aware SOLA solution.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 5: Noise Enters the Room</h1>
+                <p>The noisy data model, noise amplification, and the resolution-noise trade-off.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html" aria-current="page"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>Data Are Not Exact</h2>
+
+                    <h3>The noisy data model</h3>
+
+                    <p>So far, the data have been treated as exact:
+                    \(\mathbf d = G(\bar m).\)
+                    This was useful while building the basic SOLA idea. It allowed us to focus on
+                    the algebra of kernels without worrying about measurement uncertainty.</p>
+
+                    <p>But real data are not exact. The observed data are better written as
+                    \[\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta,\]
+                    where \(\bar m\in\M\) is the unknown true model and
+                    \(\boldsymbol\eta\in\D\)
+                    is observational noise.</p>
+
+                    <p>In the standard Gaussian version, we assume
+                    \[\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\]
+                    where
+                    \(\mathbf C_D\in\mathbb R^{N_d\times N_d}\)
+                    is the data-noise covariance matrix.</p>
+
+                    <p>Thus the observed data vector is
+                    \[\widetilde{\mathbf d} \in\mathbb R^{N_d},\]
+                    with
+                    \[[\widetilde{\mathbf d}]_i = [G(\bar m)]_i+\eta_i.\]</p>
+
+                    <p>In integral form,
+                    \[[\widetilde{\mathbf d}]_i = \int_\Omega K_i(r)\bar m(r)\dd r+\eta_i, \qquad i=1,\dots,N_d.\]</p>
+
+                    <p>The covariance matrix \(\mathbf C_D\) tells us how uncertain the data are. If
+                    \(\mathbf C_D=\sigma_D^2\mathbf I,\)
+                    then the data errors are independent and have common variance \(\sigma_D^2\).
+                    More generally, the off-diagonal entries of \(\mathbf C_D\) encode correlations
+                    between different data errors.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The kernels tell us what the experiment tries to see. The covariance
+                        tells us how clearly it sees it.</p>
+                    </div>
+
+                    <p>This changes the SOLA problem. We no longer only care about constructing a
+                    resolving kernel close to the target. We also care about how much noise the
+                    chosen data combination will amplify.</p>
+
+                    <h3>Noise amplification</h3>
+
+                    <p>Suppose we choose weights
+                    \(\mathbf x=(x_1,\dots,x_{N_d})^\top.\)
+                    The corresponding SOLA-style data combination is
+                    \(\sum_{i=1}^{N_d}x_i[\widetilde{\mathbf d}]_i.\)
+                    Substituting the noisy data model gives
+                    \[\sum_{i=1}^{N_d}x_i[\widetilde{\mathbf d}]_i = \sum_{i=1}^{N_d}x_i[G(\bar m)]_i + \sum_{i=1}^{N_d}x_i\eta_i.\]</p>
+
+                    <p>The first term is the signal part:
+                    \[\sum_{i=1}^{N_d}x_i[G(\bar m)]_i = \int_\Omega R(r)\bar m(r)\dd r,\]
+                    where
+                    \[R(r) = \sum_{i=1}^{N_d}x_iK_i(r).\]
+                    The second term is the noise part:
+                    \(\sum_{i=1}^{N_d}x_i\eta_i.\)</p>
+
+                    <p>So the same weights \(\mathbf x\) that build the resolving kernel also
+                    combine the noise.</p>
+
+                    <p>This is the trade-off. If we choose aggressive weights, we may obtain a
+                    sharper resolving kernel, but those same weights may amplify the observational
+                    errors.</p>
+
+                    <p>To see this explicitly, consider the scalar noise contribution
+                    \[\epsilon_{\mathbf x} = \sum_{i=1}^{N_d}x_i\eta_i.\]
+                    In vector notation,
+                    \(\epsilon_{\mathbf x} = \mathbf x^\top\boldsymbol\eta.\)
+                    Since
+                    \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\)
+                    we have
+                    \(\epsilon_{\mathbf x}\sim N(0,\mathbf x^\top\mathbf C_D\mathbf x).\)
+                    Thus the variance of the weighted noise is
+                    \[\operatorname{Var}(\epsilon_{\mathbf x}) = \mathbf x^\top\mathbf C_D\mathbf x.\]</p>
+
+                    <p>A resolving kernel can be beautifully localized but numerically dangerous if
+                    producing it requires large or unstable weights.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>Sharper resolution is not free. The weights that sharpen the resolving
+                        kernel may also turn quiet data noise into loud property noise.</p>
+                    </div>
+
+                    <p>For multiple properties, the weights are collected into a finite matrix
+                    \(\mathbf X:\D\to\Pspace.\)
+                    The SOLA estimate is
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    Using the noisy data model,
+                    \[\widetilde{\mathbf p} = \mathbf XG(\bar m)+\mathbf X\boldsymbol\eta.\]
+                    The signal part is
+                    \(\mathbf XG(\bar m)=\mathcal{A}(\bar m),\)
+                    where
+                    \(\mathcal{A}:=\mathbf XG:\M\to\Pspace\)
+                    is the approximate property map. The noise part is
+                    \(\mathbf X\boldsymbol\eta.\)</p>
+
+                    <p>Since \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D)\), the propagated
+                    property noise has covariance
+                    \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*.\]</p>
+
+                    <p>This formula is simple because the SOLA map is linear. That is one of the
+                    great conveniences of the method.</p>
+
+                    <h3>The resolution-noise trade-off</h3>
+
+                    <p>We now have two competing desires.</p>
+
+                    <p>First, we want the approximate property map
+                    \(\mathcal{A}=\mathbf XG\)
+                    to be close to the target property map
+                    \(\Tau.\)
+                    This is the resolution desire:
+                    \(\mathbf XG\approx \Tau.\)</p>
+
+                    <p>Second, we want the propagated noise
+                    \(\mathbf X\boldsymbol\eta\)
+                    to be small. Since its covariance is
+                    \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*,\)
+                    we need some scalar measure of the size of this covariance. A common choice is
+                    the trace:
+                    \(\Tr(\mathbf X\mathbf C_D\mathbf X^*).\)
+                    This is the total propagated variance across the property components.</p>
+
+                    <p>So noisy SOLA balances:
+                    \[\text{small resolving-target mismatch}\]
+                    against
+                    \[\text{small propagated data noise}.\]</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>SOLA tunes two dials at once: one sharpens the station, the other
+                        suppresses static.</p>
+                    </div>
+
+                    <p>If we care only about matching the target kernels, we may choose weights that
+                    are unstable. If we care only about suppressing noise, we may choose weights
+                    that produce very smooth, uninteresting resolving kernels. SOLA lives between
+                    these extremes.</p>
+
+                    <p>The central compromise is:
+                    \[\text{make }\mathbf XG\text{ close to }\Tau, \quad \text{but do not let }\mathbf X\mathbf C_D\mathbf X^*\text{ become too large}.\]</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Noise changes the SOLA problem from pure kernel approximation into a
+                        resolution-noise trade-off.</p>
+                    </div>
+
+                    <h2>Noise-Aware SOLA</h2>
+
+                    <h3>The noise-aware objective</h3>
+
+                    <p>We now write the noisy SOLA problem as an optimization problem.</p>
+
+                    <p>The noiseless unconstrained objective was
+                    \(\left\| \Tau-\mathbf XG \right\|_{\HS}^2.\)
+                    This term measures how far the resolving kernels are from the target kernels.</p>
+
+                    <p>To include data noise, we add the propagated variance term
+                    \(\Tr(\mathbf X\mathbf C_D\mathbf X^*).\)
+                    Thus the noise-aware SOLA objective is
+                    \[J(\mathbf X) = \left\| \Tau-\mathbf XG \right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*).\]</p>
+
+                    <p>The first term rewards resolution. The second term penalizes noise
+                    amplification.</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; About trade-off parameters</span>
+                        <p>Some presentations introduce an explicit trade-off parameter multiplying
+                        the noise term or the resolution term. In the simplified form used here, the
+                        relative scale is encoded directly in \(\mathbf C_D\) and in the chosen
+                        norms. One can add a tunable parameter if one wants an explicit
+                        resolution-noise dial.</p>
+                    </div>
+
+                    <p>The minimizer of \(J(\mathbf X)\) is the unconstrained noise-aware SOLA
+                    operator.</p>
+
+                    <p>Let us derive its normal equation. Perturb \(\mathbf X\) by \(\mathbf H\).
+                    The first variation of the misfit term is
+                    \[-2 ( (\Tau-\mathbf XG)G^*, \mathbf H )_{\HS}.\]
+                    The first variation of the variance term is
+                    \[2 ( \mathbf X\mathbf C_D, \mathbf H )_{\HS}.\]
+                    Therefore stationarity gives
+                    \[-(\Tau-\mathbf XG)G^*+\mathbf X\mathbf C_D=0.\]
+                    Equivalently,
+                    \[(\Tau-\mathbf XG)G^* = \mathbf X\mathbf C_D.\]
+                    Rearranging,
+                    \[\Tau G^* = \mathbf XGG^*+\mathbf X\mathbf C_D.\]
+                    Hence
+                    \[\Tau G^* = \mathbf X(GG^*+\mathbf C_D).\]</p>
+
+                    <p>Define the finite-dimensional data-space matrix
+                    \[\mathbf M := GG^*+\mathbf C_D.\]
+                    If \(\mathbf C_D\) is positive definite, then \(\mathbf M\) is invertible. The
+                    unconstrained noise-aware solution is then
+                    \[\mathbf X_0 = \Tau G^*\mathbf M^{-1}.\]</p>
+
+                    <p>Compare this with the noiseless unconstrained solution:
+                    \(\mathbf X_0^{\mathrm{noiseless}} = \Tau G^*(GG^*)^{-1}.\)
+                    Noise has replaced \(GG^*\) by
+                    \(\mathbf M=GG^*+\mathbf C_D.\)</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The covariance \(\mathbf C_D\) acts like a brake. Directions in data
+                        space with large noise become less attractive to the SOLA weights.</p>
+                    </div>
+
+                    <h3>The constrained noisy problem</h3>
+
+                    <p>We now add the resolving constraints. As in the previous act, we may have
+                    several test models
+                    \(q_1,\dots,q_L\in\M\)
+                    with data responses collected in
+                    \(\mathbf V = \begin{pmatrix} \mathbf v_1 & \cdots & \mathbf v_L \end{pmatrix}\)
+                    and desired property responses collected in
+                    \(\mathbf W = \begin{pmatrix} \mathbf w_1 & \cdots & \mathbf w_L \end{pmatrix}.\)
+                    The constraint is
+                    \(\mathbf X\mathbf V=\mathbf W.\)</p>
+
+                    <p>For averages with a single calibration, this reduces to the unimodularity
+                    condition \(\mathbf X\mathbf v=\mathbf w.\) But the general form allows any
+                    number of independent calibration conditions.</p>
+
+                    <p>The constrained noisy SOLA problem is
+                    \[\mathbf X_c = \argmin_{\mathbf X} \left\{ \left\| \Tau-\mathbf XG \right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*) \right\} \quad \text{subject to} \quad \mathbf X\mathbf V=\mathbf W.\]</p>
+
+                    <p>This is the full basic SOLA problem in these notes. It contains:
+                    \[\begin{array}{lll} \text{target matching} &:& \left\|\Tau-\mathbf XG\right\|_{\HS}^2,\\[0.3em] \text{noise control} &:& \Tr(\mathbf X\mathbf C_D\mathbf X^*),\\[0.3em] \text{interpretive calibration} &:& \mathbf X\mathbf V=\mathbf W. \end{array}\]</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Noise-aware constrained SOLA asks for the best resolving kernels that are
+                        calibrated correctly and do not amplify data noise too much.</p>
+                    </div>
+
+                    <h3>Closed-form solution</h3>
+
+                    <p>The constrained problem can be solved by the same Lagrange multiplier logic
+                    as before. The only change is that \(GG^*\) is replaced by
+                    \(\mathbf M=GG^*+\mathbf C_D.\)</p>
+
+                    <p>Define
+                    \(\mathbf M := GG^*+\mathbf C_D,\)
+                    \(\mathbf U := \mathbf M^{-1}\mathbf V,\)
+                    and
+                    \(\boldsymbol\Gamma := \mathbf V^*\mathbf U = \mathbf V^*\mathbf M^{-1}\mathbf V.\)
+                    Assuming \(\mathbf M\) is positive definite and \(\boldsymbol\Gamma\) is
+                    invertible, the constrained noise-aware SOLA solution is
+                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]</p>
+
+                    <p>This is the noisy analogue of the general constrained correction from the
+                    previous act. The first term
+                    \(\mathbf X_0 = \Tau G^*\mathbf M^{-1}\)
+                    is the unconstrained noise-aware solution. The second term is the finite-rank
+                    correction needed to enforce
+                    \(\mathbf X_c\mathbf V=\mathbf W.\)</p>
+
+                    <p>To verify, apply \(\mathbf X_c\) to \(\mathbf V\):
+                    \[\mathbf X_c\mathbf V = \Tau G^*\mathbf M^{-1}\mathbf V - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\mathbf V.\]
+                    Since
+                    \(\mathbf U^*\mathbf V = \mathbf V^*\mathbf M^{-1}\mathbf V = \boldsymbol\Gamma,\)
+                    we obtain
+                    \[\mathbf X_c\mathbf V = \Tau G^*\mathbf U - (\Tau G^*\mathbf U-\mathbf W) = \mathbf W.\]
+                    So the constraints are satisfied exactly.</p>
+
+                    <p>The single-constraint formula drops out as the special case
+                    \(\mathbf V=\mathbf v,\;\mathbf W=\mathbf w,\;\boldsymbol\Gamma=\beta,\;\mathbf U=\mathbf u,\)
+                    giving
+                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - \frac{\Tau G^*(\mathbf u)-\mathbf w}{\beta}\mathbf u^*.\]</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; The role of \(\mathbf M\)</span>
+                        <p>The matrix
+                        \(\mathbf M=GG^*+\mathbf C_D\)
+                        combines the geometry of the sensitivity kernels with the geometry of the
+                        data noise. The term \(GG^*\) knows which data combinations are supported by
+                        the model-space kernels. The term \(\mathbf C_D\) knows which data
+                        combinations are noisy.</p>
+                    </div>
+
+                    <p>At the kernel level, the \(k\)th resolving kernel is still
+                    \[R_k(r) = \sum_{i=1}^{N_d} [\mathbf X_c]_{ki}K_i(r).\]
+                    The difference is that the weights now know about noise. A kernel that could be
+                    obtained only by using extremely noisy data combinations will be discouraged by
+                    the variance term.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Noise-aware SOLA does not merely ask, &ldquo;which resolving kernel is
+                        closest to the target?&rdquo; It asks, &ldquo;which calibrated resolving
+                        kernel is closest to the target without paying too much in noise?&rdquo;</p>
+                    </div>
+
+                    <h3>The usual propagated covariance</h3>
+
+                    <p>Once the SOLA matrix \(\mathbf X\) has been chosen, the usual uncertainty
+                    calculation is straightforward.</p>
+
+                    <p>The observed data are
+                    \(\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta,\; \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D).\)
+                    The SOLA estimate is
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    Substituting the data model,
+                    \[\widetilde{\mathbf p} = \mathbf XG(\bar m) + \mathbf X\boldsymbol\eta.\]
+                    The random part is
+                    \(\mathbf X\boldsymbol\eta.\)
+                    Since \(\boldsymbol\eta\) has covariance \(\mathbf C_D\), the propagated
+                    covariance is
+                    \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*.\]</p>
+
+                    <p>In components, the covariance between the \(k\)th and \(\ell\)th SOLA outputs
+                    is
+                    \[[\mathbf C_P]_{k\ell} = \sum_{i=1}^{N_d} \sum_{j=1}^{N_d} [\mathbf X]_{ki} [\mathbf C_D]_{ij} [\mathbf X^*]_{j\ell}.\]
+                    If the data and property spaces use standard Euclidean inner products, then
+                    \(\mathbf X^*=\mathbf X^\top,\)
+                    and this becomes
+                    \[[\mathbf C_P]_{k\ell} = \sum_{i=1}^{N_d} \sum_{j=1}^{N_d} [\mathbf X]_{ki} [\mathbf C_D]_{ij} [\mathbf X]_{\ell j}.\]</p>
+
+                    <p>The diagonal entries
+                    \([\mathbf C_P]_{kk}\)
+                    are the propagated variances of the individual SOLA outputs. A common display is
+                    therefore
+                    \[[\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}},\]
+                    which shows the estimate together with a nominal two-standard-deviation
+                    band.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_sola_estimates.png"
+                             alt="SOLA property estimates with +/- 2*sigma error bars from propagated covariance">
+                        <figcaption><span class="sola-figure-label">Figure F5-1.</span>The usual SOLA uncertainty display: propagated data-noise
+                        uncertainty after applying the SOLA map \(\mathbf X\).</figcaption>
+                    </figure>
+
+                    <p>This covariance propagation is mathematically correct. If
+                    \(\boldsymbol\eta\) is Gaussian with covariance \(\mathbf C_D\), then
+                    \(\mathbf X\boldsymbol\eta\) is Gaussian with covariance
+                    \(\mathbf X\mathbf C_D\mathbf X^*\).</p>
+
+                    <p>But we should be precise about what this means. It describes how
+                    observational noise moves through the chosen SOLA map. It does not yet tell us
+                    everything one might want to know about the true target property
+                    \(\Tau(\bar m).\)
+                    That harder interpretive issue comes later.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The formula \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*\) is
+                        mathematically correct as linear covariance propagation. The harder question
+                        is what inferential question it answers.</p>
+                    </div>
+
+                    <p>We now have the classical SOLA ingredients in place: target kernels,
+                    resolving kernels, calibration constraints, noise-aware optimization, and
+                    propagated covariance. The next act asks what the resulting SOLA numbers
+                    actually estimate.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-4.html"><span class="arrow">&larr;</span> Act 4: Beyond Averages</a>
+                        <a class="part-prevnext-btn" href="act-6.html">Act 6: What Did SOLA Actually Estimate? <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

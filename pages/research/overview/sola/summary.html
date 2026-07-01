@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary &amp; Appendices — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Summary of the SOLA argument and appendices on algebra of minimizers, proxy model derivation, and suggested figures.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Summary &amp; Appendices</h1>
+                <p>Summary of the argument, algebra of SOLA minimizers, proxy model derivation, and suggested figures.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+                <a class="part-chip" href="act-11.html"><span class="part-chip-num">11</span> What SOLA Is Good For</a>
+                <a class="part-chip" href="summary.html" aria-current="page"><span class="part-chip-num">S</span> Summary</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>Summary of the Argument</h2>
+
+                    <h3>The construction</h3>
+
+                    <p>The mathematical skeleton of SOLA has three main ingredients.</p>
+
+                    <p>First, there is the forward map
+                    \(G:\M\to\D,\)
+                    which sends a model \(m\in\M\) to finite-dimensional data
+                    \(\mathbf d=G(m)\in\D\simeq\mathbb R^{N_d}.\)
+                    In components,
+                    \([G(m)]_i = (K_i,m)_{\M},\; i=1,\dots,N_d.\)
+                    The functions \(K_i\) are the sensitivity kernels.</p>
+
+                    <p>Second, there is the property map
+                    \(\Tau:\M\to\Pspace,\)
+                    which sends a model to the finite-dimensional property vector
+                    \(\mathbf p=\Tau(m)\in\Pspace\simeq\mathbb R^{N_p}.\)
+                    In components,
+                    \([\mathbf p]_k = [\Tau(m)]_k = (T_k,m)_{\M},\; k=1,\dots,N_p.\)
+                    The functions \(T_k\) are the target kernels.</p>
+
+                    <p>Third, SOLA chooses a finite-dimensional map
+                    \(\mathbf X:\D\to\Pspace\)
+                    so that
+                    \(\mathbf XG\approx \Tau.\)
+                    This is the core construction.</p>
+
+                    <p>The simplest noiseless version solves
+                    \(\mathbf X_0 = \argmin_{\mathbf X} \left\|\Tau-\mathbf XG\right\|_{\HS}^2.\)
+                    With noise and resolving constraints, the basic problem becomes
+                    \[\mathbf X_c = \argmin_{\mathbf X} \left\{\left\|\Tau-\mathbf XG\right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*)\right\} \quad \text{subject to} \quad \mathbf X\mathbf V=\mathbf W.\]</p>
+
+                    <p>Here
+                    \(\mathbf C_D\)
+                    is the data-noise covariance, and
+                    \(\mathbf X\mathbf V=\mathbf W\)
+                    collects the resolving constraints. For averages with a single calibration,
+                    this reduces to the unimodularity condition \(\mathbf X\mathbf v=\mathbf w.\)
+                    For other properties, it encodes the calibration needed for the intended
+                    interpretation.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The SOLA construction is simple at heart:
+                        \(\text{choose }\mathbf X\text{ so that }\mathbf XG\text{ behaves like }\Tau.\)
+                        The details decide what &ldquo;behaves like&rdquo; means.</p>
+                    </div>
+
+                    <h3>The interpretation</h3>
+
+                    <p>Once \(\mathbf X\) has been chosen, the approximate property map is
+                    \(\mathcal{A}:=\mathbf XG:\M\to\Pspace.\)
+                    This is the map that the data combination actually synthesizes.</p>
+
+                    <p>The target map is
+                    \(\Tau:\M\to\Pspace.\)
+                    The SOLA map is
+                    \(\mathcal{A}=\mathbf XG:\M\to\Pspace.\)</p>
+
+                    <p>For the true model \(\bar m\), the exact target property is
+                    \(\bar{\mathbf p} = \Tau(\bar m).\)
+                    The noiseless SOLA-accessible property is
+                    \(\mathcal{A}(\bar m) = \mathbf XG(\bar m).\)
+                    Thus the central interpretive distinction is
+                    \(\Tau(\bar m) \quad\text{versus}\quad \mathcal{A}(\bar m).\)</p>
+
+                    <p>In components,
+                    \([\Tau(\bar m)]_k = (T_k,\bar m)_{\M},\)
+                    whereas
+                    \([\mathcal{A}(\bar m)]_k = (R_k,\bar m)_{\M},\)
+                    with resolving kernels
+                    \(R_k = \sum_{i=1}^{N_d} [\mathbf X]_{ki}K_i.\)</p>
+
+                    <p>Therefore the SOLA output should be interpreted through the resolving
+                    kernels \(R_k\). The target kernels \(T_k\) guide the
+                    construction, but the resolving kernels define the reported quantities.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The target kernel is the request. The resolving kernel is the
+                        answer.</p>
+                    </div>
+
+                    <h3>The limitation</h3>
+
+                    <p>The difference between the exact target property and the resolved SOLA
+                    property is
+                    \(\Tau(\bar m)-\mathcal{A}(\bar m) = (\Tau-\mathcal{A})(\bar m).\)
+                    Hence
+                    \(\|\Tau(\bar m)-\mathcal{A}(\bar m)\|_{\Pspace} \le \|\Tau-\mathcal{A}\|_{\M\to\Pspace}\,\|\bar m\|_{\M}.\)</p>
+
+                    <p>This inequality is useful, but it also exposes the limitation. A small
+                    resolving-target mismatch does not give a uniform property-error bound over all
+                    possible models. It becomes an error bound only when the true model is
+                    controlled.</p>
+
+                    <p>If we know, for example, that
+                    \(\|\bar m\|_{\M}\le R,\)
+                    then
+                    \(\|\Tau(\bar m)-\mathcal{A}(\bar m)\|_{\Pspace} \le R\|\Tau-\mathcal{A}\|_{\M\to\Pspace}.\)
+                    But without such a model-side restriction, the difference can be arbitrarily
+                    large whenever \(\Tau-\mathcal{A}\neq 0\).</p>
+
+                    <p>The nullspace mechanism makes this especially clear. If
+                    \(h\in\kernel(G),\;\text{but}\; \Tau(h)\neq\mathbf 0,\)
+                    then
+                    \(\mathcal{A}(h)=\mathbf XG(h)=\mathbf 0,\)
+                    while
+                    \(\Tau(h)\neq\mathbf 0.\)
+                    Thus the exact target property can change in directions that the SOLA map
+                    cannot see.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>Resolving kernels can be close to target kernels and still fail to
+                        control target-property error over unrestricted model classes. The missing
+                        ingredient is control of the model.</p>
+                    </div>
+
+                    <h3>The uncertainty distinction</h3>
+
+                    <p>The usual SOLA propagated covariance is
+                    \(\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*.\)
+                    This is the covariance of the propagated data-noise term
+                    \(\mathbf X\boldsymbol\eta\)
+                    when
+                    \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D).\)</p>
+
+                    <p>It is therefore a covariance for observational noise in the resolved SOLA
+                    quantity
+                    \(\mathcal{A}(\bar m).\)
+                    It is not, by itself, a posterior covariance for the exact target property
+                    \(\Tau(\bar m).\)</p>
+
+                    <p>To obtain uncertainty about \(\Tau(\bar m)\), one needs model-side
+                    information. This may be a deterministic constraint set
+                    \(\bar m\in B\subset\M,\)
+                    or a probabilistic prior
+                    \(m\sim\muprior.\)</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Propagated data-noise uncertainty is not the same thing as uncertainty
+                        about the exact target property of the true model.</p>
+                    </div>
+
+                    <h3>The generative correction</h3>
+
+                    <p>The shifted-noise interpretation begins with an observation-centred object
+                    such as
+                    \(N(\widetilde{\mathbf d},\mathbf C_D),\)
+                    then pushes it through \(\mathbf X\):
+                    \[N(\widetilde{\mathbf d},\mathbf C_D) \xrightarrow{\;\mathbf X\;} N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\]
+                    This pushforward is mathematically valid, but it is not the fundamental
+                    inverse-problem object.</p>
+
+                    <p>The generative object is the model-data relation.</p>
+
+                    <p>In the probabilistic case, this is a likelihood kernel
+                    \(m\mapsto Lprob(m,\cdot).\)
+                    SOLA pushes it forward to
+                    \(m \mapsto \mathbf X_{\#}Lprob(m,\cdot).\)</p>
+
+                    <p>In the set-valued case, the model-data relation is
+                    \(m\mapsto Lset(m)\subseteq\D.\)
+                    SOLA pushes it forward to
+                    \(m \mapsto \mathbf X(Lset(m))\subseteq\Pspace.\)</p>
+
+                    <p>Thus the generative interpretation is
+                    \(\text{model-data relation} \xrightarrow{\;\mathbf X\;} \text{model-property relation}.\)</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Generative SOLA reshuffles model-indexed information. It does not need
+                        to place the observed data at the centre of the uncertainty story.</p>
+                    </div>
+
+                    <h3>The final principle</h3>
+
+                    <p>The whole argument can be compressed into one line:
+                    \[\boxed{\text{Ask with targets. Interpret with resolving kernels. Add priors when you want truth.}}\]</p>
+
+                    <p>Targets are design objects. Resolving kernels are interpretation objects.
+                    Priors or deterministic constraints are what allow claims about exact target
+                    properties of the true model.</p>
+
+                    <h2>Appendix A: Algebra of SOLA Minimizers</h2>
+
+                    <h3>Preliminaries</h3>
+
+                    <p>This appendix collects the basic algebra for the SOLA minimizers used in the
+                    main text.</p>
+
+                    <p>Let
+                    \(G:\M\to\D,\; \Tau:\M\to\Pspace,\)
+                    with finite-dimensional spaces
+                    \(\D\simeq\mathbb R^{N_d},\; \Pspace\simeq\mathbb R^{N_p}.\)
+                    Let
+                    \(\mathbf X:\D\to\Pspace\)
+                    be the SOLA matrix.</p>
+
+                    <p>The objective in the noiseless case is
+                    \(J_0(\mathbf X) = \left\|\Tau-\mathbf XG\right\|_{\HS}^2.\)</p>
+
+                    <p>For compactness, define the data-space Gram operator
+                    \(\mathbf H:=GG^*:\D\to\D.\)
+                    With the conventions of these notes, \(\mathbf H\) is represented by a
+                    finite-dimensional matrix. In components, under standard choices of inner
+                    products,
+                    \([\mathbf H]_{ij} = (K_j,K_i)_{\M}.\)</p>
+
+                    <p>For the noisy case, define
+                    \(\mathbf M:=\mathbf H+\mathbf C_D=GG^*+\mathbf C_D.\)</p>
+
+                    <p>We assume the inverses appearing below exist. In practice, positive data
+                    covariance, regularized systems, or pseudoinverses may be used when exact
+                    invertibility fails.</p>
+
+                    <h3>Unconstrained noiseless derivation</h3>
+
+                    <p>The unconstrained noiseless SOLA problem is
+                    \(\mathbf X_0 = \argmin_{\mathbf X} \left\|\Tau-\mathbf XG\right\|_{\HS}^2.\)</p>
+
+                    <p>Let
+                    \(E(\mathbf X):=\Tau-\mathbf XG.\)
+                    Then
+                    \(J_0(\mathbf X) = (E(\mathbf X),E(\mathbf X))_{\HS}.\)
+                    Perturb \(\mathbf X\) by \(\varepsilon\mathbf H_1\), where
+                    \(\mathbf H_1:\D\to\Pspace\)
+                    is an arbitrary finite-dimensional perturbation. Then
+                    \(E(\mathbf X+\varepsilon\mathbf H_1) = \Tau-(\mathbf X+\varepsilon\mathbf H_1)G = E(\mathbf X)-\varepsilon\mathbf H_1G.\)
+                    Therefore
+                    \(J_0(\mathbf X+\varepsilon\mathbf H_1) = \|E(\mathbf X)-\varepsilon\mathbf H_1G\|_{\HS}^2.\)
+                    Differentiating at \(\varepsilon=0\),
+                    \(\delta J_0(\mathbf X)[\mathbf H_1] = -2( E(\mathbf X), \mathbf H_1G)_{\HS}.\)
+                    Using the adjoint relation,
+                    \(( E(\mathbf X), \mathbf H_1G)_{\HS} = ( E(\mathbf X)G^*, \mathbf H_1)_{\HS}.\)
+                    Thus
+                    \(\delta J_0(\mathbf X)[\mathbf H_1] = -2( (\Tau-\mathbf XG)G^*, \mathbf H_1)_{\HS}.\)
+                    Stationarity for every perturbation \(\mathbf H_1\) gives
+                    \((\Tau-\mathbf XG)G^*=0.\)
+                    Hence
+                    \(\Tau G^*-\mathbf XGG^*=0,\)
+                    or
+                    \(\mathbf X\mathbf H=\Tau G^*.\)
+                    If \(\mathbf H\) is invertible, then
+                    \[\boxed{\mathbf X_0=\Tau G^*\mathbf H^{-1}.}\]
+                    Since
+                    \(\mathbf H=GG^*,\)
+                    this is often written as
+                    \(\mathbf X_0 = \Tau G^*(GG^*)^{-1}.\)</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The unconstrained noiseless minimizer is obtained by solving the normal
+                        equation \(\mathbf XGG^*=\Tau G^*.\)</p>
+                    </div>
+
+                    <h3>Constrained noiseless derivation</h3>
+
+                    <p>Now impose resolving constraints
+                    \(\mathbf X\mathbf V=\mathbf W,\)
+                    where
+                    \(\mathbf V\in\D^{N_d\times L},\; \mathbf W\in\Pspace^{N_p\times L}.\)</p>
+
+                    <p>Introduce a Lagrange multiplier matrix
+                    \(\boldsymbol\Lambda\in\Pspace^{N_p\times L}.\)
+                    Consider the Lagrangian
+                    \(\mathcal L(\mathbf X,\boldsymbol\Lambda) = \left\|\Tau-\mathbf XG\right\|_{\HS}^2 + 2\Tr\bigl((\mathbf X\mathbf V-\mathbf W)^*\boldsymbol\Lambda\bigr).\)</p>
+
+                    <p>The stationarity condition gives
+                    \((\Tau-\mathbf XG)G^* + \boldsymbol\Lambda\mathbf V^* = 0.\)
+                    Rearranging,
+                    \(\mathbf XGG^* = \Tau G^*-\boldsymbol\Lambda\mathbf V^*.\)
+                    Using \(\mathbf H=GG^*\),
+                    \(\mathbf X = \Tau G^*\mathbf H^{-1} - \boldsymbol\Lambda\mathbf V^*\mathbf H^{-1}.\)</p>
+
+                    <p>Define
+                    \(\mathbf X_0:=\Tau G^*\mathbf H^{-1},\)
+                    and
+                    \(\mathbf U:=\mathbf H^{-1}\mathbf V.\)
+                    Since \(\mathbf H\) is self-adjoint,
+                    \(\mathbf V^*\mathbf H^{-1}=\mathbf U^*.\)
+                    Therefore
+                    \(\mathbf X = \mathbf X_0-\boldsymbol\Lambda\mathbf U^*.\)</p>
+
+                    <p>Now impose the constraint:
+                    \(\mathbf X\mathbf V=\mathbf W.\)
+                    Substituting,
+                    \((\mathbf X_0-\boldsymbol\Lambda\mathbf U^*)\mathbf V = \mathbf W.\)
+                    Thus
+                    \(\mathbf X_0\mathbf V - \boldsymbol\Lambda\,\mathbf U^*\mathbf V = \mathbf W.\)
+                    Define
+                    \(\boldsymbol\Gamma := \mathbf U^*\mathbf V = \mathbf V^*\mathbf H^{-1}\mathbf V.\)
+                    Then
+                    \(\boldsymbol\Lambda = (\mathbf X_0\mathbf V-\mathbf W)\boldsymbol\Gamma^{-1}.\)</p>
+
+                    <p>Therefore
+                    \[\boxed{\mathbf X_c = \mathbf X_0 - (\mathbf X_0\mathbf V-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*}\]
+                    with
+                    \(\mathbf X_0=\Tau G^*\mathbf H^{-1},\; \mathbf U=\mathbf H^{-1}\mathbf V,\; \boldsymbol\Gamma=\mathbf V^*\mathbf U.\)</p>
+
+                    <p>The single-constraint formula drops out when
+                    \(\mathbf V=\mathbf v,\;\mathbf W=\mathbf w,\;\boldsymbol\Gamma=\beta,\;\mathbf U=\mathbf u,\)
+                    giving
+                    \(\mathbf X_c = \mathbf X_0 - \frac{\mathbf X_0\mathbf v-\mathbf w}{\beta}\mathbf u^*.\)</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The constrained noiseless solution is the unconstrained solution plus a
+                        rank-one correction that enforces the resolving constraint.</p>
+                    </div>
+
+                    <h3>Unconstrained noisy derivation</h3>
+
+                    <p>The noise-aware objective is
+                    \(J(\mathbf X) = \left\|\Tau-\mathbf XG\right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*).\)</p>
+
+                    <p>The first variation of the first term is the same as before:
+                    \(-2( (\Tau-\mathbf XG)G^*, \mathbf H_1)_{\HS}.\)</p>
+
+                    <p>For the noise term, using the standard trace derivative,
+                    \(\delta \Tr(\mathbf X\mathbf C_D\mathbf X^*)[\mathbf H_1] = 2( \mathbf X\mathbf C_D, \mathbf H_1)_{\HS},\)
+                    assuming \(\mathbf C_D\) is self-adjoint.</p>
+
+                    <p>Thus stationarity gives
+                    \(-(\Tau-\mathbf XG)G^*+\mathbf X\mathbf C_D=0.\)
+                    Equivalently,
+                    \(\Tau G^*-\mathbf XGG^* = \mathbf X\mathbf C_D.\)
+                    Hence
+                    \(\Tau G^* = \mathbf X(GG^*+\mathbf C_D).\)</p>
+
+                    <p>Define
+                    \(\mathbf M:=GG^*+\mathbf C_D.\)
+                    Then
+                    \(\mathbf X\mathbf M=\Tau G^*.\)
+                    If \(\mathbf M\) is invertible,
+                    \[\boxed{\mathbf X_0=\Tau G^*\mathbf M^{-1}.}\]</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The noisy unconstrained solution is obtained from the noiseless solution
+                        by replacing \(GG^*\) with \(GG^*+\mathbf C_D\).</p>
+                    </div>
+
+                    <h3>Constrained noisy derivation</h3>
+
+                    <p>Finally, impose the resolving constraints
+                    \(\mathbf X\mathbf V=\mathbf W\)
+                    on the noisy objective.</p>
+
+                    <p>Use the Lagrangian
+                    \(\mathcal L(\mathbf X,\boldsymbol\Lambda) = \left\|\Tau-\mathbf XG\right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*) + 2\Tr\bigl((\mathbf X\mathbf V-\mathbf W)^*\boldsymbol\Lambda\bigr).\)</p>
+
+                    <p>The stationarity condition is
+                    \(-(\Tau-\mathbf XG)G^* + \mathbf X\mathbf C_D + \boldsymbol\Lambda\mathbf V^* = 0.\)
+                    Rearranging,
+                    \(\mathbf X(GG^*+\mathbf C_D) = \Tau G^*-\boldsymbol\Lambda\mathbf V^*.\)
+                    Using
+                    \(\mathbf M:=GG^*+\mathbf C_D,\)
+                    we obtain
+                    \(\mathbf X = \Tau G^*\mathbf M^{-1} - \boldsymbol\Lambda\mathbf V^*\mathbf M^{-1}.\)</p>
+
+                    <p>Define
+                    \(\mathbf X_0:=\Tau G^*\mathbf M^{-1},\; \mathbf U:=\mathbf M^{-1}\mathbf V.\)
+                    Since \(\mathbf M\) is self-adjoint,
+                    \(\mathbf V^*\mathbf M^{-1}=\mathbf U^*.\)
+                    Therefore
+                    \(\mathbf X = \mathbf X_0-\boldsymbol\Lambda\mathbf U^*.\)</p>
+
+                    <p>Apply the constraint:
+                    \((\mathbf X_0-\boldsymbol\Lambda\mathbf U^*)\mathbf V=\mathbf W.\)
+                    Hence
+                    \(\mathbf X_0\mathbf V-\boldsymbol\Lambda\,\mathbf U^*\mathbf V=\mathbf W.\)
+                    Define
+                    \(\boldsymbol\Gamma := \mathbf U^*\mathbf V = \mathbf V^*\mathbf M^{-1}\mathbf V.\)
+                    Then
+                    \(\boldsymbol\Lambda = (\mathbf X_0\mathbf V-\mathbf W)\boldsymbol\Gamma^{-1}.\)</p>
+
+                    <p>Thus
+                    \[\boxed{\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*}\]
+                    where
+                    \(\mathbf M=GG^*+\mathbf C_D,\; \mathbf U=\mathbf M^{-1}\mathbf V,\; \boldsymbol\Gamma=\mathbf V^*\mathbf U.\)</p>
+
+                    <p>The single-constraint formula drops out when
+                    \(\mathbf V=\mathbf v,\;\mathbf W=\mathbf w,\;\boldsymbol\Gamma=\beta,\;\mathbf U=\mathbf u,\)
+                    giving
+                    \(\mathbf X_c = \Tau G^*\mathbf M^{-1} - \frac{\Tau G^*(\mathbf u)-\mathbf w}{\beta}\mathbf u^*.\)</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The constrained noisy solution is the noise-aware SOLA operator plus the
+                        correction needed to enforce the resolving constraint.</p>
+                    </div>
+
+                    <h2>Appendix B: Proxy Model Derivation</h2>
+
+                    <h3>Factorization of the constrained operator</h3>
+
+                    <p>This appendix explains why the constrained SOLA estimate can sometimes be
+                    written as the target property of a proxy model.</p>
+
+                    <p>Start from the constrained noisy SOLA operator
+                    \(\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*,\)
+                    with
+                    \(\mathbf M=GG^*+\mathbf C_D,\; \mathbf U=\mathbf M^{-1}\mathbf V,\; \boldsymbol\Gamma=\mathbf V^*\mathbf U.\)</p>
+
+                    <p>Apply \(\mathbf X_c\) to the observed data \(\widetilde{\mathbf d}\):
+                    \(\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\)
+                    Define the coefficient vector
+                    \(\mathbf c := \boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}\in\mathbb R^L.\)
+                    Then
+                    \(\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\mathbf c.\)</p>
+
+                    <p>Now suppose there exist models \(f_1,\dots,f_L\in\M\) such that
+                    \(G(f_\ell)=\mathbf v_\ell,\; \Tau(f_\ell)=\mathbf w_\ell,\; \ell=1,\dots,L.\)
+                    Then
+                    \(\mathbf W\mathbf c = \Tau\!\left(\sum_{\ell=1}^L c_\ell f_\ell\right)\)
+                    and
+                    \(\Tau G^*\mathbf U\,\mathbf c = \Tau\!\left(\sum_{\ell=1}^L c_\ell\, G^*\mathbf u_\ell\right).\)
+                    Therefore
+                    \(\mathbf X_c\widetilde{\mathbf d} = \Tau\!\left( G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr) \right).\)</p>
+
+                    <p>This gives the proxy model formula.</p>
+
+                    <h3>Construction of the proxy model</h3>
+
+                    <p>Define
+                    \(\hat m := G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr),\; \mathbf c=\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\)
+                    Then
+                    \[\boxed{\mathbf X_c\widetilde{\mathbf d}=\Tau(\hat m).}\]</p>
+
+                    <p>Thus the constrained SOLA estimate can be interpreted as the exact target
+                    property of the proxy model \(\hat m\).</p>
+
+                    <p>The first part,
+                    \(G^*\mathbf M^{-1}\widetilde{\mathbf d},\)
+                    is a noise-weighted back-projection of the data. The second part,
+                    \(\sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr),\)
+                    is the correction associated with the resolving constraints.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The proxy model \(\hat m\) is an algebraic representative. It is not
+                        automatically the true model.</p>
+                    </div>
+
+                    <p>The conditions
+                    \(G(f_\ell)=\mathbf v_\ell,\; \Tau(f_\ell)=\mathbf w_\ell\)
+                    mean that each \(f_\ell\) realizes both the data-side calibration vector and the
+                    property-side desired response for the \(\ell\)th constraint. Such functions
+                    exist if each \((\mathbf v_\ell,\mathbf w_\ell)\) lies in the range of the
+                    combined map \(\begin{bmatrix} G\\ \Tau \end{bmatrix}.\)</p>
+
+                    <p>If any \(f_\ell\) is not unique, the proxy model is not unique either. If
+                    \(f_\ell\) and \(f_\ell'\) both satisfy the conditions for a given \(\ell\),
+                    then
+                    \(f_\ell-f_\ell'\in\kernel(G)\cap\kernel(\Tau).\)
+                    Changing \(f_\ell\) by such a direction changes \(\hat m\), but not the SOLA
+                    estimate
+                    \(\Tau(\hat m).\)</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The proxy model is useful for interpretation, but it should not be
+                        mistaken for a uniquely recovered physical model.</p>
+                    </div>
+
+                    <h3>Connection with null-space components</h3>
+
+                    <p>The proxy formula becomes especially transparent in the noiseless
+                    constrained case.</p>
+
+                    <p>Set
+                    \(\mathbf C_D=\mathbf 0,\; \mathbf M=GG^*.\)
+                    Then
+                    \(\mathbf u_\ell=(GG^*)^{-1}\mathbf v_\ell.\)
+                    Since
+                    \(\mathbf v_\ell=G(f_\ell),\)
+                    we have
+                    \(G(G^*\mathbf u_\ell) = GG^*(GG^*)^{-1}\mathbf v_\ell = \mathbf v_\ell.\)
+                    Therefore
+                    \(G\bigl(G^*\mathbf u_\ell-f_\ell\bigr) = \mathbf 0.\)
+                    So in the noiseless constrained case,
+                    \(G^*\mathbf u_\ell-f_\ell\in\kernel(G)\)
+                    for each \(\ell\).</p>
+
+                    <p>The proxy model is then
+                    \(\hat m = G^*(GG^*)^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr).\)
+                    It is the minimum-norm style back-projection
+                    \(G^*(GG^*)^{-1}\widetilde{\mathbf d}\)
+                    plus a sum of nullspace corrections chosen to enforce the resolving constraints
+                    at the property level.</p>
+
+                    <p>This is why SOLA can be viewed as an inversion in disguise. It may not
+                    explicitly reconstruct a model as its primary output, but its constrained
+                    estimate can often be represented as the target property of a particular proxy
+                    model.</p>
+
+                    <p>In the noisy case, the corrections are not generally exact \(G\)-nullspace
+                    directions, because
+                    \(\mathbf M=GG^*+\mathbf C_D.\)
+                    Then
+                    \(GG^*\mathbf u_\ell = \mathbf v_\ell-\mathbf C_D\mathbf u_\ell,\)
+                    and therefore
+                    \(G(G^*\mathbf u_\ell-f_\ell) = -\mathbf C_D\mathbf u_\ell.\)
+                    So the corrections belong to the noise-weighted geometry of the problem rather
+                    than the exact nullspace of \(G\).</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Noise-free constrained SOLA has a clean nullspace-proxy interpretation.
+                        Noise-aware SOLA has a related proxy interpretation, but the geometry is
+                        modified by \(\mathbf C_D\).</p>
+                    </div>
+
+                    <h2>Appendix C: Suggested Figures</h2>
+
+                    <h3>Figures for Acts I&ndash;III</h3>
+
+                    <p><strong>Figure 1: The unknown model behind a curtain.</strong></p>
+                    <ul>
+                        <li>Show a smooth unknown function \(m(r)\) on \([0,1]\).</li>
+                        <li>Partially obscure it with a translucent curtain or dashed style.</li>
+                        <li>Message: the model exists, but it is not observed directly.</li>
+                    </ul>
+
+                    <p><strong>Figure 2: Sensitivity kernels as listening devices.</strong></p>
+                    <ul>
+                        <li>Plot several sensitivity kernels \(K_i(r)\) on the same axis.</li>
+                        <li>Use light transparent curves so their family structure is visible.</li>
+                        <li>Optional annotation: \([\mathbf d]_i=\int_\Omega K_i(r)m(r)\dd r.\)</li>
+                        <li>Message: each datum listens to the model through a different
+                        kernel.</li>
+                    </ul>
+
+                    <p><strong>Figure 3: Data as integrals.</strong></p>
+                    <ul>
+                        <li>Show one sensitivity kernel \(K_i(r)\), the model \(m(r)\), and their
+                        product \(K_i(r)m(r)\).</li>
+                        <li>Shade the area under the product curve.</li>
+                        <li>Message: the datum is one number obtained by integrating the
+                        product.</li>
+                    </ul>
+
+                    <p><strong>Figure 4: The target kernel as the desired question.</strong></p>
+                    <ul>
+                        <li>Plot a localized target kernel \(T(r)\).</li>
+                        <li>Show it centred at some location \(r_0\).</li>
+                        <li>Annotate: \([\mathbf p]_1=\int_\Omega T(r)m(r)\dd r.\)</li>
+                        <li>Message: the target kernel encodes the property we wish the data could
+                        measure.</li>
+                    </ul>
+
+                    <p><strong>Figure 5: Weighted kernels becoming a resolving kernel.</strong></p>
+                    <ul>
+                        <li>Show several kernels \(K_i\) with weights \(x_i\).</li>
+                        <li>Then show the weighted sum \(R=\sum_i x_iK_i.\)</li>
+                        <li>Overlay the target kernel \(T\).</li>
+                        <li>Message: choosing data weights is choosing a resolving kernel.</li>
+                    </ul>
+
+                    <p><strong>Figure 6: Same shape, wrong mass.</strong></p>
+                    <ul>
+                        <li>Plot two similar-looking kernels with different total area.</li>
+                        <li>Shade their areas differently.</li>
+                        <li>Annotate: \(\int R(r)\dd r\neq 1.\)</li>
+                        <li>Message: visual localization is not enough for an average.</li>
+                    </ul>
+
+                    <p><strong>Figure 7: Unimodularity correction.</strong></p>
+                    <ul>
+                        <li>Show an unconstrained resolving kernel and the constrained resolving
+                        kernel.</li>
+                        <li>Indicate that the constrained version satisfies
+                        \(\int_\Omega R_k(r)\dd r=1.\)</li>
+                        <li>Message: the constraint calibrates the resolving kernel.</li>
+                    </ul>
+
+                    <h3>Figures for Acts IV&ndash;VI</h3>
+
+                    <p><strong>Figure 8: Different target types.</strong></p>
+                    <ul>
+                        <li>Show three target kernels: (a) a positive localized average; (b) a
+                        derivative-like target with positive and negative lobes; (c) an oscillatory
+                        basis coefficient target.</li>
+                        <li>Message: not all targets are averages, so not all constraints should be
+                        unit-mass constraints.</li>
+                    </ul>
+
+                    <p><strong>Figure 9: Resolving constraints as calibration tests.</strong></p>
+                    <ul>
+                        <li>Show a test model \(q\), the data response \(G(q)=\mathbf v\), and the
+                        desired property response \(\Tau(q)=\mathbf w\).</li>
+                        <li>Then show the constraint \(\mathbf X\mathbf V=\mathbf W.\)</li>
+                        <li>Message: resolving constraints enforce correct behavior on selected
+                        test directions.</li>
+                    </ul>
+
+                    <p><strong>Figure 10: Resolution-noise trade-off slider.</strong></p>
+                    <ul>
+                        <li>Make a schematic with a slider.</li>
+                        <li>Left side: broad stable resolving kernel with small error bars.</li>
+                        <li>Right side: sharp resolving kernel with large error bars.</li>
+                        <li>Message: sharper resolution can amplify noise.</li>
+                    </ul>
+
+                    <p><strong>Figure 11: Propagated covariance.</strong></p>
+                    <ul>
+                        <li>Show data error bars being pushed through \(\mathbf X\) to property
+                        error bars.</li>
+                        <li>Annotate: \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*.\)</li>
+                        <li>Message: this is propagated data-noise uncertainty.</li>
+                    </ul>
+
+                    <p><strong>Figure 12: Target versus resolving kernel.</strong></p>
+                    <ul>
+                        <li>Overlay \(T_k\) and \(R_k\).</li>
+                        <li>Highlight their difference \(T_k-R_k.\)</li>
+                        <li>Message: the mismatch direction is where interpretation can leak.</li>
+                    </ul>
+
+                    <p><strong>Figure 13: Every map point has its own kernel.</strong></p>
+                    <ul>
+                        <li>Show a row of SOLA map values.</li>
+                        <li>Under each value, show its associated resolving kernel.</li>
+                        <li>Message: a SOLA map is a map of values plus a map of kernels.</li>
+                    </ul>
+
+                    <h3>Figures for Acts VII&ndash;XI</h3>
+
+                    <p><strong>Figure 14: Synthetic cautionary example setup.</strong></p>
+                    <ul>
+                        <li>Panel 1: sensitivity kernels \(K_i\).</li>
+                        <li>Panel 2: target kernels \(T_k\).</li>
+                        <li>Panel 3: observed data \(\widetilde{\mathbf d}\) with \(\pm1\sigma\)
+                        bars.</li>
+                        <li>Message: the example begins as a normal SOLA calculation.</li>
+                    </ul>
+
+                    <p><strong>Figure 15: Good-looking resolving kernels.</strong></p>
+                    <ul>
+                        <li>Overlay resolving kernels \(R_k\) on target kernels
+                        \(T_k\).</li>
+                        <li>Make the match look visually persuasive.</li>
+                        <li>Message: standard diagnostics may look good.</li>
+                    </ul>
+
+                    <p><strong>Figure 16: The apparent failure.</strong></p>
+                    <ul>
+                        <li>Plot SOLA estimates \([\widetilde{\mathbf p}]_k\) with \(\pm2\sigma\)
+                        bands.</li>
+                        <li>Overlay true target properties
+                        \([\bar{\mathbf p}]_k=[\Tau(\bar m)]_k.\)</li>
+                        <li>Message: the target-property interpretation can fail dramatically.</li>
+                    </ul>
+
+                    <p><strong>Figure 17: Nullspace cartoon.</strong></p>
+                    <ul>
+                        <li>Show model space as a plane or room.</li>
+                        <li>Show data-visible directions and data-invisible directions.</li>
+                        <li>Mark a direction \(h\) with \(G(h)=\mathbf 0,\; \Tau(h)\neq\mathbf 0.\)</li>
+                        <li>Message: some directions are invisible to data but visible to target
+                        properties.</li>
+                    </ul>
+
+                    <p><strong>Figure 18: Proxy model diagram.</strong></p>
+                    <ul>
+                        <li>Show two paths:
+                        \(\widetilde{\mathbf d} \xrightarrow{\;\mathbf X_c\;} \widetilde{\mathbf p}\)
+                        and
+                        \(\widetilde{\mathbf d} \longmapsto \hat m \xrightarrow{\;\Tau\;} \widetilde{\mathbf p}.\)</li>
+                        <li>Message: SOLA can be interpreted directly or through a proxy
+                        model.</li>
+                    </ul>
+
+                    <p><strong>Figure 19: Resolution operator versus resolving kernel.</strong></p>
+                    <ul>
+                        <li>Show classical inversion: \(m\mapsto \mathcal Rm.\)</li>
+                        <li>Show SOLA: \(T_k\mapsto R_k=\mathcal R^*T_k.\)</li>
+                        <li>Message: resolution operators and resolving kernels are related views
+                        of the same filtering phenomenon.</li>
+                    </ul>
+
+                    <p><strong>Figure 20: Shifted noise versus likelihood.</strong></p>
+                    <ul>
+                        <li>Left panel: a Gaussian cloud centred at \(\widetilde{\mathbf d}\).</li>
+                        <li>Right panel: a family of Gaussian clouds centred at \(G(m)\) for
+                        different \(m\).</li>
+                        <li>Message: shifted noise is observation-centred, likelihood is
+                        model-centred.</li>
+                    </ul>
+
+                    <p><strong>Figure 21: Generative SOLA.</strong></p>
+                    <ul>
+                        <li>Show:
+                        \(m \mapsto Lprob(m,\cdot) \xrightarrow{\;\mathbf X_{\#}\;} \mathbf X_{\#}Lprob(m,\cdot).\)</li>
+                        <li>Also show the set-valued version:
+                        \(m \mapsto Lset(m) \xrightarrow{\;\mathbf X\;} \mathbf X(Lset(m)).\)</li>
+                        <li>Message: SOLA pushes model-data relations into model-property
+                        relations.</li>
+                    </ul>
+
+                    <p><strong>Figure 22: Final summary graphic.</strong></p>
+                    <ul>
+                        <li>Three columns: (1) Ask with targets: \(T_k.\) (2)
+                        Interpret with resolving kernels: \(R_k.\) (3) Add priors when you want
+                        truth: \(\bar m\in B\) or \(m\sim\muprior.\)</li>
+                        <li>Message: the whole document in one picture.</li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-11.html"><span class="arrow">&larr;</span> Act 11: What SOLA Is Good For</a>
+                        <a class="part-prevnext-btn" href="my-take-on-sola.html">Back to Overview <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

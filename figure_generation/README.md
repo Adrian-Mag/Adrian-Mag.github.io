@@ -73,3 +73,39 @@ The posterior-under-refinement method (`fig4`) mirrors the original EGU poster
 script `fig10_posterior_grid.py` (boxcar discretisation, mass-weighted coefficient
 space, `LinearBayesianInversion` with a naive `sigma*I` prior vs a trace-class
 `BesselSobolevInverse` covariance), adapted to the shared `[0, 1]` problem.
+
+## `sola/`
+
+Tooling for the **"My Take on SOLA"** page series. Defines a 1-D linear inverse
+problem on `[0, 1]` with a forward operator `G` (Gaussian sensitivity kernels)
+and a target operator `T` (localised averaging kernels), then computes the SOLA
+matrix `X`, resolving kernels, and propagated covariance `C_P = X C_D X*`.
+
+Uses the same `intervalinf` / `pygeoinf` stack and re-exports the Think First
+`style.py` for visual consistency (mako colormap, dark-theme styling).
+
+| Script | Output | What it shows |
+| --- | --- | --- |
+| `fig_kernels.py` | `fig_kernels.{png,svg}` | Sensitivity kernels `K_i(r)` — translucent mako gradient. |
+| `fig_target_kernel.py` | `fig_target_kernel.{png,svg}` | A single target kernel `T(r)` with the model in the background. |
+| `fig_weighted_kernels.py` | `fig_weighted_kernels.{png,svg}` | Weighted sensitivity kernels forming a resolving kernel, overlaid with the target. |
+| `fig_same_shape_wrong_mass.py` | `fig_same_shape_wrong_mass.{png,svg}` | Two kernels with similar shape but different total mass; unimodularity correction. |
+| `fig_unconstrained_vs_constrained.py` | `fig_unconstrained_vs_constrained.{png,svg}` | Unconstrained vs constrained resolving kernels at several locations. |
+| `fig_sola_estimates.py` | `fig_sola_estimates.{png,svg}` | SOLA property estimates with `±2σ` propagated uncertainty bars. |
+| `fig_map_with_kernels.py` | `fig_map_with_kernels.{png,svg}` | SOLA map values with resolving kernels shown beneath each point. |
+| `fig_target_kernels.py` | `fig_target_kernels.{png,svg}` | Localised averaging target kernels `T^(k)`. |
+| `fig_observed_data.py` | `fig_observed_data.{png,svg}` | Observed data with `±1σ` error bars. |
+| `fig_resolving_vs_target.py` | `fig_resolving_vs_target.{png,svg}` | Resolving kernels overlaid on target kernels — the "looks good" diagnostic. |
+| `fig_sola_vs_truth.py` | `fig_sola_vs_truth.{png,svg}` | SOLA estimates vs true target properties — the cautionary tale failure. |
+
+All outputs are written to `media/research/sola/`.
+
+### Run everything
+
+```bash
+for f in fig_kernels fig_target_kernel fig_weighted_kernels fig_same_shape_wrong_mass \
+         fig_unconstrained_vs_constrained fig_sola_estimates fig_map_with_kernels \
+         fig_target_kernels fig_observed_data fig_resolving_vs_target fig_sola_vs_truth; do
+  conda run -n inferences python figure_generation/sola/$f.py
+done
+```

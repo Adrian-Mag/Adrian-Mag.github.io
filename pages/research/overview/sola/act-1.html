@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 1: The Kernel Game — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 1 of My Take on SOLA: Sensitivity kernels, data as weighted integrals, what finite data cannot see, and the target property.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}',
+                Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}',
+                Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}',
+                nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}',
+                range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}',
+                spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}',
+                HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}',
+                pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 1: The Kernel Game</h1>
+                <p>Sensitivity kernels, weighted integrals, and the target property.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html" aria-current="page"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What the Data Can See</h2>
+
+                    <h3>The unknown model</h3>
+
+                    <p>We begin with an unknown function
+                    \[m:\Omega\to\mathbb R,\]
+                    defined on a physical domain \(\Omega\). In a geophysical problem, \(\Omega\)
+                    might be an interval of depths, a radial coordinate inside a planet, a patch of
+                    the Earth's surface, or a three-dimensional region. To keep the first picture
+                    simple, we imagine that
+                    \[\Omega=[0,1],\]
+                    and that \(r\in\Omega\) is a spatial coordinate.</p>
+
+                    <p>The function \(m(r)\) represents the model. It might be a velocity
+                    perturbation, a density variation, a temperature anomaly, a sound-speed profile,
+                    or any other physical field we would like to learn about. For now, the exact
+                    interpretation does not matter. What matters is that \(m\) is the object hidden
+                    behind the data.</p>
+
+                    <p>At this stage, we will not yet be too fussy about the exact mathematical home
+                    of \(m\). Later, we may decide that \(m\) belongs to a Hilbert space \(\M\),
+                    perhaps something like \(L^2(\Omega)\) or a smoother Sobolev space. That choice
+                    will matter. It determines what it means for two models to be close, which
+                    functions are allowed, and which operations are continuous.</p>
+
+                    <p>But we do not need that machinery yet. For the moment, the essential picture
+                    is this:
+                    \[\text{there is an unknown function }m(r),\text{ and the data only see it indirectly.}\]</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The phrase &ldquo;an unknown function&rdquo; sounds innocent, but it is
+                        already hiding a modelling choice. Eventually we must say what kind of
+                        function \(m\) is allowed to be. If we do not make that choice explicitly,
+                        some later computational step will make it for us.</p>
+                    </div>
+
+                    <p>The important point is that we do not observe \(m(r)\) directly. We do not get
+                    to open the Earth, the star, the material, or the experiment and read off the
+                    function value at every \(r\). Instead, we observe numbers produced by an
+                    experiment. Those numbers are related to \(m\), but they are not \(m\) itself.</p>
+
+                    <p>The rest of this chapter is about understanding what kind of relationship the
+                    data have with the model.</p>
+
+                    <h3>Sensitivity kernels</h3>
+
+                    <p>Suppose that our experiment gives us \(N_d\) data values. Associated with
+                    these data values are functions
+                    \[K_1(r),K_2(r),\dots,K_{N_d}(r).\]
+                    These are called sensitivity kernels.</p>
+
+                    <p>Each kernel \(K_i\) describes how the \(i\)th datum responds to the model. If
+                    \(K_i(r)\) is large near some location, then the \(i\)th datum is sensitive to
+                    the model near that location. If \(K_i(r)\) is small or zero in a region, then
+                    the \(i\)th datum hardly sees that region at all.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>A sensitivity kernel is the footprint of a datum on the model. Where the
+                        kernel is large, the datum listens. Where the kernel is small, the datum is
+                        nearly deaf.</p>
+                    </div>
+
+                    <p>One should not imagine the datum as measuring \(m(r)\) at a single point.
+                    Usually it does something more blurred. It averages, smears, mixes, and filters.
+                    The kernel \(K_i\) tells us the shape of that filtering.</p>
+
+                    <p>For example, if \(K_i\) is sharply concentrated near \(r_0\), then the datum is
+                    mostly local to \(r_0\). If \(K_i\) is broad, then the datum mixes information
+                    from a wide region. If \(K_i\) oscillates between positive and negative values,
+                    then the datum compares different parts of the model against each other.</p>
+
+                    <p>This is already the beginning of the inverse problem. The data do not arrive
+                    as tiny labels attached to the model. They arrive as integrals against kernels.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_kernels.png"
+                             alt="Three panels: two individual sensitivity kernels with annotated sensitive and insensitive regions, then all kernels together">
+                        <figcaption><span class="sola-figure-label">Figure F1-1.</span>Left and centre: individual sensitivity kernels.
+                        Shaded bands mark regions where \(|K_i(r)|\) is small — the data are mostly
+                        insensitive to the model there. Where the kernel is large, the datum is
+                        strongly influenced by the model at that depth. Right: a family of
+                        \(N_d\) kernels, as one would encounter in a real problem with many data.</figcaption>
+                    </figure>
+
+                    <p>The visual lesson of the figure should be slightly unsettling. Even if we
+                    have many data, each datum sees the model through its own distorted window. The
+                    inverse problem is not a matter of simply reading off \(m\). It is a matter of
+                    understanding what can be reconstructed, estimated, or summarized from these
+                    windows.</p>
+
+                    <h3>Data as weighted integrals</h3>
+
+                    <p>In the simplest noiseless setting that usually appears in SOLA applications,
+                    the \(i\)th datum is
+                    \[[\mathbf d]_i = \int_\Omega K_i(r)m(r)\dd r, \qquad i=1,\dots,N_d.\]
+                    This equation says that the datum \([\mathbf d]_i\) is obtained by multiplying the model
+                    \(m\) by the kernel \(K_i\), then integrating over the domain.</p>
+
+                    <p>Thus each datum is a weighted integral of the model. The model \(m\) supplies
+                    the unknown field. The kernel \(K_i\) supplies the weights. The integral
+                    collapses the result to one number.</p>
+
+                    <p>We collect the data into a finite-dimensional vector
+                    \[\mathbf d \in\mathbb R^{N_d},\]
+                    whose components are the individual data.</p>
+
+                    <p>This is the first place where the finite-dimensional and infinite-dimensional
+                    worlds meet. The model \(m\) is a function. The data vector \(\mathbf d\) is
+                    just a list of numbers. The experiment turns one into the other.</p>
+
+                    <p>Later, once we choose a model Hilbert space \(\M\), the same equations can be
+                    written as
+                    \[[G(m)]_i = (K_i,m)_{\M}, \qquad i=1,\dots,N_d,\]
+                    where
+                    \[G:\M\to\D\]
+                    is the forward operator, and \(\D\simeq\mathbb R^{N_d}\) is the data space.</p>
+
+                    <p>For now, this notation should be read as a compressed version of the integral
+                    equations:
+                    \[G(m) = \begin{pmatrix} \int_\Omega K_1(r)m(r)\dd r\\ \vdots\\ \int_\Omega K_{N_d}(r)m(r)\dd r \end{pmatrix}.\]</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Why the data are linear</span>
+                        <p>Each datum depends linearly on \(m\). If \(m_1\) and \(m_2\) are two models
+                        and \(\alpha,\beta\in\mathbb R\), then
+                        \[\int_\Omega K_i(r)\bigl(\alpha m_1(r)+\beta m_2(r)\bigr)\dd r = \alpha\int_\Omega K_i(r)m_1(r)\dd r + \beta\int_\Omega K_i(r)m_2(r)\dd r.\]
+                        Therefore
+                        \[G(\alpha m_1+\beta m_2)=\alpha G(m_1)+\beta G(m_2).\]
+                        This linearity is what makes SOLA possible in its usual form.</p>
+                    </div>
+
+                    <p>It is useful to pause here. The data are not arbitrary numbers. They are
+                    responses of the model against known kernels. If we know the kernels, then we
+                    know precisely what kind of information the data contain.</p>
+
+                    <p>But we also know what they do not contain.</p>
+
+                    <h3>What finite data cannot see</h3>
+
+                    <p>The map \(G\) sends a function to finitely many numbers:
+                    \[G:\M\to\D, \qquad \D\simeq\mathbb R^{N_d}.\]
+                    This is a compression. Unless the model space is itself finite-dimensional in a
+                    very special way, many different models will produce the same data.</p>
+
+                    <p>A model perturbation \(h\in\M\) is invisible to the data if
+                    \[G(h)=\mathbf 0.\]
+                    In integral form, this means
+                    \[\int_\Omega K_i(r)h(r)\dd r=0, \qquad i=1,\dots,N_d.\]
+                    Such an \(h\) may be large, oscillatory, smooth, rough, physically plausible, or
+                    physically implausible. The data do not care. If \(G(h)=\mathbf 0\), then adding \(h\) to
+                    a model does not change the noiseless data:
+                    \[G(m+h)=G(m)+G(h)=G(m).\]</p>
+
+                    <p>The collection of all such invisible perturbations is the nullspace
+                    \[\kernel(G) = \{h\in\M:G(h)=\mathbf 0\}.\]</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>If \(h\in\kernel(G)\), then \(h\) is written in invisible ink as far as
+                        these data are concerned. It may be present in the model, but the experiment
+                        cannot read it.</p>
+                    </div>
+
+                    <p>This is not a defect of SOLA. It is a structural fact about inverse problems
+                    with indirect, finite data. The data only constrain the parts of the model that
+                    interact with the sensitivity kernels. Everything orthogonal to those
+                    measurements is left unresolved.</p>
+
+                    <p>This observation will matter later. For now, it tells us that asking for the
+                    whole model \(m\) may be too ambitious. The data do not constrain the whole model.
+                    They contain only finitely many linear shadows of it.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The data do not show us the model. They show us finitely many shadows of
+                        the model.</p>
+                    </div>
+
+                    <p>That is the first move in the SOLA story. If the data cannot reveal the whole
+                    model, perhaps we should not ask them to. Perhaps we should ask for something
+                    smaller, sharper, and better matched to what the data can actually say.</p>
+
+                    <h2>What We Would Like to Know</h2>
+
+                    <h3>The target property</h3>
+
+                    <p>In many inverse problems, the goal is not really to reconstruct the whole
+                    model. The whole model may be too much to ask for, and in many applications it
+                    is not even the thing we truly want.</p>
+
+                    <p>Instead, we may want a particular property of the model.</p>
+
+                    <p>For example, we may want the average value of \(m\) near a certain location.
+                    We may want the contrast between two regions. We may want a smoothed profile. We
+                    may want a coefficient in some basis. We may want a derivative-like quantity.
+                    The details vary, but the common structure is that we want to ask the model a
+                    specific question.</p>
+
+                    <p>The simplest such question has the form
+                    \[[\mathbf p]_1 = \int_\Omega T(r)m(r)\dd r.\]
+                    Here \(T(r)\) is the target kernel, and \([\mathbf p]_1\in\mathbb R\) is the property we
+                    would like to know. When there is only one property, we omit the subscript
+                    and write \(T\) instead of \(T_1\).</p>
+
+                    <p>This looks very similar to the data equations
+                    \[[\mathbf d]_i = \int_\Omega K_i(r)m(r)\dd r.\]
+                    The difference is that the kernels \(K_i\) are given to us by the experiment,
+                    while the target kernel \(T\) is chosen by us. The data kernels say what the
+                    experiment measured. The target kernel says what we wish it had measured.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The sensitivity kernels are the questions the experiment actually asked.
+                        The target kernel is the question we wish we could ask.</p>
+                    </div>
+
+                    <p>At this point, the SOLA idea begins to appear. If the data are integrals
+                    against kernels, and the desired property is also an integral against a kernel,
+                    then perhaps we can combine the data integrals to imitate the desired one.</p>
+
+                    <p>But before we combine anything, we should understand what kind of target we
+                    are asking for.</p>
+
+                    <h3>Localized averages</h3>
+
+                    <p>A common target is a localized average. We choose \(T\) to be concentrated
+                    near some location \(r_0\). For instance, \(T\) might be a smooth bump centred
+                    at \(r_0\), small away from \(r_0\), and normalized so that
+                    \[\int_\Omega T(r)\dd r=1.\]
+                    Then
+                    \[[\mathbf p]_1 = \int_\Omega T(r)m(r)\dd r\]
+                    is a weighted average of \(m\) near \(r_0\).</p>
+
+                    <p>The normalization matters. If \(m\) is constant, say \(m(r)=c\), then
+                    \[[\mathbf p]_1 = \int_\Omega T(r)c\dd r = c\int_\Omega T(r)\dd r = c.\]
+                    So the target kernel reproduces constants correctly. That is exactly what an
+                    averaging kernel should do.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_target_kernel.png"
+                             alt="A localized target kernel shown as a smooth bump with unit area, with the model m(r) in the background">
+                        <figcaption><span class="sola-figure-label">Figure F1-2.</span>A localized averaging target. The target kernel defines the
+                        property we would like to estimate.</figcaption>
+                    </figure>
+
+                    <p>The location and width of \(T\) encode the question. A narrow target asks for
+                    a highly localized average. A broad target asks for a more smeared average. A
+                    target with oscillations asks for a contrast or derivative-like feature rather
+                    than an ordinary average.</p>
+
+                    <p>For this first act, however, we stay with localized averages. They are the
+                    cleanest way to see what SOLA is trying to do.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>A target kernel is a question written as a function. It asks the model for
+                        a weighted answer.</p>
+                    </div>
+
+                    <h3>The property map</h3>
+
+                    <p>For a single target kernel \(T\), the property is a scalar:
+                    \[[\mathbf p]_1 = \int_\Omega T(r)m(r)\dd r.\]
+                    In practice, we often want several properties. For example, we might choose
+                    target kernels
+                    \[T_1,T_2,\dots,T_{N_p},\]
+                    centred at different locations. Each one defines a property
+                    \[[\mathbf p]_k = \int_\Omega T_k(r)m(r)\dd r, \qquad k=1,\dots,N_p.\]
+                    Collecting these into a vector gives
+                    \[\mathbf p \in\mathbb R^{N_p}.\]</p>
+
+                    <p>Once we have chosen a model Hilbert space \(\M\), this collection of
+                    properties can be written as an operator
+                    \[\Tau:\M\to\Pspace,\]
+                    where \(\Pspace\simeq\mathbb R^{N_p}\), and
+                    \[[\Tau(m)]_k = (T_k,m)_{\M}, \qquad k=1,\dots,N_p.\]</p>
+
+                    <p>The notation is compact, but the meaning is simple. The operator \(\Tau\) asks
+                    the model \(N_p\) linear questions. The \(k\)th question is encoded by the
+                    kernel \(T_k\).</p>
+
+                    <p>We now have two maps:
+                    \[G:\M\to\D, \qquad \Tau:\M\to\Pspace.\]
+                    The first map \(G\) describes what the experiment gives us. The second map
+                    \(\Tau\) describes what we would like to know.</p>
+
+                    <p>In an ideal world, the data would directly contain \(\Tau(m)\). But the
+                    experiment gives us \(G(m)\), not \(\Tau(m)\). SOLA lives in the gap between these
+                    two maps.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The forward map \(G\) describes the questions the experiment actually
+                        answered. The property map \(\Tau\) describes the questions we wish had been
+                        answered.</p>
+                    </div>
+
+                    <h3>The SOLA question</h3>
+
+                    <p>We can now state the central SOLA question.</p>
+
+                    <p>The data give us integrals against sensitivity kernels:
+                    \[[\mathbf d]_i = \int_\Omega K_i(r)m(r)\dd r.\]
+                    The desired property is an integral against a target kernel:
+                    \[[\mathbf p]_k = \int_\Omega T_k(r)m(r)\dd r.\]
+                    So SOLA asks:</p>
+
+                    \[\text{Can we combine the available data so that the combined kernel behaves like }T_k?\]
+
+                    <p>More explicitly, can we find weights \(x_1,\dots,x_{N_d}\) such that
+                    \[x_1K_1(r)+x_2K_2(r)+\cdots+x_{N_d}K_{N_d}(r)\]
+                    looks like the target kernel \(T_k(r)\)?</p>
+
+                    <p>If we can, then the corresponding weighted data combination
+                    \[x_1[\mathbf d]_1+x_2[\mathbf d]_2+\cdots+x_{N_d}[\mathbf d]_{N_d}\]
+                    will behave like the desired property.</p>
+
+                    <p>This is the whole spark of SOLA. We do not first reconstruct \(m\). We try to
+                    synthesize the property directly from the data.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA begins by refusing to reconstruct everything. It tries to manufacture
+                        the property directly from the data.</p>
+                    </div>
+
+                    <p>The next act turns this idea into algebra. The key observation will be almost
+                    embarrassingly simple: because the data are linear integrals, combining data is
+                    the same as combining kernels. That is where the kernel game truly begins.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="my-take-on-sola.html"><span class="arrow">&larr;</span> Overview</a>
+                        <a class="part-prevnext-btn" href="act-2.html">Act 2: Building SOLA from Scratch <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

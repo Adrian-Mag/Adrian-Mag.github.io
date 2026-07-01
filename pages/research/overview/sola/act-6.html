@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 6: What Did SOLA Actually Estimate? — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 6 of My Take on SOLA: The approximate property map, target vs resolving kernels, and why kernel closeness is not enough.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 6: What Did SOLA Actually Estimate?</h1>
+                <p>The approximate property map, target vs. resolving kernels, and the honest sidestep.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html" aria-current="page"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>The Target Is the Request, the Resolving Kernel Is the Answer</h2>
+
+                    <h3>The approximate property map</h3>
+
+                    <p>We have now built the standard SOLA machinery. We have a forward map
+                    \(G:\M\to\D,\) a property map \(\Tau:\M\to\Pspace,\) and a finite-dimensional
+                    SOLA matrix \(\mathbf X:\D\to\Pspace.\) The defining idea was to choose
+                    \(\mathbf X\) so that \(\mathbf XG\approx \Tau.\)</p>
+
+                    <p>This composite map deserves its own name. We define
+                    \[\mathcal{A}:=\mathbf XG:\M\to\Pspace.\]
+                    The map \(\mathcal{A}\) is the approximate property map synthesized from the data.</p>
+
+                    <p>This notation is small, but the conceptual shift is large. The target map is
+                    \(\Tau\). The map SOLA actually constructs is \(\mathcal{A}\). These are not the same
+                    object unless the resolving kernels exactly reproduce the target kernels.</p>
+
+                    <p>For a model \(m\), the desired property vector is
+                    \(\mathbf p=\Tau(m).\)
+                    The SOLA-accessible property vector, in the noiseless setting, is
+                    \(\mathcal{A}(m)=\mathbf XG(m).\)</p>
+
+                    <p>So there are two property maps in the room:
+                    \[\Tau:\M\to\Pspace, \qquad \mathcal{A}:\M\to\Pspace.\]
+                    The first one is what we asked for. The second one is what the data combination
+                    actually gives.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The target map \(\Tau\) is the question written on the wish list. The
+                        approximate map \(\mathcal{A}=\mathbf XG\) is the question the data can actually
+                        answer after SOLA has reshuffled them.</p>
+                    </div>
+
+                    <p>At the kernel level, this means the following. The \(k\)th component of the
+                    target property is represented by the target kernel \(T_k\):
+                    \[[\Tau(m)]_k = (T_k,m)_{\M}.\]
+                    The \(k\)th component of the approximate property map is represented by the
+                    resolving kernel \(R_k\):
+                    \[[\mathcal{A}(m)]_k = (R_k,m)_{\M}.\]
+                    The resolving kernel is built from the sensitivity kernels:
+                    \[R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\]</p>
+
+                    <p>Thus SOLA produces the kernels \(R_k\), not merely the numbers
+                    \([\widetilde{\mathbf p}]_k\). Those kernels are the actual lenses through
+                    which the model is being viewed.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Once \(\mathbf X\) has been chosen, SOLA has chosen a new property map
+                        \(\mathcal{A}=\mathbf XG\). The reported numbers should be interpreted through \(\mathcal{A}\),
+                        not automatically through \(\Tau\).</p>
+                    </div>
+
+                    <h3>The target property and the SOLA property</h3>
+
+                    <p>Let \(\bar m\in\M\) denote the true model. The true target property vector
+                    is
+                    \(\bar{\mathbf p} := \Tau(\bar m).\)
+                    Its components are
+                    \([\bar{\mathbf p}]_k = [\Tau(\bar m)]_k = (T_k,\bar m)_{\M}.\)</p>
+
+                    <p>Now ignore noise for a moment. If the data were exact, then
+                    \(\mathbf d=G(\bar m).\)
+                    Applying the SOLA matrix gives
+                    \[\widetilde{\mathbf p} = \mathbf X\mathbf d = \mathbf XG(\bar m) = \mathcal{A}(\bar m).\]
+                    So the noiseless SOLA output is
+                    \(\widetilde{\mathbf p}=\mathcal{A}(\bar m).\)</p>
+
+                    <p>The desired target property is
+                    \(\bar{\mathbf p}=\Tau(\bar m).\)
+                    Therefore the basic distinction is
+                    \[\mathcal{A}(\bar m) \quad\text{versus}\quad \Tau(\bar m).\]
+                    This is the interpretive fork in the road.</p>
+
+                    <p>If \(\mathcal{A}=\Tau\), then the SOLA property is exactly the target property:
+                    \(\mathcal{A}(\bar m)=\Tau(\bar m).\) In that case, there is no ambiguity.</p>
+
+                    <p>But if \(\mathcal{A}\neq \Tau\), then the SOLA output and the target property are
+                    generally different: \(\mathcal{A}(\bar m)\neq \Tau(\bar m).\)</p>
+
+                    <p>In components,
+                    \[[\widetilde{\mathbf p}]_k = [\mathcal{A}(\bar m)]_k = (R_k,\bar m)_{\M},\]
+                    whereas the desired target component is
+                    \[[\bar{\mathbf p}]_k = [\Tau(\bar m)]_k = (T_k,\bar m)_{\M}.\]
+                    So the difference is
+                    \[[\bar{\mathbf p}]_k-[\widetilde{\mathbf p}]_k = (T_k-R_k,\bar m)_{\M}.\]</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The SOLA output is exact for the resolving kernel, not automatically for
+                        the target kernel. If \(R_k\neq T_k\), then the two linear
+                        questions are different.</p>
+                    </div>
+
+                    <p>This is not a failure of SOLA. It is the method telling us precisely what it
+                    managed to build. The danger begins only when we forget the distinction and
+                    read \(\mathcal{A}(\bar m)\) as though it were \(\Tau(\bar m).\)</p>
+
+                    <h3>Why kernel closeness is not enough</h3>
+
+                    <p>A tempting thought now appears:
+                    \[\text{if }A\text{ is close to }\Tau,\text{ then }\mathcal{A}(\bar m)\text{ should be close to }\Tau(\bar m).\]
+                    This sounds reasonable, and in many practical situations it may be a useful
+                    heuristic. But as a mathematical statement, it is missing a crucial
+                    ingredient.</p>
+
+                    <p>The difference between the true target property and the SOLA-accessible
+                    property is
+                    \[\Tau(\bar m)-\mathcal{A}(\bar m) = (\Tau-\mathcal{A})(\bar m).\]
+                    Taking norms gives
+                    \[\|\Tau(\bar m)-\mathcal{A}(\bar m)\|_{\Pspace} = \|(\Tau-\mathcal{A})(\bar m)\|_{\Pspace}.\]
+                    Using the operator norm,
+                    \[\|\Tau(\bar m)-\mathcal{A}(\bar m)\|_{\Pspace} \le \|\Tau-\mathcal{A}\|_{\M\to\Pspace}\,\|\bar m\|_{\M}.\]</p>
+
+                    <p>This inequality is useful, but it does not say what one might first hope. It
+                    says that the property error is controlled by two things:
+                    \[\text{resolving-target mismatch} \quad\text{and}\quad \text{size of the true model}.\]</p>
+
+                    <p>If \(\|\bar m\|_{\M}\) is controlled, then a small operator mismatch gives a
+                    small property error. For example, if we know in advance that
+                    \(\|\bar m\|_{\M}\le R,\) then
+                    \[\|\Tau(\bar m)-\mathcal{A}(\bar m)\|_{\Pspace} \le R\|\Tau-\mathcal{A}\|_{\M\to\Pspace}.\]
+                    That is a genuine error bound.</p>
+
+                    <p>But without such a model-side restriction, there is no uniform guarantee.</p>
+
+                    <p>Indeed, suppose \(\Tau-\mathcal{A}\neq 0.\) Then there exists some direction
+                    \(h\in\M\) such that \((\Tau-\mathcal{A})(h)\neq \mathbf 0.\) For any scalar \(\alpha\),
+                    consider the model \(m_\alpha=\alpha h.\) Then
+                    \[\Tau(m_\alpha)-A(m_\alpha) = \alpha(\Tau-\mathcal{A})(h).\]
+                    Therefore
+                    \[\|\Tau(m_\alpha)-A(m_\alpha)\|_{\Pspace} = |\alpha|\,\|(\Tau-\mathcal{A})(h)\|_{\Pspace}.\]
+                    By taking \(|\alpha|\) large enough, the property mismatch can be made
+                    arbitrarily large, even though the operator mismatch
+                    \(\|\Tau-\mathcal{A}\|\) has not changed.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>A small mismatch between resolving and target kernels is not a
+                        model-independent error bound. It becomes an error bound only after the
+                        model class has been restricted.</p>
+                    </div>
+
+                    <p>This point is subtle because plots of kernels can be persuasive. If
+                    \(R_k\) visually resembles \(T_k\), it is natural to feel that the
+                    corresponding properties must be close. But the model is what multiplies the
+                    difference:
+                    \[[\Tau(\bar m)]_k-[\mathcal{A}(\bar m)]_k = (T_k-R_k,\bar m)_{\M}.\]
+                    A tiny kernel mismatch can matter a lot if the true model has large structure
+                    in exactly that mismatch direction.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Kernel mismatch is the crack. The true model decides how much water
+                        flows through it.</p>
+                    </div>
+
+                    <p>This is the first major limitation that must be stated carefully. SOLA gives
+                    us control over the resolving kernels, and that control is valuable. But
+                    closeness of resolving kernels to target kernels is not, by itself, a guarantee
+                    that the target properties of the true model have been estimated accurately.</p>
+
+                    <p>To get such a guarantee, one needs additional information about the true
+                    model. That information may be a norm bound, a smoothness class, a deterministic
+                    admissible set, a probabilistic prior, or some other model-side restriction.
+                    Without it, the data cannot rule out all directions that matter to
+                    \(\Tau-\mathcal{A}\).</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The statement \(\mathcal{A}\approx\Tau\) is a statement about operators or kernels.
+                        To turn it into a statement about \(\mathcal{A}(\bar m)\approx\Tau(\bar m)\), we need
+                        some control of \(\bar m\).</p>
+                    </div>
+
+                    <h2>The Honest Sidestep</h2>
+
+                    <h3>Interpreting through resolving kernels</h3>
+
+                    <p>There is a clean way to avoid overclaiming.</p>
+
+                    <p>Do not pretend that the resolving kernel is the target kernel. Interpret the
+                    result through the resolving kernel itself.</p>
+
+                    <p>The SOLA output is
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    Ignoring observational noise for the moment,
+                    \(\widetilde{\mathbf p} = \mathcal{A}(\bar m).\)
+                    Therefore the \(k\)th component is
+                    \[[\widetilde{\mathbf p}]_k = [\mathcal{A}(\bar m)]_k = (R_k,\bar m)_{\M},\]
+                    where
+                    \[R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\]</p>
+
+                    <p>This is not a second-rate interpretation. It is the direct interpretation of
+                    what SOLA has constructed.</p>
+
+                    <p>If \(R_k\) is a localized, unit-mass averaging kernel, then
+                    \([\widetilde{\mathbf p}]_k\) is a localized average of the true model using
+                    that resolving kernel. If \(R_k\) is broad, then the number is a broad
+                    average. If \(R_k\) has side lobes, then the number includes those side
+                    lobes. If \(R_k\) is derivative-like, then the number should be interpreted
+                    as that derivative-like diagnostic.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The safest SOLA interpretation is not &ldquo;this is the target
+                        property.&rdquo; It is &ldquo;this is the property defined by the resolving
+                        kernel.&rdquo;</p>
+                    </div>
+
+                    <p>The mistake is not that SOLA gives resolving kernels. The mistake is to
+                    compute them, plot them, admire them, and then interpret the numbers as if the
+                    target kernels had been achieved exactly.</p>
+
+                    <h3>Targets as auxiliary design objects</h3>
+
+                    <p>The target kernels are still important. They guide the construction. Without
+                    them, the SOLA optimization would not know what kind of property-like quantity
+                    we want.</p>
+
+                    <p>But target kernels should be understood as auxiliary design objects.</p>
+
+                    <p>A target kernel \(T_k\) says:
+                    \(\text{this is the linear question I would like to ask.}\)
+                    The resolving kernel \(R_k\) says:
+                    \(\text{this is the linear question the data combination actually asks.}\)</p>
+
+                    <p>The SOLA optimization tries to make these two questions as similar as
+                    possible, subject to the available data kernels, resolving constraints, and
+                    noise control. But the final interpretation belongs to the question actually
+                    asked.</p>
+
+                    <p>This view makes room for a mature use of SOLA. We can still design ambitious
+                    target kernels. We can still use them to steer the calculation. We can still
+                    compare resolving kernels with targets as a diagnostic.</p>
+
+                    <p>But when reporting the result, we should say what was actually resolved.</p>
+
+                    <p>For example, instead of saying
+                    \([\widetilde{\mathbf p}]_k \text{ estimates } (T_k,\bar m)_{\M},\)
+                    we should say
+                    \([\widetilde{\mathbf p}]_k \text{ estimates } (R_k,\bar m)_{\M},\)
+                    and then show \(R_k\).</p>
+
+                    <p>If \(R_k\) is close enough to \(T_k\) for the scientific purpose
+                    at hand, excellent. But that judgment depends on the model class and on the
+                    question being asked. It is not obtained from the plot alone.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The target kernel is useful for design. The resolving kernel is necessary
+                        for interpretation. Confusing those roles is where the trouble begins.</p>
+                    </div>
+
+                    <h3>Each map point has its own kernel</h3>
+
+                    <p>This becomes especially important when SOLA is used to build a map.</p>
+
+                    <p>Suppose we choose target kernels
+                    \(T_1,\dots,T_{N_p}\)
+                    centred at different locations. The output is a finite-dimensional vector
+                    \(\widetilde{\mathbf p}\in\Pspace,\)
+                    with components
+                    \([\widetilde{\mathbf p}]_k, \qquad k=1,\dots,N_p.\)
+                    It is tempting to plot these values as a profile or image and treat them as
+                    samples of the same kind of quantity at different locations.</p>
+
+                    <p>But each component has its own resolving kernel:
+                    \[R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\]
+                    Thus each plotted value may correspond to a different average, a different
+                    width, a different side-lobe structure, and a different response to unresolved
+                    model directions.</p>
+
+                    <p>In a good SOLA calculation, the resolving kernels may be similar enough that
+                    the map has a clean interpretation. But this has to be checked. It is not
+                    automatic.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_map_with_kernels.png"
+                             alt="SOLA map values with error bars on top, and resolving kernels R_k(r) shown beneath each point">
+                        <figcaption><span class="sola-figure-label">Figure F6-1.</span>A SOLA map should be read together with its resolving kernels.
+                        Each reported value corresponds to its own resolved linear functional.</figcaption>
+                    </figure>
+
+                    <p>This is particularly important near boundaries, gaps in coverage, or regions
+                    where the sensitivity kernels change character. There, resolving kernels may
+                    become broader, more asymmetric, or more oscillatory. The plotted SOLA number
+                    may still be perfectly valid, but its meaning has changed.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>A SOLA map is not merely a list of numbers. It is a list of numbers
+                        together with a list of resolving kernels.</p>
+                    </div>
+
+                    <p>This is the honest sidestep. We do not need to claim that SOLA has recovered
+                    the exact target properties. We can say something more precise and more
+                    defensible:
+                    \[\text{SOLA estimates the resolved properties defined by }\mathcal{A}=\mathbf XG.\]</p>
+
+                    <p>If those resolved properties are scientifically useful, then SOLA has done
+                    something valuable. If we want to go further and claim something about the
+                    exact target properties \(\Tau(\bar m),\) then we need additional assumptions
+                    about \(\bar m\). That issue will return later, when we discuss proxy models,
+                    prior information, and the difference between propagated noise and true property
+                    uncertainty.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The resolving kernel is not a diagnostic afterthought. It is part of the
+                        answer.</p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-5.html"><span class="arrow">&larr;</span> Act 5: Noise Enters the Room</a>
+                        <a class="part-prevnext-btn" href="act-7.html">Act 7: A Synthetic Cautionary Tale <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

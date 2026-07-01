@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 8: SOLA as an Inversion in Disguise — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 8 of My Take on SOLA: Examining the resolution control pillar. SOLA's resolving kernels are target kernels passed through the adjoint of a resolution operator — not a new kind of resolution, but the same operator viewed from the other side.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 8: SOLA as an Inversion in Disguise</h1>
+                <p>The second pillar under examination: resolving kernels are target kernels through an adjoint resolution operator.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html" aria-current="page"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>The Second Pillar: Resolution Control</h2>
+
+                    <p>The previous act tested the first pillar of SOLA — the claim that no
+                    prior information is needed. We showed that the absence of a prior is not
+                    a free lunch: it leaves the interpretation gap between resolved properties
+                    and true target properties unbounded. The method was not broken, but a
+                    boundary was found.</p>
+
+                    <p>Now we turn to the second pillar: <em>resolution control</em>. SOLA is
+                    often presented as offering something that classical linear inversion does
+                    not — direct, user-designed control over resolution through the choice of
+                    target kernels. Instead of accepting whatever resolution operator a
+                    standard inversion happens to produce, the practitioner specifies what
+                    kind of localized average or property they want, and SOLA builds the
+                    closest resolving kernel the data can support. This is an attractive
+                    feature, and it is real. But how different is it, fundamentally, from
+                    what classical inversion has been doing all along?</p>
+
+                    <p>What follows is not an attack on resolution control. It is an
+                    examination of what that control actually amounts to — and a reminder
+                    that the resolving kernels SOLA produces are not a new kind of object.
+                    They are target kernels passed through a resolution operator, viewed from
+                    a different angle.</p>
+
+                    <h2>The Proxy Model</h2>
+
+                    <h3>From data map to proxy model</h3>
+
+                    <p>One of the standard ways to describe SOLA is to say that it avoids
+                    reconstructing the whole model. This is a good description of the practical
+                    workflow. SOLA does not ask us to first build a model estimate \(\hat m\) and
+                    then evaluate its properties. It goes directly from data to properties:
+                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d}.\)</p>
+
+                    <p>But algebra has a habit of opening side doors.</p>
+
+                    <p>For the constrained SOLA operator, the estimate can also be written in the
+                    form
+                    \[\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d} = \Tau(\hat m),\]
+                    for a particular model \(\hat m\in\M\). This \(\hat m\) is not the true model.
+                    It is a proxy model, constructed from the data and from the same ingredients
+                    that define the SOLA operator.</p>
+
+                    <p>So there are two equivalent ways to read the same number:
+                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d}\)
+                    as a direct data-to-property estimate, or
+                    \(\widetilde{\mathbf p} = \Tau(\hat m)\)
+                    as the exact target property of a particular proxy model.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>SOLA walks past the front door of model reconstruction, but the algebra
+                        leaves a side entrance open.</p>
+                    </div>
+
+                    <p>This does not make SOLA bad. It makes SOLA more interpretable — and
+                    more familiar. The proxy model shows what kind of model-side
+                    representative is hiding behind the data-to-property map. As we shall
+                    see, that representative is not so different from the one hiding behind
+                    classical inversion.</p>
+
+                    <p>Let
+                    \(\mathbf M:=GG^*+\mathbf C_D,\; \mathbf U:=\mathbf M^{-1}\mathbf V,\; \boldsymbol\Gamma:=\mathbf V^*\mathbf U.\)
+                    Recall that the constrained noise-aware SOLA operator is
+                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]
+                    Apply this operator to the observed data:
+                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\]
+                    Define the coefficient vector
+                    \(\mathbf c := \boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}\in\mathbb R^L.\)
+                    Then
+                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\mathbf c.\]</p>
+
+                    <p>If we can find models \(f_1,\dots,f_L\in\M\) satisfying
+                    \(G(f_\ell)=\mathbf v_\ell,\; \Tau(f_\ell)=\mathbf w_\ell,\; \ell=1,\dots,L,\)
+                    then
+                    \(\mathbf W\mathbf c = \sum_{\ell=1}^L c_\ell\,\mathbf w_\ell = \sum_{\ell=1}^L c_\ell\,\Tau(f_\ell) = \Tau\!\left(\sum_{\ell=1}^L c_\ell f_\ell\right),\)
+                    and similarly
+                    \(\Tau G^*\mathbf U\,\mathbf c = \Tau\!\left(\sum_{\ell=1}^L c_\ell\, G^*\mathbf u_\ell\right),\)
+                    where \(\mathbf u_\ell\) are the columns of \(\mathbf U\). Therefore
+                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau\!\left( G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr) \right).\]
+                    This motivates the definition
+                    \[\hat m := G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr), \qquad \mathbf c=\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\]
+                    Then
+                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d} = \Tau(\hat m).\)</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The constrained SOLA estimate can be interpreted as the exact target
+                        property of a proxy model \(\hat m\).</p>
+                    </div>
+
+                    <p>This statement should be handled carefully. It does not say
+                    \(\hat m=\bar m.\)
+                    It only says that the SOLA property estimate can be factored through one
+                    particular model-space representative.</p>
+
+                    <h3>The proxy formula</h3>
+
+                    <p>Let us inspect the proxy model:
+                    \[\hat m = G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr).\]</p>
+
+                    <p>It has two pieces.</p>
+
+                    <p>The first piece is
+                    \(G^*\mathbf M^{-1}\widetilde{\mathbf d}.\)
+                    This resembles a regularized or noise-weighted back-projection of the data into
+                    the model space. It is the model-space object produced by taking the data,
+                    weighting them by \(\mathbf M^{-1}\), and applying the adjoint \(G^*\).</p>
+
+                    <p>The second piece is
+                    \(\sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr).\)
+                    This is the correction associated with the resolving constraints
+                    \(\mathbf X_c\mathbf V=\mathbf W.\)
+                    The coefficient vector
+                    \(\mathbf c=\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}\)
+                    depends on the data, while the model-space directions
+                    \(f_\ell - G^*\mathbf u_\ell\)
+                    depend on the constraints.</p>
+
+                    <p>The functions \(f_\ell\in\M\) are chosen so that
+                    \(G(f_\ell)=\mathbf v_\ell,\; \Tau(f_\ell)=\mathbf w_\ell.\)
+                    For averaging constraints, this says that each \(f_\ell\) has the desired data
+                    response to the corresponding test model and the desired property response. In
+                    the simplest average-preserving case, the \(f_\ell\) play the role of
+                    model-space representatives that make the constraints visible inside
+                    \(\Tau\).</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Non-uniqueness of \(f_\ell\)</span>
+                        <p>The functions \(f_\ell\) need not be unique. If \(f_\ell\) and
+                        \(f_\ell'\) both satisfy the conditions for a given \(\ell\), their
+                        difference lies in the joint nullspace
+                        \(f_\ell-f_\ell'\in\kernel(G)\cap\kernel(\Tau).\)
+                        Changing \(f_\ell\) by such a direction changes the proxy model, but not
+                        its data response or target property. This is another reminder that the
+                        proxy model is not a unique physical truth.</p>
+                    </div>
+
+                    <p>In the noise-free case, where
+                    \(\mathbf C_D=\mathbf 0,\;\text{and hence}\; \mathbf M=GG^*,\)
+                    we have
+                    \(G(G^*\mathbf u_\ell) = GG^*(GG^*)^{-1}\mathbf v_\ell = \mathbf v_\ell.\)
+                    Since \(G(f_\ell)=\mathbf v_\ell\), each correction direction satisfies
+                    \(G\bigl(G^*\mathbf u_\ell-f_\ell\bigr)=\mathbf 0.\)
+                    Thus, in the noise-free constrained case, each correction lives in the nullspace
+                    of \(G\).</p>
+
+                    <p>In the noise-aware case, the situation is slightly different. Since
+                    \(\mathbf M=GG^*+\mathbf C_D,\)
+                    we have
+                    \(GG^*\mathbf u_\ell = \mathbf v_\ell-\mathbf C_D\mathbf u_\ell.\)
+                    Therefore
+                    \(G\bigl(G^*\mathbf u_\ell-f_\ell\bigr) = -\mathbf C_D\mathbf u_\ell.\)
+                    So the corrections are not generally exact nullspace corrections when data noise
+                    is included. Rather, they are noise-weighted corrections tied to the SOLA
+                    objective.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>In the noise-free constrained case, the proxy correction is a true
+                        nullspace correction. In the noise-aware case, it is better interpreted as
+                        a correction relative to the noise-weighted SOLA geometry.</p>
+                    </div>
+
+                    <p>This distinction matters because it prevents us from saying something too
+                    strong. The proxy model is a useful algebraic representative, not a magical
+                    recovery of the true model.</p>
+
+                    <h3>The meaning of the proxy</h3>
+
+                    <p>The proxy model \(\hat m\) is not claimed to be the true model. It is one
+                    model-space object whose target property equals the SOLA estimate:
+                    \(\Tau(\hat m)=\widetilde{\mathbf p}.\)</p>
+
+                    <p>This gives a second interpretation of SOLA:
+                    \[\text{direct view:} \qquad \widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d},\]
+                    and
+                    \[\text{proxy-model view:} \qquad \widetilde{\mathbf p} = \Tau(\hat m).\]</p>
+
+                    <p>The direct view is the standard SOLA story. It emphasizes that the method
+                    avoids a full model reconstruction. The proxy-model view emphasizes that the
+                    same data-to-property map can be factored through a particular model-space
+                    representative.</p>
+
+                    <p>Both views are useful. The first explains why SOLA is computationally
+                    attractive. The second explains why SOLA is not entirely separate from
+                    classical inversion.</p>
+
+                    <p>If the true model \(\bar m\) is close to the proxy model \(\hat m\), in the
+                    geometry relevant to \(\Tau\), then
+                    \(\Tau(\bar m)\approx \Tau(\hat m)=\widetilde{\mathbf p}.\)
+                    But if \(\bar m\) differs from \(\hat m\) by a direction that is hard for the
+                    data to see and easy for \(\Tau\) to see, then
+                    \(\Tau(\bar m)\)
+                    can be very different from
+                    \(\Tau(\hat m).\)</p>
+
+                    <p>Thus the proxy interpretation does not remove the caution from the previous
+                    act. It sharpens it.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA may avoid explicitly reconstructing the model, but its algebra often
+                        carries an undercover proxy reconstruction.</p>
+                    </div>
+
+                    <p>The proxy model is not the villain. It is a useful witness. It tells us what
+                    kind of model the SOLA estimate is silently willing to be the property of.</p>
+
+                    <h2>Resolving Kernels and Resolution Operators</h2>
+
+                    <h3>Classical resolution operators</h3>
+
+                    <p>In a classical linear inversion, one builds a reconstruction operator
+                    \(G^\dagger:\D\to\M.\)
+                    Given data \(\mathbf d\in\D\), the reconstructed model is
+                    \(\hat m=G^\dagger\mathbf d.\)
+                    If the data are noise-free and generated by a true model \(m\), then
+                    \(\mathbf d=G(m),\)
+                    so the reconstruction is
+                    \(\hat m=G^\dagger G(m).\)
+                    The composite map
+                    \(\mathcal R:=G^\dagger G:\M\to\M\)
+                    is called the resolution operator.</p>
+
+                    <p>The resolution operator tells us what the inversion does to the true model:
+                    \(m \longmapsto \mathcal R m.\)
+                    If \(\mathcal R=I\), then the inversion recovers every model exactly. In
+                    finite-data inverse problems, this almost never happens. More commonly,
+                    \(\mathcal R\) is a smoothing, filtering, or projection-like operator.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>A resolution operator is the fingerprint left by the inverse method on
+                        the model. It tells us not what model we wished to recover, but what
+                        version of the model the data and method can return.</p>
+                    </div>
+
+                    <p>This is the classical resolution story:
+                    \[\text{true model} \quad \xrightarrow{\;\mathcal R\;} \quad \text{resolved model}.\]
+                    The reconstructed model \(\hat m\) should therefore be interpreted as
+                    \(\hat m=\mathcal R m\)
+                    in the ideal noise-free case, not automatically as \(m\).</p>
+
+                    <p>This is old knowledge. Classical inversion has carried this scar for
+                    decades: the method does not return the true model, it returns a
+                    resolved version of it. Everyone who uses least squares or regularized
+                    inversion knows this. It is part of the working knowledge of the field.</p>
+
+                    <h3>SOLA resolving kernels</h3>
+
+                    <p>SOLA defines the approximate property map
+                    \(\mathcal{A}:=\mathbf XG:\M\to\Pspace.\)
+                    For each component,
+                    \([\mathcal{A}(m)]_k = (R_k,m)_{\M},\)
+                    where
+                    \(R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\)
+                    The functions \(R_k\) are the resolving kernels.</p>
+
+                    <p>Thus SOLA has the property-space resolution story
+                    \[\text{true model} \quad \xrightarrow{\;\mathcal{A}=\mathbf XG\;} \quad \text{resolved properties}.\]</p>
+
+                    <p>The target map is
+                    \(\Tau:\M\to\Pspace.\)
+                    If SOLA achieved perfect resolution, then
+                    \(\mathcal{A}=\Tau.\)
+                    But in general,
+                    \(\mathcal{A}\neq\Tau.\)
+                    The resolving kernels describe the actual linear questions asked of the
+                    model.</p>
+
+                    <p>Here is where the second pillar's claim gets interesting. SOLA is said
+                    to offer <em>resolution control</em>: the practitioner chooses target
+                    kernels, and the method builds the closest resolving kernels the data
+                    can support. This is contrasted with classical inversion, where the
+                    resolution operator is whatever the inversion produces — take it or
+                    leave it. But is the contrast as sharp as it sounds?</p>
+
+                    <p>Now connect this with the proxy-model view. Suppose there exists a linear
+                    reconstruction-like operator
+                    \(G^\dagger:\D\to\M\)
+                    such that
+                    \(\mathbf X=\Tau G^\dagger.\)
+                    Then
+                    \(\mathcal{A}=\mathbf XG=\Tau G^\dagger G.\)
+                    Using the classical resolution operator
+                    \(\mathcal R:=G^\dagger G,\)
+                    we obtain
+                    \(\mathcal{A}=\Tau\mathcal R.\)</p>
+
+                    <p>This identity is the bridge:
+                    \[\boxed{\text{SOLA resolving map} = \text{target map after a model-space resolution operator}.}\]</p>
+
+                    <p>At the kernel level, if
+                    \([\Tau(m)]_k = (T_k,m)_{\M},\)
+                    then
+                    \([\mathcal{A}(m)]_k = [\Tau(\mathcal R m)]_k = (T_k,\mathcal R m)_{\M}.\)
+                    Using the adjoint \(\mathcal R^*\),
+                    \([\mathcal{A}(m)]_k = (\mathcal R^*T_k,m)_{\M}.\)
+                    Therefore the resolving kernel is
+                    \(R_k = \mathcal R^*T_k.\)</p>
+
+                    <p>This is a revealing formula. The SOLA resolving kernel is the target
+                    kernel passed through the adjoint of a resolution operator. Not a
+                    different kind of resolution. Not a new species of object. The same
+                    resolution operator that classical inversion has always carried — just
+                    viewed from the other side.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Classical inversion modifies models through \(\mathcal R\). SOLA
+                        modifies target kernels through \(\mathcal R^*\). Same operator,
+                        different adjoint direction.</p>
+                    </div>
+
+                    <h3>The shared resolution story</h3>
+
+                    <p>So what does the second pillar actually claim, and what does the
+                    algebra say?</p>
+
+                    <p>The claim is that SOLA offers better resolution control than
+                    classical inversion. Instead of accepting whatever resolution operator
+                    the inversion produces, the practitioner designs target kernels and
+                    SOLA finds the closest resolving kernels. The resolving kernels are
+                    put on the table, inspected, and compared to the targets. This is a
+                    genuine practical advantage.</p>
+
+                    <p>But the algebra says: the resolving kernels are not a new kind of
+                    object. They are target kernels mapped through the adjoint of a
+                    resolution operator. Classical inversion modifies the model through
+                    \(\mathcal R\); SOLA modifies the target kernel through
+                    \(\mathcal R^*\). The underlying operator is the same. The data
+                    geometry, the sensitivity kernels, the noise covariance — these
+                    still decide what is reachable. SOLA does not escape the resolution
+                    operator. It views it from the adjoint side.</p>
+
+                    <p>We can now compare the two pictures directly.</p>
+
+                    <p>Classical inversion says:
+                    \(\mathbf d=G(m),\; \hat m=G^\dagger\mathbf d,\; \hat m=G^\dagger G(m)=\mathcal R m.\)
+                    The method does not return \(m\). It returns \(\mathcal R m\).</p>
+
+                    <p>SOLA says:
+                    \(\mathbf d=G(m),\; \widetilde{\mathbf p}=\mathbf X\mathbf d,\; \widetilde{\mathbf p}=\mathbf XG(m)=\mathcal{A}(m).\)
+                    The method does not necessarily return \(\Tau(m)\). It returns \(\mathcal{A}(m)\).</p>
+
+                    <p>If
+                    \(\mathbf X=\Tau G^\dagger,\)
+                    then
+                    \(\mathcal{A}=\Tau\mathcal R.\)
+                    So the SOLA estimate is the target property of the resolved model:
+                    \(\widetilde{\mathbf p} = \Tau(\mathcal R m).\)
+                    Equivalently, it is the true model tested against resolved target
+                    kernels:
+                    \([\widetilde{\mathbf p}]_k = (\mathcal R^*T_k,m)_{\M}.\)</p>
+
+                    <p>These are two sides of the same coin:
+                    \(\Tau(\mathcal R m) \quad\text{and}\quad (\Tau\mathcal R)(m).\)</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Classical inversion blurs the model and then asks the target
+                        question. SOLA can be read as blurring the target question and
+                        then asking it of the true model. Same blur, different order of
+                        operations.</p>
+                    </div>
+
+                    <h3>What is genuinely different</h3>
+
+                    <p>There is a real advantage here, and it should not be understated.
+                    SOLA lets us design the target question and inspect the blurred
+                    version that the data can actually support. Instead of hiding
+                    resolution inside a reconstructed model, SOLA puts the resolving
+                    kernels on the table. That is useful. It is a genuine ergonomic and
+                    interpretational improvement over classical inversion, where the
+                    resolution operator may be implicit or harder to inspect.</p>
+
+                    <p>But the limitation is that this is still resolution-limited
+                    information. The data do not grant perfect access to \(\Tau(m)\)
+                    just because we avoided reconstructing \(m\). They grant access to
+                    \(\mathcal{A}(m)=\mathbf XG(m),\)
+                    which is a resolved version of the desired property. The resolving
+                    kernel is the target kernel after \(\mathcal R^*\). The resolution
+                    operator has not been bypassed — it has been moved to a different
+                    place in the formula.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>Avoiding an explicit model reconstruction does not avoid
+                        resolution. It only changes where the resolution appears.</p>
+                    </div>
+
+                    <p>This is why the slogan that SOLA gives &ldquo;resolution
+                    control&rdquo; should be read carefully. SOLA does give meaningful
+                    control over the resolving kernels — the practitioner chooses targets
+                    and inspects what the data can deliver. That is a real advantage over
+                    methods that bury resolution inside an opaque reconstructed model. But
+                    it is not a new kind of resolution. The resolving kernels are target
+                    kernels passed through \(\mathcal R^*\). The sensitivity kernels,
+                    noise covariance, constraints, and data geometry still decide what is
+                    reachable. SOLA does not give sovereignty over resolution. It gives
+                    visibility.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA does not bypass the resolution operator. It views it from
+                        the adjoint side. The resolving kernel is the target kernel after
+                        \(\mathcal R^*\). That is useful, but it is not a different
+                        species of resolution.</p>
+                    </div>
+
+                    <p>The next act turns from resolution to uncertainty — the third
+                    pillar. Once again, the theme will be the same: the formula is
+                    mathematically correct, but its interpretation needs careful
+                    labels.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-7.html"><span class="arrow">&larr;</span> Act 7: A Synthetic Cautionary Tale</a>
+                        <a class="part-prevnext-btn" href="act-9.html">Act 9: What About Uncertainty? <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

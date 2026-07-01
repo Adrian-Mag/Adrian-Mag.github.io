@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 9: What About Uncertainty? — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 9 of My Take on SOLA: Examining the uncertainty quantification pillar. Covariances don't answer questions — measures do. The noise-propagation measure and the posterior measure answer different questions, and their covariances are not interchangeable.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: '\\mathrm{L}', Lprob: 'L',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 9: What About Uncertainty?</h1>
+                <p>The third pillar under examination: covariances don't answer questions — measures do.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html" aria-current="page"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>The Third Pillar: Uncertainty Quantification</h2>
+
+                    <p>The first act of this series tested the &ldquo;no prior&rdquo; pillar and
+                    found a boundary: without model-side information, the interpretation gap is
+                    unbounded. The second act tested the &ldquo;resolution control&rdquo; pillar
+                    and found that SOLA's resolving kernels are target kernels passed through
+                    the adjoint of a resolution operator — useful, but not a new species of
+                    resolution.</p>
+
+                    <p>Now we turn to the third pillar: <em>uncertainty quantification</em>.
+                    SOLA is said to come with built-in uncertainty estimates. The propagated
+                    covariance
+                    \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*\)
+                    is presented as a quantification of uncertainty in the SOLA output, often
+                    displayed as error bars on the estimated properties. This is an attractive
+                    feature, and the calculation itself is correct. But what question does it
+                    actually answer? And is that the question we want to ask?</p>
+
+                    <p>The distinction we need here is a basic one, but it is easy to slip past.
+                    Covariances do not ask or answer questions. Measures do. A random variable
+                    or a probability measure is tied to a specific question — &ldquo;what is
+                    the distribution of the data noise?&rdquo; or &ldquo;what do we believe
+                    about the true model given the data?&rdquo; — and the associated measure
+                    provides the answer. A covariance is a summary statistic of that measure,
+                    not a substitute for it. Two different questions come with two different
+                    measures, and their covariances are not interchangeable even if the
+                    matrices happen to look similar.</p>
+
+                    <p>What follows is not an attack on uncertainty quantification. It is an
+                    examination of what question the propagated covariance actually answers,
+                    and a reminder that this is not the same question as &ldquo;what do we
+                    know about the true target property?&rdquo;</p>
+
+                    <h2>What SOLA Actually Does for Uncertainty</h2>
+
+                    <h3>The shifted-noise pushforward</h3>
+
+                    <p>Let us start with a simple observation that is easy to miss. In the
+                    noisy setting, the observed data are
+                    \(\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta,\; \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\)
+                    where \(\bar m\in\M\) is the unknown true model and \(\mathbf C_D\) is the
+                    data-noise covariance. The SOLA estimate is
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    The standard uncertainty display is the covariance
+                    \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*,\]
+                    shown as error bars
+                    \([\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}}.\)
+                    This is the advertised uncertainty quantification — the third pillar.</p>
+
+                    <p>Now here is the observation. Once the data \(\widetilde{\mathbf d}\)
+                    have been observed, one can construct a probability measure on data
+                    space by centring the noise law at the observation:
+                    \[\mathbf z_{\mathrm{shift}} = \widetilde{\mathbf d}+\boldsymbol\xi,\; \boldsymbol\xi\sim N(\mathbf 0,\mathbf C_D).\]
+                    This is the <em>shifted-noise measure</em>
+                    \(N(\widetilde{\mathbf d},\mathbf C_D)\)
+                    — the noise distribution shifted so that its mean is the observed data.
+                    Pushing it through \(\mathbf X\) gives
+                    \[N(\widetilde{\mathbf d},\mathbf C_D) \xrightarrow{\;\mathbf X\;} N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\]</p>
+
+                    <p>That is exactly the SOLA uncertainty display. The measure
+                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf C_P)\)
+                    is the pushforward of the shifted-noise measure. The covariance
+                    \(\mathbf C_P\) is a summary statistic of this pushforward measure.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>By default, SOLA's uncertainty quantification is the pushforward of
+                        the shifted-noise measure
+                        \(N(\widetilde{\mathbf d},\mathbf C_D)\)
+                        through the SOLA matrix \(\mathbf X\). The covariance
+                        \(\mathbf C_P\) is a summary statistic of that pushforward.</p>
+                    </div>
+
+                    <p>This is mathematically valid. The pushforward exists, the covariance
+                    is correctly computed, and the error bars are a faithful summary of
+                    this particular measure. Nothing is wrong with the calculation.</p>
+
+                    <p>But now the real question arrives. What is the point of this
+                    measure? What question does it answer? And is that a question worth
+                    asking in the context of an inverse problem?</p>
+
+                    <h3>What is the shifted-noise measure?</h3>
+
+                    <p>The shifted-noise construction starts from the realized observation
+                    \(\widetilde{\mathbf d}\)
+                    and spreads probability mass around it:
+                    \(\widetilde{\mathbf d} \quad\leadsto\quad N(\widetilde{\mathbf d},\mathbf C_D).\)
+                    This is an observation-centred object. It lives on data space, not
+                    model space. It says: &ldquo;take the data we happened to observe, and
+                    wiggle them as if we could draw another set of noise from the same
+                    law.&rdquo;</p>
+
+                    <p>The question it answers is:
+                    \[\text{what happens if I jitter the observed data by another draw from the noise law?}\]</p>
+
+                    <p>That is a legitimate computational question. But it is not the
+                    question behind the inverse problem. The inverse problem does not
+                    ask what happens if we re-observe. It asks what the observation tells
+                    us about the model — or about a property of the model.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The shifted-noise measure says, &ldquo;wiggle the observation.&rdquo;
+                        The inverse problem asks, &ldquo;what models and properties are
+                        compatible with this observation?&rdquo; These are different
+                        questions, and they come with different measures.</p>
+                    </div>
+
+                    <h3>The generative question</h3>
+
+                    <p>The noise distribution should be seen only as auxiliary - it helps us answer the question "If I had the perfect noiseless measurement, what would I expect to actually measure in the noisy imperfect world?". Together with the forward mapping, it allows us to answer a deeper question:
+                    \[\text{if }m\text{ were the true model, what data should I expect to observe?}\]</p>
+
+                    <p>In the additive Gaussian case, the answer is
+                    \(\mathbf d_{\mathrm{obs}} \mid m \sim N(G(m),\mathbf C_D).\)
+                    The distribution of possible observations is centred at \(G(m)\), not
+                    at the realized \(\widetilde{\mathbf d}\). This is the generative
+                    direction: model first, then data.</p>
+
+                    <p>In a probabilistic setting, this model-data relation is a likelihood
+                    kernel
+                    \(L(m,\cdot),\)
+                    where, for each \(m\in\M\),
+                    \(L(m,\cdot)\)
+                    is a probability measure on the data space \(\D\). In the additive
+                    Gaussian case,
+                    \(L(m,\cdot) = N(G(m),\mathbf C_D).\)</p>
+
+                    <p>In a set-valued setting, the analogous object is a set likelihood
+                    \(\mathrm{L}(m)\subseteq\D.\)
+                    For additive bounded noise,
+                    \(\mathrm{L}(m) = G(m)+S_{\mathrm{noise}},\)
+                    where \(S_{\mathrm{noise}}\subseteq\D\) is the set of allowed noise
+                    values. Both versions share the same architecture:
+                    \(m \quad\longmapsto\quad \text{possible data under }m.\)</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The generative measure starts from a possible model and describes
+                        what that model could produce in data space. The shifted-noise
+                        measure starts from the observation and wiggles it. One is
+                        model-to-data. The other is data-to-data. Only one of them is the
+                        right foundation for inference.</p>
+                    </div>
+
+                    <h3>Why the shifted-noise measure is not useful</h3>
+
+                    <p>One might object: &ldquo;But the generative perspective also
+                    produces a measure on data space. If we restrict attention to models
+                    whose noiseless data \(G(m)\) is close to the observed
+                    \(\widetilde{\mathbf d}\), then the likelihood measure
+                    \(L(m,\cdot)\)
+                    for those models is approximately
+                    \(N(\widetilde{\mathbf d},\mathbf C_D)\)
+                    — which is the shifted-noise measure. And those models should be the
+                    most likely ones, right?&rdquo;</p>
+
+                    <p>This is a natural thought, but it does not survive scrutiny. We
+                    already agreed that the noise is modeled probabilistically. The
+                    observed data \(\widetilde{\mathbf d}\) is a realization of a random
+                    variable whose distribution depends on \( m\) and is governed by
+                    the likelihood \(L( m,\cdot)\). There is no reason to assume that
+                    the observed data is close to the true noiseless data
+                    \(G( m)\). It might be. It might not be. That is what
+                    &ldquo;probabilistic noise&rdquo; means — the observation is not
+                    necessarily the closest thing to the truth. It is one draw from a
+                    distribution.</p>
+
+                    <p>So the observed data could, in principle, be used to update a prior
+                    on \(\M\) — that is what Bayesian inference does. But SOLA has no
+                    prior. That was the first pillar we examined, and the boundary we
+                    found there now returns: without a prior (or some other model-side
+                    information), there is no mechanism to turn the likelihood into a
+                    posterior. The observation cannot, by itself, tell us which models are
+                    more likely. It can only tell us which models are compatible — and
+                    compatibility is not probability.</p>
+
+                    <p>Paradoxically, then, the observed data itself does not seem to be
+                    of much use in the SOLA framework. Without a prior, there is nothing
+                    to update. The shifted-noise measure is a data-space object with no
+                    model-space counterpart to connect it to. It is not a posterior. It is
+                    not a likelihood. It is a jitter around an observation that cannot be
+                    turned into a statement about the model.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The shifted-noise pushforward is not a posterior measure. It
+                        cannot become one without a prior. And SOLA, by design, does not
+                        have one. The observation cannot update what is not there.</p>
+                    </div>
+
+                    <p>This is the boundary of the third pillar. The propagated covariance
+                    is the covariance of a shifted-noise pushforward. The calculation is
+                    correct. The measure is well-defined. But without a prior, it cannot
+                    be turned into a statement about the model or its properties. It
+                    answers &ldquo;what if we re-observed?&rdquo; — and that is not the
+                    question the inverse problem asks.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Without a prior, the observed data cannot be turned into a
+                        posterior. The shifted-noise measure is a data-space object with
+                        no model-space bridge. Its covariance is a summary of a measure
+                        that answers the wrong question.</p>
+                    </div>
+
+                    <p>So where does that leave us? If the observed data cannot be used to
+                    build uncertainty on the model side, and if the shifted-noise
+                    pushforward is not useful, then we should stop trying to extract
+                    meaning from the observation and return to the core idea of SOLA:
+                    reshuffling information. But this time, instead of reshuffling the
+                    observation at the level of kernels, we should apply that idea to the
+                    likelihood itself. The next act develops this generative
+                    reinterpretation — where SOLA transforms the model-data relation into
+                    a model-property relation, and uncertainty is carried by the right
+                    measure from the start.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-8.html"><span class="arrow">&larr;</span> Act 8: SOLA as an Inversion in Disguise</a>
+                        <a class="part-prevnext-btn" href="act-10.html">Act 10: Generative SOLA <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

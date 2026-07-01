@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Resolving kernels, proxy inversions, and the problem with shifted noise: a careful examination of what SOLA estimates and what its uncertainty means.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}',
+                D: '\\mathcal{D}',
+                Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}',
+                Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}',
+                Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}',
+                nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}',
+                range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}',
+                spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}',
+                HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}',
+                pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>My Take on SOLA</h1>
+                <p>Resolving kernels, proxy inversions, and the problem with shifted noise.</p>
+            </div>
+        </section>
+
+        <!-- ACT NAVIGATION -->
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What to expect</h2>
+
+                    <p>SOLA is often introduced as a method for estimating localized averages,
+                    or more general linear properties, of an unknown model without first
+                    reconstructing the whole model. Instead of solving
+                    for everything, SOLA tries to build from the data exactly the kind of
+                    quantity one wants to report.</p>
+
+                    <p>The main purpose of these notes is to explain that idea from the ground up,
+                    and then to examine carefully what the resulting numbers mean.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA is best understood as a method for reshuffling linear data
+                        information into property-like information. The reshuffled information is
+                        real, but it must be labelled honestly.</p>
+                    </div>
+
+                    <h2>The central caution</h2>
+
+                    <p>A SOLA calculation begins with target kernels. These describe the linear
+                    properties we would like to know. But the method generally returns resolving
+                    kernels. These are the linear properties that the available data can actually
+                    synthesize.</p>
+
+                    <p>If the resolving kernel equals the target kernel, then the interpretation is
+                    direct. If it does not, then the SOLA number is not the exact target property
+                    of the true model. It is the resolving-kernel property of the true model, up to
+                    observational noise.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>The target kernel is a design request. The resolving kernel is the
+                        answer delivered by the data.</p>
+                    </div>
+
+                    <h2>How to read this document</h2>
+
+                    <p>The notes are organized as a guided story. We begin with a simple integral
+                    picture, build SOLA in its cleanest form, add normalization constraints and
+                    noise, and only later ask the more delicate questions: what did SOLA estimate,
+                    what does its uncertainty mean, and what kind of prior information is needed if
+                    we want statements about the true target property?</p>
+
+                    <h2>Notation and conventions</h2>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Notation for operators and components</span>
+                        <p>We adopt the following typographic conventions throughout these notes.</p>
+                        <ul>
+                            <li><strong>Finite-dimensional objects.</strong> Boldface letters denote
+                            finite-dimensional vectors and matrices (coefficient/representation
+                            objects). For example \(\mathbf{v}\in\mathbb R^N\) and
+                            \(\mathbf{A}\in\mathbb R^{N\times N}\).</li>
+                            <li><strong>Infinite-dimensional objects.</strong> Non-bold (lightface)
+                            letters denote infinite-dimensional operators or functions acting on the
+                            model Hilbert space \(\M\); e.g.\ \(G:\M\to\D\),
+                            \(C_0:\M\to\M\).</li>
+                            <li><strong>Components / entries.</strong> The components of a vector or
+                            the entries of a matrix are written with square brackets and subscripts:
+                            \[[\mathbf v]_i = v_i,\qquad [\mathbf A]_{ij} = A_{ij},
+                            \qquad i,j=1,\dots,N.\]
+                            When an object is represented in a particular basis
+                            \(\{\phi_k\}_{k=1}^N\) we always mean the coordinates with respect to
+                            that basis; the matrix entries depend on the chosen basis.</li>
+                            <li><strong>Inner products.</strong> Throughout these notes, all spaces
+                            are Hilbert spaces. We write the inner product on a Hilbert space \(H\)
+                            as \((\cdot,\cdot)_H\). Recall that an inner product on a vector space
+                            \(H\) is a map \((\cdot,\cdot)_H:H\times H\to\mathbb R\) (or
+                            \(\mathbb C\)) that is (i) linear in its first argument, (ii) conjugate
+                            symmetric, \((u,v)_H=\overline{(v,u)_H}\), and (iii) positive definite,
+                            \((v,v)_H\ge0\) with equality iff \(v=0\). The induced norm is
+                            \(\|v\|_H=\sqrt{(v,v)_H}\). For the model space \(\M\), data space
+                            \(\D\), property space \(\Pspace\), and the space of Hilbert-Schmidt
+                            operators, we use \((\cdot,\cdot)_{\M}\),
+                            \((\cdot,\cdot)_{\D}\), \((\cdot,\cdot)_{\Pspace}\), and
+                            \((\cdot,\cdot)_{\HS}\) respectively. The angle-bracket notation
+                            \(\langle\cdot,\cdot\rangle\) is reserved for dual pairings between a
+                            space and its dual, which we do not need here since every Hilbert space
+                            is self-dual via the Riesz representation theorem.</li>
+                            <li><strong>Adjoints and transposes.</strong> We reserve \(^{\top}\) for
+                            the Euclidean transpose of a finite matrix and \(^{*}\) for the Hilbert
+                            adjoint of an operator. Discrete adjoints that incorporate mass/weight
+                            matrices will be written explicitly (for example, the discrete adjoint of
+                            \(\mathbf G\) with mass matrix \(\mathbf M\) and data weight
+                            \(\mathbf W\) is
+                            \(\mathbf G^*=\mathbf M^{-1}\mathbf G^{\top}\mathbf W\)).</li>
+                            <li><strong>Infinite sequences.</strong> When working with infinite
+                            coefficient sequences we use index notation
+                            \((\alpha_i)_{i\ge1}\) or \(\{\alpha_i\}_{i=1}^\infty\); for finite
+                            coefficient vectors we write
+                            \(\mathbf\alpha=(\alpha_1,\dots,\alpha_N)^\top\) so that
+                            \([\mathbf\alpha]_i=\alpha_i\).</li>
+                        </ul>
+                    </div>
+
+                    <h2>The eleven acts</h2>
+
+                    <p><strong>Act&nbsp;1 &mdash; <a href="act-1.html">The Kernel Game</a>.</strong>
+                    We begin with an unknown function observed through sensitivity kernels. The data
+                    are weighted integrals, and finite data cannot see everything. We introduce
+                    target kernels as the questions we wish the data could answer.</p>
+
+                    <p><strong>Act&nbsp;2 &mdash; <a href="act-2.html">Building SOLA from
+                    Scratch</a>.</strong>
+                    Combining data means combining kernels. The resolving kernel is born. We
+                    formalize the noiseless unconstrained SOLA problem and derive the normal
+                    equation.</p>
+
+                    <p><strong>Act&nbsp;3 &mdash; <a href="act-3.html">Averages Need Mass</a>.</strong>
+                    A localized kernel must also carry the right total mass. We introduce
+                    unimodularity, the average vector, and the constrained SOLA problem with its
+                    rank-one correction.</p>
+
+                    <p><strong>Act&nbsp;4 &mdash; <a href="act-4.html">Beyond Averages</a>.</strong>
+                    Not every target is an average. Derivative targets, basis coefficient targets,
+                    and contrasts each need their own resolving constraint.</p>
+
+                    <p><strong>Act&nbsp;5 &mdash; <a href="act-5.html">Noise Enters the
+                    Room</a>.</strong>
+                    Data are not exact. We build the noise-aware SOLA objective, balance resolution
+                    against noise amplification, and derive the noisy normal equation.</p>
+
+                    <p><strong>Act&nbsp;6 &mdash; <a href="act-6.html">What Did SOLA Actually
+                    Estimate?</a>.</strong>
+                    The target is the request; the resolving kernel is the answer. We confront the
+                    gap between \(\Tau(\bar m)\) and \(\mathcal{A}(\bar m)\), and learn the honest sidestep:
+                    interpret through resolving kernels.</p>
+
+                    <p><strong>Act&nbsp;7 &mdash; <a href="act-7.html">A Synthetic Cautionary
+                    Tale</a>.</strong>
+                    A case that looks good: resolving kernels match targets, error bars are small,
+                    and yet the SOLA estimates miss the true target properties. The nullspace
+                    explains why.</p>
+
+                    <p><strong>Act&nbsp;8 &mdash; <a href="act-8.html">SOLA as an Inversion in
+                    Disguise</a>.</strong>
+                    The constrained SOLA estimate can be written as the target property of a proxy
+                    model. We connect resolving kernels to classical resolution operators.</p>
+
+                    <p><strong>Act&nbsp;9 &mdash; <a href="act-9.html">What About
+                    Uncertainty?</a>.</strong>
+                    The propagated covariance \(\mathbf X\mathbf C_D\mathbf X^*\) is not a posterior
+                    covariance. We dissect the shifted-noise issue and explain what SOLA's error
+                    bars actually mean.</p>
+
+                    <p><strong>Act&nbsp;10 &mdash; <a href="act-10.html">Generative SOLA</a>.</strong>
+                    SOLA pushes forward model-data relations into model-property relations. We
+                    separate the likelihood from the shifted-noise picture and discuss where priors
+                    belong.</p>
+
+                    <!-- Act 11 and Summary hidden pending edits -->
+                    <!--
+                    <p><strong>Act&nbsp;11 &mdash; <a href="act-11.html">What SOLA Is Good
+                    For</a>.</strong>
+                    A fair summary of SOLA's strengths, what it should not be asked to do alone, and
+                    the final slogan:
+                    \[\text{Ask with targets. Interpret with resolving kernels. Add priors when you
+                    want truth.}\]</p>
+
+                    <p><strong>Summary &mdash; <a href="summary.html">Summary &amp;
+                    Appendices</a>.</strong>
+                    The mathematical skeleton, the interpretation, the limitation, the uncertainty
+                    distinction, and appendices with full algebra of SOLA minimizers, proxy model
+                    derivation, and suggested figures.</p>
+                    -->
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

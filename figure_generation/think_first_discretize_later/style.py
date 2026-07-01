@@ -29,10 +29,10 @@ PALETTE = {
     "accent": "#6791BE",    # site accent
     "muted": "#8b97a7",     # muted grey  - secondary lines / zero mean
     "mako": _MAKO,          # seaborn mako colormap for imshow / heatmaps
-    "mako_dark": _MAKO_COLORS[5],   # mid-tone mako - primary curves (visible on dark bg)
-    "mako_mid": _MAKO_COLORS[6],    # mid-light mako - secondary curves
-    "mako_light": _MAKO_COLORS[8],  # light mako - tertiary / fills
-    "mako_pale": _MAKO_COLORS[9],   # pale mako - backgrounds / bands
+    "mako_dark": _MAKO_COLORS[7],   # light-mid mako - primary curves (visible on dark bg)
+    "mako_mid": _MAKO_COLORS[8],    # light mako - secondary curves
+    "mako_light": _MAKO_COLORS[9],  # pale mako - tertiary / fills
+    "mako_pale": _MAKO_COLORS[9],   # palest mako - backgrounds / bands
 }
 
 _FG = "#dce6f5"   # light foreground for text/ticks

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 7: A Synthetic Cautionary Tale — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 7 of My Take on SOLA: A synthetic example where SOLA's resolving kernels look great, but the true target properties are the negative of the estimates. The cautionary tale.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 7: A Synthetic Cautionary Tale</h1>
+                <p>When the resolving kernels look great but the true properties are the opposite of what SOLA reports.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html" aria-current="page"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>The First Test</h2>
+
+                    <p>Up to this point, we have been building SOLA. We laid out
+                    the kernel game, constructed the matrix, added normalization
+                    and noise, and carefully examined what the method actually
+                    estimates. Throughout, the tone has been constructive — here
+                    is how it works, here is what it does well.</p>
+
+                    <p>SOLA is a relatively young method with considerable
+                    ambitions. It promises to deliver localized, interpretable
+                    properties of an unknown model directly from data, without
+                    first reconstructing the model itself. That is an attractive
+                    promise. The advertised advantages are clear and compelling:
+                    no need for prior information about the model, built-in
+                    uncertainty quantification through propagated noise
+                    covariance, and user-controlled resolution through the
+                    choice of target kernels. These are not minor features —
+                    they are the central pillars on which the case for SOLA
+                    rests. A method that needs no priors, reports its own
+                    uncertainty, and lets the practitioner choose what to
+                    resolve sounds almost too good to be true.</p>
+
+                    <p>And yet, because SOLA is not yet widely known, it has not
+                    been subjected to the kind of stress testing that older
+                    methods — least squares, least norm, regularization — have
+                    long since absorbed. Those methods carry visible marks from
+                    decades of scrutiny. Their shortcomings are well known, not
+                    because they are obvious, but because they were found the hard
+                    way: through hard cases, failures, and the slow
+                    accumulation of boundaries that define where a method can be
+                    trusted and where it cannot.</p>
+
+                    <p>What follows is that kind of test for SOLA. Not an attack —
+                    an examination. We will build a problem where SOLA looks
+                    good by every standard diagnostic, and then we will show
+                    that a naive yet intuitive interpretation of its output can fail
+                    catastrophically. The point is not to break SOLA. The point
+                    is to find where its boundaries are, so that it can be used
+                    with eyes open.</p>
+
+                    <h2>A Standard SOLA Problem</h2>
+
+                    <h3>The setup</h3>
+
+                    <p>Let us build a synthetic example. The model space is
+                    \(\M=L^2([0,1]),\)
+                    the data space is
+                    \(\D\simeq\mathbb R^{100},\)
+                    and the property space is
+                    \(\Pspace\simeq\mathbb R^{20}.\)</p>
+
+                    <p>The forward map
+                    \(G:\M\to\D\)
+                    has one hundred sensitivity kernels
+                    \(K_1,\dots,K_{100}\in\M.\)
+                    The target map
+                    \(\Tau:\M\to\Pspace\)
+                    has twenty localized averaging kernels
+                    \(T_1,\dots,T_{20}\in\M,\)
+                    each normalized so that
+                    \(\int_0^1 T_k(r)\dd r=1.\)
+                    Each target property
+                    \([\Tau(m)]_k=(T_k,m)_{\M}\)
+                    is intended to represent a localized average of the model
+                    near a chosen location.</p>
+
+                    <p>The observed data are
+                    \[\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta, \qquad \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\]
+                    where \(\bar m\) is the unknown true model and \(\mathbf C_D\) is the
+                    known data-noise covariance. The noise level is about
+                    \(10\%\)
+                    of the maximum data amplitude.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_act7_data.png"
+                             alt="Observed data with error bars">
+                        <figcaption><span class="sola-figure-label">Figure F7-1.</span>Observed data
+                        \(\widetilde{\mathbf d}\)
+                        with measurement uncertainty. One hundred data, ten percent noise.</figcaption>
+                    </figure>
+
+                    <p>At this stage, nothing is unusual. We have data, uncertainty,
+                    sensitivity kernels, and target kernels. A perfectly ordinary
+                    inverse problem. If this were a real application, this is
+                    where the analysis would begin — and, all too often, where
+                    critical questions about interpretation would be set aside
+                    in favour of producing numbers.</p>
+
+                    <h3>Solving it</h3>
+
+                    <p>We construct the constrained noise-aware SOLA matrix
+                    \(\mathbf X_c:\D\to\Pspace\)
+                    as in the previous acts, with the noise-aware Gram matrix
+                    \(\mathbf M=GG^*+\mathbf C_D\)
+                    and the unimodularity constraint
+                    \(\mathbf X\mathbf v=\mathbf w.\)
+                    The SOLA estimate is
+                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d},\)
+                    with propagated covariance
+                    \(\mathbf C_P = \mathbf X_c\mathbf C_D\mathbf X_c^*.\)</p>
+
+                    <p>The resolving kernels
+                    \(R_k = \sum_{i=1}^{N_d}[\mathbf X_c]_{ki}K_i\)
+                    are shown against the target kernels in the next figure.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_act7_resolving.png"
+                             alt="Resolving kernels overlaid on target kernels, showing a good visual match">
+                        <figcaption><span class="sola-figure-label">Figure F7-2.</span>Resolving kernels
+                        \(R_k\)
+                        (colored) overlaid on target kernels
+                        \(T_k\)
+                        (amber). The average misfit is about
+                        \(2\%\),
+                        the worst case about
+                        \(6\%\).
+                        The match looks encouraging.</figcaption>
+                    </figure>
+
+                    <p>The resolving kernels are localized near the intended targets.
+                    They have broadly similar shape and width. The average misfit
+                    between resolving and target kernels is about
+                    \(2\%,\)
+                    the worst case about
+                    \(6\%.\)
+                    By any conventional diagnostic, this is a good SOLA calculation.
+                    The resolving kernels pass the usual visual sniff test.</p>
+
+                    <p>The SOLA estimates with their
+                    \(\pm2\sigma\)
+                    uncertainty bands look like this:</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_act7_sola_good.png"
+                             alt="SOLA property estimates with 2-sigma uncertainty bands">
+                        <figcaption><span class="sola-figure-label">Figure F7-3.</span>SOLA property
+                        estimates with propagated
+                        \(\pm2\sigma\)
+                        uncertainty bands. Nothing about this plot screams disaster.</figcaption>
+                    </figure>
+
+                    <p>If we were to stop here — and in many practical settings,
+                    this is exactly where the analysis stops — the conclusion
+                    would be that SOLA has performed well. The data look
+                    reasonable. The resolving kernels look good. The uncertainty
+                    bands are computed by the standard covariance propagation
+                    formula. The estimates form a coherent spatial pattern. There
+                    is nothing in this picture that would cause alarm.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The data look reasonable. The resolving kernels look good.
+                        The uncertainty bands are computed by the standard covariance
+                        propagation formula. By every conventional diagnostic, this
+                        is a successful SOLA calculation.</p>
+                    </div>
+
+                    <p>And in one sense, it is. The method has done exactly what
+                    it was designed to do: produce resolving kernels close to the
+                    targets, with modest propagated uncertainty. The question
+                    now is not whether SOLA worked. The question is what we
+                    <em>think</em> these numbers mean — and whether that belief
+                    is justified.</p>
+
+                    <h2>So What Do We Think?</h2>
+
+                    <p>Here is where one's instincts kick in. We see twenty
+                    property estimates, each with a modest uncertainty bar, each
+                    corresponding to a localized average of the model. The resolving
+                    kernels look like the target kernels. The natural temptation is
+                    to read these numbers as estimates of the true target properties
+                    \([\Tau(\bar m)]_k = (T_k,\bar m)_{\M}\)
+                    and to start imagining what the true model looks like.</p>
+
+                    <p>Perhaps the model has a smooth profile. Perhaps it rises here
+                    and falls there. The SOLA estimates suggest certain values at
+                    certain locations, and the uncertainty bands tell us how much
+                    to trust each one. We might even start sketching a rough model
+                    in our heads — a profile that rises where the estimates rise,
+                    falls where they fall, and stays within the bounds where the
+                    uncertainty is small.</p>
+
+                    <p>This is a perfectly natural interpretation. It is also the
+                    interpretation we are about to challenge.</p>
+
+                    <h2>The Reveal</h2>
+
+                    <p>Now we reveal the true target properties
+                    \(\bar{\mathbf p} := \Tau(\bar m).\)
+                    In a real inverse problem, we would not have these. But this is
+                    a synthetic example, so we can look.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_act7_reveal.png"
+                             alt="SOLA estimates with 2-sigma bands compared with true target properties, showing the true values are approximately the negative of the estimates">
+                        <figcaption><span class="sola-figure-label">Figure F7-4.</span>SOLA estimates
+                        compared with true target properties. The true values are approximately the
+                        <em>negative</em> of the SOLA estimates. Almost every single true property lies far
+                        outside the
+                        \(\pm2\sigma\)
+                        bands.</figcaption>
+                    </figure>
+
+                    <p>The true target properties are not just far from the SOLA
+                    estimates. They are approximately the <em>negative</em> of the
+                    SOLA estimates. The correlation between the estimates and the
+                    truth is about
+                    \(-0.99.\)
+                    Every single true property lies far outside the nominal
+                    \(\pm2\sigma\)
+                    uncertainty bands.</p>
+
+                    <p>This is the first blow. The resolving kernels looked good.
+                    The calculation was algebraically correct. The uncertainty
+                    bands were propagated by the standard formula. Every
+                    conventional diagnostic gave the green light. Yet the true
+                    target properties are the opposite of what SOLA reported.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>A good-looking resolving-kernel plot does not, by itself,
+                        guarantee that
+                        \(\Tau(\bar m)\)
+                        is close to
+                        \(\mathcal{A}(\bar m).\)
+                        The true model still matters.</p>
+                    </div>
+
+                    <p>And here is the deeper point: we could cook up a problem
+                    where the true properties look like whatever we want. A heart
+                    shape. A straight line. A random scatter. The SOLA estimates
+                    would not change, because they depend only on the data, and the
+                    data are the same in every case. There is a deep and complete
+                    disconnect between what we want to find and what we actually
+                    find.</p>
+
+                    <h2>The True Model</h2>
+
+                    <p>At this point, curiosity naturally turns to what the
+                    true model actually looks like. Let us show it.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_act7_true_model.png"
+                             alt="The pathological true model with wild oscillations, compared with the smooth least-norm solution and the normal model">
+                        <figcaption><span class="sola-figure-label">Figure F7-5.</span>The true model
+                        (red) compared with the least-norm solution (dashed) and the normal model
+                        (amber, faint). The true model has norm
+                        \(\|\bar m\|\approx 2070\),
+                        while the least-norm solution has norm
+                        \(\|\tilde m\|\approx 1.7.\)
+                        Both fit the data equally well.</figcaption>
+                    </figure>
+
+                    <p>The true model looks wild. It oscillates rapidly with huge
+                    amplitude. Its norm is about
+                    \(2070\),
+                    while a least-norm solution has norm
+                    about
+                    \(1.7.\)
+                    Both models produce exactly the same data.</p>
+
+                    <h2>Pushing Back</h2>
+
+                    <p>At this point, one might object: <em>you picked a ridiculous
+                    true model!</em></p>
+
+                    <p>And that is exactly the point. The model is ridiculous —
+                    but SOLA does not know that. SOLA makes no prior assumptions
+                    about the model. It does not assume smoothness, boundedness,
+                    or physical plausibility. The model fits the data. It
+                    produces the SOLA solution shown above. The resolving kernels
+                    are quite nice. There is no internal contradiction anywhere
+                    in the calculation. The only thing that makes the model
+                    ridiculous is a belief that true models do not look like this
+                    — and that belief, however well-founded, is model-side
+                    information that SOLA does not use.</p>
+
+                    <p>This is not a trick or a pathology in the method. It is a
+                    boundary. Least squares and least norm have well-known
+                    boundaries of this kind — everyone knows that least squares
+                    is sensitive to outliers, that least norm says nothing about
+                    models in the data nullspace. These limitations are not held
+                    against those methods. They are understood, stated, and
+                    worked around. They are the marks left by hard cases that
+                    were once new and surprising. SOLA has not yet accumulated
+                    those marks, because it has not yet been tested this way in
+                    public.</p>
+
+                    <p>So let us be precise about what the objection is really
+                    saying. If one believes that the true model cannot look like
+                    this — that models do not oscillate with amplitude
+                    \(2000\)
+                    — then one has model-side information. That belief is a
+                    prior. It is potentially correct, but it should not be
+                    silently smuggled into the interpretation.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>If one believes the true model cannot look a certain way,
+                        make that belief mathematical. Use it as a prior. Then we
+                        can put actual bounds on the true properties using the
+                        actual target kernels.</p>
+                    </div>
+
+                    <p>Indeed, if one is willing to state that
+                    \(\|\bar m\|\le B\)
+    for some bound
+    \(B,\)
+    then the target-kernel interpretation error
+    \([\Tau(\bar m)]_k-[\mathcal{A}(\bar m)]_k = (T_k-R_k,\bar m)_{\M}\)
+    is bounded by
+    \(\|T_k-R_k\|_{\M}\,\|\bar m\|_{\M} \le B\,\|T_k-R_k\|_{\M}.\)
+    When the resolving kernels are close to the targets, this bound can be
+    useful. But without such a bound on the model, the error is unbounded.</p>
+
+                    <h2>How to Manufacture the Discrepancy</h2>
+
+                    <h3>The construction</h3>
+
+                    <p>The trick is simple. We begin with an ordinary-looking model
+                    \(m_n\in\M\)
+                    with moderate norm, such as
+                    \[m_n(r) = \exp\left(-\left(\frac{r-0.5}{0.5}\right)^2\right) \sin(5\pi r)+r.\]
+                    This model generates the data
+                    \(\bar{\mathbf d}=G(m_n)\)
+                    and has target properties
+                    \(\mathbf p_n=\Tau(m_n).\)</p>
+
+                    <p>Then we construct a different model \(\bar m\) that produces
+                    the <em>same</em> data but has <em>opposite</em> target properties:
+                    \[G(\bar m)=\bar{\mathbf d}, \qquad \Tau(\bar m)=-\mathbf p_n.\]</p>
+
+                    <p>Such a model exists because \(\M\) is infinite-dimensional
+                    while the constraints are finite-dimensional. The construction
+                    uses the stacked operator
+                    \[\mathcal G := \begin{bmatrix} G\\ \Tau \end{bmatrix} : \M\to \D\oplus\Pspace,\]
+                    and solves
+                    \[\mathcal G(\bar m) = \begin{bmatrix} \bar{\mathbf d}\\ -\mathbf p_n \end{bmatrix}.\]</p>
+
+                    <p>The resulting model \(\bar m\) fits the data exactly but has
+                    a huge norm, because it contains a large component in a
+                    data-invisible direction.</p>
+
+                    <h3>Invisible to data, visible to properties</h3>
+
+                    <p>Let
+                    \(h:=\bar m-m_n.\)
+                    Then
+                    \(G(h)=G(\bar m)-G(m_n)=\mathbf 0,\)
+                    so
+                    \(h\in\kernel(G).\)
+                    But
+                    \(\Tau(h)=\Tau(\bar m)-\Tau(m_n) = -\mathbf p_n-\mathbf p_n = -2\mathbf p_n.\)
+                    Thus \(h\) is invisible to \(G\), but visible to \(\Tau\).</p>
+
+                    <p>The resolving map
+                    \(\mathcal{A}=\mathbf XG\)
+                    cannot see \(h\), because
+                    \(\mathcal{A}(h)=\mathbf XG(h)=\mathbf X\mathbf 0=\mathbf 0.\)
+                    But the target map \(\Tau\) sees \(h\):
+                    \(\Tau(h)\neq\mathbf 0.\)
+                    Therefore
+                    \(\mathcal{A}(m+h)=\mathcal{A}(m),\)
+                    while
+                    \(\Tau(m+h)\neq\Tau(m).\)</p>
+
+                    <p>Indeed, for
+                    \(m_\alpha=m+\alpha h,\)
+                    we have
+                    \(G(m_\alpha)=G(m)\)
+                    for every scalar \(\alpha\), but
+                    \(\Tau(m_\alpha)=\Tau(m)+\alpha\Tau(h).\)
+                    The target property can be moved arbitrarily far while the data
+                    remain fixed.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The data closed one eye. The target property looked exactly
+                        where that eye was blind.</p>
+                    </div>
+
+                    <h2>What to Take Away</h2>
+
+                    <p>One might say: <em>fine, I will interpret my results
+                    through the resolving kernels, not the target kernels</em> —
+                    that is a legitimate position. SOLA does estimate the
+                    resolving-kernel properties
+                    \(\mathcal{A}(\bar m)\)
+                    correctly, up to propagated data noise. The resolving kernels
+                    are honest. The method is not broken. It has done exactly
+                    what it was designed to do.</p>
+
+                    <p>But the gap between
+                    \(\mathcal{A}(\bar m)\)
+                    and
+                    \(\Tau(\bar m)\)
+                    is
+                    \((T_k-R_k,\bar m)_{\M},\)
+                    and without model-side information, this gap is unbounded.
+                    The uncertainty bands quantify data noise only. They do not
+                    quantify the interpretation gap. A resolving-kernel plot that
+                    looks good does not, by itself, close that gap.</p>
+
+                    <p>This is a boundary, not a failure. Least squares has known
+                    boundaries — sensitivity to outliers, sensitivity to
+                    ill-conditioning. Least norm has known boundaries —
+                    nullspace invisibility, prior dependence. These boundaries
+                    were once discoveries, found the hard way. They are now part
+                    of the working knowledge of anyone who uses those methods.
+                    SOLA's boundary is the same in spirit: without model-side
+                    information, the target-kernel interpretation is a leap of
+                    faith, not a mathematical conclusion.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA estimates resolved properties. If we want exact
+                        target properties, we need additional model-side
+                        information that rules out, or at least controls, the
+                        dangerous invisible directions. Finding this boundary is
+                        not an attack on the method — it is the beginning of
+                        knowing where it can be trusted.</p>
+                    </div>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-6.html"><span class="arrow">&larr;</span> Act 6: What Did SOLA Actually Estimate?</a>
+                        <a class="part-prevnext-btn" href="act-8.html">Act 8: SOLA as an Inversion in Disguise <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

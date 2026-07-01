@@ -54,6 +54,20 @@ pages/
                 act-7.html
                 act-8.html
                 summary.html
+            sola/                        # My Take on SOLA (landing + multi-page acts)
+                my-take-on-sola.html
+                act-1.html
+                act-2.html
+                act-3.html
+                act-4.html
+                act-5.html
+                act-6.html
+                act-7.html
+                act-8.html
+                act-9.html
+                act-10.html
+                act-11.html
+                summary.html
         publications/
             papers.html
         posters/
@@ -105,6 +119,9 @@ Every page loads **two CSS files**:
    - `pages/research/overview/think-first/think-first-discretize-later.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` + `css/refinement-panel.css`
    - `pages/research/overview/think-first/act-*.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/think-first/summary.html` → same as act pages
+   - `pages/research/overview/sola/my-take-on-sola.html` → `css/sola.css` (four levels up: `../../../../css/`)
+   - `pages/research/overview/sola/act-*.html` → `css/sola.css` (four levels up: `../../../../css/`)
+   - `pages/research/overview/sola/summary.html` → same as act pages
    - `pages/research/publications/papers.html` → *(no dedicated stylesheet; uses `styles.css` only)*
    - `pages/research/posters/posters.html` → `css/posters.css`
    - `pages/research/posters/BSM24/BSM24.html` → `css/BSM24.css`
@@ -115,6 +132,7 @@ Pages in `pages/` link CSS with `../../css/styles.css` (two levels up).
 Pages in `pages/research/overview/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/overview/think-first/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/bayes/` link CSS with `../../../../css/styles.css`.
+Pages in `pages/research/overview/sola/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/publications/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/BSM24/` link CSS with `../../../../css/styles.css`.
@@ -157,6 +175,8 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/*.html` | `../` |
 | `pages/research/overview/*.html` | `../../../` |
 | `pages/research/overview/think-first/*.html` | `../../../../` |
+| `pages/research/overview/sola/*.html` | `../../../../` |
+| `pages/research/overview/bayes/*.html` | `../../../../` |
 | `pages/research/publications/*.html` | `../../../` |
 | `pages/research/posters/posters.html` | `../../../` |
 | `pages/research/posters/BSM24/BSM24.html` | `../../../../` |
@@ -188,6 +208,19 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/research/overview/think-first/act-7.html` | Act VII: Putting the Pieces Together — function-space posterior, discretization after formulation |
 | `pages/research/overview/think-first/act-8.html` | Act VIII: Return to the Toy Problem — corrected workflow, comparison with naive approach |
 | `pages/research/overview/think-first/summary.html` | Summary of the Argument + Appendices A–D (Gaussian conditioning, Hilbert-space measures, Gram matrices, exercises) |
+| `pages/research/overview/sola/my-take-on-sola.html` | My Take on SOLA — landing page with overview and multi-page nav |
+| `pages/research/overview/sola/act-1.html` | Act 1: The Kernel Game — sensitivity kernels, data as integrals, target kernels |
+| `pages/research/overview/sola/act-2.html` | Act 2: Building SOLA from Scratch — weighted sums, resolving kernels, the minimization problem |
+| `pages/research/overview/sola/act-3.html` | Act 3: Averages Need Mass — unimodularity constraint, constrained SOLA |
+| `pages/research/overview/sola/act-4.html` | Act 4: Beyond Averages — derivative targets, basis coefficients, contrasts, resolving constraints |
+| `pages/research/overview/sola/act-5.html` | Act 5: Noise Enters the Room — noisy data model, noise-aware SOLA, propagated covariance |
+| `pages/research/overview/sola/act-6.html` | Act 6: What Did SOLA Actually Estimate? — approximate property map, honest sidestep |
+| `pages/research/overview/sola/act-7.html` | Act 7: A Synthetic Cautionary Tale — apparent failure, manufacturing discrepancy, nullspace |
+| `pages/research/overview/sola/act-8.html` | Act 8: SOLA as an Inversion in Disguise — proxy model, resolution operators |
+| `pages/research/overview/sola/act-9.html` | Act 9: What About Uncertainty? — propagated noise vs posterior uncertainty, shifted-noise issue |
+| `pages/research/overview/sola/act-10.html` | Act 10: Generative SOLA — pushing model-data relations through SOLA, where priors belong |
+| `pages/research/overview/sola/act-11.html` | Act 11: What SOLA Is Good For — fair summary, ratios, final slogan |
+| `pages/research/overview/sola/summary.html` | Summary of the Argument + Appendices A–C (algebra of minimizers, proxy model derivation, suggested figures) |
 | `pages/research/publications/papers.html` | Publications list |
 | `pages/research/posters/posters.html` | Presentations / posters gallery |
 | `pages/research/posters/BSM24/BSM24.html` | BSM24 conference poster page |
@@ -205,7 +238,7 @@ Vanilla JS (no framework) is used for page-specific interactivity. Scripts live 
 | `js/refinement-panel.js` | `overview/think-first/think-first-discretize-later.html` | Interactive Plotly panel reading `refinement_sweep.json` (N-slider, naive/Bessel toggles, summary subplot) |
 
 External JS loaded via CDN:
-- **MathJax 3** (`tex-chtml.js`) — used by `overview/bayes/bayes-measure-theoretically.html` (and all part pages) and `overview/think-first/think-first-discretize-later.html` (and all act pages)
+- **MathJax 3** (`tex-chtml.js`) — used by `overview/bayes/bayes-measure-theoretically.html` (and all part pages), `overview/think-first/think-first-discretize-later.html` (and all act pages), and `overview/sola/my-take-on-sola.html` (and all act pages)
 - **Plotly.js 2.35.2** — used by `overview/think-first/think-first-discretize-later.html`
 
 ---
@@ -229,6 +262,13 @@ The Bayes, Measure-Theoretically page is discoverable via:
 
 The landing page includes a multi-page navigation bar linking to `part-1.html`
 through `part-4.html`. Each part page includes its own nav bar and prev/next buttons.
+
+The My Take on SOLA page is discoverable via:
+1. **Research overview** (`overview/index.html`) → Featured Theory Topics card → `sola/my-take-on-sola.html`
+
+The landing page includes a multi-page navigation bar linking to `act-1.html`
+through `act-11.html` and `summary.html`. Each act page includes its own nav bar
+(part-chip links) and prev/next buttons.
 
 ---
 

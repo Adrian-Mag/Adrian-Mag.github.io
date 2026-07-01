@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 3: Averages Need Mass — My Take on SOLA — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/sola.css">
+    <meta name="description" content="Act 3 of My Take on SOLA: Unimodularity, the average vector, constrained SOLA for averages, and the rank-one correction.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                M: '\\mathcal{M}', D: '\\mathcal{D}', Pspace: '\\mathcal{P}',
+                B: '\\mathcal{B}', Tau: '\\mathcal{T}',
+                Lset: 'L_{\\mathrm{set}}', Lprob: 'L_{\\mathrm{prob}}',
+                muprior: '\\mu_{\\mathrm{prior}}', nudobs: '\\nu_{\\mathbf{d}_{\\mathrm{obs}}}',
+                dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
+                kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
+                Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 3: Averages Need Mass</h1>
+                <p>Unimodularity, the average vector, and the rank-one correction.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Kernel Game</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Building SOLA</a>
+                <a class="part-chip" href="act-3.html" aria-current="page"><span class="part-chip-num">3</span> Averages Need Mass</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Beyond Averages</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Noise Enters</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
+                <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
+                <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+                    <h2>Why Area One Matters</h2>
+
+                    <h3>Averages are calibrated linear functionals</h3>
+
+                    <p>In the previous act, we saw the basic SOLA mechanism. A weighted sum of data
+                    produces a resolving kernel:
+                    \[R(r) = \sum_{i=1}^{N_d}x_iK_i(r),\]
+                    and the corresponding data combination is
+                    \[\sum_{i=1}^{N_d}x_i[\mathbf d]_i = \int_\Omega R(r)m(r)\dd r.\]
+                    The natural goal was to choose \(\mathbf x\) so that \(R\) resembles
+                    the target kernel \(T\).</p>
+
+                    <p>But if the target is meant to represent an average, shape is not the whole
+                    story. An average must also have the right scale.</p>
+
+                    <p>Suppose \(T\) is a localized averaging kernel. Then it should
+                    satisfy
+                    \[\int_\Omega T(r)\dd r=1.\]
+                    This condition makes the associated property
+                    \[[\mathbf p]_1 = \int_\Omega T(r)m(r)\dd r\]
+                    a genuine weighted average.</p>
+
+                    <p>To see why, test the target against a constant model. If
+                    \(m(r)=c\), then
+                    \[[\mathbf p]_1 = \int_\Omega T(r)c\dd r = c\int_\Omega T(r)\dd r = c.\]
+                    So a unit-mass target kernel reproduces constants correctly. That is what an
+                    average should do.</p>
+
+                    <p>If instead
+                    \(\int_\Omega T(r)\dd r=2,\)
+                    then the same constant model would give
+                    \([\mathbf p]_1=2c.\)
+                    The kernel may still be localized, smooth, and visually reasonable, but it is no
+                    longer an averaging kernel. It has the wrong calibration.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Averaging is not only about where the kernel is located. It is also about
+                        how much total weight the kernel carries. The location tells us where we are
+                        looking. The mass tells us whether the answer is on the right scale.</p>
+                    </div>
+
+                    <p>For several localized averages, we choose target kernels
+                    \(T_1,\dots,T_{N_p}\)
+                    with
+                    \[\int_\Omega T_k(r)\dd r=1, \qquad k=1,\dots,N_p.\]
+                    The property vector is then
+                    \(\mathbf p=\Tau(m)\in\Pspace,\)
+                    with components
+                    \[[\mathbf p]_k = \int_\Omega T_k(r)m(r)\dd r, \qquad k=1,\dots,N_p.\]
+                    Each component is intended to be a localized average of the same model, perhaps
+                    centred at a different location.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>A localized averaging kernel must do two things: it must localize the
+                        model, and it must reproduce constants correctly. The second requirement is
+                        the unit-mass condition.</p>
+                    </div>
+
+                    <h3>The resolving kernel may have the wrong mass</h3>
+
+                    <p>Now return to the resolving kernel
+                    \[R(r) = \sum_{i=1}^{N_d}x_iK_i(r).\]
+                    Even if \(R\) looks similar to the target kernel \(T\), it
+                    need not have the same total mass.</p>
+
+                    <p>Its integral is
+                    \[\int_\Omega R(r)\dd r = \int_\Omega \sum_{i=1}^{N_d}x_iK_i(r)\dd r.\]
+                    By linearity,
+                    \[\int_\Omega R(r)\dd r = \sum_{i=1}^{N_d} x_i \int_\Omega K_i(r)\dd r.\]
+                    So the mass of the resolving kernel is controlled by the same data weights
+                    \(x_i\), but through the integrals of the sensitivity kernels.</p>
+
+                    <p>There is no automatic reason for this quantity to equal one:
+                    \[\sum_{i=1}^{N_d} x_i \int_\Omega K_i(r)\dd r \neq 1\]
+                    in general.</p>
+
+                    <p>This matters because the SOLA output associated with \(R\) is
+                    \[\sum_{i=1}^{N_d}x_i[\mathbf d]_i = \int_\Omega R(r)m(r)\dd r.\]
+                    If \(R\) is supposed to be interpreted as an averaging kernel, then
+                    it should act correctly on constant models. For \(m(r)=c\),
+                    \[\int_\Omega R(r)c\dd r = c\int_\Omega R(r)\dd r.\]
+                    Thus the result equals \(c\) only if
+                    \(\int_\Omega R(r)\dd r=1.\)</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>A kernel can have a plausible shape but the wrong total mass. Then it is
+                        not the average we meant to ask for.</p>
+                    </div>
+
+                    <p>This is an easy issue to miss visually. Two kernels may appear to sit in the
+                    same region, have similar widths, and even have similar oscillations, while still
+                    carrying different total mass. A plot can make them look like siblings. The
+                    constant-model test reveals whether they are doing the same averaging job.</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_same_shape_wrong_mass.png"
+                             alt="Target kernel, unconstrained resolving kernel with wrong mass, and constrained resolving kernel with unit mass, all on one panel">
+                        <figcaption><span class="sola-figure-label">Figure F3-1.</span>Two kernels can look similarly localized while having different
+                        total mass. For averages, the mass is part of the meaning.</figcaption>
+                    </figure>
+
+                    <p>For multiple properties, the same issue appears component by component. If
+                    the approximate property map is
+                    \(\mathcal{A}:=\mathbf XG:\M\to\Pspace,\)
+                    then the \(k\)th resolving kernel is
+                    \[R_k(r) = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i(r).\]
+                    For this resolving kernel to define an average, we need
+                    \[\int_\Omega R_k(r)\dd r=1, \qquad k=1,\dots,N_p.\]</p>
+
+                    <h3>Unimodularity</h3>
+
+                    <p>The condition
+                    \[\int_\Omega R(r)\dd r=1\]
+                    is often called a unimodularity condition. The word sounds slightly complicated, but
+                    the idea is simple: the resolving kernel should have unit mass.</p>
+
+                    <p>For one average, unimodularity says
+                    \[\int_\Omega \sum_{i=1}^{N_d}x_iK_i(r)\dd r = 1.\]
+                    Equivalently,
+                    \[\sum_{i=1}^{N_d} x_i \int_\Omega K_i(r)\dd r = 1.\]</p>
+
+                    <p>For many averages, each resolving kernel should have unit mass:
+                    \[\int_\Omega R_k(r)\dd r=1, \qquad k=1,\dots,N_p.\]</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Unimodularity is the constant-model test. If the true model is flat, an
+                        averaging kernel should return the flat value. Unit mass is what makes that
+                        happen.</p>
+                    </div>
+
+                    <p>This condition does not guarantee that the resolving kernel equals the target
+                    kernel. It does not guarantee perfect localization. It does not remove the
+                    limitations imposed by the span of the sensitivity kernels.</p>
+
+                    <p>But it does enforce a basic calibration. If the output is going to be called
+                    an average, then the resolving kernel should at least behave like an average on
+                    constants.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>In Act II we asked for shape: make the resolving kernel look like the
+                        target. In Act III we add calibration: make the resolving kernel carry the
+                        right total mass.</p>
+                    </div>
+
+                    <h2>Constrained SOLA for Averages</h2>
+
+                    <h3>The average vector</h3>
+
+                    <p>We now translate unimodularity into operator notation.</p>
+
+                    <p>Let \(1_\Omega\in\M\) denote the constant function with value one:
+                    \[1_\Omega(r)=1, \qquad r\in\Omega.\]
+                    Applying the forward map \(G\) to this constant function gives a
+                    finite-dimensional vector in the data space:
+                    \[\mathbf v:=G(1_\Omega)\in\D.\]
+                    Its components are
+                    \[[\mathbf v]_i = \int_\Omega K_i(r)\dd r, \qquad i=1,\dots,N_d.\]
+                    So \(\mathbf v\) records the total mass of each sensitivity kernel.</p>
+
+                    <p>This vector is useful because the mass of any resolving kernel can be written
+                    using it. For one set of weights \(\mathbf x\),
+                    \[R(r) = \sum_{i=1}^{N_d}x_iK_i(r),\]
+                    and therefore
+                    \[\int_\Omega R(r)\dd r = \sum_{i=1}^{N_d}x_i[\mathbf v]_i.\]
+                    In Euclidean notation this is
+                    \[\int_\Omega R(r)\dd r = \mathbf x^\top\mathbf v.\]</p>
+
+                    <p>For multiple properties, the SOLA matrix \(\mathbf X:\D\to\Pspace\) has rows
+                    containing the weights for each property. The \(k\)th resolving kernel is
+                    \[R_k(r) = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i(r),\]
+                    so its mass is
+                    \[\int_\Omega R_k(r)\dd r = \sum_{i=1}^{N_d}[\mathbf X]_{ki}[\mathbf v]_i.\]
+                    But the right-hand side is exactly the \(k\)th component of
+                    \(\mathbf X\mathbf v\):
+                    \[\int_\Omega R_k(r)\dd r = [\mathbf X\mathbf v]_k.\]</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>The vector \(\mathbf v=G(1_\Omega)\) lets us test the total mass of
+                        resolving kernels using only data-space algebra.</p>
+                    </div>
+
+                    <p>This is a pleasant little piece of bookkeeping. Instead of writing one
+                    integral constraint for each resolving kernel, we can write a single
+                    finite-dimensional vector constraint.</p>
+
+                    <h3>The constraint \(\mathbf X\mathbf v=\mathbf w\)</h3>
+
+                    <p>For \(N_p\) averaging targets, we want each resolving kernel to have unit
+                    mass:
+                    \[\int_\Omega R_k(r)\dd r=1, \qquad k=1,\dots,N_p.\]
+                    Using the average vector \(\mathbf v\), this becomes
+                    \[[\mathbf X\mathbf v]_k=1, \qquad k=1,\dots,N_p.\]</p>
+
+                    <p>Define the desired mass vector
+                    \(\mathbf w\in\Pspace\)
+                    by
+                    \([\mathbf w]_k=1,\; k=1,\dots,N_p.\)
+                    Then all unimodularity constraints can be written compactly as
+                    \[\mathbf X\mathbf v=\mathbf w.\]</p>
+
+                    <p>This is the constrained SOLA condition for averages.</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; What the symbols mean</span>
+                        <p>The operator \(G:\M\to\D\) is lightface because it acts on the model
+                        function space. The vector \(\mathbf v=G(1_\Omega)\) is bold because it is a
+                        finite-dimensional data-space object. The matrix \(\mathbf X:\D\to\Pspace\)
+                        is bold because it is a finite-dimensional map between Euclidean
+                        representation spaces. The vector \(\mathbf w\) is bold because it is a
+                        finite-dimensional property-space object.</p>
+                    </div>
+
+                    <p>The constraint
+                    \(\mathbf X\mathbf v=\mathbf w\)
+                    has a clean interpretation:
+                    \[\text{constant model} \quad\longmapsto\quad \text{constant average}.\]</p>
+
+                    <p>Indeed, if \(m=c1_\Omega\), then
+                    \[G(m)=G(c1_\Omega)=cG(1_\Omega)=c\mathbf v.\]
+                    Applying the SOLA matrix gives
+                    \[\mathbf XG(m)=\mathbf X(c\mathbf v)=c\mathbf X\mathbf v.\]
+                    If \(\mathbf X\mathbf v=\mathbf w\), and \([\mathbf w]_k=1\), then
+                    \[[\mathbf XG(m)]_k=c, \qquad k=1,\dots,N_p.\]
+                    So each reported average reproduces constants correctly.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Unimodularity is not an abstract extra condition. It says that SOLA
+                        averages should return the right answer when the model is constant.</p>
+                    </div>
+
+                    <h3>The constrained minimization problem</h3>
+
+                    <p>We now add this constraint to the noiseless SOLA problem.</p>
+
+                    <p>The unconstrained problem was
+                    \[\mathbf X_0 = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2.\]
+                    For averaging targets, we instead solve
+                    \[\mathbf X_c = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2 \quad \text{subject to} \quad \mathbf X\mathbf v=\mathbf w.\]</p>
+
+                    <p>This says: match the target kernels as well as possible, but only among data
+                    combinations whose resolving kernels have the correct total mass.</p>
+
+                    <p>The constraint may force a slightly worse target fit than the unconstrained
+                    solution. That is the price of calibration. If the unconstrained resolving
+                    kernels already have unit mass, then nothing changes. But if they do not, the
+                    constrained solution adjusts the weights.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The unconstrained solution says: &ldquo;give me the closest shape.&rdquo;
+                        The constrained solution says: &ldquo;give me the closest shape among
+                        kernels that are actually averages.&rdquo;</p>
+                    </div>
+
+                    <p>The adjustment is surprisingly simple. It is a rank-one correction to the
+                    unconstrained solution.</p>
+
+                    <h3>Closed-form correction</h3>
+
+                    <p>Let
+                    \[\mathbf X_0 = \Tau G^*(GG^*)^{-1}\]
+                    be the noiseless unconstrained solution, assuming \(GG^*\) is invertible on
+                    \(\D\).</p>
+
+                    <p>Define
+                    \[\mathbf u := (GG^*)^{-1}\mathbf v \in\D,\]
+                    and
+                    \[\beta := (\mathbf v,\mathbf u)_{\D}.\]
+                    Equivalently,
+                    \[\beta = (\mathbf v,(GG^*)^{-1}\mathbf v)_{\D}.\]
+                    Assuming \(\mathbf v\neq \mathbf 0\), we have \(\beta>0\).</p>
+
+                    <p>The constrained solution is
+                    \[\mathbf X_c = \mathbf X_0 - \frac{\mathbf X_0\mathbf v-\mathbf w}{\beta} \mathbf u^*.\]
+                    Here
+                    \(\frac{\mathbf X_0\mathbf v-\mathbf w}{\beta} \mathbf u^*\)
+                    is a rank-one map from \(\D\) to \(\Pspace\). It takes a data-space vector,
+                    tests it against \(\mathbf u\), and returns a property-space correction in the
+                    direction
+                    \(\mathbf X_0\mathbf v-\mathbf w.\)</p>
+
+                    <p>Let us check that the constraint is satisfied. Applying \(\mathbf X_c\) to
+                    \(\mathbf v\) gives
+                    \[\mathbf X_c\mathbf v = \mathbf X_0\mathbf v - \frac{\mathbf X_0\mathbf v-\mathbf w}{\beta} \mathbf u^*\mathbf v.\]
+                    Since
+                    \[\mathbf u^*\mathbf v = (\mathbf u,\mathbf v)_{\D} = \beta,\]
+                    we obtain
+                    \[\mathbf X_c\mathbf v = \mathbf X_0\mathbf v - (\mathbf X_0\mathbf v-\mathbf w) = \mathbf w.\]
+                    So the correction does exactly what it should.</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Where the correction comes from</span>
+                        <p>One way to derive the formula is to introduce a Lagrange multiplier
+                        \(\boldsymbol\lambda\in\Pspace\) and solve
+                        \[\mathbf X_c = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2 \quad \text{subject to} \quad \mathbf X\mathbf v=\mathbf w.\]
+                        The stationarity equation has the form
+                        \[(\Tau-\mathbf XG)G^* = \boldsymbol\lambda\mathbf v^*.\]
+                        Solving this equation gives the unconstrained SOLA operator plus a rank-one
+                        term. The multiplier is then chosen so that \(\mathbf X_c\mathbf v=\mathbf w\),
+                        producing the formula above.</p>
+                    </div>
+
+                    <p>The formula is useful because it shows how constrained SOLA differs from
+                    unconstrained SOLA. It does not rebuild the whole solution from scratch. It
+                    corrects the unconstrained map by the smallest adjustment needed to enforce the
+                    average condition.</p>
+
+                    <p>At the kernel level, the correction modifies each resolving kernel just
+                    enough to give it unit mass. In components,
+                    \[R_k(r) = \sum_{i=1}^{N_d}[\mathbf X_c]_{ki}K_i(r),\]
+                    and the constraint ensures
+                    \[\int_\Omega R_k(r)\dd r = [\mathbf X_c\mathbf v]_k = [\mathbf w]_k = 1.\]</p>
+
+                    <figure class="sola-figure">
+                        <img src="../../../../media/research/sola/fig_unconstrained_vs_constrained.png"
+                             alt="Unconstrained and constrained resolving kernels at several locations, showing the constrained versions have unit area">
+                        <figcaption><span class="sola-figure-label">Figure F3-2.</span>The constrained SOLA solution adjusts the resolving kernel so
+                        that it has the correct mass for an average.</figcaption>
+                    </figure>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>For averages, normalization is not decoration. It is part of the meaning
+                        of the estimate.</p>
+                    </div>
+
+                    <p>This closes the average-only story. We now know how to ask SOLA for localized
+                    averages, and we know how to enforce the basic calibration that makes those
+                    averages meaningful.</p>
+
+                    <p>But not every property is an average. Some targets represent gradients,
+                    contrasts, coefficients, or more specialized linear diagnostics. Once we leave
+                    averages, the word &ldquo;unimodularity&rdquo; is no longer broad enough. The
+                    next act replaces it with the more general idea of a resolving constraint.</p>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-2.html"><span class="arrow">&larr;</span> Act 2: Building SOLA from Scratch</a>
+                        <a class="part-prevnext-btn" href="act-4.html">Act 4: Beyond Averages <span class="arrow">&rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>
