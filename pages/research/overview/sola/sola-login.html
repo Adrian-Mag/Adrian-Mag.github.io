@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Code — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1d23 0%, #2a2d35 100%);
+        }
+        .sola-login-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .sola-login-card .lock-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .sola-login-card h1 {
+            font-size: 1.4rem;
+            margin: 0 0 0.5rem 0;
+            color: #222;
+        }
+        .sola-login-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0 0 1.5rem 0;
+        }
+        .sola-login-card input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .sola-login-card input:focus {
+            outline: none;
+            border-color: #4a6da7;
+        }
+        .sola-login-card button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #2a2d35;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sola-login-card button:hover {
+            background: #1a1d23;
+        }
+        .sola-login-card .error-msg {
+            color: #c0392b;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .sola-login-card .error-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="sola-login-card">
+        <div class="lock-icon">&#128274;</div>
+        <h1>Access Restricted</h1>
+        <p>This content is confidential. Please enter the access code to continue.</p>
+        <form id="sola-login-form" autocomplete="off">
+            <input type="password" id="sola-code-input" placeholder="Enter access code" autofocus>
+            <button type="submit">Unlock</button>
+        </form>
+        <p class="error-msg" id="sola-error">Incorrect code. Please try again.</p>
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+
+        var HASH = "44193171f4bee5eaf9b4b8358b21fc3fb0ec5e7700e76570680d2e8060a0575f";
+
+        async function sha256(message) {
+            var msgBuffer = new TextEncoder().encode(message);
+            var hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            var hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(function (b) {
+                return b.toString(16).padStart(2, "0");
+            }).join("");
+        }
+
+        document.getElementById("sola-login-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            var input = document.getElementById("sola-code-input").value;
+            var errorMsg = document.getElementById("sola-error");
+
+            var hash = await sha256(input);
+            if (hash === HASH) {
+                sessionStorage.setItem("sola-auth", "verified");
+                window.location.href = "my-take-on-sola.html";
+            } else {
+                errorMsg.classList.add("show");
+                document.getElementById("sola-code-input").value = "";
+                document.getElementById("sola-code-input").focus();
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
