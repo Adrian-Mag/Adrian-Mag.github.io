@@ -551,8 +551,23 @@
 
 /* Let wide display equations scroll horizontally */
 mjx-container[jax="CHTML"][display="true"] {
-    overflow-x: auto;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: auto !important;
+    overflow-y: hidden;
     padding: 0.5rem 0;
+}
+
+/* Inline MathJax: scrollable inline box so long formulas don't clip */
+mjx-container[jax="CHTML"]:not([display="true"]) {
+    display: inline-block !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    vertical-align: middle;
 }
 
 /* ── Links section ────────────────────────────────────── */

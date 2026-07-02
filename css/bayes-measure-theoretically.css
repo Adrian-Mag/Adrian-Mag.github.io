@@ -44,6 +44,10 @@
     min-width: 0;
 }
 
+.research-content > .container {
+    min-width: 0;
+}
+
 .research-intro h2 {
     color: #fff;
     background: #6791BE;
