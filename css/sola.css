@@ -83,7 +83,7 @@
     }
 
     mjx-container[jax="CHTML"] {
-        font-size: 85% !important;
+        font-size: 100% !important;
     }
 
     mjx-container[jax="CHTML"]:not([display="true"]) {
@@ -98,10 +98,6 @@
         font-size: 1rem;
         line-height: 1.75;
         padding: 0 0.5rem;
-    }
-
-    mjx-container[jax="CHTML"] {
-        font-size: 72% !important;
     }
 
     .math-article > h2 {
@@ -191,20 +187,11 @@
     }
 }
 
-@media (max-width: 500px) {
-    mjx-container[jax="CHTML"] {
-        font-size: 62% !important;
-    }
-}
 
 @media (max-width: 400px) {
     .math-article {
         padding: 0 0.3rem;
         font-size: 0.9rem;
-    }
-
-    mjx-container[jax="CHTML"] {
-        font-size: 55% !important;
     }
 
     .math-article > h2 {
