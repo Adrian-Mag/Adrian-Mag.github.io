@@ -52,6 +52,7 @@
     font-size: 1.05rem;
     padding: 0 1rem;
     overflow-wrap: break-word;
+    overflow-x: hidden;
 }
 
 .sola-callout {
