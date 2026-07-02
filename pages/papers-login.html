@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Code — Adrian Mag</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1d23 0%, #2a2d35 100%);
+        }
+        .papers-login-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .papers-login-card .lock-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .papers-login-card h1 {
+            font-size: 1.4rem;
+            margin: 0 0 0.5rem 0;
+            color: #222;
+        }
+        .papers-login-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0 0 1.5rem 0;
+        }
+        .papers-login-card input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .papers-login-card input:focus {
+            outline: none;
+            border-color: #4a6da7;
+        }
+        .papers-login-card button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #2a2d35;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .papers-login-card button:hover {
+            background: #1a1d23;
+        }
+        .papers-login-card .error-msg {
+            color: #c0392b;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .papers-login-card .error-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="papers-login-card">
+        <div class="lock-icon">&#128274;</div>
+        <h1>Access Restricted</h1>
+        <p>Please enter the access code to view the documents.</p>
+        <form id="papers-login-form" autocomplete="off">
+            <input type="password" id="papers-code-input" placeholder="Enter access code" autofocus>
+            <button type="submit">Unlock</button>
+        </form>
+        <p class="error-msg" id="papers-error">Incorrect code. Please try again.</p>
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+
+        var HASH = "7b1743505fed491c344bdb147e96d1782448a4c6df165f5dcc3d6c15ef9401ea";
+
+        async function sha256(message) {
+            var msgBuffer = new TextEncoder().encode(message);
+            var hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            var hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(function (b) {
+                return b.toString(16).padStart(2, "0");
+            }).join("");
+        }
+
+        document.getElementById("papers-login-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            var input = document.getElementById("papers-code-input").value;
+            var errorMsg = document.getElementById("papers-error");
+
+            var hash = await sha256(input);
+            if (hash === HASH) {
+                sessionStorage.setItem("papers-auth", "verified");
+                window.location.href = "papers-in-prep.html";
+            } else {
+                errorMsg.classList.add("show");
+                document.getElementById("papers-code-input").value = "";
+                document.getElementById("papers-code-input").focus();
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

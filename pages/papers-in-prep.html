@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papers in Preparation — Adrian Mag</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        .papers-nav-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            padding: 1.5rem 0 0.5rem 0;
+            flex-wrap: wrap;
+        }
+        .papers-nav-bar a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            background: rgba(103, 145, 190, 0.15);
+            border: 1.5px solid rgba(103, 145, 190, 0.35);
+            color: #c5d4e8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .papers-nav-bar a:hover {
+            background: rgba(103, 145, 190, 0.3);
+            border-color: rgba(103, 145, 190, 0.6);
+            transform: translateY(-2px);
+        }
+        .papers-nav-bar .nav-icon {
+            font-size: 1.1rem;
+        }
+        .papers-list {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        .papers-list h1 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .papers-list .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+        .paper-card {
+            background: rgba(44, 56, 80, 0.5);
+            border: 1.5px solid rgba(103, 145, 190, 0.18);
+            border-radius: 12px;
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            box-shadow: 0 4px 24px rgba(103, 145, 190, 0.12);
+        }
+        .paper-card h2 {
+            font-size: 1.25rem;
+            color: #c5d4e8;
+            margin-bottom: 0.5rem;
+        }
+        .paper-card .paper-meta {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 1rem;
+        }
+        .paper-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+        .paper-card .paper-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .paper-card .paper-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(103, 145, 190, 0.2);
+            border: 1.5px solid rgba(103, 145, 190, 0.3);
+            color: #c5d4e8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .paper-card .paper-links a:hover {
+            background: rgba(103, 145, 190, 0.35);
+            border-color: rgba(103, 145, 190, 0.55);
+        }
+        .papers-footer {
+            text-align: center;
+            padding: 2rem 0 3rem 0;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.85rem;
+        }
+        .papers-footer a {
+            color: rgba(103, 145, 190, 0.7);
+            text-decoration: none;
+        }
+        .papers-footer a:hover {
+            color: rgba(103, 145, 190, 1);
+        }
+    </style>
+</head>
+<body>
+    <script src="../js/papers-auth.js"></script>
+
+    <div class="papers-nav-bar">
+        <a href="../index.html"><span class="nav-icon">&#127968;</span> Home</a>
+        <a href="research/overview/index.html"><span class="nav-icon">&#128300;</span> Research</a>
+    </div>
+
+    <div class="papers-list">
+        <h1>Papers in Preparation</h1>
+        <p class="subtitle">These manuscripts are works in progress. Please do not distribute without permission.</p>
+
+        <!-- Paper 1 -->
+        <div class="paper-card">
+            <h2>Paper 1 Title</h2>
+            <p class="paper-meta">Status: In preparation &middot; 2026</p>
+            <p>Short abstract or description goes here. Replace this text with a brief summary of the paper.</p>
+            <div class="paper-links">
+                <a href="../media/papers/paper1.pdf" target="_blank" rel="noopener">&#128196; View PDF</a>
+                <a href="../media/papers/paper1.pdf" download>&#11015; Download</a>
+            </div>
+        </div>
+
+        <!-- Paper 2 -->
+        <div class="paper-card">
+            <h2>Paper 2 Title</h2>
+            <p class="paper-meta">Status: In preparation &middot; 2026</p>
+            <p>Short abstract or description goes here. Replace this text with a brief summary of the paper.</p>
+            <div class="paper-links">
+                <a href="../media/papers/paper2.pdf" target="_blank" rel="noopener">&#128196; View PDF</a>
+                <a href="../media/papers/paper2.pdf" download>&#11015; Download</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="papers-footer">
+        <p>&copy; 2025&ndash;2026 Adrian Mag. &middot; <a href="../index.html">adrianmag.github.io</a></p>
+    </div>
+</body>
+</html>
