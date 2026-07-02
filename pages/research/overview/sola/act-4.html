@@ -291,9 +291,9 @@
                     different spatial averages, different amounts of smoothing, or different
                     mixtures of nearby structure.</p>
 
-                    <p>A ratio such as</p>
-                    \[\frac{[\widetilde{\mathbf p}]_1}{[\widetilde{\mathbf p}]_2}\]
-                    <p>is therefore not automatically the ratio of the intended target properties. It
+                    <p>A ratio such as
+                    \(\frac{[\widetilde{\mathbf p}]_1}{[\widetilde{\mathbf p}]_2}\)
+                    is therefore not automatically the ratio of the intended target properties. It
                     is the ratio of two resolved quantities, each with its own resolving kernel.</p>
 
                     <p>For the intended ratio interpretation to be safe, one would like the relevant
@@ -350,14 +350,14 @@
                     the resulting resolving kernels have the structural property needed for
                     interpretation.</p>
 
-                    <p>For averages:</p>
-                    \[\text{resolving constraint} = \text{unit mass}.\]
-                    <p>For derivative-like targets:</p>
-                    \[\text{resolving constraint} = \text{zero response to constants, or correct derivative calibration}.\]
-                    <p>For coefficient targets:</p>
-                    \[\text{resolving constraint} = \text{correct response to selected basis directions}.\]
-                    <p>For ratios:</p>
-                    \[\text{resolving constraint} = \text{compatible resolution between numerator and denominator}.\]
+                    <p>For averages:
+                    \(\text{resolving constraint} = \text{unit mass}.\)
+                    For derivative-like targets:
+                    \(\text{resolving constraint} = \text{zero response to constants, or correct derivative calibration}.\)
+                    For coefficient targets:
+                    \(\text{resolving constraint} = \text{correct response to selected basis directions}.\)
+                    For ratios:
+                    \(\text{resolving constraint} = \text{compatible resolution between numerator and denominator}.\)</p>
 
                     <div class="sola-callout callout-lesson">
                         <span class="sola-callout-label">Lesson</span>
@@ -434,23 +434,23 @@
                     <p>Sometimes one calibration condition is not enough. We may want the resolving
                     kernels to respond correctly to several test models
                     \(q_1,\dots,q_L\in\M.\)
-                    Define the finite-dimensional data vectors</p>
-                    \[\mathbf v_\ell=G(q_\ell)\in\D,\; \ell=1,\dots,L.\]
-                    <p>Collect these into the finite matrix</p>
+                    Define the finite-dimensional data vectors
+                    \(\mathbf v_\ell=G(q_\ell)\in\D,\; \ell=1,\dots,L.\)
+                    Collect these into the finite matrix
                     \[\mathbf V = \begin{pmatrix} \mathbf v_1 & \cdots & \mathbf v_L \end{pmatrix}.\]
-                    <p>Likewise, choose the desired responses</p>
-                    \[\mathbf w_\ell\in\Pspace,\; \ell=1,\dots,L,\]
-                    <p>and collect them into</p>
+                    Likewise, choose the desired responses
+                    \(\mathbf w_\ell\in\Pspace,\; \ell=1,\dots,L,\)
+                    and collect them into
                     \[\mathbf W = \begin{pmatrix} \mathbf w_1 & \cdots & \mathbf w_L \end{pmatrix}.\]
-                    <p>Then the constraint becomes
+                    Then the constraint becomes
                     \(\mathbf X\mathbf V=\mathbf W.\)</p>
 
                     <p>A common choice is
                     \(\mathbf w_\ell=\Tau(q_\ell),\)
-                    so that</p>
-                    \[\mathbf XG(q_\ell)=\Tau(q_\ell),\; \ell=1,\dots,L.\]
-                    <p>Equivalently,</p>
-                    \[\mathcal{A}(q_\ell)=\Tau(q_\ell),\; \ell=1,\dots,L.\]
+                    so that
+                    \(\mathbf XG(q_\ell)=\Tau(q_\ell),\; \ell=1,\dots,L.\)
+                    Equivalently,
+                    \(\mathcal{A}(q_\ell)=\Tau(q_\ell),\; \ell=1,\dots,L.\)</p>
 
                     <p>This says that the SOLA approximate property map \(\mathcal{A}=\mathbf XG\) must agree
                     with the target property map \(\Tau\) on a selected finite-dimensional set of
@@ -478,13 +478,13 @@
                     The correction subtracts just enough, in the \(\mathbf H^{-1}\)-geometry, to
                     force the constraints to hold.</p>
 
-                    <p>To verify, apply \(\mathbf X_c\) to \(\mathbf V\):</p>
+                    <p>To verify, apply \(\mathbf X_c\) to \(\mathbf V\):
                     \[\mathbf X_c\mathbf V = \mathbf X_0\mathbf V - (\mathbf X_0\mathbf V-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf V^*\mathbf H^{-1}\mathbf V.\]
-                    <p>Since</p>
-                    \[\mathbf V^*\mathbf H^{-1}\mathbf V=\boldsymbol\Gamma,\]
-                    <p>we obtain</p>
+                    Since
+                    \(\mathbf V^*\mathbf H^{-1}\mathbf V=\boldsymbol\Gamma,\)
+                    we obtain
                     \[\mathbf X_c\mathbf V = \mathbf X_0\mathbf V - (\mathbf X_0\mathbf V-\mathbf W) = \mathbf W.\]
-                    <p>So the constraint is satisfied exactly.</p>
+                    So the constraint is satisfied exactly.</p>
 
                     <p>The one-constraint formula drops out as a special case. If
                     \(\mathbf V=\mathbf v\) and \(\mathbf W=\mathbf w\), then
@@ -493,9 +493,9 @@
                     \[\mathbf X_c = \mathbf X_0 - \frac{\mathbf X_0\mathbf v-\mathbf w}{\beta}\mathbf u^*,\]
                     which is exactly the earlier formula.</p>
 
-                    <p>The matrix</p>
-                    \[\boldsymbol\Gamma=\mathbf V^*\mathbf H^{-1}\mathbf V\]
-                    <p>is the Gram matrix of the constraint directions in the SOLA geometry. If it is
+                    <p>The matrix
+                    \(\boldsymbol\Gamma=\mathbf V^*\mathbf H^{-1}\mathbf V\)
+                    is the Gram matrix of the constraint directions in the SOLA geometry. If it is
                     invertible, the constraints are independent in the geometry induced by
                     \(\mathbf H^{-1}\). If it is singular, some constraints are redundant or
                     incompatible in that geometry, and one would use a pseudoinverse or remove

@@ -61,6 +61,23 @@ main {
     min-width: 0;
 }
 
+.math-article p,
+.math-article li,
+.math-article blockquote,
+.sola-callout {
+    max-width: 100%;
+    min-width: 0;
+}
+
+mjx-container[jax="CHTML"]:not([display="true"]) {
+    display: inline-block !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    vertical-align: middle;
+}
+
 .sola-callout {
     overflow-x: auto;
     overflow-y: hidden;
@@ -81,11 +98,6 @@ main {
         max-width: 100%;
     }
 
-    mjx-container[jax="CHTML"]:not([display="true"]) {
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
 }
 
 @media (max-width: 700px) {
@@ -509,10 +521,10 @@ main {
 /* Display equations */
 mjx-container[jax="CHTML"][display="true"] {
     display: block !important;
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box;
-    overflow-x: auto;
+    overflow-x: auto !important;
     overflow-y: hidden;
     padding: 0.5rem 0;
 }
