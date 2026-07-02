@@ -71,13 +71,6 @@
     overflow-wrap: break-word;
 }
 
-.math-article p,
-.math-article li,
-.math-article blockquote {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
 .bayes-callout {
     overflow-x: auto;
     overflow-y: hidden;
