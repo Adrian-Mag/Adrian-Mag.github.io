@@ -63,6 +63,10 @@
 
 /* ── Math article content ─────────────────────────────── */
 
+main {
+    min-width: 0;
+}
+
 .math-article {
     max-width: 1080px;
     margin: 0 auto;
