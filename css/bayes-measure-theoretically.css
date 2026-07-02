@@ -69,17 +69,8 @@
     font-size: 1.05rem;
     padding: 0 1rem;
     overflow-wrap: break-word;
-    /* Prevent wide inline math from expanding the page.  Paragraphs
-       inside have their own overflow-x: auto so they scroll instead
-       of being clipped. */
-    overflow-x: hidden;
 }
 
-/* Paragraphs and list items that contain long inline MathJax
-   expressions get a horizontal scrollbar instead of pushing the
-   page wider or being clipped.  overflow-x: auto only shows a
-   scrollbar when content actually overflows, so paragraphs with
-   normal text are unaffected. */
 .math-article p,
 .math-article li,
 .math-article blockquote {
