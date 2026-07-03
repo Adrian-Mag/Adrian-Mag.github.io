@@ -112,7 +112,7 @@ main {
 
 @media (max-width: 700px) {
     .part-nav {
-        position: relative;
+        position: relative !important;
     }
 
     .math-article {
@@ -354,8 +354,8 @@ main {
 
 .part-nav {
     position: sticky;
-    top: var(--header-h, 72px);
-    z-index: 90;
+    top: 0;
+    z-index: 110;
     background: rgba(30,34,40,0.92);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(103,145,190,0.2);

@@ -2582,6 +2582,1059 @@ This is the general frequentist answer in safety-critical settings. Whether the 
 
 The price is conservatism. If the likelihoods for dangerous and non-dangerous truths overlap substantially, then many observations will remain inconclusive. That is not a defect of the construction. It is the sampling model saying that the data are not strong enough to safely support a sharper verdict.
 
+% ============================================================
+\section{SOLA as a Transformed Observation Problem}
+% ============================================================
 
+\subsection{The original forward problem}
+
+We now connect the preceding discussion to SOLA. The starting point is an inverse problem in which the unknown object is a model
+\[
+    m_{\mathrm{true}}\in\Mspace.
+\]
+The data predicted by this model are obtained through a forward map
+\[
+    \G:\Mspace\to\Dspace.
+\]
+Thus, the noiseless true datum is
+\[
+    \dtrue=\G m_{\mathrm{true}}.
+\]
+
+The actual observed datum is polluted by observational error:
+\[
+    \dobs
+    =
+    \G m_{\mathrm{true}}
+    +
+    \nobs.
+\]
+Equivalently,
+\[
+    \dobs=\dtrue+\nobs.
+\]
+
+This is the same ontological observation equation as before, but now the true datum is explicitly tied to an underlying model \(m_{\mathrm{true}}\). The model itself may be infinite-dimensional or function-valued, while the observed data are typically finite-dimensional.
+
+The corresponding epistemological noise model is
+\[
+    \Nrand\sim\muN.
+\]
+Before observation, under the frequentist interpretation with \(m_{\mathrm{true}}\) fixed, the random observed datum is
+\[
+    \Dobsrand
+    =
+    \G m_{\mathrm{true}}
+    +
+    \Nrand.
+\]
+
+The inverse problem is difficult because we usually do not want merely to describe \(\G m_{\mathrm{true}}\). We want to say something about some property of the model, for example a localized average, a contrast, or a feature indicator. SOLA enters by constructing linear combinations of the observed data that are designed to approximate such properties.
+
+\subsection{Applying a linear data transformation}
+
+Let
+\[
+    \X:\Dspace\to\Pspace
+\]
+be a linear transformation applied to the data. In finite-dimensional terms, \(\X\) may be a matrix whose rows define linear combinations of the observed data.
+
+Applying \(\X\) to the observation equation gives
+\[
+    \X\dobs
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \X\nobs.
+\]
+
+Before observation, the corresponding random equation is
+\[
+    \X\Dobsrand
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \X\Nrand.
+\]
+
+Thus, \(\X\) transforms the original data-space observation problem into a new observation problem in the transformed space \(\Pspace\). The transformed signal is
+\[
+    \X\G m_{\mathrm{true}},
+\]
+and the transformed noise is
+\[
+    \X\Nrand.
+\]
+
+This is the basic mathematical move behind the SOLA interpretation used here:
+\[
+    \text{data equation}
+    \quad
+    \longmapsto
+    \quad
+    \text{transformed data equation}.
+\]
+
+\subsection{The transformed observed quantity}
+
+Define the transformed observed quantity by
+\[
+    \pobs=\X\dobs.
+\]
+Since \(\dobs\) is the actual observed datum, \(\pobs\) is also an actual realized quantity.
+
+Using the observation equation,
+\[
+    \dobs=\G m_{\mathrm{true}}+\nobs,
+\]
+we obtain
+\[
+    \pobs
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \X\nobs.
+\]
+
+Thus, the transformed observed quantity is the sum of two terms:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Transformed true signal.]
+    The quantity \(\X\G m_{\mathrm{true}}\), which is the noiseless part of the transformed data.
+
+    \item[Transformed realized noise.]
+    The quantity \(\X\nobs\), which is the actual noise after applying \(\X\).
+\end{description}
+
+The symbol \(\pobs\) should not be interpreted automatically as the true property of the model. It is the observed transformed quantity. Its relationship to the desired property depends on how well \(\X\G\) approximates the property map of interest.
+
+\subsection{The transformed noise}
+
+The realized transformed noise is
+\[
+    \etarand_{\mathrm{obs}}
+    =
+    \X\nobs.
+\]
+This is an actual realized quantity, fixed after the observation has been made.
+
+The corresponding transformed noise random variable is
+\[
+    \etarand
+    =
+    \X\Nrand.
+\]
+Its law is the pushforward of \(\muN\) through \(\X\):
+\[
+    \mueta
+    =
+    \X_{\#}\muN.
+\]
+That is, for every measurable set \(B\in\SigmaP\),
+\[
+    \mueta(B)
+    =
+    \muN(\X^{-1}(B)).
+\]
+
+If the original noise has covariance \(\Sigma_N\) and \(\X\) is represented by a matrix, then the transformed noise covariance is formally
+\[
+    \Sigma_{\eta}
+    =
+    \X\Sigma_N\X^{\top}.
+\]
+In particular, even if the original noise components are independent, the transformed noise components may be correlated after applying \(\X\).
+
+The transformed observation equation can now be written as
+\[
+    \pobs
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \etarand_{\mathrm{obs}},
+\]
+and the corresponding pre-observation random equation is
+\[
+    \Prand
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \etarand,
+\]
+where
+\[
+    \Prand=\X\Dobsrand.
+\]
+
+Thus, after applying \(\X\), we again have an observation equation of the same general form:
+\[
+    \text{observed transformed quantity}
+    =
+    \text{true transformed signal}
+    +
+    \text{transformed noise}.
+\]
+
+\subsection{The approximate property}
+
+The direct noiseless quantity obtained after applying \(\X\) is
+\[
+    \X\G m_{\mathrm{true}}.
+\]
+This is the true transformed signal. It is the quantity that would be obtained by applying \(\X\) to noiseless data.
+
+In SOLA, \(\X\) is typically chosen so that \(\X\G m\) approximates some desired property of the model \(m\). For example, a row of \(\X\) may be chosen so that the corresponding linear combination of data has an averaging kernel localized around a region of interest.
+
+It is useful to define the SOLA-induced approximate property map
+\[
+    \A_{\X}:\Mspace\to\Pspace
+\]
+by
+\[
+    \A_{\X}m
+    =
+    \X\G m.
+\]
+Then the noiseless transformed signal is
+\[
+    \A_{\X}m_{\mathrm{true}}
+    =
+    \X\G m_{\mathrm{true}}.
+\]
+
+The confidence statements obtained directly from the transformed noise model are naturally statements about
+\[
+    \A_{\X}m_{\mathrm{true}},
+\]
+not automatically about any ideal property one may have wanted before constructing \(\X\).
+
+This distinction matters. SOLA does not magically observe the desired property exactly. It produces a transformed data quantity whose noiseless part is \(\X\G m_{\mathrm{true}}\). Whether that quantity is a good approximation to the desired property is a separate resolution question.
+
+\subsection{Connection to the desired property map}
+
+Let the desired property map be
+\[
+    \Tau:\Mspace\to\Pspace.
+\]
+For the true model \(m_{\mathrm{true}}\), the desired true property is
+\[
+    \ptrue
+    =
+    \Tau(m_{\mathrm{true}}).
+\]
+
+In component form, if \(\Pspace\) is finite-dimensional, one may write
+\[
+    [\ptrue]_k
+    =
+    [\Tau(m_{\mathrm{true}})]_k.
+\]
+For example, each component may represent a localized average, a regional contrast, or another scalar property extracted from the model.
+
+The purpose of SOLA is often to choose \(\X\) so that
+\[
+    \X\G m
+    \approx
+    \Tau(m)
+\]
+for models \(m\) of interest. In other words, one seeks
+\[
+    \A_{\X}
+    =
+    \X\G
+    \approx
+    \Tau.
+\]
+
+For the true model, this means one hopes that
+\[
+    \X\G m_{\mathrm{true}}
+    \approx
+    \Tau(m_{\mathrm{true}})
+    =
+    \ptrue.
+\]
+
+However, this approximation is not automatic. The transformed data equation gives direct access, up to transformed noise, to
+\[
+    \X\G m_{\mathrm{true}},
+\]
+while the desired property is
+\[
+    \Tau(m_{\mathrm{true}}).
+\]
+
+The gap between these two quantities is the resolution error.
+
+\subsection{Resolution error}
+
+Define the resolution error by
+\[
+    \mathbf r_{\X}(m)
+    =
+    \X\G m-\Tau(m).
+\]
+For the true model,
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    =
+    \X\G m_{\mathrm{true}}
+    -
+    \Tau(m_{\mathrm{true}}).
+\]
+
+Using
+\[
+    \ptrue=\Tau(m_{\mathrm{true}}),
+\]
+we can write
+\[
+    \X\G m_{\mathrm{true}}
+    =
+    \ptrue+\mathbf r_{\X}(m_{\mathrm{true}}).
+\]
+
+Substituting this into the transformed observation equation gives
+\[
+    \pobs
+    =
+    \ptrue
+    +
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    +
+    \etarand_{\mathrm{obs}}.
+\]
+
+Equivalently,
+\[
+    \pobs
+    =
+    \Tau(m_{\mathrm{true}})
+    +
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    +
+    \X\nobs.
+\]
+
+Thus, the error between the observed transformed quantity and the desired true property has two contributions:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Resolution error.]
+    The deterministic modelling error
+    \[
+        \mathbf r_{\X}(m_{\mathrm{true}})
+        =
+        \X\G m_{\mathrm{true}}-\Tau(m_{\mathrm{true}}).
+    \]
+
+    \item[Transformed noise.]
+    The observational error
+    \[
+        \etarand_{\mathrm{obs}}
+        =
+        \X\nobs.
+    \]
+\end{description}
+
+This decomposition is essential. If one ignores \(\mathbf r_{\X}(m_{\mathrm{true}})\), then one may mistakenly interpret a confidence statement about \(\X\G m_{\mathrm{true}}\) as a confidence statement about \(\Tau(m_{\mathrm{true}})\).
+
+In other words:
+\[
+    \text{noise control}
+    \quad
+    \text{does not automatically imply}
+    \quad
+    \text{resolution control}.
+\]
+
+\subsection{Confidence statements in property space}
+
+Suppose first that we are interested directly in the SOLA-induced approximate property
+\[
+    \A_{\X}m_{\mathrm{true}}
+    =
+    \X\G m_{\mathrm{true}}.
+\]
+Then the transformed observation equation is
+\[
+    \Prand
+    =
+    \A_{\X}m_{\mathrm{true}}
+    +
+    \etarand.
+\]
+
+This has the same form as the original additive-noise problem, but now in property space. If \(F_{\alpha}\subseteq\Pspace\) is a transformed-noise acceptance region satisfying
+\[
+    \mueta(F_{\alpha})=1-\alpha,
+\]
+then a confidence set for the approximate property is
+\[
+    C_{\alpha}^{\X}(\pobs)
+    =
+    \left\{
+        \mathbf p\in\Pspace:
+        \pobs-\mathbf p\in F_{\alpha}
+    \right\}.
+\]
+
+Equivalently,
+\[
+    C_{\alpha}^{\X}(\pobs)
+    =
+    \pobs-F_{\alpha}.
+\]
+
+The corresponding coverage statement is
+\[
+    \Prob_{\A_{\X}m_{\mathrm{true}}}
+    \left(
+        \A_{\X}m_{\mathrm{true}}
+        \in
+        C_{\alpha}^{\X}(\Prand)
+    \right)
+    =
+    1-\alpha.
+\]
+
+This statement is directly about
+\[
+    \A_{\X}m_{\mathrm{true}}
+    =
+    \X\G m_{\mathrm{true}}.
+\]
+It is not, by itself, a statement about
+\[
+    \ptrue=\Tau(m_{\mathrm{true}}),
+\]
+unless the resolution error is zero or has been controlled.
+
+To make a confidence statement about the desired property \(\ptrue\), one must account for
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}}).
+\]
+For example, if one can guarantee that
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}})\in R_{\alpha}
+\]
+for some resolution-error set \(R_{\alpha}\), and if
+\[
+    \etarand\in F_{\alpha}
+\]
+with high probability, then the total error belongs to a combined error set. Schematically,
+\[
+    \pobs-\ptrue
+    =
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    +
+    \etarand_{\mathrm{obs}}.
+\]
+Therefore, a valid property-space confidence set must account for both terms:
+\[
+    \text{property uncertainty}
+    =
+    \text{transformed noise}
+    +
+    \text{resolution error}.
+\]
+
+If the resolution error is ignored, the resulting set is only calibrated for the approximate property \(\X\G m_{\mathrm{true}}\), not for the desired property \(\Tau(m_{\mathrm{true}})\).
+
+\subsection{What SOLA does not automatically provide}
+
+SOLA provides a way to design \(\X\) so that transformed data components behave like approximate localized properties. It also provides a natural way to push the noise model through the same transformation:
+\[
+    \mueta
+    =
+    \X_{\#}\muN.
+\]
+This allows one to construct transformed-noise confidence sets for the SOLA-induced quantities
+\[
+    \X\G m_{\mathrm{true}}.
+\]
+
+However, this is not the same as constructing a posterior probability measure on
+\[
+    \Tau(m_{\mathrm{true}}).
+\]
+A posterior measure on \(\Tau(m_{\mathrm{true}})\) would require a Bayesian construction: a prior on \(m\), a likelihood for the data, a posterior on \(m\), and then a pushforward through \(\Tau\).
+
+In contrast, the frequentist SOLA construction gives calibrated statements of the form:
+\[
+    \text{A random transformed confidence set catches the fixed transformed quantity}
+\]
+with a prescribed repeated-sampling frequency.
+
+More precisely, without a prior, SOLA can provide:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[Transformed observation.]
+    The actual quantity
+    \[
+        \pobs=\X\dobs.
+    \]
+
+    \item[Transformed noise law.]
+    The pushforward measure
+    \[
+        \mueta=\X_{\#}\muN.
+    \]
+
+    \item[Approximate property.]
+    The noiseless transformed signal
+    \[
+        \A_{\X}m_{\mathrm{true}}=\X\G m_{\mathrm{true}}.
+    \]
+
+    \item[Frequentist confidence statements.]
+    Coverage statements for confidence sets targeting \(\A_{\X}m_{\mathrm{true}}\), or for \(\Tau(m_{\mathrm{true}})\) only if resolution error is controlled.
+\end{description}
+
+What SOLA does not automatically provide is:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[No posterior on models.]
+    There is no posterior measure on \(m_{\mathrm{true}}\) unless a prior has been introduced.
+
+    \item[No posterior on properties.]
+    There is no posterior measure on \(\Tau(m_{\mathrm{true}})\) unless a posterior on models has been constructed and pushed forward.
+
+    \item[No automatic exact property statement.]
+    A statement about \(\X\G m_{\mathrm{true}}\) is not automatically a statement about \(\Tau(m_{\mathrm{true}})\).
+
+    \item[No immunity to outliers.]
+    The transformed observation \(\pobs\) may still be affected by an unlucky realization of transformed noise.
+\end{description}
+
+Thus, the clean interpretation is:
+\[
+    \boxed{
+    \text{SOLA transforms the observation problem. It does not erase the distinction between Bayesian posterior probability and frequentist coverage.}
+    }
+\]
+
+It moves the inferential problem from data space to property space:
+\[
+    \dobs=\G m_{\mathrm{true}}+\nobs
+    \quad
+    \longmapsto
+    \quad
+    \pobs=\X\G m_{\mathrm{true}}+\etarand_{\mathrm{obs}}.
+\]
+After that transformation, the same conceptual questions remain:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[Bayesian route.]
+    Put a prior on \(m\), condition on \(\dobs\), and push the posterior through \(\Tau\).
+
+    \item[Frequentist route.]
+    Keep \(m_{\mathrm{true}}\) fixed, push the noise through \(\X\), and build calibrated confidence or decision procedures for the transformed quantities.
+\end{description}
+
+
+% ============================================================
+\section{Frequentist SOLA Interpretation}
+% ============================================================
+
+\subsection{Fixed model and repeated noisy observations}
+
+In the frequentist interpretation, the true model
+\[
+    m_{\mathrm{true}}\in\Mspace
+\]
+is fixed but unknown. It is not assigned a prior measure and is not treated as a random variable. The randomness comes from the observation process.
+
+The original data equation is
+\[
+    \Dobsrand
+    =
+    \G m_{\mathrm{true}}
+    +
+    \Nrand,
+\]
+where
+\[
+    \Nrand\sim\muN.
+\]
+After observation, the realized equation is
+\[
+    \dobs
+    =
+    \G m_{\mathrm{true}}
+    +
+    \nobs.
+\]
+
+SOLA applies a linear transformation
+\[
+    \X:\Dspace\to\Pspace
+\]
+to the data. Before observation, this gives
+\[
+    \Prand
+    =
+    \X\Dobsrand
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \X\Nrand.
+\]
+After observation, this gives
+\[
+    \pobs
+    =
+    \X\dobs
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \X\nobs.
+\]
+
+Define the transformed noise random variable by
+\[
+    \boldsymbol{\eta}
+    =
+    \X\Nrand,
+\]
+with law
+\[
+    \mu_{\eta}
+    =
+    \X_{\#}\muN.
+\]
+The realized transformed noise is
+\[
+    \boldsymbol{\eta}_{\mathrm{obs}}
+    =
+    \X\nobs.
+\]
+
+Thus the transformed frequentist observation equation is
+\[
+    \Prand
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \boldsymbol{\eta}.
+\]
+
+The model \(m_{\mathrm{true}}\) is fixed. The transformed signal
+\[
+    \X\G m_{\mathrm{true}}
+\]
+is fixed. The transformed observation \(\Prand\) is random because the transformed noise \(\boldsymbol{\eta}\) is random.
+
+If the experiment were repeated many times with the same fixed model \(m_{\mathrm{true}}\), then one would obtain
+\[
+    \Prand_j
+    =
+    \X\G m_{\mathrm{true}}
+    +
+    \boldsymbol{\eta}_j,
+    \qquad
+    j=1,2,3,\dots.
+\]
+Each repetition would produce a different transformed observation because each repetition would have a different noise realization.
+
+This is the frequentist setting for SOLA:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[Fixed object.]
+    The true model \(m_{\mathrm{true}}\).
+
+    \item[Fixed transformed signal.]
+    The SOLA-induced quantity \(\X\G m_{\mathrm{true}}\).
+
+    \item[Random object.]
+    The transformed observation \(\Prand=\X\Dobsrand\).
+
+    \item[Observed object.]
+    The realized transformed datum \(\pobs=\X\dobs\).
+\end{description}
+
+\subsection{Transformed compatibility sets}
+
+The quantity directly targeted by the transformed observation equation is
+\[
+    \X\G m_{\mathrm{true}}.
+\]
+It is useful to define the SOLA-induced approximate property map
+\[
+    \A_{\X}:\Mspace\to\Pspace
+\]
+by
+\[
+    \A_{\X}m
+    =
+    \X\G m.
+\]
+Then the transformed observation equation becomes
+\[
+    \Prand
+    =
+    \A_{\X}m_{\mathrm{true}}
+    +
+    \boldsymbol{\eta}.
+\]
+
+Given the realized transformed observation \(\pobs\), a candidate transformed signal
+\[
+    \mathbf p\in\Pspace
+\]
+is compatible with the observation if the implied transformed noise
+\[
+    \pobs-\mathbf p
+\]
+is plausible under the transformed noise law \(\mu_{\eta}\).
+
+Let
+\[
+    F_{\alpha}\subseteq\Pspace
+\]
+be a transformed-noise acceptance region satisfying
+\[
+    \mu_{\eta}(F_{\alpha})=1-\alpha.
+\]
+Then the transformed compatibility set is
+\[
+    C_{\alpha}^{\X}(\pobs)
+    =
+    \left\{
+        \mathbf p\in\Pspace:
+        \pobs-\mathbf p\in F_{\alpha}
+    \right\}.
+\]
+Equivalently,
+\[
+    C_{\alpha}^{\X}(\pobs)
+    =
+    \pobs-F_{\alpha}.
+\]
+
+This set contains the transformed signal values \(\mathbf p\) for which the observation \(\pobs\) can be explained by an accepted transformed-noise realization.
+
+Therefore, the direct SOLA confidence statement is about
+\[
+    \A_{\X}m_{\mathrm{true}}
+    =
+    \X\G m_{\mathrm{true}}.
+\]
+
+If the desired property is instead
+\[
+    \ptrue
+    =
+    \Tau(m_{\mathrm{true}}),
+\]
+then one must also account for the resolution error
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    =
+    \X\G m_{\mathrm{true}}
+    -
+    \Tau(m_{\mathrm{true}}).
+\]
+Indeed,
+\[
+    \pobs
+    =
+    \Tau(m_{\mathrm{true}})
+    +
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    +
+    \boldsymbol{\eta}_{\mathrm{obs}}.
+\]
+
+Thus, a confidence set for \(\Tau(m_{\mathrm{true}})\) requires control of both transformed noise and resolution error. If one can guarantee that
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}})\in R
+\]
+for some resolution-error set \(R\subseteq\Pspace\), then
+\[
+    \pobs-\ptrue
+    =
+    \mathbf r_{\X}(m_{\mathrm{true}})
+    +
+    \boldsymbol{\eta}_{\mathrm{obs}}
+    \in
+    R+F_{\alpha}
+\]
+whenever
+\[
+    \boldsymbol{\eta}_{\mathrm{obs}}\in F_{\alpha}.
+\]
+This motivates the property-level compatibility set
+\[
+    C_{\alpha}^{\Tau}(\pobs)
+    =
+    \left\{
+        \mathbf p\in\Pspace:
+        \pobs-\mathbf p\in R+F_{\alpha}
+    \right\}.
+\]
+
+The distinction is important:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[Approximate-property confidence.]
+    If only transformed noise is controlled, the confidence set targets
+    \[
+        \X\G m_{\mathrm{true}}.
+    \]
+
+    \item[Desired-property confidence.]
+    If both transformed noise and resolution error are controlled, the confidence set may target
+    \[
+        \Tau(m_{\mathrm{true}}).
+    \]
+\end{description}
+
+\subsection{Coverage in transformed space}
+
+We first derive coverage for the SOLA-induced approximate property
+\[
+    \A_{\X}m_{\mathrm{true}}
+    =
+    \X\G m_{\mathrm{true}}.
+\]
+
+Before observation, define the random transformed confidence set
+\[
+    C_{\alpha}^{\X}(\Prand)
+    =
+    \left\{
+        \mathbf p\in\Pspace:
+        \Prand-\mathbf p\in F_{\alpha}
+    \right\}.
+\]
+We want to know how often this random set contains the fixed transformed signal
+\[
+    \A_{\X}m_{\mathrm{true}}.
+\]
+
+By definition,
+\[
+    \A_{\X}m_{\mathrm{true}}\in C_{\alpha}^{\X}(\Prand)
+\]
+if and only if
+\[
+    \Prand-\A_{\X}m_{\mathrm{true}}\in F_{\alpha}.
+\]
+But
+\[
+    \Prand
+    =
+    \A_{\X}m_{\mathrm{true}}
+    +
+    \boldsymbol{\eta}.
+\]
+Therefore,
+\[
+    \Prand-\A_{\X}m_{\mathrm{true}}
+    =
+    \boldsymbol{\eta}.
+\]
+Hence
+\[
+    \A_{\X}m_{\mathrm{true}}\in C_{\alpha}^{\X}(\Prand)
+    \quad
+    \Longleftrightarrow
+    \quad
+    \boldsymbol{\eta}\in F_{\alpha}.
+\]
+
+Taking probabilities gives
+\[
+\begin{aligned}
+    \Prob_{m_{\mathrm{true}}}
+    \left(
+        \A_{\X}m_{\mathrm{true}}
+        \in
+        C_{\alpha}^{\X}(\Prand)
+    \right)
+    &=
+    \Prob
+    \left(
+        \boldsymbol{\eta}\in F_{\alpha}
+    \right)
+    \\
+    &=
+    \mu_{\eta}(F_{\alpha})
+    \\
+    &=
+    1-\alpha.
+\end{aligned}
+\]
+
+Thus,
+\[
+    \Prob_{m_{\mathrm{true}}}
+    \left(
+        \X\G m_{\mathrm{true}}
+        \in
+        C_{\alpha}^{\X}(\Prand)
+    \right)
+    =
+    1-\alpha.
+\]
+
+This is the direct frequentist SOLA coverage statement. It says:
+\begin{quote}
+    If the true model \(m_{\mathrm{true}}\) is fixed and the noisy observation process is repeated many times, then the transformed confidence set catches the fixed transformed signal \(\X\G m_{\mathrm{true}}\) with frequency \(1-\alpha\).
+\end{quote}
+
+If one has a deterministic resolution-error guarantee
+\[
+    \mathbf r_{\X}(m_{\mathrm{true}})\in R,
+\]
+then the property-level set
+\[
+    C_{\alpha}^{\Tau}(\Prand)
+    =
+    \left\{
+        \mathbf p\in\Pspace:
+        \Prand-\mathbf p\in R+F_{\alpha}
+    \right\}
+\]
+satisfies
+\[
+    \Prob_{m_{\mathrm{true}}}
+    \left(
+        \Tau(m_{\mathrm{true}})
+        \in
+        C_{\alpha}^{\Tau}(\Prand)
+    \right)
+    \geq
+    1-\alpha.
+\]
+
+The inequality appears because the resolution part is controlled deterministically, while the probability comes from the transformed noise event
+\[
+    \boldsymbol{\eta}\in F_{\alpha}.
+\]
+If the resolution error is not controlled, then this property-level coverage statement is not available.
+
+Thus, SOLA gives an immediate confidence statement for the approximate property \(\X\G m_{\mathrm{true}}\), and a confidence statement for the desired property \(\Tau(m_{\mathrm{true}})\) only after resolution error has been included.
+
+\subsection{Decision rules for localized features}
+
+SOLA is often used because one wants to make a statement about a localized feature. For example, one may choose \(\X\) so that a component of
+\[
+    \pobs=\X\dobs
+\]
+is sensitive to a localized region of the model.
+
+Suppose the desired property is scalar, or suppose we focus on one component,
+\[
+    [\ptrue]_k
+    =
+    [\Tau(m_{\mathrm{true}})]_k.
+\]
+Let \(\tau\) be a decision threshold. For example,
+\[
+    [\ptrue]_k\geq \tau
+\]
+may represent the presence of a feature, while
+\[
+    [\ptrue]_k<\tau
+\]
+may represent its absence.
+
+A safety-critical frequentist rule should be designed around the dangerous error. If the dangerous error is a false negative, then the dangerous set of models is
+\[
+    \mathcal H_{\mathrm{danger}}
+    =
+    \left\{
+        m\in\Mspace:
+        [\Tau(m)]_k\geq \tau
+    \right\}.
+\]
+
+A conservative rule for declaring the feature absent is:
+\[
+    \text{declare absent only if}
+    \quad
+    C_{\alpha}^{\Tau}(\pobs)
+    \cap
+    \left\{
+        \mathbf p\in\Pspace:
+        [\mathbf p]_k\geq \tau
+    \right\}
+    =
+    \varnothing.
+\]
+In words, one declares absence only when no feature-present property value remains compatible with the transformed observation.
+
+Equivalently, using an upper confidence bound for the \(k\)-th component, let
+\[
+    U_{\alpha,k}(\pobs)
+\]
+satisfy
+\[
+    \Prob_{m_{\mathrm{true}}}
+    \left(
+        [\Tau(m_{\mathrm{true}})]_k
+        \leq
+        U_{\alpha,k}(\Prand)
+    \right)
+    \geq
+    1-\alpha,
+\]
+for all models in the class under consideration. Then a false-negative-controlled rule is
+\[
+    \text{declare feature absent only if}
+    \quad
+    U_{\alpha,k}(\pobs)<\tau.
+\]
+
+If the true model actually belongs to the dangerous set,
+\[
+    m_{\mathrm{true}}\in\mathcal H_{\mathrm{danger}},
+\]
+then a false declaration of absence can occur only if the confidence procedure fails to cover the true property. Therefore,
+\[
+    \Prob_{m_{\mathrm{true}}}
+    \left(
+        \text{false negative}
+    \right)
+    \leq
+    \alpha.
+\]
+
+More generally, a uniform safety guarantee has the form
+\[
+    \sup_{m\in\mathcal H_{\mathrm{danger}}}
+    \Prob_m
+    \left(
+        \text{declare feature absent}
+    \right)
+    \leq
+    \alpha.
+\]
+
+This is the frequentist decision-theoretic version of SOLA:
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[Transform the data.]
+    Compute
+    \[
+        \pobs=\X\dobs.
+    \]
+
+    \item[Transform the noise.]
+    Use
+    \[
+        \mu_{\eta}=\X_{\#}\muN.
+    \]
+
+    \item[Control resolution error.]
+    Account for
+    \[
+        \X\G m-\Tau(m).
+    \]
+
+    \item[Construct confidence or decision rules.]
+    Build sets or bounds with repeated-sampling guarantees.
+
+    \item[Declare absence only when safe.]
+    If dangerous truths remain compatible with the observation, the result is not absence but inconclusive.
+\end{description}
+
+This is why SOLA is naturally frequentist in this interpretation. It does not produce a posterior distribution over models or properties. It transforms the observation equation and the noise law, then uses the transformed problem to build calibrated confidence and decision procedures.d
+
+
+% ============================================================
 
 \end{document}
