@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 5: Beyond Additive Noise — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/frequentist.css">
+    <meta name="description" content="Part 5: General sampling laws, test statistics, confidence sets under heteroscedastic and non-additive models, and decision rules with worst-case guarantees.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                Dspace: '\\mathcal{D}',
+                Drand: '\\mathbf{D}',
+                Dobsrand: "\\mathbf{D}'",
+                Nrand: '\\mathbf{N}',
+                dtrue: '\\mathbf{d}_{\\mathrm{true}}',
+                dobs: '\\mathbf{d}_{\\mathrm{obs}}',
+                nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                muN: '\\mu_N',
+                prior: '\\mu_D',
+                post: "\\mu_{D\\mid D'}",
+                muPred: "\\mu_{D'}",
+                muJoint: "\\mu_{D,D'}",
+                Prob: '\\mathbb{P}',
+                Exp: '\\mathbb{E}',
+                Ealpha: 'E_{\\alpha}',
+                Calpha: 'C_{\\alpha}',
+                G: '\\mathcal{G}',
+                Td: 'T_{\\mathbf{d}}',
+                L: 'L'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 5: Beyond Additive Noise</h1>
+                <p>General sampling laws, test statistics, and decision rules.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
+                <a class="part-chip" href="part-5.html" aria-current="page"><span class="part-chip-num">5</span> Beyond Additive</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The general starting point</h2>
+
+                    <p>So far we assumed an additive observation model
+                    \(\Dobsrand = \dtrue + \Nrand\) with a single noise law
+                    \(\muN\). In that special case, all candidate true data share
+                    the same noise distribution, and the observation law under
+                    candidate \(\mathbf d\) is obtained by translation:
+                    \(\mu_{\mathbf d}(A) = \muN(A - \mathbf d)\).</p>
+
+                    <p>This shifted-noise picture is useful, but not the most general
+                    frequentist construction. In many problems, the observational
+                    uncertainty may depend on the true datum, or the observation may
+                    not be generated by simple addition at all. The noise may be
+                    multiplicative, signal-dependent, nonlinear, or produced by an
+                    observation mechanism that cannot be written cleanly as
+                    truth + noise.</p>
+
+                    <p>The more general starting point is the likelihood kernel
+                    itself. For each candidate \(\mathbf d \in \Dspace\), we assume
+                    there is a probability measure
+                    \(\L(\mathbf d, \cdot)\) on the observation space. The
+                    general sampling model is
+                    \[
+                        \mathbf d \longmapsto \L(\mathbf d, \cdot).
+                    \]
+                    This may come from an additive model, a heteroscedastic additive
+                    model, a multiplicative model, a nonlinear simulator, or any
+                    other stochastic observation mechanism. The frequentist
+                    construction does not require the observation law to be a
+                    shifted copy of a single noise measure.</p>
+
+                    <h2>Candidate-dependent observation laws</h2>
+
+                    <p>In the additive homoscedastic case:
+                    \(\L(\mathbf d, A) = \muN(A - \mathbf d)\).</p>
+
+                    <p>In a heteroscedastic additive case, the noise law may depend
+                    on the candidate:
+                    \[
+                        \Dobsrand_{\mathbf d} = \mathbf d + \Nrand_{\mathbf d},
+                        \qquad
+                        \Nrand_{\mathbf d} \sim \mu_{N \mid \mathbf d},
+                    \]
+                    giving \(\L(\mathbf d, A) = \mu_{N \mid \mathbf d}(A - \mathbf d)\).</p>
+
+                    <p>More generally, one may have an observation mechanism
+                    \(\Dobsrand_{\mathbf d} = H(\mathbf d, \mathbf W)\), where
+                    \(\mathbf W\) is a random variable representing all unresolved
+                    randomness. Then
+                    \(\L(\mathbf d, A) = \Prob(H(\mathbf d, \mathbf W) \in A)\).
+                    The notation \(\L(\mathbf d, \cdot)\) does not require us
+                    to decide whether the noise is additive, multiplicative,
+                    heteroscedastic, nonlinear, or something else.</p>
+
+                    <h2>Candidate-dependent acceptance regions</h2>
+
+                    <p>To construct confidence sets in this general setting, we no
+                    longer begin with one fixed noise region \(E_\alpha\). Instead,
+                    for each candidate \(\mathbf d\), we choose an acceptance region
+                    in observation space:
+                    \[
+                        A_{\alpha}(\mathbf d) \subseteq \Dspace,
+                    \]
+                    satisfying
+                    \(\L(\mathbf d, A_{\alpha}(\mathbf d)) = 1 - \alpha\)
+                    (or \(\geq 1 - \alpha\) for conservative regions).</p>
+
+                    <p>The candidate \(\mathbf d\) is compatible with the observation
+                    \(\dobs\) when \(\dobs \in A_{\alpha}(\mathbf d)\). In the
+                    additive homoscedastic case, this reduces to
+                    \(A_{\alpha}(\mathbf d) = \mathbf d + E_\alpha\), and the
+                    condition becomes \(\dobs - \mathbf d \in E_\alpha\) as before.
+                    But in the general case, the fundamental condition is simply
+                    \(\dobs \in A_{\alpha}(\mathbf d)\).</p>
+
+                    <h2>Confidence sets under general sampling laws</h2>
+
+                    <p>The general confidence set is
+                    \[
+                        \Calpha(\dobs)
+                        = \left\{
+                            \mathbf d \in \Dspace :
+                            \dobs \in A_{\alpha}(\mathbf d)
+                        \right\}.
+                    \]
+                    This contains exactly those candidate true data values for which
+                    the actual observation would not be rejected as unusual. In a
+                    multiplicative or nonlinear model, there may be no meaningful
+                    residual of the form \(\dobs - \mathbf d\), but the confidence
+                    set is still well-defined.</p>
+
+                    <div class="freq-callout callout-lesson">
+                        <span class="freq-callout-label">Test inversion</span>
+                        <p>The shifted-noise construction is a special case. The
+                        deeper frequentist construction is <em>test
+                        inversion</em>: test each candidate truth, then keep the
+                        candidates not rejected.</p>
+                    </div>
+
+                    <h2>Using test statistics</h2>
+
+                    <p>Acceptance regions are often constructed using a test
+                    statistic \(T : \Dspace \times \Dspace \to \mathbb{R}\), where
+                    \(T(\mathbf d, \mathbf d')\) measures how unusual the observation
+                    \(\mathbf d'\) would be if \(\mathbf d\) were true. For each
+                    candidate \(\mathbf d\), choose a critical value
+                    \(c_{\alpha}(\mathbf d)\) such that
+                    \[
+                        \L\!\left(
+                            \mathbf d,
+                            \{\mathbf d' : T(\mathbf d, \mathbf d') \leq c_{\alpha}(\mathbf d)\}
+                        \right) = 1 - \alpha.
+                    \]
+                    Then
+                    \(A_{\alpha}(\mathbf d) = \{\mathbf d' : T(\mathbf d, \mathbf d') \leq c_{\alpha}(\mathbf d)\}\)
+                    and the confidence set becomes
+                    \[
+                        \Calpha(\dobs)
+                        = \left\{
+                            \mathbf d : T(\mathbf d, \dobs) \leq c_{\alpha}(\mathbf d)
+                        \right\}.
+                    \]</p>
+
+                    <p>In the scalar Gaussian additive case
+                    \(D'_{\theta} = \theta + N\), \(N \sim \mathcal{N}(0, \sigma^2)\),
+                    one possible statistic is
+                    \(T(\theta, d') = |(d' - \theta)/\sigma|\). In the heteroscedastic
+                    case \(D'_{\theta} = \theta + N_{\theta}\),
+                    \(N_{\theta} \sim \mathcal{N}(0, \sigma^2(\theta))\), one uses
+                    \(T(\theta, d') = |(d' - \theta)/\sigma(\theta)|\) instead.</p>
+
+                    <h2>Coverage under the true sampling law</h2>
+
+                    <p>The coverage statement now follows directly from the
+                    likelihood kernel. Before observation, if the true datum is
+                    \(\dtrue\), then \(\Dobsrand \sim \L(\dtrue, \cdot)\).
+                    The random confidence set is
+                    \(\Calpha(\Dobsrand) = \{\mathbf d : \Dobsrand \in A_{\alpha}(\mathbf d)\}\).</p>
+
+                    <p>The event \(\dtrue \in \Calpha(\Dobsrand)\) is equivalent to
+                    \(\Dobsrand \in A_{\alpha}(\dtrue)\). Therefore:
+                    \[
+                        \begin{aligned}
+                            \Prob_{\dtrue}\!\left(
+                                \dtrue \in \Calpha(\Dobsrand)
+                            \right)
+                            &= \Prob_{\dtrue}\!\left(
+                                \Dobsrand \in A_{\alpha}(\dtrue)
+                            \right) \\
+                            &= \L\!\left(
+                                \dtrue, A_{\alpha}(\dtrue)
+                            \right) = 1 - \alpha.
+                        \end{aligned}
+                    \]</p>
+
+                    <p>The confidence set contains the true datum exactly when the
+                    random observation falls inside the true datum's own acceptance
+                    region. Since that region was chosen to have probability
+                    \(1-\alpha\) under the true sampling law, coverage follows. The
+                    additive shifted-noise proof was only one special version of this
+                    argument.</p>
+
+                    <h2>Decision rules with worst-case guarantees</h2>
+
+                    <p>In high-stakes problems, one often needs a decision rather
+                    than only a confidence set. Let
+                    \(\mathcal{H}_{\mathrm{danger}} \subseteq \Dspace\) denote the
+                    set of true data values corresponding to a dangerous state. A
+                    decision rule \(\delta : \Dspace \to \{0, 1, \mathrm{inc}\}\)
+                    maps the observation to a verdict: absent, present, or
+                    inconclusive.</p>
+
+                    <p>If the dangerous error is a false negative, the event of
+                    concern is \(\delta(\Dobsrand) = 0\) when the truth actually
+                    belongs to \(\mathcal{H}_{\mathrm{danger}}\). A frequentist
+                    safety guarantee takes the form
+                    \[
+                        \sup_{\mathbf d \in \mathcal{H}_{\mathrm{danger}}}
+                        \Prob_{\mathbf d}\!\left(
+                            \delta(\Dobsrand) = 0
+                        \right) \leq \alpha.
+                    \]
+                    This means: no matter which dangerous true datum is the actual
+                    truth, the probability of falsely declaring absence is at most
+                    \(\alpha\). The supremum gives a <em>uniform</em> guarantee over
+                    all dangerous truths &mdash; no prior over
+                    \(\mathcal{H}_{\mathrm{danger}}\) is required.</p>
+
+                    <p>A natural conservative rule can be built from confidence
+                    sets: declare the dangerous feature absent only when
+                    \(\Calpha(\dobs) \cap \mathcal{H}_{\mathrm{danger}} = \varnothing\).
+                    If any dangerous truth remains compatible with the observation,
+                    the responsible decision is not to clear the dangerous
+                    state.</p>
+
+                    <div class="freq-callout callout-intuition">
+                        <span class="freq-callout-label">Why it works</span>
+                        <p>If \(\dtrue \in \mathcal{H}_{\mathrm{danger}}\) and the
+                        rule falsely declares absence, then
+                        \(\dtrue \notin \Calpha(\Dobsrand)\). So the false-negative
+                        event is contained in the coverage-failure event:
+                        \[
+                            \{\delta(\Dobsrand) = 0\}
+                            \subseteq
+                            \{\dtrue \notin \Calpha(\Dobsrand)\}.
+                        \]
+                        Taking probabilities:
+                        \(\Prob_{\dtrue}(\delta(\Dobsrand) = 0) \leq \Prob_{\dtrue}(\dtrue \notin \Calpha(\Dobsrand)) \leq \alpha\).</p>
+                    </div>
+
+                    <p>This is the general frequentist answer in safety-critical
+                    settings. Whether the observation law is additive,
+                    heteroscedastic, multiplicative, or nonlinear, the frequentist
+                    can work directly with the likelihood kernel and design rules
+                    with uniform error guarantees.</p>
+
+                    <div class="freq-callout callout-warning">
+                        <span class="freq-callout-label">The price of conservatism</span>
+                        <p>If the likelihoods for dangerous and non-dangerous truths
+                        overlap substantially, then many observations will remain
+                        inconclusive. That is not a defect of the construction. It
+                        is the sampling model saying that the data are not strong
+                        enough to safely support a sharper verdict.</p>
+                    </div>
+
+                </div>
+
+                <div class="part-prevnext">
+                    <a class="part-prevnext-btn" href="part-4.html">
+                        <span class="arrow">&larr;</span> Part 4: Frequentist Path
+                    </a>
+                    <a class="part-prevnext-btn" href="bayesian-frequentist.html">
+                        Overview <span class="arrow">&rarr;</span>
+                    </a>
+                </div>
+                <div class="part-prevnext-spacer"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

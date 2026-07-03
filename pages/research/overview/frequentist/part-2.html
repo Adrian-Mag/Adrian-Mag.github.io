@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 2: The Likelihood Kernel — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/frequentist.css">
+    <meta name="description" content="Part 2: The noise model as an epistemological object, the likelihood kernel, and what it can and cannot say.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                Dspace: '\\mathcal{D}',
+                Drand: '\\mathbf{D}',
+                Dobsrand: "\\mathbf{D}'",
+                Nrand: '\\mathbf{N}',
+                dtrue: '\\mathbf{d}_{\\mathrm{true}}',
+                dobs: '\\mathbf{d}_{\\mathrm{obs}}',
+                nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                muN: '\\mu_N',
+                prior: '\\mu_D',
+                post: "\\mu_{D\\mid D'}",
+                muPred: "\\mu_{D'}",
+                muJoint: "\\mu_{D,D'}",
+                Prob: '\\mathbb{P}',
+                Exp: '\\mathbb{E}',
+                Ealpha: 'E_{\\alpha}',
+                Calpha: 'C_{\\alpha}',
+                G: '\\mathcal{G}',
+                Td: 'T_{\\mathbf{d}}',
+                L: 'L'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 2: The Likelihood Kernel</h1>
+                <p>The noise model as an epistemological object.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
+                <a class="part-chip" href="part-2.html" aria-current="page"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
+                <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>From realized noise to a noise model</h2>
+
+                    <p>In the ontological observation equation
+                    \(\dobs = \dtrue + \nobs\), the quantity \(\nobs\) denotes the
+                    actual noise that occurred. To reason about uncertainty, we
+                    introduce a mathematical model for possible noise realizations:
+                    a random variable
+                    \[
+                        \Nrand : \Omega \to \Dspace
+                    \]
+                    with probability law \(\Nrand \sim \muN\).</p>
+
+                    <p>The measure \(\muN\) describes which noise values are
+                    considered plausible, likely, unlikely, or extreme according to
+                    the assumed observation model. For example, if the noise is
+                    centred and Gaussian, noise values near zero receive high
+                    density, while large deviations receive low density.</p>
+
+                    <div class="freq-callout callout-intuition">
+                        <span class="freq-callout-label">Two kinds of objects</span>
+                        <p><strong>Ontological noise:</strong>
+                        \(\nobs\) is the actual error that occurred.</p>
+                        <p><strong>Epistemological noise model:</strong>
+                        \(\Nrand \sim \muN\) is the mathematical model for possible
+                        errors.</p>
+                        <p>The noise law \(\muN\) tells us how the observation
+                        procedure behaves probabilistically. It does not, by itself,
+                        identify the particular noise realization in the actual
+                        experiment.</p>
+                    </div>
+
+                    <h2>The shifted noise measure</h2>
+
+                    <p>If \(\dtrue\) were known, we could combine it with the noise
+                    random variable and construct a random observed datum
+                    \(\Dobsrand = \dtrue + \Nrand\). Define the translation map
+                    \[
+                        T_{\dtrue} : \Dspace \to \Dspace,
+                        \qquad
+                        T_{\dtrue}(\mathbf n) = \dtrue + \mathbf n.
+                    \]
+                    The law of \(\Dobsrand\) is the pushforward of \(\muN\) through
+                    \(T_{\dtrue}\):
+                    \[
+                        \mu_{\dtrue} = (T_{\dtrue})_{\#}\muN,
+                    \]
+                    meaning that for every measurable set
+                    \(A \subseteq \Dspace\),
+                    \[
+                        \mu_{\dtrue}(A) = \muN(A - \dtrue).
+                    \]
+                    If \(\muN\) has a density \(p_N\), the shifted observation law
+                    has density
+                    \[
+                        p_{\dtrue}(\mathbf d') = p_N(\mathbf d' - \dtrue).
+                    \]</p>
+
+                    <p>This expression already reveals the central difficulty. To
+                    evaluate how likely the observation is under the true shifted
+                    noise law, one needs the residual \(\dobs - \dtrue\). But
+                    \(\dtrue\) is unknown.</p>
+
+                    <h2>Candidate true data and the likelihood kernel</h2>
+
+                    <p>Since \(\dtrue\) is unknown, we cannot construct the shifted
+                    noise law centred at \(\dtrue\). What we can do is consider
+                    possible candidate values. For each candidate
+                    \(\mathbf d \in \Dspace\), the observation model would be
+                    \(\Dobsrand_{\mathbf d} = \mathbf d + \Nrand\), with law
+                    \[
+                        \mu_{\mathbf d} = (T_{\mathbf d})_{\#}\muN,
+                        \qquad
+                        \mu_{\mathbf d}(A) = \muN(A - \mathbf d).
+                    \]
+                    If a density exists, the density assigned to the actual observed
+                    datum is
+                    \[
+                        p(\dobs \mid \mathbf d) = p_N(\dobs - \mathbf d).
+                    \]
+                    This measures how plausible the observed datum would be if
+                    \(\mathbf d\) were the true datum.</p>
+
+                    <p>The assignment
+                    \[
+                        \mathbf d \longmapsto \mu_{\mathbf d}
+                    \]
+                    is the <strong>likelihood kernel</strong>. More explicitly:
+                    \[
+                        \L : \Dspace \times \Sigma_{\Dspace} \to [0,1],
+                        \qquad
+                        \L(\mathbf d, A) = \mu_{\mathbf d}(A) = \muN(A - \mathbf d).
+                    \]
+                    For each fixed candidate truth \(\mathbf d\), the map
+                    \(A \mapsto \L(\mathbf d, A)\) is a probability measure
+                    on the observation space. For each fixed observation event
+                    \(A\), the map
+                    \(\mathbf d \mapsto \L(\mathbf d, A)\) describes how the
+                    probability of observing \(A\) depends on the candidate
+                    truth.</p>
+
+                    <div class="freq-callout callout-lesson">
+                        <span class="freq-callout-label">Direction matters</span>
+                        <p>The likelihood kernel has the direction:
+                        \[
+                            \text{candidate truth}
+                            \longmapsto
+                            \text{probability measure on possible observations}.
+                        \]
+                        It does <em>not</em> map observations to probability
+                        measures on truths. That reverse direction requires a
+                        prior.</p>
+                    </div>
+
+                    <h2>What the likelihood kernel can say</h2>
+
+                    <p>The likelihood kernel can answer candidate-wise questions. For
+                    a proposed true datum \(\mathbf d\), it asks: if \(\mathbf d\)
+                    were true, would \(\dobs\) be a plausible outcome of the noise
+                    model?</p>
+
+                    <p>In the additive setting, this reduces to examining the implied
+                    noise \(\dobs - \mathbf d\). If this lies in a high-probability
+                    region of \(\muN\), the candidate is compatible; if it lies in a
+                    low-probability region, the candidate is less compatible.</p>
+
+                    <p>For example, if \(E_\alpha \subseteq \Dspace\) is a noise
+                    region with \(\muN(E_\alpha) = 1 - \alpha\), then a candidate
+                    \(\mathbf d\) is compatible at level \(1-\alpha\) if
+                    \(\dobs - \mathbf d \in E_\alpha\), or equivalently
+                    \(\mathbf d \in \dobs - E_\alpha\). This is the basic frequentist
+                    compatibility idea that will later become a confidence set.</p>
+
+                    <h2>What the likelihood kernel cannot say alone</h2>
+
+                    <p>The likelihood kernel does not, by itself, assign
+                    probabilities to candidate true data values. It tells us how
+                    probable the observation would be if \(\mathbf d\) were true, but
+                    not how probable \(\mathbf d\) is given the observation.</p>
+
+                    <p>A posterior distribution would have the opposite direction:
+                    \(\dobs \longmapsto\) probability measure on possible true data
+                    values. To construct such a posterior, one needs a prior measure
+                    on possible true data values. Without that prior, the likelihood
+                    values \(\ell_{\dobs}(\mathbf d) = p_N(\dobs - \mathbf d)\) are
+                    <em>compatibility scores</em>, not probabilities over
+                    \(\mathbf d\).</p>
+
+                    <div class="freq-callout callout-warning">
+                        <span class="freq-callout-label">Not licensed by likelihood alone</span>
+                        <p>The statement
+                        \(\Prob(\dtrue \in A \mid \dobs) = 0.95\)
+                        requires a probability model for \(\dtrue\). The likelihood
+                        kernel provides only the family of observation laws
+                        \(\{\mu_{\mathbf d} : \mathbf d \in \Dspace\}\). It does not
+                        provide a probability law on \(\mathbf d\).</p>
+                    </div>
+
+                    <p>The likelihood kernel is therefore a crucial object shared by
+                    both Bayesian and frequentist reasoning, but it is not yet a
+                    full inference about the truth. What one does with that family
+                    of laws is where the Bayesian and frequentist constructions
+                    begin to diverge.</p>
+
+                </div>
+
+                <div class="part-prevnext">
+                    <a class="part-prevnext-btn" href="part-1.html">
+                        <span class="arrow">&larr;</span> Part 1: The Setup
+                    </a>
+                    <a class="part-prevnext-btn" href="part-3.html">
+                        Part 3: Bayesian Path <span class="arrow">&rarr;</span>
+                    </a>
+                </div>
+                <div class="part-prevnext-spacer"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

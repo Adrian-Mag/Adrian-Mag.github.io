@@ -1,0 +1,2587 @@
+\documentclass[11pt]{article}
+
+% ============================================================
+% Packages
+% ============================================================
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% ============================================================
+% Hyperref setup
+% ============================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% ============================================================
+% Fill marker
+% ============================================================
+
+\newcommand{\tofill}[1]{%
+    \par\medskip
+    \noindent
+    \fcolorbox{black}{gray!10}{%
+        \begin{minipage}{0.95\linewidth}
+        \textbf{To fill:} #1
+        \end{minipage}
+    }
+    \par\medskip
+}
+
+% ============================================================
+% Spaces
+% ============================================================
+
+\newcommand{\Mspace}{\mathcal M}
+\newcommand{\Dspace}{\mathcal D}
+\newcommand{\Pspace}{\mathcal P}
+\newcommand{\Nspace}{\mathcal N}
+
+% ============================================================
+% Sigma-algebras
+% ============================================================
+
+\newcommand{\SigmaM}{\Sigma_{\mathcal M}}
+\newcommand{\SigmaD}{\Sigma_{\mathcal D}}
+\newcommand{\SigmaP}{\Sigma_{\mathcal P}}
+
+% ============================================================
+% Measures
+% ============================================================
+
+\newcommand{\muN}{\mu_N}
+\newcommand{\muD}{\mu_{\mathcal D}}
+\newcommand{\muP}{\mu_{\mathcal P}}
+\newcommand{\prior}{\pi}
+\newcommand{\post}{\pi_{\mathrm{post}}}
+
+% ============================================================
+% Random variables
+% ============================================================
+
+\newcommand{\Drand}{\mathbf D}
+\newcommand{\Dobsrand}{\mathbf D'}
+\newcommand{\Nrand}{\mathbf N}
+\newcommand{\Prand}{\mathbf P}
+
+% ============================================================
+% Realized quantities
+% ============================================================
+
+\newcommand{\dtrue}{\mathbf d_{\mathrm{true}}}
+\newcommand{\dobs}{\mathbf d_{\mathrm{obs}}}
+\newcommand{\nobs}{\mathbf n_{\mathrm{obs}}}
+
+\newcommand{\ptrue}{\mathbf p_{\mathrm{true}}}
+\newcommand{\pobs}{\mathbf p_{\mathrm{obs}}}
+
+% ============================================================
+% Operators and maps
+% ============================================================
+
+\newcommand{\G}{\mathcal G}
+\newcommand{\Tau}{\mathcal T}
+\newcommand{\X}{\mathbf X}
+\newcommand{\A}{\mathcal A}
+
+% ============================================================
+% Confidence sets and noise regions
+% ============================================================
+
+\newcommand{\Ealpha}{E_{\alpha}}
+\newcommand{\Calpha}{C_{\alpha}}
+\newcommand{\Ualpha}{U_{\alpha}}
+\newcommand{\Lalpha}{L_{\alpha}}
+
+% ============================================================
+% Probability notation
+% ============================================================
+
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Exp}{\mathbb E}
+
+\newcommand{\etarand}{\boldsymbol{\eta}}
+\newcommand{\etaobs}{\boldsymbol{\eta}_{\mathrm{obs}}}
+\newcommand{\mueta}{\mu_{\eta}}
+
+% ============================================================
+% Title
+% ============================================================
+
+\title{Bayesian and Frequentist Inference from an Ontological--Epistemological Split}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+\subsection{Purpose of the note}
+
+The purpose of this note is to compare Bayesian and frequentist inference from the same starting point. We begin with a simple observation equation:
+\[
+    \dobs=\dtrue+\nobs.
+\]
+Here \(\dobs\) is the datum that has actually been observed, \(\dtrue\) is the unknown true datum, and \(\nobs\) is the actual realized observational error. This equation is not yet Bayesian or frequentist. It is simply a statement about the relation between the true datum, the observed datum, and the error that occurred in the observation process.
+
+The central theme of the note is that Bayesian and frequentist inference do not merely give different answers to the same probabilistic question. Rather, they construct different epistemological objects around the same ontological situation. The true datum \(\dtrue\) is treated as an actual but unknown object. The observed datum \(\dobs\) is also an actual object. The uncertainty enters because we do not know how to decompose \(\dobs\) into its true component and its error component.
+
+The Bayesian approach introduces an epistemological random variable, denoted by \(\Drand\), together with a prior measure \(\prior\), to represent uncertainty about the unknown true datum. This creates a probabilistic model in which posterior probability statements about the truth become meaningful. In contrast, the frequentist approach refuses to assign a probability law to \(\dtrue\). Instead, it keeps \(\dtrue\) fixed but unknown, places probability on the data-generating procedure, and constructs estimators, tests, or confidence sets with calibrated repeated-sampling behaviour.
+
+Thus, the goal of this note is not to declare one perspective correct and the other incorrect. The goal is to make precise what each perspective is doing, what objects it constructs, what statements it licenses, and what statements it does not license.
+
+\subsection{The guiding question}
+
+The guiding question is:
+\[
+    \text{What can be said about } \dtrue
+    \text{ after observing } \dobs?
+\]
+This question is deceptively simple. Since
+\[
+    \dobs=\dtrue+\nobs,
+\]
+one might hope that knowing \(\dobs\) and having a probabilistic model for the noise would immediately yield a probabilistic statement about \(\dtrue\). But this is not automatic.
+
+If the true datum \(\dtrue\) were known, then one could construct a random observed datum
+\[
+    \Dobsrand=\dtrue+\Nrand,
+\]
+where \(\Nrand\) is a noise random variable. The law of \(\Dobsrand\) would be the noise law shifted by \(\dtrue\). Under that shifted measure, one could ask whether the actual observation \(\dobs\) looks typical or atypical.
+
+However, in the inverse problem, \(\dtrue\) is precisely what is unknown. Therefore, there is not one single observation law. Instead, there is a family of possible observation laws, one for each candidate true datum:
+\[
+    \mathbf d
+    \longmapsto
+    \text{law of } \mathbf d+\Nrand.
+\]
+This family is the likelihood kernel. It tells us how plausible the observed datum would be under each candidate truth, but by itself it does not assign probabilities to the candidate truths.
+
+The Bayesian and frequentist approaches part ways at this point. The Bayesian adds a prior measure on possible true data values and then conditions on the observed datum. The frequentist does not add such a prior, and instead constructs procedures whose long-run behaviour is controlled under repeated noisy observations.
+
+The guiding question therefore splits into two different questions:
+\begin{description}[leftmargin=2.5cm,style=nextline]
+    \item[Bayesian question.]
+    Given \(\dobs\), how should probability be distributed over possible true data values?
+
+    \item[Frequentist question.]
+    Can we construct a procedure which reliably captures or tests the fixed truth under repeated observations?
+\end{description}
+Both questions are meaningful, but they are not the same question.
+
+\subsection{Why the distinction matters}
+
+The distinction matters because many interpretational mistakes come from silently replacing ontological objects by epistemological random variables, or conversely, from using frequentist confidence statements as though they were Bayesian posterior probability statements.
+
+The actual true datum \(\dtrue\) is not random merely because we do not know it. In the ontological sense, it is fixed. It is the value that reality has. Similarly, after the observation has been made, the observed datum \(\dobs\) is fixed as well. The realized noise
+\[
+    \nobs=\dobs-\dtrue
+\]
+is also fixed, even though it is usually unknown.
+
+Random variables such as \(\Nrand\), \(\Drand\), and \(\Dobsrand\) are mathematical objects introduced to represent uncertainty, variability, or repeated sampling. They are epistemological constructions. They are not the same kind of object as the actual realized quantities \(\nobs\), \(\dtrue\), and \(\dobs\).
+
+This distinction is especially important for confidence intervals. A frequentist confidence set \(\Calpha(\Dobsrand)\) is random before the observation is made, because it depends on the random observed datum \(\Dobsrand\). One can therefore make a statement such as
+\[
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    =
+    1-\alpha.
+\]
+This means that the random procedure catches the fixed truth with frequency \(1-\alpha\) under repeated noisy observations.
+
+After the observation is made, however, the set becomes
+\[
+    \Calpha(\dobs).
+\]
+This is now a fixed set. The frequentist statement does not automatically become
+\[
+    \Prob
+    \left(
+        \dtrue\in\Calpha(\dobs)
+    \right)
+    =
+    1-\alpha.
+\]
+That latter statement would require a probability model for \(\dtrue\) after observing \(\dobs\), which is a Bayesian-type object.
+
+The same distinction also matters when discussing outliers. To say that \(\dobs\) is an outlier under the noise model, one must know what value the noise is being measured relative to. The relevant noise realization would be
+\[
+    \dobs-\dtrue,
+\]
+but \(\dtrue\) is unknown. Thus, without a prior, repeated measurements, additional constraints, or a candidate hypothesis, one cannot simply declare that the observation is intrinsically unlikely.
+
+The purpose of this note is therefore to keep the ontological and epistemological layers separate. Once the layers are separated, the Bayesian and frequentist constructions become easier to compare:
+\[
+\begin{aligned}
+    \text{Bayesian inference}
+    &\text{ places probability on an epistemological representation of the truth,}
+    \\
+    \text{Frequentist inference}
+    &\text{ places probability on the observation procedure while keeping the truth fixed.}
+\end{aligned}
+\]
+This separation will be the organizing principle for everything that follows.
+
+
+% ============================================================
+\section{The Ontological Observation Equation}
+% ============================================================
+
+\subsection{The actual objects}
+
+We begin with the objects that belong to the actual observation event. These are not yet Bayesian objects or frequentist objects. They are simply the quantities involved in the real measurement.
+
+There is an actual true datum,
+\[
+    \dtrue \in \Dspace.
+\]
+This is the datum that would be obtained if the observation process were perfect. In applications, \(\dtrue\) may represent ideal noiseless measurements, exact path averages, or any other data-level quantity that the measurement apparatus is trying to access.
+
+There is also an actual observed datum,
+\[
+    \dobs \in \Dspace.
+\]
+This is the datum that was actually recorded. It is the quantity available to us after the experiment or observation has been performed.
+
+Finally, there is an actual realized noise term,
+\[
+    \nobs \in \Dspace.
+\]
+This is the particular error that occurred in the observation process. It is the difference between what was observed and what would have been observed in the absence of noise.
+
+The important point is that these three quantities are realized quantities. They are not random merely because we do not know them. Once the observation has happened, reality has already selected the values
+\[
+    \dtrue,
+    \qquad
+    \dobs,
+    \qquad
+    \nobs.
+\]
+Some of these values may be hidden from us, but their hiddenness is an epistemological issue, not an ontological one.
+
+\subsection{The realized observation equation}
+
+The actual observation equation is
+\[
+    \dobs=\dtrue+\nobs.
+\]
+This equation describes the relationship between the true datum, the observed datum, and the realized observational error.
+
+At this stage, there is no random variable in the equation. The symbol \(\dobs\) denotes the specific observed datum that was obtained. The symbol \(\dtrue\) denotes the specific true datum that generated the observation. The symbol \(\nobs\) denotes the specific error that occurred.
+
+Equivalently, if \(\dtrue\) were known, then the realized noise could be recovered as
+\[
+    \nobs=\dobs-\dtrue.
+\]
+Likewise, if \(\nobs\) were known, then the true datum could be recovered as
+\[
+    \dtrue=\dobs-\nobs.
+\]
+
+But in the inverse problem, neither of these recoveries is usually available. The observation equation gives one relation between two unknown quantities:
+\[
+    \dtrue
+    \qquad
+    \text{and}
+    \qquad
+    \nobs.
+\]
+The datum \(\dobs\) is known, but its decomposition into truth and error is not.
+
+This is the basic inferential tension. The equation
+\[
+    \dobs=\dtrue+\nobs
+\]
+is perfectly simple as an ontological statement, but difficult as an epistemological problem.
+
+\subsection{What is known and what is hidden}
+
+After the observation has been made, the known quantity is
+\[
+    \dobs.
+\]
+This is the data we have in hand.
+
+The hidden quantities are
+\[
+    \dtrue
+    \qquad
+    \text{and}
+    \qquad
+    \nobs.
+\]
+The true datum is hidden because the measurement is noisy. The realized noise is hidden because it can only be computed if the true datum is already known.
+
+This creates a circular-looking difficulty:
+\[
+    \nobs=\dobs-\dtrue.
+\]
+To know the noise, we would need to know the truth. But to know the truth, we would need to know the noise.
+
+Thus, from the observed datum alone, the decomposition
+\[
+    \dobs
+    =
+    \dtrue
+    +
+    \nobs
+\]
+is not identifiable. For any candidate true datum \(\mathbf d\in\Dspace\), one can define an implied realized noise
+\[
+    \mathbf n_{\mathrm{implied}}
+    =
+    \dobs-\mathbf d.
+\]
+Then
+\[
+    \dobs
+    =
+    \mathbf d
+    +
+    \mathbf n_{\mathrm{implied}}.
+\]
+So the observation can always be explained by many different candidate truths, each paired with a different implied noise.
+
+The role of a noise model is to distinguish among these explanations by saying which implied noises are plausible and which are not. But that step already introduces an epistemological object. It is no longer just the realized observation equation.
+
+\subsection{The epistemological problem}
+
+The inferential problem is not that the true datum is intrinsically random. The problem is that we do not know it.
+
+Ontologically, the true datum is fixed:
+\[
+    \dtrue
+    \quad
+    \text{just is.}
+\]
+The observed datum is fixed:
+\[
+    \dobs
+    \quad
+    \text{has already been recorded.}
+\]
+The realized noise is fixed:
+\[
+    \nobs
+    =
+    \dobs-\dtrue
+    \quad
+    \text{has already occurred.}
+\]
+
+What is uncertain is our knowledge of the decomposition. We know the sum,
+\[
+    \dobs,
+\]
+but we do not know the two pieces,
+\[
+    \dtrue
+    \qquad
+    \text{and}
+    \qquad
+    \nobs.
+\]
+
+This is why one must be careful when introducing probability. Probability is not automatically attached to \(\dtrue\) simply because \(\dtrue\) is unknown. A probability law for \(\dtrue\) is an additional epistemological construction. It may be useful, and it is exactly what the Bayesian approach introduces, but it is not already present in the ontological equation.
+
+Similarly, a probability law for the noise is not the same thing as knowing the realized noise. A noise model describes possible noise realizations. It does not reveal which noise realization actually occurred in the experiment.
+
+Thus, the observation equation gives the ontological starting point,
+\[
+    \dobs=\dtrue+\nobs,
+\]
+while inference begins when we introduce mathematical objects that represent uncertainty, repeated sampling, or prior information.
+
+The rest of the note studies two different ways of doing this:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Bayesian construction.]
+    Introduce an epistemological random variable representing uncertainty about the true datum, and condition on the actual observation.
+
+    \item[Frequentist construction.]
+    Keep the true datum fixed, place probability on the observation procedure, and construct calibrated procedures for inference.
+\end{description}
+
+
+% ============================================================
+\section{The Noise Model as an Epistemological Object}
+% ============================================================
+
+\subsection{From realized noise to a noise random variable}
+
+In the ontological observation equation,
+\[
+    \dobs=\dtrue+\nobs,
+\]
+the quantity \(\nobs\) denotes the actual noise that occurred. It is the particular error made by the observation process in this particular experiment.
+
+To reason about uncertainty, however, we introduce a mathematical model for possible noise realizations. We represent this model by a random variable
+\[
+    \Nrand:\Omega\to\Dspace
+\]
+with probability law
+\[
+    \Nrand\sim\muN.
+\]
+Equivalently, for a measurable set \(B\subseteq\Dspace\),
+\[
+    \Prob(\Nrand\in B)=\muN(B).
+\]
+
+The measure \(\muN\) describes which noise values are considered plausible, likely, unlikely, or extreme according to the assumed observation model. For example, if the noise is centred and Gaussian, then noise values near zero receive high density, while large deviations receive low density.
+
+The important point is that \(\Nrand\) is not the same object as \(\nobs\). The random variable \(\Nrand\) belongs to our epistemological model of the observation process. The realized noise \(\nobs\) belongs to the actual observation event.
+
+Thus, the noise model is a bridge between reality and inference. It does not reveal the actual noise that occurred, but it gives a probability law against which possible noise realizations can be judged.
+
+\subsection{The realized noise versus the noise random variable}
+
+We therefore have two different kinds of objects:
+\[
+    \nobs
+    \qquad
+    \text{and}
+    \qquad
+    \Nrand.
+\]
+The first is an actual realized quantity. The second is a random variable used to model possible realized quantities.
+
+The realized noise is
+\[
+    \nobs=\dobs-\dtrue.
+\]
+Once the observation has happened, this value is fixed. It is not changing, and it is not random in the ontological sense. The difficulty is that we usually do not know it, because we do not know \(\dtrue\).
+
+The noise random variable \(\Nrand\), on the other hand, describes the possible values that the noise could have taken before the observation was made, or could take under repetitions of the same observation procedure. Its distribution is \(\muN\). Thus,
+\[
+    \muN(B)
+\]
+is not the probability that the already-realized noise \(\nobs\) is in \(B\), unless one has explicitly adopted an epistemological interpretation in which \(\nobs\) is treated as a realization of \(\Nrand\).
+
+A useful way to say this is:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Ontological noise.]
+    \(\nobs\) is the actual error that occurred.
+
+    \item[Epistemological noise model.]
+    \(\Nrand\sim\muN\) is the mathematical model for possible errors.
+\end{description}
+
+The distinction is subtle, but it prevents an important confusion. The noise law \(\muN\) tells us how the observation procedure behaves probabilistically. It does not, by itself, identify the particular noise realization in the actual experiment.
+
+\subsection{If the true datum were known}
+
+Suppose, for a moment, that the true datum \(\dtrue\) were known. Then we could combine the known true datum with the noise random variable and construct a random observed datum
+\[
+    \Dobsrand=\dtrue+\Nrand.
+\]
+This random variable describes what we would expect to observe if the true datum were \(\dtrue\) and the only randomness came from the observational noise.
+
+In this hypothetical known-truth setting, the law of \(\Dobsrand\) is completely determined by \(\dtrue\) and \(\muN\). If a measurable set \(A\subseteq\Dspace\) is given, then
+\[
+    \Prob(\Dobsrand\in A)
+    =
+    \Prob(\dtrue+\Nrand\in A).
+\]
+Equivalently,
+\[
+    \Prob(\Dobsrand\in A)
+    =
+    \muN(A-\dtrue),
+\]
+where
+\[
+    A-\dtrue
+    =
+    \{\mathbf n\in\Dspace:\dtrue+\mathbf n\in A\}.
+\]
+
+Thus, if \(\dtrue\) were known, the observation law would simply be the noise law shifted by \(\dtrue\). The random variable \(\Dobsrand\) would describe possible polluted observations around the known true datum.
+
+This hypothetical construction is very useful conceptually. It tells us what kind of probabilistic object we would like to have. If the truth were known, we could describe the distribution of possible observations around that truth.
+
+\subsection{The shifted noise measure}
+
+To write the shifted noise law cleanly, define the translation map
+\[
+    T_{\dtrue}:\Dspace\to\Dspace,
+    \qquad
+    T_{\dtrue}(\mathbf n)=\dtrue+\mathbf n.
+\]
+Then
+\[
+    \Dobsrand=T_{\dtrue}(\Nrand).
+\]
+The law of \(\Dobsrand\) is the pushforward of the noise measure \(\muN\) through \(T_{\dtrue}\):
+\[
+    \mu_{\dtrue}
+    =
+    (T_{\dtrue})_{\#}\muN.
+\]
+This means that, for every measurable set \(A\subseteq\Dspace\),
+\[
+    \mu_{\dtrue}(A)
+    =
+    \muN\!\left(T_{\dtrue}^{-1}(A)\right).
+\]
+Since
+\[
+    T_{\dtrue}^{-1}(A)
+    =
+    A-\dtrue,
+\]
+we obtain
+\[
+    \mu_{\dtrue}(A)
+    =
+    \muN(A-\dtrue).
+\]
+
+The measure \(\mu_{\dtrue}\) is the probability law of the polluted datum under the assumption that the true datum is \(\dtrue\). It is the observational uncertainty measure centred at the true datum.
+
+In the special case where \(\muN\) has a density \(p_N\) with respect to a reference measure on \(\Dspace\), the shifted observation law has density
+\[
+    p_{\dtrue}(\mathbf d')
+    =
+    p_N(\mathbf d'-\dtrue).
+\]
+Thus, the density at an observed value \(\dobs\) would be
+\[
+    p_{\dtrue}(\dobs)
+    =
+    p_N(\dobs-\dtrue).
+\]
+
+This expression already reveals the central difficulty. To evaluate how likely the observation is under the true shifted noise law, one needs to know the residual
+\[
+    \dobs-\dtrue.
+\]
+But \(\dtrue\) is unknown.
+
+\subsection{Outlier assessment in the hypothetical known-truth case}
+
+If \(\dtrue\) were known, then we could assess whether the actual observation \(\dobs\) is typical or atypical under the shifted noise measure \(\mu_{\dtrue}\).
+
+For example, one could take a measurable neighbourhood \(A_{\varepsilon}(\dobs)\) around the observed datum and compute
+\[
+    \mu_{\dtrue}\!\left(A_{\varepsilon}(\dobs)\right).
+\]
+If this number is very small compared with the mass assigned to similar neighbourhoods around other points, then \(\dobs\) would be an atypical observation under the known-truth observation law.
+
+If the shifted noise measure has a density, then one could instead examine
+\[
+    p_{\dtrue}(\dobs)
+    =
+    p_N(\dobs-\dtrue).
+\]
+A small value of this density would indicate that the implied noise
+\[
+    \dobs-\dtrue
+\]
+lies in a low-density region of the noise model. In informal language, one might then say that the observation was an outlier.
+
+In the known-truth case, this interpretation is legitimate because the centre of the noise law is known. The statement
+\[
+    \dobs
+    \text{ is unlikely}
+\]
+really means
+\[
+    \dobs
+    \text{ is unlikely under the law }
+    \mu_{\dtrue}.
+\]
+Equivalently, it means that the realized noise
+\[
+    \nobs=\dobs-\dtrue
+\]
+is unlikely under \(\muN\).
+
+Thus, outlier assessment is straightforward if the true datum is known. One simply compares the actual residual to the assumed noise law.
+
+\subsection{Why the known-truth construction is unavailable}
+
+In the actual inverse problem, the true datum \(\dtrue\) is not known. This is precisely what we are trying to infer. Therefore, the shifted measure
+\[
+    \mu_{\dtrue}
+    =
+    (T_{\dtrue})_{\#}\muN
+\]
+cannot be constructed around the actual true datum in any directly usable way.
+
+We can construct such a measure for any candidate value \(\mathbf d\in\Dspace\):
+\[
+    \mu_{\mathbf d}
+    =
+    (T_{\mathbf d})_{\#}\muN,
+    \qquad
+    T_{\mathbf d}(\mathbf n)=\mathbf d+\mathbf n.
+\]
+But this produces a family of possible observation laws,
+\[
+    \mathbf d
+    \longmapsto
+    \mu_{\mathbf d},
+\]
+not a single known observation law.
+
+This is the point at which inference begins. Since the true centre of the noise law is unknown, the observation \(\dobs\) cannot be judged as intrinsically typical or atypical. It can only be judged relative to a candidate true datum, a prior distribution, or some other additional structure.
+
+For a candidate \(\mathbf d\), the implied noise is
+\[
+    \dobs-\mathbf d.
+\]
+The candidate \(\mathbf d\) is plausible if this implied noise is plausible under \(\muN\). It is implausible if this implied noise lies in a region that the noise model regards as extreme.
+
+Thus, the known-truth construction motivates the likelihood kernel:
+\[
+    \mathbf d
+    \longmapsto
+    \mu_{\mathbf d}.
+\]
+The next section develops this object explicitly. It is the first major epistemological construction built from the noise model.
+
+% ============================================================
+\section{The Likelihood Kernel}
+% ============================================================
+
+\subsection{Candidate true data}
+
+Since the actual true datum \(\dtrue\) is unknown, we cannot directly construct the shifted noise law centred at \(\dtrue\). What we can do instead is consider possible candidate values for the true datum.
+
+Let
+\[
+    \mathbf d\in\Dspace
+\]
+be a candidate true datum. This does not mean that \(\mathbf d\) is assumed to be the true datum in reality. It means that we temporarily ask the hypothetical question:
+
+\begin{quote}
+    If \(\mathbf d\) were the true datum, what would the distribution of possible observations look like?
+\end{quote}
+
+Under this hypothesis, the observation model would be
+\[
+    \Dobsrand = \mathbf d + \Nrand.
+\]
+The random object here is \(\Dobsrand\), the possible polluted observation. The candidate \(\mathbf d\) is held fixed.
+
+Thus, for each possible candidate truth \(\mathbf d\), we obtain a corresponding probability law for the observed datum. The role of the likelihood kernel is to collect all of these candidate-dependent observation laws into one object.
+
+\subsection{Candidate-dependent shifted noise laws}
+
+For a fixed candidate \(\mathbf d\in\Dspace\), define the translation map
+\[
+    T_{\mathbf d}:\Dspace\to\Dspace,
+    \qquad
+    T_{\mathbf d}(\mathbf n)=\mathbf d+\mathbf n.
+\]
+If the noise random variable satisfies
+\[
+    \Nrand\sim\muN,
+\]
+then the polluted observation under candidate truth \(\mathbf d\) is
+\[
+    \Dobsrand_{\mathbf d}
+    =
+    T_{\mathbf d}(\Nrand)
+    =
+    \mathbf d+\Nrand.
+\]
+
+The law of \(\Dobsrand_{\mathbf d}\) is the pushforward measure
+\[
+    \mu_{\mathbf d}
+    =
+    (T_{\mathbf d})_{\#}\muN.
+\]
+Therefore, for any measurable set \(A\in\SigmaD\),
+\[
+    \mu_{\mathbf d}(A)
+    =
+    \muN\!\left(T_{\mathbf d}^{-1}(A)\right).
+\]
+Since
+\[
+    T_{\mathbf d}^{-1}(A)
+    =
+    A-\mathbf d,
+\]
+we have
+\[
+    \mu_{\mathbf d}(A)
+    =
+    \muN(A-\mathbf d).
+\]
+
+Thus, \(\mu_{\mathbf d}\) is the law of possible observations under the hypothesis that the true datum is \(\mathbf d\). It is the noise law shifted so that it is centred at the candidate truth.
+
+If the noise law has a density \(p_N\), then the observation law under candidate \(\mathbf d\) has density
+\[
+    p(\mathbf d'\mid \mathbf d)
+    =
+    p_N(\mathbf d'-\mathbf d).
+\]
+In particular, the density assigned to the actual observed datum \(\dobs\) is
+\[
+    p(\dobs\mid \mathbf d)
+    =
+    p_N(\dobs-\mathbf d).
+\]
+
+This quantity measures how plausible the observed datum would be if \(\mathbf d\) were the true datum.
+
+\subsection{The likelihood kernel as a map}
+
+The assignment
+\[
+    \mathbf d
+    \longmapsto
+    \mu_{\mathbf d}
+\]
+is the likelihood kernel. More explicitly, we may write
+\[
+    \mathsf L:\Dspace\times\SigmaD\to[0,1],
+\]
+where
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \mu_{\mathbf d}(A)
+    =
+    \muN(A-\mathbf d).
+\]
+
+For each fixed candidate truth \(\mathbf d\), the map
+\[
+    A\longmapsto \mathsf L(\mathbf d,A)
+\]
+is a probability measure on the observation space \((\Dspace,\SigmaD)\).
+
+For each fixed measurable observation event \(A\), the map
+\[
+    \mathbf d\longmapsto \mathsf L(\mathbf d,A)
+\]
+describes how the probability of observing \(A\) depends on the candidate true datum.
+
+Thus, the likelihood kernel has the direction
+\[
+    \text{candidate truth}
+    \longmapsto
+    \text{probability measure on possible observations}.
+\]
+
+This direction is important. The likelihood kernel does not yet map observations to probability measures on truths. It maps possible truths to probability measures on observations.
+
+If a density exists, then fixing the actual observation \(\dobs\) gives the likelihood function
+\[
+    \ell_{\dobs}(\mathbf d)
+    =
+    p(\dobs\mid \mathbf d)
+    =
+    p_N(\dobs-\mathbf d).
+\]
+The likelihood function is obtained by evaluating the likelihood kernel at the observed datum. It is a function of the candidate truth \(\mathbf d\), but it is not by itself a probability density over \(\mathbf d\).
+
+\subsection{What the likelihood kernel can say}
+
+The likelihood kernel can answer candidate-wise questions. For a proposed true datum \(\mathbf d\), it can ask:
+
+\begin{quote}
+    If \(\mathbf d\) were the true datum, would the actual observation \(\dobs\) be a plausible outcome of the noise model?
+\end{quote}
+
+In the additive setting, this question reduces to examining the implied noise
+\[
+    \dobs-\mathbf d.
+\]
+If this implied noise lies in a high-probability region of \(\muN\), then the candidate \(\mathbf d\) is compatible with the observation. If it lies in a low-probability region of \(\muN\), then the candidate \(\mathbf d\) is less compatible.
+
+For example, suppose \(E_{\alpha}\subseteq\Dspace\) is a noise region satisfying
+\[
+    \muN(E_{\alpha})=1-\alpha.
+\]
+Then a candidate \(\mathbf d\) can be called compatible at level \(1-\alpha\) if
+\[
+    \dobs-\mathbf d\in E_{\alpha}.
+\]
+Equivalently,
+\[
+    \mathbf d\in \dobs-E_{\alpha}.
+\]
+
+This is the basic frequentist compatibility idea that will later become a confidence set. The likelihood kernel gives the sampling law under each candidate truth, and from those sampling laws one can decide which candidate truths would make the observation look ordinary, unusual, or extreme.
+
+If a density exists, the same idea appears through the likelihood value
+\[
+    \ell_{\dobs}(\mathbf d)
+    =
+    p_N(\dobs-\mathbf d).
+\]
+Large values indicate that \(\dobs\) is relatively plausible under candidate \(\mathbf d\). Small values indicate that \(\dobs\) would require a relatively unusual noise realization under candidate \(\mathbf d\).
+
+Thus, the likelihood kernel can compare candidate truths by asking how well each one explains the observed datum through the noise model.
+
+\subsection{What the likelihood kernel cannot say alone}
+
+The likelihood kernel does not, by itself, assign probabilities to candidate true data values. It tells us
+\[
+    \text{how probable the observation would be if } \mathbf d \text{ were true,}
+\]
+but it does not tell us
+\[
+    \text{how probable } \mathbf d \text{ is given the observation.}
+\]
+
+These are different directions of conditioning.
+
+The likelihood kernel has the direction
+\[
+    \mathbf d
+    \longmapsto
+    \mu_{\mathbf d}.
+\]
+It starts from a candidate truth and gives a probability law on possible observations.
+
+A posterior distribution would have the opposite direction:
+\[
+    \dobs
+    \longmapsto
+    \text{probability measure on possible true data values}.
+\]
+
+To construct such a posterior measure, one needs additional information: a prior measure on possible true data values. Without that prior, the likelihood values
+\[
+    \ell_{\dobs}(\mathbf d)
+\]
+are not probabilities over \(\mathbf d\). They are compatibility scores, or densities of the observed datum under different candidate observation laws.
+
+This is why the following statement is generally not licensed by the likelihood alone:
+\[
+    \Prob(\dtrue\in A\mid \dobs)=0.95.
+\]
+Such a statement requires a probability model for \(\dtrue\). The likelihood kernel does not provide one. It provides only the family of observation laws
+\[
+    \{\mu_{\mathbf d}:\mathbf d\in\Dspace\}.
+\]
+
+Therefore, the likelihood kernel is a crucial object shared by both Bayesian and frequentist reasoning, but it is not yet a full inference about the truth. It says what the observation model would look like under each candidate truth. What one does with that family of laws is where the Bayesian and frequentist constructions begin to diverge.
+
+% ============================================================
+\section{The Bayesian Construction}
+% ============================================================
+
+\subsection{Introducing an epistemological true-datum random variable}
+
+The likelihood kernel described in the previous section gives, for each candidate true datum \(\mathbf d\), a probability law for possible observations. It has the direction
+\[
+    \mathbf d
+    \longmapsto
+    \mu_{\mathbf d}.
+\]
+This is not yet a probability law on possible true data values. It tells us how observations would behave if a given candidate were true, but it does not tell us how probable the candidate itself is.
+
+The Bayesian construction adds precisely this missing ingredient. It introduces a probability measure
+\[
+    \prior
+\]
+on the true-data space \((\Dspace,\SigmaD)\). Equivalently, it introduces a random variable
+\[
+    \Drand:\Omega\to\Dspace
+\]
+with law
+\[
+    \Drand\sim\prior.
+\]
+
+The random variable \(\Drand\) is an epistemological representation of uncertainty about the unknown true datum. It is not introduced because reality itself contains a randomly fluctuating true datum. It is introduced because, from the perspective of the observer, the true datum is unknown.
+
+Thus, the prior measure satisfies
+\[
+    \prior(A)
+    =
+    \Prob(\Drand\in A),
+    \qquad
+    A\in\SigmaD.
+\]
+The interpretation is:
+\[
+    \prior(A)
+    =
+    \text{degree of probability assigned to the true datum lying in } A
+    \text{ before observing } \dobs.
+\]
+
+This is the first major Bayesian step. The unknown truth is represented by a random variable so that probabilities over possible true values become meaningful.
+
+\subsection{Ontological truth versus epistemological surrogate}
+
+It is important to keep two objects separate:
+\[
+    \dtrue
+    \qquad
+    \text{and}
+    \qquad
+    \Drand.
+\]
+
+The quantity \(\dtrue\) is the ontological true datum. It is the actual true datum that generated the observed data. It is fixed, whether or not we know it.
+
+The quantity \(\Drand\) is an epistemological surrogate. It is a mathematical object used to encode uncertainty about \(\dtrue\). Its possible values are possible candidates for the true datum, and its law \(\prior\) encodes how those candidates are weighted before the actual observation is used.
+
+Thus, the Bayesian does not need to claim that the real true datum is physically random. The Bayesian construction can be understood as introducing a random variable that represents uncertain knowledge about a fixed but unknown object.
+
+We may summarize the distinction as follows:
+\begin{description}[leftmargin=3.1cm,style=nextline]
+    \item[Ontological true datum.]
+    \(\dtrue\) is the actual true datum. It is fixed, but generally hidden.
+
+    \item[Epistemological true datum.]
+    \(\Drand\sim\prior\) is a random variable representing uncertainty about which value \(\dtrue\) might have.
+\end{description}
+
+The prior \(\prior\) therefore lives in the epistemological layer. It is not part of the original observation equation
+\[
+    \dobs=\dtrue+\nobs.
+\]
+It is an additional mathematical structure placed on top of that equation in order to make probabilistic statements about the unknown true datum.
+
+\subsection{The Bayesian observation model}
+
+Once the epistemological true-datum random variable has been introduced, the Bayesian combines it with the noise random variable. Assuming, for simplicity, that \(\Drand\) and \(\Nrand\) are independent, the Bayesian observation model is
+\[
+    \Dobsrand=\Drand+\Nrand.
+\]
+
+Here:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[\(\Drand\).]
+    Represents uncertainty about the unknown true datum.
+
+    \item[\(\Nrand\).]
+    Represents uncertainty in the observation process.
+
+    \item[\(\Dobsrand\).]
+    Represents the polluted datum one expects to observe before the actual observation is used.
+\end{description}
+
+This construction is different from the known-truth model
+\[
+    \Dobsrand=\dtrue+\Nrand.
+\]
+In the known-truth model, the centre of the observation law is the fixed value \(\dtrue\). In the Bayesian model, the centre is itself epistemologically random:
+\[
+    \Drand\sim\prior.
+\]
+
+Therefore, the Bayesian observation random variable \(\Dobsrand\) mixes two sources of uncertainty:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Prior uncertainty.]
+    Uncertainty about the true datum, represented by \(\Drand\).
+
+    \item[Noise uncertainty.]
+    Uncertainty about the observational error, represented by \(\Nrand\).
+\end{description}
+
+This is why the Bayesian predictive observation law is not merely the noise law shifted by one known datum. It is an average of shifted noise laws over the prior distribution of possible true data values.
+
+\subsection{The prior predictive distribution}
+
+The law of \(\Dobsrand\) is called the prior predictive distribution. It describes what observations are expected before the actual datum \(\dobs\) is used.
+
+For a measurable set \(A\in\SigmaD\), the prior predictive probability is
+\[
+    \Prob(\Dobsrand\in A)
+    =
+    \Prob(\Drand+\Nrand\in A).
+\]
+
+Using the likelihood kernel, this can be written as
+\[
+    \mu_{\mathrm{pred}}(A)
+    =
+    \int_{\Dspace}
+        \mu_{\mathbf d}(A)
+    \,\prior(d\mathbf d).
+\]
+Since
+\[
+    \mu_{\mathbf d}(A)
+    =
+    \muN(A-\mathbf d),
+\]
+we have
+\[
+    \mu_{\mathrm{pred}}(A)
+    =
+    \int_{\Dspace}
+        \muN(A-\mathbf d)
+    \,\prior(d\mathbf d).
+\]
+
+In the additive independent case, this prior predictive measure is the convolution of the prior measure and the noise measure:
+\[
+    \mu_{\mathrm{pred}}
+    =
+    \prior * \muN.
+\]
+
+If both \(\prior\) and \(\muN\) have densities \(p_{\prior}\) and \(p_N\), then the prior predictive density is
+\[
+    p_{\mathrm{pred}}(\mathbf d')
+    =
+    \int_{\Dspace}
+        p_N(\mathbf d'-\mathbf d)\,
+        p_{\prior}(\mathbf d)
+    \,d\mathbf d.
+\]
+
+This distribution answers a different question from the likelihood. The likelihood asks:
+\[
+    \text{If } \mathbf d \text{ were true, how plausible is } \dobs?
+\]
+The prior predictive asks:
+\[
+    \text{Before observing } \dobs,
+    \text{ how plausible are different possible observations under the prior and noise model?}
+\]
+
+Thus, the prior predictive distribution is the Bayesian model's pre-data distribution for what the observed data might be.
+
+\subsection{The joint measure}
+
+The Bayesian construction also defines a joint probability measure on the pair
+\[
+    (\Drand,\Dobsrand).
+\]
+This joint measure lives on
+\[
+    (\Dspace\times\Dspace,\SigmaD\otimes\SigmaD).
+\]
+
+For measurable sets \(B,A\in\SigmaD\), the joint probability is
+\[
+    \Prob(\Drand\in B,\Dobsrand\in A).
+\]
+Using the likelihood kernel, this can be written as
+\[
+    \mu_{\mathrm{joint}}(B\times A)
+    =
+    \int_B
+        \mu_{\mathbf d}(A)
+    \,\prior(d\mathbf d).
+\]
+
+More generally, for a measurable set \(Q\subseteq\Dspace\times\Dspace\),
+\[
+    \mu_{\mathrm{joint}}(Q)
+    =
+    \int_{\Dspace}
+        \mu_{\mathbf d}
+        \bigl(
+            \{\mathbf d':(\mathbf d,\mathbf d')\in Q\}
+        \bigr)
+    \,\prior(d\mathbf d).
+\]
+
+This joint measure contains the main Bayesian objects:
+\begin{description}[leftmargin=3.1cm,style=nextline]
+    \item[Prior.]
+    The marginal law of \(\Drand\).
+
+    \item[Prior predictive.]
+    The marginal law of \(\Dobsrand\).
+
+    \item[Likelihood kernel.]
+    The conditional law of \(\Dobsrand\) given \(\Drand=\mathbf d\).
+
+    \item[Posterior kernel.]
+    The conditional law of \(\Drand\) given \(\Dobsrand=\mathbf d'\).
+\end{description}
+
+In this sense, the Bayesian construction wraps the prior, likelihood, prior predictive distribution, and posterior into one joint probabilistic object.
+
+\subsection{The likelihood inside the Bayesian construction}
+
+The likelihood kernel appears inside the Bayesian construction as the conditional law of the observation given the epistemological true datum.
+
+That is,
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \Prob(\Dobsrand\in A\mid \Drand=\mathbf d).
+\]
+In the additive noise model,
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \muN(A-\mathbf d).
+\]
+
+Thus, the same shifted-noise family from the previous section is used by Bayes. The difference is that Bayes now combines it with the prior \(\prior\) to produce the joint measure:
+\[
+    \mu_{\mathrm{joint}}(d\mathbf d,d\mathbf d')
+    =
+    \prior(d\mathbf d)\,
+    \mathsf L(\mathbf d,d\mathbf d').
+\]
+
+If densities exist, this takes the familiar form
+\[
+    p_{\mathrm{joint}}(\mathbf d,\mathbf d')
+    =
+    p_{\prior}(\mathbf d)\,
+    p_N(\mathbf d'-\mathbf d).
+\]
+
+Therefore, the likelihood is not uniquely Bayesian. It is the sampling part of the model. What is distinctively Bayesian is the multiplication of this sampling model by a prior measure on possible true data values.
+
+\subsection{The posterior kernel}
+
+The posterior kernel reverses the direction of the likelihood kernel.
+
+The likelihood kernel has direction
+\[
+    \text{candidate truth}
+    \longmapsto
+    \text{measure on possible observations}.
+\]
+The posterior kernel has direction
+\[
+    \text{observed datum}
+    \longmapsto
+    \text{measure on possible true data values}.
+\]
+
+We denote the posterior kernel by
+\[
+    \Pi(\mathbf d',B)
+    =
+    \Prob(\Drand\in B\mid \Dobsrand=\mathbf d'),
+    \qquad
+    B\in\SigmaD.
+\]
+Thus, for each possible observed datum \(\mathbf d'\), the map
+\[
+    B\longmapsto \Pi(\mathbf d',B)
+\]
+is a probability measure on the true-data space.
+
+After the actual observation \(\dobs\) is made, the Bayesian posterior is
+\[
+    \Pi(\dobs,\cdot).
+\]
+This is the probability measure over possible true data values after conditioning on the observed datum.
+
+If densities exist, Bayes' formula gives
+\[
+    p(\mathbf d\mid \dobs)
+    =
+    \frac{
+        p_N(\dobs-\mathbf d)\,p_{\prior}(\mathbf d)
+    }{
+        p_{\mathrm{pred}}(\dobs)
+    },
+\]
+where
+\[
+    p_{\mathrm{pred}}(\dobs)
+    =
+    \int_{\Dspace}
+        p_N(\dobs-\mathbf d)\,
+        p_{\prior}(\mathbf d)
+    \,d\mathbf d.
+\]
+
+Equivalently,
+\[
+    p(\mathbf d\mid \dobs)
+    \propto
+    p_N(\dobs-\mathbf d)\,p_{\prior}(\mathbf d).
+\]
+
+The posterior therefore combines two ingredients:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Data fit.]
+    The term \(p_N(\dobs-\mathbf d)\), which measures how well candidate \(\mathbf d\) explains the observed datum through the noise model.
+
+    \item[Prior weight.]
+    The term \(p_{\prior}(\mathbf d)\), which measures how plausible candidate \(\mathbf d\) was before observing \(\dobs\).
+\end{description}
+
+This is the Bayesian mechanism for turning likelihood values into probabilities over possible true data values.
+
+\subsection{The point of contact with reality}
+
+The actual observation \(\dobs\) is an ontological object. It is the datum that was really observed. It is not itself a random variable after the observation has happened.
+
+The Bayesian model, however, contains an epistemological random variable \(\Dobsrand\), representing possible observations before the actual observation is used. The point of contact between the model and reality is the identification of the actual observation as a realization of this random variable:
+\[
+    \Dobsrand=\dobs.
+\]
+
+Conditioning on this event injects information from the actual observation into the epistemological model. Before conditioning, uncertainty about the true datum is represented by the prior:
+\[
+    \Drand\sim\prior.
+\]
+After conditioning, uncertainty about the true datum is represented by the posterior:
+\[
+    \Drand\mid \Dobsrand=\dobs
+    \sim
+    \Pi(\dobs,\cdot).
+\]
+
+Thus, the Bayesian workflow may be summarized as:
+\[
+    \prior
+    \quad
+    \longrightarrow
+    \quad
+    \mu_{\mathrm{joint}}
+    \quad
+    \longrightarrow
+    \quad
+    \Pi(\dobs,\cdot).
+\]
+
+In words:
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Before observation.]
+    The prior represents uncertainty about the true datum.
+
+    \item[Observation model.]
+    The likelihood describes possible observations for each candidate truth.
+
+    \item[After observation.]
+    The posterior represents updated uncertainty about the true datum after the actual datum \(\dobs\) is used.
+\end{description}
+
+This is why the Bayesian can make statements such as
+\[
+    \Prob(\Drand\in B\mid \Dobsrand=\dobs)
+    =
+    \Pi(\dobs,B).
+\]
+Such statements are not statements about repeated confidence-set coverage. They are posterior probability statements about the epistemological true-datum random variable.
+
+\subsection{Bayesian outlier assessment}
+
+The Bayesian construction also gives a way to ask whether the actual observation \(\dobs\) is surprising before conditioning. This is done using the prior predictive distribution.
+
+The relevant quantity is not the shifted noise law around a known truth, because the truth is not known. Instead, the Bayesian asks whether \(\dobs\) is surprising under the combined prior-and-noise model:
+\[
+    \mu_{\mathrm{pred}}
+    =
+    \prior * \muN.
+\]
+
+For a measurable neighbourhood \(A_{\varepsilon}(\dobs)\) around the observed datum, one may examine
+\[
+    \mu_{\mathrm{pred}}\!\left(A_{\varepsilon}(\dobs)\right).
+\]
+If this quantity is very small compared with the prior predictive mass of similar neighbourhoods elsewhere, then \(\dobs\) is surprising under the prior predictive model.
+
+If a prior predictive density exists, one may examine
+\[
+    p_{\mathrm{pred}}(\dobs).
+\]
+A small value indicates that the observed datum lies in a low-density region of the prior predictive distribution.
+
+However, this is not the same as saying that the realized noise was necessarily an outlier. A prior predictive surprise can occur for several reasons:
+\begin{description}[leftmargin=3.1cm,style=nextline]
+    \item[Noise outlier.]
+    The observation may require an extreme noise realization around a plausible true datum.
+
+    \item[Prior surprise.]
+    The true datum may lie in a region that had low prior probability.
+
+    \item[Model failure.]
+    The prior, noise model, or observation model may be misspecified.
+\end{description}
+
+Thus, Bayesian outlier assessment is relative to the full prior predictive construction. The statement
+\[
+    \dobs
+    \text{ is surprising}
+\]
+really means
+\[
+    \dobs
+    \text{ is surprising under the prior predictive law }
+    \mu_{\mathrm{pred}}.
+\]
+
+After observing \(\dobs\), the posterior can also be used to examine which explanation is favoured. For example, one can ask whether the posterior concentrates on candidate truths for which
+\[
+    \dobs-\mathbf d
+\]
+is an ordinary noise realization, or whether it concentrates on explanations that require extreme noise or unexpected true data values.
+
+This illustrates the Bayesian advantage and the Bayesian price. The advantage is that Bayes can make posterior probability statements about possible truths and possible explanations. The price is that these statements depend on the prior and the full probabilistic model.
+
+% ============================================================
+\section{What Collapses Without a Prior}
+% ============================================================
+
+\subsection{Objects that require a prior}
+
+The Bayesian construction in the previous section depends on the introduction of a prior measure
+\[
+    \prior
+\]
+on the true-data space. This prior is what allows the Bayesian to turn the unknown true datum into an epistemological random variable,
+\[
+    \Drand\sim\prior.
+\]
+
+Without this step, several Bayesian objects cannot be constructed.
+
+First, without a prior, there is no epistemological true-datum random variable:
+\[
+    \Drand.
+\]
+The ontological true datum \(\dtrue\) still exists, but there is no probability law describing uncertainty over possible values of \(\dtrue\).
+
+Second, without \(\Drand\), there is no Bayesian predictive observation random variable of the form
+\[
+    \Dobsrand=\Drand+\Nrand.
+\]
+One can still construct observation random variables conditional on candidate true data values, but not the Bayesian prior predictive random variable that averages over possible truths.
+
+Third, without \(\Drand\), there is no prior predictive distribution
+\[
+    \mu_{\mathrm{pred}}.
+\]
+Recall that the prior predictive measure is defined by
+\[
+    \mu_{\mathrm{pred}}(A)
+    =
+    \int_{\Dspace}
+        \mu_{\mathbf d}(A)
+    \,\prior(d\mathbf d).
+\]
+This formula requires \(\prior\). Without a prior, there is no measure with which to average the candidate-dependent observation laws \(\mu_{\mathbf d}\).
+
+Fourth, without a prior, there is no Bayesian joint measure on
+\[
+    (\Drand,\Dobsrand).
+\]
+The joint measure was given by
+\[
+    \mu_{\mathrm{joint}}(B\times A)
+    =
+    \int_B
+        \mu_{\mathbf d}(A)
+    \,\prior(d\mathbf d).
+\]
+Again, the prior is essential. It supplies the marginal law of the epistemological true datum and allows the likelihood kernel to be assembled into a joint probability measure.
+
+Finally, without the joint measure, there is no posterior kernel
+\[
+    \Pi(\mathbf d',B)
+    =
+    \Prob(\Drand\in B\mid \Dobsrand=\mathbf d').
+\]
+The posterior is obtained by conditioning the Bayesian joint measure. If the joint measure has not been constructed, there is nothing to condition.
+
+Thus, without a prior, the following Bayesian objects collapse:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Epistemological truth.]
+    There is no random variable \(\Drand\sim\prior\) representing uncertainty about \(\dtrue\).
+
+    \item[Bayesian predictive datum.]
+    There is no prior predictive random variable \(\Dobsrand=\Drand+\Nrand\).
+
+    \item[Prior predictive law.]
+    There is no prior predictive measure \(\mu_{\mathrm{pred}}\) obtained by averaging observation laws over possible truths.
+
+    \item[Joint measure.]
+    There is no Bayesian joint measure on true-data and observed-data variables.
+
+    \item[Posterior kernel.]
+    There is no posterior probability measure on possible true data values after observing \(\dobs\).
+\end{description}
+
+This is the sense in which Bayes is stuck without a prior. The prior is not a decorative extra. It is the object that makes posterior probability over possible truths mathematically meaningful.
+
+\subsection{Objects that survive without a prior}
+
+Although the full Bayesian construction collapses without a prior, not everything disappears.
+
+The noise model may still be available:
+\[
+    \Nrand\sim\muN.
+\]
+This model describes possible observational errors. It does not require a prior on \(\dtrue\).
+
+The candidate-dependent observation laws also survive. For each candidate true datum
+\[
+    \mathbf d\in\Dspace,
+\]
+we can still define
+\[
+    \Dobsrand_{\mathbf d}
+    =
+    \mathbf d+\Nrand.
+\]
+The law of this random variable is
+\[
+    \mu_{\mathbf d}
+    =
+    (T_{\mathbf d})_{\#}\muN,
+    \qquad
+    T_{\mathbf d}(\mathbf n)=\mathbf d+\mathbf n.
+\]
+Equivalently,
+\[
+    \mu_{\mathbf d}(A)
+    =
+    \muN(A-\mathbf d),
+    \qquad
+    A\in\SigmaD.
+\]
+
+Therefore, the likelihood kernel survives:
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \mu_{\mathbf d}(A).
+\]
+It is still meaningful to ask:
+\[
+    \text{If } \mathbf d \text{ were the true datum, how plausible would } \dobs \text{ be?}
+\]
+
+If a density exists, then the likelihood function for the observed datum is still
+\[
+    \ell_{\dobs}(\mathbf d)
+    =
+    p_N(\dobs-\mathbf d).
+\]
+This can be evaluated for different candidate true data values. It can identify candidates for which the observation would require an ordinary noise realization, and candidates for which the observation would require an extreme noise realization.
+
+Thus, without a prior, we still have:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Noise model.]
+    The measure \(\muN\) describing possible observational errors.
+
+    \item[Sampling family.]
+    The family of observation laws
+    \[
+        \{\mu_{\mathbf d}:\mathbf d\in\Dspace\}.
+    \]
+
+    \item[Likelihood kernel.]
+    The map
+    \[
+        \mathbf d
+        \longmapsto
+        \mu_{\mathbf d},
+    \]
+    from candidate true data values to probability measures on possible observations.
+
+    \item[Compatibility assessment.]
+    The ability to test whether \(\dobs-\mathbf d\) is plausible under the noise model for each candidate \(\mathbf d\).
+\end{description}
+
+This distinction is crucial. Without a prior, one does not lose the observation model. One loses the ability to turn the observation model into posterior probabilities over possible truths.
+
+In short:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Survives.]
+    Candidate-wise sampling laws.
+
+    \item[Collapses.]
+    Probability over candidate truths.
+\end{description}
+
+This surviving sampling structure is the starting point for frequentist inference.
+
+\subsection{Why posterior probabilities are unavailable}
+
+The posterior probability statement one might want is something like
+\[
+    \Prob(\dtrue\in A\mid \dobs)=0.95.
+\]
+However, this expression is not automatically meaningful.
+
+The difficulty is that \(\dtrue\) is an ontological object, not a random variable. It is the actual true datum. It is fixed, although unknown. In order for the expression
+\[
+    \Prob(\dtrue\in A\mid \dobs)
+\]
+to be a probability statement, one must first introduce a probability model in which the true datum is represented by a random variable.
+
+In the Bayesian construction, this role is played by
+\[
+    \Drand\sim\prior.
+\]
+Then the posterior probability statement becomes
+\[
+    \Prob(\Drand\in A\mid \Dobsrand=\dobs).
+\]
+This is meaningful because both \(\Drand\) and \(\Dobsrand\) are random variables inside a joint probability model.
+
+Without the prior \(\prior\), there is no \(\Drand\). Without \(\Drand\), there is no joint law for
+\[
+    (\Drand,\Dobsrand).
+\]
+Without a joint law, there is no conditional law of the true datum given the observation.
+
+The likelihood alone cannot fix this problem. The likelihood function
+\[
+    \ell_{\dobs}(\mathbf d)
+    =
+    p_N(\dobs-\mathbf d)
+\]
+is a function of the candidate true datum \(\mathbf d\), but it is not a probability density over \(\mathbf d\). It does not generally integrate to one over \(\Dspace\), and even if it can be normalized in a special case, that normalization implicitly introduces a reference measure and prior-like structure.
+
+The likelihood answers:
+\[
+    \text{How plausible is the observation if } \mathbf d \text{ were true?}
+\]
+The posterior answers:
+\[
+    \text{How plausible is } \mathbf d \text{ after observing } \dobs?
+\]
+The second question cannot be obtained from the first without additional structure.
+
+This is why the following two expressions should not be confused:
+\[
+    p(\dobs\mid \mathbf d)
+\]
+and
+\[
+    p(\mathbf d\mid \dobs).
+\]
+The first is likelihood. The second is posterior. Passing from one to the other requires a prior.
+
+Therefore, without a prior, one may still say:
+\[
+    \text{Candidate } \mathbf d
+    \text{ is compatible or incompatible with } \dobs
+    \text{ under the noise model.}
+\]
+But one may not say:
+\[
+    \text{The probability that } \dtrue
+    \text{ lies in } A
+    \text{ given } \dobs
+    \text{ is } 0.95.
+\]
+
+That latter statement belongs to a Bayesian construction, or to another framework that introduces a post-data probability measure on possible true values. It is not supplied by the likelihood kernel alone.
+
+The prior-free situation is therefore not empty, but it is austere. It gives a family of candidate-wise observation laws. It gives likelihoods, tests, and compatibility regions. It does not give posterior probabilities over the unknown truth.
+
+
+% ============================================================
+\section{The Frequentist Construction}
+% ============================================================
+
+\subsection{Refusing the epistemological true-datum random variable}
+
+The frequentist construction begins from the same ontological observation equation,
+\[
+    \dobs=\dtrue+\nobs,
+\]
+but it refuses one of the Bayesian moves. In particular, the frequentist does not introduce an epistemological true-datum random variable
+\[
+    \Drand\sim\prior.
+\]
+
+The true datum is not assigned a probability law. It is treated as fixed but unknown:
+\[
+    \dtrue
+    \quad
+    \text{is fixed, but hidden.}
+\]
+The uncertainty is not placed on \(\dtrue\). Instead, probability is placed on the observation procedure, through the noise random variable
+\[
+    \Nrand\sim\muN.
+\]
+
+Thus, the frequentist does not try to construct a posterior probability measure of the form
+\[
+    \Prob(\dtrue\in A\mid\dobs).
+\]
+Such a statement would require a probability law for \(\dtrue\). Since the frequentist has not introduced such a law, this expression is not part of the strict frequentist construction.
+
+Instead, the frequentist asks a different question:
+\begin{quote}
+    Can we construct a procedure which behaves reliably under repeated noisy observations, no matter what the fixed true datum actually is?
+\end{quote}
+
+So the frequentist does not produce a probability distribution over possible truths. The frequentist produces a calibrated procedure. The truth is fixed. The data-generating process is random. The procedure is judged by how it behaves across repeated draws from that process.
+
+\subsection{Truth fixed, observation random}
+
+In the frequentist construction, the true datum \(\dtrue\) is fixed. The noise is random:
+\[
+    \Nrand\sim\muN.
+\]
+Therefore, before the observation is made, the polluted datum is represented by
+\[
+    \Dobsrand=\dtrue+\Nrand.
+\]
+
+This equation looks similar to the Bayesian observation model,
+\[
+    \Dobsrand=\Drand+\Nrand,
+\]
+but its interpretation is different. In the Bayesian model, \(\Drand\) is random. In the frequentist model, \(\dtrue\) is fixed.
+
+Thus, in the frequentist model,
+\[
+    \Dobsrand-\dtrue=\Nrand.
+\]
+The randomness of \(\Dobsrand\) comes only from the noise. If the experiment were repeated many times under the same true datum \(\dtrue\), we would obtain different observations
+\[
+    \Dobsrand_1,
+    \Dobsrand_2,
+    \Dobsrand_3,
+    \dots
+\]
+because the noise would realize differently each time:
+\[
+    \Dobsrand_j=\dtrue+\Nrand_j.
+\]
+
+The true datum stays fixed throughout these repetitions. It is the observations that move around it.
+
+This is the basic frequentist picture:
+\begin{description}[leftmargin=3.0cm,style=nextline]
+    \item[Fixed object.]
+    The true datum \(\dtrue\).
+
+    \item[Random object.]
+    The possible observation \(\Dobsrand=\dtrue+\Nrand\).
+
+    \item[Known object after observation.]
+    The realized observation \(\dobs\).
+
+    \item[Hidden object after observation.]
+    The realized noise \(\nobs=\dobs-\dtrue\).
+\end{description}
+
+\subsection{Candidate-wise compatibility}
+
+Since \(\dtrue\) is unknown, the frequentist considers candidate true data values
+\[
+    \mathbf d\in\Dspace.
+\]
+For each candidate \(\mathbf d\), the observed datum \(\dobs\) implies a candidate noise realization:
+\[
+    \mathbf n_{\mathrm{implied}}(\mathbf d)
+    =
+    \dobs-\mathbf d.
+\]
+
+The candidate \(\mathbf d\) is compatible with the observation if this implied noise looks plausible under the noise law \(\muN\). It is incompatible if the implied noise would be extreme under \(\muN\).
+
+Thus, the frequentist does not ask:
+\[
+    \text{How probable is } \mathbf d \text{ given } \dobs?
+\]
+Instead, the frequentist asks:
+\[
+    \text{If } \mathbf d \text{ were the truth, would } \dobs
+    \text{ require a plausible noise realization?}
+\]
+
+This is the same candidate-wise logic already present in the likelihood kernel. The difference is that the frequentist uses this logic to construct tests, confidence sets, and decision procedures, rather than to construct a posterior measure over possible truths.
+
+In the additive noise case, the compatibility check is especially simple:
+\[
+    \mathbf d
+    \text{ is compatible}
+    \quad
+    \Longleftrightarrow
+    \quad
+    \dobs-\mathbf d
+    \text{ is plausible under } \muN.
+\]
+
+\subsection{Noise acceptance regions}
+
+To turn the compatibility idea into a confidence set, choose a measurable noise acceptance region
+\[
+    \Ealpha\subseteq\Dspace
+\]
+such that
+\[
+    \muN(\Ealpha)=1-\alpha.
+\]
+
+The set \(\Ealpha\) contains noise realizations that are regarded as ordinary or acceptable at level \(1-\alpha\). Its complement,
+\[
+    \Dspace\setminus\Ealpha,
+\]
+contains noise realizations regarded as extreme at level \(\alpha\).
+
+For example, in one dimension, if
+\[
+    \Nrand\sim\mathcal N(0,\sigma^2),
+\]
+then a symmetric \(95\%\) noise acceptance region is
+\[
+    E_{0.05}
+    =
+    [-1.96\sigma,1.96\sigma].
+\]
+This region satisfies approximately
+\[
+    \Prob(\Nrand\in E_{0.05})=0.95.
+\]
+
+In higher dimensions, \(\Ealpha\) may be an ellipsoid, a box, a ball, or some other measurable set chosen to have noise probability \(1-\alpha\). The exact shape of \(\Ealpha\) depends on the noise model and on what notion of extremeness is being used.
+
+The important point is that \(\Ealpha\) is a set in noise space. It is not yet a confidence set for the true datum. It becomes a confidence set only after we shift it through the observation equation.
+
+\subsection{Confidence sets from shifted noise regions}
+
+Given the observed datum \(\dobs\), define the confidence set
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d\in\Dspace:
+        \dobs-\mathbf d\in\Ealpha
+    \right\}.
+\]
+
+This set contains all candidate true data values whose implied noise lies in the accepted noise region. In words:
+\[
+    \Calpha(\dobs)
+    =
+    \text{candidate truths compatible with } \dobs
+    \text{ at noise level } 1-\alpha.
+\]
+
+Equivalently,
+\[
+    \Calpha(\dobs)
+    =
+    \dobs-\Ealpha,
+\]
+where
+\[
+    \dobs-\Ealpha
+    =
+    \{\dobs-\mathbf n:\mathbf n\in\Ealpha\}.
+\]
+
+This is the shifted-noise construction. The noise acceptance region \(\Ealpha\) is translated through the observation equation to produce a set of candidate true data values.
+
+The logic is:
+\[
+\begin{aligned}
+    \text{accepted noise values}
+    &\quad
+    \mathbf n\in\Ealpha,
+    \\
+    \text{observation equation}
+    &\quad
+    \dobs=\mathbf d+\mathbf n,
+    \\
+    \text{candidate truth}
+    &\quad
+    \mathbf d=\dobs-\mathbf n.
+\end{aligned}
+\]
+Therefore, allowing all accepted noise values \(\mathbf n\in\Ealpha\) gives all candidate truths
+\[
+    \mathbf d=\dobs-\mathbf n.
+\]
+
+Thus, the confidence set is not produced by assigning probabilities to candidate truths. It is produced by translating accepted noise realizations into compatible true data values.
+
+\subsection{The pre-observation random confidence set}
+
+Before the observation is made, the observed datum is still random:
+\[
+    \Dobsrand=\dtrue+\Nrand.
+\]
+Therefore, the confidence set produced by the procedure is also random:
+\[
+    \Calpha(\Dobsrand)
+    =
+    \left\{
+        \mathbf d\in\Dspace:
+        \Dobsrand-\mathbf d\in\Ealpha
+    \right\}.
+\]
+
+This is the object to which the frequentist probability statement applies. The random set
+\[
+    \Calpha(\Dobsrand)
+\]
+changes from one repetition of the experiment to another because \(\Dobsrand\) changes from one repetition to another.
+
+If the experiment is repeated many times with the same fixed true datum \(\dtrue\), then we obtain a sequence of random observations
+\[
+    \Dobsrand_1,\Dobsrand_2,\Dobsrand_3,\dots
+\]
+and therefore a sequence of random confidence sets
+\[
+    \Calpha(\Dobsrand_1),
+    \Calpha(\Dobsrand_2),
+    \Calpha(\Dobsrand_3),
+    \dots.
+\]
+
+Some of these sets contain the fixed truth \(\dtrue\). Some may not. The frequentist calibration concerns the long-run frequency with which they do.
+
+\subsection{The coverage statement}
+
+We now derive the coverage statement. By definition,
+\[
+    \Calpha(\Dobsrand)
+    =
+    \left\{
+        \mathbf d\in\Dspace:
+        \Dobsrand-\mathbf d\in\Ealpha
+    \right\}.
+\]
+Therefore,
+\[
+    \dtrue\in\Calpha(\Dobsrand)
+\]
+if and only if
+\[
+    \Dobsrand-\dtrue\in\Ealpha.
+\]
+But in the frequentist model,
+\[
+    \Dobsrand=\dtrue+\Nrand.
+\]
+Hence
+\[
+    \Dobsrand-\dtrue=\Nrand.
+\]
+Therefore,
+\[
+    \dtrue\in\Calpha(\Dobsrand)
+    \quad
+    \Longleftrightarrow
+    \quad
+    \Nrand\in\Ealpha.
+\]
+
+Taking probabilities gives
+\[
+\begin{aligned}
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    &=
+    \Prob_{\dtrue}
+    \left(
+        \Dobsrand-\dtrue\in\Ealpha
+    \right)
+    \\
+    &=
+    \Prob
+    \left(
+        \Nrand\in\Ealpha
+    \right)
+    \\
+    &=
+    \muN(\Ealpha)
+    \\
+    &=
+    1-\alpha.
+\end{aligned}
+\]
+
+This is the frequentist coverage statement:
+\[
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    =
+    1-\alpha.
+\]
+
+The subscript \(\dtrue\) indicates that the probability is computed under the sampling law in which \(\dtrue\) is the fixed true datum. The probability is not over \(\dtrue\). It is over the random observation \(\Dobsrand\), or equivalently, over the random noise \(\Nrand\).
+
+In words:
+\begin{quote}
+    If the true datum is fixed at \(\dtrue\), and the noisy observation procedure is repeated many times, then the confidence set produced by this rule contains \(\dtrue\) in a fraction \(1-\alpha\) of repetitions.
+\end{quote}
+
+\subsection{The realized confidence set}
+
+After the observation has been made, the random observed datum \(\Dobsrand\) is replaced by the actual observed value \(\dobs\). The confidence set becomes
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d\in\Dspace:
+        \dobs-\mathbf d\in\Ealpha
+    \right\}.
+\]
+
+This set is no longer random within the frequentist model. It is the specific set produced from the specific observation \(\dobs\).
+
+At this point, the statement
+\[
+    \dtrue\in\Calpha(\dobs)
+\]
+is either true or false. The actual true datum either lies in the realized confidence set, or it does not. The frequentist generally does not know which, because \(\dtrue\) is hidden.
+
+This is the subtle but essential distinction:
+\begin{description}[leftmargin=3.4cm,style=nextline]
+    \item[Before observation.]
+    \(\Calpha(\Dobsrand)\) is random, so it makes sense to ask for the probability that it contains \(\dtrue\).
+
+    \item[After observation.]
+    \(\Calpha(\dobs)\) is fixed, so the statement that it contains \(\dtrue\) is no longer a random event unless one introduces a probability law for \(\dtrue\).
+\end{description}
+
+The observation is still useful. It tells us which candidate truths are compatible with the actual datum under the accepted noise region. What it does not provide, by itself, is a posterior probability that the truth lies in the realized set.
+
+\subsection{What the frequentist does and does not claim}
+
+The frequentist does claim:
+\[
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    =
+    1-\alpha.
+\]
+This is a statement about a random confidence set before the observation is realized.
+
+Equivalently:
+\begin{quote}
+    The rule \(\dobs\mapsto\Calpha(\dobs)\) catches the fixed truth with frequency \(1-\alpha\) under repeated noisy observations.
+\end{quote}
+
+The frequentist does not automatically claim:
+\[
+    \Prob
+    \left(
+        \dtrue\in\Calpha(\dobs)
+    \right)
+    =
+    1-\alpha.
+\]
+This would be a statement about the probability that the fixed truth lies in the already-realized confidence set. To make such a statement, one would need a probability model for \(\dtrue\), which the frequentist construction has deliberately not introduced.
+
+Thus, the two statements must be kept separate:
+\begin{description}[leftmargin=3.7cm,style=nextline]
+    \item[Frequentist coverage.]
+    A random confidence set catches a fixed truth with probability \(1-\alpha\).
+
+    \item[Posterior-style statement.]
+    A fixed realized set contains an uncertain truth with probability \(1-\alpha\).
+\end{description}
+
+The first is licensed by the frequentist sampling model. The second requires a probability distribution over possible true data values.
+
+This does not make the realized confidence set useless. The set
+\[
+    \Calpha(\dobs)
+\]
+has a concrete compatibility interpretation:
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        \dobs-\mathbf d
+        \text{ is an accepted noise realization}
+    \right\}.
+\]
+It tells us which candidate truths survive the noise-based compatibility test.
+
+The frequentist information is therefore not a posterior probability measure. It is a calibrated compatibility set. The calibration is pre-observation:
+\[
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    =
+    1-\alpha.
+\]
+The output is post-observation:
+\[
+    \Calpha(\dobs).
+\]
+
+This is the distinctive frequentist rhythm:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+    \item[Before seeing data.]
+    Design a rule with known repeated-sampling behaviour.
+
+    \item[After seeing data.]
+    Apply the rule to obtain a concrete set of compatible truths.
+
+    \item[Interpretation.]
+    Trust the output through the calibration of the rule, not through a posterior probability assigned to the realized set.
+\end{description}
+
+
+% ============================================================
+\section{Heteroscedastic and Non-Additive Observation Laws}
+% ============================================================
+
+\subsection{Starting from the likelihood kernel}
+
+So far, the simplest construction assumed an additive observation model of the form
+\[
+    \Dobsrand=\dtrue+\Nrand,
+\]
+with a single noise law
+\[
+    \Nrand\sim\muN.
+\]
+In that special case, all candidate true data values share the same noise distribution. The observation law under candidate \(\mathbf d\) is obtained by translating the same noise measure:
+\[
+    \mu_{\mathbf d}(A)
+    =
+    \muN(A-\mathbf d).
+\]
+
+This shifted-noise picture is useful, but it is not the most general frequentist construction. In many problems, the observational uncertainty may depend on the true datum, or the observation may not be generated by simple addition at all. For example, the noise may be multiplicative, signal-dependent, nonlinear, or produced by an observation mechanism that cannot be written cleanly as
+\[
+    \text{truth}+\text{noise}.
+\]
+
+The more general starting point is therefore the likelihood kernel itself. For each candidate true datum
+\[
+    \mathbf d\in\Dspace,
+\]
+we assume there is a probability measure
+\[
+    \mathsf L(\mathbf d,\cdot)
+\]
+on the observation space \((\Dspace,\SigmaD)\). For each measurable set \(A\in\SigmaD\),
+\[
+    \mathsf L(\mathbf d,A)
+\]
+is interpreted as the probability that the observed datum lies in \(A\), under the assumption that the true datum is \(\mathbf d\).
+
+Thus, the general sampling model is
+\[
+    \mathbf d
+    \longmapsto
+    \mathsf L(\mathbf d,\cdot).
+\]
+This is the object the frequentist needs. It may come from an additive model, a heteroscedastic additive model, a multiplicative model, a nonlinear simulator, or any other stochastic observation mechanism.
+
+The frequentist construction does not require the observation law to be a shifted copy of a single noise measure. It only requires that, for each candidate truth, we know or assume the sampling law of possible observations.
+
+\subsection{Candidate-dependent observation laws}
+
+In the additive homoscedastic case, the sampling law has the form
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \muN(A-\mathbf d).
+\]
+In a heteroscedastic additive case, the noise law may depend on the candidate truth:
+\[
+    \Dobsrand_{\mathbf d}
+    =
+    \mathbf d+\Nrand_{\mathbf d},
+    \qquad
+    \Nrand_{\mathbf d}\sim\mu_{N\mid\mathbf d}.
+\]
+Then
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \mu_{N\mid\mathbf d}(A-\mathbf d).
+\]
+
+But there are many other possibilities. For example, in a scalar multiplicative model one might have
+\[
+    D'_{\theta}
+    =
+    \theta(1+N_{\theta}),
+\]
+or
+\[
+    D'_{\theta}
+    =
+    \theta\,Z_{\theta},
+\]
+where the distributions of \(N_{\theta}\) or \(Z_{\theta}\) may themselves depend on \(\theta\). In such cases, the law of \(D'_{\theta}\) is not obtained by simply shifting one fixed noise law.
+
+More generally, one may have an observation mechanism
+\[
+    \Dobsrand_{\mathbf d}
+    =
+    H(\mathbf d,\mathbf W),
+\]
+where \(\mathbf W\) is a random variable representing all unresolved randomness in the measurement process. Then the likelihood kernel is
+\[
+    \mathsf L(\mathbf d,A)
+    =
+    \Prob\bigl(H(\mathbf d,\mathbf W)\in A\bigr).
+\]
+
+The important point is that the likelihood kernel already contains everything needed to describe the candidate-dependent sampling law. The notation
+\[
+    \mathsf L(\mathbf d,\cdot)
+\]
+does not require us to decide whether the noise is additive, multiplicative, heteroscedastic, nonlinear, or something else.
+
+It only says:
+\begin{quote}
+    If \(\mathbf d\) were the true datum, this is the probability law for the observation.
+\end{quote}
+
+\subsection{Candidate-dependent acceptance regions}
+
+To construct confidence sets in this general setting, we no longer begin with one fixed noise region \(\Ealpha\). Instead, for each candidate truth \(\mathbf d\), we choose an acceptance region in observation space:
+\[
+    A_{\alpha}(\mathbf d)\subseteq\Dspace.
+\]
+
+This region should satisfy
+\[
+    \mathsf L\bigl(\mathbf d,A_{\alpha}(\mathbf d)\bigr)
+    =
+    1-\alpha.
+\]
+More generally, one may allow conservative regions satisfying
+\[
+    \mathsf L\bigl(\mathbf d,A_{\alpha}(\mathbf d)\bigr)
+    \geq
+    1-\alpha.
+\]
+
+The interpretation is:
+\[
+    A_{\alpha}(\mathbf d)
+    =
+    \text{observations that would be accepted as ordinary if } \mathbf d
+    \text{ were true.}
+\]
+
+Thus, instead of asking whether an implied additive noise lies inside a fixed noise set, we ask whether the actual observation lies inside the candidate's own acceptance region.
+
+The candidate \(\mathbf d\) is compatible with the observation \(\dobs\) when
+\[
+    \dobs\in A_{\alpha}(\mathbf d).
+\]
+
+This is the general version of the shifted-noise compatibility condition. In the additive homoscedastic case, the acceptance region has the form
+\[
+    A_{\alpha}(\mathbf d)
+    =
+    \mathbf d+\Ealpha.
+\]
+Then
+\[
+    \dobs\in A_{\alpha}(\mathbf d)
+\]
+is equivalent to
+\[
+    \dobs-\mathbf d\in\Ealpha.
+\]
+
+In the heteroscedastic additive case, one may have candidate-dependent noise regions
+\[
+    \Ealpha(\mathbf d)
+\]
+with
+\[
+    \mu_{N\mid\mathbf d}\bigl(\Ealpha(\mathbf d)\bigr)
+    =
+    1-\alpha.
+\]
+Then
+\[
+    A_{\alpha}(\mathbf d)
+    =
+    \mathbf d+\Ealpha(\mathbf d),
+\]
+and the compatibility condition becomes
+\[
+    \dobs-\mathbf d\in\Ealpha(\mathbf d).
+\]
+
+But in the fully general likelihood-based construction, the more fundamental condition is simply
+\[
+    \dobs\in A_{\alpha}(\mathbf d).
+\]
+
+\subsection{Confidence sets under general sampling laws}
+
+Given the candidate-dependent acceptance regions \(A_{\alpha}(\mathbf d)\), define the confidence set
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d\in\Dspace:
+        \dobs\in A_{\alpha}(\mathbf d)
+    \right\}.
+\]
+
+This set contains exactly those candidate true data values for which the actual observation \(\dobs\) would not be rejected as unusual.
+
+Equivalently, \(\mathbf d\) belongs to \(\Calpha(\dobs)\) if the observed datum is compatible with the sampling law
+\[
+    \mathsf L(\mathbf d,\cdot).
+\]
+
+This is the general confidence-set construction:
+\[
+    \boxed{
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        \dobs
+        \text{ is accepted under the sampling law }
+        \mathsf L(\mathbf d,\cdot)
+    \right\}.
+    }
+\]
+
+In the additive homoscedastic case, this reduces to
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        \dobs-\mathbf d\in\Ealpha
+    \right\}.
+\]
+In the heteroscedastic additive case, it becomes
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        \dobs-\mathbf d\in\Ealpha(\mathbf d)
+    \right\}.
+\]
+In a multiplicative or nonlinear observation model, there may be no meaningful residual of the form \(\dobs-\mathbf d\). The confidence set is then still defined by
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        \dobs\in A_{\alpha}(\mathbf d)
+    \right\},
+\]
+where \(A_{\alpha}(\mathbf d)\) is chosen directly from the likelihood kernel.
+
+Thus, the shifted-noise construction is a special case. The deeper frequentist construction is test inversion:
+\[
+    \text{test each candidate truth, then keep the candidates not rejected.}
+\]
+
+\subsection{Using test statistics}
+
+Acceptance regions are often constructed using a test statistic. Suppose we choose a function
+\[
+    T:\Dspace\times\Dspace\to\mathbb R,
+\]
+where
+\[
+    T(\mathbf d,\mathbf d')
+\]
+measures how unusual the observation \(\mathbf d'\) would be if \(\mathbf d\) were the true datum.
+
+For each candidate \(\mathbf d\), choose a critical value \(c_{\alpha}(\mathbf d)\) such that
+\[
+    \mathsf L
+    \left(
+        \mathbf d,
+        \left\{
+            \mathbf d':
+            T(\mathbf d,\mathbf d')\leq c_{\alpha}(\mathbf d)
+        \right\}
+    \right)
+    =
+    1-\alpha.
+\]
+Then define
+\[
+    A_{\alpha}(\mathbf d)
+    =
+    \left\{
+        \mathbf d':
+        T(\mathbf d,\mathbf d')\leq c_{\alpha}(\mathbf d)
+    \right\}.
+\]
+
+The confidence set becomes
+\[
+    \Calpha(\dobs)
+    =
+    \left\{
+        \mathbf d:
+        T(\mathbf d,\dobs)\leq c_{\alpha}(\mathbf d)
+    \right\}.
+\]
+
+In the scalar Gaussian additive case,
+\[
+    D'_{\theta}=\theta+N,
+    \qquad
+    N\sim\mathcal N(0,\sigma^2),
+\]
+one possible statistic is
+\[
+    T(\theta,d')
+    =
+    \left|
+        \frac{d'-\theta}{\sigma}
+    \right|.
+\]
+In a heteroscedastic Gaussian additive case,
+\[
+    D'_{\theta}=\theta+N_{\theta},
+    \qquad
+    N_{\theta}\sim\mathcal N(0,\sigma^2(\theta)),
+\]
+one instead uses
+\[
+    T(\theta,d')
+    =
+    \left|
+        \frac{d'-\theta}{\sigma(\theta)}
+    \right|.
+\]
+The critical value may be constant in this simple standardized example, but in a general likelihood model it may depend on the candidate \(\theta\).
+
+The test-statistic formulation is often the most flexible way to build confidence sets when the observation law is not simply additive.
+
+\subsection{Coverage under the true sampling law}
+
+The coverage statement now follows directly from the likelihood kernel.
+
+Before observation, if the true datum is \(\dtrue\), then the random observation has law
+\[
+    \Dobsrand\sim\mathsf L(\dtrue,\cdot).
+\]
+The random confidence set is
+\[
+    \Calpha(\Dobsrand)
+    =
+    \left\{
+        \mathbf d:
+        \Dobsrand\in A_{\alpha}(\mathbf d)
+    \right\}.
+\]
+
+Now consider the event that the random confidence set contains the true datum:
+\[
+    \dtrue\in\Calpha(\Dobsrand).
+\]
+By definition of \(\Calpha\), this event is equivalent to
+\[
+    \Dobsrand\in A_{\alpha}(\dtrue).
+\]
+
+Therefore,
+\[
+\begin{aligned}
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    &=
+    \Prob_{\dtrue}
+    \left(
+        \Dobsrand\in A_{\alpha}(\dtrue)
+    \right)
+    \\
+    &=
+    \mathsf L
+    \left(
+        \dtrue,
+        A_{\alpha}(\dtrue)
+    \right)
+    \\
+    &=
+    1-\alpha.
+\end{aligned}
+\]
+
+If the acceptance regions were chosen conservatively so that
+\[
+    \mathsf L
+    \left(
+        \mathbf d,
+        A_{\alpha}(\mathbf d)
+    \right)
+    \geq
+    1-\alpha
+\]
+for every \(\mathbf d\), then the coverage statement becomes
+\[
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\in\Calpha(\Dobsrand)
+    \right)
+    \geq
+    1-\alpha.
+\]
+
+This derivation shows why the general construction works. The confidence set contains the true datum exactly when the random observation falls inside the true datum's own acceptance region. Since that acceptance region was chosen to have probability \(1-\alpha\) under the true sampling law, coverage follows.
+
+The additive shifted-noise proof was only one special version of this argument. The general proof needs only the likelihood kernel and the candidate-dependent acceptance regions.
+
+\subsection{Decision rules with worst-case guarantees}
+
+In high-stakes problems, one often needs a decision rather than only a confidence set. For example, one may need to decide whether a dangerous feature is present or absent.
+
+Let
+\[
+    \mathcal H_{\mathrm{danger}}\subseteq\Dspace
+\]
+denote the set of true data values corresponding to the dangerous state. A decision rule is a map
+\[
+    \delta:\Dspace\to\{0,1,\mathrm{inc}\},
+\]
+where, for example,
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[\(\delta(\dobs)=0\).]
+    Declare the dangerous feature absent.
+
+    \item[\(\delta(\dobs)=1\).]
+    Declare the dangerous feature present.
+
+    \item[\(\delta(\dobs)=\mathrm{inc}\).]
+    Declare the result inconclusive.
+\end{description}
+
+If the dangerous error is a false negative, then the event of concern is
+\[
+    \delta(\Dobsrand)=0
+\]
+when the true datum actually belongs to \(\mathcal H_{\mathrm{danger}}\).
+
+A frequentist safety guarantee takes the form
+\[
+    \sup_{\mathbf d\in\mathcal H_{\mathrm{danger}}}
+    \Prob_{\mathbf d}
+    \left(
+        \delta(\Dobsrand)=0
+    \right)
+    \leq
+    \alpha.
+\]
+
+This statement means:
+\begin{quote}
+    No matter which dangerous true datum is the actual truth, the probability of falsely declaring absence is at most \(\alpha\).
+\end{quote}
+
+The supremum is important. It gives a uniform guarantee over all dangerous truths, rather than an average guarantee over a distribution of truths. No prior over \(\mathcal H_{\mathrm{danger}}\) is required.
+
+In terms of the likelihood kernel, the guarantee is
+\[
+    \sup_{\mathbf d\in\mathcal H_{\mathrm{danger}}}
+    \mathsf L
+    \left(
+        \mathbf d,
+        \{\mathbf d':\delta(\mathbf d')=0\}
+    \right)
+    \leq
+    \alpha.
+\]
+
+This is the decision-theoretic analogue of confidence coverage. Instead of requiring a random set to cover the true value with high probability, we require a decision rule to make the dangerous error with small probability, uniformly over the dangerous part of the truth space.
+
+A natural conservative rule can be built from confidence sets:
+\[
+    \delta(\dobs)=0
+    \quad
+    \text{only if}
+    \quad
+    \Calpha(\dobs)\cap\mathcal H_{\mathrm{danger}}=\varnothing.
+\]
+That is, we declare the dangerous feature absent only when no dangerous candidate truth remains compatible with the observation.
+
+If
+\[
+    \Calpha(\dobs)\cap\mathcal H_{\mathrm{danger}}\neq\varnothing,
+\]
+then at least one dangerous truth is still compatible with the data, and the responsible decision is not to clear the dangerous state. One may declare the result present or inconclusive, depending on the problem and the decision rule.
+
+This construction gives the desired false-negative control because, if the true datum lies in \(\mathcal H_{\mathrm{danger}}\) and the rule falsely declares absence, then the true datum must have been excluded from the confidence set. Therefore, the false-negative event is contained in the coverage-failure event.
+
+More explicitly, suppose
+\[
+    \dtrue\in\mathcal H_{\mathrm{danger}}.
+\]
+If
+\[
+    \delta(\Dobsrand)=0,
+\]
+then by the rule
+\[
+    \Calpha(\Dobsrand)\cap\mathcal H_{\mathrm{danger}}=\varnothing.
+\]
+Since \(\dtrue\in\mathcal H_{\mathrm{danger}}\), this implies
+\[
+    \dtrue\notin\Calpha(\Dobsrand).
+\]
+Therefore,
+\[
+    \{\delta(\Dobsrand)=0\}
+    \subseteq
+    \{\dtrue\notin\Calpha(\Dobsrand)\}.
+\]
+Taking probabilities gives
+\[
+    \Prob_{\dtrue}
+    \left(
+        \delta(\Dobsrand)=0
+    \right)
+    \leq
+    \Prob_{\dtrue}
+    \left(
+        \dtrue\notin\Calpha(\Dobsrand)
+    \right)
+    \leq
+    \alpha.
+\]
+
+Hence,
+\[
+    \sup_{\mathbf d\in\mathcal H_{\mathrm{danger}}}
+    \Prob_{\mathbf d}
+    \left(
+        \delta(\Dobsrand)=0
+    \right)
+    \leq
+    \alpha.
+\]
+
+This is the general frequentist answer in safety-critical settings. Whether the observation law is additive, heteroscedastic, multiplicative, or nonlinear, the frequentist can work directly with the likelihood kernel and design rules with uniform error guarantees.
+
+The price is conservatism. If the likelihoods for dangerous and non-dangerous truths overlap substantially, then many observations will remain inconclusive. That is not a defect of the construction. It is the sampling model saying that the data are not strong enough to safely support a sharper verdict.
+
+
+
+\end{document}

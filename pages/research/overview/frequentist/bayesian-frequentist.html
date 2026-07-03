@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian and Frequentist Inference — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/frequentist.css">
+    <meta name="description" content="A conceptual comparison of Bayesian and frequentist inference from the same starting point — an ontological–epistemological split.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                Dspace: '\\mathcal{D}',
+                Drand: '\\mathbf{D}',
+                Dobsrand: "\\mathbf{D}'",
+                Nrand: '\\mathbf{N}',
+                dtrue: '\\mathbf{d}_{\\mathrm{true}}',
+                dobs: '\\mathbf{d}_{\\mathrm{obs}}',
+                nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                muN: '\\mu_N',
+                prior: '\\mu_D',
+                post: "\\mu_{D\\mid D'}",
+                muPred: "\\mu_{D'}",
+                muJoint: "\\mu_{D,D'}",
+                Prob: '\\mathbb{P}',
+                Exp: '\\mathbb{E}',
+                Ealpha: 'E_{\\alpha}',
+                Calpha: 'C_{\\alpha}',
+                G: '\\mathcal{G}',
+                Td: 'T_{\\mathbf{d}}',
+                L: 'L'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Bayesian and Frequentist Inference</h1>
+                <p>From an ontological&ndash;epistemological split.</p>
+            </div>
+        </section>
+
+        <!-- PART NAVIGATION -->
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
+                <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What to expect</h2>
+
+                    <p>Bayesian and frequentist inference do not merely give different
+                    answers to the same probabilistic question. They construct
+                    <em>different epistemological objects</em> around the same
+                    ontological situation.</p>
+
+                    <p>We begin with a simple observation equation:
+                    \[
+                        \dobs=\dtrue+\nobs.
+                    \]
+                    Here \(\dobs\) is the observed datum, \(\dtrue\) is the unknown
+                    true datum, and \(\nobs\) is the realized noise. This equation is
+                    not yet Bayesian or frequentist &mdash; it is simply a statement
+                    about the relation between truth, observation, and error.</p>
+
+                    <p>The Bayesian introduces a probability measure on possible
+                    true data values to represent uncertainty about \(\dtrue\), then
+                    conditions on \(\dobs\) to obtain posterior probabilities over
+                    possible truths. The frequentist refuses to assign a probability
+                    law to \(\dtrue\), keeps it fixed but unknown, places
+                    probability on the data-generating procedure, and constructs
+                    calibrated procedures with controlled repeated-sampling
+                    behaviour.</p>
+
+                    <p>The goal is not to declare one perspective correct and the
+                    other incorrect. The goal is to make precise what each
+                    perspective is doing, what objects it constructs, what statements
+                    it licenses, and what statements it does not license.</p>
+
+                    <h2>The five parts</h2>
+
+                    <p><strong>Part&nbsp;1 &mdash; <a href="part-1.html">The
+                    Setup</a>.</strong>
+                    The ontological observation equation: actual objects, what is
+                    known and what is hidden, and why the decomposition of \(\dobs\)
+                    into truth and noise is not identifiable from the observation
+                    alone.</p>
+
+                    <p><strong>Part&nbsp;2 &mdash; <a href="part-2.html">The
+                    Likelihood Kernel</a>.</strong>
+                    The noise model as an epistemological object. Candidate-dependent
+                    observation laws, the likelihood kernel as a map from candidate
+                    truths to probability measures on observations, and what it can
+                    and cannot say by itself.</p>
+
+                    <p><strong>Part&nbsp;3 &mdash; <a href="part-3.html">The
+                    Bayesian Path</a>.</strong>
+                    Introducing a prior, the epistemological true-datum random
+                    variable, the joint measure, the posterior kernel, and what
+                    collapses when the prior is removed.</p>
+
+                    <p><strong>Part&nbsp;4 &mdash; <a href="part-4.html">The
+                    Frequentist Path</a>.</strong>
+                    Truth fixed, observation random. Noise acceptance regions,
+                    confidence sets from shifted noise, the coverage statement, and
+                    what the frequentist does and does not claim.</p>
+
+                    <p><strong>Part&nbsp;5 &mdash; <a href="part-5.html">Beyond
+                    Additive Noise</a>.</strong>
+                    Heteroscedastic and non-additive observation laws, the general
+                    likelihood-based construction of confidence sets, test
+                    statistics, and decision rules with worst-case guarantees.</p>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

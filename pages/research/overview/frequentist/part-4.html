@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 4: The Frequentist Path — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/frequentist.css">
+    <meta name="description" content="Part 4: The frequentist construction — truth fixed, observation random, confidence sets, coverage, and what the frequentist does and does not claim.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                Dspace: '\\mathcal{D}',
+                Drand: '\\mathbf{D}',
+                Dobsrand: "\\mathbf{D}'",
+                Nrand: '\\mathbf{N}',
+                dtrue: '\\mathbf{d}_{\\mathrm{true}}',
+                dobs: '\\mathbf{d}_{\\mathrm{obs}}',
+                nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                muN: '\\mu_N',
+                prior: '\\mu_D',
+                post: "\\mu_{D\\mid D'}",
+                muPred: "\\mu_{D'}",
+                muJoint: "\\mu_{D,D'}",
+                Prob: '\\mathbb{P}',
+                Exp: '\\mathbb{E}',
+                Ealpha: 'E_{\\alpha}',
+                Calpha: 'C_{\\alpha}',
+                G: '\\mathcal{G}',
+                Td: 'T_{\\mathbf{d}}',
+                L: 'L'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 4: The Frequentist Path</h1>
+                <p>Truth fixed, observation random, calibrated procedures.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
+                <a class="part-chip" href="part-4.html" aria-current="page"><span class="part-chip-num">4</span> Frequentist Path</a>
+                <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>Refusing the epistemological true-datum random variable</h2>
+
+                    <p>The frequentist construction begins from the same ontological
+                    observation equation \(\dobs = \dtrue + \nobs\), but refuses one
+                    of the Bayesian moves. The frequentist does not introduce an
+                    epistemological true-datum random variable
+                    \(\Drand \sim \prior\). The true datum is not assigned a
+                    probability law. It is treated as fixed but unknown.</p>
+
+                    <p>Instead, probability is placed on the observation procedure
+                    through the noise random variable \(\Nrand \sim \muN\). The
+                    frequentist does not try to construct a posterior probability
+                    measure \(\Prob(\dtrue \in A \mid \dobs)\). Instead, the
+                    frequentist asks:</p>
+
+                    <blockquote>
+                        Can we construct a procedure which behaves reliably under
+                        repeated noisy observations, no matter what the fixed true
+                    datum actually is?
+                    </blockquote>
+
+                    <p>The frequentist does not produce a probability distribution
+                    over possible truths. The frequentist produces a
+                    <em>calibrated procedure</em>. The truth is fixed. The
+                    data-generating process is random. The procedure is judged by
+                    how it behaves across repeated draws from that process.</p>
+
+                    <h2>Truth fixed, observation random</h2>
+
+                    <p>In the frequentist model, \(\dtrue\) is fixed and
+                    \(\Nrand \sim \muN\), so before the observation the polluted
+                    datum is \(\Dobsrand = \dtrue + \Nrand\). This looks similar to
+                    the Bayesian \(\Dobsrand = \Drand + \Nrand\), but the
+                    interpretation is different: in the Bayesian model
+                    \(\Drand\) is random; in the frequentist model \(\dtrue\) is
+                    fixed.</p>
+
+                    <p>If the experiment were repeated many times under the same
+                    \(\dtrue\), we would obtain different observations
+                    \(\Dobsrand_1, \Dobsrand_2, \dots\) because the noise realizes
+                    differently each time: \(\Dobsrand_j = \dtrue + \Nrand_j\). The
+                    true datum stays fixed throughout. It is the observations that
+                    move around it.</p>
+
+                    <h2>Candidate-wise compatibility</h2>
+
+                    <p>Since \(\dtrue\) is unknown, the frequentist considers
+                    candidate true data values \(\mathbf d \in \Dspace\). For each
+                    candidate, the implied noise is
+                    \(\mathbf n_{\mathrm{implied}}(\mathbf d) = \dobs - \mathbf d\).
+                    The candidate is compatible if this implied noise looks plausible
+                    under \(\muN\).</p>
+
+                    <p>The frequentist does not ask &ldquo;how probable is
+                    \(\mathbf d\) given \(\dobs\)?&rdquo; but rather &ldquo;if
+                    \(\mathbf d\) were the truth, would \(\dobs\) require a
+                    plausible noise realization?&rdquo; This is the same
+                    candidate-wise logic present in the likelihood kernel, used to
+                    construct tests and confidence sets rather than a posterior
+                    measure.</p>
+
+                    <h2>Noise acceptance regions</h2>
+
+                    <p>Choose a measurable noise acceptance region
+                    \(E_\alpha \subseteq \Dspace\) with
+                    \(\muN(E_\alpha) = 1 - \alpha\). This set contains noise
+                    realizations regarded as ordinary at level \(1-\alpha\); its
+                    complement contains those regarded as extreme.</p>
+
+                    <p>For example, if \(\Nrand \sim \mathcal{N}(0, \sigma^2)\), a
+                    symmetric \(95\%\) acceptance region is
+                    \(E_{0.05} = [-1.96\sigma, 1.96\sigma]\). In higher dimensions,
+                    \(E_\alpha\) may be an ellipsoid, a box, a ball, or another set
+                    chosen to have noise probability \(1-\alpha\).</p>
+
+                    <h2>Confidence sets from shifted noise regions</h2>
+
+                    <p>Given the observed datum \(\dobs\), define the confidence set
+                    \[
+                        \Calpha(\dobs)
+                        = \left\{
+                            \mathbf d \in \Dspace :
+                            \dobs - \mathbf d \in E_\alpha
+                        \right\}.
+                    \]
+                    This contains all candidate true data values whose implied noise
+                    lies in the accepted region. Equivalently,
+                    \(\Calpha(\dobs) = \dobs - E_\alpha\).</p>
+
+                    <p>The logic is:
+                    \[
+                        \begin{aligned}
+                            \text{accepted noise values}
+                            &\quad \mathbf n \in E_\alpha, \\
+                            \text{observation equation}
+                            &\quad \dobs = \mathbf d + \mathbf n, \\
+                            \text{candidate truth}
+                            &\quad \mathbf d = \dobs - \mathbf n.
+                        \end{aligned}
+                    \]
+                    The confidence set is not produced by assigning probabilities to
+                    candidate truths. It is produced by translating accepted noise
+                    realizations into compatible true data values.</p>
+
+                    <h2>The pre-observation random confidence set</h2>
+
+                    <p>Before the observation, \(\Dobsrand = \dtrue + \Nrand\) is
+                    random, so the confidence set is also random:
+                    \[
+                        \Calpha(\Dobsrand)
+                        = \left\{
+                            \mathbf d :
+                            \Dobsrand - \mathbf d \in E_\alpha
+                        \right\}.
+                    \]
+                    If the experiment is repeated many times with the same fixed
+                    \(\dtrue\), we obtain a sequence of random confidence sets
+                    \(\Calpha(\Dobsrand_1), \Calpha(\Dobsrand_2), \dots\). Some
+                    contain \(\dtrue\); some may not. The frequentist calibration
+                    concerns the long-run frequency with which they do.</p>
+
+                    <h2>The coverage statement</h2>
+
+                    <p>By definition, \(\dtrue \in \Calpha(\Dobsrand)\) if and only
+                    if \(\Dobsrand - \dtrue \in E_\alpha\). But in the frequentist
+                    model, \(\Dobsrand - \dtrue = \Nrand\). Therefore:
+                    \[
+                        \dtrue \in \Calpha(\Dobsrand)
+                        \quad\Longleftrightarrow\quad
+                        \Nrand \in E_\alpha.
+                    \]
+                    Taking probabilities:
+                    \[
+                        \begin{aligned}
+                            \Prob_{\dtrue}\!\left(
+                                \dtrue \in \Calpha(\Dobsrand)
+                            \right)
+                            &= \Prob_{\dtrue}\!\left(
+                                \Dobsrand - \dtrue \in E_\alpha
+                            \right) \\
+                            &= \Prob\!\left(\Nrand \in E_\alpha\right) \\
+                            &= \muN(E_\alpha) = 1 - \alpha.
+                        \end{aligned}
+                    \]</p>
+
+                    <div class="freq-callout callout-lesson">
+                        <span class="freq-callout-label">Frequentist coverage</span>
+                        <p>\[
+                            \Prob_{\dtrue}\!\left(
+                                \dtrue \in \Calpha(\Dobsrand)
+                            \right) = 1 - \alpha.
+                        \]</p>
+                        <p>The subscript \(\dtrue\) indicates the probability is
+                        computed under the sampling law in which \(\dtrue\) is the
+                        fixed true datum. The probability is <em>over</em>
+                        \(\Dobsrand\) (equivalently \(\Nrand\)), not over
+                        \(\dtrue\).</p>
+                    </div>
+
+                    <p>In words: if the true datum is fixed at \(\dtrue\), and the
+                    noisy observation procedure is repeated many times, then the
+                    confidence set contains \(\dtrue\) in a fraction \(1-\alpha\)
+                    of repetitions.</p>
+
+                    <h2>The realized confidence set</h2>
+
+                    <p>After the observation, the random \(\Dobsrand\) is replaced by
+                    the actual \(\dobs\). The confidence set becomes
+                    \(\Calpha(\dobs)\) &mdash; a fixed set. At this point,
+                    \(\dtrue \in \Calpha(\dobs)\) is either true or false. The
+                    frequentist generally does not know which, because \(\dtrue\) is
+                    hidden.</p>
+
+                    <div class="freq-callout callout-warning">
+                        <span class="freq-callout-label">The subtle distinction</span>
+                        <p><strong>Before observation:</strong>
+                        \(\Calpha(\Dobsrand)\) is random, so it makes sense to ask
+                        for the probability that it contains \(\dtrue\).</p>
+                        <p><strong>After observation:</strong>
+                        \(\Calpha(\dobs)\) is fixed, so the statement that it
+                        contains \(\dtrue\) is no longer a random event unless one
+                        introduces a probability law for \(\dtrue\).</p>
+                    </div>
+
+                    <h2>What the frequentist does and does not claim</h2>
+
+                    <p>The frequentist <strong>does</strong> claim:
+                    \[
+                        \Prob_{\dtrue}\!\left(
+                            \dtrue \in \Calpha(\Dobsrand)
+                        \right) = 1 - \alpha.
+                    \]
+                    This is a statement about a random confidence set before the
+                    observation is realized. Equivalently: the rule
+                    \(\dobs \mapsto \Calpha(\dobs)\) catches the fixed truth with
+                    frequency \(1-\alpha\) under repeated noisy observations.</p>
+
+                    <p>The frequentist does <strong>not</strong> automatically claim:
+                    \[
+                        \Prob\!\left(
+                            \dtrue \in \Calpha(\dobs)
+                        \right) = 1 - \alpha.
+                    \]
+                    This would be a statement about the probability that the fixed
+                    truth lies in the already-realized set. To make such a
+                    statement, one would need a probability model for \(\dtrue\),
+                    which the frequentist construction has deliberately not
+                    introduced.</p>
+
+                    <div class="freq-callout callout-checkpoint">
+                        <span class="freq-callout-label">Two statements, kept separate</span>
+                        <p><strong>Frequentist coverage:</strong>
+                        A random confidence set catches a fixed truth with
+                        probability \(1-\alpha\).</p>
+                        <p><strong>Posterior-style statement:</strong>
+                        A fixed realized set contains an uncertain truth with
+                        probability \(1-\alpha\).</p>
+                        <p>The first is licensed by the sampling model. The second
+                        requires a probability distribution over possible true data
+                        values.</p>
+                    </div>
+
+                    <h2>The distinctive frequentist rhythm</h2>
+
+                    <p>The realized confidence set \(\Calpha(\dobs)\) is not useless
+                    &mdash; it has a concrete compatibility interpretation. It tells
+                    us which candidate truths survive the noise-based compatibility
+                    test. The calibration is pre-observation; the output is
+                    post-observation.</p>
+
+                    <blockquote>
+                        <p><strong>Before seeing data:</strong>
+                        Design a rule with known repeated-sampling behaviour.</p>
+                        <p><strong>After seeing data:</strong>
+                        Apply the rule to obtain a concrete set of compatible
+                        truths.</p>
+                        <p><strong>Interpretation:</strong>
+                        Trust the output through the calibration of the rule, not
+                        through a posterior probability assigned to the realized
+                        set.</p>
+                    </blockquote>
+
+                </div>
+
+                <div class="part-prevnext">
+                    <a class="part-prevnext-btn" href="part-3.html">
+                        <span class="arrow">&larr;</span> Part 3: Bayesian Path
+                    </a>
+                    <a class="part-prevnext-btn" href="part-5.html">
+                        Part 5: Beyond Additive <span class="arrow">&rarr;</span>
+                    </a>
+                </div>
+                <div class="part-prevnext-spacer"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

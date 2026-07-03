@@ -43,6 +43,13 @@ pages/
                 part-3e.html
                 part-3f.html
                 part-4.html
+            frequentist/                 # Bayesian and Frequentist Inference (landing + multi-page parts)
+                bayesian-frequentist.html
+                part-1.html
+                part-2.html
+                part-3.html
+                part-4.html
+                part-5.html
             think-first/              # Think First, Discretize Later (landing + multi-page acts)
                 think-first-discretize-later.html
                 act-1.html
@@ -119,6 +126,8 @@ Every page loads **two CSS files**:
    - `pages/research/overview/think-first/think-first-discretize-later.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` + `css/refinement-panel.css`
    - `pages/research/overview/think-first/act-*.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/think-first/summary.html` → same as act pages
+   - `pages/research/overview/frequentist/bayesian-frequentist.html` → `css/frequentist.css` (four levels up: `../../../../css/`)
+   - `pages/research/overview/frequentist/part-*.html` → `css/frequentist.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/sola/my-take-on-sola.html` → `css/sola.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/sola/act-*.html` → `css/sola.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/sola/summary.html` → same as act pages
@@ -132,6 +141,7 @@ Pages in `pages/` link CSS with `../../css/styles.css` (two levels up).
 Pages in `pages/research/overview/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/overview/think-first/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/bayes/` link CSS with `../../../../css/styles.css`.
+Pages in `pages/research/overview/frequentist/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/sola/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/publications/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/` link CSS with `../../../css/styles.css`.
@@ -208,6 +218,12 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/research/overview/think-first/act-7.html` | Act VII: Putting the Pieces Together — function-space posterior, discretization after formulation |
 | `pages/research/overview/think-first/act-8.html` | Act VIII: Return to the Toy Problem — corrected workflow, comparison with naive approach |
 | `pages/research/overview/think-first/summary.html` | Summary of the Argument + Appendices A–D (Gaussian conditioning, Hilbert-space measures, Gram matrices, exercises) |
+| `pages/research/overview/frequentist/bayesian-frequentist.html` | Bayesian and Frequentist Inference — landing page with overview and multi-page nav |
+| `pages/research/overview/frequentist/part-1.html` | Part 1: The Setup — ontological observation equation, actual objects, identifiability |
+| `pages/research/overview/frequentist/part-2.html` | Part 2: The Likelihood Kernel — noise model, candidate-dependent laws, what likelihood can/cannot say |
+| `pages/research/overview/frequentist/part-3.html` | Part 3: The Bayesian Path — prior, joint measure, posterior, what collapses without a prior |
+| `pages/research/overview/frequentist/part-4.html` | Part 4: The Frequentist Path — truth fixed, confidence sets, coverage, what frequentist does/doesn't claim |
+| `pages/research/overview/frequentist/part-5.html` | Part 5: Beyond Additive Noise — general sampling laws, test statistics, decision rules |
 | `pages/research/overview/sola/my-take-on-sola.html` | My Take on SOLA — landing page with overview and multi-page nav |
 | `pages/research/overview/sola/act-1.html` | Act 1: The Kernel Game — sensitivity kernels, data as integrals, target kernels |
 | `pages/research/overview/sola/act-2.html` | Act 2: Building SOLA from Scratch — weighted sums, resolving kernels, the minimization problem |
@@ -262,6 +278,12 @@ The Bayes, Measure-Theoretically page is discoverable via:
 
 The landing page includes a multi-page navigation bar linking to `part-1.html`
 through `part-4.html`. Each part page includes its own nav bar and prev/next buttons.
+
+The Bayesian and Frequentist Inference page is discoverable via:
+1. **Research overview** (`overview/index.html`) → Featured Theory Topics card → `frequentist/bayesian-frequentist.html`
+
+The landing page includes a multi-page navigation bar linking to `part-1.html`
+through `part-5.html`. Each part page includes its own nav bar and prev/next buttons.
 
 The My Take on SOLA page is discoverable via:
 1. **Research overview** (`overview/index.html`) → Featured Theory Topics card → `sola/my-take-on-sola.html`

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 3: The Bayesian Path — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <link rel="stylesheet" href="../../../../css/frequentist.css">
+    <meta name="description" content="Part 3: The Bayesian construction — prior, joint measure, posterior kernel, and what collapses without a prior.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                Dspace: '\\mathcal{D}',
+                Drand: '\\mathbf{D}',
+                Dobsrand: "\\mathbf{D}''",
+                Nrand: '\\mathbf{N}',
+                dtrue: '\\mathbf{d}_{\\mathrm{true}}',
+                dobs: '\\mathbf{d}_{\\mathrm{obs}}',
+                nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                muN: '\\mu_N',
+                prior: '\\mu_D',
+                post: "\\mu_{D\\mid D''}",
+                muPred: "\\mu_{D''}",
+                muJoint: "\\mu_{D,D''}",
+                Prob: '\\mathbb{P}',
+                Exp: '\\mathbb{E}',
+                Ealpha: 'E_{\\alpha}',
+                Calpha: 'C_{\\alpha}',
+                G: '\\mathcal{G}',
+                Td: 'T_{\\mathbf{d}}',
+                L: 'L'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../../../../index.html">Home</a></li>
+                <li><a href="../../../about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="../index.html">Research</a>
+                    <div class="dropdown-content">
+                        <a href="../../publications/papers.html">Publications</a>
+                        <a href="../../posters/posters.html">Presentations</a>
+                    </div>
+                </li>
+                <li><a href="../../../cv.html">CV</a></li>
+                <li><a href="../../../contacts.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Part 3: The Bayesian Path</h1>
+                <p>Prior, joint measure, posterior &mdash; and what collapses without one.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Part navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-3.html" aria-current="page"><span class="part-chip-num">3</span> Bayesian Path</a>
+                <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
+                <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>Introducing a prior on the truth</h2>
+
+                    <p>The likelihood kernel gives, for each candidate true datum
+                    \(\mathbf d\), a probability law for possible observations. It
+                    has the direction
+                    \(\mathbf d \longmapsto \mu_{\mathbf d}\) &mdash; from candidate
+                    truth to observation law. This is not yet a probability law on
+                    possible true data values.</p>
+
+                    <p>The Bayesian construction adds precisely this missing
+                    ingredient: a probability measure \(\prior\) on the true-data
+                    space \((\Dspace, \Sigma_{\Dspace})\), or equivalently a random
+                    variable \(\Drand \sim \prior\). This random variable is an
+                    <em>epistemological representation</em> of uncertainty about the
+                    unknown true datum. It is not introduced because reality itself
+                    contains a randomly fluctuating true datum, but because, from
+                    the perspective of the observer, the true datum is unknown.</p>
+
+                    <div class="freq-callout callout-intuition">
+                        <span class="freq-callout-label">Two objects, kept separate</span>
+                        <p><strong>Ontological true datum:</strong>
+                        \(\dtrue\) is the actual true datum. It is fixed, but
+                        generally hidden.</p>
+                        <p><strong>Epistemological true datum:</strong>
+                        \(\Drand \sim \prior\) is a random variable representing
+                        uncertainty about which value \(\dtrue\) might have.</p>
+                    </div>
+
+                    <h2>The Bayesian observation model</h2>
+
+                    <p>Assuming \(\Drand\) and \(\Nrand\) are independent, the
+                    Bayesian observation model is
+                    \[
+                        \Dobsrand = \Drand + \Nrand.
+                    \]
+                    This differs from the known-truth model
+                    \(\Dobsrand = \dtrue + \Nrand\) in that the centre of the
+                    observation law is itself epistemologically random:
+                    \(\Drand \sim \prior\). The Bayesian observation variable mixes
+                    two sources of uncertainty: prior uncertainty about the true
+                    datum (\(\Drand\)) and noise uncertainty (\(\Nrand\)).</p>
+
+                    <h2>The prior predictive distribution</h2>
+
+                    <p>The law of \(\Dobsrand\) is called the prior predictive
+                    distribution. It describes what observations are expected before
+                    the actual datum \(\dobs\) is used:
+                    \[
+                        \muPred(A)
+                        = \int_{\Dspace} \mu_{\mathbf d}(A)
+                        \,\prior(d\mathbf d).
+                    \]
+                    In the additive independent case, this is the convolution
+                    \(\muPred = \prior * \muN\). If densities exist:
+                    \[
+                        p_{\muPred}(\mathbf d')
+                        = \int_{\Dspace} p_N(\mathbf d' - \mathbf d)\,
+                        p_{\prior}(\mathbf d)\,d\mathbf d.
+                    \]</p>
+
+                    <h2>The joint measure</h2>
+
+                    <p>The Bayesian construction defines a joint probability measure
+                    on the pair \((\Drand, \Dobsrand)\):
+                    \[
+                        \muJoint(B \times A)
+                        = \int_B \mu_{\mathbf d}(A)\,\prior(d\mathbf d).
+                    \]
+                    This joint measure contains the main Bayesian objects:</p>
+
+                    <ul>
+                        <li><strong>Prior:</strong> the marginal law of
+                        \(\Drand\).</li>
+                        <li><strong>Prior predictive:</strong> the marginal law of
+                        \(\Dobsrand\).</li>
+                        <li><strong>Likelihood kernel:</strong> the conditional law
+                        of \(\Dobsrand\) given \(\Drand = \mathbf d\).</li>
+                        <li><strong>Posterior kernel:</strong> the conditional law
+                        of \(\Drand\) given \(\Dobsrand = \mathbf d'\).</li>
+                    </ul>
+
+                    <p>The likelihood appears inside the Bayesian construction as the
+                    conditional law of the observation given the epistemological true
+                    datum:
+                    \(\L(\mathbf d, A) = \Prob(\Dobsrand \in A \mid \Drand = \mathbf d)\).
+                    What is distinctively Bayesian is the multiplication of this
+                    sampling model by a prior measure on possible true data
+                    values.</p>
+
+                    <h2>The posterior kernel</h2>
+
+                    <p>The posterior kernel reverses the direction of the likelihood
+                    kernel. The likelihood goes from candidate truth to observation
+                    law; the posterior goes from observed datum to probability
+                    measure on possible truths:
+                    \[
+                        \post(\mathbf d', B)
+                        = \Prob(\Drand \in B \mid \Dobsrand = \mathbf d').
+                    \]
+                    After the actual observation \(\dobs\), the Bayesian posterior is
+                    \(\post(\dobs, \cdot)\). If densities exist, Bayes' formula
+                    gives
+                    \[
+                        p(\mathbf d \mid \dobs)
+                        = \frac{p_N(\dobs - \mathbf d)\,p_{\prior}(\mathbf d)}
+                               {p_{\muPred}(\dobs)},
+                    \]
+                    or equivalently
+                    \(p(\mathbf d \mid \dobs) \propto p_N(\dobs - \mathbf d)\,p_{\prior}(\mathbf d)\).</p>
+
+                    <p>The posterior combines two ingredients:
+                    <strong>data fit</strong> \(p_N(\dobs - \mathbf d)\), which
+                    measures how well candidate \(\mathbf d\) explains the observed
+                    datum, and <strong>prior weight</strong>
+                    \(p_{\prior}(\mathbf d)\), which measures how plausible
+                    \(\mathbf d\) was before observing.</p>
+
+                    <h2>The point of contact with reality</h2>
+
+                    <p>The actual observation \(\dobs\) is an ontological object. The
+                    Bayesian model contains an epistemological random variable
+                    \(\Dobsrand\) representing possible observations before the
+                    actual observation is used. The point of contact is the
+                    identification \(\Dobsrand = \dobs\). Conditioning on this event
+                    injects information from reality into the epistemological
+                    model.</p>
+
+                    <p>The Bayesian workflow:
+                    \[
+                        \prior
+                        \quad\longrightarrow\quad
+                        \muJoint
+                        \quad\longrightarrow\quad
+                        \post(\dobs, \cdot).
+                    \]
+                    Before observation, uncertainty is represented by the prior.
+                    After observation, uncertainty is represented by the posterior.
+                    This is why the Bayesian can make statements such as
+                    \(\Prob(\Drand \in B \mid \Dobsrand = \dobs) = \post(\dobs, B)\)
+                    &mdash; these are posterior probability statements about the
+                    epistemological true-datum random variable, not statements about
+                    repeated confidence-set coverage.</p>
+
+                    <h2>Bayesian outlier assessment</h2>
+
+                    <p>The Bayesian can ask whether \(\dobs\) is surprising before
+                    conditioning, using the prior predictive distribution
+                    \(\muPred = \prior * \muN\). A small value of
+                    \(p_{\muPred}(\dobs)\) indicates that the observed datum
+                    lies in a low-density region of the prior predictive
+                    distribution.</p>
+
+                    <p>However, a prior predictive surprise can occur for several
+                    reasons: the observation may require an extreme noise
+                    realization around a plausible true datum (noise outlier), the
+                    true datum may lie in a region of low prior probability (prior
+                    surprise), or the model may be misspecified. After observing
+                    \(\dobs\), the posterior can help distinguish which explanation
+                    is favoured.</p>
+
+                    <div class="freq-callout callout-lesson">
+                        <span class="freq-callout-label">Bayesian advantage and price</span>
+                        <p>The advantage: Bayes can make posterior probability
+                        statements about possible truths and explanations. The price:
+                        these statements depend on the prior and the full
+                        probabilistic model.</p>
+                    </div>
+
+                    <h2>What collapses without a prior</h2>
+
+                    <p>Without the prior \(\prior\), several Bayesian objects cannot
+                    be constructed:</p>
+
+                    <ul>
+                        <li>No epistemological true-datum random variable
+                        \(\Drand \sim \prior\).</li>
+                        <li>No Bayesian predictive observation variable
+                        \(\Dobsrand = \Drand + \Nrand\).</li>
+                        <li>No prior predictive distribution \(\muPred\)
+                        &mdash; there is no measure with which to average the
+                        candidate-dependent observation laws.</li>
+                        <li>No joint measure on \((\Drand, \Dobsrand)\).</li>
+                        <li>No posterior kernel \(\post(\mathbf d', B)\) &mdash;
+                        there is nothing to condition.</li>
+                    </ul>
+
+                    <p>The prior is not a decorative extra. It is the object that
+                    makes posterior probability over possible truths mathematically
+                    meaningful.</p>
+
+                    <h2>What survives without a prior</h2>
+
+                    <p>Although the full Bayesian construction collapses, not
+                    everything disappears. The noise model \(\Nrand \sim \muN\)
+                    survives. The candidate-dependent observation laws
+                    \(\mu_{\mathbf d} = (T_{\mathbf d})_{\#}\muN\) survive. The
+                    likelihood kernel
+                    \(\L(\mathbf d, A) = \mu_{\mathbf d}(A)\) survives. The
+                    ability to test whether \(\dobs - \mathbf d\) is plausible under
+                    the noise model for each candidate \(\mathbf d\) survives.</p>
+
+                    <div class="freq-callout callout-checkpoint">
+                        <span class="freq-callout-label">The dividing line</span>
+                        <p><strong>Survives without a prior:</strong>
+                        candidate-wise sampling laws.</p>
+                        <p><strong>Collapses without a prior:</strong>
+                        probability over candidate truths.</p>
+                        <p>Without a prior, one does not lose the observation model.
+                        One loses the ability to turn the observation model into
+                        posterior probabilities over possible truths. This surviving
+                        sampling structure is the starting point for frequentist
+                        inference.</p>
+                    </div>
+
+                    <h2>Why posterior probabilities are unavailable</h2>
+
+                    <p>The posterior probability statement
+                    \(\Prob(\dtrue \in A \mid \dobs) = 0.95\) is not automatically
+                    meaningful. The difficulty is that \(\dtrue\) is an ontological
+                    object, not a random variable. For the expression to be a
+                    probability statement, one must first introduce a probability
+                    model in which the true datum is represented by a random
+                    variable &mdash; exactly what the Bayesian does with
+                    \(\Drand \sim \prior\).</p>
+
+                    <p>The likelihood alone cannot fix this. The likelihood function
+                    \(\ell_{\dobs}(\mathbf d) = p_N(\dobs - \mathbf d)\) is a
+                    function of the candidate true datum, but it is not a probability
+                    density over \(\mathbf d\). It does not generally integrate to
+                    one over \(\Dspace\). The likelihood answers: <em>how plausible
+                    is the observation if \(\mathbf d\) were true?</em> The posterior
+                    answers: <em>how plausible is \(\mathbf d\) after observing
+                    \(\dobs\)?</em> The second question cannot be obtained from the
+                    first without additional structure.</p>
+
+                    <p>Without a prior, one may say &ldquo;candidate \(\mathbf d\) is
+                    compatible or incompatible with \(\dobs\) under the noise
+                    model,&rdquo; but not &ldquo;the probability that \(\dtrue\)
+                    lies in \(A\) given \(\dobs\) is \(0.95\).&rdquo; That latter
+                    statement belongs to a Bayesian construction, or to another
+                    framework that introduces a post-data probability measure on
+                    possible true values.</p>
+
+                </div>
+
+                <div class="part-prevnext">
+                    <a class="part-prevnext-btn" href="part-2.html">
+                        <span class="arrow">&larr;</span> Part 2: The Likelihood
+                    </a>
+                    <a class="part-prevnext-btn" href="part-4.html">
+                        Part 4: Frequentist Path <span class="arrow">&rarr;</span>
+                    </a>
+                </div>
+                <div class="part-prevnext-spacer"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <span>&copy; 2025–2026 Adrian Mag.</span><br>
+                <span>
+                    Text and content: license for notes to be decided.<br>
+                    Code samples and repositories: each has its own license (see linked code for details).<br>
+                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
+                    Background images are by Adrian Mag and also published on Unsplash.<br>
+                    Other images may be subject to separate copyright.
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

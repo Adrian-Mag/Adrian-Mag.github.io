@@ -105,6 +105,10 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 @media (max-width: 700px) {
+    .part-nav {
+        position: relative;
+    }
+
     .math-article {
         font-size: 1rem;
         line-height: 1.75;
@@ -337,7 +341,11 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 /* ── Part navigation (nav chips + prev/next) ─────────── */
 
 .part-nav {
-    background: rgba(30,34,40,0.5);
+    position: sticky;
+    top: var(--header-h, 72px);
+    z-index: 90;
+    background: rgba(30,34,40,0.92);
+    backdrop-filter: blur(10px);
     border-top: 1px solid rgba(103,145,190,0.2);
     border-bottom: 1px solid rgba(103,145,190,0.2);
     padding: 1rem 1rem;

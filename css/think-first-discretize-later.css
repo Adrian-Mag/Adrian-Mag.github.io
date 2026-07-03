@@ -840,6 +840,10 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
         font-size: 1rem;
     }
 
+    .act-nav {
+        position: relative;
+    }
+
     .act-nav-inner {
         gap: 6px;
         padding: 8px 12px;
