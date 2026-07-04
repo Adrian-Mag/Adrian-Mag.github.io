@@ -79,7 +79,7 @@
         <nav class="part-nav" aria-label="Part navigation">
             <div class="part-nav-inner">
                 <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
-                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Observation Kernel</a>
                 <a class="part-chip" href="part-3.html" aria-current="page"><span class="part-chip-num">3</span> Bayesian Path</a>
                 <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
                 <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
@@ -92,7 +92,7 @@
 
                     <h2>Introducing a prior on the truth</h2>
 
-                    <p>The likelihood kernel gives, for each candidate true datum
+                    <p>The observation kernel gives, for each candidate true datum
                     \(\mathbf d\), a probability law for possible observations. It
                     has the direction
                     \(\mathbf d \longmapsto \mu_{\mathbf d}\) &mdash; from candidate
@@ -165,7 +165,7 @@
                         \(\Drand\).</li>
                         <li><strong>Prior predictive:</strong> the marginal law of
                         \(\Dobsrand\).</li>
-                        <li><strong>Likelihood kernel:</strong> the conditional law
+                        <li><strong>Observation kernel:</strong> the conditional law
                         of \(\Dobsrand\) given \(\Drand = \mathbf d\).</li>
                         <li><strong>Posterior kernel:</strong> the conditional law
                         of \(\Drand\) given \(\Dobsrand = \mathbf d'\).</li>
@@ -181,8 +181,8 @@
 
                     <h2>The posterior kernel</h2>
 
-                    <p>The posterior kernel reverses the direction of the likelihood
-                    kernel. The likelihood goes from candidate truth to observation
+                    <p>The posterior kernel reverses the direction of the observation
+                    kernel. The observation kernel goes from candidate truth to observation
                     law; the posterior goes from observed datum to probability
                     measure on possible truths:
                     \[
@@ -286,7 +286,7 @@
                     everything disappears. The noise model \(\Nrand \sim \muN\)
                     survives. The candidate-dependent observation laws
                     \(\mu_{\mathbf d} = (T_{\mathbf d})_{\#}\muN\) survive. The
-                    likelihood kernel
+                    observation kernel
                     \(\L(\mathbf d, A) = \mu_{\mathbf d}(A)\) survives. The
                     ability to test whether \(\dobs - \mathbf d\) is plausible under
                     the noise model for each candidate \(\mathbf d\) survives.</p>
@@ -337,7 +337,7 @@
 
                 <div class="part-prevnext">
                     <a class="part-prevnext-btn" href="part-2.html">
-                        <span class="arrow">&larr;</span> Part 2: The Likelihood
+                        <span class="arrow">&larr;</span> Part 2: The Observation Kernel
                     </a>
                     <a class="part-prevnext-btn" href="part-4.html">
                         Part 4: Frequentist Path <span class="arrow">&rarr;</span>

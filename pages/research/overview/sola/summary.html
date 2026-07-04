@@ -20,7 +20,10 @@
                 dd: '\\,\\mathrm{d}', range: '\\operatorname{ran}',
                 kernel: '\\operatorname{ker}', spanop: '\\operatorname{span}',
                 Tr: '\\operatorname{Tr}', HS: '\\mathrm{HS}',
-                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}'
+                argmin: '\\operatorname*{arg\\,min}', pushforward: '_{\\#}',
+                dobs: '\\widetilde{\\mathbf{d}}', nobs: '\\mathbf{n}_{\\mathrm{obs}}',
+                pobs: '\\widetilde{\\mathbf{p}}', etaobs: '\\boldsymbol{\\eta}_{\\mathrm{obs}}',
+                mueta: '\\mu_{\\eta}', muN: '\\mu_N'
             },
             tags: 'ams'
         }
@@ -76,9 +79,8 @@
                 <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
                 <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
                 <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
-                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
-                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
-                <a class="part-chip" href="act-11.html"><span class="part-chip-num">11</span> What SOLA Is Good For</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> What SOLA Is Good For</a>
                 <a class="part-chip" href="summary.html" aria-current="page"><span class="part-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -213,7 +215,7 @@
                     This is the covariance of the propagated data-noise term
                     \(\mathbf X\boldsymbol\eta\)
                     when
-                    \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D).\)</p>
+                    \(\boldsymbol\eta\sim \mathcal{N}(\mathbf 0,\mathbf C_D).\)</p>
 
                     <p>It is therefore a covariance for observational noise in the resolved SOLA
                     quantity
@@ -233,35 +235,33 @@
                         about the exact target property of the true model.</p>
                     </div>
 
-                    <h3>The generative correction</h3>
+                    <h3>The frequentist interpretation</h3>
 
-                    <p>The shifted-noise interpretation begins with an observation-centred object
-                    such as
-                    \(N(\widetilde{\mathbf d},\mathbf C_D),\)
-                    then pushes it through \(\mathbf X\):
-                    \[N(\widetilde{\mathbf d},\mathbf C_D) \xrightarrow{\;\mathbf X\;} N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\]
-                    This pushforward is mathematically valid, but it is not the fundamental
-                    inverse-problem object.</p>
+                    <p>The shifted-noise pushforward is not a posterior. Without a prior, the
+                    observed data cannot be turned into a statement about which models are more
+                    likely. The Bayesian route is closed.</p>
 
-                    <p>The generative object is the model-data relation.</p>
-
-                    <p>In the probabilistic case, this is a likelihood kernel
-                    \(m\mapsto Lprob(m,\cdot).\)
-                    SOLA pushes it forward to
-                    \(m \mapsto \mathbf X_{\#}Lprob(m,\cdot).\)</p>
-
-                    <p>In the set-valued case, the model-data relation is
-                    \(m\mapsto Lset(m)\subseteq\D.\)
-                    SOLA pushes it forward to
-                    \(m \mapsto \mathbf X(Lset(m))\subseteq\Pspace.\)</p>
-
-                    <p>Thus the generative interpretation is
-                    \(\text{model-data relation} \xrightarrow{\;\mathbf X\;} \text{model-property relation}.\)</p>
+                    <p>The frequentist route keeps the true model
+                    \(m_{\mathrm{true}}\)
+                    fixed and treats the observation as random. SOLA transforms the observation
+                    equation from data space to property space:
+                    \[\dobs = G(m_{\mathrm{true}}) + \nobs \;\longmapsto\; \pobs = \mathbf X G(m_{\mathrm{true}}) + \etaobs.\]
+                    The transformed noise law is
+                    \(\mueta = \mathbf X_{\#}\muN.\)
+                    Confidence sets for the approximate property
+                    \(\mathbf X G(m_{\mathrm{true}})\)
+                    are built from acceptance regions of the transformed noise, with coverage
+                    \(1-\alpha.\)
+                    Confidence for the desired property
+                    \(\Tau(m_{\mathrm{true}})\)
+                    requires additional control of resolution error.</p>
 
                     <div class="sola-callout callout-lesson">
                         <span class="sola-callout-label">Lesson</span>
-                        <p>Generative SOLA reshuffles model-indexed information. It does not need
-                        to place the observed data at the centre of the uncertainty story.</p>
+                        <p>SOLA transforms the observation problem. It does not erase the
+                        distinction between Bayesian posterior probability and frequentist
+                        coverage. Without a prior, the frequentist interpretation is the natural
+                        framework for SOLA's uncertainty.</p>
                     </div>
 
                     <h3>The final principle</h3>
@@ -771,23 +771,25 @@
                         of the same filtering phenomenon.</li>
                     </ul>
 
-                    <p><strong>Figure 20: Shifted noise versus likelihood.</strong></p>
+                    <p><strong>Figure 20: Shifted noise versus observation model.</strong></p>
                     <ul>
                         <li>Left panel: a Gaussian cloud centred at \(\widetilde{\mathbf d}\).</li>
                         <li>Right panel: a family of Gaussian clouds centred at \(G(m)\) for
                         different \(m\).</li>
-                        <li>Message: shifted noise is observation-centred, likelihood is
+                        <li>Message: shifted noise is observation-centred, the observation model is
                         model-centred.</li>
                     </ul>
 
-                    <p><strong>Figure 21: Generative SOLA.</strong></p>
+                    <p><strong>Figure 21: Frequentist SOLA.</strong></p>
                     <ul>
                         <li>Show:
-                        \(m \mapsto Lprob(m,\cdot) \xrightarrow{\;\mathbf X_{\#}\;} \mathbf X_{\#}Lprob(m,\cdot).\)</li>
-                        <li>Also show the set-valued version:
-                        \(m \mapsto Lset(m) \xrightarrow{\;\mathbf X\;} \mathbf X(Lset(m)).\)</li>
-                        <li>Message: SOLA pushes model-data relations into model-property
-                        relations.</li>
+                        \(\dobs = G(m_{\mathrm{true}}) + \nobs \;\longmapsto\; \pobs = \mathbf X G(m_{\mathrm{true}}) + \etaobs.\)</li>
+                        <li>Show confidence set:
+                        \(C_{\alpha}^{\mathbf X}(\pobs) = \pobs - F_{\alpha}\)
+                        with coverage
+                        \(1-\alpha.\)</li>
+                        <li>Message: SOLA transforms the observation problem; the frequentist
+                        framework gives calibrated confidence without a prior.</li>
                     </ul>
 
                     <p><strong>Figure 22: Final summary graphic.</strong></p>
@@ -800,7 +802,7 @@
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">
-                        <a class="part-prevnext-btn" href="act-11.html"><span class="arrow">&larr;</span> Act 11: What SOLA Is Good For</a>
+                        <a class="part-prevnext-btn" href="act-10.html"><span class="arrow">&larr;</span> Act 10: What SOLA Is Good For</a>
                         <a class="part-prevnext-btn" href="my-take-on-sola.html">Back to Overview <span class="arrow">&rarr;</span></a>
                     </div>
                 </div>

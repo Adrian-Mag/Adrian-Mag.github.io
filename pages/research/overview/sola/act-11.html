@@ -76,9 +76,8 @@
                 <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
                 <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
                 <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
-                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
-                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
-                <a class="part-chip" href="act-11.html" aria-current="page"><span class="part-chip-num">11</span> What SOLA Is Good For</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> What SOLA Is Good For</a>
                 <a class="part-chip" href="summary.html"><span class="part-chip-num">S</span> Summary</a>
             </div>
         </nav>
@@ -108,15 +107,16 @@
                     new species of resolution. The resolution operator has not been bypassed.
                     It has been moved to a different place in the formula.</p>
 
-                    <p>The third pillar was <em>uncertainty quantification</em>. Acts 9 and 10
+                    <p>The third pillar was <em>uncertainty quantification</em>. Act 9
                     showed that SOLA's default uncertainty — the shifted-noise pushforward
-                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*)\)
+                    \(\mathcal{N}(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*)\)
                     — is not a posterior. It is a data-space jitter centred on the observation.
                     Without a prior, the observed data cannot be turned into a statement about
-                    the model. The generative reinterpretation — pushing the likelihood
-                    \(L(m,\cdot)\)
-                    through \(\mathbf X\) instead — gives a cleaner foundation, but it too
-                    requires a prior to produce posterior belief.</p>
+                    the model. The frequentist interpretation — pushing the noise through
+                    \(\mathbf X\)
+                    and building calibrated confidence sets — gives a clean framework that does
+                    not require a prior, but it produces coverage statements, not posterior
+                    beliefs.</p>
 
                     <div class="sola-callout callout-checkpoint">
                         <span class="sola-callout-label">Checkpoint</span>
@@ -174,14 +174,12 @@
                     question is already a linear property of the model, then SOLA tries to build
                     that property directly from the data.</p>
 
-                    <p>And, as Act 10 showed, SOLA has a clean generative role: it transports a
-                    model-data relation into a model-property relation. The likelihood kernel
-                    \(L(m,\cdot)\)
-                    becomes
-                    \(\mathbf X_{\#}L(m,\cdot),\)
-                    a measure on property space indexed by the model. This is the right object
-                    for SOLA to act on — not a shifted-noise cloud around the observation, but
-                    the generative relation that the inverse problem is actually built from.</p>
+                    <p>And, as Act 9 showed, SOLA has a clean frequentist role: it transforms the
+                    observation equation from data space to property space, pushing the noise
+                    law through \(\mathbf X\) and building calibrated confidence sets for the
+                    transformed quantities. This is the right framework for SOLA's uncertainty
+                    — not a shifted-noise cloud around the observation, but a frequentist
+                    procedure with repeated-sampling guarantees.</p>
 
                     <div class="sola-callout callout-intuition">
                         <span class="sola-callout-label">Intuition</span>
@@ -245,11 +243,10 @@
                     shifted-noise measure answers &ldquo;what if we re-observed?&rdquo; — and
                     that is not the question the inverse problem asks.</p>
 
-                    <p>The generative reinterpretation of Act 10 does not fix this by itself. It
-                    gives a cleaner foundation — the likelihood kernel
-                    \(L(m,\cdot)\)
-                    pushed through \(\mathbf X\) — but the likelihood is still not a posterior.
-                    To turn a likelihood into a posterior, one needs a prior. That is not a
+                    <p>The frequentist interpretation of Act 9 does not fix this by itself. It
+                    gives calibrated confidence sets — repeated-sampling guarantees for the
+                    transformed quantities — but confidence is not posterior probability. To
+                    turn a likelihood into a posterior, one needs a prior. That is not a
                     limitation of SOLA. It is a structural fact about inference.</p>
 
                     <p>So SOLA alone should not be asked to provide:</p>
@@ -440,7 +437,7 @@
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">
-                        <a class="part-prevnext-btn" href="act-10.html"><span class="arrow">&larr;</span> Act 10: Generative SOLA</a>
+                        <a class="part-prevnext-btn" href="act-9.html"><span class="arrow">&larr;</span> Act 9: Uncertainty</a>
                         <a class="part-prevnext-btn" href="summary.html">Summary &amp; Appendices <span class="arrow">&rarr;</span></a>
                     </div>
                 </div>

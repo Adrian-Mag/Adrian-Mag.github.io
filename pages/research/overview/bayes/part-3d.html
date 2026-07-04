@@ -208,7 +208,7 @@
 
                     \[L(m,B):=\ell_B(m)=\mathbb{P}(D\in B\mid M=m).\]
 
-                    <p>This is the <em>likelihood kernel</em>. For each fixed
+                    <p>This is the <em>observation kernel</em>. For each fixed
                     \(m\), \(L(m,\cdot)\) is a probability measure on
                     \((\D,\SigmaD)\) &mdash; it tells us how data is
                     distributed when the model is \(m\).</p>
@@ -245,7 +245,7 @@
                             \(\mu_{\M\mid D=d}\) is the disintegration with
                             respect to the data marginal. In Bayesian
                             inversion, we often specify the prior and the
-                            likelihood kernel first, and thereby build the
+                            observation kernel first, and thereby build the
                             joint law. Either way, the same mechanism produces
                             both kernels.
                         </p>
@@ -297,7 +297,7 @@
                     for each \(d\), it produces a full probability measure on
                     \(\M\).</p>
 
-                    <h3>Rows &rarr; likelihood kernel</h3>
+                    <h3>Rows &rarr; observation kernel</h3>
 
                     <p>Now fix a model value, say \(m=00\). The row
                     \(\{0.08, 0.32\}\) sums to \(\muMzero(\{00\})=0.40\).
@@ -307,7 +307,7 @@
 
                     <p>This is the likelihood distribution over data given
                     \(m=00\): \(\{0.2, 0.8\}\). Repeating for each \(m\) gives
-                    the likelihood kernel. The row-normalization operation is
+                    the observation kernel. The row-normalization operation is
                     the same bundling in the other direction.</p>
 
                     <div class="bayes-callout callout-intuition">
@@ -317,7 +317,7 @@
                             \(\Rightarrow\) posterior kernel
                             \(\mu_{\M\mid D=d}(A)\).<br>
                             <strong>Rows</strong> (normalize by row sum)
-                            \(\Rightarrow\) likelihood kernel \(L(m,B)\).<br>
+                            \(\Rightarrow\) observation kernel \(L(m,B)\).<br>
                             Both are disintegrations of the same joint table.
                         </p>
                     </div>
@@ -361,7 +361,7 @@
                             joint table.</strong> Normalizing columns (orange
                             dashed) gives the posterior kernel
                             \(\mu_{\M\mid D=d}\). Normalizing rows (green dashed)
-                            gives the likelihood kernel \(L(m,\cdot)\). Both are
+                            gives the observation kernel \(L(m,\cdot)\). Both are
                             disintegrations of the same joint measure \(\Pi\).
                         </figcaption>
                     </figure>
@@ -377,7 +377,7 @@
                     <p>The first disintegrates with respect to the predictive
                     data measure \(\muD\) and produces the posterior kernel.
                     The second disintegrates with respect to the prior
-                    \(\muMzero\) and produces the likelihood kernel. Both are
+                    \(\muMzero\) and produces the observation kernel. Both are
                     decompositions of the <em>same</em> joint measure &mdash;
                     they are two sides of the same coin.</p>
 
@@ -427,7 +427,7 @@
                             joint law \(\Pi\) admits two disintegrations:
                             the posterior kernel \(\mu_{\M\mid D=d}\)
                             (disintegration with respect to \(\muD\)) and the
-                            likelihood kernel \(L\) (disintegration with
+                            observation kernel \(L\) (disintegration with
                             respect to \(\muMzero\)). Comparing them will give
                             us Bayes' formula.
                         </p>

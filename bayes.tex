@@ -46,7 +46,7 @@ We will solve the same problem twice.
 
 First, in Section~\ref{sec:elementary}, we solve it in the most elementary way possible. We list all possible hidden switch configurations, all possible reports, and all joint probabilities. Then we condition on each possible report by selecting the appropriate part of the table and normalizing. No measure theory is needed. The only operations are multiplication, addition, and division.
 
-Second, in Section~\ref{sec:measure}, we solve the same problem again using the language of measure theory. The prior becomes a probability measure on the model space. The reporting mechanism becomes a likelihood kernel. The combined experiment becomes a joint measure. The Bayesian update becomes a posterior kernel.
+Second, in Section~\ref{sec:measure}, we solve the same problem again using the language of measure theory. The prior becomes a probability measure on the model space. The reporting mechanism becomes an observation kernel. The combined experiment becomes a joint measure. The Bayesian update becomes a posterior kernel.
 
 The important point is that the observed report is not used to build the theory. The theory is built before the report arrives.
 
@@ -864,7 +864,7 @@ In larger problems, the model space may contain thousands, millions, or infinite
 
 So in the next section we repeat the same construction in a more durable language.
 
-The prior distribution becomes a probability measure on the model space. The reporter rule becomes a likelihood kernel from the model space to the data space. The joint table becomes a joint measure on \(\M\times\D\). The column sums become marginals. The normalized columns become a posterior kernel.
+The prior distribution becomes a probability measure on the model space. The reporter rule becomes an observation kernel from the model space to the data space. The joint table becomes a joint measure on \(\M\times\D\). The column sums become marginals. The normalized columns become a posterior kernel.
 
 The arithmetic will look different, but the idea is the same:
 
@@ -936,7 +936,7 @@ Elementary language & Measure-theoretic language \\
 \midrule
 hidden states \(m\) & events \(A\subseteq \M\) \\
 prior probabilities \(\mathbb{P}(m)\) & prior measure \(\muMzero\) \\
-report probabilities \(\mathbb{P}(d\mid m)\) & likelihood kernel \(L(m,B)\) \\
+report probabilities \(\mathbb{P}(d\mid m)\) & observation kernel \(L(m,B)\) \\
 joint table \(\mathbb{P}(m,d)\) & joint measure \(J\) \\
 column sums \(\mathbb{P}(d)\) & predictive data measure \(\muD\) \\
 posterior table \(\mathbb{P}(m\mid d)\) & posterior kernel \(\kappa(d,A)\) \\
@@ -1067,7 +1067,7 @@ The event \(\D=\{0,1\}\) means:
 
 The data space tells us what kinds of observations can occur. The sigma algebra tells us which questions about the observation are legitimate events.
 
-\subsection{The likelihood kernel}
+\subsection{The observation kernel}
 
 We now encode the reporter's behaviour.
 
@@ -1088,13 +1088,13 @@ Measure-theoretically, we package all of these probabilities into one object:
     B\in\SigmaD.
 \]
 
-This object is called the likelihood kernel.
+This object is called the observation kernel.
 
 For each fixed hidden state \(m\in\M\), the map
 \[
     B\longmapsto L(m,B)
 \]
-is a probability measure on \((\D,\SigmaD)\). In other words, once \(m\) is fixed, the likelihood kernel tells us the probability of every possible data event.
+is a probability measure on \((\D,\SigmaD)\). In other words, once \(m\) is fixed, the observation kernel tells us the probability of every possible data event.
 
 For each fixed data event \(B\in\SigmaD\), the map
 \[
@@ -1102,7 +1102,7 @@ For each fixed data event \(B\in\SigmaD\), the map
 \]
 is a measurable function on \((\M,\SigmaM)\). In this finite example, this measurability condition is automatic because every subset of \(\M\) is measurable.
 
-The likelihood kernel is just the reporter table from Section~\ref{sec:elementary}, rewritten as a kernel.
+The observation kernel is just the reporter table from Section~\ref{sec:elementary}, rewritten as a kernel.
 
 For singleton data events, we have
 \[
@@ -1253,7 +1253,7 @@ These are exactly the column sums of the joint table from Section~\ref{sec:eleme
 
 \subsection{The joint measure}
 
-The prior measure \(\muMzero\) describes uncertainty about the hidden model. The likelihood kernel \(L\) describes how each hidden model produces reports.
+The prior measure \(\muMzero\) describes uncertainty about the hidden model. The observation kernel \(L\) describes how each hidden model produces reports.
 
 Together, they determine a probability measure on the product space
 \[
@@ -1710,7 +1710,7 @@ The measure-theoretic view keeps the underlying objects visible:
 \[
     \text{prior measure},
     \qquad
-    \text{likelihood kernel},
+    \text{observation kernel},
     \qquad
     \text{joint measure},
     \qquad
@@ -1800,7 +1800,7 @@ on the measurable model space
     (\M,\SigmaM).
 \]
 
-The reporter rule became a likelihood kernel
+The reporter rule became an observation kernel
 \[
     L(m,B),
     \qquad
@@ -1808,7 +1808,7 @@ The reporter rule became a likelihood kernel
 \]
 from the model space to the data space.
 
-Together, the prior measure and likelihood kernel defined the joint measure
+Together, the prior measure and observation kernel defined the joint measure
 \[
     J(A\times B)
     =

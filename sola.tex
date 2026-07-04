@@ -5335,7 +5335,7 @@ observed data.
 
 The generative formulation begins with a model-data relation.
 
-In a probabilistic setting, this relation is a likelihood kernel
+In a probabilistic setting, this relation is an observation kernel
 \[
   L_{\mathrm{prob}}(m,\cdot),
 \]
@@ -5365,7 +5365,7 @@ This object answers the clean question:
   \text{if }m\text{ were true, how likely would different observations be?}
 \]
 
-In a set-valued setting, the analogous object is a set likelihood
+In a set-valued setting, the analogous object is a set-valued observation relation
 \[
   L_{\mathrm{set}}(m)\subseteq\D.
 \]
@@ -5494,7 +5494,7 @@ On the other hand, the inverse problem itself is not born from a probability clo
 the observation. It is born from a model-data relation. It begins with a possible model and asks
 what data that model could have produced.
 
-In the probabilistic setting, this model-data relation is encoded by a likelihood kernel
+In the probabilistic setting, this model-data relation is encoded by an observation kernel
 \[
   L_{\mathrm{prob}}:\M\times\Sigma_{\D}\to[0,1].
 \]
@@ -5519,7 +5519,7 @@ In the familiar additive Gaussian case,
   \qquad
   \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),
 \]
-the likelihood kernel is
+the observation kernel is
 \[
   L_{\mathrm{prob}}(m,\cdot)
   =
@@ -5528,7 +5528,7 @@ the likelihood kernel is
 So for each model \(m\), the distribution of possible data is centred at \(G(m)\).
 
 \begin{intuitionbox}
-The likelihood kernel is a machine that takes a model as input and outputs a probability law on
+The observation kernel is a machine that takes a model as input and outputs a probability law on
 data space. It answers: if this model were true, what observations should we expect?
 \end{intuitionbox}
 
@@ -5542,11 +5542,11 @@ The observation \(\widetilde{\mathbf d}\) is then compared against this family o
 data distributions.
 
 This is different from starting with \(\widetilde{\mathbf d}\) and placing a cloud around it. The
-shifted-noise cloud is centred on what happened. The likelihood kernel describes what could
+shifted-noise cloud is centred on what happened. The observation kernel describes what could
 happen under each possible model.
 
 \begin{checkpointbox}
-The shifted-noise measure is observation-centred. The likelihood kernel is model-centred, or
+The shifted-noise measure is observation-centred. The observation kernel is model-centred, or
 generative.
 \end{checkpointbox}
 
@@ -5655,7 +5655,7 @@ The generative SOLA relation answers:
 That is a clean question. It is the property-space analogue of the original observation model.
 
 \begin{lessonbox}
-SOLA pushes the likelihood kernel from data space to property space. It turns a model-data
+SOLA pushes the observation kernel from data space to property space. It turns a model-data
 relation into a model-resolved-property relation.
 \end{lessonbox}
 
@@ -6010,7 +6010,7 @@ In probabilistic linear inversion, model-side information is encoded by a prior 
 \]
 on \(\M\). This prior describes which models are considered plausible before seeing the data.
 
-Together with the likelihood kernel
+Together with the observation kernel
 \[
   L_{\mathrm{prob}}(m,\cdot),
 \]
@@ -6804,7 +6804,7 @@ This pushforward is mathematically valid, but it is not the fundamental inverse-
 
 The generative object is the model-data relation.
 
-In the probabilistic case, this is a likelihood kernel
+In the probabilistic case, this is an observation kernel
 \[
   m\mapsto L_{\mathrm{prob}}(m,\cdot).
 \]

@@ -112,3 +112,42 @@
 }
 
 /* Add more page-specific styles below as needed */
+
+/* ---- MathJax overflow fixes (inversions-inferences page) ---- */
+
+main {
+    min-width: 0;
+}
+
+section.about-content {
+    min-width: 0;
+}
+
+section.about-content .container {
+    min-width: 0;
+}
+
+.about-text {
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* Display equations: scroll horizontally, never expand the page */
+mjx-container[jax="CHTML"][display="true"] {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+}
+
+/* Inline MathJax: scrollable inline box, never clip */
+mjx-container[jax="CHTML"]:not([display="true"]) {
+    display: inline-block !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    vertical-align: middle;
+}

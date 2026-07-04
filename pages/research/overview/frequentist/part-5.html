@@ -79,7 +79,7 @@
         <nav class="part-nav" aria-label="Part navigation">
             <div class="part-nav-inner">
                 <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
-                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-2.html"><span class="part-chip-num">2</span> The Observation Kernel</a>
                 <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
                 <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
                 <a class="part-chip" href="part-5.html" aria-current="page"><span class="part-chip-num">5</span> Beyond Additive</a>
@@ -107,7 +107,7 @@
                     observation mechanism that cannot be written cleanly as
                     truth + noise.</p>
 
-                    <p>The more general starting point is the likelihood kernel
+                    <p>The more general starting point is the observation kernel
                     itself. For each candidate \(\mathbf d \in \Dspace\), we assume
                     there is a probability measure
                     \(\L(\mathbf d, \cdot)\) on the observation space. The
@@ -224,7 +224,7 @@
                     <h2>Coverage under the true sampling law</h2>
 
                     <p>The coverage statement now follows directly from the
-                    likelihood kernel. Before observation, if the true datum is
+                    observation kernel. Before observation, if the true datum is
                     \(\dtrue\), then \(\Dobsrand \sim \L(\dtrue, \cdot)\).
                     The random confidence set is
                     \(\Calpha(\Dobsrand) = \{\mathbf d : \Dobsrand \in A_{\alpha}(\mathbf d)\}\).</p>
@@ -303,7 +303,7 @@
                     <p>This is the general frequentist answer in safety-critical
                     settings. Whether the observation law is additive,
                     heteroscedastic, multiplicative, or nonlinear, the frequentist
-                    can work directly with the likelihood kernel and design rules
+                    can work directly with the observation kernel and design rules
                     with uniform error guarantees.</p>
 
                     <div class="freq-callout callout-warning">

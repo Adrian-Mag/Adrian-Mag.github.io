@@ -220,7 +220,7 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/research/overview/think-first/summary.html` | Summary of the Argument + Appendices A–D (Gaussian conditioning, Hilbert-space measures, Gram matrices, exercises) |
 | `pages/research/overview/frequentist/bayesian-frequentist.html` | Bayesian and Frequentist Inference — landing page with overview and multi-page nav |
 | `pages/research/overview/frequentist/part-1.html` | Part 1: The Setup — ontological observation equation, actual objects, identifiability |
-| `pages/research/overview/frequentist/part-2.html` | Part 2: The Likelihood Kernel — noise model, candidate-dependent laws, what likelihood can/cannot say |
+| `pages/research/overview/frequentist/part-2.html` | Part 2: The Observation Kernel — noise model, candidate-dependent laws, what likelihood can/cannot say |
 | `pages/research/overview/frequentist/part-3.html` | Part 3: The Bayesian Path — prior, joint measure, posterior, what collapses without a prior |
 | `pages/research/overview/frequentist/part-4.html` | Part 4: The Frequentist Path — truth fixed, confidence sets, coverage, what frequentist does/doesn't claim |
 | `pages/research/overview/frequentist/part-5.html` | Part 5: Beyond Additive Noise — general sampling laws, test statistics, decision rules |

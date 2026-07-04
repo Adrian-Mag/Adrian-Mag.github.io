@@ -172,7 +172,7 @@ However, in the inverse problem, \(\dtrue\) is precisely what is unknown. Theref
     \longmapsto
     \text{law of } \mathbf d+\Nrand.
 \]
-This family is the likelihood kernel. It tells us how plausible the observed datum would be under each candidate truth, but by itself it does not assign probabilities to the candidate truths.
+This family is the observation kernel. It tells us how plausible the observed datum would be under each candidate truth, but by itself it does not assign probabilities to the candidate truths.
 
 The Bayesian and frequentist approaches part ways at this point. The Bayesian adds a prior measure on possible true data values and then conditions on the observed datum. The frequentist does not add such a prior, and instead constructs procedures whose long-run behaviour is controlled under repeated noisy observations.
 
@@ -652,7 +652,7 @@ For a candidate \(\mathbf d\), the implied noise is
 \]
 The candidate \(\mathbf d\) is plausible if this implied noise is plausible under \(\muN\). It is implausible if this implied noise lies in a region that the noise model regards as extreme.
 
-Thus, the known-truth construction motivates the likelihood kernel:
+Thus, the known-truth construction motivates the observation kernel:
 \[
     \mathbf d
     \longmapsto
@@ -661,7 +661,7 @@ Thus, the known-truth construction motivates the likelihood kernel:
 The next section develops this object explicitly. It is the first major epistemological construction built from the noise model.
 
 % ============================================================
-\section{The Likelihood Kernel}
+\section{The Observation Kernel}
 % ============================================================
 
 \subsection{Candidate true data}
@@ -684,7 +684,7 @@ Under this hypothesis, the observation model would be
 \]
 The random object here is \(\Dobsrand\), the possible polluted observation. The candidate \(\mathbf d\) is held fixed.
 
-Thus, for each possible candidate truth \(\mathbf d\), we obtain a corresponding probability law for the observed datum. The role of the likelihood kernel is to collect all of these candidate-dependent observation laws into one object.
+Thus, for each possible candidate truth \(\mathbf d\), we obtain a corresponding probability law for the observed datum. The role of the observation kernel is to collect all of these candidate-dependent observation laws into one object.
 
 \subsection{Candidate-dependent shifted noise laws}
 
@@ -749,7 +749,7 @@ In particular, the density assigned to the actual observed datum \(\dobs\) is
 
 This quantity measures how plausible the observed datum would be if \(\mathbf d\) were the true datum.
 
-\subsection{The likelihood kernel as a map}
+\subsection{The observation kernel as a map}
 
 The assignment
 \[
@@ -757,7 +757,7 @@ The assignment
     \longmapsto
     \mu_{\mathbf d}
 \]
-is the likelihood kernel. More explicitly, we may write
+is the observation kernel. More explicitly, we may write
 \[
     \mathsf L:\Dspace\times\SigmaD\to[0,1],
 \]
@@ -782,14 +782,14 @@ For each fixed measurable observation event \(A\), the map
 \]
 describes how the probability of observing \(A\) depends on the candidate true datum.
 
-Thus, the likelihood kernel has the direction
+Thus, the observation kernel has the direction
 \[
     \text{candidate truth}
     \longmapsto
     \text{probability measure on possible observations}.
 \]
 
-This direction is important. The likelihood kernel does not yet map observations to probability measures on truths. It maps possible truths to probability measures on observations.
+This direction is important. The observation kernel does not yet map observations to probability measures on truths. It maps possible truths to probability measures on observations.
 
 If a density exists, then fixing the actual observation \(\dobs\) gives the likelihood function
 \[
@@ -799,11 +799,11 @@ If a density exists, then fixing the actual observation \(\dobs\) gives the like
     =
     p_N(\dobs-\mathbf d).
 \]
-The likelihood function is obtained by evaluating the likelihood kernel at the observed datum. It is a function of the candidate truth \(\mathbf d\), but it is not by itself a probability density over \(\mathbf d\).
+The likelihood function is obtained by evaluating the observation kernel at the observed datum. It is a function of the candidate truth \(\mathbf d\), but it is not by itself a probability density over \(\mathbf d\).
 
-\subsection{What the likelihood kernel can say}
+\subsection{What the observation kernel can say}
 
-The likelihood kernel can answer candidate-wise questions. For a proposed true datum \(\mathbf d\), it can ask:
+The observation kernel can answer candidate-wise questions. For a proposed true datum \(\mathbf d\), it can ask:
 
 \begin{quote}
     If \(\mathbf d\) were the true datum, would the actual observation \(\dobs\) be a plausible outcome of the noise model?
@@ -828,7 +828,7 @@ Equivalently,
     \mathbf d\in \dobs-E_{\alpha}.
 \]
 
-This is the basic frequentist compatibility idea that will later become a confidence set. The likelihood kernel gives the sampling law under each candidate truth, and from those sampling laws one can decide which candidate truths would make the observation look ordinary, unusual, or extreme.
+This is the basic frequentist compatibility idea that will later become a confidence set. The observation kernel gives the sampling law under each candidate truth, and from those sampling laws one can decide which candidate truths would make the observation look ordinary, unusual, or extreme.
 
 If a density exists, the same idea appears through the likelihood value
 \[
@@ -838,11 +838,11 @@ If a density exists, the same idea appears through the likelihood value
 \]
 Large values indicate that \(\dobs\) is relatively plausible under candidate \(\mathbf d\). Small values indicate that \(\dobs\) would require a relatively unusual noise realization under candidate \(\mathbf d\).
 
-Thus, the likelihood kernel can compare candidate truths by asking how well each one explains the observed datum through the noise model.
+Thus, the observation kernel can compare candidate truths by asking how well each one explains the observed datum through the noise model.
 
-\subsection{What the likelihood kernel cannot say alone}
+\subsection{What the observation kernel cannot say alone}
 
-The likelihood kernel does not, by itself, assign probabilities to candidate true data values. It tells us
+The observation kernel does not, by itself, assign probabilities to candidate true data values. It tells us
 \[
     \text{how probable the observation would be if } \mathbf d \text{ were true,}
 \]
@@ -853,7 +853,7 @@ but it does not tell us
 
 These are different directions of conditioning.
 
-The likelihood kernel has the direction
+The observation kernel has the direction
 \[
     \mathbf d
     \longmapsto
@@ -878,12 +878,12 @@ This is why the following statement is generally not licensed by the likelihood 
 \[
     \Prob(\dtrue\in A\mid \dobs)=0.95.
 \]
-Such a statement requires a probability model for \(\dtrue\). The likelihood kernel does not provide one. It provides only the family of observation laws
+Such a statement requires a probability model for \(\dtrue\). The observation kernel does not provide one. It provides only the family of observation laws
 \[
     \{\mu_{\mathbf d}:\mathbf d\in\Dspace\}.
 \]
 
-Therefore, the likelihood kernel is a crucial object shared by both Bayesian and frequentist reasoning, but it is not yet a full inference about the truth. It says what the observation model would look like under each candidate truth. What one does with that family of laws is where the Bayesian and frequentist constructions begin to diverge.
+Therefore, the observation kernel is a crucial object shared by both Bayesian and frequentist reasoning, but it is not yet a full inference about the truth. It says what the observation model would look like under each candidate truth. What one does with that family of laws is where the Bayesian and frequentist constructions begin to diverge.
 
 % ============================================================
 \section{The Bayesian Construction}
@@ -891,7 +891,7 @@ Therefore, the likelihood kernel is a crucial object shared by both Bayesian and
 
 \subsection{Introducing an epistemological true-datum random variable}
 
-The likelihood kernel described in the previous section gives, for each candidate true datum \(\mathbf d\), a probability law for possible observations. It has the direction
+The observation kernel described in the previous section gives, for each candidate true datum \(\mathbf d\), a probability law for possible observations. It has the direction
 \[
     \mathbf d
     \longmapsto
@@ -1014,7 +1014,7 @@ For a measurable set \(A\in\SigmaD\), the prior predictive probability is
     \Prob(\Drand+\Nrand\in A).
 \]
 
-Using the likelihood kernel, this can be written as
+Using the observation kernel, this can be written as
 \[
     \mu_{\mathrm{pred}}(A)
     =
@@ -1081,7 +1081,7 @@ For measurable sets \(B,A\in\SigmaD\), the joint probability is
 \[
     \Prob(\Drand\in B,\Dobsrand\in A).
 \]
-Using the likelihood kernel, this can be written as
+Using the observation kernel, this can be written as
 \[
     \mu_{\mathrm{joint}}(B\times A)
     =
@@ -1110,7 +1110,7 @@ This joint measure contains the main Bayesian objects:
     \item[Prior predictive.]
     The marginal law of \(\Dobsrand\).
 
-    \item[Likelihood kernel.]
+    \item[Observation kernel.]
     The conditional law of \(\Dobsrand\) given \(\Drand=\mathbf d\).
 
     \item[Posterior kernel.]
@@ -1119,9 +1119,9 @@ This joint measure contains the main Bayesian objects:
 
 In this sense, the Bayesian construction wraps the prior, likelihood, prior predictive distribution, and posterior into one joint probabilistic object.
 
-\subsection{The likelihood inside the Bayesian construction}
+\subsection{The observation kernel inside the Bayesian construction}
 
-The likelihood kernel appears inside the Bayesian construction as the conditional law of the observation given the epistemological true datum.
+The observation kernel appears inside the Bayesian construction as the conditional law of the observation given the epistemological true datum.
 
 That is,
 \[
@@ -1152,13 +1152,13 @@ If densities exist, this takes the familiar form
     p_N(\mathbf d'-\mathbf d).
 \]
 
-Therefore, the likelihood is not uniquely Bayesian. It is the sampling part of the model. What is distinctively Bayesian is the multiplication of this sampling model by a prior measure on possible true data values.
+Therefore, the observation kernel is not uniquely Bayesian. It is the sampling part of the model. What is distinctively Bayesian is the multiplication of this sampling model by a prior measure on possible true data values.
 
 \subsection{The posterior kernel}
 
-The posterior kernel reverses the direction of the likelihood kernel.
+The posterior kernel reverses the direction of the observation kernel.
 
-The likelihood kernel has direction
+The observation kernel has direction
 \[
     \text{candidate truth}
     \longmapsto
@@ -1268,7 +1268,7 @@ In words:
     The prior represents uncertainty about the true datum.
 
     \item[Observation model.]
-    The likelihood describes possible observations for each candidate truth.
+    The observation kernel describes possible observations for each candidate truth.
 
     \item[After observation.]
     The posterior represents updated uncertainty about the true datum after the actual datum \(\dobs\) is used.
@@ -1392,7 +1392,7 @@ The joint measure was given by
         \mu_{\mathbf d}(A)
     \,\prior(d\mathbf d).
 \]
-Again, the prior is essential. It supplies the marginal law of the epistemological true datum and allows the likelihood kernel to be assembled into a joint probability measure.
+Again, the prior is essential. It supplies the marginal law of the epistemological true datum and allows the observation kernel to be assembled into a joint probability measure.
 
 Finally, without the joint measure, there is no posterior kernel
 \[
@@ -1459,7 +1459,7 @@ Equivalently,
     A\in\SigmaD.
 \]
 
-Therefore, the likelihood kernel survives:
+Therefore, the observation kernel survives:
 \[
     \mathsf L(\mathbf d,A)
     =
@@ -1489,7 +1489,7 @@ Thus, without a prior, we still have:
         \{\mu_{\mathbf d}:\mathbf d\in\Dspace\}.
     \]
 
-    \item[Likelihood kernel.]
+    \item[Observation kernel.]
     The map
     \[
         \mathbf d
@@ -1587,7 +1587,7 @@ But one may not say:
     \text{ is } 0.95.
 \]
 
-That latter statement belongs to a Bayesian construction, or to another framework that introduces a post-data probability measure on possible true values. It is not supplied by the likelihood kernel alone.
+That latter statement belongs to a Bayesian construction, or to another framework that introduces a post-data probability measure on possible true values. It is not supplied by the observation kernel alone.
 
 The prior-free situation is therefore not empty, but it is austere. It gives a family of candidate-wise observation laws. It gives likelihoods, tests, and compatibility regions. It does not give posterior probabilities over the unknown truth.
 
@@ -1706,7 +1706,7 @@ Instead, the frequentist asks:
     \text{ require a plausible noise realization?}
 \]
 
-This is the same candidate-wise logic already present in the likelihood kernel. The difference is that the frequentist uses this logic to construct tests, confidence sets, and decision procedures, rather than to construct a posterior measure over possible truths.
+This is the same candidate-wise logic already present in the observation kernel. The difference is that the frequentist uses this logic to construct tests, confidence sets, and decision procedures, rather than to construct a posterior measure over possible truths.
 
 In the additive noise case, the compatibility check is especially simple:
 \[
@@ -2047,7 +2047,7 @@ This is the distinctive frequentist rhythm:
 \section{Heteroscedastic and Non-Additive Observation Laws}
 % ============================================================
 
-\subsection{Starting from the likelihood kernel}
+\subsection{Starting from the observation kernel}
 
 So far, the simplest construction assumed an additive observation model of the form
 \[
@@ -2069,7 +2069,7 @@ This shifted-noise picture is useful, but it is not the most general frequentist
     \text{truth}+\text{noise}.
 \]
 
-The more general starting point is therefore the likelihood kernel itself. For each candidate true datum
+The more general starting point is therefore the observation kernel itself. For each candidate true datum
 \[
     \mathbf d\in\Dspace,
 \]
@@ -2136,14 +2136,14 @@ More generally, one may have an observation mechanism
     =
     H(\mathbf d,\mathbf W),
 \]
-where \(\mathbf W\) is a random variable representing all unresolved randomness in the measurement process. Then the likelihood kernel is
+where \(\mathbf W\) is a random variable representing all unresolved randomness in the measurement process. Then the observation kernel is
 \[
     \mathsf L(\mathbf d,A)
     =
     \Prob\bigl(H(\mathbf d,\mathbf W)\in A\bigr).
 \]
 
-The important point is that the likelihood kernel already contains everything needed to describe the candidate-dependent sampling law. The notation
+The important point is that the observation kernel already contains everything needed to describe the candidate-dependent sampling law. The notation
 \[
     \mathsf L(\mathbf d,\cdot)
 \]
@@ -2290,7 +2290,7 @@ In a multiplicative or nonlinear observation model, there may be no meaningful r
         \dobs\in A_{\alpha}(\mathbf d)
     \right\},
 \]
-where \(A_{\alpha}(\mathbf d)\) is chosen directly from the likelihood kernel.
+where \(A_{\alpha}(\mathbf d)\) is chosen directly from the observation kernel.
 
 Thus, the shifted-noise construction is a special case. The deeper frequentist construction is test inversion:
 \[
@@ -2376,7 +2376,7 @@ The test-statistic formulation is often the most flexible way to build confidenc
 
 \subsection{Coverage under the true sampling law}
 
-The coverage statement now follows directly from the likelihood kernel.
+The coverage statement now follows directly from the observation kernel.
 
 Before observation, if the true datum is \(\dtrue\), then the random observation has law
 \[
@@ -2448,7 +2448,7 @@ for every \(\mathbf d\), then the coverage statement becomes
 
 This derivation shows why the general construction works. The confidence set contains the true datum exactly when the random observation falls inside the true datum's own acceptance region. Since that acceptance region was chosen to have probability \(1-\alpha\) under the true sampling law, coverage follows.
 
-The additive shifted-noise proof was only one special version of this argument. The general proof needs only the likelihood kernel and the candidate-dependent acceptance regions.
+The additive shifted-noise proof was only one special version of this argument. The general proof needs only the observation kernel and the candidate-dependent acceptance regions.
 
 \subsection{Decision rules with worst-case guarantees}
 
@@ -2498,7 +2498,7 @@ This statement means:
 
 The supremum is important. It gives a uniform guarantee over all dangerous truths, rather than an average guarantee over a distribution of truths. No prior over \(\mathcal H_{\mathrm{danger}}\) is required.
 
-In terms of the likelihood kernel, the guarantee is
+In terms of the observation kernel, the guarantee is
 \[
     \sup_{\mathbf d\in\mathcal H_{\mathrm{danger}}}
     \mathsf L
@@ -2578,7 +2578,7 @@ Hence,
     \alpha.
 \]
 
-This is the general frequentist answer in safety-critical settings. Whether the observation law is additive, heteroscedastic, multiplicative, or nonlinear, the frequentist can work directly with the likelihood kernel and design rules with uniform error guarantees.
+This is the general frequentist answer in safety-critical settings. Whether the observation law is additive, heteroscedastic, multiplicative, or nonlinear, the frequentist can work directly with the observation kernel and design rules with uniform error guarantees.
 
 The price is conservatism. If the likelihoods for dangerous and non-dangerous truths overlap substantially, then many observations will remain inconclusive. That is not a defect of the construction. It is the sampling model saying that the data are not strong enough to safely support a sharper verdict.
 

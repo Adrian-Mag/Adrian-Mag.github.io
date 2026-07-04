@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 10: Generative SOLA — My Take on SOLA — Adrian Mag</title>
+    <title>Act 10: What SOLA Is Good For — My Take on SOLA — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/sola.css">
-    <meta name="description" content="Act 10 of My Take on SOLA: What SOLA should push forward, the generative model-property relation, and where priors belong.">
+    <meta name="description" content="Act 10 of My Take on SOLA: What SOLA is genuinely good at after examining all three pillars, what it cannot do without a prior, and the final slogan.">
     <script>
     MathJax = {
         tex: {
@@ -58,8 +58,8 @@
         <section class="page-header" style="position: relative; overflow: hidden;">
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
-                <h1>Act 10: Generative SOLA</h1>
-                <p>What SOLA should push forward, the model-property relation, and where priors belong.</p>
+                <h1>Act 10: What SOLA Is Good For</h1>
+                <p>Strengths, limitations, and the honest grammar of SOLA's outputs.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
                 </p>
@@ -76,334 +76,324 @@
                 <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
                 <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
                 <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
-                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
-                <a class="part-chip" href="act-10.html" aria-current="page"><span class="part-chip-num">10</span> Generative SOLA</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty</a>
+                <a class="part-chip" href="act-10.html" aria-current="page"><span class="part-chip-num">10</span> What SOLA Is Good For</a>
+                <a class="part-chip" href="summary.html"><span class="part-chip-num">S</span> Summary</a>
             </div>
         </nav>
 
         <section class="research-content">
             <div class="container">
                 <div class="math-article">
-                    <h2>What Should SOLA Push Forward?</h2>
+                    <h2>After Three Pillars</h2>
 
-                    <h3>The probabilistic model-data relation</h3>
+                    <p>We have now examined all three pillars on which the case for SOLA
+                    rests.</p>
 
-                    <p>In the previous act, we separated two ideas that are often allowed to blur
-                    together.</p>
+                    <p>The first pillar was <em>no prior information</em>. Act 7 showed that
+                    without model-side assumptions, the gap between the resolved property
+                    \(\mathcal{A}(\bar m)\)
+                    and the true target property
+                    \(\Tau(\bar m)\)
+                    is unbounded. A good-looking resolving-kernel plot does not, by itself,
+                    close that gap. The boundary is real, and it is the same boundary that
+                    classical inversion has long since accepted.</p>
 
-                    <p>On the one hand, we have a data-side shifted-noise object:
-                    \(N(\widetilde{\mathbf d},\mathbf C_D).\)
-                    This is a probability measure centred at the observed data. It can be pushed
-                    through the SOLA matrix \(\mathbf X\), giving
-                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)
-                    That calculation is mathematically valid.</p>
+                    <p>The second pillar was <em>resolution control</em>. Act 8 showed that
+                    SOLA's resolving kernels are target kernels passed through the adjoint of a
+                    resolution operator:
+                    \(R_k = \mathcal R^*T_k.\)
+                    This is useful — it gives visibility and design control — but it is not a
+                    new species of resolution. The resolution operator has not been bypassed.
+                    It has been moved to a different place in the formula.</p>
 
-                    <p>On the other hand, the inverse problem itself is not born from a probability
-                    cloud placed around the observation. It is born from a model-data relation. It
-                    begins with a possible model and asks what data that model could have
-                    produced.</p>
-
-                    <p>In the probabilistic setting, this model-data relation is encoded by a
-                    likelihood kernel
-                    \(L:\M\times\Sigma_{\D}\to[0,1].\)
-                    For each model \(m\in\M\),
-                    \(L(m,\cdot)\)
-                    is a probability measure on the data space \(\D\). It describes the possible
-                    observations under the hypothesis that \(m\) is the true model.</p>
-
-                    <p>Thus, for a measurable set \(B\subseteq\D\),
-                    \(L(m,B)\)
-                    is the probability of observing data in \(B\) if \(m\) were true.</p>
-
-                    <p>In the familiar additive Gaussian case,
-                    \(\widetilde{\mathbf d} = G(m)+\boldsymbol\eta,\; \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\)
-                    the likelihood kernel is
-                    \(L(m,\cdot) = N(G(m),\mathbf C_D).\)
-                    So for each model \(m\), the distribution of possible data is centred at
-                    \(G(m)\).</p>
-
-                    <div class="sola-callout callout-intuition">
-                        <span class="sola-callout-label">Intuition</span>
-                        <p>The likelihood kernel is a machine that takes a model as input and
-                        outputs a probability law on data space. It answers: if this model were
-                        true, what observations should we expect?</p>
-                    </div>
-
-                    <p>This is the direction of explanation that matters:
-                    \(m \quad\longmapsto\quad \text{possible data}.\)
-                    The observation \(\widetilde{\mathbf d}\) is then compared against this family
-                    of model-indexed data distributions.</p>
-
-                    <p>This is different from starting with \(\widetilde{\mathbf d}\) and placing a
-                    cloud around it. The shifted-noise cloud is centred on what happened. The
-                    likelihood kernel describes what could happen under each possible model.</p>
+                    <p>The third pillar was <em>uncertainty quantification</em>. Act 9 showed
+                    that SOLA's default uncertainty — the shifted-noise pushforward
+                    \(\mathcal{N}(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*)\)
+                    — is not a posterior. It is a data-space jitter centred on the observation.
+                    Without a prior, the observed data cannot be turned into a probabilistic statement (conditioned on the observed data) about the approximate property of the true model. The frequentist interpretation — pushing the noise through
+                    \(\mathbf X\)
+                    and building calibrated confidence sets — gives a clean framework that does
+                    not require a prior, but it produces coverage statements, not posterior
+                    beliefs.</p>
 
                     <div class="sola-callout callout-checkpoint">
                         <span class="sola-callout-label">Checkpoint</span>
-                        <p>The shifted-noise measure is observation-centred. The likelihood kernel
-                        is model-centred, or generative.</p>
+                        <p>All three pillars share the same boundary: without model-side
+                        information, SOLA can report resolved properties and their resolving
+                        kernels, but it cannot cross from there to exact target properties or
+                        posterior beliefs.</p>
                     </div>
 
-                    <p>This distinction is not merely aesthetic. Once the likelihood is written as
-                    \(m\mapsto L(m,\cdot),\)
-                    it can handle much more than additive Gaussian noise. For example, one may have
-                    model-dependent noise
-                    \(L(m,\cdot) = N(G(m),\mathbf C_D(m)),\)
-                    or data whose distribution is not naturally
-                    written as &ldquo;prediction plus additive error&rdquo;.</p>
+                    <p>So where does that leave SOLA? In a perfectly good place — provided we
+                    read its outputs with the right grammar.</p>
 
-                    <p>The generative relation is the flexible object. The shifted-noise measure is
-                    only a special data-centred construction.</p>
+                    <h2>What SOLA Does Well</h2>
 
-                    <h3>Pushing the relation through SOLA</h3>
-
-                    <p>Now bring SOLA back into the story.</p>
-
-                    <p>A SOLA matrix
+                    <p>SOLA is excellent at constructing controlled linear combinations of data.
+                    Given data
+                    \(\widetilde{\mathbf d}\in\D,\)
+                    it builds a finite-dimensional map
                     \(\mathbf X:\D\to\Pspace\)
-                    transforms data-space vectors into property-space vectors:
-                    \(\mathbf d \quad\longmapsto\quad \mathbf X\mathbf d.\)</p>
+                    and reports
+                    \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
+                    Because the map is linear, the output is easy to compute, easy to inspect,
+                    and easy to propagate data noise through.</p>
 
-                    <p>If each model \(m\) generates a probability measure on data space,
-                    \(L(m,\cdot),\)
-                    then \(\mathbf X\) pushes that measure forward to a probability measure on
-                    property space:
-                    \(\mathbf X_{\#}L(m,\cdot).\)</p>
+                    <p>Altough the resolving kernels are simply target kernels filtered through a resolution operator that is not fundamentally different from what normal linear inversions produce, they still provide a more principled analysis of targeted properties.</p>
 
-                    <p>Thus SOLA induces a new model-property relation:
-                    \(m \quad\longmapsto\quad \mathbf X_{\#}L(m,\cdot).\)</p>
-
-                    <p>This is the probabilistic version of generative SOLA.</p>
-
-                    <p>For each model \(m\), the measure
-                    \(\mathbf X_{\#}L(m,\cdot)\)
-                    describes the possible SOLA outputs that could be observed if \(m\) were the
-                    true model.</p>
-
-                    <p>In the additive Gaussian case,
-                    \(L(m,\cdot) = N(G(m),\mathbf C_D).\)
-                    Pushing this through \(\mathbf X\) gives
-                    \(\mathbf X_{\#}L(m,\cdot) = N(\mathbf XG(m),\mathbf X\mathbf C_D\mathbf X^*).\)
-                    Since
-                    \(\mathcal{A}:=\mathbf XG,\)
-                    this becomes
-                    \(\mathbf X_{\#}L(m,\cdot) = N(\mathcal{A}(m),\mathbf X\mathbf C_D\mathbf X^*).\)</p>
-
-                    <p>This is subtly but importantly different from the shifted-noise pushforward
-                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)
-                    The generative pushforward is indexed by the model:
-                    \(m\mapsto N(\mathcal{A}(m),\mathbf X\mathbf C_D\mathbf X^*).\)
-                    The shifted-noise pushforward is centred at the observed SOLA output:
-                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)</p>
-
-                    <div class="sola-callout callout-warning">
-                        <span class="sola-callout-label">Warning</span>
-                        <p>The same covariance \(\mathbf X\mathbf C_D\mathbf X^*\) can appear in two
-                        different stories. One story is generative and model-indexed. The other is
-                        observation-centred. The formulas may look similar, but the interpretation
-                        is not the same.</p>
-                    </div>
-
-                    <p>The generative SOLA relation answers:
-                    \[\text{if }m\text{ were true, what SOLA outputs should we expect?}\]
-                    That is a clean question. It is the property-space analogue of the original
-                    observation model.</p>
-
-                    <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Lesson</span>
-                        <p>SOLA pushes the likelihood kernel from data space to property space. It
-                        turns a model-data relation into a model-resolved-property relation.</p>
-                    </div>
-
-                    <p>Notice the phrase &ldquo;resolved-property&rdquo;. The mean of the
-                    pushed-forward Gaussian is
-                    \(\mathcal{A}(m)=\mathbf XG(m),\)
-                    not generally
-                    \(\Tau(m).\)
-                    So even in the generative interpretation, SOLA naturally produces a relation
-                    between models and resolved properties. The target property \(\Tau(m)\) enters
-                    only when
-                    \(\mathcal{A}\approx\Tau,\)
-                    or when additional assumptions justify replacing one by the other.</p>
-
-                    <h3>The set-valued analogue</h3>
-
-                    <p>There is an exactly parallel set-valued version.</p>
-
-                    <p>Instead of assigning to each model a probability measure on data space,
-                    suppose the observation model assigns to each model a set of admissible data:
-                    \(\mathrm{L}(m)\subseteq\D.\)
-                    This means:
-                    \[\text{if }m\text{ were true, the observation should lie in }\mathrm{L}(m).\]</p>
-
-                    <p>For example, in an additive bounded-noise model, one might write
-                    \(\mathrm{L}(m) = G(m)+S_{\mathrm{noise}},\)
+                    <p>For each property component,
+                    \([\widetilde{\mathbf p}]_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}[\widetilde{\mathbf d}]_i,\)
+                    and, in the noiseless idealization,
+                    \([\widetilde{\mathbf p}]_k = (R_k,\bar m)_{\M},\)
                     where
-                    \(S_{\mathrm{noise}}\subseteq\D\)
-                    is the set of allowed noise values.</p>
+                    \(R_k = \sum_{i=1}^{N_d}[\mathbf X]_{ki}K_i.\)
+                    Thus the method tells us not only the number it reports, but also the linear
+                    functional of the model that produced that number.</p>
 
-                    <p>Now apply SOLA. The finite-dimensional map
-                    \(\mathbf X:\D\to\Pspace\)
-                    sends admissible data sets to admissible property-space sets:
-                    \(\mathbf X(\mathrm{L}(m)) := \{\mathbf X\mathbf d:\mathbf d\in \mathrm{L}(m)\} \subseteq\Pspace.\)
-                    Thus SOLA induces the set-valued model-property relation
-                    \(m \quad\longmapsto\quad \mathbf X(\mathrm{L}(m)).\)</p>
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>SOLA does not merely output estimates. It outputs estimates together
+                        with the kernels that define what those estimates mean.</p>
+                    </div>
 
-                    <p>In the additive bounded-noise case,
-                    \(\mathrm{L}(m) = G(m)+S_{\mathrm{noise}},\)
-                    so
-                    \(\mathbf X(\mathrm{L}(m)) = \mathbf XG(m)+\mathbf X(S_{\mathrm{noise}}).\)
-                    Using
-                    \(\mathcal{A}=\mathbf XG,\)
-                    this becomes
-                    \(\mathbf X(\mathrm{L}(m)) = \mathcal{A}(m)+\mathbf X(S_{\mathrm{noise}}).\)</p>
+                    <p>SOLA also gives a clear way to balance resolution against noise. The
+                    noise-aware objective
+                    \(\left\|\Tau-\mathbf XG\right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*)\)
+                    contains two competing desires:
+                    \(\text{make resolving kernels look like target kernels,}\)
+                    and
+                    \(\text{avoid amplifying data noise too much.}\)
+                    This trade-off is not hidden. It can be inspected, tuned, plotted, and
+                    discussed.</p>
 
-                    <p>Again, the centre is the resolved property
-                    \(\mathcal{A}(m),\)
-                    not the exact target property
-                    \(\Tau(m).\)</p>
+                    <p>SOLA is also property-focused. It does not demand that we reconstruct the
+                    whole model before asking for the quantity we care about. If the scientific
+                    question is already a linear property of the model, then SOLA tries to build
+                    that property directly from the data.</p>
+
+                    <p>And, as Act 9 showed, SOLA has a clean frequentist role: it transforms the
+                    observation equation from data space to property space, pushing the noise
+                    law through \(\mathbf X\) and building calibrated confidence sets for the
+                    transformed quantities. This is the right framework for SOLA's uncertainty
+                    — not a shifted-noise cloud around the observation, but a frequentist
+                    procedure with repeated-sampling guarantees.</p>
 
                     <div class="sola-callout callout-intuition">
                         <span class="sola-callout-label">Intuition</span>
-                        <p>The probabilistic version pushes probability clouds through \(\mathbf
-                        X\). The set-valued version pushes admissible data sets through \(\mathbf
-                        X\). In both cases, SOLA transports the model-data relation into property
-                        space.</p>
+                        <p>SOLA is a data-to-property pipeline. Feed it an observation equation
+                        and a noise model, and it gives you the same equation in property space
+                        with calibrated confidence. The pipeline is good. The question is what
+                        you feed it.</p>
                     </div>
 
-                    <p>This set-valued viewpoint is useful because it makes the architecture visible
-                    without requiring probability. The fundamental object is still the relation
-                    \(m \quad\longmapsto\quad \text{possible observations}.\)
-                    SOLA then transforms the possible observations into possible resolved-property
-                    outputs.</p>
 
-                    <div class="sola-callout callout-checkpoint">
-                        <span class="sola-callout-label">Checkpoint</span>
-                        <p>Whether uncertainty is probabilistic or set-valued, the generative
-                        direction is the same:
-                        \(m \longmapsto \text{data possibilities} \longmapsto \text{SOLA-output possibilities}.\)</p>
-                    </div>
+                    <h2>What SOLA Cannot Do Alone</h2>
 
-                    <h3>The new interpretation</h3>
+                    <p>The caution is not that SOLA is weak. The caution is that SOLA is sometimes
+                    asked to carry more meaning than its construction supplies.</p>
 
-                    <p>We can now state the conceptual replacement.</p>
+                    <p>SOLA constructs
+                    \(\mathcal{A}:=\mathbf XG.\)
+                    The target property map is
+                    \(\Tau:\M\to\Pspace.\)
+                    The desired exact target property of the true model is
+                    \(\bar{\mathbf p} = \Tau(\bar m).\)
+                    The noiseless resolved property produced by SOLA is
+                    \(\mathcal{A}(\bar m).\)</p>
 
-                    <p>The observation-centred picture says:
-                    \[\text{shifted noise on data} \quad \xrightarrow{\;\mathbf X\;} \quad \text{property uncertainty}.\]</p>
-
-                    <p>The generative picture says:
-                    \[\text{model-data relation} \quad \xrightarrow{\;\mathbf X\;} \quad \text{model-property relation}.\]</p>
-
-                    <p>The second picture is the one that belongs at the foundation.</p>
-
-                    <p>In the probabilistic case:
-                    \(m\mapsto L(m,\cdot)\)
-                    becomes
-                    \(m\mapsto \mathbf X_{\#}L(m,\cdot).\)</p>
-
-                    <p>In the set-valued case:
-                    \(m\mapsto \mathrm{L}(m)\)
-                    becomes
-                    \(m\mapsto \mathbf X(\mathrm{L}(m)).\)</p>
-
-                    <p>This is generative SOLA.</p>
-
-                    <p>It does not say that SOLA solves the whole inverse problem. It does not
-                    magically turn resolved properties into exact target properties. It does not
-                    remove the need for model-side assumptions when those assumptions are
-                    needed.</p>
-
-                    <p>What it does is give a cleaner answer to the question:
-                    \[\text{what kind of uncertainty object should SOLA act on?}\]
-                    It should act on the model-data relation.</p>
-
-                    <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Lesson</span>
-                        <p>Generative SOLA does not push forward an observation-centred shifted
-                        noise object. It pushes forward the model-data relation.</p>
-                    </div>
-
-                    <p>This interpretation also clarifies what SOLA is good at. SOLA is a map from
-                    data space to property space. Therefore it is naturally suited to transform
-                    data-side consequences of a model into property-side consequences of that same
-                    model.</p>
-
-                    <p>In short:
-                    \[\boxed{\text{SOLA reshuffles generative information}.}\]</p>
-
-                    <p>But if we want to infer the true target property
-                    \(\Tau(\bar m),\)
-                    then we need one more ingredient: information about which models are plausible
-                    before seeing the data.</p>
-
-                    <h2>But What About the Observed Data?</h2>
-
-                    <p>At this point a natural objection arises. We have spent two acts arguing that
-                    SOLA's default uncertainty is a shifted-noise pushforward, that it is not useful,
-                    and that the generative reinterpretation works with the likelihood rather than
-                    the observation. But surely the observed data \(\widetilde{\mathbf d}\) matters?
-                    Surely it carries information that should not be discarded?</p>
-
-                    <p>This is a fair challenge, and it deserves a direct answer.</p>
-
-                    <p>The observed data is not ignored — it is a realization of a random variable
-                    whose distribution is governed by the likelihood \(L(\bar m,\cdot)\). In a
-                    Bayesian framework, this random variable is the <em>predictive data
-                    variable</em>: before observing, one has a prior on models and a likelihood that
-                    maps each model to a distribution on data space. The marginal of that joint
-                    distribution on data space is the prior predictive distribution. The observed
-                    data is a single draw from the distribution determined by the true model
-                    \(\bar m\). Its role is to update the prior into a posterior.</p>
-
-                    <p>That is, in my view, the only useful way to incorporate the observed data
-                    into the analysis: as a realization of the predictive data variable, which
-                    requires a prior to turn into posterior belief. I currently do not see another
-                    useful way of understanding it. Without a prior, the observation cannot be
-                    turned into a statement about which models are more likely. It can only tell us
-                    which models are compatible — and compatibility, again, is not probability.</p>
+                    <p>These are the same only if
+                    \(\mathcal{A}=\Tau\)
+                    on the relevant model class. If not, then the difference is
+                    \(\Tau(\bar m)-\mathcal{A}(\bar m) = (\Tau-\mathcal{A})(\bar m).\)
+                    A small resolving-target mismatch is not, by itself, a model-independent
+                    guarantee that
+                    \(\mathcal{A}(\bar m)\approx\Tau(\bar m).\)
+                    To make that implication, we need some control of \(\bar m\).</p>
 
                     <div class="sola-callout callout-warning">
                         <span class="sola-callout-label">Warning</span>
-                        <p>The observed data is a realization of a random variable governed by the
-                        likelihood. To turn it into posterior belief about the model, a prior is
-                        required. Without one, the observation cannot do that work.</p>
+                        <p>SOLA can estimate resolved properties without a prior. It cannot turn
+                        resolved properties into exact target properties without some assumption
+                        about the model.</p>
                     </div>
 
-                    <p>Now, one may take a different view. One may say: &ldquo;The observed data is
-                    the closest thing we have to the true noiseless data \(G(\bar m)\). I will
-                    assume it is close, and proceed accordingly.&rdquo; That is a legitimate
-                    choice. If one adopts it, then one is effectively restricting attention to
-                    models \(m\) for which \(G(m)\approx\widetilde{\mathbf d}\). In that case, the
-                    likelihood measure \(L(m,\cdot)\) for those models is approximately
-                    \(N(\widetilde{\mathbf d},\mathbf C_D)\) — which is the shifted-noise measure.
-                    And the generative pushforward
-                    \(\mathbf X_{\#}L(m,\cdot)\)
-                    collapses to the classic SOLA pushforward
-                    \(N(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\)</p>
+                    <p>Similarly, the propagated covariance
+                    \(\mathbf C_P=\mathbf X\mathbf C_D\mathbf X^*\)
+                    is the covariance of a shifted-noise pushforward. As Act 9 argued, this
+                    measure is not a posterior on the model or on the target property. Without a
+                    prior, the observed data cannot be turned into posterior belief. The
+                    shifted-noise measure answers &ldquo;what if we re-observed?&rdquo; — and
+                    that is not the question the inverse problem asks.</p>
 
-                    <p>So the generative perspective does not contradict classic SOLA. It contains
-                    it as a special case — the case where one assumes the observation is close to
-                    the true noiseless data, and restricts the model space accordingly.</p>
+                    <p>The frequentist interpretation of Act 9 does not fix this by itself. It
+                    gives calibrated confidence sets — repeated-sampling guarantees for the
+                    transformed quantities — but confidence is not posterior probability. To
+                    turn a likelihood into a posterior, one needs a prior. That is not a
+                    limitation of SOLA. It is a structural fact about inference.</p>
 
-                    <p>I do not adhere to that assumption. The whole point of modeling noise
-                    probabilistically is that the observation is one draw from a distribution, not
-                    necessarily the closest point to the truth. But if someone wishes to make that
-                    assumption, they are free to do so. The generative framework accommodates it.
-                    It simply makes the assumption visible rather than hiding it inside a
-                    shifted-noise construction that pretends to be prior-free.</p>
+                    <p>So SOLA alone should not be asked to provide:</p>
 
-                    <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Lesson</span>
-                        <p>The observed data is best understood as a realization of the Bayesian
-                        predictive data variable, which requires a prior to become useful. If one
-                        instead assumes the observation is close to the true noiseless data, the
-                        generative perspective reduces to classic SOLA. That assumption is
-                        legitimate — but it should be stated, not smuggled in.</p>
+                    <ul>
+                        <li>exact target properties \(\Tau(\bar m)\) when \(\mathcal{A}\neq\Tau\), without
+                        model-side assumptions;</li>
+                        <li>posterior uncertainty about \(\Tau(\bar m)\) without a prior or an
+                        equivalent model-side assumption;</li>
+                        <li>useful uncertainty from the shifted-noise pushforward alone, since it
+                        is not connected to any model-space measure;</li>
+                        <li>safe ratios or contrasts without checking the relevant resolving
+                        kernels together;</li>
+                        <li>model-independent error bounds from kernel plots alone.</li>
+                    </ul>
+
+                    <p>This is not a demotion. It is just bookkeeping. SOLA answers a precise
+                    question, and it answers it beautifully:
+                    \(\text{which resolved linear properties can I build from the available data?}\)</p>
+
+                    <p>If we want a stronger answer —
+                    \(\text{what is the exact target property of the true model?}\)
+                    — then we need stronger assumptions.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>SOLA can tell us what the data can say after we choose a way of
+                        listening. It cannot tell us what the data never heard. And it cannot
+                        tell us what to believe without a prior to update.</p>
+                    </div>
+
+                    <p>The safest language is therefore:
+                    \(\widetilde{\mathbf p} \text{ estimates } \mathcal{A}(\bar m)\)
+                    with propagated data-noise covariance
+                    \(\mathbf C_P.\)
+                    If we also want to say that
+                    \(\mathcal{A}(\bar m)\approx\Tau(\bar m),\)
+                    then we should state what model-side assumptions make that approximation
+                    reliable. If we want posterior uncertainty, we should state a prior.</p>
+
+                    <h2>Ratios and Multi-Property Diagnostics</h2>
+
+                    <p>The same caution becomes sharper when SOLA outputs are combined after the
+                    fact.</p>
+
+                    <p>Suppose we estimate two quantities, perhaps associated with two model
+                    components
+                    \(m_1,m_2\in\M,\)
+                    or with two different physical fields. Let
+                    \(\Tau_1:\M\to\mathbb R,\; \Tau_2:\M\to\mathbb R\)
+                    be the corresponding target property maps. Since their outputs are
+                    finite-dimensional, we write their one-dimensional property values as vectors:
+                    \(\mathbf p_1=\Tau_1(m_1)\in\mathbb R,\; \mathbf p_2=\Tau_2(m_2)\in\mathbb R.\)
+                    Their scalar components are
+                    \([\mathbf p_1]_1,\; [\mathbf p_2]_1.\)</p>
+
+                    <p>SOLA does not generally return these exact target properties. It returns
+                    resolved quantities defined by approximate maps
+                    \(\mathcal{A}_1:=\mathbf X_1G_1,\; \mathcal{A}_2:=\mathbf X_2G_2.\)
+                    Thus the reported quantities are, in the noiseless idealization,
+                    \(\mathcal{A}_1(m_1),\; \mathcal{A}_2(m_2).\)</p>
+
+                    <p>If we form a ratio of the SOLA outputs, we are forming something like
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1}.\)
+                    But the intended target ratio may be
+                    \(\frac{[\Tau_1(m_1)]_1}{[\Tau_2(m_2)]_1}.\)
+                    In general,
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1} \neq \frac{[\Tau_1(m_1)]_1}{[\Tau_2(m_2)]_1}.\)</p>
+
+                    <p>The issue is not only that each resolving kernel might differ from its
+                    target. The issue is that the two resolving kernels may differ from each
+                    other in ways that matter to the ratio.</p>
+
+                    <p>For example, suppose the two target kernels are meant to localize the two
+                    quantities in the same region. If the resolving kernel for the numerator is
+                    narrow, but the resolving kernel for the denominator is broad, then the ratio
+                    is mixing two different spatial averages. If one resolving kernel has side
+                    lobes and the other does not, the ratio inherits that asymmetry.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>A ratio of SOLA outputs is a ratio of resolved quantities. It is not
+                        automatically the ratio of the corresponding target quantities.</p>
+                    </div>
+
+                    <p>This does not mean ratios are forbidden. It means they require matched
+                    interpretation.</p>
+
+                    <p>A safer ratio statement would be:
+                    \(\frac{[\mathcal{A}_1(m_1)]_1}{[\mathcal{A}_2(m_2)]_1}\)
+                    is the ratio of two resolved quantities, where the numerator is resolved
+                    through \(\mathcal{A}_1\) and the denominator is resolved through \(\mathcal{A}_2\). If
+                    \(\mathcal{A}_1\) and \(\mathcal{A}_2\) have sufficiently compatible resolving kernels for
+                    the intended scientific question, then the ratio may be meaningful.</p>
+
+                    <p>But there is a deeper frustration here. Each SOLA output comes with its own
+                    resolving kernel, so each value must be interpreted through its own custom
+                    lens. If you want uniform interpretation &mdash; the ability to compare, combine,
+                    or ratio outputs without individually auditing every kernel &mdash; the only
+                    way to get that is by introducing prior information. With a sufficiently
+                    informative prior, one can place bounds on the actual desired target
+                    properties, and then it is simply a matter of using the same target kernels
+                    wherever needed.</p>
+
+                    <p>Without a prior, you might be tempted to say: &ldquo;My resolving kernels
+                    are very close to the targets. Surely the approximate property cannot be that
+                    far from the desired one.&rdquo; But as we saw in Act 7, it can be arbitrarily
+                    far off, no matter how close the resolving kernels are to the targets. Then
+                    you might say: &ldquo;Sure, it could be far off if the true model is very
+                    weird, but surely it is not in my case.&rdquo; But that &mdash; the belief
+                    that the true model is not weird &mdash; is prior information. If you have it,
+                    be honest and rigorous: put it in the problem.</p>
+                   
+                    <h2>The Final Slogan</h2>
+
+                    <p>We can now compress the whole story:
+                    \[\boxed{\text{SOLA transforms the observation problem into a more useful form.}}\]</p>
+
+                    <p>The first half — <em>transforms the observation problem</em> — is the
+                    constructive heart of SOLA. The method takes a data-space observation
+                    equation and transports it to property space. It builds resolving kernels
+                    that make the transport visible. It lets the practitioner design the target
+                    question and inspect what the data can actually deliver. That is genuinely
+                    useful.</p>
+
+                    <p>If we want more — posterior beliefs, exact target properties, useful
+                    uncertainty about \(\Tau(\bar m)\) — we need to add something from the model
+                    side. That something may be deterministic:
+                    \(\bar m\in B\subset\M.\)
+                    It may be probabilistic:
+                    \(m\sim\muprior.\)
+                    It may come from physics, geology, smoothness, boundedness, or earlier
+                    experiments. But it should be stated, not smuggled in.</p>
+
+                    <p>So my take on SOLA is not that it should be discarded. Far from it. SOLA is
+                    a neat and useful method precisely because it focuses on properties, exposes
+                    resolving kernels, makes the resolution-noise trade-off visible, and
+                    transforms the observation problem cleanly.</p>
+
+                    <p>But its outputs should be read with the right grammar.</p>
+
+                    <p>A SOLA number is not just a number. It comes with a kernel.</p>
+
+                    <p>A SOLA error bar is not posterior uncertainty. It is propagated
+                    data-noise — a summary of a shifted-noise pushforward, not a statement about
+                    the true property.</p>
+
+                    <p>A target kernel is not a promise. It is a design request.</p>
+
+                    <p>And if we want to turn resolved measurements into exact claims about the
+                    true model, we must say what we believe about the model.</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The mature use of SOLA is neither blind trust nor rejection. It is
+                        careful labelling: resolved quantity, resolving kernel, frequentist
+                        confidence, and explicit model assumptions when exact target properties or
+                        posterior beliefs are claimed.</p>
                     </div>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">
-                        <a class="part-prevnext-btn" href="act-9.html"><span class="arrow">&larr;</span> Act 9: What About Uncertainty?</a>
+                        <a class="part-prevnext-btn" href="act-9.html"><span class="arrow">&larr;</span> Act 9: Uncertainty</a>
+                        <a class="part-prevnext-btn" href="summary.html">Summary &amp; Appendices <span class="arrow">&rarr;</span></a>
                     </div>
                 </div>
             </div>

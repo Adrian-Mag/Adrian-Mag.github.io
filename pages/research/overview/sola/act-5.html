@@ -76,8 +76,8 @@
                 <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> What Did SOLA Estimate?</a>
                 <a class="part-chip" href="act-7.html"><span class="part-chip-num">7</span> Cautionary Tale</a>
                 <a class="part-chip" href="act-8.html"><span class="part-chip-num">8</span> Inversion in Disguise</a>
-                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty?</a>
-                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> Generative SOLA</a>
+                <a class="part-chip" href="act-9.html"><span class="part-chip-num">9</span> Uncertainty</a>
+                <a class="part-chip" href="act-10.html"><span class="part-chip-num">10</span> What SOLA Is Good For</a>
             </div>
         </nav>
 
@@ -100,7 +100,7 @@
                     is observational noise.</p>
 
                     <p>In the standard Gaussian version, we assume
-                    \[\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\]
+                    \[\boldsymbol\eta\sim \mathcal{N}(\mathbf 0,\mathbf C_D),\]
                     where
                     \(\mathbf C_D\in\mathbb R^{N_d\times N_d}\)
                     is the data-noise covariance matrix.</p>
@@ -157,9 +157,9 @@
                     In vector notation,
                     \(\epsilon_{\mathbf x} = \mathbf x^\top\boldsymbol\eta.\)
                     Since
-                    \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D),\)
+                    \(\boldsymbol\eta\sim \mathcal{N}(\mathbf 0,\mathbf C_D),\)
                     we have
-                    \(\epsilon_{\mathbf x}\sim N(0,\mathbf x^\top\mathbf C_D\mathbf x).\)
+                    \(\epsilon_{\mathbf x}\sim \mathcal{N}(0,\mathbf x^\top\mathbf C_D\mathbf x).\)
                     Thus the variance of the weighted noise is
                     \[\operatorname{Var}(\epsilon_{\mathbf x}) = \mathbf x^\top\mathbf C_D\mathbf x.\]</p>
 
@@ -185,7 +185,7 @@
                     is the approximate property map. The noise part is
                     \(\mathbf X\boldsymbol\eta.\)</p>
 
-                    <p>Since \(\boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D)\), the propagated
+                    <p>Since \(\boldsymbol\eta\sim \mathcal{N}(\mathbf 0,\mathbf C_D)\), the propagated
                     property noise has covariance
                     \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*.\]</p>
 
@@ -390,7 +390,7 @@
                     calculation is straightforward.</p>
 
                     <p>The observed data are
-                    \(\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta,\; \boldsymbol\eta\sim N(\mathbf 0,\mathbf C_D).\)
+                    \(\widetilde{\mathbf d} = G(\bar m)+\boldsymbol\eta,\; \boldsymbol\eta\sim \mathcal{N}(\mathbf 0,\mathbf C_D).\)
                     The SOLA estimate is
                     \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
                     Substituting the data model,

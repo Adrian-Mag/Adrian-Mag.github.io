@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 2: The Likelihood Kernel — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <title>Part 2: The Observation Kernel — Bayesian and Frequentist Inference — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/frequentist.css">
-    <meta name="description" content="Part 2: The noise model as an epistemological object, the likelihood kernel, and what it can and cannot say.">
+    <meta name="description" content="Part 2: The noise model as an epistemological object, the observation kernel, and what it can and cannot say.">
     <script>
     MathJax = {
         tex: {
@@ -68,7 +68,7 @@
         <section class="page-header" style="position: relative; overflow: hidden;">
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/vertical.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
-                <h1>Part 2: The Likelihood Kernel</h1>
+                <h1>Part 2: The Observation Kernel</h1>
                 <p>The noise model as an epistemological object.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
@@ -79,7 +79,7 @@
         <nav class="part-nav" aria-label="Part navigation">
             <div class="part-nav-inner">
                 <a class="part-chip" href="part-1.html"><span class="part-chip-num">1</span> The Setup</a>
-                <a class="part-chip" href="part-2.html" aria-current="page"><span class="part-chip-num">2</span> The Likelihood</a>
+                <a class="part-chip" href="part-2.html" aria-current="page"><span class="part-chip-num">2</span> The Observation Kernel</a>
                 <a class="part-chip" href="part-3.html"><span class="part-chip-num">3</span> Bayesian Path</a>
                 <a class="part-chip" href="part-4.html"><span class="part-chip-num">4</span> Frequentist Path</a>
                 <a class="part-chip" href="part-5.html"><span class="part-chip-num">5</span> Beyond Additive</a>
@@ -152,7 +152,7 @@
                     noise law, one needs the residual \(\dobs - \dtrue\). But
                     \(\dtrue\) is unknown.</p>
 
-                    <h2>Candidate true data and the likelihood kernel</h2>
+                    <h2>Candidate true data and the observation kernel</h2>
 
                     <p>Since \(\dtrue\) is unknown, we cannot construct the shifted
                     noise law centred at \(\dtrue\). What we can do is consider
@@ -176,7 +176,7 @@
                     \[
                         \mathbf d \longmapsto \mu_{\mathbf d}
                     \]
-                    is the <strong>likelihood kernel</strong>. More explicitly:
+                    is the <strong>observation kernel</strong>. More explicitly:
                     \[
                         \L : \Dspace \times \Sigma_{\Dspace} \to [0,1],
                         \qquad
@@ -192,7 +192,7 @@
 
                     <div class="freq-callout callout-lesson">
                         <span class="freq-callout-label">Direction matters</span>
-                        <p>The likelihood kernel has the direction:
+                        <p>The observation kernel has the direction:
                         \[
                             \text{candidate truth}
                             \longmapsto
@@ -203,9 +203,9 @@
                         prior.</p>
                     </div>
 
-                    <h2>What the likelihood kernel can say</h2>
+                    <h2>What the observation kernel can say</h2>
 
-                    <p>The likelihood kernel can answer candidate-wise questions. For
+                    <p>The observation kernel can answer candidate-wise questions. For
                     a proposed true datum \(\mathbf d\), it asks: if \(\mathbf d\)
                     were true, would \(\dobs\) be a plausible outcome of the noise
                     model?</p>
@@ -222,9 +222,9 @@
                     \(\mathbf d \in \dobs - E_\alpha\). This is the basic frequentist
                     compatibility idea that will later become a confidence set.</p>
 
-                    <h2>What the likelihood kernel cannot say alone</h2>
+                    <h2>What the observation kernel cannot say alone</h2>
 
-                    <p>The likelihood kernel does not, by itself, assign
+                    <p>The observation kernel does not, by itself, assign
                     probabilities to candidate true data values. It tells us how
                     probable the observation would be if \(\mathbf d\) were true, but
                     not how probable \(\mathbf d\) is given the observation.</p>
@@ -241,13 +241,13 @@
                         <span class="freq-callout-label">Not licensed by likelihood alone</span>
                         <p>The statement
                         \(\Prob(\dtrue \in A \mid \dobs) = 0.95\)
-                        requires a probability model for \(\dtrue\). The likelihood
+                        requires a probability model for \(\dtrue\). The observation
                         kernel provides only the family of observation laws
                         \(\{\mu_{\mathbf d} : \mathbf d \in \Dspace\}\). It does not
                         provide a probability law on \(\mathbf d\).</p>
                     </div>
 
-                    <p>The likelihood kernel is therefore a crucial object shared by
+                    <p>The observation kernel is therefore a crucial object shared by
                     both Bayesian and frequentist reasoning, but it is not yet a
                     full inference about the truth. What one does with that family
                     of laws is where the Bayesian and frequentist constructions
