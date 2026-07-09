@@ -866,8 +866,8 @@
                                     <td>\(\Wb_D\)</td>
                                 </tr>
                                 <tr>
-                                    <td>\(C_0\)</td>
-                                    <td>\(C_{0,N}\)</td>
+                                    <td>\(C_0\) (covariance operator)</td>
+                                    <td>\(C_{0,N}\) (operator matrix in basis \(\{\phi_j\}\))</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -878,7 +878,11 @@
                         discrete ingredients on the right are what enter a
                         computation. The adjoint \(G^{\adj}\) becomes
                         \(\Mb^{-1}\Gb^{\T}\Wb_D\), not \(\Gb^{\T}\), unless both
-                        Gram matrices are identity.
+                        Gram matrices are identity. The entry \(C_{0,N}\) is the
+                        matrix of the covariance operator \(C_0\) in the chosen
+                        basis; in a non-orthonormal basis it is not the same as
+                        the covariance matrix of the coefficient vector
+                        \(\mathbf{u}\), which involves mass-matrix weighting.
                     </figcaption>
                 </figure>
 

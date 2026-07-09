@@ -302,15 +302,18 @@
                         <span class="sola-callout-label">Remark &mdash; A small functional-analytic caveat</span>
                         <p>In a fully careful treatment, the sensitivity kernels and target kernels
                         should be placed in the correct dual or Riesz-represented Hilbert setting.
-                        For the present explanation, we identify linear functionals with their
-                        representing kernels. This keeps the picture readable while preserving the
-                        main idea.</p>
+                        As noted in Act 1, the physical integral kernel \(K_i(r)\) and the Riesz
+                        representer in the \(\M\)-inner product coincide only when
+                        \(\M=L^2(\Omega)\); for Sobolev model spaces they differ. For the present
+                        explanation, we identify linear functionals with their Riesz representers
+                        and write them simply as \(K_i\) and \(T_k\). This keeps the picture
+                        readable while preserving the main idea.</p>
                     </div>
 
                     <p>The solution is a projection problem. We are projecting the target kernel
                     onto the space spanned by the sensitivity kernels:
                     \[\spanop\{K_1,\dots,K_{N_d}\}.\]
-                    If \(\Tau\) already lies in that span, the projection is exact. Otherwise,
+                    If \(T_k\) already lies in that span, the projection is exact. Otherwise,
                     the projection gives the reachable kernel closest to the requested one.</p>
 
                     <div class="sola-callout callout-intuition">

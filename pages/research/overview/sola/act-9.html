@@ -159,7 +159,9 @@
 
                     <h2>What does the pushforward measure mean?</h2>
                     
-                    <p>We know by now that SOLA targets the approximate property \(\mathcal{A}(m)\), not the desired property \(\Tau(m)\). That distinction was established in earlier acts. The question now is narrower: what does the pushforward measure \(\mathcal{N}(\mathbf X\widetilde{\mathbf d}, \mathbf C_P)\) say <em>probabilistically</em> about the approximate property \(\mathcal{A}(m_{\mathrm{true}})\)? Should we interpret it as &ldquo;the approximate property of the true model is distributed according to this measure&rdquo;? I argue not.</p>
+                    <p>We know by now that SOLA targets the approximate property \(\mathcal{A}(m)\), not the desired property \(\Tau(m)\). That distinction was established in earlier acts. The question now is narrower: what does the pushforward measure \(\mathcal{N}(\mathbf X\widetilde{\mathbf d}, \mathbf C_P)\) say <em>probabilistically</em> about the approximate property \(\mathcal{A}(m_{\mathrm{true}})\)? Should we interpret it as &ldquo;the approximate property of the true model is distributed according to this measure&rdquo;? It is not a posterior measure on the model or its properties &mdash; that much is clear, and we will see why shortly. But the plotted interval
+                    \([\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}}\)
+                    does have a perfectly legitimate <em>frequentist</em> interpretation as a confidence interval for the resolved quantity \(\mathcal{A}(m_{\mathrm{true}})\). We will derive that interpretation later in this act. The point of the present discussion is not to say the interval is meaningless, but to clarify what it is and is not: it is not a Bayesian posterior, but it can be a calibrated frequentist confidence statement.</p>
 
                     <h2>No Prior, No Posterior</h2>
 
@@ -358,9 +360,9 @@
                     not produce a posterior distribution over models or properties. It transforms
                     the observation equation and the noise law, then uses the transformed problem
                     to build calibrated confidence and decision procedures. The shifted-noise
-                    pushforward — the object SOLA reports by default — is not wrong, but it is not
-                    a posterior. It is a frequentist object viewed from the wrong end. The
-                    frequentist interpretation makes its meaning precise.</p>
+                    pushforward &mdash; the object SOLA reports by default &mdash; is not wrong, but
+                    it is not a posterior. It is a frequentist object that happens to look like one.
+                    The frequentist interpretation makes its meaning precise.</p>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

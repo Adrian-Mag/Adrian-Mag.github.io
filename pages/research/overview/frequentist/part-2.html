@@ -149,9 +149,12 @@
                     \]</p>
 
                     <p>This expression already reveals the central difficulty. To
-                    evaluate how likely the observation is under the true shifted
+                    evaluate how plausible the observation is under the true shifted
                     noise law, one needs the residual \(\dobs - \dtrue\). But
-                    \(\dtrue\) is unknown.</p>
+                    \(\dtrue\) is unknown. When a density exists, plausibility is
+                    measured by the density at \(\dobs\); when no density exists,
+                    one works directly with the noise measure of neighbourhoods
+                    around the implied residual.</p>
 
                     <h2>Candidate true data and the observation kernel</h2>
 
@@ -165,13 +168,17 @@
                         \qquad
                         \mu_{\mathbf d}(A) = \muN(A - \mathbf d).
                     \]
-                    If a density exists, the density assigned to the actual observed
+                    If a density exists, the density at the actual observed
                     datum is
                     \[
                         p(\dobs \mid \mathbf d) = p_N(\dobs - \mathbf d).
                     \]
                     This measures how plausible the observed datum would be if
-                    \(\mathbf d\) were the true datum.</p>
+                    \(\mathbf d\) were the true datum. In continuous data spaces,
+                    the literal probability of observing exactly \(\dobs\) is
+                    zero; the density (or the probability of a small neighbourhood
+                    around \(\dobs\)) is the appropriate measure of
+                    plausibility.</p>
 
                     <p>The assignment
                     \[
@@ -227,8 +234,10 @@
 
                     <p>The observation kernel does not, by itself, assign
                     probabilities to candidate true data values. It tells us how
-                    probable the observation would be if \(\mathbf d\) were true, but
-                    not how probable \(\mathbf d\) is given the observation.</p>
+                    plausible the observation would be if \(\mathbf d\) were true
+                    &mdash; via density or neighbourhood probability, not literal
+                    point probability in continuous settings &mdash; but not how
+                    probable \(\mathbf d\) is given the observation.</p>
 
                     <p>A posterior distribution would have the opposite direction:
                     \(\dobs \longmapsto\) probability measure on possible true data

@@ -1043,9 +1043,13 @@
                     <div class="tfdl-interactive-header">
                         <strong>F4c &mdash; Sobolev spaces as smoothness filters.</strong>
                         Drag the slider to change the Sobolev order \(s\).
-                        Each Fourier mode \(\sin(j\pi x)\) is weighted by
-                        \((1+j^2)^{-s/2}\). As \(s\) increases, high-frequency
-                        modes are suppressed &mdash; the space demands more smoothness.
+                        The \(H^s\) norm weights each Fourier coefficient
+                        \(a_j\) by \((1+j^2)^{s}\), so high frequencies are
+                        penalized. Typical draws from an \(H^s\)-based prior
+                        scale their coefficients by \((1+j^2)^{-s/2}\), which
+                        suppresses high frequencies. As \(s\) increases, both
+                        effects strengthen &mdash; the space demands more
+                        smoothness.
                     </div>
                     <div class="tfdl-slider-container">
                         <label for="f4c-slider">

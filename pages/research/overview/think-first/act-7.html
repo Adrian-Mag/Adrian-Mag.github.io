@@ -96,17 +96,20 @@
                     </p>
                     <p>
                         Same domain \(\Omega = [0,1]\), same Gaussian kernels, same \(K = 20\)
-                        data, same hat basis, same forward matrix \(\Gb\). The only thing
-                        that changes is the order of operations: we think first,
-                        discretize later.
+                        data, same hat basis, same forward matrix \(\Gb\). The physical
+                        forward and data setup is unchanged. What changes is the Bayesian
+                        formulation: the prior is now a function-space-consistent
+                        covariance operator rather than a per-resolution diagonal matrix.
+                        We think first, discretize later.
                     </p>
                 </div>
 
                 <div class="tfdl-callout callout-lesson">
                     <span class="tfdl-callout-label">Lesson</span>
                     <p>
-                        This is not a new problem. It is the same problem, solved in the
-                        correct order. The broken machine is rebuilt with the correct parts.
+                        This is not a new physical problem. It is the same forward and
+                        data setup, placed in a function-space-consistent Bayesian
+                        formulation. The broken machine is rebuilt with the correct parts.
                     </p>
                 </div>
 
@@ -423,8 +426,8 @@
                                 <td>\(G^{\T}\) (ignores geometry)</td>
                             </tr>
                             <tr>
-                                <td>\(C_0: \M \to \M\)</td>
-                                <td>\(C_{0,N}\) from discretizing \(C_0\)</td>
+                                <td>\(C_0: \M \to \M\) (covariance operator)</td>
+                                <td>\(C_{0,N}\) (operator matrix in basis)</td>
                                 <td>\(\sigma^2 I_N\) (invents covariance)</td>
                             </tr>
                             <tr>
@@ -445,10 +448,12 @@
                         Each function-space object has a discrete representation,
                         but the mapping is not a naive symbol substitution. The
                         adjoint \(G^{\adj}\) becomes \(M^{-1}G^{\T} W_D\), not
-                        \(G^{\T}\). The covariance \(C_0\) becomes \(C_{0,N}\)
-                        from discretizing the operator, not \(\sigma^2 I_N\). The
-                        third column shows what goes wrong when the shortcut is
-                        taken.
+                        \(G^{\T}\). The covariance operator \(C_0\) becomes the
+                        operator matrix \(C_{0,N}\) in the chosen basis, not
+                        \(\sigma^2 I_N\). In a non-orthonormal basis, this operator
+                        matrix is not the same as the covariance matrix of the
+                        coefficient vector. The third column shows what goes wrong
+                        when the shortcut is taken.
                     </figcaption>
                 </figure>
 

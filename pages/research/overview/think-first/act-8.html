@@ -59,7 +59,7 @@
             <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Act VIII: The Verdict</h1>
-                <p>Same problem, two workflows &mdash; the full story, side by side.</p>
+                <p>Same setup, two formulations &mdash; the full story, side by side.</p>
                 <p class="tfdl-supp">
                     Part of <a href="../think-first-discretize-later.html">Think First, Discretize Later</a>.
                 </p>
@@ -85,7 +85,7 @@
             <div class="container">
 
                 <div class="tfdl-chapter">
-                    <h3>The Verdict: Same Problem, Two Workflows</h3>
+                    <h3>The Verdict: Same Setup, Two Formulations</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -96,8 +96,8 @@
                     <p>
                         We arrange the exhibits side by side. Same domain, same
                         kernels, same data, same hat basis, same forward matrix.
-                        The only difference is the order of operations. The
-                        mathematics does the rest.
+                        The physical setup is unchanged; the Bayesian formulation
+                        is different. The mathematics does the rest.
                     </p>
                 </div>
 
@@ -109,10 +109,10 @@
                     </p>
                 </div>
 
-                <!-- F8a: Same problem, two workflows -->
+                <!-- F8a: Same setup, two workflows -->
 
                 <div class="tfdl-section-heading">
-                    <h4>F8a &mdash; Same problem, two workflows</h4>
+                    <h4>F8a &mdash; Same setup, two workflows</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -191,15 +191,15 @@
                         <text x="360" y="195" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="16" font-weight="700">vs</text>
                     </svg>
                     <figcaption>
-                        <strong>F8a &mdash; Same problem, two workflows.</strong>
+                        <strong>F8a &mdash; Same setup, two workflows.</strong>
                         Left: the naive pipeline starts with the mesh, invents a
                         diagonal prior, uses the transpose as adjoint, and produces
-                        a posterior whose trace diverges. Right: the corrected
-                        pipeline starts with function spaces, defines the forward
-                        map and prior operator, uses the geometry-aware adjoint,
-                        and produces a posterior with bounded trace. The same
-                        data and basis enter both pipelines; the order of
-                        operations is the only difference.
+                        a posterior whose coefficient-space trace diverges. Right:
+                        the corrected pipeline starts with function spaces, defines
+                        the forward map and prior operator, uses the geometry-aware
+                        adjoint, and produces a posterior with bounded trace. The
+                        same data and basis enter both pipelines; the Bayesian
+                        formulation is the difference.
                     </figcaption>
                 </figure>
 
@@ -256,13 +256,15 @@
                     <p>
                         The most revealing experiment: refine the mesh and watch
                         both posteriors react. The top row (naive) shows the
-                        uncertainty band inflating as \(N\) grows; the bottom row
-                        (corrected) shows the band settling to a fixed width.
+                        coefficient-space variance growing as \(N\) increases;
+                        the posterior samples oscillate more and more. The bottom
+                        row (corrected) shows the posterior settling to a fixed
+                        measure.
                     </p>
                     <p>
                         Same \(N\), same data, in each column. Two completely
                         different behaviours. This is the clearest demonstration
-                        of why the order of operations matters.
+                        of why the Bayesian formulation matters.
                     </p>
                 </div>
 
@@ -272,14 +274,17 @@
                     <figcaption>
                         <strong>F8c &mdash; Posterior under mesh refinement.</strong>
                         Columns share the same \(N\) (21, 35, 50). <em>Top row
-                        (naive):</em> the \(\pm 1\sigma\) band (coral) inflates as
-                        the mesh is refined &mdash; the maximum pointwise standard
-                        deviation climbs from \(8.8\) to \(13.8\). <em>Bottom row
-                        (corrected):</em> the band (green) barely changes &mdash;
-                        the maximum standard deviation stays near \(0.05\) &mdash;
-                        and the mean tracks the truth at every resolution. Same
-                        data, same basis; the only difference is the order of
-                        operations.
+                        (naive):</em> the posterior samples oscillate more and more
+                        as the mesh is refined &mdash; the coefficient-space trace
+                        \(\Tr(\mathbf{C}_N^{\obs})\) grows linearly with \(N\).
+                        The pointwise band stays bounded (for hat functions,
+                        \(\operatorname{sd}(m_N(x)) \leq \sigma\)), but the
+                        posterior measure has no coherent function-space limit.
+                        <em>Bottom row (corrected):</em> the band (green) barely
+                        changes &mdash; the maximum standard deviation stays near
+                        \(0.05\) &mdash; and the mean tracks the truth at every
+                        resolution. Same data, same basis; the difference is the
+                        Bayesian formulation.
                     </figcaption>
                 </figure>
 
@@ -347,7 +352,7 @@
                             <tr>
                                 <td>Prior covariance</td>
                                 <td>\(\sigma^2 I_N\) (invented per \(N\))</td>
-                                <td>\(C_{0,N} \approx C_0\) (from operator)</td>
+                                <td>\(C_{0,N}\) (operator matrix \(\approx C_0\))</td>
                             </tr>
                             <tr>
                                 <td>Prior trace</td>
@@ -355,7 +360,7 @@
                                 <td>\(\Tr(C_0) < \infty\)</td>
                             </tr>
                             <tr>
-                                <td>Posterior trace</td>
+                                <td>Posterior trace (coeff.)</td>
                                 <td>\(\to \infty\) (diverges)</td>
                                 <td>\(\leq \Tr(C_0) < \infty\) (bounded)</td>
                             </tr>
@@ -388,8 +393,9 @@
                     <p>
                         The same numerical basis can either approximate a coherent
                         function-space problem or define a sequence of unrelated
-                        finite-dimensional problems. The difference is the order
-                        in which the modelling choices are made.
+                        finite-dimensional problems. The difference is whether the
+                        Bayesian formulation is chosen before or after
+                        discretization.
                     </p>
                 </div>
 
@@ -469,7 +475,7 @@
                         problems. The corrected workflow produces a sequence of
                         approximations to one function-space posterior. The
                         difference is not in the matrices &mdash; it is in the
-                        order of operations.
+                        Bayesian formulation.
                     </figcaption>
                 </figure>
 

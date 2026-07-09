@@ -257,11 +257,20 @@
 
                     <div class="sola-callout callout-remark">
                         <span class="sola-callout-label">Remark &mdash; About trade-off parameters</span>
-                        <p>Some presentations introduce an explicit trade-off parameter multiplying
-                        the noise term or the resolution term. In the simplified form used here, the
-                        relative scale is encoded directly in \(\mathbf C_D\) and in the chosen
-                        norms. One can add a tunable parameter if one wants an explicit
-                        resolution-noise dial.</p>
+                        <p>The two terms in \(J(\mathbf X)\) have different meanings and, in general,
+                        different units. The resolution misfit
+                        \(\|\Tau-\mathbf XG\|_{\HS}^2\)
+                        measures kernel mismatch in the model-space norm, while the noise term
+                        \(\Tr(\mathbf X\mathbf C_D\mathbf X^*)\)
+                        measures variance in property-space units. Adding them without an explicit
+                        trade-off parameter is not innocent; it implicitly fixes a relative scale.
+                        Some presentations introduce an explicit parameter \(\lambda\):
+                        \[J_\lambda(\mathbf X) = \|\Tau-\mathbf XG\|_{\HS}^2 + \lambda\,\Tr(\mathbf X\mathbf C_D\mathbf X^*),\]
+                        which makes the resolution-noise dial visible. In the simplified form used
+                        here, the relative scale is absorbed into \(\mathbf C_D\) and the chosen
+                        norms. This is a legitimate convention, but it should not be read as
+                        canonical. One can always reintroduce \(\lambda\) if an explicit
+                        resolution-noise dial is desired.</p>
                     </div>
 
                     <p>The minimizer of \(J(\mathbf X)\) is the unconstrained noise-aware SOLA

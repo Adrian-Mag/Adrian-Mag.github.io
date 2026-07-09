@@ -587,7 +587,25 @@
                     </p>
                     <p>
                         This means that the total posterior variance in coefficient space grows without
-                        bound.
+                        bound. It is important to note what this does and does not imply. The
+                        coefficient-space trace \(\Tr(\mathbf{C}_N^{\obs})\) is not the same as the
+                        integrated physical variance \(\Tr(\Mb\mathbf{C}_N^{\obs})\), and it is not
+                        the same as the pointwise variance
+                        \(\operatorname{Var}_{\post_N}(m_N(x)) = \boldsymbol{\phi}(x)^{\top}
+                        \mathbf{C}_N^{\obs}\boldsymbol{\phi}(x)\). For nodal hat functions, at most
+                        two basis functions are nonzero at any \(x\), and their values lie in
+                        \([0,1]\), so \(|\boldsymbol{\phi}(x)|_2^2 \leq 1\). Since
+                        \(0 \leq \mathbf{C}_N^{\obs} \leq \sigma^2 \mathbf{I}_N\), the pointwise
+                        standard deviation satisfies
+                        \(\operatorname{sd}_{\post_N}(m_N(x)) \leq \sigma\). The pointwise band does
+                        not diverge. What diverges is the Euclidean coefficient posterior: the
+                        cloud of coefficient vectors spreads out in \(\R^N\), even though the
+                        reconstructed functions may not oscillate with unbounded amplitude at any
+                        fixed point. The pathology is that the sequence of coefficient posteriors
+                        does not correspond to a coherent sequence of function-space measures &mdash;
+                        the Euclidean coefficient geometry is not the \(L^2\) geometry, and without
+                        a trace-class prior there is no guarantee that the posterior measures
+                        converge to a well-defined limit on any function space.
                     </p>
                 </div>
 
@@ -595,12 +613,16 @@
                     <img src="../../../../media/research/think-first/fig2d_variance_growth.svg"
                          alt="Total posterior variance trace vs number of basis functions, showing linear growth.">
                     <figcaption>
-                        <strong>F2d &mdash; Variance grows with mesh refinement.</strong>
-                        The total posterior variance \(\Tr(\mathbf{C}_N^{\obs})\)
+                        <strong>F2d &mdash; Coefficient-space variance grows with mesh refinement.</strong>
+                        The coefficient-space trace \(\Tr(\mathbf{C}_N^{\obs})\)
                         grows linearly with \(N\), tracking the lower bound
                         \(\sigma^2(N-K)\). Each new basis function adds a direction
                         the data cannot see, and the naive prior assigns it full
-                        variance \(\sigma^2\).
+                        variance \(\sigma^2\). This does not mean the pointwise
+                        uncertainty band diverges &mdash; for hat functions it stays
+                        bounded by \(\sigma\) &mdash; but it does mean the sequence
+                        of coefficient posteriors has no coherent function-space
+                        limit.
                     </figcaption>
                 </figure>
 
@@ -610,11 +632,11 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        If the posterior covariance grows in total variance as the mesh is refined, then
+                        If the coefficient-space posterior variance grows without bound as the mesh is refined, then
                         the sequence of posteriors is not settling down to a meaningful limiting
                         posterior. Instead of approximating a fixed probability measure on functions, we
                         are generating a sequence of increasingly large finite-dimensional probability
-                        clouds.
+                        clouds in \(\R^N\).
                     </p>
                     <p>
                         The data may continue to control a small number of visible directions. But the
@@ -633,8 +655,8 @@
                     <div class="tfdl-interactive-header">
                         <strong>F2e &mdash; Refinement slider.</strong>
                         Drag the slider to change the number of basis functions \(N\).
-                        The posterior mean barely moves, but the uncertainty band
-                        inflates &mdash; the posterior does not converge.
+                        The posterior mean barely moves, but the coefficient-space
+                        variance grows &mdash; the posterior does not converge.
                     </div>
                     <div class="tfdl-slider-container">
                         <label for="f2e-slider">

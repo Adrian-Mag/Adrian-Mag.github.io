@@ -95,7 +95,8 @@
 
                     <p>The frequentist construction begins from the same ontological
                     observation equation \(\dobs = \dtrue + \nobs\), but refuses one
-                    of the Bayesian moves. The frequentist does not introduce an
+                    of the Bayesian moves. In the Neyman confidence-set framework
+                    considered here, the frequentist does not introduce an
                     epistemological true-datum random variable
                     \(\Drand \sim \prior\). The true datum is not assigned a
                     probability law. It is treated as fixed but unknown.</p>
@@ -156,9 +157,13 @@
 
                     <p>Choose a measurable noise acceptance region
                     \(E_\alpha \subseteq \Dspace\) with
-                    \(\muN(E_\alpha) = 1 - \alpha\). This set contains noise
+                    \(\muN(E_\alpha) \ge 1 - \alpha\). This set contains noise
                     realizations regarded as ordinary at level \(1-\alpha\); its
-                    complement contains those regarded as extreme.</p>
+                    complement contains those regarded as extreme. When the noise
+                    distribution is continuous, one can typically choose
+                    \(E_\alpha\) so that \(\muN(E_\alpha) = 1-\alpha\) exactly;
+                    in discrete settings or under restricted shapes, exact equality
+                    may be unattainable and the region is conservative.</p>
 
                     <p>For example, if \(\Nrand \sim \mathcal{N}(0, \sigma^2)\), a
                     symmetric \(95\%\) acceptance region is
@@ -232,7 +237,7 @@
                                 \Dobsrand - \dtrue \in E_\alpha
                             \right) \\
                             &= \Prob\!\left(\Nrand \in E_\alpha\right) \\
-                            &= \muN(E_\alpha) = 1 - \alpha.
+                            &= \muN(E_\alpha) \ge 1 - \alpha.
                         \end{aligned}
                     \]</p>
 
@@ -241,7 +246,7 @@
                         <p>\[
                             \Prob_{\dtrue}\!\left(
                                 \dtrue \in \Calpha(\Dobsrand)
-                            \right) = 1 - \alpha.
+                            \right) \ge 1 - \alpha.
                         \]</p>
                         <p>The subscript \(\dtrue\) indicates the probability is
                         computed under the sampling law in which \(\dtrue\) is the
@@ -252,8 +257,11 @@
 
                     <p>In words: if the true datum is fixed at \(\dtrue\), and the
                     noisy observation procedure is repeated many times, then the
-                    confidence set contains \(\dtrue\) in a fraction \(1-\alpha\)
-                    of repetitions.</p>
+                    confidence set contains \(\dtrue\) in at least a fraction
+                    \(1-\alpha\) of repetitions. When exact acceptance regions are
+                    available (as in continuous models), the coverage is exactly
+                    \(1-\alpha\); in discrete or restricted settings, the coverage
+                    may be conservative.</p>
 
                     <h2>The realized confidence set</h2>
 
@@ -281,12 +289,13 @@
                     \[
                         \Prob_{\dtrue}\!\left(
                             \dtrue \in \Calpha(\Dobsrand)
-                        \right) = 1 - \alpha.
+                        \right) \ge 1 - \alpha.
                     \]
                     This is a statement about a random confidence set before the
                     observation is realized. Equivalently: the rule
                     \(\dobs \mapsto \Calpha(\dobs)\) catches the fixed truth with
-                    frequency \(1-\alpha\) under repeated noisy observations.</p>
+                    frequency at least \(1-\alpha\) under repeated noisy
+                    observations.</p>
 
                     <p>The frequentist does <strong>not</strong> automatically claim:
                     \[
@@ -304,7 +313,7 @@
                         <span class="freq-callout-label">Two statements, kept separate</span>
                         <p><strong>Frequentist coverage:</strong>
                         A random confidence set catches a fixed truth with
-                        probability \(1-\alpha\).</p>
+                        probability at least \(1-\alpha\).</p>
                         <p><strong>Posterior-style statement:</strong>
                         A fixed realized set contains an uncertain truth with
                         probability \(1-\alpha\).</p>

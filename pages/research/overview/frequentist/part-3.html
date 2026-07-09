@@ -126,7 +126,10 @@
                     \[
                         \Dobsrand = \Drand + \Nrand.
                     \]
-                    This differs from the known-truth model
+                    This assumes that the data space \(\Dspace\) carries enough
+                    structure for addition to be meaningful &mdash; for instance,
+                    \(\Dspace=\mathbb{R}^n\) or a Banach space. This differs from
+                    the known-truth model
                     \(\Dobsrand = \dtrue + \Nrand\) in that the centre of the
                     observation law is itself epistemologically random:
                     \(\Drand \sim \prior\). The Bayesian observation variable mixes
@@ -190,8 +193,16 @@
                         \post(\mathbf d', B)
                         = \Prob(\Drand \in B \mid \Dobsrand = \mathbf d').
                     \]
-                    After the actual observation \(\dobs\), the Bayesian posterior is
-                    \(\post(\dobs, \cdot)\). If densities exist, Bayes' formula
+                    When \(\Dobsrand\) is continuous, the event
+                    \(\{\Dobsrand = \mathbf d'\}\) has probability zero, so the
+                    posterior kernel should be understood as a <em>regular
+                    conditional distribution</em> &mdash; a version of the
+                    conditional law defined \(\muPred\)-almost everywhere, which
+                    exists under standard conditions (e.g. standard Borel or Radon
+                    spaces). After the actual observation \(\dobs\), the Bayesian
+                    posterior is
+                    \(\post(\dobs, \cdot)\), evaluated using a regular version
+                    well-behaved at \(\dobs\). If densities exist, Bayes' formula
                     gives
                     \[
                         p(\mathbf d \mid \dobs)
@@ -318,9 +329,16 @@
 
                     <p>The likelihood alone cannot fix this. The likelihood function
                     \(\ell_{\dobs}(\mathbf d) = p_N(\dobs - \mathbf d)\) is a
-                    function of the candidate true datum, but it is not a probability
-                    density over \(\mathbf d\). It does not generally integrate to
-                    one over \(\Dspace\). The likelihood answers: <em>how plausible
+                    function of the candidate true datum, but it is not automatically
+                    a probability density over \(\mathbf d\). It may or may not be
+                    normalizable with respect to a chosen reference measure on
+                    \(\Dspace\), but that reference measure is extra structure
+                    &mdash; it is not supplied by the observation kernel alone. Even
+                    when normalization happens to work (as in the additive location
+                    model with Lebesgue measure), treating the likelihood as a
+                    density over \(\mathbf d\) corresponds morally to using a flat
+                    or improper prior, a construction that is not invariant under
+                    reparameterization. The likelihood answers: <em>how plausible
                     is the observation if \(\mathbf d\) were true?</em> The posterior
                     answers: <em>how plausible is \(\mathbf d\) after observing
                     \(\dobs\)?</em> The second question cannot be obtained from the

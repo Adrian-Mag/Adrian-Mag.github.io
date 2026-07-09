@@ -218,6 +218,22 @@
                     \[G(m) = \begin{pmatrix} \int_\Omega K_1(r)m(r)\dd r\\ \vdots\\ \int_\Omega K_{N_d}(r)m(r)\dd r \end{pmatrix}.\]</p>
 
                     <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Physical kernels versus Riesz representers</span>
+                        <p>When \(\M=L^2(\Omega)\) with the usual inner product, the function
+                        \(K_i(r)\) appearing in the physical integral
+                        \(\int_\Omega K_i(r)m(r)\dd r\) is also the Riesz representer of the
+                        functional in the \(\M\)-inner product, so the two notations coincide.
+                        If \(\M\) is a Sobolev space \(H^s(\Omega)\), however, the Riesz
+                        representer \(\widehat{K}_i\) of the same functional satisfies
+                        \((\widehat{K}_i,m)_{H^s}=\int_\Omega K_i(r)m(r)\dd r\), and
+                        \(\widehat{K}_i\) is generally <em>not</em> the same function as
+                        \(K_i\). Throughout these notes we write \((K_i,m)_\M\) for readability,
+                        but the reader should understand this as the Riesz-represented form of
+                        the functional. The distinction matters whenever the model space is not
+                        \(L^2\).</p>
+                    </div>
+
+                    <div class="sola-callout callout-remark">
                         <span class="sola-callout-label">Remark &mdash; Why the data are linear</span>
                         <p>Each datum depends linearly on \(m\). If \(m_1\) and \(m_2\) are two models
                         and \(\alpha,\beta\in\mathbb R\), then

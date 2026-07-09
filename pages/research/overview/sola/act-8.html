@@ -123,8 +123,14 @@
                     <p>For the constrained SOLA operator, the estimate can also be written in the
                     form
                     \[\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d} = \Tau(\hat m),\]
-                    for a particular model \(\hat m\in\M\). This \(\hat m\) is not the true model.
-                    It is a proxy model, constructed from the data and from the same ingredients
+                    for a particular model \(\hat m\in\M\) &mdash; provided that the calibration
+                    pairs \((\mathbf v_\ell,\mathbf w_\ell)\) are jointly realizable by some
+                    \(f_\ell\in\M\) satisfying \(G(f_\ell)=\mathbf v_\ell\) and
+                    \(\Tau(f_\ell)=\mathbf w_\ell\). This is automatic when the constraints are
+                    built from test models \(q_\ell\) (take \(f_\ell=q_\ell\)), but for
+                    arbitrarily prescribed \((\mathbf V,\mathbf W)\) such \(f_\ell\) need not
+                    exist. The proxy model \(\hat m\) is not the true model.
+                    It is constructed from the data and from the same ingredients
                     that define the SOLA operator.</p>
 
                     <p>So there are two equivalent ways to read the same number:
@@ -172,7 +178,8 @@
                     <div class="sola-callout callout-checkpoint">
                         <span class="sola-callout-label">Checkpoint</span>
                         <p>The constrained SOLA estimate can be interpreted as the exact target
-                        property of a proxy model \(\hat m\).</p>
+                        property of a proxy model \(\hat m\), provided the calibration pairs
+                        are jointly realizable in \(\M\).</p>
                     </div>
 
                     <p>This statement should be handled carefully. It does not say
@@ -386,11 +393,15 @@
                     Therefore the resolving kernel is
                     \(R_k = \mathcal R^*T_k.\)</p>
 
-                    <p>This is a revealing formula. The SOLA resolving kernel is the target
-                    kernel passed through the adjoint of a resolution operator. Not a
+                    <p>This is a revealing formula, when it applies. The SOLA resolving kernel is
+                    the target kernel passed through the adjoint of a resolution operator. Not a
                     different kind of resolution. Not a new species of object. The same
-                    resolution operator that classical inversion has always carried — just
-                    viewed from the other side.</p>
+                    resolution operator that classical inversion has always carried &mdash; just
+                    viewed from the other side. The caveat is that this factorization
+                    \(\mathbf X=\Tau G^\dagger\) need not hold for every SOLA map; when it does,
+                    the bridge formula \(R_k=\mathcal R^*T_k\) is available, and when it does not,
+                    the resolving kernels are still well-defined but cannot be written in this
+                    compact form.</p>
 
                     <div class="sola-callout callout-checkpoint">
                         <span class="sola-callout-label">Checkpoint</span>
@@ -411,7 +422,8 @@
                     put on the table, inspected, and compared to the targets. This is a
                     genuine practical advantage.</p>
 
-                    <p>But the algebra says: the resolving kernels are not a new kind of
+                    <p>But the algebra says: whenever the SOLA map factors as
+                    \(\mathbf X=\Tau G^\dagger\), the resolving kernels are not a new kind of
                     object. They are target kernels mapped through the adjoint of a
                     resolution operator. Classical inversion modifies the model through
                     \(\mathcal R\); SOLA modifies the target kernel through
@@ -430,11 +442,11 @@
                     \(\mathbf d=G(m),\; \widetilde{\mathbf p}=\mathbf X\mathbf d,\; \widetilde{\mathbf p}=\mathbf XG(m)=\mathcal{A}(m).\)
                     The method does not necessarily return \(\Tau(m)\). It returns \(\mathcal{A}(m)\).</p>
 
-                    <p>If
+                    <p>If the SOLA map factors as
                     \(\mathbf X=\Tau G^\dagger,\)
                     then
                     \(\mathcal{A}=\Tau\mathcal R.\)
-                    So the SOLA estimate is the target property of the resolved model:
+                    In that case, the SOLA estimate is the target property of the resolved model:
                     \(\widetilde{\mathbf p} = \Tau(\mathcal R m).\)
                     Equivalently, it is the true model tested against resolved target
                     kernels:
