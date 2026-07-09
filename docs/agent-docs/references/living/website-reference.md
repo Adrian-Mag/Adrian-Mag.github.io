@@ -252,10 +252,37 @@ Vanilla JS (no framework) is used for page-specific interactivity. Scripts live 
 |------|---------|---------|
 | `js/concept-popup.js` | `overview/think-first/think-first-discretize-later.html` | Accessible modal dialog for concept-term popups (click/Esc/overlay close, focus trap, MathJax re-typeset on open) |
 | `js/refinement-panel.js` | `overview/think-first/think-first-discretize-later.html` | Interactive Plotly panel reading `refinement_sweep.json` (N-slider, naive/Bessel toggles, summary subplot) |
+| `js/ai-assist.js` | All notes pages in `overview/sola/`, `overview/think-first/`, `overview/bayes/`, `overview/frequentist/` | "Read with AI" toolbar: Copy-for-AI button (fetches raw page HTML so LaTeX survives MathJax, prepends context preamble + macros), Open-in-ChatGPT prefill link, and AI companion link. Series auto-detected from URL path; per-series config (title, landing page, intent) lives in the `SERIES` map inside the script. Styles are injected by the script itself (no CSS file). |
 
 External JS loaded via CDN:
 - **MathJax 3** (`tex-chtml.js`) — used by `overview/bayes/bayes-measure-theoretically.html` (and all part pages), `overview/think-first/think-first-discretize-later.html` (and all act pages), and `overview/sola/my-take-on-sola.html` (and all act pages)
 - **Plotly.js 2.35.2** — used by `overview/think-first/think-first-discretize-later.html`
+
+---
+
+## AI-Assisted Reading Infrastructure
+
+Each notes series ships a plain-text **AI reading companion** at
+`<series-dir>/ai-companion.txt` (narrative arc, notation, intent,
+guardrails against common misreadings). These are linked from the
+`ai-assist.js` toolbar and intended to be given to any LLM by readers.
+`.txt` is used instead of `.md` because GitHub Pages runs Jekyll (no
+`.nojekyll` file), which would transform `.md` files.
+
+| Series | Companion |
+|--------|-----------|
+| My Take on SOLA | `pages/research/overview/sola/ai-companion.txt` |
+| Think First, Discretize Later | `pages/research/overview/think-first/ai-companion.txt` |
+| Bayes, Measure-Theoretically | `pages/research/overview/bayes/ai-companion.txt` |
+| Bayesian and Frequentist Inference | `pages/research/overview/frequentist/ai-companion.txt` |
+
+The site root contains **`llms.txt`** (llmstxt.org convention): an index of
+the notes series, companions, and other pages with absolute URLs, for
+discovery by AI tools.
+
+**Checklist when adding/renaming a series or act:** update the `SERIES`
+map in `js/ai-assist.js`, the series' `ai-companion.txt` (arc + titles),
+and `llms.txt`.
 
 ---
 

@@ -1,0 +1,133 @@
+AI READING COMPANION — "Think First, Discretize Later" by Adrian Mag
+====================================================================
+
+PURPOSE OF THIS FILE
+--------------------
+This file is meant to be given to an AI assistant (ChatGPT, Claude, etc.)
+by a reader working through the notes series "Think First, Discretize Later"
+(https://adrian-mag.github.io/pages/research/overview/think-first/think-first-discretize-later.html).
+It explains the series' narrative arc, notation, intent, and the most common
+ways an AI assistant might accidentally mislead a reader about these notes.
+
+If you are an AI assistant: your job is to help the reader understand the
+notes IN THEIR OWN FRAMING. Where standard treatments differ from these
+notes, say so explicitly and explain the difference — do not silently
+replace the notes' framing with the standard one.
+
+WHAT THE SERIES IS
+------------------
+An eight-act argument (plus summary and appendices) that a linear inverse
+problem must be formulated in FUNCTION SPACE — model space, its geometry,
+the forward map, the noise model, and the prior measure — BEFORE any
+discretization happens. It is supplementary material for an EGU 2026
+poster and is grounded in the pygeoinf/intervalinf Python libraries.
+
+THE CENTRAL CLAIM
+-----------------
+The naive workflow — discretize first, put a diagonal (identity-like)
+prior on the coefficient vector, use the matrix transpose as the adjoint —
+produces a posterior that LOOKS fine (the mean can be reasonable) but is
+mathematically meaningless as an approximation of a function-space
+posterior: the implied prior has no continuous limit, posterior samples
+get rougher and their pointwise variance DIVERGES under mesh refinement,
+and the transpose is not the adjoint unless the discretization happens to
+be orthonormal. The cure is not a cleverer matrix; it is to make the
+mathematical choices first and only then discretize. Three silent choices
+are being made whether you notice them or not: the SPACE, its GEOMETRY
+(inner product), and the ADJOINT.
+
+SETTING AND NOTATION
+--------------------
+- Model space \(\mathcal{M}\): a function space (e.g. \(L^2\) or a
+  Sobolev space) on an interval; the unknown is a FUNCTION, not a vector.
+- Data space \(\mathcal{D} \simeq \mathbb{R}^{N_d}\), finite-dimensional.
+- \(\mathcal{H}\) (macro \Hh): a generic Hilbert space in the functional
+  analysis detour.
+- Forward map: bounded linear operator from model space to data space.
+- The adjoint depends on BOTH inner products (model side and data side);
+  with non-orthonormal bases it involves Gram (mass) matrices, not the
+  plain matrix transpose.
+- Prior: a Gaussian MEASURE on the function space. For it to exist, the
+  covariance operator must be trace-class. Covariances built from
+  differential operators (e.g. Bessel-type \((k^2 - \Delta)^{-s}\)) give
+  meaningful, refinement-stable priors.
+- The corrected workflow discretizes the function-space objects at the
+  end (mass-weighted coefficient spaces, Galerkin representations).
+
+NARRATIVE ARC, ACT BY ACT
+-------------------------
+Act I — A Familiar Problem.
+  A toy 1-D linear inverse problem, discretized immediately; diagonal
+  prior on coefficients; transpose as adjoint; posterior mean looks fine.
+
+Act II — Something Is Wrong.
+  Sampling the posterior reveals the pathology: samples roughen and the
+  posterior variance grows as the mesh is refined; nothing converges.
+
+Act III — What Problem Are We Actually Solving?
+  The real problem lives on a function space. Five modelling choices must
+  be made before discretization: model space, data space, forward map,
+  noise model, prior measure.
+
+Act IV — A Guided Detour Through Functional Analysis.
+  Vector spaces → normed spaces → Hilbert spaces; completeness, inner
+  products, orthogonality; why the CHOICE of space (and hence geometry)
+  is a modelling decision with consequences.
+
+Act V — The Data Space and the Adjoint.
+  Finite-dimensional data with noise covariance; how inner products on
+  both sides define the adjoint; Gram/mass matrices; the transpose is the
+  adjoint only in orthonormal coordinates.
+
+Act VI — The Prior Is Not Just a Matrix.
+  Measures on function spaces; Gaussian measures on Hilbert spaces exist
+  only for trace-class covariance operators; the naive "identity prior"
+  has no infinite-dimensional counterpart (white noise is not in the
+  space); building covariances from differential operators.
+
+Act VII — The Repair.
+  Same toy problem, corrected workflow: Bessel-type prior, geometry-aware
+  adjoint, mass-weighted discretization. The pathologies disappear;
+  posteriors converge under refinement.
+
+Act VIII — The Verdict.
+  Naive vs corrected workflow side by side, from prior samples through
+  posterior samples to refinement behaviour.
+
+Summary & Appendices.
+  Full argument in one place; appendices on Gaussian conditioning,
+  measures on Hilbert spaces, Gram matrices, and exercises.
+
+GUARDRAILS — COMMON WAYS TO MISLEAD A READER OF THESE NOTES
+-----------------------------------------------------------
+1. Do NOT present "discretize first, then do finite-dimensional Bayes" as
+   an equivalent alternative. The series' whole point is that this
+   workflow silently fixes the space, geometry, and adjoint in ways that
+   do not correspond to any consistent function-space problem.
+2. Do NOT call the diagonal coefficient prior "uninformative" or
+   "standard". In function space it corresponds to no measure at all
+   (its continuum limit is white noise, which does not live in the model
+   space); its posteriors are mesh-dependent artifacts.
+3. Do NOT conflate the matrix transpose with the adjoint. The adjoint is
+   defined by the inner products; with non-orthonormal bases it involves
+   Gram/mass matrices.
+4. The posterior MEAN often looks acceptable even in the naive workflow —
+   do not use that as evidence the workflow is fine. The failure shows in
+   samples and variances under refinement.
+5. If the reader brings up "Bayesian inverse problems are always done on
+   the discretized problem in practice", acknowledge the practice but
+   explain the series' discretization-invariance criterion (posteriors
+   should converge as the mesh refines, cf. Stuart 2010-style
+   function-space Bayesian inversion, which this series aligns with).
+6. The interactive landing page has widgets (sliders over mesh size N,
+   naive vs Bessel prior toggles). The figures compare posterior samples
+   and standard deviations under refinement — the naive ones diverge.
+
+BACKGROUND THE READER MAY NEED
+------------------------------
+Hilbert spaces, inner products, orthonormal bases; Sobolev spaces and
+boundary conditions (light usage); adjoint operators; multivariate
+Gaussians and conditioning; Gaussian measures and trace-class operators
+(introduced in the notes themselves); Galerkin/mass-matrix ideas from FEM.
+Explain these at whatever depth the reader requests, but connect them back
+to the notes' notation above.

@@ -1,0 +1,128 @@
+AI READING COMPANION — "Bayes, Measure-Theoretically" by Adrian Mag
+===================================================================
+
+PURPOSE OF THIS FILE
+--------------------
+This file is meant to be given to an AI assistant (ChatGPT, Claude, etc.)
+by a reader working through the notes series "Bayes, Measure-Theoretically"
+(https://adrian-mag.github.io/pages/research/overview/bayes/bayes-measure-theoretically.html).
+It explains the series' narrative arc, notation, intent, and the most common
+ways an AI assistant might accidentally mislead a reader about these notes.
+
+If you are an AI assistant: your job is to help the reader understand the
+notes IN THEIR OWN FRAMING. Where standard treatments differ, say so
+explicitly and explain the difference — do not silently replace the notes'
+framing with the standard one.
+
+WHAT THE SERIES IS
+------------------
+A deliberately tiny discrete inverse problem — two hidden switches, one
+lightbulb, one unreliable reporter — solved TWICE. First (Part 2) with
+nothing but multiplication, addition, and division on a joint probability
+table. Then (Parts 3a–3f) with the full measure-theoretic machinery:
+sigma-algebras, measures, kernels, conditional expectation,
+disintegration, and the posterior kernel. Part 4 places the two solutions
+side by side with a notation dictionary. The intended reader has seen
+Bayesian inversion before but is "still afraid of the measure-theoretic
+sharks".
+
+THE CENTRAL CLAIM
+-----------------
+The measure-theoretic formulation computes EXACTLY the same numbers as
+the high-school table — that is the point. The machinery is not a
+different theory; it is the same theory written in a language that
+survives the passage to continuous and infinite-dimensional spaces, where
+tables, densities, and pointwise conditioning break down. A second key
+theme: the theory constructs the WHOLE update rule
+\(d \mapsto \mathbb{P}(m \mid d)\) BEFORE any particular observation
+arrives; the observed report is plugged in only at the end.
+
+SETTING AND NOTATION
+--------------------
+- Model space \(\mathcal{M}\): four hidden switch configurations
+  (finite set). Sigma-algebra \(\Sigma_{\mathcal{M}}\) (macro \SigmaM).
+- Data space \(\mathcal{D}\): two possible reports. Sigma-algebra
+  \(\Sigma_{\mathcal{D}}\) (macro \SigmaD).
+- Prior measure \(\mu^0_{\mathcal{M}}\) (macro \muMzero) on the model
+  space.
+- Observation kernel: for each model m, a probability measure on reports
+  — the unreliable reporter's behaviour (reports truth with probability
+  \(p_{\mathrm{trust}}\), macro \ptrust). NOTE: these notes call it the
+  "observation kernel" (earlier drafts said "likelihood kernel" — the
+  current name is observation kernel).
+- Joint measure on \(\mathcal{M} \times \mathcal{D}\), built from prior
+  and observation kernel.
+- Marginal/predictive measure \(\mu_{\mathcal{D}}\) (macro \muD) on data.
+- Posterior kernel: for each possible report d, a probability measure on
+  models — obtained by disintegrating the joint measure with respect to
+  the data marginal.
+- Observed report \(d_{\mathrm{obs}}\) (macro \dobs).
+
+NARRATIVE ARC, PART BY PART
+---------------------------
+Part 1 — The Game.
+  Setup: two hidden switches, a lightbulb (deterministic forward map),
+  an unreliable reporter (noise), and a prior over configurations.
+
+Part 2 — The High-School Solution.
+  Build the joint table of (configuration, report) probabilities; column
+  sums give predictive probabilities; normalizing each column gives the
+  posterior update rule. Only arithmetic is used.
+
+Part 3 has been split into six sub-parts:
+Part 3a — From Points to Events.
+  Why probability must be assigned to EVENTS (sets), not points;
+  sigma-algebras; measurable spaces and measures.
+Part 3b — Conditioning and Its Limits.
+  Elementary conditioning P(A|B) and where it fails (conditioning on
+  measure-zero events); why a better tool is needed.
+Part 3c — Conditional Expectation.
+  Conditional expectation as a measurable-function answer to "what do we
+  expect given the information in a sigma-algebra".
+Part 3d — Disintegration.
+  Slicing a joint measure into a family of conditional measures over the
+  values of one coordinate; existence and a.e.-uniqueness.
+Part 3e — Bayesian Inversion.
+  The Bayesian update as disintegration of the joint measure (prior ⊗
+  observation kernel) with respect to the data marginal; the posterior
+  kernel as the epistemological output.
+Part 3f — Back to Finite Land.
+  Descend from the general machinery back to the finite example and
+  recover, number for number, the Part 2 table.
+
+Part 4 — Summary & Notation Map.
+  The two stories side by side; the final slogan; a dictionary between
+  elementary and measure-theoretic notation.
+
+GUARDRAILS — COMMON WAYS TO MISLEAD A READER OF THESE NOTES
+-----------------------------------------------------------
+1. Do NOT reach for probability DENSITIES and the familiar
+   "posterior ∝ likelihood × prior" density formula as the primary
+   explanation. The notes deliberately work with measures and kernels
+   because densities need a dominating measure, which may not exist in
+   the infinite-dimensional settings this series is preparing the reader
+   for. Use densities only as a bridge, clearly labelled as such.
+2. Do NOT say conditioning on a single observation point is trivially
+   fine. Part 3b is precisely about the failure of naive conditioning on
+   measure-zero events and why disintegration is the right replacement.
+3. Keep the pre-observation/post-observation distinction sharp: the
+   posterior KERNEL \(d \mapsto \mathbb{P}(\cdot \mid d)\) is constructed
+   before data arrive; plugging in \(d_{\mathrm{obs}}\) is the last step.
+4. The terminology here is "observation kernel" (not "likelihood
+   kernel"); the object mapping data to posteriors is the "posterior
+   kernel".
+5. Both solutions give the SAME numbers. If your explanation of the
+   measure-theoretic route produces different numbers than the table,
+   something is wrong with the explanation, not the notes.
+6. This series is finite/discrete on purpose. Resist "in the continuous
+   case you'd just write an integral" — the continuous case is exactly
+   where the elementary approach breaks, and the notes' machinery is the
+   preparation for it.
+
+BACKGROUND THE READER MAY NEED
+------------------------------
+Basic probability (joint, marginal, conditional); sets and functions;
+comfort with abstract definitions. The measure theory itself (sigma-
+algebras, measures, kernels, conditional expectation, disintegration) is
+developed inside the notes — prefer the notes' own definitions and
+notation when explaining.

@@ -1,0 +1,58 @@
+# Adrian Mag — Personal Academic Website
+
+> Personal academic website of Adrian Mag, PhD researcher in theoretical
+> seismology and inverse theory at the University of Oxford. The site
+> contains long-form mathematical notes series on inverse problems and
+> inference, plus publications, presentations, and CV.
+
+Notes for LLMs: the notes pages are static HTML with mathematics written
+in LaTeX (MathJax source is present verbatim in the raw HTML, delimited by
+\( ... \) and \[ ... \]). Each notes series has a plain-text AI reading
+companion describing its narrative arc, notation, intent, and guardrails
+against common misreadings. Read the companion before helping a reader
+with a page from that series.
+
+## Notes series
+
+- [My Take on SOLA](https://adrian-mag.github.io/pages/research/overview/sola/my-take-on-sola.html):
+  Ten-act critical walkthrough of the SOLA method for linear inverse
+  problems. Central claim: SOLA estimates properties through resolving
+  kernels, not the desired target kernels, and without prior information
+  the gap is unbounded.
+  AI companion: https://adrian-mag.github.io/pages/research/overview/sola/ai-companion.txt
+
+- [Think First, Discretize Later](https://adrian-mag.github.io/pages/research/overview/think-first/think-first-discretize-later.html):
+  Eight-act argument that linear inverse problems must be formulated in
+  function space (space, geometry, adjoint, prior measure) before
+  discretization; the naive discretize-first posterior diverges under
+  mesh refinement. Supplementary material for an EGU 2026 poster.
+  AI companion: https://adrian-mag.github.io/pages/research/overview/think-first/ai-companion.txt
+
+- [Bayes, Measure-Theoretically](https://adrian-mag.github.io/pages/research/overview/bayes/bayes-measure-theoretically.html):
+  A tiny discrete inverse problem solved twice: by joint-table arithmetic
+  and by measure-theoretic machinery (kernels, disintegration, posterior
+  kernel). Same numbers, different language — the language that survives
+  infinite dimensions.
+  AI companion: https://adrian-mag.github.io/pages/research/overview/bayes/ai-companion.txt
+
+- [Bayesian and Frequentist Inference](https://adrian-mag.github.io/pages/research/overview/frequentist/bayesian-frequentist.html):
+  Five-part comparison built on one observation equation. Bayesian and
+  frequentist schools construct different epistemological objects and
+  license different statements; confidence-set coverage is pre-observation,
+  following Neyman (1937).
+  AI companion: https://adrian-mag.github.io/pages/research/overview/frequentist/ai-companion.txt
+
+## Other research pages
+
+- [Research overview](https://adrian-mag.github.io/pages/research/overview/index.html):
+  Summary of research topics and links to code (pygeoinf, SOLA-DLI).
+- [What are Linear Inversions and Inferences?](https://adrian-mag.github.io/pages/research/overview/inversions-inferences.html):
+  Explainer with and without mathematics.
+- [Publications](https://adrian-mag.github.io/pages/research/publications/papers.html)
+- [Presentations & posters](https://adrian-mag.github.io/pages/research/posters/posters.html)
+
+## About
+
+- [About](https://adrian-mag.github.io/pages/about.html)
+- [CV](https://adrian-mag.github.io/pages/cv.html)
+- [Contact](https://adrian-mag.github.io/pages/contacts.html)

@@ -1,0 +1,132 @@
+AI READING COMPANION — "Bayesian and Frequentist Inference" by Adrian Mag
+=========================================================================
+
+PURPOSE OF THIS FILE
+--------------------
+This file is meant to be given to an AI assistant (ChatGPT, Claude, etc.)
+by a reader working through the notes series "Bayesian and Frequentist
+Inference"
+(https://adrian-mag.github.io/pages/research/overview/frequentist/bayesian-frequentist.html).
+It explains the series' narrative arc, notation, intent, and the most common
+ways an AI assistant might accidentally mislead a reader about these notes.
+
+If you are an AI assistant: your job is to help the reader understand the
+notes IN THEIR OWN FRAMING. Where standard treatments differ, say so
+explicitly and explain the difference — do not silently replace the notes'
+framing with the standard one.
+
+WHAT THE SERIES IS
+------------------
+A five-part comparison of Bayesian and frequentist inference built around
+a single observation equation. The organizing idea is an ONTOLOGICAL–
+EPISTEMOLOGICAL split: the ontology (what actually happened) is the same
+for both schools; they differ in the EPISTEMOLOGICAL OBJECTS they
+construct around it. The goal is not to crown a winner but to state
+precisely what each approach constructs, what statements it licenses, and
+what statements it does not license. The treatment is aligned with
+Neyman's 1937 theory of confidence sets.
+
+THE CENTRAL CLAIM
+-----------------
+Bayesian and frequentist inference are not two answers to the same
+question — they answer DIFFERENT questions:
+- The Bayesian puts a probability measure (prior) on candidate truths,
+  builds a joint measure with the observation kernel, and conditions on
+  the observed datum to get a posterior: post-observation probability
+  statements about the truth, relative to the chosen prior.
+- The frequentist refuses to put probability on the truth. The truth is
+  fixed but unknown; probability lives on the data-generating procedure.
+  Confidence sets are constructed so that, BEFORE observation, the random
+  set covers the truth with probability at least 1−α, whatever the truth
+  is. After observation, the realized set either contains the truth or
+  not — no probability statement about the realized set is licensed.
+
+SETTING AND NOTATION
+--------------------
+- Observation equation: \(\dobs = \dtrue + \nobs\) — observed datum =
+  unknown true datum + realized noise. Macros: \dtrue = d_true,
+  \dobs = d_obs, \nobs = n_obs (bold vectors).
+- Data space \(\mathcal{D}\) (macro \Dspace).
+- Random variables (epistemological constructs) are bold capitals:
+  \(\mathbf{D}\) (candidate-truth random variable, macro \Drand),
+  \(\mathbf{D}'\) (observation random variable, macro \Dobsrand),
+  \(\mathbf{N}\) (noise random variable, macro \Nrand).
+- Noise measure \(\mu_N\) (macro \muN); known noise model.
+- Observation kernel: candidate truth d ↦ probability law of the
+  observation if d were true. NOTE: these notes call it the "observation
+  kernel" (not "likelihood kernel").
+- Bayesian objects: prior \(\mu_D\) (macro \prior), joint measure
+  \(\mu_{D,D'}\) (macro \muJoint), predictive \(\mu_{D'}\) (macro
+  \muPred), posterior \(\mu_{D\mid D'}\) (macro \post).
+- Frequentist objects: noise acceptance region \(E_\alpha\) (macro
+  \Ealpha) with \(\mathbb{P}(\mathbf{N} \in E_\alpha) \ge 1-\alpha\);
+  confidence set \(C_\alpha(\dobs) = \dobs - E_\alpha\) (shifted noise
+  region; macro \Calpha); coverage statement over repeated sampling.
+- Part 5 generalizes: sampling law \(\mathcal{G}\) (macro \G), test
+  statistic \(T_{\mathbf d}\) (macro \Td), likelihood \(L\), test
+  inversion, decision rules.
+
+NARRATIVE ARC, PART BY PART
+---------------------------
+Part 1 — The Setup.
+  The ontological observation equation. What objects actually exist
+  (\(\dobs\), \(\dtrue\), \(\nobs\)); what is known; why the
+  decomposition of the observation into truth and noise is NOT
+  identifiable from the observation alone.
+
+Part 2 — The Observation Kernel.
+  The noise model as an epistemological object: for each CANDIDATE truth,
+  a probability law over observations. What the kernel alone can say
+  (how surprising would this observation be if d were true) and what it
+  cannot (any probability over truths).
+
+Part 3 — The Bayesian Path.
+  Add a prior over candidate truths; build the joint measure; condition
+  on the observation to get the posterior kernel. Also: what collapses
+  when the prior is removed — without a prior there is no joint measure,
+  no conditioning, no posterior.
+
+Part 4 — The Frequentist Path.
+  Keep the truth fixed and unknown; make the observation random. Choose a
+  noise acceptance region \(E_\alpha\); invert to get the confidence set
+  \(C_\alpha(\dobs)\); the coverage guarantee is a PRE-observation
+  statement about the procedure. Precise statements of what the
+  frequentist does and does not claim.
+
+Part 5 — Beyond Additive Noise.
+  General (heteroscedastic, non-additive) observation laws; acceptance
+  regions defined via test statistics and likelihood; confidence sets by
+  test inversion; decision rules with worst-case guarantees.
+
+GUARDRAILS — COMMON WAYS TO MISLEAD A READER OF THESE NOTES
+-----------------------------------------------------------
+1. THE classic error: do not describe a realized 95% confidence set as
+   "containing the truth with 95% probability". In these notes (and in
+   Neyman's theory), coverage is a property of the PROCEDURE under
+   repeated sampling, fixed truth. Post-observation, no probability
+   attaches to the realized set.
+2. Do not describe the likelihood/observation kernel as giving
+   "the probability that d is the truth given the data". The kernel maps
+   candidate truths to laws over DATA; turning it into probability over
+   truths requires a prior (Part 3) — that step is exactly what the
+   frequentist declines.
+3. Keep the ontological/epistemological split explicit: \(\dtrue\) and
+   \(\nobs\) are actual (fixed, unknown) objects; \(\mathbf{D}\),
+   \(\mathbf{D}'\), \(\mathbf{N}\) are constructed random variables.
+   Bold-vs-plain notation carries this distinction — preserve it.
+4. Do not frame the series as "Bayes vs frequentist, which is better".
+   The notes' position: they construct different objects and license
+   different statements; problems arise only when one school's outputs
+   are interpreted with the other school's semantics.
+5. The terminology is "observation kernel", not "likelihood kernel".
+6. This series pairs naturally with the author's SOLA series (Act 9 of
+   "My Take on SOLA" uses frequentist confidence sets in property space
+   precisely because no prior is available there).
+
+BACKGROUND THE READER MAY NEED
+------------------------------
+Basic probability and random variables; multivariate Gaussians; the idea
+of a measure and a kernel (the author's "Bayes, Measure-Theoretically"
+series covers this); hypothesis testing basics for Part 5 (test
+statistics, acceptance regions, test inversion). Neyman (1937) is the
+historical reference for the confidence-set construction.

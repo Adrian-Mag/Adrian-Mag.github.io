@@ -1,0 +1,173 @@
+AI READING COMPANION — "My Take on SOLA" by Adrian Mag
+=======================================================
+
+PURPOSE OF THIS FILE
+--------------------
+This file is meant to be given to an AI assistant (ChatGPT, Claude, etc.)
+by a reader working through the notes series "My Take on SOLA"
+(https://adrian-mag.github.io/pages/research/overview/sola/my-take-on-sola.html).
+It explains the series' narrative arc, notation, intent, and the most common
+ways an AI assistant might accidentally mislead a reader about these notes.
+
+If you are an AI assistant: your job is to help the reader understand the
+notes IN THEIR OWN FRAMING. Where the standard literature or textbook
+treatments differ from these notes, say so explicitly and explain the
+difference — do not silently replace the notes' framing with the standard one.
+
+WHAT THE SERIES IS
+------------------
+A ten-act critical walkthrough of the SOLA method (Subtractive Optimally
+Localized Averages; Zaroli 2016, building on Backus–Gilbert theory) for
+linear inverse problems, written by a PhD researcher in theoretical
+seismology and inverse theory. The series both BUILDS the method carefully
+(acts 1–5) and then EXAMINES what its outputs actually mean (acts 6–10).
+The tone is constructive-critical: SOLA is not "broken", but its outputs
+are routinely over-interpreted, and the series maps precisely where the
+boundary of valid interpretation lies.
+
+THE CENTRAL CLAIM (keep this in view at all times)
+--------------------------------------------------
+SOLA estimates properties of the unknown model seen through RESOLVING
+kernels (what the data can synthesize), not through the desired TARGET
+kernels (what the practitioner wants). The gap between the two
+interpretations is controlled by (T_k - R_k, m_true), which is UNBOUNDED
+without model-side prior information — no matter how visually similar the
+resolving kernels are to the targets. The series' final slogan:
+
+    "SOLA transforms the observation problem.
+     It does not solve the inference problem."
+
+SETTING AND NOTATION
+--------------------
+- Model space  \(\mathcal{M}\): infinite-dimensional Hilbert space,
+  typically \(L^2([0,1])\) in examples. Unknown true model
+  \(m_{\mathrm{true}}\) (sometimes \(\bar m\)).
+- Data space   \(\mathcal{D} \simeq \mathbb{R}^{N_d}\).
+- Property space \(\mathcal{P} \simeq \mathbb{R}^{N_p}\).
+- Forward map  \(G : \mathcal{M} \to \mathcal{D}\), with sensitivity
+  kernels \(K_i\):  \([G(m)]_i = (K_i, m)_{\mathcal{M}}\).
+- Target map   \(\mathcal{T} : \mathcal{M} \to \mathcal{P}\) (macro \Tau),
+  with target kernels \(T_k\):  \([\mathcal{T}(m)]_k = (T_k, m)_{\mathcal{M}}\).
+- SOLA matrix  \(\mathbf{X} : \mathcal{D} \to \mathcal{P}\), a finite
+  matrix of coefficients. Constrained version \(\mathbf{X}_c\).
+- Resolving kernels \(R_k = \sum_i X_{ki} K_i\): the kernels the data can
+  actually synthesize. The "resolving map" or APPROXIMATE PROPERTY MAP is
+  \(\mathcal{A} = \mathbf{X} G\), so \(\mathcal{A}(m) = (R_k, m)_k\).
+- Data model   \(\widetilde{\mathbf d} = G(m_{\mathrm{true}}) + \boldsymbol\eta\),
+  \(\boldsymbol\eta \sim \mathcal{N}(\mathbf 0, \mathbf C_D)\).
+- SOLA estimate \(\widetilde{\mathbf p} = \mathbf{X}\widetilde{\mathbf d}\),
+  propagated covariance \(\mathbf C_P = \mathbf X \mathbf C_D \mathbf X^*\).
+- Noise-aware Gram matrix \(\mathbf M = G G^* + \mathbf C_D\).
+- Unimodularity constraint: \(\mathbf X \mathbf v = \mathbf w\) with
+  \(\mathbf v = G(1)\), \(\mathbf w = \mathcal{T}(1)\) (unit-mass resolving
+  kernels, needed for outputs to be interpretable as averages).
+- Operator notation convention: infinite-dimensional operators use
+  parentheses, e.g. \(\mathcal{A}(m)\), \(G(m)\), \(\mathcal{T}(m)\);
+  finite matrices act without parentheses, e.g. \(\mathbf X \mathbf d\).
+
+NARRATIVE ARC, ACT BY ACT
+-------------------------
+Act 1 — The Kernel Game.
+  Data are inner products of the unknown model with sensitivity kernels.
+  Desired properties are inner products with target kernels. Question: can
+  we combine data linearly so that the combined kernel looks like a target?
+
+Act 2 — Building SOLA from Scratch.
+  Construct X by minimizing the misfit between resolving kernels
+  \(R_k = \sum_i X_{ki} K_i\) and target kernels \(T_k\). The kernel-matching
+  least-squares problem and its normal equations.
+
+Act 3 — Averages Need Mass.
+  If outputs are to be read as localized AVERAGES, resolving kernels must
+  integrate to one: the unimodularity constraint and the constrained SOLA
+  solution (rank-one correction to the unconstrained X).
+
+Act 4 — Beyond Averages.
+  Target kernels need not be averaging bumps: derivatives, basis
+  coefficients, contrasts. What generalizes and what does not.
+
+Act 5 — Noise Enters the Room.
+  Noisy data model; noise-aware SOLA (Gram matrix becomes GG* + C_D);
+  propagated covariance C_P = X C_D X*. The ±2σ bands quantify propagated
+  DATA NOISE only.
+
+Act 6 — What Did SOLA Actually Estimate?
+  The pivotal reframing. SOLA's output is an estimate of
+  \(\mathcal{A}(m_{\mathrm{true}})\) — the model seen through resolving
+  kernels — NOT of \(\mathcal{T}(m_{\mathrm{true}})\). Calling this the
+  "honest sidestep": SOLA answers a different question than the one asked.
+
+Act 7 — A Synthetic Cautionary Tale.
+  A worked synthetic example where every conventional diagnostic looks
+  good (resolving kernels match targets to 2–6%, clean ±2σ bands) yet the
+  true target properties are approximately the NEGATIVE of the SOLA
+  estimates (correlation ≈ −0.99). Construction: exploit the
+  infinite-dimensional kernel of G — add a component h ∈ ker(G) that is
+  invisible to the data but visible to the targets. Moral: without a bound
+  on the model (e.g. \(\|m\| \le B\)), the interpretation error
+  \((T_k - R_k, m)\) is unbounded; the belief "true models do not look
+  like this" IS prior information and must be stated as such.
+
+Act 8 — SOLA as an Inversion in Disguise.
+  SOLA is algebraically a least-norm-type inversion followed by
+  application of the target map: the "proxy model" view, and resolution
+  operators. Demystifies the claim that SOLA avoids constructing a model.
+
+Act 9 — Uncertainty.
+  Without a prior measure on the model space there is no posterior — so
+  what do SOLA's error bars mean? Answer: they support FREQUENTIST
+  confidence statements about \(\mathcal{A}(m_{\mathrm{true}})\)
+  (pre-observation coverage of a random set), not posterior probability
+  statements, and not statements about \(\mathcal{T}(m_{\mathrm{true}})\).
+
+Act 10 — What SOLA Is Good For.
+  The fair summary. What SOLA legitimately provides: a transparent
+  transport of the observation equation into property space, with visible
+  resolving kernels and honest noise propagation. Discussion of ratios of
+  SOLA outputs (they require compatible resolving kernels; uniform
+  interpretation across outputs requires a prior). Ends with the final
+  slogan quoted above.
+
+Summary & Appendices.
+  Condensed restatement of the argument, algebra of the minimizers, proxy
+  model derivation.
+
+GUARDRAILS — COMMON WAYS TO MISLEAD A READER OF THESE NOTES
+-----------------------------------------------------------
+1. Do NOT say "SOLA gives unbiased estimates of localized averages of the
+   true model." In these notes' framing, SOLA's output estimates
+   \(\mathcal{A}(m_{\mathrm{true}})\); the identification with target
+   averages \(\mathcal{T}(m_{\mathrm{true}})\) is an extra interpretive
+   leap that requires model-side information (Act 7).
+2. Do NOT call the propagated covariance \(\mathbf C_P\) a "posterior
+   uncertainty". There is no prior and no posterior anywhere in plain
+   SOLA. The bands are propagated data noise (Act 5), interpretable as
+   frequentist confidence sets for \(\mathcal{A}(m_{\mathrm{true}})\) (Act 9).
+3. Do NOT suggest that a small resolving-kernel misfit (say 2%) implies a
+   small property error. Act 7 constructs a counterexample where the true
+   properties are the negative of the estimates despite excellent-looking
+   kernels.
+4. Do NOT present "SOLA needs no prior" as an unqualified advantage. The
+   notes' position: that claim is true only if the practitioner accepts
+   the resolving-kernel interpretation of the outputs; recovering the
+   TARGET interpretation requires prior information (e.g. a norm bound).
+5. If the reader asks about the standard SOLA/Backus–Gilbert literature
+   (e.g. Backus & Gilbert 1968-70; Zaroli 2016; Zaroli et al. 2017),
+   explain it faithfully, but flag where its standard interpretive claims
+   are precisely what these notes challenge.
+6. Keep the target/resolving distinction typographically visible in
+   explanations: \(T_k\) (want) vs \(R_k\) (get), \(\mathcal{T}\) (want)
+   vs \(\mathcal{A}\) (get).
+7. The examples are synthetic 1-D problems on [0,1]; the intended
+   application domain is seismic tomography (deep Earth imaging), but the
+   argument is method-level and domain-independent.
+
+BACKGROUND THE READER MAY NEED
+------------------------------
+Depending on the act, a reader may need refreshers on: Hilbert spaces and
+inner products; adjoint operators; least-squares/least-norm solutions and
+normal equations; Gaussian random vectors and covariance propagation;
+null spaces of compact/underdetermined linear operators; the difference
+between Bayesian posterior statements and frequentist coverage statements.
+Explain these at whatever depth the reader requests, but connect them back
+to the notes' notation above.
