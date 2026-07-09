@@ -163,8 +163,11 @@
 
                     \[\mu_{\M\mid D=0}(\{00\})=\mu_{\M\mid D=0}(\{01\})=\mu_{\M\mid D=0}(\{10\})=\mu_{\M\mid D=0}(\{11\})=\frac{1}{4}.\]
 
-                    <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform. No
-                    information is gained.</p>
+                    <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform
+                    &mdash; it coincides with the prior. The observation \(d=0\)
+                    is equally likely under every model state (each has
+                    \(L(m,\{0\})=0.2\)), so the likelihood factor cancels
+                    upon normalization and the posterior reduces to the prior.</p>
 
                     <h3>Case \(d=1\): the reporter says &ldquo;1&rdquo;</h3>
 
@@ -222,7 +225,7 @@
                         <figcaption>
                             <strong>F3f-1 &mdash; The posterior kernel for the switch
                             problem.</strong> Left: when \(d=0\), the posterior is uniform
-                            &mdash; no information is gained. Right: when \(d=1\), the
+                            &mdash; it coincides with the prior. Right: when \(d=1\), the
                             posterior concentrates on the matching states \(\{00,11\}\).
                             These are exactly the same numbers we computed in
                             <a href="part-2.html">Part&nbsp;2</a>, now derived from the
