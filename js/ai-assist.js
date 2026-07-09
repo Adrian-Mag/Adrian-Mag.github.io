@@ -24,25 +24,50 @@
             title: "My Take on SOLA",
             landing: "my-take-on-sola.html",
             companion: "ai-companion.txt",
-            intent: "These notes build the SOLA (Subtractive Optimally Localized Averages) method from scratch and then examine critically what its outputs mean. The central claim: SOLA estimates properties seen through RESOLVING kernels, not the desired TARGET kernels, and without model-side prior information the gap between the two is unbounded. Do not present SOLA's outputs as estimates of the true target properties, and do not present propagated data noise as posterior uncertainty."
+            intent: "These notes build the SOLA (Subtractive Optimally Localized Averages) method from scratch and then examine critically what its outputs mean. The central claim: SOLA estimates properties seen through RESOLVING kernels, not the desired TARGET kernels, and without model-side prior information the gap between the two is unbounded. Do not present SOLA's outputs as estimates of the true target properties, and do not present propagated data noise as posterior uncertainty.",
+            pages: [
+                "my-take-on-sola.html",
+                "act-1.html", "act-2.html", "act-3.html", "act-4.html",
+                "act-5.html", "act-6.html", "act-7.html", "act-8.html",
+                "act-9.html", "act-10.html", "act-11.html",
+                "summary.html"
+            ]
         },
         "think-first": {
             title: "Think First, Discretize Later",
             landing: "think-first-discretize-later.html",
             companion: "ai-companion.txt",
-            intent: "These notes argue that a linear inverse problem must be formulated in function space (model space, geometry, adjoint, prior measure) BEFORE discretizing. The naive discretize-first workflow produces mesh-dependent posteriors that do not converge under refinement. Do not present the naive discretized posterior as a harmless default."
+            intent: "These notes argue that a linear inverse problem must be formulated in function space (model space, geometry, adjoint, prior measure) BEFORE discretizing. The naive discretize-first workflow produces mesh-dependent posteriors that do not converge under refinement. Do not present the naive discretized posterior as a harmless default.",
+            pages: [
+                "think-first-discretize-later.html",
+                "act-1.html", "act-2.html", "act-3.html", "act-4.html",
+                "act-5.html", "act-6.html", "act-7.html", "act-8.html",
+                "summary.html"
+            ]
         },
         "bayes": {
             title: "Bayes, Measure-Theoretically",
             landing: "bayes-measure-theoretically.html",
             companion: "ai-companion.txt",
-            intent: "These notes develop Bayesian inference twice on the same finite toy problem: first with elementary joint-table probability, then measure-theoretically (measurable spaces, kernels, joint measure, disintegration). The point is that the measure-theoretic machinery computes the SAME answer and is the correct language for infinite-dimensional generalization. Keep the two formulations in strict parallel; do not substitute density-based shortcuts that fail in infinite dimensions."
+            intent: "These notes develop Bayesian inference twice on the same finite toy problem: first with elementary joint-table probability, then measure-theoretically (measurable spaces, kernels, joint measure, disintegration). The point is that the measure-theoretic machinery computes the SAME answer and is the correct language for infinite-dimensional generalization. Keep the two formulations in strict parallel; do not substitute density-based shortcuts that fail in infinite dimensions.",
+            pages: [
+                "bayes-measure-theoretically.html",
+                "part-1.html", "part-2.html",
+                "part-3a.html", "part-3b.html", "part-3c.html",
+                "part-3d.html", "part-3e.html", "part-3f.html",
+                "part-4.html"
+            ]
         },
         "frequentist": {
             title: "Bayesian and Frequentist Inference",
             landing: "bayesian-frequentist.html",
             companion: "ai-companion.txt",
-            intent: "These notes contrast the Bayesian and frequentist paths for the same observation equation, being precise about what each does and does not claim. Frequentist confidence sets make PRE-observation coverage statements about a procedure; they are not post-observation probability statements about the truth. Do not blur that distinction."
+            intent: "These notes contrast the Bayesian and frequentist paths for the same observation equation, being precise about what each does and does not claim. Frequentist confidence sets make PRE-observation coverage statements about a procedure; they are not post-observation probability statements about the truth. Do not blur that distinction.",
+            pages: [
+                "bayesian-frequentist.html",
+                "part-1.html", "part-2.html", "part-3.html",
+                "part-4.html", "part-5.html"
+            ]
         }
     };
 
@@ -175,6 +200,41 @@
         return lines.join("\n");
     }
 
+    function buildSeriesPayload(pageTexts, macros) {
+        var lines = [
+            "=== CONTEXT FOR AI ASSISTANT ===",
+            "The reader is studying the ENTIRE series \u201C" + series.title + "\u201D by Adrian Mag.",
+            "",
+            "Series landing page: " + landingUrl,
+            "Reading companion (narrative arc, notation, guardrails): " + companionUrl,
+            "",
+            "Intent of the series: " + series.intent,
+            "",
+            "Instructions: Help the reader understand these notes IN THEIR OWN FRAMING and notation. If a standard textbook treatment differs from the treatment here, explain the difference explicitly rather than silently replacing the notes' framing. Mathematics below is written in LaTeX (inline \\( ... \\), display \\[ ... \\]). The notes are split into multiple pages (acts/parts); they are presented below in reading order, separated by dividers.",
+            ""
+        ];
+
+        if (macros) {
+            lines.push("MathJax macro definitions used across the series:");
+            lines.push(macros);
+            lines.push("");
+        }
+
+        lines.push("=== FULL SERIES CONTENT ===");
+        lines.push("");
+
+        for (var i = 0; i < pageTexts.length; i++) {
+            if (pageTexts[i]) {
+                lines.push(pageTexts[i]);
+                lines.push("");
+                lines.push("---");
+                lines.push("");
+            }
+        }
+
+        return lines.join("\n");
+    }
+
     /* ------------------------------------------------------------------ */
     /* Toolbar                                                             */
     /* ------------------------------------------------------------------ */
@@ -188,7 +248,7 @@
         label.textContent = "Read with AI:";
         bar.appendChild(label);
 
-        // 1. Copy for AI
+        // 1a. Copy page for AI
         var copyBtn = document.createElement("button");
         copyBtn.type = "button";
         copyBtn.className = "ai-assist-btn";
@@ -220,6 +280,54 @@
                 });
         });
         bar.appendChild(copyBtn);
+
+        // 1b. Copy entire series for AI
+        var copySeriesBtn = document.createElement("button");
+        copySeriesBtn.type = "button";
+        copySeriesBtn.className = "ai-assist-btn";
+        copySeriesBtn.textContent = "\uD83D\uDCDA Copy entire series for AI";
+        copySeriesBtn.addEventListener("click", function () {
+            copySeriesBtn.disabled = true;
+            copySeriesBtn.textContent = "Fetching all pages...";
+            var pageUrls = series.pages.map(function (p) { return dirUrl + p; });
+            var macrosFound = null;
+            var pageTexts = new Array(pageUrls.length);
+            var fetches = pageUrls.map(function (url, idx) {
+                return fetch(url, { cache: "no-cache" })
+                    .then(function (r) { return r.text(); })
+                    .then(function (rawHtml) {
+                        if (!macrosFound) {
+                            macrosFound = extractMacros(rawHtml);
+                        }
+                        var text = extractArticleText(rawHtml);
+                        if (text) {
+                            var titleMatch = rawHtml.match(/<title>(.*?)<\/title>/);
+                            var title = titleMatch ? titleMatch[1].replace(/\s+/g, " ").trim() : series.pages[idx];
+                            pageTexts[idx] = "## " + title + "\n\n" + text;
+                        }
+                    })
+                    .catch(function () { /* skip failed pages */ });
+            });
+            Promise.all(fetches).then(function () {
+                var payload = buildSeriesPayload(pageTexts, macrosFound);
+                return navigator.clipboard.writeText(payload);
+            }).then(function () {
+                copySeriesBtn.textContent = "\u2713 Entire series copied \u2014 paste into any AI chat";
+                copySeriesBtn.classList.add("copied");
+                setTimeout(function () {
+                    copySeriesBtn.textContent = "\uD83D\uDCDA Copy entire series for AI";
+                    copySeriesBtn.classList.remove("copied");
+                    copySeriesBtn.disabled = false;
+                }, 4000);
+            }).catch(function () {
+                copySeriesBtn.textContent = "Copy failed \u2014 try again";
+                setTimeout(function () {
+                    copySeriesBtn.textContent = "\uD83D\uDCDA Copy entire series for AI";
+                    copySeriesBtn.disabled = false;
+                }, 3000);
+            });
+        });
+        bar.appendChild(copySeriesBtn);
 
         // 2. Open in ChatGPT (prefilled prompt)
         var prompt =
