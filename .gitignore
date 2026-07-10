@@ -13,3 +13,6 @@ __pycache__/
 *~RF*.TMP
 *.swp
 .DS_Store
+
+# in-prep paper drafts must only ever be committed encrypted (tools/encrypt_papers.py)
+media/papers/*.pdf
