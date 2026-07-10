@@ -29,6 +29,8 @@ See `COMMIT_CONVENTION.md` for the full commit message format. All feature/fix c
 
 The **served site** has no build step, no package manager, and no bundler — validate page/CSS changes by opening the HTML in a browser. The **figure-generation pipeline** (`figure_generation/`) is separate: it is Python, runs offline on demand through the `inferences` conda environment, writes assets into `media/`, and has its own pytest suite. It is never part of the deployed site.
 
+One small offline step feeds the site: the client-side search (`pages/search.html`) reads a pre-built index at `media/search-index.json`. After editing any notes page, regenerate it with `python3 tools/build_search_index.py` (stdlib only, no conda env needed) and commit the refreshed JSON alongside the content change.
+
 ## Key Conventions
 
 - **No frameworks**: Plain HTML5 and CSS3 only. No JavaScript frameworks, no preprocessors.
