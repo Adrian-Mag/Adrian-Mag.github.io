@@ -78,6 +78,13 @@
             display: block;
         }
     </style>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Access Code — Adrian Mag">
+    <meta property="og:description" content="Adrian Mag's academic website: seismology, inverse theory, and long-form notes on inference.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/papers-login.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
     <div class="papers-login-card">
@@ -91,35 +98,41 @@
         <p class="error-msg" id="papers-error">Incorrect code. Please try again.</p>
     </div>
 
+    <script src="../js/papers-crypto.js"></script>
     <script>
     (function () {
         "use strict";
 
-        var HASH = "7b1743505fed491c344bdb147e96d1782448a4c6df165f5dcc3d6c15ef9401ea";
+        // The access code is the decryption key: it is verified by actually
+        // decrypting a canary ciphertext (media/papers/vault-check.enc).
+        // Nothing on this site or in its repository can reveal the documents
+        // without the code.
 
-        async function sha256(message) {
-            var msgBuffer = new TextEncoder().encode(message);
-            var hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-            var hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(function (b) {
-                return b.toString(16).padStart(2, "0");
-            }).join("");
-        }
+        var form = document.getElementById("papers-login-form");
+        var input = document.getElementById("papers-code-input");
+        var errorMsg = document.getElementById("papers-error");
+        var button = form.querySelector("button");
 
-        document.getElementById("papers-login-form").addEventListener("submit", async function (e) {
+        form.addEventListener("submit", function (e) {
             e.preventDefault();
-            var input = document.getElementById("papers-code-input").value;
-            var errorMsg = document.getElementById("papers-error");
+            var code = input.value;
+            if (!code) return;
+            errorMsg.classList.remove("show");
+            button.disabled = true;
+            button.textContent = "Checking…";
 
-            var hash = await sha256(input);
-            if (hash === HASH) {
-                sessionStorage.setItem("papers-auth", "verified");
-                window.location.href = "papers-in-prep.html";
-            } else {
-                errorMsg.classList.add("show");
-                document.getElementById("papers-code-input").value = "";
-                document.getElementById("papers-code-input").focus();
-            }
+            window.PapersVault.verifyCode(code).then(function (ok) {
+                if (ok) {
+                    window.PapersVault.storeCode(code);
+                    window.location.href = "papers-in-prep.html";
+                } else {
+                    button.disabled = false;
+                    button.textContent = "Unlock";
+                    errorMsg.classList.add("show");
+                    input.value = "";
+                    input.focus();
+                }
+            });
         });
     })();
     </script>

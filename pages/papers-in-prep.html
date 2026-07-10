@@ -115,9 +115,17 @@
             color: rgba(103, 145, 190, 1);
         }
     </style>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Papers in Preparation — Adrian Mag">
+    <meta property="og:description" content="Adrian Mag's academic website: seismology, inverse theory, and long-form notes on inference.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/papers-in-prep.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-    <script src="../js/papers-auth.js"></script>
+    <script src="../js/papers-crypto.js"></script>
+    <script>window.PapersVault.requireSession();</script>
 
     <div class="papers-nav-bar">
         <a href="../index.html"><span class="nav-icon">&#127968;</span> Home</a>
@@ -134,8 +142,8 @@
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear Bayesian inference, but for properties of models rather than models themselves.</p>
             <div class="paper-links">
-                <a href="../media/papers/PLI_Paper.pdf" target="_blank" rel="noopener">&#128196; View PDF</a>
-                <a href="../media/papers/PLI_Paper.pdf" download>&#11015; Download</a>
+                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="view">&#128196; View PDF</a>
+                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="download">&#11015; Download</a>
             </div>
         </div>
 
@@ -145,12 +153,54 @@
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear inference with set-theoretic constraints.</p>
             <div class="paper-links">
-                <a href="../media/papers/BGP_Paper.pdf" target="_blank" rel="noopener">&#128196; View PDF</a>
-                <a href="../media/papers/BGP_Paper.pdf" download>&#11015; Download</a>
+                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="view">&#128196; View PDF</a>
+                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="download">&#11015; Download</a>
             </div>
         </div>
 
     </div>
+
+    <script>
+    (function () {
+        "use strict";
+        // Decrypt on demand: fetch the ciphertext, decrypt with the stored
+        // access code, hand the browser a blob: URL. Wrong/expired code ->
+        // back to the login page.
+        var busy = false;
+        document.querySelectorAll(".paper-links a[data-enc]").forEach(function (link) {
+            var original = link.innerHTML;
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (busy) return;
+                var code = window.PapersVault.getCode();
+                if (!code) { window.location.href = "papers-login.html"; return; }
+                busy = true;
+                link.innerHTML = "&#8987; Decrypting…";
+                window.PapersVault.decryptToBlobUrl(link.getAttribute("data-enc"), code)
+                    .then(function (blobUrl) {
+                        if (link.getAttribute("data-mode") === "download") {
+                            var a = document.createElement("a");
+                            a.href = blobUrl;
+                            a.download = link.getAttribute("data-name");
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                        } else {
+                            window.open(blobUrl, "_blank", "noopener");
+                        }
+                    })
+                    .catch(function () {
+                        window.PapersVault.clearCode();
+                        window.location.href = "papers-login.html";
+                    })
+                    .finally(function () {
+                        busy = false;
+                        link.innerHTML = original;
+                    });
+            });
+        });
+    })();
+    </script>
 
     <div class="papers-footer">
         <p>&copy; 2025&ndash;2026 Adrian Mag. &middot; <a href="../index.html">adrianmag.github.io</a></p>
