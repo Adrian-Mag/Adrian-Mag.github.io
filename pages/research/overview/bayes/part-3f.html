@@ -160,15 +160,23 @@
 
                     \[\mu_{\M\mid D=0}(\{00\})=\frac{L(00,\{0\})\,\muMzero(\{00\})}{\muD(\{0\})}=\frac{0.2\cdot 0.4}{0.32}=\frac{0.08}{0.32}=\frac{1}{4}.\]
 
-                    <p>By symmetry, the same holds for all model states:</p>
+                    <p>Running the same computation for the other three states
+                    (\(0.8\cdot 0.1\), \(0.8\cdot 0.1\), and \(0.2\cdot 0.4\) in the
+                    numerator, respectively) gives \(0.08\) each time:</p>
 
                     \[\mu_{\M\mid D=0}(\{00\})=\mu_{\M\mid D=0}(\{01\})=\mu_{\M\mid D=0}(\{10\})=\mu_{\M\mid D=0}(\{11\})=\frac{1}{4}.\]
 
-                    <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform
-                    &mdash; it coincides with the prior. The observation \(d=0\)
-                    is equally likely under every model state (each has
-                    \(L(m,\{0\})=0.2\)), so the likelihood factor cancels
-                    upon normalization and the posterior reduces to the prior.</p>
+                    <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform. Note
+                    carefully what makes it uniform: it is <em>not</em> that \(d=0\) is equally
+                    likely under every model state &mdash; the likelihoods are
+                    \(L(m,\{0\})=(0.2,\,0.8,\,0.8,\,0.2)\) across \((00,01,10,11)\), far from
+                    equal. And the uniform posterior does <em>not</em> coincide with the prior
+                    \((0.4,\,0.1,\,0.1,\,0.4)\). What happens is that the likelihood exactly
+                    <em>cancels the nonuniformity of the prior</em>: the products
+                    \(L(m,\{0\})\,\muMzero(\{m\})\) all equal \(0.08\), so normalization
+                    flattens everything to \(1/4\). This is the same observation we made in
+                    <a href="part-2.html">Part&nbsp;2</a> &mdash; equal <em>products</em>, not
+                    equal likelihoods.</p>
 
                     <h3>Case \(d=1\): the reporter says &ldquo;1&rdquo;</h3>
 
@@ -184,7 +192,8 @@
 
                     \[\mu_{\M\mid D=1}(\{01\})=\frac{L(01,\{1\})\,\muMzero(\{01\})}{\muD(\{1\})}=\frac{0.2\cdot 0.1}{0.68}=\frac{0.02}{0.68}=\frac{1}{34}.\]
 
-                    <p>By symmetry, \(\mu_{\M\mid D=1}(\{10\})=\frac{1}{34}\) as well.</p>
+                    <p>The same computation gives \(\mu_{\M\mid D=1}(\{10\})=\frac{1}{34}\)
+                    as well (its likelihood and prior mass match those of \(01\)).</p>
 
                     <p>So when the reporter says &ldquo;1&rdquo;, the posterior concentrates on
                     the matching states \(\{00,11\}\):</p>
@@ -226,7 +235,8 @@
                         <figcaption>
                             <strong>F3f-1 &mdash; The posterior kernel for the switch
                             problem.</strong> Left: when \(d=0\), the posterior is uniform
-                            &mdash; it coincides with the prior. Right: when \(d=1\), the
+                            &mdash; the likelihood exactly cancels the prior's nonuniformity.
+                            Right: when \(d=1\), the
                             posterior concentrates on the matching states \(\{00,11\}\).
                             These are exactly the same numbers we computed in
                             <a href="part-2.html">Part&nbsp;2</a>, now derived from the

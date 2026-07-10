@@ -6,7 +6,7 @@
     <title>Part 3b: Conditioning and Its Limits — Bayes, Measure-Theoretically — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css">
-    <meta name="description" content="Part 3b of Bayes, Measure-Theoretically: Conditioning works in discrete settings and on positive-measure sets, but breaks down for zero-probability events. The Borel-Kolmogorov paradox and why sigma-algebra conditioning resolves it.">
+    <meta name="description" content="Part 3b of Bayes, Measure-Theoretically: Conditioning works on positive-probability events, but breaks down for zero-probability events. The Borel-Kolmogorov paradox and how sigma-algebra conditioning addresses it up to null sets.">
     <script>
     MathJax = {
         tex: {
@@ -108,37 +108,55 @@
                     <p>This formula simply says: <em>restrict the universe to \(B\), then
                     renormalize to make total probability one.</em></p>
 
-                    <p>Concretely, from Part&nbsp;2 we know the joint probabilities. Using the
-                    event notation from Part&nbsp;3a, we write:</p>
+                    <p>Concretely, from Part&nbsp;2 we know the joint probabilities. One point of
+                    care: the event \(\{00\}\) lives in the model space \(\M\), while \(\{0\}\)
+                    lives in the data space \(\D\) &mdash; they are subsets of <em>different</em>
+                    spaces, so writing \(\{00\}\cap\{0\}\) would be ill-typed. The joint event
+                    &ldquo;\(M=00\) and \(D=0\)&rdquo; lives in the <em>product space</em>
+                    \(\M\times\D\), where the joint measure \(\Pi\) assigns:</p>
 
-                    \[\mathbb{P}\bigl(\{00\}\cap\{0\}\bigr)=0.08, \qquad \mathbb{P}\bigl(\{0\}\bigr)=0.32.\]
+                    \[\Pi\bigl(\{00\}\times\{0\}\bigr)=0.08, \qquad \muD\bigl(\{0\}\bigr)=0.32.\]
 
                     <p>So</p>
 
-                    \[\mathbb{P}\bigl(\{00\}\mid\{0\}\bigr)=\frac{0.08}{0.32}=\frac{1}{4}.\]
+                    \[\mathbb{P}\bigl(M=00\mid D=0\bigr)=\frac{\Pi(\{00\}\times\{0\})}{\muD(\{0\})}=\frac{0.08}{0.32}=\frac{1}{4}.\]
 
                     <p>This is just column normalization. The denominator
-                    \(\mathbb{P}(\{0\})=0.32\) is positive, so the division is well-defined. The
-                    same works for the event \(\{1\}\):</p>
+                    \(\muD(\{0\})=0.32\) is positive, so the division is well-defined. The
+                    same works for the data value \(1\):</p>
 
-                    \[\mathbb{P}\bigl(\{00\}\mid\{1\}\bigr)=\frac{0.32}{0.68}=\frac{8}{17}.\]
+                    \[\mathbb{P}\bigl(M=00\mid D=1\bigr)=\frac{\Pi(\{00\}\times\{1\})}{\muD(\{1\})}=\frac{0.32}{0.68}=\frac{8}{17}.\]
+
+                    <p>(Equivalently, one can introduce an underlying sample space \(\Omega\)
+                    carrying random variables \(M:\Omega\to\M\) and \(D:\Omega\to\D\), and
+                    intersect the <em>pullback</em> events \(M^{-1}(\{00\})\cap D^{-1}(\{0\})\),
+                    which do live in the same space. The two formulations agree; we will use
+                    whichever is clearer in context.)</p>
 
                     <div class="bayes-callout callout-intuition">
                         <span class="bayes-callout-label">Intuition</span>
                         <p>
-                            Conditioning via the ratio is completely routine in discrete problems
-                            because every event has positive probability. If all problems you
-                            ever considered were discrete, you could stop here: conditioning always
-                            works and there is no ambiguity.
+                            Conditioning via the ratio is completely routine here because both
+                            possible data values have positive predictive probability
+                            (\(0.32\) and \(0.68\)), so conditioning on either one is
+                            well-defined. This is typical of small discrete problems, though not
+                            automatic: even a finite space can contain events of probability zero,
+                            and the ratio is undefined for those. What discreteness buys you in
+                            practice is that the data values you actually observe have positive
+                            probability &mdash; so the elementary ratio never lets you down.
                         </p>
                     </div>
 
                     <h3>What if the data space were continuous?</h3>
 
                     <p>Now imagine a variant of the switch problem where the reporter outputs a
-                    real-valued measurement \(d\in\mathbb{R}\) rather than a binary report. The
-                    predictive data measure \(\muD\) now has a density &mdash; a smooth curve over
-                    the real line.</p>
+                    real-valued measurement \(d\in\mathbb{R}\) rather than a binary report.
+                    Assume the predictive data measure \(\muD\) is absolutely continuous with
+                    respect to Lebesgue measure, so it has a density &mdash; a smooth curve over
+                    the real line. (A real-valued observable need not have a density in general:
+                    its distribution can have atoms or even a singular continuous part. We assume
+                    a density here because it is the case that exhibits the difficulty most
+                    cleanly.)</p>
 
                     <p>Conditioning on a <em>region</em> \(B\) with \(\muD(B)>0\) still works
                     perfectly. For example, if we observe that \(d\in[0.3, 0.7]\), we can
@@ -391,8 +409,13 @@
                             probability zero, we condition on the <em>&sigma;-algebra generated by
                             the random variable \(D\)</em>. This &sigma;-algebra encodes the
                             information revealed by observing \(D\), and conditioning on it
-                            produces a unique, canonical conditional distribution &mdash; no
-                            geometric choices required.
+                            produces a conditional distribution that is canonical <em>up to
+                            \(\muD\)-null sets</em>: it is determined for \(\muD\)-almost every
+                            data value, with no geometric choices required. What it does
+                            <em>not</em> do is single out a value at one specific
+                            probability-zero datum &mdash; evaluating there requires choosing a
+                            regular version of the conditional, a point we return to carefully in
+                            Parts&nbsp;3c and 3d.
                         </p>
                     </div>
 
@@ -409,17 +432,21 @@
                         &sigma;-algebra on the switch problem.</li>
                         <li>Show how conditioning on the random variable \(D\) arises naturally
                         from conditioning on \(\sigma(D)\).</li>
-                        <li>Resolve the Borel&ndash;Kolmogorov paradox: conditioning via
-                        &sigma;-algebras is canonical, while ad hoc geometric limits are not.</li>
+                        <li>Revisit the Borel&ndash;Kolmogorov paradox: conditioning via
+                        &sigma;-algebras is canonical up to null sets, while ad hoc geometric
+                        limits are not canonical at all &mdash; and see exactly what is and is
+                        not pinned down at a single null datum.</li>
                         <li>Bundle eventwise conditional probabilities into conditional
                         probability measures via disintegration.</li>
                         <li>Derive Bayes' formula as the equality of two disintegrations of the
                         same joint law &mdash; not as a postulate.</li>
                         <li>Apply the integral Bayes formula back to the finite switch problem,
                         bringing everything full circle.</li>
-                        <li>See that the posterior kernel is well-defined even when
-                        \(\muD(\{d_{\mathrm{obs}}\})=0\), because it was constructed by
-                        disintegration, not by dividing by point probabilities.</li>
+                        <li>See that the posterior kernel is well-defined for
+                        \(\muD\)-almost every datum even when individual data values have
+                        probability zero, because it is constructed by disintegration, not by
+                        dividing by point probabilities &mdash; and see what extra regularity is
+                        needed to evaluate it at one specific datum.</li>
                     </ul>
 
                     <div class="part-prevnext-spacer"></div>

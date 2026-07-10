@@ -149,9 +149,17 @@
                     <em>conditional distribution</em> or <em>posterior
                     kernel</em>. The theorem guaranteeing that it works, under
                     good measurable-space assumptions (e.g. standard Borel
-                    spaces), is the <em>disintegration theorem</em>. The
-                    kernel is defined \(\muD\)-almost everywhere and is unique
-                    up to \(\muD\)-null sets.</p>
+                    spaces), is the <em>disintegration theorem</em>. A point of
+                    precision about what is and is not pinned down: a kernel is
+                    ordinarily presented as a function defined for <em>every</em>
+                    \(d\) &mdash; one can always fill in arbitrary probability
+                    measures on an exceptional null set to achieve this. What is
+                    determined by the joint law is the kernel's
+                    <em>equivalence class</em>: two valid kernels must agree for
+                    \(\muD\)-almost every \(d\), but may differ freely on a
+                    \(\muD\)-null set. So the accurate slogan is not
+                    &ldquo;defined almost everywhere&rdquo; but &ldquo;defined
+                    everywhere, unique almost everywhere.&rdquo;</p>
 
                     <h2>The consistency identity</h2>
 
@@ -221,9 +229,10 @@
                     \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm),\]
 
                     <p>where \(\muMzero\) is the prior &mdash; the marginal of
-                    \(\Pi\) over data space. This says: the joint probability
-                    of \((A,B)\) decomposes as the integral of the likelihood
-                    \(L(m,B)\), weighted by the prior, over all model states
+                    \(\Pi\) on the model space, obtained by integrating out the
+                    data: \(\muMzero(A)=\Pi(A\times\D)\). This says: the joint probability
+                    of \((A,B)\) decomposes as the integral of the observation
+                    kernel \(L(m,B)\), weighted by the prior, over all model states
                     in \(A\).</p>
 
                     <div class="bayes-callout callout-intuition">
@@ -307,10 +316,14 @@
 
                     \[L(00,\{d\})=\frac{\Pi(\{00\}\times\{d\})}{\muMzero(\{00\})}.\]
 
-                    <p>This is the likelihood distribution over data given
+                    <p>This is the data distribution given
                     \(m=00\): \(\{0.2, 0.8\}\). Repeating for each \(m\) gives
                     the observation kernel. The row-normalization operation is
-                    the same bundling in the other direction.</p>
+                    the same bundling in the other direction. (We reserve the
+                    word <em>likelihood</em> for the density \(L(d\mid m)\) of
+                    Part&nbsp;3e, or for the function \(m\mapsto L(d\mid m)\)
+                    once the data is fixed; the measure-valued object
+                    \(L(m,\cdot)\) is the observation kernel.)</p>
 
                     <div class="bayes-callout callout-intuition">
                         <span class="bayes-callout-label">Two ways of reading the same table</span>
@@ -356,7 +369,7 @@
                             <text x="420" y="250" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">column &#8594; posterior</text>
                             <!-- Row highlight (m=00) -->
                             <rect x="110" y="40" width="380" height="40" fill="none" stroke="rgba(120,180,120,0.6)" stroke-width="2" stroke-dasharray="5,3"/>
-                            <text x="300" y="35" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">row &#8594; likelihood</text>
+                            <text x="300" y="35" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">row &#8594; observation kernel</text>
                         </svg>
                         <figcaption>
                             <strong>F3d-1 &mdash; Two ways of reading the same
@@ -374,7 +387,7 @@
                     \(\Pi\) on \(\M\times\D\):</p>
 
                     \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd) \qquad\text{(posterior: model given data)},\]
-                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(likelihood: data given model)}.\]
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(observation kernel: data given model)}.\]
 
                     <p>The first disintegrates with respect to the predictive
                     data measure \(\muD\) and produces the posterior kernel.
@@ -403,8 +416,8 @@
                         <p>
                             Conditional expectation does not magically assign
                             a unique value at every zero-probability data
-                            point. It gives a version defined <em>almost
-                            everywhere</em> with respect to \(\muD\). To
+                            point. It gives a version determined only <em>up to
+                            \(\muD\)-null sets</em>. To
                             evaluate at a specific observed \(\dobs\), one
                             often needs additional structure &mdash; such as a
                             likelihood density, continuity, a chosen regular
@@ -414,7 +427,8 @@
                         <p>
                             This is the anti-Borel&ndash;Kolmogorov charm: it
                             keeps the exposition honest. The posterior kernel
-                            is defined \(\muD\)-a.e., and pointwise evaluation
+                            can be chosen everywhere but is unique only
+                            \(\muD\)-a.e., and pointwise evaluation
                             at \(\dobs\) requires regularity that must be
                             checked, not assumed.
                         </p>

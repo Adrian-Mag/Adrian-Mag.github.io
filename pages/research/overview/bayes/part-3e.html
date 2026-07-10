@@ -91,7 +91,7 @@
                     \(\Pi\) on \(\M\times\D\) admits two disintegrations:</p>
 
                     \[\Pi(A\times B)=\int_B \mu_{\M\mid D=d}(A)\,\muD(dd) \qquad\text{(posterior: model given data)},\]
-                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(likelihood: data given model)}.\]
+                    \[\Pi(A\times B)=\int_A L(m,B)\,\muMzero(dm) \qquad\text{(observation kernel: data given model)}.\]
 
                     <p>In Bayesian inversion, we usually specify the problem in the opposite
                     direction from what we want. We do not start by knowing the posterior. We
@@ -200,14 +200,21 @@
                     prior&rdquo; appears only when the data-given-model kernel has a density
                     with respect to a reference measure.</p>
 
-                    <p>Assume there exists a reference measure \(\lambda\) on
+                    <p>Assume there exists a <em>&sigma;-finite</em> reference measure \(\lambda\) on
                     \((\D,\SigmaD)\) such that \(L(m,\cdot)\ll\lambda\) for \(\muMzero\)-a.e.\(m\).
-                    Then the Radon&ndash;Nikodým derivative</p>
+                    Then for each such \(m\) the Radon&ndash;Nikodým derivative</p>
 
                     \[L(d\mid m):=\frac{dL(m,\cdot)}{d\lambda}(d)\]
 
-                    <p>exists \(\lambda\)-a.e.and is jointly measurable in \((m,d)\). The
-                    joint law then admits the density representation:</p>
+                    <p>exists \(\lambda\)-a.e. One further point deserves honesty: the
+                    derivatives are defined <em>separately for each \(m\)</em>, and choosing
+                    them so that \((m,d)\mapsto L(d\mid m)\) is <em>jointly</em> measurable is
+                    a genuine (if standard) extra step. It is guaranteed under the assumptions
+                    we work with throughout &mdash; \(\lambda\) &sigma;-finite, the data
+                    &sigma;-algebra countably generated (e.g. \(\D\) a standard Borel space),
+                    and \(L\) a measurable kernel &mdash; but it is not automatic on arbitrary
+                    measurable spaces. Granting joint measurability, the
+                    joint law admits the density representation:</p>
 
                     \[\Pi(dm,dd)=L(d\mid m)\,\lambda(dd)\,\muMzero(dm).\]
 
@@ -238,6 +245,16 @@
 
                     \[\mu_{\M\mid D=d}(A)\,Z(d)=\int_A L(d\mid m)\,\muMzero(dm), \qquad A\in\SigmaM.\]
 
+                    <p>(A technical footnote: for each fixed \(A\) this equality holds outside
+                    an \(A\)-dependent \(\lambda\)-null set. To get <em>one</em> exceptional
+                    null set that works for all \(A\) simultaneously &mdash; which is what the
+                    displayed statement asserts &mdash; one runs the argument over a countable
+                    generating class of model events and extends by a monotone-class argument.
+                    This is available when \(\SigmaM\) is countably generated, as it is for
+                    standard Borel model spaces. Alternatively, one can simply <em>define</em>
+                    the kernel by the ratio formula below wherever \(Z(d)>0\) and verify
+                    directly that it satisfies the disintegration identity.)</p>
+
                     <h3>Bayes' relation in density form</h3>
 
                     <p>If \(Z(d)\in(0,\infty)\) for \(\muD\)-a.e.\(d\), then the posterior
@@ -264,11 +281,18 @@
                         <p>
                             The likelihood \(L(d\mid m)\) depends on the choice of reference
                             measure \(\lambda\) and is therefore not an invariant object. The
-                            posterior kernel \(\mu_{\M\mid D=d}\), by contrast, is defined up to
-                            \(\muD\)-null sets and does not depend on any reference measure. In
-                            the total absence of a dominating reference, the posterior kernel
-                            still exists as a regular conditional distribution; only the simple
-                            density formula need not hold.
+                            posterior kernel \(\mu_{\M\mid D=d}\), by contrast, is determined up
+                            to \(\muD\)-null sets and does not depend on any reference measure.
+                            Even in the total absence of a dominating reference, the posterior
+                            kernel still exists as a regular conditional distribution
+                            <em>provided the spaces are well-behaved</em> &mdash; standard Borel
+                            spaces (Polish spaces with their Borel &sigma;-algebras, which cover
+                            every finite, Euclidean, and separable Banach setting we care about)
+                            are the usual sufficient condition. On truly pathological measurable
+                            spaces, regular conditional distributions can fail to exist. Within
+                            the standard-Borel world: existence holds, uniqueness holds up to
+                            \(\muD\)-null sets, and only the simple density formula needs the
+                            dominating reference measure.
                         </p>
                     </div>
 
@@ -282,6 +306,10 @@
 
                     <p>Assume:</p>
                     <ul>
+                        <li>The data space is \(\D=\mathbb{R}^{N_d}\) with its Borel
+                        &sigma;-algebra. (The additive structure below needs a vector space
+                        with measurable addition; for this section we simply take Euclidean
+                        data space, which is the practically relevant case.)</li>
                         <li>\(M\sim\muMzero\) on \((\M,\SigmaM)\) &mdash; the prior;</li>
                         <li>\(\eta\sim\mu_\eta\) on \((\D,\SigmaD)\) &mdash; the noise distribution;</li>
                         <li>\(M\) and \(\eta\) are independent;</li>
@@ -361,12 +389,20 @@
 
                     <h3>The likelihood as a shifted noise density</h3>
 
-                    <p>Assume the noise law \(\mu_\eta\) is absolutely continuous with respect to
-                    a reference measure \(\lambda\) (e.g.Lebesgue measure on
-                    \(\mathbb{R}^{N_d}\)), with density \(\rho_\eta(\xi)=d\mu_\eta/d\lambda(\xi)\).</p>
+                    <p>Now take \(\lambda\) to be <em>Lebesgue measure</em> on
+                    \(\D=\mathbb{R}^{N_d}\), and assume the noise law \(\mu_\eta\) has a
+                    Lebesgue density \(\rho_\eta(\xi)=d\mu_\eta/d\lambda(\xi)\). The choice of
+                    Lebesgue measure is not cosmetic: the computation below slides the density
+                    along a translation, and Lebesgue measure is <em>translation-invariant</em>.
+                    For a general reference measure \(\lambda\), the density of the translated
+                    noise law with respect to \(\lambda\) is <em>not</em> simply
+                    \(\rho_\eta(d-G(m))\) &mdash; one would pick up a Radon&ndash;Nikodým
+                    correction comparing \(\lambda\) to its own translate (and if \(\lambda\)
+                    and its translate are mutually singular, no such density exists at all).</p>
 
                     <p>Testing \(L(m,\cdot)\) against a bounded measurable function \(f\) and performing
-                    the change of variable \(d=G(m)+\xi\):</p>
+                    the change of variable \(d=G(m)+\xi\) (using translation invariance of
+                    Lebesgue measure):</p>
 
                     \[\int_\D f(d)\,L(m,dd)=\int_\D f(d)\,\rho_\eta\!\bigl(d-G(m)\bigr)\,\lambda(dd).\]
 
@@ -379,9 +415,18 @@
                         <p>
                             The likelihood is the noise density evaluated at the <em>residual</em>
                             \(d-G(m)\) &mdash; the mismatch between the observed data and the
-                            forward-model prediction. A model \(m\) that predicts the data well
-                            (small residual) yields a high likelihood; a model that predicts
-                            poorly (large residual) yields a low likelihood.
+                            forward-model prediction. Whether a small residual is
+                            <em>favoured</em> depends entirely on the shape and centring of the
+                            noise density. For the familiar centred, unimodal noise models
+                            &mdash; Gaussian noise
+                            \(\rho_\eta(r)\propto\exp(-\tfrac12\lVert r\rVert^2_{\mathbf{C}^{-1}})\)
+                            being the canonical example &mdash; the density decreases with the
+                            size of the residual, so small residuals do mean high likelihood.
+                            But an arbitrary noise density can be asymmetric, multimodal, or
+                            even vanish at zero (noise concentrated near \(\pm 1\) makes a
+                            <em>perfect</em> data fit unlikely!). The exact statement is:
+                            the likelihood equals the noise density at the residual &mdash;
+                            nothing more, nothing less.
                         </p>
                     </div>
 
@@ -401,6 +446,26 @@
                     denominator \(Z(d)\) is an integral over the model space &mdash; it is
                     finite and positive under standard assumptions, even when the data space is
                     continuous and \(\muD(\{d\})=0\).</p>
+
+                    <div class="bayes-callout callout-warning">
+                        <span class="bayes-callout-label">A finite-dimensional story &mdash; signpost for infinite dimensions</span>
+                        <p>
+                            Everything in this additive-noise section leaned on Lebesgue measure
+                            on \(\mathbb{R}^{N_d}\). In <em>infinite-dimensional</em> data or
+                            model spaces there is no Lebesgue measure to lean on &mdash; no
+                            &sigma;-finite, translation-invariant measure exists on an
+                            infinite-dimensional Banach space. Worse, translating a Gaussian
+                            measure can produce a <em>mutually singular</em> measure unless the
+                            shift lies in its Cameron&ndash;Martin space. The right
+                            infinite-dimensional formulation therefore expresses the posterior
+                            as a density with respect to the <em>prior</em>,
+                            \(\frac{d\mu^{d}}{d\mu^{0}}(m)\propto\exp[-\Phi(m;d)]\),
+                            rather than giving prior and posterior densities with respect to a
+                            (nonexistent) flat volume measure. This is the standard formulation
+                            of Bayesian inverse problems on function spaces; the finite-dimensional
+                            formulas of this section are its Lebesgue-dominated special case.
+                        </p>
+                    </div>
 
                     <figure class="bayes-diagram">
                         <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">

@@ -139,7 +139,10 @@
                     reporter observes a noisy function of \(m\) &mdash; but the model space is now
                     a continuum.</p>
 
-                    <p>We might try to ask the same question as before:</p>
+                    <p>Assume, as is natural here, that our uncertainty about \(m\) is described
+                    by a smooth density over the square &mdash; a prior with no lumps of
+                    probability concentrated at individual points. We might try to ask the same
+                    question as before:</p>
 
                     <div class="bayes-callout callout-checkpoint">
                         <span class="bayes-callout-label">Question</span>
@@ -160,10 +163,20 @@
                     of \(m\) must be the true hidden state. How can every possible outcome have
                     probability zero?</p>
 
-                    <p>The resolution is that in a continuous universe, there are uncountably many
-                    possible outcomes. If we tried to assign each one a strictly positive
-                    probability, the total would exceed one. The requirement that probabilities add
-                    up coherently forces every individual point to carry zero probability.</p>
+                    <p>Two remarks make this precise. First, a probability measure can have at
+                    most countably many <em>atoms</em> &mdash; points carrying strictly positive
+                    mass. (If uncountably many points each had positive probability, then for some
+                    \(n\) uncountably many would carry mass at least \(1/n\), and the total would
+                    exceed one.) So on an uncountable space, <em>most</em> points must have
+                    probability zero. Second, whether <em>every</em> point has probability zero is
+                    a property of the <em>measure</em>, not of the space alone: an uncountable
+                    space can perfectly well support atoms (a prior that puts mass \(1/2\)
+                    exactly on \((0.3,0.7)\) and spreads the rest smoothly is a legitimate
+                    probability measure). A measure with no atoms is called <em>atomless</em>,
+                    and our smooth-density prior is atomless &mdash; that is why every singleton
+                    gets zero. &ldquo;Continuous model space&rdquo; and &ldquo;atomless
+                    prior&rdquo; are different statements, and it is the second one doing the
+                    work here.</p>
 
                     <figure class="bayes-diagram">
                         <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
@@ -206,16 +219,23 @@
                         </svg>
                         <figcaption>
                             <strong>F3a-1 &mdash; The continuous shock.</strong> In the discrete
-                            switch problem, each hidden state carries positive probability. In a
-                            continuous model space, every individual point has probability zero.
-                            Probability can no longer be attached to outcomes; it must be attached
-                            to <em>sets</em> of outcomes.
+                            switch problem, each hidden state carries positive probability. Under
+                            an atomless prior on a continuous model space, every individual point
+                            has probability zero. Point masses stop carrying information;
+                            probabilities of nontrivial <em>sets</em> of outcomes become the
+                            essential objects.
                         </figcaption>
                     </figure>
 
                     <p>This does not mean that &ldquo;nothing happens.&rdquo; It means that
-                    individual outcomes are no longer the right objects to which probability should
-                    be attached.</p>
+                    individual outcomes are no longer <em>useful</em> carriers of probability.
+                    To be precise: probability was always assigned to measurable sets &mdash; a
+                    singleton \(\{m\}\) is itself a perfectly good measurable set, in finite and
+                    continuous problems alike. The real change is that in the finite problem the
+                    singleton masses <em>characterized</em> the whole measure, whereas under an
+                    atomless measure every singleton mass is zero, so singleton probabilities no
+                    longer distinguish one distribution from another. The information now lives
+                    in the probabilities of larger sets.</p>
 
                     <div class="bayes-callout callout-lesson">
                         <span class="bayes-callout-label">Key shift</span>
@@ -381,7 +401,15 @@
                     <p>This has \(16\) elements: the empty set, four singletons, six pairs, four
                     triples, and \(\M\) itself. Every subset is an event.</p>
 
-                    <p>In continuous spaces, we cannot take the full power set. The natural choice
+                    <p>In continuous spaces, the full power set is no longer a workable choice
+                    &mdash; not because no measure could ever live on it (a point mass
+                    \(\delta_x\) is happily defined on <em>every</em> subset), but because the
+                    measures we actually want are ruled out. If we ask for the usual atomless,
+                    translation-invariant notion of &ldquo;area&rdquo; on \([0,1]^2\) (or length
+                    on \(\mathbb{R}\)), then it is impossible to extend it to <em>all</em>
+                    subsets while keeping countable additivity &mdash; this is the content of
+                    the classical Vitali construction of a non-measurable set. The mainstream
+                    resolution is to shrink the domain: the natural choice
                     is the <em>Borel &sigma;-algebra</em>, which is the smallest &sigma;-algebra
                     containing all open sets. This is the &sigma;-algebra we use when the model
                     space is, say, \([0,1]^2\).</p>
