@@ -6,6 +6,7 @@
     <title>Act 1: The Kernel Game — My Take on SOLA — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/styles.css">
     <link rel="stylesheet" href="../../../../css/sola.css">
+    <link rel="stylesheet" href="../../../../css/kernel-game.css">
     <meta name="description" content="Act 1 of My Take on SOLA: Sensitivity kernels, data as weighted integrals, what finite data cannot see, and the target property.">
     <script>
     MathJax = {
@@ -38,6 +39,13 @@
     <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Act 1: The Kernel Game — My Take on SOLA — Adrian Mag">
+    <meta property="og:description" content="Act 1 of My Take on SOLA: Sensitivity kernels, data as weighted integrals, what finite data cannot see, and the target property.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-1.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
     <header>
@@ -51,10 +59,16 @@
                         <a href="../../publications/papers.html">Publications</a>
                         <a href="../../posters/posters.html">Presentations</a>
                         <a href="../../posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="dropdown-label">Notes</span>
+                        <a href="../sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
                     </div>
                 </li>
                 <li><a href="../../../cv.html">CV</a></li>
                 <li><a href="../../../contacts.html">Contact</a></li>
+                <li><a href="../../../search.html">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -439,6 +453,30 @@
                         the property directly from the data.</p>
                     </div>
 
+                    <p>Before the algebra, play the game yourself. Below are six sensitivity kernels
+                    \(K_1,\dots,K_6\) &mdash; some smooth bumps, one broad averager, two that
+                    oscillate. Pick a target kernel and use the sliders to choose weights
+                    \(x_1,\dots,x_6\). The teal curve is your combined kernel
+                    \(x_1K_1(r)+\cdots+x_6K_6(r)\); the dashed curve is the target you are trying
+                    to imitate.</p>
+
+                    <div class="kernel-game" id="kernel-game">
+                        <div class="kg-header">
+                            <span class="kg-title">Try it: the kernel game</span>
+                            <span class="kg-sub">Match the dashed target with a weighted combination
+                            of the six kernels. Two things fight each other: the kernel mismatch, and
+                            the noise amplification \(\sqrt{\textstyle\sum_i x_i^2}\) that your
+                            weights inflict on the data errors.</span>
+                        </div>
+                        <noscript><p>This interactive panel requires JavaScript.</p></noscript>
+                    </div>
+
+                    <p>Two lessons hide in this toy. First, even the best match is imperfect
+                    &mdash; the teal curve is a <em>resolving</em> kernel, and it is the kernel the
+                    data give you, not the kernel you asked for. Second, try the target at
+                    \(r=0.85\): every kernel is nearly zero there, and no choice of weights can
+                    manufacture sensitivity the data never had.</p>
+
                     <p>The next act turns this idea into algebra. The key observation will be almost
                     embarrassingly simple: because the data are linear integrals, combining data is
                     the same as combining kernels. That is where the kernel game truly begins.</p>
@@ -485,5 +523,7 @@
     })();
     </script>
     <script src="../../../../js/ai-assist.js" defer></script>
+    <script src="../../../../js/notes-extras.js" defer></script>
+    <script src="../../../../js/kernel-game.js" defer></script>
 </body>
 </html>

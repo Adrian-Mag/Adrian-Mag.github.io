@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/index.css">
     <meta name="description" content="Adrian Mag's academic website showcasing seismology research, publications, and conference presentations.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Adrian Mag - Seismology Research">
+    <meta property="og:description" content="Adrian Mag's academic website showcasing seismology research, publications, and conference presentations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adrian-mag.github.io/">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
     <header>
@@ -20,10 +27,16 @@
                         <a href="pages/research/publications/papers.html">Publications</a>
                         <a href="pages/research/posters/posters.html">Presentations</a>
                         <a href="pages/research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="dropdown-label">Notes</span>
+                        <a href="pages/research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="pages/research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="pages/research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="pages/research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
                     </div>
                 </li>
                 <li><a href="pages/cv.html">CV</a></li>
                 <li><a href="pages/contacts.html">Contact</a></li>
+                <li><a href="pages/search.html">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -38,6 +51,50 @@
                 <div class="cta-buttons">
                     <a href="pages/research/overview/index.html" class="btn btn-primary">Research Overview</a>
                     <a href="pages/research/overview/inversions-inferences.html" class="btn btn-secondary">What are Inversions & Inferences?</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="highlights">
+            <div class="container">
+                <h2>Notes on Inverse Theory &amp; Inference</h2>
+                <p style="text-align:center;color:rgba(255,255,255,0.65);max-width:640px;margin:0.5rem auto 0;">
+                    Long-form, self-contained series &mdash; built from first principles, with
+                    interactive figures and an AI reading companion for each series.
+                </p>
+                <div class="notes-grid">
+                    <div class="highlight-item">
+                        <a class="card-link" href="pages/research/overview/sola/my-take-on-sola.html">
+                            <h3>My Take on SOLA</h3>
+                            <span class="series-meta">10 acts</span>
+                            <p>Backus&ndash;Gilbert&rsquo;s heir, built from scratch and examined critically. Central claim: SOLA reshuffles generative information &mdash; it does not create it.</p>
+                            <span style="color:#6791BE;font-weight:600;">Start with Act 1: The Kernel Game →</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a class="card-link" href="pages/research/overview/think-first/think-first-discretize-later.html">
+                            <h3>Think First, Discretize Later</h3>
+                            <span class="series-meta">8 acts &middot; interactive</span>
+                            <p>Why the model space, its geometry, and the adjoint must be chosen <em>before</em> discretizing a linear inverse problem &mdash; with live refinement panels.</p>
+                            <span style="color:#6791BE;font-weight:600;">Explore →</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a class="card-link" href="pages/research/overview/bayes/bayes-measure-theoretically.html">
+                            <h3>Bayes, Measure-Theoretically</h3>
+                            <span class="series-meta">4 parts</span>
+                            <p>One tiny inverse problem, solved twice: first by tables, then by posterior kernels. The finite table is the baby version of the disintegration.</p>
+                            <span style="color:#6791BE;font-weight:600;">Read →</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a class="card-link" href="pages/research/overview/frequentist/bayesian-frequentist.html">
+                            <h3>Bayesian vs Frequentist</h3>
+                            <span class="series-meta">5 parts</span>
+                            <p>Same observation equation, same noise model &mdash; two different epistemological objects. Where the probability lives is the whole disagreement.</p>
+                            <span style="color:#6791BE;font-weight:600;">Compare →</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

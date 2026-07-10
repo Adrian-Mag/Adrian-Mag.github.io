@@ -29,7 +29,7 @@
                 "my-take-on-sola.html",
                 "act-1.html", "act-2.html", "act-3.html", "act-4.html",
                 "act-5.html", "act-6.html", "act-7.html", "act-8.html",
-                "act-9.html", "act-10.html", "act-11.html",
+                "act-9.html", "act-10.html",
                 "summary.html"
             ]
         },

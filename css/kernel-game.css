@@ -1,0 +1,216 @@
+/* Kernel Game interactive panel (SOLA Act 1) — matches the sola.css dark theme */
+
+.kernel-game {
+    max-width: 860px;
+    margin: 2.5rem auto;
+    padding: 1.4rem 1.6rem 1.6rem;
+    border-radius: 12px;
+    background: rgba(30,34,40,0.55);
+    border: 1px solid rgba(103,145,190,0.25);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.30);
+}
+
+.kg-header {
+    margin-bottom: 1rem;
+}
+
+.kg-title {
+    display: block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a0c4e8;
+    margin-bottom: 0.3rem;
+}
+
+.kg-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.kg-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+    white-space: nowrap;
+}
+
+/* target chooser */
+.kg-targets {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+
+.kg-target-btn {
+    background: rgba(103,145,190,0.10);
+    color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(103,145,190,0.35);
+    border-radius: 18px;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.kg-target-btn:hover { background: rgba(103,145,190,0.22); }
+
+.kg-target-btn.is-on {
+    background: #4a6da3;
+    color: #fff;
+    border-color: #6791BE;
+}
+
+/* weight sliders */
+.kg-sliders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 26px;
+    margin-bottom: 0.9rem;
+}
+
+.kg-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.kg-slider-label {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    min-width: 72px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.kg-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex: none;
+}
+
+.kg-slider {
+    flex: 1;
+    accent-color: #6791BE;
+    min-width: 0;
+}
+
+.kg-slider-value {
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255,255,255,0.6);
+    min-width: 44px;
+    text-align: right;
+}
+
+/* buttons + penalty */
+.kg-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.kg-btn {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.kg-btn:hover { background: rgba(255,255,255,0.16); }
+
+.kg-btn-primary {
+    background: linear-gradient(90deg, #4a6da3 0%, #6791BE 100%);
+    border-color: #6791BE;
+    color: #fff;
+    font-weight: 600;
+}
+
+.kg-btn-primary:hover { filter: brightness(1.12); }
+
+.kg-penalty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 220px;
+}
+
+.kg-penalty .kg-slider { max-width: 220px; }
+
+/* canvas */
+.kg-canvas {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    background: rgba(20,23,28,0.6);
+}
+
+/* scoreboard */
+.kg-score {
+    margin-top: 0.9rem;
+    display: grid;
+    gap: 8px;
+}
+
+.kg-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.kg-bar-row .kg-label { min-width: 150px; }
+
+.kg-bar-track {
+    flex: 1;
+    height: 10px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+}
+
+.kg-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    width: 0;
+    transition: width 0.25s ease;
+}
+
+.kg-bar-misfit { background: linear-gradient(90deg, #c87850, #ff6b6b); }
+.kg-bar-noise  { background: linear-gradient(90deg, #4a6da3, #6791BE); }
+
+.kg-bar-value {
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255,255,255,0.8);
+    min-width: 52px;
+    text-align: right;
+}
+
+.kg-status {
+    margin-top: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.72);
+    border-left: 3px solid rgba(103,145,190,0.5);
+    padding-left: 12px;
+    min-height: 2.5em;
+}
+
+@media (max-width: 640px) {
+    .kernel-game { padding: 1rem; }
+    .kg-sliders { grid-template-columns: 1fr; }
+    .kg-bar-row .kg-label { min-width: 120px; font-size: 0.78rem; }
+}
