@@ -9,9 +9,9 @@
     justify-content: center;
     gap: 24px;
     padding: 16px 20px;
-    background: rgba(44,56,80,0.35);
+    background: var(--surface-2);
     border-radius: 12px;
-    border: 1px solid rgba(103,145,190,0.15);
+    border: 1px solid var(--line);
 }
 
 /* ── Slider ──────────────────────────────────────────── */
@@ -25,7 +25,7 @@
 .tfdl-slider-label {
     font-size: 1rem;
     font-weight: 700;
-    color: #a0c4e8;
+    color: var(--accent-bright);
     min-width: 70px;
     text-align: right;
     letter-spacing: 0.02em;
@@ -37,7 +37,7 @@
     width: 180px;
     height: 6px;
     border-radius: 3px;
-    background: rgba(103,145,190,0.25);
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
     outline: none;
     cursor: pointer;
 }
@@ -48,8 +48,8 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #6791BE;
-    border: 2px solid #a0c4e8;
+    background: var(--accent);
+    border: 2px solid var(--accent);
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -63,8 +63,8 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #6791BE;
-    border: 2px solid #a0c4e8;
+    background: var(--accent);
+    border: 2px solid var(--accent);
     cursor: pointer;
     transition: transform 0.15s ease;
 }
@@ -92,9 +92,9 @@
     gap: 8px;
     padding: 7px 16px;
     border-radius: 20px;
-    border: 1.5px solid rgba(103,145,190,0.20);
-    background: rgba(58,62,67,0.50);
-    color: rgba(255,255,255,0.50);
+    border: 1.5px solid var(--line);
+    background: var(--surface-2);
+    color: var(--muted);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -103,13 +103,13 @@
 }
 
 .tfdl-toggle.is-on {
-    color: rgba(255,255,255,0.90);
-    border-color: rgba(103,145,190,0.35);
-    background: rgba(74,109,163,0.20);
+    color: var(--text);
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .tfdl-toggle:hover {
-    border-color: rgba(103,145,190,0.40);
+    border-color: var(--accent);
 }
 
 .tfdl-toggle:focus {

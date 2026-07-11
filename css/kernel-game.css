@@ -5,8 +5,8 @@
     margin: 2.5rem auto;
     padding: 1.4rem 1.6rem 1.6rem;
     border-radius: 12px;
-    background: rgba(30,34,40,0.55);
-    border: 1px solid rgba(103,145,190,0.25);
+    background: var(--surface);
+    border: 1px solid var(--line-2);
     box-shadow: 0 8px 32px rgba(0,0,0,0.30);
 }
 
@@ -20,19 +20,19 @@
     font-size: 1.05rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #a0c4e8;
+    color: var(--accent-bright);
     margin-bottom: 0.3rem;
 }
 
 .kg-sub {
-    color: rgba(255,255,255,0.7);
+    color: var(--muted);
     font-size: 0.95rem;
     line-height: 1.6;
 }
 
 .kg-label {
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.65);
+    color: var(--muted);
     white-space: nowrap;
 }
 
@@ -46,9 +46,9 @@
 }
 
 .kg-target-btn {
-    background: rgba(103,145,190,0.10);
-    color: rgba(255,255,255,0.75);
-    border: 1px solid rgba(103,145,190,0.35);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--muted);
+    border: 1px solid var(--line-2);
     border-radius: 18px;
     padding: 5px 14px;
     font-size: 0.85rem;
@@ -56,12 +56,12 @@
     transition: background 0.2s ease, color 0.2s ease;
 }
 
-.kg-target-btn:hover { background: rgba(103,145,190,0.22); }
+.kg-target-btn:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
 
 .kg-target-btn.is-on {
-    background: #4a6da3;
-    color: #fff;
-    border-color: #6791BE;
+    background: var(--accent);
+    color: var(--text);
+    border-color: var(--accent);
 }
 
 /* weight sliders */
@@ -80,7 +80,7 @@
 
 .kg-slider-label {
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.75);
+    color: var(--muted);
     min-width: 72px;
     display: inline-flex;
     align-items: center;
@@ -97,14 +97,14 @@
 
 .kg-slider {
     flex: 1;
-    accent-color: #6791BE;
+    accent-color: var(--accent);
     min-width: 0;
 }
 
 .kg-slider-value {
     font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
-    color: rgba(255,255,255,0.6);
+    color: var(--muted);
     min-width: 44px;
     text-align: right;
 }
@@ -119,9 +119,9 @@
 }
 
 .kg-btn {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.85);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+    color: var(--text);
+    border: 1px solid var(--line);
     border-radius: 8px;
     padding: 7px 16px;
     font-size: 0.9rem;
@@ -129,12 +129,12 @@
     transition: background 0.2s ease;
 }
 
-.kg-btn:hover { background: rgba(255,255,255,0.16); }
+.kg-btn:hover { background: color-mix(in srgb, var(--text) 16%, transparent); }
 
 .kg-btn-primary {
-    background: linear-gradient(90deg, #4a6da3 0%, #6791BE 100%);
-    border-color: #6791BE;
-    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--text);
     font-weight: 600;
 }
 
@@ -155,7 +155,7 @@
     width: 100%;
     display: block;
     border-radius: 8px;
-    background: rgba(20,23,28,0.6);
+    background: var(--surface);
 }
 
 /* scoreboard */
@@ -177,7 +177,7 @@
     flex: 1;
     height: 10px;
     border-radius: 5px;
-    background: rgba(255,255,255,0.08);
+    background: color-mix(in srgb, var(--text) 8%, transparent);
     overflow: hidden;
 }
 
@@ -188,13 +188,13 @@
     transition: width 0.25s ease;
 }
 
-.kg-bar-misfit { background: linear-gradient(90deg, #c87850, #ff6b6b); }
-.kg-bar-noise  { background: linear-gradient(90deg, #4a6da3, #6791BE); }
+.kg-bar-misfit { background: linear-gradient(90deg, var(--sem-orange-line), var(--sem-orange-text)); }
+.kg-bar-noise  { background: var(--accent); }
 
 .kg-bar-value {
     font-size: 0.9rem;
     font-variant-numeric: tabular-nums;
-    color: rgba(255,255,255,0.8);
+    color: var(--muted);
     min-width: 52px;
     text-align: right;
 }
@@ -203,8 +203,8 @@
     margin-top: 0.9rem;
     font-size: 0.95rem;
     line-height: 1.6;
-    color: rgba(255,255,255,0.72);
-    border-left: 3px solid rgba(103,145,190,0.5);
+    color: var(--muted);
+    border-left: 3px solid var(--line-2);
     padding-left: 12px;
     min-height: 2.5em;
 }

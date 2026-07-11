@@ -47,20 +47,25 @@ if MODE == "space":
     _SPINE = "#5a6675"
 else:
     # Earth mode: same semantic roles, deepened to read on the cream
-    # ground (#EDE9DD) of the site's earth palette.
+    # ground (#EDE9DD) of the site's earth palette. The blue mako family
+    # is replaced by a custom "terra" blend (dark olive -> moss -> ochre
+    # -> sand) so nothing in the figures reads as a space color.
+    _TERRA_ANCHORS = ["#2E2B1C", "#4A5527", "#5C6D33", "#8C7A2A", "#B0741B", "#D2A96A"]
+    _TERRA = sns.blend_palette(_TERRA_ANCHORS, as_cmap=True)
+    _TERRA_COLORS = sns.blend_palette(_TERRA_ANCHORS, 10)
     PALETTE = {
         "true": "#B0741B",      # deep ochre   - the true model
         "naive": "#C24E44",     # brick red    - the naive (transpose) result
         "correct": "#3E7D5E",   # forest green - the geometry-correct result
         "kernel": "#5C6D33",    # moss (site earth accent) - sensitivity kernels
-        "data": "#46628F",      # steel blue   - data points
+        "data": "#6B4A21",      # dark umber   - data points
         "accent": "#5C6D33",    # site earth accent
         "muted": "#8A8268",     # warm grey    - secondary lines / zero mean
-        "mako": _MAKO,          # mako still reads on light ground
-        "mako_dark": _MAKO_COLORS[2],   # dark mako - primary curves (visible on light bg)
-        "mako_mid": _MAKO_COLORS[4],    # mid mako - secondary curves
-        "mako_light": _MAKO_COLORS[5],  # lighter mako - tertiary / fills
-        "mako_pale": _MAKO_COLORS[6],   # palest usable mako on cream
+        "mako": _TERRA,         # terra colormap replaces mako in earth mode
+        "mako_dark": _TERRA_COLORS[1],   # dark terra - primary curves
+        "mako_mid": _TERRA_COLORS[3],    # mid terra - secondary curves
+        "mako_light": _TERRA_COLORS[5],  # lighter terra - tertiary / fills
+        "mako_pale": _TERRA_COLORS[6],   # palest usable terra on cream
     }
     _FG = "#3A3627"   # dark olive ink for text/ticks
     _SPINE = "#8F8768"
@@ -107,6 +112,8 @@ def mako_n(n: int) -> list:
     the site's dark background. Use :func:`mako_light_n` for line plots
     where every curve must be visible.
     """
+    if MODE == "earth":
+        return sns.blend_palette(_TERRA_ANCHORS, n)
     return sns.color_palette("mako", n)
 
 
@@ -117,11 +124,11 @@ def mako_light_n(n: int, start: float = 0.3) -> list:
     returned colour is visible on the dark website background. Use this
     for line plots where all curves need to be distinguishable.
     """
-    full = sns.color_palette("mako", int(n / (1.0 - start)) + 2)
     if MODE == "earth":
-        # on the light ground the LIGHT end is the invisible one -
-        # sample from the darker portion instead
+        # terra family, darker portion (the light end vanishes on cream)
+        full = sns.blend_palette(_TERRA_ANCHORS, int(n / (1.0 - start)) + 2)
         return full[:n]
+    full = sns.color_palette("mako", int(n / (1.0 - start)) + 2)
     return full[int(len(full) * start):][:n]
 
 

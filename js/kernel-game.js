@@ -16,15 +16,31 @@
     var N_GRID = 241;
     var N_K = 6;
 
-    var COLORS = {
-        target: "#e0e0e0",
-        resolving: "#4ecdc4",
-        mismatch: "rgba(255,107,107,0.28)",
-        kernels: ["#6791BE", "#9ed49e", "#e8a878", "#c8a8e0", "#B8B7C5", "#d4c46a"],
-        grid: "rgba(255,255,255,0.08)",
-        axis: "rgba(255,255,255,0.35)",
-        font: "rgba(255,255,255,0.75)"
+    // Two canvas palettes: space (dark panel) and earth (light panel).
+    var PALETTES = {
+        space: {
+            target: "#e0e0e0",
+            resolving: "#4ecdc4",
+            mismatch: "rgba(255,107,107,0.28)",
+            kernels: ["#6791BE", "#9ed49e", "#e8a878", "#c8a8e0", "#B8B7C5", "#d4c46a"],
+            grid: "rgba(255,255,255,0.08)",
+            axis: "rgba(255,255,255,0.35)",
+            font: "rgba(255,255,255,0.75)"
+        },
+        earth: {
+            target: "#3A3627",
+            resolving: "#2E7D6B",
+            mismatch: "rgba(162,60,54,0.30)",
+            kernels: ["#5C6D33", "#3E7D5E", "#B0741B", "#6E4390", "#6A644F", "#8F7A1E"],
+            grid: "rgba(41,38,27,0.10)",
+            axis: "rgba(41,38,27,0.40)",
+            font: "rgba(41,38,27,0.80)"
+        }
     };
+    function themeName() {
+        return document.documentElement.getAttribute("data-theme") === "earth" ? "earth" : "space";
+    }
+    var COLORS = PALETTES[themeName()];
 
     // --- problem definition -------------------------------------------------
 
@@ -317,6 +333,14 @@
         }
         return A;
     }
+
+    new MutationObserver(function () {
+        COLORS = PALETTES[themeName()];
+        document.querySelectorAll("#kernel-game .kg-dot").forEach(function (dot, i) {
+            dot.style.background = COLORS.kernels[i % COLORS.kernels.length];
+        });
+        update(false);
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     function update(solved) {
         var A = combined();
