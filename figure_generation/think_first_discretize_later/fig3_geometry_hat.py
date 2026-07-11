@@ -50,7 +50,7 @@ def main() -> None:
     ax0.legend()
 
     ax_h = fig.add_subplot(gs[0, 1])
-    im = ax_h.imshow(disc_hat.gram, cmap="cividis")
+    im = ax_h.imshow(disc_hat.gram, cmap=PALETTE["mako"])
     ax_h.set_title(r"hat Gram $M$  (tridiagonal)")
     ax_h.set_xticks([])
     ax_h.set_yticks([])

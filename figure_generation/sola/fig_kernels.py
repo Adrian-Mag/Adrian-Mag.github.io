@@ -75,15 +75,19 @@ def _annotate_kernel(ax, x, vals, idx: int) -> None:
     r_insens = (x[best_lo] + x[best_hi]) / 2
 
     # Annotate sensitive region
+    # Keep the label INSIDE the axes: peaks sit at the extremes, so placing
+    # the text beyond them overflows into the title / x-axis. Anchor it at
+    # ~65% of the peak height instead and let the arrow bridge the gap.
+    y_text = 0.65 * vals[i_peak]
     ax.annotate(
         r"data is sensitive here",
         xy=(r_peak, vals[i_peak]),
-        xytext=(r_peak + 0.18, vals[i_peak] + 0.5 if vals[i_peak] > 0 else vals[i_peak] - 0.5),
+        xytext=(r_peak + 0.22, y_text),
         fontsize=10,
         color=PALETTE["true"],
         arrowprops=dict(arrowstyle="->", color=PALETTE["true"], lw=1.2),
         ha="left",
-        va="bottom" if vals[i_peak] > 0 else "top",
+        va="center",
     )
 
     # Annotate insensitive region
