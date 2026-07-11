@@ -227,6 +227,51 @@ a { color: inherit; text-decoration: none; }
   .nav-cta { padding: 8px 12px; }
 }
 
+/* ---------- mobile hamburger menu (built by js/nav-menu.js) ---------- */
+.nav-burger {
+  display: none;
+  width: 34px; height: 34px; place-items: center; padding: 0;
+  border: none; background: transparent; border-radius: 8px; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--muted);
+}
+.nav-burger:hover { color: var(--text); }
+@media (max-width: 760px) { .nav-burger { display: grid; } }
+
+.nav-mobile-panel {
+  display: none;
+  position: absolute; top: 100%; left: 12px; right: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  flex-direction: column;
+  gap: 2px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+.nav-mobile-panel.open { display: flex; }
+.nav-mobile-panel a {
+  color: var(--text);
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.nav-mobile-panel a:active,
+.nav-mobile-panel a:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.nav-mobile-panel a.nav-mobile-sub {
+  padding-left: 26px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.nav-mobile-panel .nav-drop-label {
+  border-top: 1px solid var(--line);
+  margin-top: 6px;
+  padding: 10px 14px 4px;
+}
+
 /* ---------- buttons ---------- */
 .btn {
   font-family: var(--sans); font-size: 0.98rem; font-weight: 600;
