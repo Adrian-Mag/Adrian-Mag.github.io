@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Code — Adrian Mag</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/theme.css">
     <meta name="robots" content="noindex, nofollow">
     <style>
         body {
@@ -12,37 +13,39 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a1d23 0%, #2a2d35 100%);
+            background: radial-gradient(120% 120% at 50% 0%, #1B1F27 0%, #16191F 100%);
         }
         .papers-login-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            max-width: 380px;
+            background: var(--surface, #232833);
+            border: 1px solid var(--line-2, rgba(143,180,221,0.22));
+            border-radius: 16px;
+            padding: 2.6rem 2.2rem;
+            max-width: 400px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow, 0 18px 46px -20px rgba(0,0,0,0.7));
         }
-        .papers-login-card .lock-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #555;
-        }
+        .papers-login-card .monogram { margin: 0 auto 1.1rem; width: 42px; height: 42px; font-size: 1.1rem; }
         .papers-login-card h1 {
-            font-size: 1.4rem;
+            font-family: var(--serif, Georgia, serif);
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
             margin: 0 0 0.5rem 0;
-            color: #222;
+            color: var(--text, #EAEFF6);
         }
         .papers-login-card p {
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.92rem;
+            color: var(--muted, #9AA7B7);
             margin: 0 0 1.5rem 0;
         }
         .papers-login-card input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--line-2, rgba(143,180,221,0.22));
+            border-radius: 10px;
+            background: var(--ground, #16191F);
+            color: var(--text, #EAEFF6);
             font-size: 1rem;
             text-align: center;
             letter-spacing: 2px;
@@ -51,32 +54,33 @@
         }
         .papers-login-card input:focus {
             outline: none;
-            border-color: #4a6da7;
+            border-color: var(--accent, #6791BE);
         }
         .papers-login-card button {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.8rem;
             margin-top: 1rem;
             border: none;
-            border-radius: 8px;
-            background: #2a2d35;
+            border-radius: 999px;
+            background: var(--accent, #6791BE);
             color: #fff;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.18s;
         }
         .papers-login-card button:hover {
-            background: #1a1d23;
+            background: var(--accent-bright, #9BC1E8);
+            transform: translateY(-1px);
         }
+        .papers-login-card button:disabled { opacity: 0.6; cursor: default; transform: none; }
         .papers-login-card .error-msg {
-            color: #c0392b;
+            color: #e08585;
             font-size: 0.85rem;
             margin-top: 1rem;
             display: none;
         }
-        .papers-login-card .error-msg.show {
-            display: block;
-        }
+        .papers-login-card .error-msg.show { display: block; }
     </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Access Code — Adrian Mag">
@@ -88,7 +92,7 @@
 </head>
 <body>
     <div class="papers-login-card">
-        <div class="lock-icon">&#128274;</div>
+        <span class="monogram">AM</span>
         <h1>Access Restricted</h1>
         <p>Please enter the access code to view the documents.</p>
         <form id="papers-login-form" autocomplete="off">

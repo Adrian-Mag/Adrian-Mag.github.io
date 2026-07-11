@@ -5,115 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Papers in Preparation — Adrian Mag</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/theme.css">
     <meta name="robots" content="noindex, nofollow">
     <style>
         .papers-nav-bar {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            padding: 1.5rem 0 0.5rem 0;
+            padding: 1.6rem 0 0.5rem 0;
             flex-wrap: wrap;
         }
         .papers-nav-bar a {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.6rem 1.5rem;
-            border-radius: 8px;
-            background: rgba(103, 145, 190, 0.15);
-            border: 1.5px solid rgba(103, 145, 190, 0.35);
-            color: #c5d4e8;
+            padding: 0.55rem 1.4rem;
+            border-radius: 999px;
+            background: var(--surface, #232833);
+            border: 1px solid var(--line-2, rgba(143,180,221,0.22));
+            color: var(--text, #EAEFF6);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.93rem;
             font-weight: 600;
-            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+            transition: border-color 0.2s, transform 0.2s, background 0.2s;
         }
         .papers-nav-bar a:hover {
-            background: rgba(103, 145, 190, 0.3);
-            border-color: rgba(103, 145, 190, 0.6);
+            border-color: var(--accent, #6791BE);
+            background: var(--surface-2, #2B313D);
             transform: translateY(-2px);
         }
-        .papers-nav-bar .nav-icon {
-            font-size: 1.1rem;
-        }
+        .papers-nav-bar .nav-icon { font-size: 1.05rem; }
         .papers-list {
             max-width: 800px;
             margin: 2rem auto;
             padding: 0 20px;
         }
         .papers-list h1 {
-            font-size: 1.8rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
+            font-family: var(--serif, Georgia, serif);
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text, #EAEFF6);
+            margin-bottom: 0.4rem;
         }
         .papers-list .subtitle {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--muted, #9AA7B7);
             font-size: 0.95rem;
             margin-bottom: 2rem;
         }
         .paper-card {
-            background: rgba(44, 56, 80, 0.5);
-            border: 1.5px solid rgba(103, 145, 190, 0.18);
-            border-radius: 12px;
-            padding: 1.8rem 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            background: var(--surface, #232833);
+            border: 1px solid var(--line, rgba(143,180,221,0.14));
+            border-radius: 16px;
+            padding: 1.8rem 1.6rem;
+            margin-bottom: 1.4rem;
+            transition: transform 0.25s cubic-bezier(.2,.6,.2,1), border-color 0.25s, box-shadow 0.25s;
+        }
+        .paper-card::before {
+            content: "";
+            position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(var(--accent, #6791BE), var(--accent-deep, #3C536F));
+            transform: scaleY(0.3); transform-origin: top; opacity: .5;
+            transition: transform .28s ease, opacity .28s ease;
         }
         .paper-card:hover {
-            box-shadow: 0 4px 24px rgba(103, 145, 190, 0.12);
+            transform: translateY(-3px);
+            border-color: var(--line-2, rgba(143,180,221,0.22));
+            box-shadow: var(--shadow, 0 18px 46px -20px rgba(0,0,0,0.7));
         }
+        .paper-card:hover::before { transform: scaleY(1); opacity: 1; }
         .paper-card h2 {
-            font-size: 1.25rem;
-            color: #c5d4e8;
+            font-family: var(--serif, Georgia, serif);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text, #EAEFF6);
             margin-bottom: 0.5rem;
         }
         .paper-card .paper-meta {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.45);
+            font-family: var(--mono, monospace);
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent, #6791BE);
             margin-bottom: 1rem;
         }
         .paper-card p {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--muted, #9AA7B7);
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 1.2rem;
         }
-        .paper-card .paper-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+        .paper-card .paper-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
         .paper-card .paper-links a {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
             padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            background: rgba(103, 145, 190, 0.2);
-            border: 1.5px solid rgba(103, 145, 190, 0.3);
-            color: #c5d4e8;
+            border-radius: 999px;
+            background: var(--accent, #6791BE);
+            border: 1px solid transparent;
+            color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: background 0.2s, border-color 0.2s;
+            transition: background 0.2s, transform 0.18s;
         }
         .paper-card .paper-links a:hover {
-            background: rgba(103, 145, 190, 0.35);
-            border-color: rgba(103, 145, 190, 0.55);
+            background: var(--accent-bright, #9BC1E8);
+            transform: translateY(-1px);
+        }
+        .paper-card .paper-links a[data-mode="download"] {
+            background: transparent;
+            border-color: var(--line-2, rgba(143,180,221,0.22));
+            color: var(--text, #EAEFF6);
+        }
+        .paper-card .paper-links a[data-mode="download"]:hover {
+            border-color: var(--accent, #6791BE);
+            background: var(--surface-2, #2B313D);
         }
         .papers-footer {
             text-align: center;
             padding: 2rem 0 3rem 0;
-            color: rgba(255, 255, 255, 0.35);
+            color: var(--muted, #9AA7B7);
             font-size: 0.85rem;
         }
-        .papers-footer a {
-            color: rgba(103, 145, 190, 0.7);
-            text-decoration: none;
-        }
-        .papers-footer a:hover {
-            color: rgba(103, 145, 190, 1);
-        }
+        .papers-footer a { color: var(--accent-bright, #9BC1E8); text-decoration: none; }
     </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Papers in Preparation — Adrian Mag">
@@ -128,8 +146,8 @@
     <script>window.PapersVault.requireSession();</script>
 
     <div class="papers-nav-bar">
-        <a href="../index.html"><span class="nav-icon">&#127968;</span> Home</a>
-        <a href="research/overview/index.html"><span class="nav-icon">&#128300;</span> Research</a>
+        <a href="../index.html">Home</a>
+        <a href="research/overview/index.html">Research</a>
     </div>
 
     <div class="papers-list">
@@ -142,8 +160,8 @@
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear Bayesian inference, but for properties of models rather than models themselves.</p>
             <div class="paper-links">
-                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="view">&#128196; View PDF</a>
-                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="download">&#11015; Download</a>
+                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="view">View PDF</a>
+                <a href="#" data-enc="../media/papers/PLI_Paper.pdf.enc" data-name="PLI_Paper.pdf" data-mode="download">Download</a>
             </div>
         </div>
 
@@ -153,8 +171,8 @@
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear inference with set-theoretic constraints.</p>
             <div class="paper-links">
-                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="view">&#128196; View PDF</a>
-                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="download">&#11015; Download</a>
+                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="view">View PDF</a>
+                <a href="#" data-enc="../media/papers/BGP_Paper.pdf.enc" data-name="BGP_Paper.pdf" data-mode="download">Download</a>
             </div>
         </div>
 
@@ -175,7 +193,7 @@
                 var code = window.PapersVault.getCode();
                 if (!code) { window.location.href = "papers-login.html"; return; }
                 busy = true;
-                link.innerHTML = "&#8987; Decrypting…";
+                link.innerHTML = "Decrypting…";
                 window.PapersVault.decryptToBlobUrl(link.getAttribute("data-enc"), code)
                     .then(function (blobUrl) {
                         if (link.getAttribute("data-mode") === "download") {
