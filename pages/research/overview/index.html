@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Overview - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/research_overview.css">
+    <title>Research Overview — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../css/theme.css">
     <meta name="description" content="Overview of Adrian Mag's seismology research, including current projects and methodologies.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Research Overview - Adrian Mag">
@@ -16,195 +15,139 @@
     <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../../../index.html">Home</a></li>
-                <li><a href="../../about.html">About</a></li>
-                <li class="dropdown">
-                    <a href="index.html">Research</a>
-                    <div class="dropdown-content">
-                        <a href="../publications/papers.html">Publications</a>
-                        <a href="../posters/posters.html">Presentations</a>
-                        <a href="../posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
-                        <span class="dropdown-label">Notes</span>
-                        <a href="sola/my-take-on-sola.html">My Take on SOLA</a>
-                        <a href="think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
-                        <a href="bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
-                        <a href="frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../pages/about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../pages/research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../pages/research/publications/papers.html">Publications</a>
+                        <a href="../../../pages/research/posters/posters.html">Presentations</a>
+                        <a href="../../../pages/research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../pages/research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../pages/research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../pages/research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../pages/research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
                     </div>
-                </li>
-                <li><a href="../../cv.html">CV</a></li>
-                <li><a href="../../contacts.html">Contact</a></li>
-                <li><a href="../../search.html">Search</a></li>
-            </ul>
-        </nav>
+                </div>
+                <a class="hide-sm" href="../../../pages/cv.html">CV</a>
+                <a class="nav-cta" href="../../../pages/contacts.html">Contact</a>
+                <a class="nav-search" href="../../../pages/search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="page-hero-photo" style="background-image:url('../../../media/backgrounds/hero-nebula.jpg'); background-position:50% 42%;"></div>
+        <div class="page-hero-scrim"></div>
+        <div class="wrap page-hero-inner">
+            <div class="eyebrow">Research</div>
+            <h1>Research Overview</h1>
+            <p class="lead">Linear inversion and inference for the Earth&rsquo;s interior &mdash; and long-form notes working the theory out from first principles.</p>
+        </div>
     </header>
 
-    <main>
-        <section class="page-header" style="position: relative; overflow: hidden;">
-            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../media/backgrounds/cygnus.jpg') center 70%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
-            <div class="container" style="position: relative; z-index: 2;">
-                <h1>Research Overview</h1>
+    <section class="section">
+        <div class="wrap">
+            <div class="eyebrow">Featured theory topics</div>
+            <h2 class="block-head" style="margin-top:8px;">Notes &amp; explainers</h2>
+            <div class="card-grid">
+                <a class="card" href="inversions-inferences.html">
+                    <div class="meta">Intro</div>
+                    <h3>What are Inversions and Inferences?</h3>
+                    <p>An accessible introduction to the difference between inversion and inference in seismology, for a wide audience.</p>
+                    <span class="go">Read the intro <span class="arrow">&rarr;</span></span>
+                </a>
+                <a class="card" href="bayes/bayes-measure-theoretically.html">
+                    <div class="meta">4 parts</div>
+                    <h3>Bayes, Measure-Theoretically</h3>
+                    <p>A simple discrete inverse problem, solved twice &mdash; first by tables, then by posterior kernels. The finite table is the baby version of the posterior kernel.</p>
+                    <span class="go">Learn more <span class="arrow">&rarr;</span></span>
+                </a>
+                <a class="card" href="frequentist/bayesian-frequentist.html">
+                    <div class="meta">5 parts</div>
+                    <h3>Bayesian and Frequentist Inference</h3>
+                    <p>Same observation equation, same noise model &mdash; two different epistemological objects. Where the probability lives is the whole disagreement.</p>
+                    <span class="go">Learn more <span class="arrow">&rarr;</span></span>
+                </a>
+                <a class="card" href="think-first/think-first-discretize-later.html">
+                    <div class="meta">8 acts &middot; interactive</div>
+                    <h3>Think First, Discretize Later</h3>
+                    <p>Why the model space, its geometry, and the adjoint must be chosen before discretizing a linear inverse problem.</p>
+                    <span class="go">Explore <span class="arrow">&rarr;</span></span>
+                </a>
+                <a class="card" href="sola/my-take-on-sola.html">
+                    <div class="meta">10 acts</div>
+                    <h3>My Take on SOLA</h3>
+                    <p>A careful walk through SOLA &mdash; from sensitivity and resolving kernels to noise, proxy models, and the distinction between propagated noise and posterior uncertainty. SOLA reshuffles generative information; it does not create it.</p>
+                    <span class="go">Read more <span class="arrow">&rarr;</span></span>
+                </a>
             </div>
-        </section>
-        <script>
-        // Fade-in animation for .research-area cards when in viewport
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.research-area');
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach((entry, i) => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                            entry.target.style.transition = 'opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1)';
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.15 });
-                cards.forEach(card => observer.observe(card));
-            } else {
-                // Fallback for browsers without IntersectionObserver
-                cards.forEach(card => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                });
-            }
-        });
-        </script>
+        </div>
+    </section>
 
-        <section class="research-content">
-            <div class="container">
-
-                <div class="research-areas">
-                    <h2>Featured Theory Topics</h2>
-
-
-                <div class="research-area clickable-area">
-                    <a href="inversions-inferences.html" style="text-decoration:none;color:inherit;display:block;">
-                        <h3>What are Inversions and Inferences?</h3>
-                        <p>Accessible introduction to the difference between inversion and inference in seismology, for a wide audience.</p>
-                        <span style="color:#6791BE;font-weight:600;">Read the intro &rarr;</span>
-                    </a>
+    <section class="section" style="background:var(--ground-2); border-top:1px solid var(--line);">
+        <div class="wrap">
+            <div class="eyebrow">Software</div>
+            <h2 class="block-head" style="margin-top:8px;">Codes</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>SOLA-DLI Inversion Code</h3>
+                    <ul class="linklist" style="margin-top:12px;">
+                        <li><a class="repo" href="https://github.com/Adrian-Mag/SOLA_DLI" target="_blank" rel="noopener">github.com/Adrian-Mag/SOLA_DLI</a>
+                        <span>Python package for SOLA-DLI in the absence of data noise.</span></li>
+                    </ul>
                 </div>
-
-                    <div class="research-area clickable-area">
-                        <a href="bayes/bayes-measure-theoretically.html" style="text-decoration:none;color:inherit;display:block;">
-                            <h3>Bayes, Measure-Theoretically</h3>
-                            <p>A simple discrete inverse problem, solved twice &mdash; first by tables, then by posterior kernels. Written for readers who have dipped their toes in Bayesian waters but are still wary of the measure-theoretical sharks lurking in the deep.</p>
-                            <p style="margin-top:0.6em;font-size:0.9em;color:rgba(255,255,255,0.5);">The example is deliberately small: four hidden states, two possible reports. We build the full posterior update rule before the observation arrives &mdash; the finite table is the baby version of the posterior kernel.</p>
-                            <p style="margin-top:0.8em;font-size:0.85em;color:rgba(255,255,255,0.45);">
-                                <strong>Part 1</strong> &mdash; The Game. <strong>Part 2</strong> &mdash; The High-School Solution. <strong>Part 3</strong> &mdash; From Points to Events, Conditional Expectation, Disintegration, Bayesian Inversion, and Back to Finite Land. <strong>Part 4</strong> &mdash; Summary &amp; Notation Map.
-                            </p>
-                            <span style="color:#6791BE;font-weight:600;">Learn more &rarr;</span>
-                        </a>
-                    </div>
-
-                    <div class="research-area clickable-area">
-                        <a href="frequentist/bayesian-frequentist.html" style="text-decoration:none;color:inherit;display:block;">
-                            <h3>Bayesian and Frequentist Inference</h3>
-                            <p>A conceptual comparison of Bayesian and frequentist inference from the same starting point &mdash; an observation equation and a noise model &mdash; showing how each constructs different epistemological objects around the same ontological situation.</p>
-                            <p style="margin-top:0.6em;font-size:0.9em;color:rgba(255,255,255,0.5);">The central message: Bayesian inference places probability on an epistemological representation of the truth; frequentist inference places probability on the observation procedure while keeping the truth fixed.</p>
-                            <p style="margin-top:0.8em;font-size:0.85em;color:rgba(255,255,255,0.45);">
-                                <strong>Part 1</strong> &mdash; The Setup. <strong>Part 2</strong> &mdash; The Observation Kernel. <strong>Part 3</strong> &mdash; The Bayesian Path. <strong>Part 4</strong> &mdash; The Frequentist Path. <strong>Part 5</strong> &mdash; Beyond Additive Noise.
-                            </p>
-                            <span style="color:#6791BE;font-weight:600;">Learn more &rarr;</span>
-                        </a>
-                    </div>
-
-                    <div class="research-area clickable-area">
-                        <a href="think-first/think-first-discretize-later.html" style="text-decoration:none;color:inherit;display:block;">
-                            <h3>Think First, Discretize Later</h3>
-                            <p>An interactive explainer on why the model space, its geometry, and the adjoint must be chosen before discretizing a linear inverse problem.</p>
-                            <span style="color:#6791BE;font-weight:600;">Explore &rarr;</span>
-                        </a>
-                    </div>
-
-                    <div class="research-area clickable-area">
-                        <a href="sola/my-take-on-sola.html" style="text-decoration:none;color:inherit;display:block;">
-                            <h3>My Take on SOLA</h3>
-                            <p>A careful walk through the SOLA (Subtractive Optimally Localized Averages) method &mdash; from sensitivity kernels and resolving kernels to noise, proxy models, and the distinction between propagated noise and posterior uncertainty.</p>
-                            <p style="margin-top:0.6em;font-size:0.9em;color:rgba(255,255,255,0.5);">Ten acts (so far). The central message: SOLA reshuffles generative information &mdash; it does not create it.</p>
-                            <p style="margin-top:0.8em;font-size:0.85em;color:rgba(255,255,255,0.45);">
-                                <strong>Act 1</strong> &mdash; The Kernel Game. <strong>Act 2</strong> &mdash; Building SOLA. <strong>Act 3</strong> &mdash; Averages Need Mass. <strong>Act 4</strong> &mdash; Beyond Averages. <strong>Act 5</strong> &mdash; Noise Enters. <strong>Act 6</strong> &mdash; What Did SOLA Estimate? <strong>Act 7</strong> &mdash; A Cautionary Tale. <strong>Act 8</strong> &mdash; Inversion in Disguise. <strong>Act 9</strong> &mdash; Uncertainty? <strong>Act 10</strong> &mdash; Generative SOLA.
-                            </p>
-                            <span style="color:#6791BE;font-weight:600;">Read more &rarr;</span>
-                        </a>
-                    </div>
-
-
+                <div class="card">
+                    <h3>Probabilistic Linear Inference</h3>
+                    <ul class="linklist" style="margin-top:12px;">
+                        <li><a class="repo" href="https://github.com/da380/pygeoinf" target="_blank" rel="noopener">github.com/da380/pygeoinf</a>
+                        <span>Probabilistic and Bayesian linear inference for geophysics. Created by David Al-Attar and Daniel Heathcote; I am a contributor.</span></li>
+                    </ul>
                 </div>
-
-                <div class="methods-tools">
-                    <h2>Codes</h2>
-                    <div class="tools-grid">
-                        <div class="tool-category">
-                            <h3>SOLA-DLI Inversion Code</h3>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/Adrian-Mag/SOLA_DLI" target="_blank" rel="noopener" class="pub-link">GitHub: SOLA_DLI</a>
-                                    <span>Python package for SOLA-DLI in the absence of data noise.</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tool-category">
-                            <h3>Probabilistic Linear Inference</h3>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/da380/pygeoinf" target="_blank" rel="noopener" class="pub-link">GitHub: pygeoinf</a>
-                                    <span>Package for Probabilistic and Bayesian linear inverse and inference methods for geophysical inference.<br>
-                                    <em>Created by David Al-Attar and Daniel Heathcote. I am a contributor to this project.</em></span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tool-category">
-                            <h3>Sensitivity Kernels</h3>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/Adrian-Mag/AxiSEM3D_Kernels" target="_blank" rel="noopener" class="pub-link">GitHub: AxiSEM3D_Kernels</a>
-                                    <span>Computation and visualization of sensitivity kernels for seismic tomography based on AxiSEM3D.</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tool-category">
-                            <h3>Ray Theoretic Sensitivity Code</h3>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/Adrian-Mag/SensRay" target="_blank" rel="noopener" class="pub-link">GitHub: SensRay</a>
-                                    <span>Lightweight utilities for building planet (1D) models, generating meshes, computing per-cell ray path lengths and simple sensitivity kernels.<br>
-                                    <em>Matthew Bell contributed to this code.</em></span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tool-category">
-                            <h3>Pharma-Kinetic Code</h3>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/Adrian-Mag/Pharmakinetic_project" target="_blank" rel="noopener" class="pub-link">GitHub: Pharmakinetic_project</a>
-                                    <span>This project runs a very basic pharmacokinetic (PK) model, allowing the user to quantitatively examine the flow of drugs in and out of the body.<br>
-                                    <em>A small 1 day project code for a class with two other students.</em></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="card">
+                    <h3>Sensitivity Kernels</h3>
+                    <ul class="linklist" style="margin-top:12px;">
+                        <li><a class="repo" href="https://github.com/Adrian-Mag/AxiSEM3D_Kernels" target="_blank" rel="noopener">github.com/Adrian-Mag/AxiSEM3D_Kernels</a>
+                        <span>Computation and visualization of sensitivity kernels for seismic tomography based on AxiSEM3D.</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Ray-Theoretic Sensitivity</h3>
+                    <ul class="linklist" style="margin-top:12px;">
+                        <li><a class="repo" href="https://github.com/Adrian-Mag/SensRay" target="_blank" rel="noopener">github.com/Adrian-Mag/SensRay</a>
+                        <span>Lightweight utilities for 1D planet models, meshes, per-cell ray path lengths and simple kernels. Matthew Bell contributed.</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Pharmacokinetic Code</h3>
+                    <ul class="linklist" style="margin-top:12px;">
+                        <li><a class="repo" href="https://github.com/Adrian-Mag/Pharmakinetic_project" target="_blank" rel="noopener">github.com/Adrian-Mag/Pharmakinetic_project</a>
+                        <span>A basic pharmacokinetic model of drug flow in and out of the body. A one-day class project with two other students.</span></li>
+                    </ul>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer>
-        <div class="container">
-            <p>
-                <span>&copy; 2025–2026 Adrian Mag.</span><br>
-                <span>
-                    Text and content: license for notes to be decided.<br>
-                    Code samples and repositories: each has its own license (see linked code for details).<br>
-                    Any papers shown, linked, or shared are subject to their own publisher or author license.<br>
-                    Background images are by Adrian Mag and also published on Unsplash.<br>
-                    Other images may be subject to separate copyright.
-                </span>
-            </p>
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
         </div>
     </footer>
 </body>

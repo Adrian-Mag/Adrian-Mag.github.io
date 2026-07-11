@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - Adrian Mag</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/cv.css">
+    <title>CV — Adrian Mag</title>
+    <link rel="stylesheet" href="../css/theme.css">
     <meta name="description" content="Curriculum Vitae of Adrian Mag - PhD candidate in Seismology at University of Oxford.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="CV - Adrian Mag">
@@ -16,204 +15,148 @@
     <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li class="dropdown">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="about.html">About</a>
+                <div class="nav-drop hide-sm">
                     <a href="research/overview/index.html">Research</a>
-                    <div class="dropdown-content">
+                    <div class="nav-drop-menu">
                         <a href="research/publications/papers.html">Publications</a>
                         <a href="research/posters/posters.html">Presentations</a>
                         <a href="research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
-                        <span class="dropdown-label">Notes</span>
+                        <span class="nav-drop-label">Notes</span>
                         <a href="research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
                         <a href="research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
                         <a href="research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
                         <a href="research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
                     </div>
-                </li>
-                <li><a href="cv.html">CV</a></li>
-                <li><a href="contacts.html">Contact</a></li>
-                <li><a href="search.html">Search</a></li>
-            </ul>
-        </nav>
+                </div>
+                <a class="hide-sm" href="cv.html">CV</a>
+                <a class="nav-cta" href="contacts.html">Contact</a>
+                <a class="nav-search" href="search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="page-hero-photo" style="background-image:url('../media/backgrounds/pleiades_medium.jpg'); background-position:50% 38%;"></div>
+        <div class="page-hero-scrim"></div>
+        <div class="wrap page-hero-inner">
+            <div class="eyebrow">Curriculum Vitae</div>
+            <h1>Adrian Mag</h1>
+            <div class="cta-row" style="margin-top:20px;">
+                <a class="btn btn-primary" href="../Long_CV.pdf" download>Download PDF CV <span class="arrow">&darr;</span></a>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section class="page-header" style="position: relative; overflow: hidden;">
-            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../media/backgrounds/triangulum.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
-            <div class="container" style="position: relative; z-index: 2;">
-                <h1>Curriculum Vitae</h1>
-                <div class="cv-download">
-                    <a href="../Long_CV.pdf" class="btn btn-primary" download>Download PDF CV</a>
+    <div class="content-layout">
+        <main>
+            <div class="tl-block">
+                <h2>Education</h2>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>PhD in Deep Earth Imaging</h3><span class="tl-date">2022 &ndash; Present</span></div>
+                    <p class="inst">University of Oxford, Oxford, UK</p>
+                    <p>Thesis: <em>&ldquo;Imaging the multi-scale topography of the Earth&rsquo;s core&rdquo;</em><br>
+                       Advisors: Dr. Paula Koelemeijer, Dr. Christophe Zaroli, Dr. Andrew Walker</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>MSci in Geophysics</h3><span class="tl-date">2018 &ndash; 2022</span></div>
+                    <p class="inst">University College London, London, UK</p>
+                    <p>First-Class Honours (Average: 82%)</p>
                 </div>
             </div>
-        </section>
 
-        <section class="cv-content research-content">
-            <div class="container">
-                <div class="cv-grid">
-                    <div class="cv-main">
-                        <div class="cv-section">
-                            <h2>Education</h2>
-                            <div class="cv-item">
-                                <div class="cv-item-header">
-                                    <h3>PhD in Deep Earth Imaging</h3>
-                                    <span class="cv-date">2022 – Present</span>
-                                </div>
-                                <p class="cv-institution">University of Oxford, Oxford, UK</p>
-                                <p class="cv-description">
-                                    Thesis: <em>“Imaging the multi-scale topography of the Earth’s core”</em><br>
-                                    Advisors: Dr. Paula Koelemeijer, Dr. Christophe Zaroli, Dr. Andrew Walker
-                                </p>
-                            </div>
-
-                            <div class="cv-item">
-                                <div class="cv-item-header">
-                                    <h3>MSci in Geophysics</h3>
-                                    <span class="cv-date">2018 – 2022</span>
-                                </div>
-                                <p class="cv-institution">University College London, London, UK</p>
-                                <p class="cv-description">
-                                    First-Class Honours (Average: 82%)
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Research Experience</h2>
-                            <div class="cv-item">
-                                <div class="cv-item-header">
-                                    <h3>PhD Researcher in Theoretical Seismology and Inverse Theory</h3>
-                                    <span class="cv-date">2022 – Present</span>
-                                </div>
-                                <p class="cv-institution">University of Oxford, Oxford, UK</p>
-                                <ul class="cv-list">
-                                    <li>Developed 3D finite-frequency sensitivity kernel computations at global scale using the AxiSEM3D wave solver.</li>
-                                    <li>Extended the SOLA inversion framework to constrain new classes of Earth properties and established formal connections with related methods (Deterministic Linear Inference, MOLA).</li>
-                                    <li>Maintain a Python package for solving general linear inverse problems using the SOLA-DLI framework.</li>
-                                    <li>Contribute to a scientific Python library for probabilistic linear inferences by implementing abstract function spaces, linear operators, measures, and their interrelations.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Conferences and Presentations</h2>
-                            <div class="cv-item">
-                                <span class="cv-date">2026</span>
-                                <p class="cv-description"><strong>Poster</strong>: "Think First, Discretize Later", EGU, Vienna, Austria</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2025</span>
-                                <p class="cv-description"><strong>Talk</strong>: "Beyond inversions: the flexibility of linear inference methods", PGRiP, Oxford, UK</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2025</span>
-                                <p class="cv-description"><strong>Poster</strong>: "Combining SOLA and Deterministic Linear Inferences", Inge Lehmann Symposium, Copenhagen, Denmark</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2025</span>
-                                <p class="cv-description"><strong>Poster</strong>: "SOLA inferences and normal modes", MODES/Deep Earth Meeting, Oxford&ndash;Cambridge, UK</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2024</span>
-                                <p class="cv-description"><strong>Poster</strong>: "Constraining Earth model properties through Backus&ndash;Gilbert SOLA inferences", UKSEDI, Leeds, UK</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2024</span>
-                                <p class="cv-description"><strong>Poster</strong>: "Constraining Earth model properties through Backus&ndash;Gilbert SOLA inferences", BSM, Reading, UK</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2023</span>
-                                <p class="cv-description"><strong>Poster</strong>: "Mapping the Topography of Earth's Core", PGRiP, Edinburgh, UK</p>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Honors & Awards</h2>
-                            <div class="cv-item">
-                                <span class="cv-date">2023</span>
-                                <p class="cv-description">Grant for SPIN workshop</p>
-                            </div>
-                            <div class="cv-item">
-                                <span class="cv-date">2022</span>
-                                <p class="cv-description">Travel grant for SEDI conference</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="cv-sidebar">
-                        <div class="cv-section">
-                            <h2>Technical Skills</h2>
-                            <div class="skills-category">
-                                <h3>Programming</h3>
-                                <ul class="skills-list">
-                                    <li>Python (Intermediate)</li>
-                                    <li>C++ (Beginner)</li>
-                                    <li>MATLAB (Beginner)</li>
-                                </ul>
-                            </div>
-                            <div class="skills-category">
-                                <h3>Software Development</h3>
-                                <ul class="skills-list">
-                                    <li>Version control (Git)</li>
-                                    <li>CI/CD (GitHub Actions)</li>
-                                    <li>Testing (pytest)</li>
-                                    <li>Documentation (Sphinx)</li>
-                                    <li>Package development (setuptools, poetry)</li>
-                                </ul>
-                            </div>
-                            <div class="skills-category">
-                                <h3>Scientific Computing</h3>
-                                <ul class="skills-list">
-                                    <li>Designed extensible scientific libraries modeling functional spaces and operators; applied in inverse problems and numerical PDEs</li>
-                                    <li>Numerical methods: FEM, FDM</li>
-                                </ul>
-                            </div>
-                            <div class="skills-category">
-                                <h3>Mathematics</h3>
-                                <ul class="skills-list">
-                                    <li>Linear algebra, ODE/PDEs, functional analysis, measure theory</li>
-                                    <li>Bayesian inversions and inferences</li>
-                                </ul>
-                            </div>
-                            <div class="skills-category">
-                                <h3>DevOps / Other</h3>
-                                <ul class="skills-list">
-                                    <li>LaTeX</li>
-                                    <li>Linux</li>
-                                    <li>Jupyter</li>
-                                    <li>Markdown</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="cv-section">
-                            <h2>Languages</h2>
-                            <ul class="skills-list">
-                                <li>English (Fluent)</li>
-                                <li>Romanian (Native)</li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="tl-block">
+                <h2>Research Experience</h2>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>PhD Researcher &mdash; Theoretical Seismology &amp; Inverse Theory</h3><span class="tl-date">2022 &ndash; Present</span></div>
+                    <p class="inst">University of Oxford, Oxford, UK</p>
+                    <ul>
+                        <li>Developed 3D finite-frequency sensitivity kernel computations at global scale using the AxiSEM3D wave solver.</li>
+                        <li>Extended the SOLA inversion framework to constrain new classes of Earth properties and established formal connections with related methods (Deterministic Linear Inference, MOLA).</li>
+                        <li>Maintain a Python package for solving general linear inverse problems using the SOLA-DLI framework.</li>
+                        <li>Contribute to a scientific Python library for probabilistic linear inferences by implementing abstract function spaces, linear operators, measures, and their interrelations.</li>
+                    </ul>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <p>
-                <span>&copy; 2025–2026 Adrian Mag.</span><br>
-                <span>
-                    Text and content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.<br>
-                    Code samples are open source (MIT License unless otherwise stated).<br>
-                    Background images are by Adrian Mag and also published on Unsplash.<br>
-                    Other images may be subject to separate copyright.
-                </span>
-            </p>
+            <div class="tl-block">
+                <h2>Conferences &amp; Presentations</h2>
+                <div class="tl-item"><div class="tl-head"><h3>Think First, Discretize Later</h3><span class="tl-date">2026</span></div><p>Poster &mdash; EGU, Vienna, Austria</p></div>
+                <div class="tl-item"><div class="tl-head"><h3>Beyond inversions: the flexibility of linear inference methods</h3><span class="tl-date">2025</span></div><p>Talk &mdash; PGRiP, Oxford, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3>Combining SOLA and Deterministic Linear Inferences</h3><span class="tl-date">2025</span></div><p>Poster &mdash; Inge Lehmann Symposium, Copenhagen, Denmark</p></div>
+                <div class="tl-item"><div class="tl-head"><h3>SOLA inferences and normal modes</h3><span class="tl-date">2025</span></div><p>Poster &mdash; MODES/Deep Earth Meeting, Oxford&ndash;Cambridge, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3>Constraining Earth model properties through Backus&ndash;Gilbert SOLA inferences</h3><span class="tl-date">2024</span></div><p>Poster &mdash; UKSEDI, Leeds, UK &middot; BSM, Reading, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3>Mapping the Topography of Earth&rsquo;s Core</h3><span class="tl-date">2023</span></div><p>Poster &mdash; PGRiP, Edinburgh, UK</p></div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Honors &amp; Awards</h2>
+                <div class="tl-item"><div class="tl-head"><h3>Grant for SPIN workshop</h3><span class="tl-date">2023</span></div></div>
+                <div class="tl-item"><div class="tl-head"><h3>Travel grant for SEDI conference</h3><span class="tl-date">2022</span></div></div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Programming</h3>
+                <ul>
+                    <li>Python <span style="color:var(--muted)">(Intermediate)</span></li>
+                    <li>C++ <span style="color:var(--muted)">(Beginner)</span></li>
+                    <li>MATLAB <span style="color:var(--muted)">(Beginner)</span></li>
+                </ul>
+            </div>
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Software &amp; Scientific Computing</h3>
+                <ul>
+                    <li>Git, GitHub Actions (CI/CD)</li>
+                    <li>pytest, Sphinx, setuptools/poetry</li>
+                    <li>Extensible libraries for function spaces &amp; operators</li>
+                    <li>Numerical methods: FEM, FDM</li>
+                </ul>
+            </div>
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Mathematics</h3>
+                <ul>
+                    <li>Linear algebra, ODE/PDEs</li>
+                    <li>Functional analysis, measure theory</li>
+                    <li>Bayesian inversions &amp; inferences</li>
+                </ul>
+            </div>
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Other</h3>
+                <ul>
+                    <li>LaTeX, Linux, Jupyter, Markdown</li>
+                </ul>
+            </div>
+            <div class="sidebar-card">
+                <h3>Languages</h3>
+                <ul>
+                    <li>English <span style="color:var(--muted)">(Fluent)</span></li>
+                    <li>Romanian <span style="color:var(--muted)">(Native)</span></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Text and content under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent-bright)">CC BY 4.0</a>; code samples open source (MIT unless stated).<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
         </div>
     </footer>
 </body>
