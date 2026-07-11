@@ -37,3 +37,5 @@ One small offline step feeds the site: the client-side search (`pages/search.htm
 - **Consistent styling**: Each page links its own CSS file (e.g., `about.css`) plus the shared `styles.css`.
 - **Media paths**: Images and PDFs live under `media/`. Use relative paths from the page's location.
 - **Navigation**: The site-wide navigation bar is replicated in each HTML page's `<nav>` section. Any nav change must be applied to all pages.
+
+Cache busting: local CSS/JS references carry a `?v=N` query. After changing any stylesheet or script, bump the version on its references (site-wide search-replace) so phones don't serve stale assets.
