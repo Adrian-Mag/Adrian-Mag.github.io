@@ -223,7 +223,7 @@
     height: auto;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.30);
-    background: rgba(30,34,40,0.40);
+    background: var(--surface);
 }
 
 .tfdl-figure figcaption {
@@ -290,7 +290,7 @@
 .tfdl-ingredient-card select {
     width: 100%;
     padding: 0.4rem 0.6rem;
-    background: rgba(30,34,40,0.6);
+    background: var(--surface);
     color: var(--text);
     border: 1px solid var(--accent-bright);
     border-radius: 4px;
@@ -351,11 +351,11 @@
 }
 
 .tfdl-ladder-rung:hover {
-    background: rgba(52,122,162,0.06);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
 .tfdl-ladder-rung.active {
-    background: rgba(52,122,162,0.1);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .tfdl-ladder-level {
@@ -389,7 +389,7 @@
     max-width: 700px;
     margin: 1rem auto 0 auto;
     padding: 1rem 1.2rem;
-    background: rgba(52,122,162,0.06);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
     border: 1px solid var(--accent-bright);
     border-radius: 8px;
     min-height: 80px;
@@ -500,12 +500,12 @@
 }
 
 .tfdl-pert-btn:hover {
-    background: rgba(52,122,162,0.1);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
     color: var(--muted);
 }
 
 .tfdl-pert-btn.active {
-    background: rgba(52,122,162,0.15);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     border-color: var(--accent-bright);
     color: var(--sem-green-text);
 }
@@ -927,7 +927,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     height: 6px;
     -webkit-appearance: none;
     appearance: none;
-    background: rgba(52,122,162,0.2);
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
     border-radius: 3px;
     outline: none;
     cursor: pointer;
@@ -995,7 +995,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .tfdl-legend-band-sw {
-    background: rgba(52,122,162,0.25);
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
     border: 1px solid var(--accent-bright);
 }
 
@@ -1093,7 +1093,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 .tfdl-adjoint-calc-row select {
     width: 100%;
     padding: 0.4rem 0.6rem;
-    background: rgba(30,34,40,0.6);
+    background: var(--surface);
     color: var(--text);
     border: 1px solid var(--accent-bright);
     border-radius: 4px;
@@ -1162,7 +1162,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .tfdl-translation-table tr:hover td {
-    background: rgba(52,122,162,0.04);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
 /* ── Act VI: Trace-Class Gate (F6c) ── */
@@ -1254,7 +1254,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 .tfdl-prior-sampler-bc-row select {
     width: 100%;
     padding: 0.4rem 0.6rem;
-    background: rgba(30,34,40,0.6);
+    background: var(--surface);
     color: var(--text);
     border: 1px solid var(--accent-bright);
     border-radius: 4px;
@@ -1269,7 +1269,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 
 .tfdl-prior-sampler-btn {
     padding: 0.5rem 1rem;
-    background: rgba(52,122,162,0.15);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     color: var(--sem-green-text);
     border: 1px solid var(--accent-bright);
     border-radius: 4px;
@@ -1280,7 +1280,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .tfdl-prior-sampler-btn:hover {
-    background: rgba(52,122,162,0.25);
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .tfdl-prior-sampler-plot {

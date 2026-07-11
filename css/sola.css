@@ -489,7 +489,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     height: auto;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.30);
-    background: rgba(30,34,40,0.40);
+    background: var(--surface);
 }
 
 .sola-figure figcaption {
