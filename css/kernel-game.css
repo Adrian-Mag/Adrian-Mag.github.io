@@ -60,7 +60,7 @@
 
 .kg-target-btn.is-on {
     background: var(--accent);
-    color: var(--text);
+    color: #fff;
     border-color: var(--accent);
 }
 
@@ -134,7 +134,7 @@
 .kg-btn-primary {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--text);
+    color: #fff;
     font-weight: 600;
 }
 

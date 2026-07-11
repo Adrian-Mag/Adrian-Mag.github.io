@@ -39,7 +39,7 @@
 
 #bayes-game .bg-btn-primary {
     background: var(--accent);
-    color: var(--text);
+    color: #fff;
     border-color: var(--accent);
 }
 
