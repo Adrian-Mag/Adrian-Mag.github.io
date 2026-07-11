@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act V: The Data Space and the Adjoint — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=3">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=3">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=3">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=3">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=4">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=4">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=4">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=4">
     <meta name="description" content="Act V of Think First, Discretize Later: The data space, the forward operator, and why the adjoint is not just a transpose.">
     <script>
     MathJax = {
@@ -1588,10 +1588,10 @@
                     var isIdentity = (p.mType === 'identity' && p.wType === 'identity');
                     if (isIdentity) {
                         f5eWarning.textContent = 'M = I and W_D = I: transpose equals adjoint. The arrows coincide.';
-                        f5eWarning.style.color = 'rgba(109,210,172,0.8)';
+                        f5eWarning.style.color = 'var(--sem-green-text)';
                     } else {
                         f5eWarning.textContent = 'Transpose equals adjoint only when M = I and W_D = I. The arrows differ.';
-                        f5eWarning.style.color = 'rgba(239,111,108,0.8)';
+                        f5eWarning.style.color = 'var(--sem-orange-text)';
                     }
                 }
             }
@@ -1603,8 +1603,8 @@
         }
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=3" defer></script>
-    <script src="../../../../js/notes-extras.js?v=3" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=3" defer></script>
+    <script src="../../../../js/ai-assist.js?v=4" defer></script>
+    <script src="../../../../js/notes-extras.js?v=4" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=4" defer></script>
 </body>
 </html>

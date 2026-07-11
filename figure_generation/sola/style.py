@@ -28,6 +28,8 @@ _spec.loader.exec_module(_tf_style)
 
 # Re-export the public API.
 PALETTE = _tf_style.PALETTE
+MODE = _tf_style.MODE
+FG = _tf_style.FG
 apply_style = _tf_style.apply_style
 mako_n = _tf_style.mako_n
 mako_light_n = _tf_style.mako_light_n

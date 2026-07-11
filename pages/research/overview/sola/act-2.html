@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=3">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=3">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=3">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=4">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=4">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=4">
     <meta name="description" content="Act 2 of My Take on SOLA: The resolving kernel, the span limitation, the noiseless unconstrained SOLA problem, and the normal equation.">
     <script>
     MathJax = {
@@ -138,7 +138,7 @@
                     \[\sum_{i=1}^{N_d}x_i [\mathbf d]_i = \int_\Omega \left( \sum_{i=1}^{N_d}x_iK_i(r) \right) m(r)\dd r.\]</p>
 
                     <figure class="sola-figure">
-                        <img src="../../../../media/research/sola/fig_resolving_kernel_construction.png"
+                        <img data-themed="1" src="../../../../media/research/sola/fig_resolving_kernel_construction.png"
                              alt="Visual construction of a resolving kernel: a stack of weighted integral equations with real kernel graphs, a summation bar, and the combined resolving kernel integral below">
                         <figcaption><span class="sola-figure-label">Figure F2-1.</span>Building a resolving kernel. Each row is a
                         weighted integral of the model against one sensitivity kernel. Summing the
@@ -199,7 +199,7 @@
                     \[R\approx T.\]</p>
 
                     <figure class="sola-figure">
-                        <img src="../../../../media/research/sola/fig_weighted_kernels.png"
+                        <img data-themed="1" src="../../../../media/research/sola/fig_weighted_kernels.png"
                              alt="Several sensitivity kernels with weights, and the resulting resolving kernel overlaid with the target kernel">
                         <figcaption><span class="sola-figure-label">Figure F2-2.</span>A weighted combination of sensitivity kernels produces a
                         resolving kernel. SOLA chooses the weights so that this resolving kernel
@@ -530,8 +530,9 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=3" defer></script>
-    <script src="../../../../js/notes-extras.js?v=3" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=3" defer></script>
+    <script src="../../../../js/ai-assist.js?v=4" defer></script>
+    <script src="../../../../js/notes-extras.js?v=4" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=4" defer></script>
+    <script src="../../../../js/themed-figures.js?v=4" defer></script>
 </body>
 </html>

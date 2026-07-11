@@ -17,9 +17,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 
 import problem_setup as ps
-from style import PALETTE, apply_style, plt, save
+from style import PALETTE, apply_style, plt, save, FG
 
-_FG = "#dce6f5"
+_FG = FG
 
 
 def _gaussian(r, r0, width):

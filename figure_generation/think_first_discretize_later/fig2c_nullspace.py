@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 
 import problem_setup as ps
-from style import PALETTE, apply_style, mako_light_n, plt, save
+from style import PALETTE, apply_style, mako_light_n, plt, save, FG
 
 N_CELLS = 30
 N_SHOW = 4  # number of null-space vectors to display
@@ -74,8 +74,8 @@ def main() -> None:
     ax.set_xlabel(r"coefficient index $j$")
     ax.set_ylabel(r"null-space vector $k$")
     cbar = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.02)
-    cbar.set_label("coefficient value", color=PALETTE.get("muted", "#dce6f5"))
-    cbar.ax.tick_params(colors=PALETTE.get("muted", "#dce6f5"))
+    cbar.set_label("coefficient value", color=PALETTE.get("muted", FG))
+    cbar.ax.tick_params(colors=PALETTE.get("muted", FG))
 
     # (b) Function reconstructions — function world
     ax = axes[1]

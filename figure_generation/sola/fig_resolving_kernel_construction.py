@@ -15,9 +15,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 
 import problem_setup as ps
-from style import PALETTE, apply_style, mako_light_n, plt, save
+from style import PALETTE, apply_style, mako_light_n, plt, save, FG
 
-_FG = "#dce6f5"
+_FG = FG
 
 
 def _plot_kernel_inset(fig, rect, x, yvals, color, lw=1.5, alpha=0.9,

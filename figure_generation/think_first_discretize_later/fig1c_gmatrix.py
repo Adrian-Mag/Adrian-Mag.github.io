@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 
 import problem_setup as ps
-from style import PALETTE, apply_style, plt, save
+from style import PALETTE, apply_style, plt, save, FG
 
 N_CELLS = 30
 
@@ -43,8 +43,8 @@ def main() -> None:
     ax.set_xlabel(r"basis index $j$")
     ax.set_ylabel(r"observation index $i$")
     cbar = fig.colorbar(im, ax=ax, shrink=0.85)
-    cbar.set_label(r"$[\mathbf{G}]_{ij}$", color=PALETTE.get("muted", "#dce6f5"))
-    cbar.ax.tick_params(colors=PALETTE.get("muted", "#dce6f5"))
+    cbar.set_label(r"$[\mathbf{G}]_{ij}$", color=PALETTE.get("muted", FG))
+    cbar.ax.tick_params(colors=PALETTE.get("muted", FG))
 
     fig.tight_layout()
     save(fig, "fig1c_gmatrix", ps.output_dir())
