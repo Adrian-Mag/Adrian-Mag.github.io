@@ -16,3 +16,6 @@ __pycache__/
 
 # in-prep paper drafts must only ever be committed encrypted (tools/encrypt_papers.py)
 media/papers/*.pdf
+
+# full-resolution photo originals (kept locally, never served/committed)
+photo-originals/
