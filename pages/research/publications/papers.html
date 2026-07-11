@@ -2,6 +2,7 @@
 <html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publications — Adrian Mag</title>
     <link rel="stylesheet" href="../../../css/theme.css">
@@ -46,7 +47,7 @@
     </nav>
 
     <header class="page-hero">
-        <div class="page-hero-photo" style="background-image:url('../../../media/backgrounds/veil.jpg'); background-position:55% 42%;"></div>
+        <div class="page-hero-photo" data-hero="publications" style="background-image:url('../../../media/backgrounds/veil.jpg'); background-position:55% 42%;"></div>
         <div class="page-hero-scrim"></div>
         <div class="wrap page-hero-inner">
             <div class="eyebrow">Publications</div>
@@ -120,5 +121,6 @@
             });
         });
     </script>
+    <script src="../../../js/theme-toggle.js" defer></script>
 </body>
 </html>

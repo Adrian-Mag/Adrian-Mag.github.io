@@ -27,9 +27,11 @@
   var ctx = canvas.getContext("2d");
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
   var W = 0, H = 0;
-  function accent() {
-    return getComputedStyle(document.documentElement).getPropertyValue("--accent-bright").trim() || "#9BC1E8";
-  }
+  // Fixed inks, independent of theme: the earth palette's accent is a dark
+  // moss that vanishes over photos. A dark halo under a bright ice-white
+  // line keeps the trace legible on any hero image.
+  var HALO = "rgba(10, 13, 18, 0.6)";
+  var LINE = "#E8F2FF";
   function resize() {
     var r = canvas.getBoundingClientRect();
     W = r.width; H = r.height;
@@ -49,12 +51,8 @@
     }
     return Math.min(amp, 1.1);
   }
-  function trace(t) {
+  function tracePath(t) {
     var mid = H * 0.52;
-    ctx.clearRect(0, 0, W, H);
-    var col = accent();
-    ctx.lineWidth = 1.4; ctx.strokeStyle = col;
-    ctx.shadowColor = col; ctx.shadowBlur = 6;
     ctx.beginPath();
     for (var px = 0; px <= W; px += 2) {
       var u = px / W;
@@ -66,8 +64,21 @@
         + Math.sin(phase * 11.0 * 6.283) * 3 * env;
       if (px === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
     }
-    ctx.stroke();
-    ctx.shadowBlur = 0; ctx.globalAlpha = 0.25; ctx.lineWidth = 1;
+  }
+  function trace(t) {
+    var mid = H * 0.52;
+    ctx.clearRect(0, 0, W, H);
+    // dark halo pass — guarantees contrast over bright imagery
+    ctx.shadowBlur = 0;
+    ctx.lineWidth = 4; ctx.strokeStyle = HALO;
+    tracePath(t); ctx.stroke();
+    // bright line pass
+    ctx.lineWidth = 1.6; ctx.strokeStyle = LINE;
+    ctx.shadowColor = LINE; ctx.shadowBlur = 8;
+    tracePath(t); ctx.stroke();
+    // faint baseline
+    ctx.shadowBlur = 0; ctx.globalAlpha = 0.3; ctx.lineWidth = 1;
+    ctx.strokeStyle = LINE;
     ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
     ctx.globalAlpha = 1;
   }

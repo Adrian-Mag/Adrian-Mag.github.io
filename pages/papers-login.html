@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Code — Adrian Mag</title>
     <link rel="stylesheet" href="../css/styles.css">
@@ -13,7 +14,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(120% 120% at 50% 0%, #1B1F27 0%, #16191F 100%);
+            background: radial-gradient(120% 120% at 50% 0%, var(--ground-2, #1B1F27) 0%, var(--ground, #16191F) 100%);
         }
         .papers-login-card {
             background: var(--surface, #232833);

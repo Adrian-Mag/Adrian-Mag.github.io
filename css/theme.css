@@ -43,6 +43,14 @@
   /* restrained warm secondary, used only for small details */
   --warm: #E0B978;
 
+  /* semantic callout colors (lesson / warning / aside boxes in the notes) */
+  --sem-green-text:  #9ed49e;
+  --sem-green-line:  #78b478;
+  --sem-orange-text: #e8a878;
+  --sem-orange-line: #c87850;
+  --sem-purple-text: #c9aee0;
+  --sem-purple-line: #a078be;
+
   /* elevation & shape */
   --shadow:    0 18px 46px -20px rgba(0,0,0,0.7);
   --shadow-sm: 0 8px 22px -14px rgba(0,0,0,0.65);
@@ -53,18 +61,78 @@
 }
 
 /* ------------------------------------------------------------
-   RESERVED — Earth palette (nature / mountains). Not active yet.
-   Sample these from media/personal/mountains.jpg when building it.
-:root[data-theme="earth"] {
-  --ground:#F1EFEA; --ground-2:#E8E4DC; --surface:#FFFFFF; --surface-2:#F6F3ED;
-  --line:rgba(74,64,52,0.16); --line-2:rgba(74,64,52,0.26);
-  --text:#241E17; --muted:#5E5648;
-  --accent:#5F7A52; --accent-bright:#7A9A69; --accent-deep:#d9e0cf;
-  --warm:#B5701F;
-  --shadow:0 20px 44px -24px rgba(48,40,30,0.28);
-  --shadow-sm:0 10px 24px -18px rgba(48,40,30,0.24);
-}
+   EARTH — light, earthy palette sampled from the mountain photos
+   (moss #52542E/#8E885C, ochre #8D6B2B/#CBAA74, warm grey #847C65,
+   cream #D5C8A5). Activated by data-theme="earth" on <html>;
+   the toggle in the nav stamps it and persists to localStorage.
    ------------------------------------------------------------ */
+:root[data-theme="earth"] {
+  --ground:    #EDE9DD;
+  --ground-2:  #E4DFCF;
+  --surface:   #FBF9F2;
+  --surface-2: #F2EFE4;
+
+  --line:   rgba(74, 68, 42, 0.18);
+  --line-2: rgba(74, 68, 42, 0.32);
+
+  --text:  #29261B;
+  --muted: #6A644F;
+
+  --accent:        #5C6D33;   /* moss */
+  --accent-bright: #46571F;   /* deeper moss — the emphasis/link ink on cream */
+  --accent-deep:   #C9CDA6;   /* pale moss tint for gradient tails */
+
+  --warm: #A0752B;            /* ochre */
+
+  /* semantic callout colors, darkened for the light ground */
+  --sem-green-text:  #33702F;
+  --sem-green-line:  #5A9455;
+  --sem-orange-text: #9C5320;
+  --sem-orange-line: #B4703F;
+  --sem-purple-text: #6E4390;
+  --sem-purple-line: #8A63A8;
+
+  --shadow:    0 18px 42px -20px rgba(60, 52, 30, 0.30);
+  --shadow-sm: 0 8px 20px -14px rgba(60, 52, 30, 0.22);
+}
+
+/* Earth-mode heroes: each hero element carries data-hero="<key>"; the
+   space image is inline on the element, and these override it when the
+   earth palette is active. url()s resolve relative to THIS file (css/),
+   which is correct from any page depth, locally and deployed. */
+:root[data-theme="earth"] [data-hero="home"]         { background-image: url('../media/backgrounds/earth/home.jpg') !important; background-position: center 64% !important; }
+:root[data-theme="earth"] [data-hero="about"]        { background-image: url('../media/backgrounds/earth/about.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="contact"]      { background-image: url('../media/backgrounds/earth/contact.jpg') !important; background-position: center 40% !important; }
+:root[data-theme="earth"] [data-hero="cv"]           { background-image: url('../media/backgrounds/earth/cv.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="research"]     { background-image: url('../media/backgrounds/earth/research.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="publications"] { background-image: url('../media/backgrounds/earth/publications.jpg') !important; background-position: center 55% !important; }
+:root[data-theme="earth"] [data-hero="posters"]      { background-image: url('../media/backgrounds/earth/posters.jpg') !important; background-position: center 50% !important; }
+:root[data-theme="earth"] [data-hero="search"]       { background-image: url('../media/backgrounds/earth/search.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="sola"]         { background-image: url('../media/backgrounds/earth/sola.jpg') !important; background-position: center 50% !important; }
+:root[data-theme="earth"] [data-hero="think-first"]  { background-image: url('../media/backgrounds/earth/think-first.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="bayes"]        { background-image: url('../media/backgrounds/earth/bayes.jpg') !important; background-position: center 45% !important; }
+:root[data-theme="earth"] [data-hero="frequentist"]  { background-image: url('../media/backgrounds/earth/frequentist.jpg') !important; background-position: center 50% !important; }
+:root[data-theme="earth"] [data-hero="misc"]         { background-image: url('../media/backgrounds/earth/misc.jpg') !important; background-position: center 50% !important; }
+
+/* Text overlaid on hero PHOTOS keeps light ink in both themes — the photo
+   scrims are dark regardless of palette. Earth's accent inks are too dark
+   to survive on imagery, so pin them light here. */
+:root[data-theme="earth"] .page-hero-inner .eyebrow,
+:root[data-theme="earth"] .hero-eyebrow {
+  color: #E9EDDA;
+}
+:root[data-theme="earth"] .page-hero h1 { color: #F4F6EC; }
+:root[data-theme="earth"] .page-hero .lead { color: #DDE2CE; }
+
+/* theme toggle button (inserted into the nav by js/theme-toggle.js) */
+.theme-toggle {
+  width: 34px; height: 34px; display: grid; place-items: center; padding: 0;
+  border: none; background: transparent; border-radius: 8px; cursor: pointer;
+  color: var(--muted);
+  transition: color .18s ease, background .18s ease;
+}
+.theme-toggle:hover { color: var(--text); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.theme-toggle svg { display: block; }
 
 /* ---------- base ---------- */
 * { box-sizing: border-box; }

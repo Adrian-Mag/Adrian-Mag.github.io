@@ -23,7 +23,7 @@
     radial-gradient(135% 105% at 20% 34%, rgba(12,14,18,0.12), rgba(12,14,18,0.48) 58%, rgba(12,14,18,0.78)),
     linear-gradient(180deg, rgba(12,14,18,0.42) 0%, rgba(12,14,18,0.08) 44%, rgba(12,14,18,0.66) 100%);
 }
-#seismo { position: absolute; left: 0; right: 0; bottom: 8%; width: 100%; height: 34%; opacity: 0.55; }
+#seismo { position: absolute; left: 0; right: 0; bottom: 8%; width: 100%; height: 34%; opacity: 0.9; }
 .hero-inner { position: relative; z-index: 3; padding: 96px 0; color: #EAF1F9; }
 .hero-eyebrow { color: var(--accent-bright); }
 .hero h1 {

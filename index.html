@@ -2,6 +2,7 @@
 <html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adrian Mag - Seismology Research</title>
     <link rel="stylesheet" href="css/theme.css">
@@ -47,7 +48,7 @@
     </nav>
 
     <header class="hero">
-        <div class="hero-photo"></div>
+        <div class="hero-photo" data-hero="home"></div>
         <div class="hero-scrim"></div>
         <canvas id="seismo"></canvas>
         <div class="wrap hero-inner">
@@ -140,5 +141,6 @@
     </footer>
 
     <script src="js/hero.js"></script>
+    <script src="js/theme-toggle.js" defer></script>
 </body>
 </html>

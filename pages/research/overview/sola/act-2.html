@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="space">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css">
@@ -84,7 +85,7 @@
 
     <main>
         <section class="page-header" style="position: relative; overflow: hidden;">
-            <div class="page-header-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="page-header-bg" data-hero="sola" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Act 2: Building SOLA from Scratch</h1>
                 <p>The resolving kernel, the span limitation, and the normal equation.</p>
@@ -531,5 +532,6 @@
     </script>
     <script src="../../../../js/ai-assist.js" defer></script>
     <script src="../../../../js/notes-extras.js" defer></script>
+    <script src="../../../../js/theme-toggle.js" defer></script>
 </body>
 </html>
