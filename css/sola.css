@@ -199,14 +199,14 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .math-article > h2 {
-    color: #a0c4e8;
+    color: var(--accent-bright);
     font-size: 1.6rem;
     font-weight: 800;
     letter-spacing: 0.02em;
     margin-bottom: 0.4em;
     margin-top: 2.5rem;
     padding-bottom: 0.3em;
-    border-bottom: 1px solid rgba(103,145,190,0.20);
+    border-bottom: 1px solid var(--line);
 }
 
 .math-article > h2:first-child {
@@ -214,7 +214,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .math-article h3 {
-    color: rgba(255,255,255,0.92);
+    color: var(--text);
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: 0.01em;
@@ -222,23 +222,23 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .math-article h4 {
-    color: rgba(255,255,255,0.88);
+    color: var(--text);
     font-size: 1.15rem;
     font-weight: 700;
     margin: 1.5rem 0 0.2rem 0;
     padding-bottom: 0.15em;
-    border-bottom: 1px solid rgba(103,145,190,0.25);
+    border-bottom: 1px solid var(--line-2);
 }
 
 .math-article p {
     margin-bottom: 1rem;
-    color: rgba(255,255,255,0.88);
+    color: var(--text);
 }
 
 .math-article ul,
 .math-article ol {
     margin: 0.75rem 0 0.75rem 2em;
-    color: rgba(255,255,255,0.85);
+    color: var(--text);
 }
 
 .math-article li {
@@ -246,12 +246,12 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .math-article blockquote {
-    background: rgba(74,109,163,0.18);
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
     border-left: 4px solid #4a6da3;
     padding: 0.8em 1.4em;
     margin: 1.2em 0;
     border-radius: 0 8px 8px 0;
-    color: rgba(255,255,255,0.92);
+    color: var(--text);
     font-style: italic;
 }
 
@@ -269,30 +269,30 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 
 .math-article table {
     border-collapse: collapse;
-    color: rgba(255,255,255,0.9);
+    color: var(--text);
     min-width: 280px;
 }
 
 .math-article th {
-    background: rgba(74,109,163,0.35);
-    border: 1px solid rgba(103,145,190,0.4);
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    border: 1px solid var(--line-2);
     padding: 0.6em 1.8em;
     text-align: center;
 }
 
 .math-article td {
-    border: 1px solid rgba(103,145,190,0.25);
+    border: 1px solid var(--line-2);
     padding: 0.45em 1.8em;
     text-align: center;
 }
 
 .math-article tr:nth-child(even) td {
-    background: rgba(103,145,190,0.07);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
 }
 
 .math-article figcaption {
     text-align: center;
-    color: rgba(255,255,255,0.6);
+    color: var(--muted);
     font-size: 0.9rem;
     margin-top: 0.5rem;
     font-style: italic;
@@ -304,10 +304,10 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     position: sticky;
     top: 0;
     z-index: 110;
-    background: rgba(46,49,53,0.92);
+    background: var(--surface);
     backdrop-filter: blur(10px);
-    border-bottom: 1.5px solid rgba(103,145,190,0.18);
-    border-top: 1px solid rgba(103,145,190,0.08);
+    border-bottom: 1.5px solid var(--line);
+    border-top: 1px solid var(--line);
     padding: 0;
 }
 
@@ -325,8 +325,8 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     gap: 6px;
     padding: 8px 18px;
     border-radius: 22px;
-    background: rgba(74,109,163,0.15);
-    color: rgba(255,255,255,0.75);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--muted);
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
@@ -337,16 +337,16 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 
 .part-chip:hover,
 .part-chip:focus {
-    background: rgba(74,109,163,0.30);
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
     color: #fff;
     text-decoration: none;
     transform: translateY(-1px);
 }
 
 .part-chip[aria-current="page"] {
-    background: #6791BE;
+    background: var(--accent);
     color: #fff;
-    border-color: #a0c4e8;
+    border-color: var(--accent-bright);
     box-shadow: 0 4px 16px rgba(103,145,190,0.25);
 }
 
@@ -357,13 +357,13 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.18);
+    background: color-mix(in srgb, var(--text) 18%, transparent);
     font-size: 0.82rem;
     font-weight: 800;
 }
 
 .part-chip[aria-current="page"] .part-chip-num {
-    background: rgba(255,255,255,0.30);
+    background: color-mix(in srgb, var(--text) 30%, transparent);
 }
 
 /* Prev/next buttons */
@@ -381,7 +381,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 .part-prevnext-spacer {
     width: 100%;
     height: 1px;
-    background: rgba(103,145,190,0.15);
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
     margin: 0 0 1.5rem 0;
 }
 
@@ -391,20 +391,20 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     gap: 8px;
     padding: 12px 24px;
     border-radius: 22px;
-    background: rgba(74,109,163,0.20);
-    color: #a0c4e8;
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: var(--accent-bright);
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
-    border: 1.5px solid rgba(103,145,190,0.25);
+    border: 1.5px solid var(--line-2);
     transition: all 0.22s cubic-bezier(.4,0,.2,1);
 }
 
 .part-prevnext-btn:hover,
 .part-prevnext-btn:focus {
-    background: #6791BE;
+    background: var(--accent);
     color: #fff;
-    border-color: #a0c4e8;
+    border-color: var(--accent-bright);
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(103,145,190,0.20);
     text-decoration: none;
@@ -429,7 +429,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 
 .sola-callout p {
     margin-bottom: 0.6rem;
-    color: rgba(255,255,255,0.88);
+    color: var(--text);
 }
 
 .sola-callout p:last-child {
@@ -446,22 +446,22 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 }
 
 .callout-lesson {
-    background: rgba(103,145,190,0.12);
-    border-left-color: #6791BE;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-left-color: var(--accent);
 }
-.callout-lesson .sola-callout-label { color: #a0c4e8; }
+.callout-lesson .sola-callout-label { color: var(--accent-bright); }
 
 .callout-intuition {
     background: rgba(120,180,120,0.10);
     border-left-color: #78b478;
 }
-.callout-intuition .sola-callout-label { color: #9ed49e; }
+.callout-intuition .sola-callout-label { color: var(--sem-green-text); }
 
 .callout-warning {
     background: rgba(200,120,80,0.12);
     border-left-color: #c87850;
 }
-.callout-warning .sola-callout-label { color: #e8a878; }
+.callout-warning .sola-callout-label { color: var(--sem-orange-text); }
 
 .callout-checkpoint {
     background: rgba(160,120,190,0.12);
@@ -495,7 +495,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 .sola-figure figcaption {
     margin-top: 0.8rem;
     font-size: 0.95rem;
-    color: rgba(255,255,255,0.65);
+    color: var(--muted);
     line-height: 1.5;
     max-width: 680px;
     margin-left: auto;
@@ -505,12 +505,12 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
 
 .sola-figure-label {
     font-weight: 700;
-    color: rgba(255,255,255,0.85);
+    color: var(--text);
     margin-right: 0.4em;
 }
 
 .sola-figure figcaption strong {
-    color: rgba(255,255,255,0.8);
+    color: var(--muted);
 }
 
 /* Display equations */
