@@ -1,3 +1,18 @@
+/* pinned dark exhibit: this page is a self-contained poster artifact;
+   it keeps the dark ground in both site themes. */
+body {
+  --ground:#16191F; --ground-2:#1B1F27; --surface:#232833; --surface-2:#2B313D;
+  --line:rgba(143,180,221,0.14); --line-2:rgba(143,180,221,0.22);
+  --text:#EAEFF6; --muted:#9AA7B7;
+  --accent:#6791BE; --accent-bright:#9BC1E8; --accent-deep:#3C536F;
+  --warm:#E0B978;
+  --sem-green-text:#9ed49e; --sem-green-line:#78b478;
+  --sem-orange-text:#e8a878; --sem-orange-line:#c87850;
+  --sem-purple-text:#c9aee0; --sem-purple-line:#a078be;
+  background: #16191F !important;
+  color: #EAEFF6;
+}
+
 /* AI-Assisted Research page — restyled to match site dark theme */
 
 .ai-article {

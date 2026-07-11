@@ -467,13 +467,13 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     background: rgba(160,120,190,0.12);
     border-left-color: #a078be;
 }
-.callout-checkpoint .sola-callout-label { color: #c8a8e0; }
+.callout-checkpoint .sola-callout-label { color: var(--sem-purple-text); }
 
 .callout-remark {
     background: rgba(100,130,160,0.10);
     border-left-color: #688aa0;
 }
-.callout-remark .sola-callout-label { color: #9ab8d0; }
+.callout-remark .sola-callout-label { color: var(--accent-bright); }
 
 /* ── Figures ── */
 

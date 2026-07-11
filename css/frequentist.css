@@ -479,7 +479,7 @@ main {
     background: rgba(160,120,190,0.12);
     border-left-color: #a078be;
 }
-.callout-checkpoint .freq-callout-label { color: #c8a8e0; }
+.callout-checkpoint .freq-callout-label { color: var(--sem-purple-text); }
 
 /* ── Conceptual diagrams (inline SVG) ── */
 

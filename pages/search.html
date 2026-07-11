@@ -5,8 +5,8 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search - Adrian Mag</title>
-    <link rel="stylesheet" href="../css/theme.css?v=3">
-    <link rel="stylesheet" href="../css/styles.css?v=3">
+    <link rel="stylesheet" href="../css/theme.css?v=4">
+    <link rel="stylesheet" href="../css/styles.css?v=4">
     <meta name="description" content="Search across all of Adrian Mag's notes on inverse theory, SOLA, Bayesian inference, and function-space discretization.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Search - Adrian Mag">
@@ -38,7 +38,7 @@
             max-width: 720px;
             margin: 0 auto 1.5rem;
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.5);
+            color:var(--muted);
         }
         #search-results {
             list-style: none;
@@ -55,7 +55,7 @@
             padding: 0.9rem 1.2rem;
         }
         .search-result-title {
-            color: #a0c4e8;
+            color:var(--accent-bright);
             font-weight: 600;
             font-size: 1.05rem;
             text-decoration: none;
@@ -65,7 +65,7 @@
             display: inline-block;
             margin-left: 0.7rem;
             font-size: 0.75rem;
-            color: rgba(255,255,255,0.5);
+            color:var(--muted);
             background: rgba(103,145,190,0.13);
             border-radius: 6px;
             padding: 1px 8px;
@@ -75,11 +75,11 @@
             margin-top: 0.4rem;
             font-size: 0.92rem;
             line-height: 1.55;
-            color: rgba(255,255,255,0.65);
+            color:var(--muted);
         }
         .search-result-snippet mark {
             background: rgba(103,145,190,0.35);
-            color: #fff;
+            color:var(--text);
             border-radius: 3px;
             padding: 0 2px;
         }
@@ -150,7 +150,7 @@
         </div>
     </footer>
 
-    <script src="../js/site-search.js?v=3" defer></script>
-    <script src="../js/theme-toggle.js?v=3" defer></script>
+    <script src="../js/site-search.js?v=4" defer></script>
+    <script src="../js/theme-toggle.js?v=4" defer></script>
 </body>
 </html>

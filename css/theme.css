@@ -82,7 +82,7 @@
   --accent-bright: #46571F;   /* deeper moss — the emphasis/link ink on cream */
   --accent-deep:   #C9CDA6;   /* pale moss tint for gradient tails */
 
-  --warm: #A0752B;            /* ochre */
+  --warm: #8A611C;            /* ochre, deep enough for text on cream */
 
   /* semantic callout colors, darkened for the light ground */
   --sem-green-text:  #33702F;
@@ -123,6 +123,15 @@
 }
 :root[data-theme="earth"] .page-hero h1 { color: #F4F6EC; }
 :root[data-theme="earth"] .page-hero .lead { color: #DDE2CE; }
+
+/* Sweep-panel figures (f6e/f6f parameter sliders) are not duplicated per
+   theme - they keep a dark instrument backdrop so the space-styled
+   transparent PNGs stay readable on the earth ground. */
+:root[data-theme="earth"] .tfdl-interactive-img {
+  background: #1B1F27;
+  border-radius: 10px;
+  padding: 8px;
+}
 
 /* theme toggle button (inserted into the nav by js/theme-toggle.js) */
 .theme-toggle {
