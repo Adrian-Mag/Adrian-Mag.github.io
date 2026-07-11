@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=12">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=12">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=12">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=13">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=13">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=13">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=13">
     <meta name="description" content="Act 2 of My Take on SOLA: The resolving kernel, the span limitation, the noiseless unconstrained SOLA problem, and the normal equation.">
     <script>
     MathJax = {
@@ -126,8 +127,12 @@
                     Each datum is one weighted integral of the model. Suppose we choose scalar
                     weights
                     \[x_1,\dots,x_{N_d}\in\mathbb R.\]
-                    Equivalently, we collect them into the finite-dimensional vector
-                    \[\mathbf x = (x_1,\dots,x_{N_d})^\top \in\mathbb R^{N_d}, \qquad [\mathbf x]_i=x_i.\]</p>
+                    Equivalently, we collect them into the finite-dimensional vector</p>
+                    <span class="concept-term eq-tappable" data-concept="why-brackets"
+                          data-concept-title="Isn&rsquo;t this notation overkill?">
+                        \[\mathbf x = (x_1,\dots,x_{N_d})^\top \in\mathbb R^{N_d}, \qquad [\mathbf x]_i=x_i.\]
+                        <span class="eq-tap-hint">notation feels fussy? tap &#10148;</span>
+                    </span>
 
                     <p>Now form the weighted sum of data
                     \[\sum_{i=1}^{N_d}x_i [\mathbf d]_i.\]
@@ -530,10 +535,31 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=12" defer></script>
-    <script src="../../../../js/notes-extras.js?v=12" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=12" defer></script>
-    <script src="../../../../js/nav-menu.js?v=12" defer></script>
-    <script src="../../../../js/themed-figures.js?v=12" defer></script>
+    <script src="../../../../js/ai-assist.js?v=13" defer></script>
+    <script src="../../../../js/notes-extras.js?v=13" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=13" defer></script>
+    <script src="../../../../js/nav-menu.js?v=13" defer></script>
+    <script src="../../../../js/themed-figures.js?v=13" defer></script>
+    <script src="../../../../js/concept-popup.js?v=13" defer></script>
+
+    <template id="concept-why-brackets">
+        <p style="margin:0 0 12px;">You might reasonably object: why write \([\mathbf x]_i\) when
+        \(x_i\) already says it? Isn&rsquo;t the boldface-and-brackets ritual just noise? Two
+        answers.</p>
+        <p><strong>First, the notation is consistent, not decorative.</strong> In these notes scalars
+        are never boldface. So \(x_i\) is a number, \(\mathbf x\) is the vector that collects
+        such numbers, and \([\mathbf x]_i = x_i\) is the precise statement of how the two relate.
+        No symbol ever does double duty, and you can always tell a container from its contents at a
+        glance.</p>
+        <p><strong>Second, the two vectors on this page have different biographies.</strong> The
+        weights arrived as scalars first &mdash; one \(x_i\) per datum &mdash; and were only then
+        collected into \(\mathbf x\); the equation \([\mathbf x]_i = x_i\) simply records that
+        the collection contains what we started from. The data went the other way: \(\mathbf d\)
+        was born a vector, so its entries are only ever reached by extraction, \([\mathbf d]_i\).
+        The notation is tracking that history.</p>
+        <p style="margin-bottom:0;">If you still find the brackets fussy, read \([\mathbf x]_i\)
+        as \(x_i\) everywhere &mdash; nothing downstream will break. I just prefer notation that
+        never blurs the line between a vector and its entries.</p>
+    </template>
 </body>
 </html>

@@ -5,11 +5,11 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 1: The Kernel Game — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=12">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=12">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=12">
-    <link rel="stylesheet" href="../../../../css/kernel-game.css?v=12">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=12">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=13">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=13">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=13">
+    <link rel="stylesheet" href="../../../../css/kernel-game.css?v=13">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=13">
     <meta name="description" content="Act 1 of My Take on SOLA: Sensitivity kernels, data as weighted integrals, what finite data cannot see, and the target property.">
     <script>
     MathJax = {
@@ -534,13 +534,13 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=12" defer></script>
-    <script src="../../../../js/notes-extras.js?v=12" defer></script>
-    <script src="../../../../js/kernel-game.js?v=12" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=12" defer></script>
-    <script src="../../../../js/nav-menu.js?v=12" defer></script>
-    <script src="../../../../js/themed-figures.js?v=12" defer></script>
-    <script src="../../../../js/concept-popup.js?v=12" defer></script>
+    <script src="../../../../js/ai-assist.js?v=13" defer></script>
+    <script src="../../../../js/notes-extras.js?v=13" defer></script>
+    <script src="../../../../js/kernel-game.js?v=13" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=13" defer></script>
+    <script src="../../../../js/nav-menu.js?v=13" defer></script>
+    <script src="../../../../js/themed-figures.js?v=13" defer></script>
+    <script src="../../../../js/concept-popup.js?v=13" defer></script>
 
     <template id="concept-notation">
         <p style="margin:0 0 10px;">These notes mix two kinds of objects, and the typography tells
@@ -556,6 +556,13 @@
             <span class="meaning"><strong>Square brackets extract one entry</strong>: \([\mathbf d]_i\)
             is the \(i\)th number inside the vector \(\mathbf d\). Likewise
             \([\mathbf G]_{ij}\) would be the entry in row \(i\), column \(j\) of a matrix.</span>
+        </div>
+        <div class="concept-notation-row">
+            <span class="sym">\(x_i,\ N_d,\ r\)</span>
+            <span class="meaning"><strong>Plain lowercase letters are scalars</strong> &mdash; single
+            numbers. Scalars are never boldface, which is what keeps the system consistent:
+            \(x_i\) and \([\mathbf x]_i\) are the same number reached two ways &mdash; by its own
+            name, or extracted from the vector that collects it.</span>
         </div>
         <div class="concept-notation-row">
             <span class="sym">\(m,\ K_i\)</span>
