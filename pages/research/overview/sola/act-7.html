@@ -196,18 +196,18 @@
                     <h3>Solving it</h3>
 
                     <p>We construct the constrained noise-aware SOLA matrix
-                    \(\mathbf X_c:\D\to\Pspace\)
+                    \(\widetilde{\mathbf X}_c:\D\to\Pspace\)
                     as in the previous acts, with the noise-aware Gram matrix
                     \(\mathbf M=GG^*+\mathbf C_D\)
                     and the unimodularity constraint
                     \(\mathbf X\mathbf v=\mathbf w.\)
                     The SOLA estimate is
-                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d},\)
+                    \(\widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d},\)
                     with propagated covariance
-                    \(\mathbf C_P = \mathbf X_c\mathbf C_D\mathbf X_c^*.\)</p>
+                    \(\mathbf C_P = \widetilde{\mathbf X}_c\mathbf C_D\widetilde{\mathbf X}_c^*.\)</p>
 
                     <p>The resolving kernels
-                    \(R_k = \sum_{i=1}^{N_d}[\mathbf X_c]_{ki}K_i\)
+                    \(R_k = \sum_{i=1}^{N_d}[\widetilde{\mathbf X}_c]_{ki}K_i\)
                     are shown against the target kernels in the next figure.</p>
 
                     <figure class="sola-figure">

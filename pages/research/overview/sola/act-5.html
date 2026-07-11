@@ -315,10 +315,13 @@
                     \[\mathbf M := GG^*+\mathbf C_D.\]
                     If \(\mathbf C_D\) is positive definite, then \(\mathbf M\) is invertible. The
                     unconstrained noise-aware solution is then
-                    \[\mathbf X_0 = \Tau G^*\mathbf M^{-1}.\]</p>
+                    \[\widetilde{\mathbf X}_0 = \Tau G^*\mathbf M^{-1}.\]
+                    The tilde matches the noisy data \(\widetilde{\mathbf d}\): as announced in
+                    Act 2, tildes mark noise-aware objects, while the subscript \(0\) still means
+                    that no calibration constraint has been applied.</p>
 
-                    <p>Compare this with the noiseless unconstrained solution:
-                    \(\mathbf X_0^{\mathrm{noiseless}} = \Tau G^*(GG^*)^{-1}.\)
+                    <p>Compare this with the noiseless unconstrained solution from Act 2:
+                    \(\mathbf X_0 = \Tau G^*(GG^*)^{-1}.\)
                     Noise has replaced \(GG^*\) by
                     \(\mathbf M=GG^*+\mathbf C_D.\)</p>
 
@@ -345,7 +348,7 @@
                     number of independent calibration conditions.</p>
 
                     <p>The constrained noisy SOLA problem is
-                    \[\mathbf X_c = \argmin_{\mathbf X} \left\{ \left\| \Tau-\mathbf XG \right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*) \right\} \quad \text{subject to} \quad \mathbf X\mathbf V=\mathbf W.\]</p>
+                    \[\widetilde{\mathbf X}_c = \argmin_{\mathbf X} \left\{ \left\| \Tau-\mathbf XG \right\|_{\HS}^2 + \Tr(\mathbf X\mathbf C_D\mathbf X^*) \right\} \quad \text{subject to} \quad \mathbf X\mathbf V=\mathbf W.\]</p>
 
                     <p>This is the full basic SOLA problem in these notes. It contains:
                     \[\begin{array}{lll} \text{target matching} &:& \left\|\Tau-\mathbf XG\right\|_{\HS}^2,\\[0.3em] \text{noise control} &:& \Tr(\mathbf X\mathbf C_D\mathbf X^*),\\[0.3em] \text{interpretive calibration} &:& \mathbf X\mathbf V=\mathbf W. \end{array}\]</p>
@@ -369,27 +372,27 @@
                     \(\boldsymbol\Gamma := \mathbf V^*\mathbf U = \mathbf V^*\mathbf M^{-1}\mathbf V.\)
                     Assuming \(\mathbf M\) is positive definite and \(\boldsymbol\Gamma\) is
                     invertible, the constrained noise-aware SOLA solution is
-                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]</p>
+                    \[\widetilde{\mathbf X}_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]</p>
 
                     <p>This is the noisy analogue of the general constrained correction from the
                     previous act. The first term
-                    \(\mathbf X_0 = \Tau G^*\mathbf M^{-1}\)
+                    \(\widetilde{\mathbf X}_0 = \Tau G^*\mathbf M^{-1}\)
                     is the unconstrained noise-aware solution. The second term is the finite-rank
                     correction needed to enforce
-                    \(\mathbf X_c\mathbf V=\mathbf W.\)</p>
+                    \(\widetilde{\mathbf X}_c\mathbf V=\mathbf W.\)</p>
 
-                    <p>To verify, apply \(\mathbf X_c\) to \(\mathbf V\):
-                    \[\mathbf X_c\mathbf V = \Tau G^*\mathbf M^{-1}\mathbf V - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\mathbf V.\]
+                    <p>To verify, apply \(\widetilde{\mathbf X}_c\) to \(\mathbf V\):
+                    \[\widetilde{\mathbf X}_c\mathbf V = \Tau G^*\mathbf M^{-1}\mathbf V - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\mathbf V.\]
                     Since
                     \(\mathbf U^*\mathbf V = \mathbf V^*\mathbf M^{-1}\mathbf V = \boldsymbol\Gamma,\)
                     we obtain
-                    \[\mathbf X_c\mathbf V = \Tau G^*\mathbf U - (\Tau G^*\mathbf U-\mathbf W) = \mathbf W.\]
+                    \[\widetilde{\mathbf X}_c\mathbf V = \Tau G^*\mathbf U - (\Tau G^*\mathbf U-\mathbf W) = \mathbf W.\]
                     So the constraints are satisfied exactly.</p>
 
                     <p>The single-constraint formula drops out as the special case
                     \(\mathbf V=\mathbf v,\;\mathbf W=\mathbf w,\;\boldsymbol\Gamma=\beta,\;\mathbf U=\mathbf u,\)
                     giving
-                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - \frac{\Tau G^*(\mathbf u)-\mathbf w}{\beta}\mathbf u^*.\]</p>
+                    \[\widetilde{\mathbf X}_c = \Tau G^*\mathbf M^{-1} - \frac{\Tau G^*(\mathbf u)-\mathbf w}{\beta}\mathbf u^*.\]</p>
 
                     <div class="sola-callout callout-remark">
                         <span class="sola-callout-label">Remark &mdash; The role of \(\mathbf M\)</span>
@@ -402,7 +405,7 @@
                     </div>
 
                     <p>At the kernel level, the \(k\)th resolving kernel is still
-                    \[R_k(r) = \sum_{i=1}^{N_d} [\mathbf X_c]_{ki}K_i(r).\]
+                    \[R_k(r) = \sum_{i=1}^{N_d} [\widetilde{\mathbf X}_c]_{ki}K_i(r).\]
                     The difference is that the weights now know about noise. A kernel that could be
                     obtained only by using extremely noisy data combinations will be discouraged by
                     the variance term.</p>

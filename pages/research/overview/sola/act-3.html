@@ -354,7 +354,9 @@
                     <p>The unconstrained problem was
                     \[\mathbf X_0 = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2.\]
                     For averaging targets, we instead solve
-                    \[\mathbf X_c = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2 \quad \text{subject to} \quad \mathbf X\mathbf v=\mathbf w.\]</p>
+                    \[\mathbf X_c = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2 \quad \text{subject to} \quad \mathbf X\mathbf v=\mathbf w.\]
+                    The subscript \(c\) is for <em>calibrated</em>: this is the corrected solution
+                    that Act 2&rsquo;s uncorrected \(\mathbf X_0\) was waiting for.</p>
 
                     <p>This says: match the target kernels as well as possible, but only among data
                     combinations whose resolving kernels have the correct total mass.</p>

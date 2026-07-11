@@ -137,13 +137,13 @@
                     reconstructing the whole model. This is a good description of the practical
                     workflow. SOLA does not ask us to first build a model estimate \(\hat m\) and
                     then evaluate its properties. It goes directly from data to properties:
-                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d}.\)</p>
+                    \(\widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d}.\)</p>
 
                     <p>But algebra has a habit of opening side doors.</p>
 
                     <p>For the constrained SOLA operator, the estimate can also be written in the
                     form
-                    \[\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d} = \Tau(\hat m),\]
+                    \[\widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d} = \Tau(\hat m),\]
                     for a particular model \(\hat m\in\M\) &mdash; provided that the calibration
                     pairs \((\mathbf v_\ell,\mathbf w_\ell)\) are jointly realizable by some
                     \(f_\ell\in\M\) satisfying \(G(f_\ell)=\mathbf v_\ell\) and
@@ -155,7 +155,7 @@
                     that define the SOLA operator.</p>
 
                     <p>So there are two equivalent ways to read the same number:
-                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d}\)
+                    \(\widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d}\)
                     as a direct data-to-property estimate, or
                     \(\widetilde{\mathbf p} = \Tau(\hat m)\)
                     as the exact target property of a particular proxy model.</p>
@@ -175,13 +175,13 @@
                     <p>Let
                     \(\mathbf M:=GG^*+\mathbf C_D,\; \mathbf U:=\mathbf M^{-1}\mathbf V,\; \boldsymbol\Gamma:=\mathbf V^*\mathbf U.\)
                     Recall that the constrained noise-aware SOLA operator is
-                    \[\mathbf X_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]
+                    \[\widetilde{\mathbf X}_c = \Tau G^*\mathbf M^{-1} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*.\]
                     Apply this operator to the observed data:
-                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\]
+                    \[\widetilde{\mathbf X}_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\]
                     Define the coefficient vector
                     \(\mathbf c := \boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}\in\mathbb R^L.\)
                     Then
-                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\mathbf c.\]</p>
+                    \[\widetilde{\mathbf X}_c\widetilde{\mathbf d} = \Tau G^*\mathbf M^{-1}\widetilde{\mathbf d} - (\Tau G^*\mathbf U-\mathbf W)\mathbf c.\]</p>
 
                     <p>If we can find models \(f_1,\dots,f_L\in\M\) satisfying
                     \(G(f_\ell)=\mathbf v_\ell,\; \Tau(f_\ell)=\mathbf w_\ell,\; \ell=1,\dots,L,\)
@@ -190,11 +190,11 @@
                     and similarly
                     \(\Tau G^*\mathbf U\,\mathbf c = \Tau\!\left(\sum_{\ell=1}^L c_\ell\, G^*\mathbf u_\ell\right),\)
                     where \(\mathbf u_\ell\) are the columns of \(\mathbf U\). Therefore
-                    \[\mathbf X_c\widetilde{\mathbf d} = \Tau\!\left( G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr) \right).\]
+                    \[\widetilde{\mathbf X}_c\widetilde{\mathbf d} = \Tau\!\left( G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr) \right).\]
                     This motivates the definition
                     \[\hat m := G^*\mathbf M^{-1}\widetilde{\mathbf d} + \sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr), \qquad \mathbf c=\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}.\]
                     Then
-                    \(\widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d} = \Tau(\hat m).\)</p>
+                    \(\widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d} = \Tau(\hat m).\)</p>
 
                     <div class="sola-callout callout-checkpoint">
                         <span class="sola-callout-label">Checkpoint</span>
@@ -224,7 +224,7 @@
                     <p>The second piece is
                     \(\sum_{\ell=1}^L c_\ell\bigl(f_\ell - G^*\mathbf u_\ell\bigr).\)
                     This is the correction associated with the resolving constraints
-                    \(\mathbf X_c\mathbf V=\mathbf W.\)
+                    \(\widetilde{\mathbf X}_c\mathbf V=\mathbf W.\)
                     The coefficient vector
                     \(\mathbf c=\boldsymbol\Gamma^{-1}\mathbf U^*\widetilde{\mathbf d}\)
                     depends on the data, while the model-space directions
@@ -287,7 +287,7 @@
                     \(\Tau(\hat m)=\widetilde{\mathbf p}.\)</p>
 
                     <p>This gives a second interpretation of SOLA:
-                    \[\text{direct view:} \qquad \widetilde{\mathbf p} = \mathbf X_c\widetilde{\mathbf d},\]
+                    \[\text{direct view:} \qquad \widetilde{\mathbf p} = \widetilde{\mathbf X}_c\widetilde{\mathbf d},\]
                     and
                     \[\text{proxy-model view:} \qquad \widetilde{\mathbf p} = \Tau(\hat m).\]</p>
 
