@@ -58,13 +58,16 @@
 
     // --- 1. reading time -------------------------------------------------------
 
-    function readingTime() {
+    function readingTime(ctx) {
         var article = document.querySelector(".math-article") || document.querySelector("main");
         if (!article) return null;
         var text = article.textContent || "";
         var words = (text.match(/\S+/g) || []).length;
-        // long-form math reads slower than prose; ~180 wpm
-        return Math.max(1, Math.round(words / 180));
+        // long-form math reads slower than prose; ~180 wpm baseline.
+        // SOLA runs denser still (operator arguments), so ~150 wpm there
+        // (about 20% more suggested time).
+        var wpm = (ctx && ctx.key === "sola") ? 150 : 180;
+        return Math.max(1, Math.round(words / wpm));
     }
 
     // --- 2. resume bookkeeping ---------------------------------------------------
@@ -143,7 +146,7 @@
         if (ctx.isLanding) {
             resumeBanner(ctx);
         } else {
-            var mins = readingTime();
+            var mins = readingTime(ctx);
             if (mins) {
                 var meta = document.createElement("div");
                 meta.className = "notes-meta";
