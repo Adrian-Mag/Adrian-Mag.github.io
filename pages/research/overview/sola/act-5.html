@@ -129,10 +129,10 @@
                     <p>Thus the observed data vector is
                     \[\widetilde{\mathbf d} \in\mathbb R^{N_d},\]
                     with
-                    \[[\widetilde{\mathbf d}]_i = [G(\bar m)]_i+\eta_i.\]</p>
+                    \[[\widetilde{\mathbf d}]_i = [G(\bar m)]_i+[\boldsymbol\eta]_i.\]</p>
 
                     <p>In integral form,
-                    \[[\widetilde{\mathbf d}]_i = \int_\Omega K_i(r)\bar m(r)\dd r+\eta_i, \qquad i=1,\dots,N_d.\]</p>
+                    \[[\widetilde{\mathbf d}]_i = \int_\Omega K_i(r)\bar m(r)\dd r+[\boldsymbol\eta]_i, \qquad i=1,\dots,N_d.\]</p>
 
                     <p>The covariance matrix \(\mathbf C_D\) tells us how uncertain the data are. If
                     \(\mathbf C_D=\sigma_D^2\mathbf I,\)
@@ -157,14 +157,14 @@
                     The corresponding SOLA-style data combination is
                     \(\sum_{i=1}^{N_d}x_i[\widetilde{\mathbf d}]_i.\)
                     Substituting the noisy data model gives
-                    \[\sum_{i=1}^{N_d}x_i[\widetilde{\mathbf d}]_i = \sum_{i=1}^{N_d}x_i[G(\bar m)]_i + \sum_{i=1}^{N_d}x_i\eta_i.\]</p>
+                    \[\sum_{i=1}^{N_d}x_i[\widetilde{\mathbf d}]_i = \sum_{i=1}^{N_d}x_i[G(\bar m)]_i + \sum_{i=1}^{N_d}x_i[\boldsymbol\eta]_i.\]</p>
 
                     <p>The first term is the signal part:
                     \[\sum_{i=1}^{N_d}x_i[G(\bar m)]_i = \int_\Omega R(r)\bar m(r)\dd r,\]
                     where
                     \[R(r) = \sum_{i=1}^{N_d}x_iK_i(r).\]
                     The second term is the noise part:
-                    \(\sum_{i=1}^{N_d}x_i\eta_i.\)</p>
+                    \(\sum_{i=1}^{N_d}x_i[\boldsymbol\eta]_i.\)</p>
 
                     <p>So the same weights \(\mathbf x\) that build the resolving kernel also
                     combine the noise.</p>
@@ -174,7 +174,7 @@
                     errors.</p>
 
                     <p>To see this explicitly, consider the scalar noise contribution
-                    \[\epsilon_{\mathbf x} = \sum_{i=1}^{N_d}x_i\eta_i.\]
+                    \[\epsilon_{\mathbf x} = \sum_{i=1}^{N_d}x_i[\boldsymbol\eta]_i.\]
                     In vector notation,
                     \(\epsilon_{\mathbf x} = \mathbf x^\top\boldsymbol\eta.\)
                     Since
