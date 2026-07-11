@@ -207,7 +207,8 @@ def main() -> None:
         ax.plot(x, rk, color=colors[k], alpha=0.9, lw=2)
     ax.plot([], [], color=PALETTE["true"], alpha=0.5, lw=3, label="Target kernels")
     ax.plot([], [], color=colors[N_P // 2], alpha=0.9, lw=2, label="Resolving kernels")
-    ax.legend()
+    # the axes are wall-to-wall kernels: park the legend below the plot
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncol=2, frameon=False)
     ax.set_xlabel(r"$r$")
     ax.set_ylabel("Kernel value")
     ax.set_title("Resolving kernels vs. target kernels")
