@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=14">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=14">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=14">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=14">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=15">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=15">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=15">
     <meta name="description" content="Act 2 of My Take on SOLA: The resolving kernel, the span limitation, the noiseless unconstrained SOLA problem, and the normal equation.">
     <script>
     MathJax = {
@@ -412,6 +412,20 @@
 
                     <h3>The normal equation</h3>
 
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning &mdash; operator algebra ahead</span>
+                        <p>The next derivation works with whole operators at once: we perturb
+                        \(\mathbf X\), expand a Hilbert&ndash;Schmidt norm, and move an adjoint
+                        around. Buckle up &mdash; but if the manipulations feel opaque, do not stall
+                        here. Skim to the punchline,
+                        \[\mathbf X_0 = \Tau G^*(GG^*)^{-1},\]
+                        and carry away one idea: all those integrals and sums repackage into a few
+                        lines of operator notation. That compression is not just cosmetic &mdash;
+                        the same picture generalizes far beyond this setting, and it will come in
+                        handy repeatedly later in the series. Nothing that follows requires you to
+                        reproduce this derivation yourself.</p>
+                    </div>
+
                     <p>We now derive the solution of the unconstrained problem
                     \[\mathbf X_0 = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2.\]
                     Define
@@ -539,12 +553,12 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=14" defer></script>
-    <script src="../../../../js/notes-extras.js?v=14" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=14" defer></script>
-    <script src="../../../../js/nav-menu.js?v=14" defer></script>
-    <script src="../../../../js/themed-figures.js?v=14" defer></script>
-    <script src="../../../../js/concept-popup.js?v=14" defer></script>
+    <script src="../../../../js/ai-assist.js?v=15" defer></script>
+    <script src="../../../../js/notes-extras.js?v=15" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=15" defer></script>
+    <script src="../../../../js/nav-menu.js?v=15" defer></script>
+    <script src="../../../../js/themed-figures.js?v=15" defer></script>
+    <script src="../../../../js/concept-popup.js?v=15" defer></script>
 
     <template id="concept-why-brackets">
         <p style="margin:0 0 12px;">You might reasonably object: why write \([\mathbf x]_i\) when
