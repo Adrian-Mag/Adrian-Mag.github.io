@@ -148,7 +148,7 @@ header nav ul li a:hover {
 }
 
 section{
-    background: rgb(58, 69, 80);
+    background: transparent;
     padding: 20px;
     display: flex;
     flex-direction: row;
