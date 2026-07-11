@@ -138,3 +138,55 @@
         font-size: 0.95rem;
     }
 }
+
+
+/* ---------- tappable equation (concept-term wrapping display math) ---------- */
+.eq-tappable {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  border: 1px dashed var(--line-2);
+  border-radius: 12px;
+  padding: 4px 12px 26px;
+  margin: 1.1em 0;
+  transition: border-color .2s ease, background .2s ease, transform .18s ease;
+}
+.eq-tappable:hover, .eq-tappable:focus-visible {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  transform: translateY(-1px);
+}
+.eq-tap-hint {
+  position: absolute;
+  bottom: 7px; right: 14px;
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: eqHintPulse 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes eqHintPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .eq-tap-hint { animation: none; } }
+
+/* notation table inside the popup */
+.concept-notation-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.concept-notation-row:last-child { border-bottom: none; }
+.concept-notation-row .sym { text-align: center; }
+.concept-notation-row .meaning { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+.concept-notation-row .meaning strong { color: var(--text); }
+@media (max-width: 520px) {
+  .concept-notation-row { grid-template-columns: 1fr; gap: 4px; }
+  .concept-notation-row .sym { text-align: left; }
+}

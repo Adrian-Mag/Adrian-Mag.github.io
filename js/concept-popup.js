@@ -99,7 +99,7 @@
         var template = document.getElementById("concept-" + conceptId);
         if (!template) return;
 
-        var titleText = term.textContent.trim();
+        var titleText = term.getAttribute("data-concept-title") || term.textContent.trim();
         dialog.querySelector(".concept-dialog-title").textContent = titleText;
 
         contentEl.innerHTML = "";
