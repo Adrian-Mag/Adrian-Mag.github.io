@@ -197,3 +197,18 @@
   overflow-y: hidden;
   max-width: 100%;
 }
+
+/* ---------- inline concept term (dotted underline trigger) ---------- */
+.concept-term-inline {
+  cursor: pointer;
+  color: var(--accent-bright);
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  border-radius: 3px;
+  transition: color .18s ease, background .18s ease;
+}
+.concept-term-inline:hover, .concept-term-inline:focus-visible {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
