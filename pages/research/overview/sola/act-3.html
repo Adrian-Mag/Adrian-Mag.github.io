@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 3: Averages Need Mass — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=15">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=15">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=15">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=16">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=16">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=16">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=16">
     <meta name="description" content="Act 3 of My Take on SOLA: Unimodularity, the average vector, constrained SOLA for averages, and the rank-one correction.">
     <script>
     MathJax = {
@@ -219,9 +220,13 @@
 
                     <h3>Unimodularity</h3>
 
-                    <p>The condition
-                    \[\int_\Omega R(r)\dd r=1\]
-                    is often called a unimodularity condition. The word sounds slightly complicated, but
+                    <p>The condition</p>
+                    <span class="concept-term eq-tappable" data-concept="unimodularity-objection"
+                          data-concept-title="Doesn&rsquo;t this make the estimator worse?">
+                        \[\int_\Omega R(r)\dd r=1\]
+                        <span class="eq-tap-hint">statistically inclined? tap &#10148;</span>
+                    </span>
+                    <p>This is often called a unimodularity condition. The word sounds slightly complicated, but
                     the idea is simple: the resolving kernel should have unit mass.</p>
 
                     <p>For one average, unimodularity says
@@ -485,10 +490,38 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=15" defer></script>
-    <script src="../../../../js/notes-extras.js?v=15" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=15" defer></script>
-    <script src="../../../../js/nav-menu.js?v=15" defer></script>
-    <script src="../../../../js/themed-figures.js?v=15" defer></script>
+    <script src="../../../../js/ai-assist.js?v=16" defer></script>
+    <script src="../../../../js/notes-extras.js?v=16" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=16" defer></script>
+    <script src="../../../../js/nav-menu.js?v=16" defer></script>
+    <script src="../../../../js/themed-figures.js?v=16" defer></script>
+    <script src="../../../../js/concept-popup.js?v=16" defer></script>
+
+    <template id="concept-unimodularity-objection">
+        <p style="margin:0 0 12px;">If you have a statistics background, you may want to object:
+        <em>&ldquo;This is a step backwards. If \(\widetilde p\) is meant to estimate the target
+        property \((T,m)_{\M}\), plain SOLA is already biased &mdash; the resolving kernel
+        \(R\) is not \(T\), so the output is \((R,m)_{\M}\), not the number I asked for.
+        Bolting on an extra constraint shrinks the feasible set and pushes \(R\) even further
+        from \(T\). Why make a biased estimator worse?&rdquo;</em></p>
+        <p><strong>The objection is correct &mdash; inside its own frame.</strong> If SOLA is read
+        as an estimator of the target property, unimodularity does not help and can genuinely hurt.
+        No argument there.</p>
+        <p><strong>But that frame is not what SOLA is.</strong> The target was never available. The
+        data only carry the quantities \((K_i, m)_{\M}\), so anything you report is a combination
+        of those &mdash; something built from \(\operatorname{span}\{K_i\}\), full stop. SOLA
+        does not create information; it <em>reshuffles</em> it. The honest reading of every SOLA
+        output is: &ldquo;this is \((R,m)_{\M}\), for the \(R\) actually achieved &mdash;
+        interpret it through that kernel, imperfections and all.&rdquo;</p>
+        <p><strong>Seen that way, constraints are a wish list, not a statistical move.</strong>
+        You cannot have the target, but you can state requirements on the kernel you will be
+        interpreted through: <em>I want \(R\) concentrated here; I want it to be a genuine
+        average.</em> Unimodularity is the second wish. It does not improve the estimate of an
+        unreachable number &mdash; it changes <em>what kind of number</em> you report, guaranteeing
+        it passes the constant-model test and can honestly be called an average.</p>
+        <p style="margin-bottom:0;">This &ldquo;reshuffling, not creating&rdquo; view is the running
+        thesis of these notes; Acts 6 and 9 return to it when noise and uncertainty enter the
+        picture.</p>
+    </template>
 </body>
 </html>
