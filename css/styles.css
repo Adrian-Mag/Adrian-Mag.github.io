@@ -17,12 +17,9 @@
 
 body {
     /* Subtle geometric pattern background, as on Home page (no photo) */
-    background-color: #2E3135;
-    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%233a3e43"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.13"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10" fill="none"/></svg>');
-    background-repeat: repeat;
-    background-size: auto;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--ground, #16191F);
+    color: var(--text, #EAEFF6);
+    font-family: var(--sans, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -177,11 +174,7 @@ a:hover{
     text-decoration: underline;
 }
 
-div:not([class]){
-    background: red;
-    display: inline;
-    margin: auto;
-}
+
 
 img.oxf_logo{
     max-width: 100px;
@@ -262,10 +255,26 @@ main {
 .page-header {
     position: relative;
     overflow: hidden;
-    padding: 90px 0 60px 0;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(103,145,190,0.13);
+    min-height: 42vh;
+    padding: 110px 0 56px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: left;
     background: none;
+    border-bottom: 1px solid rgba(143,180,221,0.14);
+}
+
+/* readability scrim: dark only at the bottom where the title sits */
+.page-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(12,14,18,0.10) 0%, rgba(12,14,18,0.04) 42%, rgba(12,14,18,0.82) 100%),
+        radial-gradient(90% 90% at 12% 95%, rgba(12,14,18,0.55), transparent 62%);
 }
 
 .page-header-bg {
@@ -274,8 +283,8 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    filter: brightness(0.95) blur(1.2px);
+    z-index: 0;
+    filter: none !important;   /* kill the old blur so the photo is sharp */
 }
 
 .page-header-content {
@@ -289,43 +298,37 @@ main {
 }
 
 
+.page-header .container { position: relative; z-index: 2; }
+
 .page-header h1 {
-    font-size: 3.2rem;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 0.03em;
-    text-shadow: 0 8px 32px rgba(44,56,80,0.28), 0 2px 0 #4a6da3;
-    margin-bottom: 0.5em;
-    margin-top: 0;
-    background: rgba(60,62,70,0.32);
-    border-radius: 10px;
-    padding: 0.3em 1.2em;
-    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
-    display: inline-block;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+    font-weight: 700;
+    color: #EAF1F9;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.55);
+    margin: 0;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    display: block;
 }
 
-.about-content {
-/* Style the subtitle in the page-header */
-.page-header-content p {
+/* header subtitle / intro paragraphs (notes pages put these in .container) */
+.page-header .container > p {
     position: relative;
     z-index: 2;
-    color: #fff;
-    font-size: 1.3rem;
-    background: rgba(44,56,80,0.32);
-    border-radius: 8px;
-    padding: 0.5em 1.2em;
-    margin-top: 0.5em;
-    box-shadow: 0 2px 12px rgba(103,145,190,0.13);
-    display: inline-block;
+    color: #C6D3E2;
+    font-size: 1.05rem;
+    margin: 0.7em 0 0;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    max-width: 60ch;
 }
-    padding: 80px 0;
-    /* Subtle geometric pattern background using SVG */
-    background-color: #3a3e43;
-    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%233a3e43"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.13"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10" fill="none"/></svg>');
-    background-repeat: repeat;
-    position: relative;
-    overflow: hidden;
-}
+.page-header .container > p a { color: #9BC1E8; }
 
 .about-grid {
     display: grid;
@@ -421,9 +424,7 @@ footer {
 .research-content {
     padding: 80px 0;
     /* Subtle geometric pattern background using SVG */
-    background-color: #3a3e43;
-    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%233a3e43"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.13"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10" fill="none"/></svg>');
-    background-repeat: repeat;
+    background-color: var(--ground, #16191F);
     position: relative;
     overflow: hidden;
 }

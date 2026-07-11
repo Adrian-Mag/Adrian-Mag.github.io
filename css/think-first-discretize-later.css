@@ -151,15 +151,11 @@
 }
 
 .act-band-a {
-    background-color: #3a3e43;
-    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%233a3e43"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.13"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10" fill="none"/></svg>');
-    background-repeat: repeat;
+    background-color: var(--ground, #16191F);
 }
 
 .act-band-b {
-    background-color: #35393d;
-    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="%2335393d"/><path d="M0 20h40M20 0v40" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.10"/><circle cx="20" cy="20" r="8" stroke="%234a6da3" stroke-width="1.2" stroke-opacity="0.08" fill="none"/></svg>');
-    background-repeat: repeat;
+    background-color: var(--ground-2, #1B1F27);
 }
 
 /* ── Act heads ────────────────────────────────────────── */
