@@ -350,7 +350,7 @@ main {
 .part-chip:hover,
 .part-chip:focus {
     background: color-mix(in srgb, var(--accent) 30%, transparent);
-    color: #fff;
+    color: var(--text);
     text-decoration: none;
     transform: translateY(-1px);
 }
