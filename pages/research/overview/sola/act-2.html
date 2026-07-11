@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=13">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=13">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=13">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=13">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=14">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=14">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=14">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=14">
     <meta name="description" content="Act 2 of My Take on SOLA: The resolving kernel, the span limitation, the noiseless unconstrained SOLA problem, and the normal equation.">
     <script>
     MathJax = {
@@ -389,8 +389,12 @@
                     <p>The target map is \(\Tau\). The map actually built from data is
                     \(\mathcal{A}=\mathbf XG\). The SOLA objective is to make these two maps close.</p>
 
-                    <p>The noiseless unconstrained SOLA problem is therefore
-                    \[\mathbf X_0 = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2.\]</p>
+                    <p>The noiseless unconstrained SOLA problem is therefore</p>
+                    <span class="concept-term eq-tappable" data-concept="hs-norm"
+                          data-concept-title="The Hilbert&ndash;Schmidt norm">
+                        \[\mathbf X_0 = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2.\]
+                        <span class="eq-tap-hint">what is \(\|\cdot\|_{\HS}\)? tap &#10148;</span>
+                    </span>
 
                     <p>Here \(\|\cdot\|_{\HS}\) denotes the Hilbert-Schmidt norm. In this
                     finite-property setting, it can be understood as summing the squared mismatch
@@ -535,12 +539,12 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=13" defer></script>
-    <script src="../../../../js/notes-extras.js?v=13" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=13" defer></script>
-    <script src="../../../../js/nav-menu.js?v=13" defer></script>
-    <script src="../../../../js/themed-figures.js?v=13" defer></script>
-    <script src="../../../../js/concept-popup.js?v=13" defer></script>
+    <script src="../../../../js/ai-assist.js?v=14" defer></script>
+    <script src="../../../../js/notes-extras.js?v=14" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=14" defer></script>
+    <script src="../../../../js/nav-menu.js?v=14" defer></script>
+    <script src="../../../../js/themed-figures.js?v=14" defer></script>
+    <script src="../../../../js/concept-popup.js?v=14" defer></script>
 
     <template id="concept-why-brackets">
         <p style="margin:0 0 12px;">You might reasonably object: why write \([\mathbf x]_i\) when
@@ -560,6 +564,32 @@
         <p style="margin-bottom:0;">If you still find the brackets fussy, read \([\mathbf x]_i\)
         as \(x_i\) everywhere &mdash; nothing downstream will break. I just prefer notation that
         never blurs the line between a vector and its entries.</p>
+    </template>
+
+    <template id="concept-hs-norm">
+        <p style="margin:0 0 12px;"><strong>Start with a matrix.</strong> For a finite matrix, the
+        Hilbert&ndash;Schmidt norm is just the Frobenius norm: unroll the matrix into one long vector
+        and take the ordinary Euclidean length,
+        \[\|\mathbf A\|_{\HS}^2 = \sum_{k,i} [\mathbf A]_{ki}^2.\]
+        Nothing exotic &mdash; it treats the matrix as a list of numbers.</p>
+        <p><strong>Now let the columns become functions.</strong> The object
+        \(\Tau-\mathbf XG\) maps a model to \(N_p\) numbers, and its \(k\)th component is
+        represented by the residual kernel \(T_k - R_k\), where
+        \(R_k = \sum_i [\mathbf X]_{ki}K_i\) is the \(k\)th resolving kernel. The
+        Hilbert&ndash;Schmidt norm does exactly what Frobenius did &mdash; sum the squared sizes of
+        the rows &mdash; except each &ldquo;row&rdquo; is now a function, measured in the model-space
+        norm:
+        \[\left\|\Tau-\mathbf XG\right\|_{\HS}^2 = \sum_{k=1}^{N_p}\left\|T_k - R_k\right\|_{\M}^2
+        = \sum_{k=1}^{N_p}\int_\Omega \bigl(T_k(r)-R_k(r)\bigr)^2\,\dd r.\]</p>
+        <p><strong>Why it is the right yardstick here.</strong> It treats every target kernel
+        equally, and the sum decouples: minimizing over \(\mathbf X\) row by row is \(N_p\)
+        independent copies of the scalar problem from earlier in this act. The operator problem is
+        the scalar problem run in parallel &mdash; which is exactly the point of the checkpoint
+        below the equation.</p>
+        <p style="margin-bottom:0;">For the general definition: for an operator \(A\) between
+        Hilbert spaces, \(\|A\|_{\HS}^2 = \sum_j \|Ae_j\|^2\) over any orthonormal basis
+        \(\{e_j\}\) &mdash; the value does not depend on which basis you pick, which is what
+        makes it a legitimate norm on operators rather than an artifact of coordinates.</p>
     </template>
 </body>
 </html>

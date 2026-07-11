@@ -190,3 +190,10 @@
   .concept-notation-row { grid-template-columns: 1fr; gap: 4px; }
   .concept-notation-row .sym { text-align: left; }
 }
+
+/* wide display math inside the dialog scrolls instead of clipping */
+.concept-dialog-content mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
