@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 4: Beyond Averages — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=18">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=18">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=18">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=18">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=19">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=19">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=19">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=19">
     <meta name="description" content="Act 4 of My Take on SOLA: Derivative targets, basis coefficient targets, contrasts, and the general idea of resolving constraints.">
     <script>
     MathJax = {
@@ -177,6 +177,11 @@
                         <em>different</em> kernels with different total mass and different
                         averaging properties. That means the interpretation of the corresponding
                         property changes with position — an undesirable side effect.</p>
+                        <p style="margin-top:0.6em;">A careful reader will already be smiling at
+                        this argument. <span class="concept-term concept-term-inline"
+                        data-concept="touche-targets"
+                        data-concept-title="&ldquo;As if the resolving kernels won&rsquo;t differ anyway&hellip;&rdquo;">If
+                        that is you, tap here</span>.</p>
                     </div>
 
                     <figure class="sola-figure">
@@ -630,12 +635,12 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=18" defer></script>
-    <script src="../../../../js/notes-extras.js?v=18" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=18" defer></script>
-    <script src="../../../../js/nav-menu.js?v=18" defer></script>
-    <script src="../../../../js/themed-figures.js?v=18" defer></script>
-    <script src="../../../../js/concept-popup.js?v=18" defer></script>
+    <script src="../../../../js/ai-assist.js?v=19" defer></script>
+    <script src="../../../../js/notes-extras.js?v=19" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=19" defer></script>
+    <script src="../../../../js/nav-menu.js?v=19" defer></script>
+    <script src="../../../../js/themed-figures.js?v=19" defer></script>
+    <script src="../../../../js/concept-popup.js?v=19" defer></script>
 
     <template id="concept-smooth-compact">
         <p style="margin:0 0 12px;">Two separate requirements, each doing a specific job in the
@@ -658,6 +663,28 @@
         <p style="margin-bottom:0;">Act 3&rsquo;s compact-vs-Gaussian figure is the same
         distinction drawn for averaging kernels; here it decides whether a derivative target can be
         built at all.</p>
+    </template>
+
+    <template id="concept-touche-targets">
+        <p style="margin:0 0 12px;"><em>&ldquo;Haha &mdash; as if the resolving kernels won&rsquo;t
+        have different shapes from one location to another anyway! You tidy up the targets so that
+        &lsquo;the same kernel means the same thing everywhere&rsquo;, but the kernels that are
+        actually achieved vary from place to place no matter what. The position-independent
+        interpretation this remark promises is precisely what SOLA cannot deliver.&rdquo;</em></p>
+        <p><strong>Touch&eacute;.</strong> For SOLA itself, this truly does not matter much. The
+        targets are auxiliary objects &mdash; they model our <em>wishes</em> about the resolving
+        kernels, nothing more. What carries the interpretation of a SOLA output is the achieved
+        kernel \(R_k\), and the achieved kernels will differ from location to location however
+        tidy the wish list is.</p>
+        <p><strong>Where the argument has real force</strong> is in methods that can genuinely
+        constrain the desired property &mdash; for instance, in the presence of prior information.
+        There the target is not merely a wish: comparability of targets across locations translates
+        into comparability of the reported quantities themselves, and a position-dependent effective
+        target is a genuine defect rather than an aesthetic one.</p>
+        <p style="margin-bottom:0;">Even so, it is a good habit for SOLA users too. When you hold
+        \(R_k\) up against \(T_k\) to judge how well a wish was granted, an easily interpretable
+        target &mdash; a clean bump rather than a clipped Gaussian &mdash; keeps the yardstick
+        meaning the same thing everywhere, even though the achieved kernels do not.</p>
     </template>
 </body>
 </html>
