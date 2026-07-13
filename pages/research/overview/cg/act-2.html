@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 2: Rolling Downhill — The Road to Conjugate Gradients — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
+    <link rel="stylesheet" href="../../../../css/cg-explorer.css?v=20">
+    <meta name="description" content="Act 2 of The Road to Conjugate Gradients: gradient descent with exact line search, derived completely — and the zigzag pathology, experienced interactively.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                H: '\\mathcal{H}',
+                Kry: '\\mathcal{K}',
+                ip: ['\\left(#1,\\;#2\\right)', 2],
+                ipA: ['\\left(#1,\\;#2\\right)_{A}', 2],
+                norm: ['\\left\\lVert #1\\right\\rVert', 1],
+                normA: ['\\left\\lVert #1\\right\\rVert_{A}', 1],
+                dd: '\\,\\mathrm{d}',
+                spanop: '\\operatorname{span}',
+                argmin: '\\operatorname*{arg\\,min}',
+                kernel: '\\operatorname{ker}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Act 2: Rolling Downhill — Adrian Mag">
+    <meta property="og:description" content="Gradient descent with exact line search, derived completely — and the zigzag pathology, experienced interactively.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-2.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 2: Rolling Downhill</h1>
+                <p>Gradient descent with exact line search &mdash; the obvious method, and its embarrassing gait.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="conjugate-gradient.html">The Road to Conjugate Gradients</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="conjugate-gradient.html"><span class="part-chip-num">&laquo;</span> Overview</a>
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Landscape</a>
+                <a class="part-chip" href="act-2.html" aria-current="page"><span class="part-chip-num">2</span> Rolling Downhill</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> The Right Geometry</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Never Undo Work</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Conjugate Gradients</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> The Best Descent</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The Most Obvious Algorithm in the World</h2>
+
+                    <p>Act&nbsp;1 left us standing on a hillside with a compass. The landscape is
+                    \(J(v)=\tfrac12\ip{Av}{v}-\ip{f}{v}\); its unique bottom is the solution of
+                    \(Au=f\); and at our current position \(u_k\) the residual
+                    \(r_k = f - Au_k\) points downhill. The plan requires no imagination
+                    whatsoever:</p>
+
+                    <p style="text-align:center;"><em>step in the direction \(r_k\), stop at the
+                    lowest point along that line, repeat.</em></p>
+
+                    <p>The only quantity to determine is how far to step. Write the step as
+                    \(u_{k+1} = u_k + \alpha\, r_k\) and ask which \(\alpha\in\mathbb R\) is
+                    best. &ldquo;Best&rdquo; has an unambiguous meaning here: the \(\alpha\)
+                    that makes \(J\) smallest along the ray. This is called an <em>exact line
+                    search</em>, and for our quadratic landscape it is not an aspiration but a
+                    formula &mdash; the master identity of Act&nbsp;1, with \(v = u_k\) and
+                    \(w = \alpha r_k\), gives
+                    \[\varphi(\alpha) := J(u_k + \alpha r_k)
+                    = J(u_k) \;-\; \alpha\,\ip{r_k}{r_k} \;+\; \tfrac{\alpha^2}{2}\ip{Ar_k}{r_k},\]
+                    where we used \(\ip{Au_k - f}{r_k} = -\ip{r_k}{r_k}\).</p>
+
+                    <p>Look at what this says: restricted to any line, the infinite-dimensional
+                    landscape \(J\) is an ordinary upward-opening parabola in the single real
+                    variable \(\alpha\) (upward-opening because \(\ip{Ar_k}{r_k}>0\) &mdash;
+                    positive definiteness again). Minimizing a parabola is calculus at its most
+                    gentle:
+                    \[\varphi'(\alpha) = -\ip{r_k}{r_k} + \alpha\,\ip{Ar_k}{r_k} = 0
+                    \qquad\Longrightarrow\qquad
+                    \alpha_k = \frac{\ip{r_k}{r_k}}{\ip{Ar_k}{r_k}}.\]</p>
+
+                    <figure class="sola-figure">
+                        <img data-themed="1" src="../../../../media/research/cg/fig_cg2_linesearch.png"
+                             alt="J restricted to the ray through the residual is a parabola in alpha; the optimal step is where the parabola bottoms out.">
+                        <figcaption><span class="sola-figure-label">Figure FC2-1.</span>The line
+                        search in one picture. Along the ray \(u_k + \alpha r_k\), the landscape
+                        is a parabola in \(\alpha\); the optimal step \(\alpha_k\) is where it
+                        bottoms out. Note the units of honesty here: computing \(\alpha_k\) costs
+                        exactly one application of \(A\).</figcaption>
+                    </figure>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Algorithm &mdash; steepest descent</span>
+                        <p>Choose \(u_0\in\H\) and compute \(r_0 = f - Au_0\). Then for
+                        \(k=0,1,2,\dots\):
+                        \begin{align*}
+                        q_k &= A r_k && \text{(the one application of } A\text{)}\\
+                        \alpha_k &= \frac{\ip{r_k}{r_k}}{\ip{q_k}{r_k}} && \text{(step length)}\\
+                        u_{k+1} &= u_k + \alpha_k r_k && \text{(step)}\\
+                        r_{k+1} &= r_k - \alpha_k q_k && \text{(new residual, for free)}
+                        \end{align*}
+                        Stop when \(\norm{r_k}\) is small enough.</p>
+                    </div>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; a method with a birth certificate</span>
+                        <p>&ldquo;Walk downhill&rdquo; is so natural that it has a precise
+                        birthday: Augustin-Louis Cauchy proposed exactly this method in a
+                        four-page note to the French Academy on October 18, 1847
+                        <a href="#ref-cau47">[Cau47]</a> &mdash; motivated, pleasingly for this
+                        site, by the least-squares orbit computations of astronomy. Lemar&eacute;chal&rsquo;s
+                        short commentary <a href="#ref-lem12">[Lem12]</a> tells the story and
+                        reprints the argument in modern notation. What Cauchy could not know is
+                        how badly his method ages as the landscape stiffens &mdash; which is
+                        this act&rsquo;s main event.</p>
+                    </div>
+
+                    <p>The residual update in the last line deserves its one-line justification,
+                    because it is exact, not approximate:
+                    \[r_{k+1} = f - Au_{k+1} = f - A(u_k + \alpha_k r_k) = r_k - \alpha_k A r_k
+                    = r_k - \alpha_k q_k.\]
+                    So each iteration costs <em>one</em> black-box application of \(A\), two inner
+                    products, and two vector updates. Given our toolkit from Act&nbsp;1, it is
+                    hard to imagine spending less.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Everything about this method is greedy and local: look down, take the
+                        best possible step along the steepest line, look down again. Greedy and
+                        local is exactly what you would do lost in fog on a mountainside &mdash;
+                        and, as every hiker knows, it is not how you descend a long narrow
+                        valley.</p>
+                    </div>
+
+                    <h2>Feel It Fail</h2>
+
+                    <p>Before any more theory, drive the method yourself. The panel below shows
+                    the contour map of a two-dimensional slice of the landscape. The slider
+                    controls the <em>stiffness</em> \(\kappa\) of the valley &mdash; how elongated
+                    the contours are; its formal definition comes in a moment. Click anywhere to
+                    drop a starting point, then step.</p>
+
+                    <div class="cg-panel" data-cg="descent" data-kappa="12">
+                        <div class="cgx-header">
+                            <span class="cgx-title">Try it: rolling downhill</span>
+                            <span class="cgx-sub">Each press of <em>Take one step</em> performs one
+                            exact line search along the residual. Start with \(\kappa\) small
+                            &mdash; the method looks perfectly competent. Then raise \(\kappa\)
+                            and watch the gait change.</span>
+                        </div>
+                        <noscript><p>This interactive panel requires JavaScript.</p></noscript>
+                    </div>
+
+                    <p>Two experiments to make sure you see it:</p>
+                    <ul>
+                        <li>Set \(\kappa = 1\) (a perfectly round bowl). One step lands exactly on
+                        the solution, from anywhere. Hold that memory; it becomes important in
+                        Act&nbsp;3.</li>
+                        <li>Set \(\kappa = 40\) and start near a &ldquo;corner&rdquo; of the
+                        valley. The method crosses the valley floor over and over, descending a
+                        little each time, converging with excruciating politeness.</li>
+                    </ul>
+
+                    <h2>The Staircase, Autopsied</h2>
+
+                    <figure class="sola-figure">
+                        <img data-themed="1" src="../../../../media/research/cg/fig_cg2_zigzag.png"
+                             alt="Steepest descent on an elongated valley: the path is a staircase of right-angled segments; inset shows the slow decay of the energy error.">
+                        <figcaption><span class="sola-figure-label">Figure FC2-2.</span>Twenty steps
+                        of steepest descent on a valley with \(\kappa=20\), started at a
+                        worst-case point. The path is a staircase; the inset shows the energy
+                        error creeping down by a constant factor per step.</figcaption>
+                    </figure>
+
+                    <p>The staircase pattern in the figure is not an accident of this example
+                    &mdash; it is a theorem, and its proof is one line. The line search chose
+                    \(\alpha_k\) by setting \(\varphi'(\alpha_k)=0\). But differentiate
+                    \(\varphi\) directly:
+                    \[\varphi'(\alpha)
+                    = -\ip{f - A(u_k+\alpha r_k)}{r_k},\]
+                    which at \(\alpha=\alpha_k\) is \(-\ip{r_{k+1}}{r_k}\). So the stopping
+                    condition of each line search says precisely:
+                    \[\ip{r_{k+1}}{r_k} = 0.\]</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>Exact line search doesn&rsquo;t merely permit the right-angled turns
+                        &mdash; it <em>mandates</em> them. Stopping at the bottom of the parabola
+                        means the new downhill direction has no component along the old one.
+                        Each direction is used, exhausted, abandoned&hellip; and then, two steps
+                        later, needed again.</p>
+                    </div>
+
+                    <h3>Quantifying the pain</h3>
+
+                    <p>How slow is slow? The classical answer (we state it now and earn a sharper
+                    view of it in Act&nbsp;6) is governed by the <em>condition number</em>. Let
+                    \(\gamma\) and \(\Gamma\) be the best constants with
+                    \[\gamma\,\norm{v}^2 \;\le\; \ip{Av}{v} \;\le\; \Gamma\,\norm{v}^2
+                    \qquad\text{for all } v\in\H,\]
+                    and set \(\kappa = \Gamma/\gamma \ge 1\). Geometrically, \(\kappa\) is the
+                    squared aspect ratio of the contour ellipses &mdash; exactly the stiffness
+                    slider of the panel above. Steepest descent then satisfies
+                    \[\normA{u_{k+1}-u} \;\le\; \frac{\kappa-1}{\kappa+1}\;\normA{u_k-u},\]
+                    where \(\normA{\cdot}\) is the energy norm that Act&nbsp;3 will
+                    formally introduce (for now: a norm in which descent of \(J\) is exactly
+                    shrinkage of the error). The bound is sharp &mdash; the figure above was
+                    started at a point that achieves it. For the worst-case analysis behind this
+                    bound see Shewchuk <a href="#ref-she94">[She94]</a>, &sect;6.2, or Nocedal
+                    &amp; Wright <a href="#ref-nw06">[NW06]</a>, Ch.&nbsp;3.</p>
+
+                    <p>Numbers make the formula honest. Per step, the error keeps a factor
+                    \((\kappa-1)/(\kappa+1)\):</p>
+                    <ul>
+                        <li>\(\kappa=10\): factor \(0.818\) &mdash; about 11 steps per decimal digit. Tolerable.</li>
+                        <li>\(\kappa=100\): factor \(0.980\) &mdash; about 114 steps per digit. Painful.</li>
+                        <li>\(\kappa=10^4\): factor \(0.9998\) &mdash; about 11,500 steps <em>per digit</em>. Unusable.</li>
+                    </ul>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>Large \(\kappa\) is not a rare disease; it is the default state of the
+                        problems we care about. Discretized diffusion operators have
+                        \(\kappa\) growing like \(h^{-2}\) under mesh refinement (the classical
+                        stiffness-matrix estimates; see Brenner &amp; Scott
+                        <a href="#ref-bs08">[BS08]</a>); and the condition number of the normal
+                        equations \(G^*G\) is <em>exactly the square</em> of that of \(G\)
+                        (Saad <a href="#ref-saa03">[Saa03]</a>, &sect;8.1). The regime
+                        where steepest descent dies is exactly the regime where we live.</p>
+                    </div>
+
+                    <h3>Naming the crime</h3>
+
+                    <p>Here is the observation that unlocks everything, so let us state it
+                    carefully. Look at the staircase again. The method minimizes along a
+                    direction &mdash; call it \(p\) &mdash; and, at that moment, is genuinely at
+                    the lowest point of the landscape along \(p\). Two steps later it is walking
+                    along \(p\) again. Why? Because the intervening step, taken along a different
+                    direction, <em>ruined</em> the first minimization: after moving, the point is
+                    no longer optimal with respect to \(p\), and the work must be redone. And
+                    then redone again. The staircase is the picture of a method perpetually
+                    repairing damage it inflicts on itself.</p>
+
+                    <p>Once said out loud, the demand practically states itself:</p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Steepest descent is optimal for one step and disastrous over many,
+                        because each new step un-does previous minimizations. What we should ask
+                        of a method: <em>once a direction has been dealt with, no later step may
+                        spoil it.</em></p>
+                    </div>
+
+                    <p>Is that demand even satisfiable? Surprisingly, it translates into a clean,
+                    checkable condition on pairs of directions &mdash; but seeing that requires
+                    understanding first <em>why</em> the right angles of the staircase were the
+                    wrong right angles. That is the business of Act&nbsp;3, and it is where the
+                    true geometry of the problem finally shows itself.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-cau47">Augustin-Louis Cauchy (1847). &ldquo;M&eacute;thode
+                        g&eacute;n&eacute;rale pour la r&eacute;solution des syst&egrave;mes
+                        d&rsquo;&eacute;quations simultan&eacute;es.&rdquo; <em>Comptes Rendus de
+                        l&rsquo;Acad&eacute;mie des Sciences de Paris</em> 25, 536&ndash;538.
+                        <a href="http://sites.mathdoc.fr/cgi-bin/oeitem?id=OE_CAUCHY_1_10_399_1" target="_blank" rel="noopener">full text (&OElig;uvres compl&egrave;tes I.10, 399&ndash;402, Mathdoc)</a></li>
+                        <li id="ref-lem12">Claude Lemar&eacute;chal (2012). &ldquo;Cauchy and the
+                        Gradient Method.&rdquo; <em>Documenta Mathematica</em>, Extra Volume ISMP,
+                        251&ndash;254.
+                        <a href="https://ems.press/content/book-chapter-files/27368?nt=1" target="_blank" rel="noopener">free PDF (EMS Press)</a></li>
+                        <li id="ref-she94">Jonathan R. Shewchuk (1994). &ldquo;An Introduction to
+                        the Conjugate Gradient Method Without the Agonizing Pain.&rdquo; Carnegie
+                        Mellon University. Steepest-descent convergence analysis: &sect;6.
+                        <a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf" target="_blank" rel="noopener">free PDF (CMU)</a></li>
+                        <li id="ref-nw06">Jorge Nocedal and Stephen J. Wright (2006).
+                        <em>Numerical Optimization</em>, 2nd edition. Springer. Line searches and
+                        steepest descent: Ch.&nbsp;3.
+                        <a href="https://doi.org/10.1007/978-0-387-40065-5" target="_blank" rel="noopener">doi:10.1007/978-0-387-40065-5</a></li>
+                        <li id="ref-saa03">Yousef Saad (2003). <em>Iterative Methods for Sparse
+                        Linear Systems</em>, 2nd edition. SIAM. Conditioning of the normal
+                        equations: &sect;8.1.
+                        <a href="https://doi.org/10.1137/1.9780898718003" target="_blank" rel="noopener">doi:10.1137/1.9780898718003</a> &middot;
+                        <a href="https://www-users.cse.umn.edu/~saad/IterMethBook_2ndEd.pdf" target="_blank" rel="noopener">free PDF (author&rsquo;s edition)</a></li>
+                        <li id="ref-bs08">Susanne C. Brenner and L. Ridgway Scott (2008).
+                        <em>The Mathematical Theory of Finite Element Methods</em>, 3rd edition.
+                        Springer. Conditioning of stiffness matrices under mesh refinement.
+                        <a href="https://doi.org/10.1007/978-0-387-75934-0" target="_blank" rel="noopener">doi:10.1007/978-0-387-75934-0</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-1.html"><span class="arrow">&larr;</span> Act 1: The Landscape Hidden in the Equation</a>
+                        <a class="part-prevnext-btn" href="act-3.html">Act 3: The Right Geometry <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+    <script src="../../../../js/themed-figures.js?v=20" defer></script>
+    <script src="../../../../js/cg-explorer.js?v=20" defer></script>
+</body>
+</html>

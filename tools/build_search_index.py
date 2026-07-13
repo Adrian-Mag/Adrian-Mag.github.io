@@ -30,6 +30,7 @@ SERIES_DIRS = [
     ("pages/research/overview/think-first", "Think First, Discretize Later"),
     ("pages/research/overview/bayes", "Bayes, Measure-Theoretically"),
     ("pages/research/overview/frequentist", "Bayesian vs Frequentist"),
+    ("pages/research/overview/cg", "The Road to Conjugate Gradients"),
 ]
 EXTRA_PAGES = [
     ("pages/research/overview/index.html", None),

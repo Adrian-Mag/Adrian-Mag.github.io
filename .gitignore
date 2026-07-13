@@ -19,3 +19,6 @@ media/papers/*.pdf
 
 # full-resolution photo originals (kept locally, never served/committed)
 photo-originals/
+
+# local reference copies for citation checking (never publish)
+references/

@@ -1,0 +1,330 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsthm}
+
+\geometry{margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+\title{The Conjugate Gradient Method in the Most General Setting}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Setting}
+
+Let \( \mathcal{H} \) be a real Hilbert space with inner product \( \langle \cdot, \cdot \rangle \) and norm \( \| \cdot \| \). Let \( A : \mathcal{H} \to \mathcal{H} \) be a bounded, self-adjoint, and positive-definite linear operator, and let \( f \in \mathcal{H} \).
+
+We consider the problem of finding \( u \in \mathcal{H} \) such that:
+\[
+A u = f.
+\]
+
+\section{Variational Formulation}
+
+This problem is equivalent to minimizing the quadratic functional:
+\[
+J(v) = \frac{1}{2} \langle A v, v \rangle - \langle f, v \rangle.
+\]
+
+Because \( A \) is self-adjoint and positive-definite, \( J \) is strictly convex and has a unique minimizer, which is the solution of \( A u = f \).
+
+\section{The Conjugate Gradient Method}
+
+Let \( u_0 \in \mathcal{H} \) be an initial guess. We define:
+
+\begin{align*}
+r_0 &= f - A u_0 \quad \text{(residual)}, \\
+p_0 &= r_0 \quad \text{(initial search direction)}.
+\end{align*}
+
+Then, for \( k = 0, 1, 2, \dots \), iterate:
+
+\begin{enumerate}[label=(\arabic*)]
+    \item Compute step size:
+    \[
+    \alpha_k = \frac{\langle r_k, r_k \rangle}{\langle A p_k, p_k \rangle}.
+    \]
+    
+    \item Update solution:
+    \[
+    u_{k+1} = u_k + \alpha_k p_k.
+    \]
+    
+    \item Update residual:
+    \[
+    r_{k+1} = r_k - \alpha_k A p_k.
+    \]
+    
+    \item Check for convergence: if \( \|r_{k+1}\| \) is below a given tolerance, stop.
+    
+    \item Compute conjugation factor:
+    \[
+    \beta_k = \frac{\langle r_{k+1}, r_{k+1} \rangle}{\langle r_k, r_k \rangle}.
+    \]
+    
+    \item Update direction:
+    \[
+    p_{k+1} = r_{k+1} + \beta_k p_k.
+    \]
+\end{enumerate}
+
+\section{Remarks}
+
+\begin{itemize}
+    \item The method only requires the application of \( A \) to elements in \( \mathcal{H} \), not an explicit representation.
+    
+    \item Convergence is guaranteed in at most \( n \) steps if \( \mathcal{H} \) is \( n \)-dimensional, but in infinite dimensions, the method must be truncated based on a tolerance.
+    
+    \item In practice, for problems in infinite-dimensional spaces (e.g., PDEs), one typically discretizes the problem using finite-dimensional subspaces (e.g., finite element or spectral methods) and applies CG to the resulting system.
+    
+    \item If \( A \) is not positive-definite or not self-adjoint, the conjugate gradient method is not applicable. Alternatives include MINRES or GMRES.
+\end{itemize}
+
+\section{Discretization}
+
+To compute numerically, we select a sequence of finite-dimensional subspaces \( V_h \subset \mathcal{H} \) and solve the projected problem:
+\[
+\text{Find } u_h \in V_h \text{ such that } \langle A u_h, v_h \rangle = \langle f, v_h \rangle \quad \forall v_h \in V_h.
+\]
+This leads to a linear system \( A_h \mathbf{u}_h = \mathbf{f}_h \), where CG can be applied in matrix or operator form.
+
+\section{Derivation}
+
+\subsection{Motivation: Steepest Descent}
+
+Starting from an initial guess \( u_0 \), one might attempt to minimize \( J \) using steepest descent. The direction of steepest descent is given by the negative gradient of \( J \) at \( u_k \), which is
+\[
+\nabla J(u_k) = A u_k - f = -r_k,
+\]
+where we define the residual
+\[
+r_k = f - A u_k.
+\]
+Thus, the steepest descent update is
+\[
+u_{k+1} = u_k + \alpha_k r_k,
+\]
+where \( \alpha_k \) is chosen to minimize \( J(u_k + \alpha r_k) \). Setting the derivative of \( J(u_k + \alpha r_k) \) with respect to \( \alpha \) to zero, we get:
+\[
+\frac{d}{d\alpha} J(u_k + \alpha r_k) = \langle A(u_k + \alpha r_k), r_k \rangle - \langle f, r_k \rangle = \langle A r_k, r_k \rangle \alpha - \langle r_k, r_k \rangle.
+\]
+Setting this to zero yields:
+\[
+\alpha_k = \frac{\langle r_k, r_k \rangle}{\langle A r_k, r_k \rangle}.
+\]
+
+\textbf{Problem:} Steepest descent suffers from slow convergence, especially when \( A \) is ill-conditioned. Hence, we improve the method by enforcing conjugacy of directions.
+
+\subsection{Conjugate Directions and Optimality}
+
+We seek to build a sequence of directions \( \{p_k\} \subset \mathcal{H} \) such that:
+
+\begin{itemize}
+    \item \( p_k \in \operatorname{span}\{r_0, A r_0, \dots, A^{k} r_0\} \) (Krylov subspace),
+    \item \( \langle A p_i, p_j \rangle = 0 \) for \( i \neq j \) (mutual \( A \)-conjugacy).
+\end{itemize}
+
+Then, the iterates are defined by:
+\[
+u_{k+1} = u_k + \alpha_k p_k,
+\]
+and we choose \( \alpha_k \) to minimize \( J(u_k + \alpha p_k) \). This gives:
+\[
+\alpha_k = \frac{\langle r_k, p_k \rangle}{\langle A p_k, p_k \rangle}.
+\]
+We now define the new residual:
+\[
+r_{k+1} = r_k - \alpha_k A p_k.
+\]
+
+\subsubsection*{Why this residual update?}
+
+Note:
+\[
+r_{k+1} = f - A u_{k+1} = f - A(u_k + \alpha_k p_k) = r_k - \alpha_k A p_k.
+\]
+So this is not a guess — it's an exact consequence of the update to \( u_{k+1} \).
+
+\subsection{Constructing Conjugate Directions}
+
+We now derive how to build \( p_{k+1} \) from \( r_{k+1} \) and \( p_k \) so that \( p_{k+1} \) remains \( A \)-conjugate to the previous directions.
+
+We propose:
+\[
+p_{k+1} = r_{k+1} + \beta_k p_k,
+\]
+and we determine \( \beta_k \) such that \( \langle A p_{k+1}, p_k \rangle = 0 \). Substituting:
+\[
+\langle A (r_{k+1} + \beta_k p_k), p_k \rangle = 0 \Rightarrow \langle A r_{k+1}, p_k \rangle + \beta_k \langle A p_k, p_k \rangle = 0.
+\]
+Solving for \( \beta_k \), we get:
+\[
+\beta_k = - \frac{\langle A r_{k+1}, p_k \rangle}{\langle A p_k, p_k \rangle}.
+\]
+
+\textbf{Alternative formula:} In practice, we use a numerically cheaper and equivalent expression (which follows from orthogonality of residuals):
+\[
+\beta_k = \frac{\langle r_{k+1}, r_{k+1} \rangle}{\langle r_k, r_k \rangle}.
+\]
+
+This is valid due to:
+\[
+\langle r_{k+1}, p_k \rangle = 0,
+\]
+which can be shown inductively.
+
+\subsection{Final Conjugate Gradient Algorithm}
+
+We summarize the derived steps:
+
+\begin{enumerate}[label=(\arabic*)]
+    \item Choose \( u_0 \in \mathcal{H} \), compute \( r_0 = f - A u_0 \), set \( p_0 = r_0 \).
+    
+    \item For \( k = 0, 1, 2, \dots \), do:
+    \begin{align*}
+    \alpha_k &= \frac{\langle r_k, r_k \rangle}{\langle A p_k, p_k \rangle}, \\
+    u_{k+1} &= u_k + \alpha_k p_k, \\
+    r_{k+1} &= r_k - \alpha_k A p_k, \\
+    \beta_k &= \frac{\langle r_{k+1}, r_{k+1} \rangle}{\langle r_k, r_k \rangle}, \\
+    p_{k+1} &= r_{k+1} + \beta_k p_k.
+    \end{align*}
+    
+    \item Stop when \( \| r_k \| \) is below tolerance.
+\end{enumerate}
+
+\subsection{Geometric and Optimality Interpretation}
+
+At each iteration, \( u_k \) minimizes \( J \) over the \( k \)-th Krylov subspace:
+\[
+\mathcal{K}_k = \operatorname{span}\{r_0, A r_0, \dots, A^{k-1} r_0\}.
+\]
+
+Thus, CG is a Galerkin method in a Krylov subspace, selecting the best approximation in that space with respect to the energy norm \( \| v \|_A := \sqrt{\langle A v, v \rangle} \).
+
+
+\section{Further details on deriving \(\alpha_k\)}
+
+We aim to minimize the energy functional
+\[
+J(v) = \frac{1}{2} \langle A v, v \rangle - \langle f, v \rangle
+\]
+along the search direction \( d_k \in \mathcal{H} \), starting from the current iterate \( u_k \). That is, we define:
+\[
+\phi(\alpha) := J(u_k + \alpha d_k)
+\]
+and we want to choose \( \alpha_k \) that minimizes \( \phi(\alpha) \).
+
+\paragraph{Step 1: Expand \( \phi(\alpha) \).}
+
+Using bilinearity and symmetry of the inner product and of \( A \), we have:
+\begin{align*}
+\phi(\alpha)
+&= \frac{1}{2} \langle A(u_k + \alpha d_k), u_k + \alpha d_k \rangle - \langle f, u_k + \alpha d_k \rangle \\
+&= \frac{1}{2} \left[ \langle A u_k, u_k \rangle + 2\alpha \langle A u_k, d_k \rangle + \alpha^2 \langle A d_k, d_k \rangle \right] \\
+&\quad - \langle f, u_k \rangle - \alpha \langle f, d_k \rangle.
+\end{align*}
+
+\paragraph{Step 2: Differentiate with respect to \( \alpha \).}
+
+\[
+\phi'(\alpha) = \langle A u_k, d_k \rangle - \langle f, d_k \rangle + \alpha \langle A d_k, d_k \rangle.
+\]
+
+\paragraph{Step 3: Specialize to \( d_k = r_k = f - A u_k \).}
+
+Substitute \( d_k = r_k \), and note that \( A u_k = f - r_k \), so:
+\[
+\langle A u_k, r_k \rangle = \langle f, r_k \rangle - \langle r_k, r_k \rangle.
+\]
+
+Then,
+\begin{align*}
+\phi'(\alpha)
+&= \left( \langle f, r_k \rangle - \langle r_k, r_k \rangle \right) - \langle f, r_k \rangle + \alpha \langle A r_k, r_k \rangle \\
+&= - \langle r_k, r_k \rangle + \alpha \langle A r_k, r_k \rangle.
+\end{align*}
+
+\paragraph{Step 4: Set derivative to zero.}
+
+Set \( \phi'(\alpha_k) = 0 \) to minimize \( \phi \). Then:
+\[
+\alpha_k = \frac{\langle r_k, r_k \rangle}{\langle A r_k, r_k \rangle}.
+\]
+
+\section*{Further derivation of \texorpdfstring{$\alpha_k$}{alpha\_k} in the Conjugate Gradient Method}
+
+At iteration \( k \), we seek to compute the next approximation \( u_{k+1} \) as:
+\[
+u_{k+1} = u_k + \alpha_k p_k,
+\]
+where \( p_k \in \mathcal{H} \) is the current search direction. To find the optimal step size \( \alpha_k \), we minimize the energy functional along this direction:
+\[
+\phi(\alpha) := J(u_k + \alpha p_k),
+\]
+where
+\[
+J(v) = \frac{1}{2} \langle A v, v \rangle - \langle f, v \rangle.
+\]
+
+\paragraph{Step 1: Expand \( \phi(\alpha) \).}
+
+\begin{align*}
+\phi(\alpha)
+&= \frac{1}{2} \langle A(u_k + \alpha p_k), u_k + \alpha p_k \rangle - \langle f, u_k + \alpha p_k \rangle \\
+&= \frac{1}{2} \left[ \langle A u_k, u_k \rangle + 2\alpha \langle A u_k, p_k \rangle + \alpha^2 \langle A p_k, p_k \rangle \right] \\
+&\quad - \langle f, u_k \rangle - \alpha \langle f, p_k \rangle.
+\end{align*}
+
+\paragraph{Step 2: Differentiate with respect to \( \alpha \).}
+
+\[
+\phi'(\alpha) = \langle A u_k, p_k \rangle - \langle f, p_k \rangle + \alpha \langle A p_k, p_k \rangle.
+\]
+
+\paragraph{Step 3: Use the definition of the residual.}
+
+Recall the residual at step \( k \) is defined as:
+\[
+r_k = f - A u_k \quad \Rightarrow \quad \langle A u_k, p_k \rangle = \langle f, p_k \rangle - \langle r_k, p_k \rangle.
+\]
+Substituting into \( \phi'(\alpha) \), we get:
+\begin{align*}
+\phi'(\alpha)
+&= (\langle f, p_k \rangle - \langle r_k, p_k \rangle) - \langle f, p_k \rangle + \alpha \langle A p_k, p_k \rangle \\
+&= - \langle r_k, p_k \rangle + \alpha \langle A p_k, p_k \rangle.
+\end{align*}
+
+\paragraph{Step 4: Solve for the minimizer.}
+
+Set \( \phi'(\alpha_k) = 0 \), then:
+\[
+\alpha_k = \frac{\langle r_k, p_k \rangle}{\langle A p_k, p_k \rangle}.
+\]
+
+\paragraph{Residual Update.}
+
+Once \( \alpha_k \) is computed, the new iterate is:
+\[
+u_{k+1} = u_k + \alpha_k p_k,
+\]
+and the new residual becomes:
+\begin{align*}
+r_{k+1} &= f - A u_{k+1} = f - A(u_k + \alpha_k p_k) \\
+&= f - A u_k - \alpha_k A p_k = r_k - \alpha_k A p_k.
+\end{align*}
+
+\paragraph{Conclusion:}
+
+The step size \( \alpha_k \) is chosen to minimize the energy functional along the \( A \)-conjugate direction \( p_k \), and the residual update follows directly from the definition of \( u_{k+1} \). This ensures that \( r_{k+1} \perp p_k \), preserving the orthogonality structure that underpins the efficiency of the conjugate gradient method.
+
+
+
+\end{document}

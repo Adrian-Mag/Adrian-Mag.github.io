@@ -18,7 +18,8 @@
         "sola": { landing: "my-take-on-sola.html", title: "My Take on SOLA" },
         "think-first": { landing: "think-first-discretize-later.html", title: "Think First, Discretize Later" },
         "bayes": { landing: "bayes-measure-theoretically.html", title: "Bayes, Measure-Theoretically" },
-        "frequentist": { landing: "bayesian-frequentist.html", title: "Bayesian vs Frequentist" }
+        "frequentist": { landing: "bayesian-frequentist.html", title: "Bayesian vs Frequentist" },
+        "cg": { landing: "conjugate-gradient.html", title: "The Road to Conjugate Gradients" }
     };
 
     function detect() {

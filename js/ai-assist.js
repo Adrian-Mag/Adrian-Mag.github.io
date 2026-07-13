@@ -68,6 +68,17 @@
                 "part-1.html", "part-2.html", "part-3.html",
                 "part-4.html", "part-5.html"
             ]
+        },
+        "cg": {
+            title: "The Road to Conjugate Gradients",
+            landing: "conjugate-gradient.html",
+            companion: "ai-companion.txt",
+            intent: "These notes derive the conjugate gradient method as a sequence of forced moves, starting from gradient descent, entirely in a real Hilbert space (no matrices until discretization). The pedagogical claim: every CG formula is the unique answer to an unavoidable question — the line search is a parabola minimum, conjugacy is the no-spoiling condition, the short recurrence follows from Krylov structure, and the result is optimal in the energy norm. Preserve the order of the argument; do not present CG as a recipe of update formulas.",
+            pages: [
+                "conjugate-gradient.html",
+                "act-1.html", "act-2.html", "act-3.html",
+                "act-4.html", "act-5.html", "act-6.html"
+            ]
         }
     };
 

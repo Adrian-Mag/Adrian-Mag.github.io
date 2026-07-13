@@ -184,7 +184,7 @@
 }
 .concept-notation-row:last-child { border-bottom: none; }
 .concept-notation-row .sym { text-align: center; }
-.concept-notation-row .meaning { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+.concept-notation-row .meaning { color: var(--muted); font-size: 0.95rem; line-height: 1.6; min-width: 0; }
 .concept-notation-row .meaning strong { color: var(--text); }
 @media (max-width: 520px) {
   .concept-notation-row { grid-template-columns: 1fr; gap: 4px; }

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 4: Never Undo Your Work — The Road to Conjugate Gradients — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
+    <link rel="stylesheet" href="../../../../css/cg-explorer.css?v=20">
+    <meta name="description" content="Act 4 of The Road to Conjugate Gradients: the method of conjugate directions — permanent progress, the expanding-subspace theorem, and finite termination.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                H: '\\mathcal{H}',
+                Kry: '\\mathcal{K}',
+                ip: ['\\left(#1,\\;#2\\right)', 2],
+                ipA: ['\\left(#1,\\;#2\\right)_{A}', 2],
+                norm: ['\\left\\lVert #1\\right\\rVert', 1],
+                normA: ['\\left\\lVert #1\\right\\rVert_{A}', 1],
+                dd: '\\,\\mathrm{d}',
+                spanop: '\\operatorname{span}',
+                argmin: '\\operatorname*{arg\\,min}',
+                kernel: '\\operatorname{ker}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Act 4: Never Undo Your Work — Adrian Mag">
+    <meta property="og:description" content="The method of conjugate directions — permanent progress, the expanding-subspace theorem, and finite termination.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-4.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 4: Never Undo Your Work</h1>
+                <p>Conjugate directions: line searches whose progress is permanent.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="conjugate-gradient.html">The Road to Conjugate Gradients</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="conjugate-gradient.html"><span class="part-chip-num">&laquo;</span> Overview</a>
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Landscape</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Rolling Downhill</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> The Right Geometry</a>
+                <a class="part-chip" href="act-4.html" aria-current="page"><span class="part-chip-num">4</span> Never Undo Work</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Conjugate Gradients</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> The Best Descent</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>The Design Specification</h2>
+
+                    <p>Acts 2 and 3 leave us holding a precise design brief. We want a method
+                    that, like steepest descent, is built from line searches (they are cheap, and
+                    the parabola formula makes them exact), but whose directions
+                    \(p_0, p_1, p_2, \dots\) are chosen so that no line search can damage an
+                    earlier one. Act&nbsp;3 told us exactly what that requires:
+                    \[\ipA{p_i}{p_j} = \ip{Ap_i}{p_j} = 0 \qquad\text{for all } i\neq j.\]
+                    A family of directions satisfying this is called <em>\(A\)-conjugate</em>
+                    (or just conjugate). For the moment, suppose someone hands us such a family
+                    &mdash; where it comes from is Act&nbsp;5&rsquo;s problem, and respecting that
+                    order of questions is exactly how the classical authors got here too: the
+                    general &ldquo;method of conjugate directions&rdquo; (the
+                    <em>cd-method</em>) is set up before conjugate gradients in the original
+                    paper of Hestenes and Stiefel <a href="#ref-hs52">[HS52]</a>, &sect;&sect;3&ndash;4.</p>
+
+                    <p>One small generalization of Act&nbsp;2 is needed: the line search along an
+                    arbitrary direction \(p_k\) (not necessarily the residual). The master
+                    identity with \(w = \alpha p_k\) gives
+                    \[J(u_k + \alpha p_k) = J(u_k) - \alpha\ip{r_k}{p_k}
+                    + \tfrac{\alpha^2}{2}\ip{Ap_k}{p_k},\]
+                    an upward parabola again, with minimum at
+                    \[\alpha_k = \frac{\ip{r_k}{p_k}}{\ip{Ap_k}{p_k}},\]
+                    and, exactly as before, the stopping condition of the search reads
+                    \(\ip{r_{k+1}}{p_k} = 0\): the new residual is orthogonal (plain,
+                    Euclidean orthogonal!) to the direction just searched.</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Algorithm &mdash; conjugate directions</span>
+                        <p>Given \(u_0\) and pairwise \(A\)-conjugate directions
+                        \(p_0,p_1,p_2,\dots\); compute \(r_0 = f-Au_0\), then for
+                        \(k=0,1,2,\dots\):
+                        \begin{align*}
+                        \alpha_k &= \frac{\ip{r_k}{p_k}}{\ip{Ap_k}{p_k}},\\
+                        u_{k+1} &= u_k + \alpha_k p_k,\\
+                        r_{k+1} &= r_k - \alpha_k A p_k.
+                        \end{align*}</p>
+                    </div>
+
+                    <h2>What Permanence Buys: the Expanding-Subspace Theorem</h2>
+
+                    <p>Now let us cash the design in. The claim is that the no-spoiling property
+                    upgrades the method from &ldquo;greedy on a line&rdquo; to &ldquo;optimal on
+                    an ever-growing subspace&rdquo;:</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Theorem &mdash; expanding subspaces</span>
+                        <p>After \(k\) steps of the conjugate directions method,
+                        \[\ip{r_k}{p_j} = 0 \quad\text{for all } j &lt; k,\]
+                        and consequently \(u_k\) minimizes \(J\) over the entire affine subspace
+                        \[u_0 + \spanop\{p_0, p_1, \dots, p_{k-1}\}.\]
+                        Progress is cumulative: each direction is dealt with once, and stays
+                        dealt with forever.</p>
+                        <p style="font-size:0.88rem; margin-top:0.5em;">(The orthogonality
+                        statement is Theorem 4:1 of <a href="#ref-hs52">[HS52]</a>; the
+                        &ldquo;expanding subspace&rdquo; framing and name follow Luenberger
+                        &mdash; see <a href="#ref-ly16">[LY16]</a>, the chapter on conjugate
+                        direction methods.)</p>
+                    </div>
+
+                    <p>The proof is short enough to enjoy. We show \(\ip{r_k}{p_j}=0\) for
+                    \(j&lt;k\) by induction on \(k\). For \(j = k-1\) this is just the stopping
+                    condition of the most recent line search. For \(j &lt; k-1\), use the residual
+                    update:
+                    \[\ip{r_k}{p_j} = \ip{r_{k-1} - \alpha_{k-1}Ap_{k-1}}{p_j}
+                    = \underbrace{\ip{r_{k-1}}{p_j}}_{=\,0\ \text{(induction)}}
+                    \;-\; \alpha_{k-1}\underbrace{\ip{Ap_{k-1}}{p_j}}_{=\,0\ \text{(conjugacy)}} = 0.\]
+                    Both kill shots are exactly the two ingredients we designed in: line searches
+                    give the first zero, conjugacy the second. Nothing else is used.</p>
+
+                    <p>Why does residual-orthogonality mean minimization over the whole subspace?
+                    Because \(J\) restricted to the affine subspace is again a bowl, and its
+                    minimum is characterized by the derivative vanishing along every direction of
+                    the subspace: \(\ip{Au_k - f}{p_j} = -\ip{r_k}{p_j} = 0\) for each \(j&lt;k\).
+                    That is precisely what we proved.</p>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Steepest descent answers one question per step and then forgets it.
+                        Conjugate directions answer one question per step and <em>keep every
+                        previous answer</em>. After \(k\) steps, \(k\) questions are permanently
+                        closed &mdash; the method is provably the best it could possibly be using
+                        those \(k\) directions.</p>
+                    </div>
+
+                    <h3>Finite termination</h3>
+
+                    <p>In an \(n\)-dimensional space, the payoff is spectacular. Conjugate
+                    directions are automatically linearly independent (if
+                    \(\sum_j c_j p_j = 0\), taking the \(A\)-inner product with \(p_i\) forces
+                    \(c_i\ip{Ap_i}{p_i}=0\), so \(c_i=0\)). Hence \(n\) of them span the whole
+                    space &mdash; and after \(n\) steps the residual is orthogonal to
+                    <em>everything</em>, which forces \(r_n = 0\):
+                    \[\text{the method solves an } n\text{-dimensional problem in exactly } n
+                    \text{ steps. No } \kappa \text{ anywhere.}\]</p>
+
+                    <p>Compare this with Act&nbsp;2&rsquo;s arithmetic: steepest descent needed
+                    11,500 steps <em>per digit</em> at \(\kappa=10^4\); conjugate directions need
+                    \(n\) steps, <em>total</em>, at any \(\kappa\) whatsoever. The condition
+                    number has not been beaten yet &mdash; it will sneak back in Act&nbsp;6 when
+                    we truncate early &mdash; but the pathology of the staircase is gone at the
+                    root.</p>
+
+                    <h2>See It: Any First Direction, Two Steps</h2>
+
+                    <p>On our two-dimensional playground, the theorem says something almost
+                    provocative: <em>whatever</em> first direction \(p_0\) you pick &mdash;
+                    steep, shallow, absurd &mdash; the conjugacy condition determines \(p_1\), and
+                    the second line search lands exactly on the solution. Try to break it:</p>
+
+                    <div class="cg-panel" data-cg="conjugate" data-kappa="12">
+                        <div class="cgx-header">
+                            <span class="cgx-title">Try it: the two-step guarantee</span>
+                            <span class="cgx-sub">Drag the angle slider to choose the first
+                            direction; the dotted line through the start shows your choice. The
+                            method line-searches along it, computes the unique \(A\)-conjugate
+                            second direction, and finishes. The ghost path is steepest descent
+                            from the same start, for scale.</span>
+                        </div>
+                        <noscript><p>This interactive panel requires JavaScript.</p></noscript>
+                    </div>
+
+                    <figure class="sola-figure">
+                        <img data-themed="1" src="../../../../media/research/cg/fig_cg4_twostep.png"
+                             alt="Two steps along conjugate directions reach the exact solution while the ghost steepest-descent path takes 45 zigzag steps on the same landscape.">
+                        <figcaption><span class="sola-figure-label">Figure FC4-1.</span>The still
+                        version, for the record: a deliberately generic first direction, the
+                        forced \(A\)-conjugate second direction, and the exact solution in two
+                        steps &mdash; against 45 steps of the steepest-descent staircase from the
+                        same start.</figcaption>
+                    </figure>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; what the picture is really showing</span>
+                        <p>Recall the stretched world of Act&nbsp;3: conjugate directions are
+                        perpendicular on the honest map. On that map, the two steps you are
+                        watching are utterly boring &mdash; walk along one axis of a round bowl,
+                        then along the perpendicular axis, done. All the apparent cleverness in
+                        the original coordinates is just ordinary Cartesian common sense,
+                        transported through the lens \(A^{1/2}\). Good methods usually look like
+                        this: obvious in the right variables, magical in the wrong ones.</p>
+                    </div>
+
+                    <h2>The One Missing Ingredient</h2>
+
+                    <p>Let us take honest inventory of what we have and what we lack.</p>
+
+                    <p><strong>Have:</strong> a complete, provably optimal iteration &mdash;
+                    <em>given</em> a conjugate family \(\{p_k\}\).</p>
+
+                    <p><strong>Lack:</strong> the family. And the obvious ways to get one are all
+                    disqualified by the black-box constraint of Act&nbsp;1:</p>
+                    <ul>
+                        <li><em>Eigenvectors of \(A\)</em> are conjugate (even orthogonal), but
+                        computing them is vastly harder than solving \(Au=f\).</li>
+                        <li><em>Gram&ndash;Schmidt on a fixed basis</em> (\(A\)-orthogonalize
+                        \(e_1, e_2, \dots\)) works in principle, but each new direction must be
+                        orthogonalized against <em>all</em> previous ones: the cost grows
+                        quadratically, every direction must be stored &mdash; and in an
+                        infinite-dimensional \(\H\) there is no finite basis to start from.</li>
+                        <li><em>Choosing directions in advance</em> ignores everything the
+                        iteration learns along the way. The landscape talks to us at every step
+                        &mdash; through the residual &mdash; and a pre-committed basis refuses to
+                        listen.</li>
+                    </ul>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Conjugate line searches make progress permanent, minimize over an
+                        expanding subspace, and terminate in \(n\) steps in \(n\) dimensions. The
+                        sole remaining question: <em>where do conjugate directions come from, at
+                        black-box prices?</em></p>
+                    </div>
+
+                    <p>The answer will come from the only place it can: the residuals, the one
+                    new piece of information each iteration produces. In Act&nbsp;5 we
+                    \(A\)-orthogonalize the residual stream &mdash; and discover that the
+                    infinitely long Gram&ndash;Schmidt formula collapses, by structure and not by
+                    luck, to two terms. That collapse <em>is</em> the conjugate gradient
+                    method.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-hs52">Magnus R. Hestenes and Eduard Stiefel (1952).
+                        &ldquo;Methods of Conjugate Gradients for Solving Linear Systems.&rdquo;
+                        <em>Journal of Research of the National Bureau of Standards</em> 49(6),
+                        409&ndash;436. Conjugate directions and their orthogonality/termination
+                        properties: &sect;&sect;3&ndash;4 (Theorem 4:1 in particular).
+                        <a href="https://doi.org/10.6028/jres.049.044" target="_blank" rel="noopener">doi:10.6028/jres.049.044</a> &middot;
+                        <a href="https://nvlpubs.nist.gov/nistpubs/jres/049/jresv49n6p409_A1b.pdf" target="_blank" rel="noopener">free PDF (NIST)</a></li>
+                        <li id="ref-ly16">David G. Luenberger and Yinyu Ye (2016). <em>Linear and
+                        Nonlinear Programming</em>, 4th edition. Springer. Conjugate direction
+                        methods and the expanding subspace theorem.
+                        <a href="https://doi.org/10.1007/978-3-319-18842-3" target="_blank" rel="noopener">doi:10.1007/978-3-319-18842-3</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-3.html"><span class="arrow">&larr;</span> Act 3: The Right Geometry</a>
+                        <a class="part-prevnext-btn" href="act-5.html">Act 5: The Conjugate Gradient Method <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+    <script src="../../../../js/themed-figures.js?v=20" defer></script>
+    <script src="../../../../js/cg-explorer.js?v=20" defer></script>
+</body>
+</html>

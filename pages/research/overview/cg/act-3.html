@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 3: The Right Geometry — The Road to Conjugate Gradients — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
+    <link rel="stylesheet" href="../../../../css/cg-explorer.css?v=20">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=20">
+    <meta name="description" content="Act 3 of The Road to Conjugate Gradients: the zigzag autopsied — the landscape measures perpendicularity with A, and the energy inner product is born.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                H: '\\mathcal{H}',
+                Kry: '\\mathcal{K}',
+                ip: ['\\left(#1,\\;#2\\right)', 2],
+                ipA: ['\\left(#1,\\;#2\\right)_{A}', 2],
+                norm: ['\\left\\lVert #1\\right\\rVert', 1],
+                normA: ['\\left\\lVert #1\\right\\rVert_{A}', 1],
+                dd: '\\,\\mathrm{d}',
+                spanop: '\\operatorname{span}',
+                argmin: '\\operatorname*{arg\\,min}',
+                kernel: '\\operatorname{ker}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Act 3: The Right Geometry — Adrian Mag">
+    <meta property="og:description" content="The zigzag autopsied: the landscape measures perpendicularity with A, and the energy inner product is born.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-3.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 3: The Right Geometry</h1>
+                <p>The zigzag autopsied: right angles measured with the wrong ruler.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="conjugate-gradient.html">The Road to Conjugate Gradients</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="conjugate-gradient.html"><span class="part-chip-num">&laquo;</span> Overview</a>
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Landscape</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Rolling Downhill</a>
+                <a class="part-chip" href="act-3.html" aria-current="page"><span class="part-chip-num">3</span> The Right Geometry</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Never Undo Work</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Conjugate Gradients</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> The Best Descent</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What Exactly Does &ldquo;Spoiling&rdquo; Mean?</h2>
+
+                    <p>Act&nbsp;2 ended with an accusation: each step of steepest descent spoils
+                    the minimizations before it. Accusations deserve precision. So let us compute,
+                    in general, when one line search damages another &mdash; the calculation takes
+                    four lines and its answer is the pivot of the entire series.</p>
+
+                    <p>Suppose that at the point \(v\in\H\) we have just finished an exact line
+                    search along a direction \(p\): among all points \(v + tp\), our \(v\) has the
+                    least \(J\). From the parabola picture of Act&nbsp;2, that fact has an exact
+                    algebraic expression &mdash; the derivative along \(p\) vanishes:
+                    \[\ip{Av - f}{p} = 0.\]</p>
+
+                    <p>Now the method moves on: it takes a step of size \(\beta\) along some new
+                    direction \(q\), arriving at \(v' = v + \beta q\). Question: standing at
+                    \(v'\), are we <em>still</em> at a minimum along \(p\)? Same test &mdash;
+                    differentiate \(J\) along \(p\) at the new point:
+                    \[\ip{Av' - f}{p}
+                    = \ip{A(v+\beta q) - f}{p}
+                    = \underbrace{\ip{Av - f}{p}}_{=\,0\ \text{(just finished)}}
+                    + \beta\,\ip{Aq}{p}
+                    = \beta\,\ip{Aq}{p}.\]</p>
+
+                    <p>Read the result. The old minimization survives the new step if and only if
+                    \[\ip{Aq}{p} = 0.\]
+                    Not \(\ip{q}{p}=0\) &mdash; the Euclidean right angles that steepest descent
+                    so scrupulously produces are simply <em>not the relevant condition</em>. The
+                    landscape inserts an \(A\) between the two directions before judging them
+                    perpendicular.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson</span>
+                        <p>&ldquo;Don&rsquo;t spoil finished work&rdquo; is not a slogan; it is
+                        the equation \(\ip{Aq}{p}=0\). Directions satisfying it are called
+                        <em>\(A\)-orthogonal</em> or <em>conjugate</em>. Steepest descent fails
+                        precisely because it enforces orthogonality without the \(A\).</p>
+                    </div>
+
+                    <h2>The Inner Product the Problem Wanted All Along</h2>
+
+                    <p>The combination \(\ip{Aq}{p}\) earned its own name, so we give it
+                    permanent notation: for \(v,w\in\H\), define
+                    \[\ipA{v}{w} := \ip{Av}{w}.\]
+                    This is not merely a convenient abbreviation. Because \(A\) is
+                    <span class="concept-term concept-term-inline" data-concept="energy-ip"
+                    data-concept-title="Why this is a legitimate inner product">self-adjoint and
+                    positive definite, \(\ipA{\cdot}{\cdot}\) is a genuine inner product</span>
+                    on \(\H\) &mdash; symmetric, bilinear, and positive &mdash; with its own
+                    induced norm
+                    \[\normA{v} = \sqrt{\ipA{v}{v}} = \sqrt{\ip{Av}{v}}.\]
+                    It is called the <em>energy inner product</em>, and \(\normA{\cdot}\) the
+                    <em>energy norm</em>: for the physical examples of Act&nbsp;1
+                    (heat flow, elasticity), \(\tfrac12\normA{v}^2\) literally is the physical
+                    energy stored in the configuration \(v\).</p>
+
+                    <p>Why should we accept a second inner product on the same space, when
+                    \(\H\) came with a perfectly good one? Because the landscape itself uses this
+                    one. Here is the fact that settles it. Take the master identity of Act&nbsp;1,
+                    centered at the solution \(u\) (so the linear term dies), and read it for an
+                    arbitrary point \(v = u + w\):
+                    \[J(v) - J(u) = \tfrac12\ip{A(v-u)}{v-u} = \tfrac12\,\normA{v-u}^2.\]</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson &mdash; the error identity</span>
+                        <p>\[J(v) - J(u) = \tfrac12\normA{v-u}^2.\]
+                        The height of the landscape above its floor <em>is</em> the squared
+                        energy-norm distance to the solution. Descending \(J\) and shrinking the
+                        \(A\)-norm error are not two goals that happen to align &mdash; they are
+                        the same number. Every convergence statement in this series
+                        (including the \((\kappa-1)/(\kappa+1)\) rate quoted in Act&nbsp;2) is
+                        naturally a statement about \(\normA{\cdot}\).</p>
+                    </div>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>The problem \(Au=f\) comes equipped with its own private geometry, in
+                        which distance is measured by \(A\). The Euclidean inner product we used
+                        in Act&nbsp;2 was <em>our</em> choice, not the problem&rsquo;s. The
+                        zigzag is what it looks like when a navigator insists on the wrong
+                        map.</p>
+                    </div>
+
+                    <h2>The World Where the Bowl Is Round</h2>
+
+                    <p>There is a wonderfully concrete way to see this &ldquo;private
+                    geometry&rdquo;. Since \(A\) is self-adjoint and positive definite, it has a
+                    unique self-adjoint positive square root \(A^{1/2}\) (in finite dimensions:
+                    keep the eigenvectors, take square roots of the eigenvalues; the operator case
+                    is the spectral theorem doing the same thing &mdash; the classical
+                    &ldquo;square-root lemma&rdquo; of operator theory, see Reed &amp; Simon
+                    <a href="#ref-rs80">[RS80]</a>). Change variables:
+                    \[w = A^{1/2} v.\]
+                    In the new variables, the energy inner product of two elements is just their
+                    ordinary inner product, since
+                    \(\ipA{v_1}{v_2}=\ip{A^{1/2}v_1}{A^{1/2}v_2}\), and the landscape
+                    becomes, up to an additive constant,
+                    \[J = \tfrac12\norm{w - w_\star}^2 + \text{const},
+                    \qquad w_\star = A^{1/2}u.\]
+                    A perfectly round bowl. Every contour a circle.</p>
+
+                    <p>And now recall the very first experiment from the panel of Act&nbsp;2: on
+                    a round bowl (\(\kappa=1\)), steepest descent converges in a single step,
+                    from anywhere &mdash; in a round bowl, downhill points straight at the
+                    center. So in the \(w\)-world our problem is <em>trivial</em>. The
+                    entire difficulty of the original problem is the mismatch between two rulers:
+                    the Euclidean ruler our method used, and the \(A\)-ruler in which the bowl is
+                    round.</p>
+
+                    <figure class="sola-figure">
+                        <img data-themed="1" src="../../../../media/research/cg/fig_cg3_stretch.png"
+                             alt="Left: elliptical contours with the zigzagging descent path. Right: the same problem in stretched coordinates where contours are circles; the mapped path visibly aims away from the center while the true downhill points straight at it.">
+                        <figcaption><span class="sola-figure-label">Figure FC3-1.</span>One descent,
+                        two maps. Left: our coordinates &mdash; elliptical contours, right-angled
+                        staircase. Right: the same iterates replotted in \(w = A^{1/2}v\)
+                        coordinates, where the landscape is round. In this honest map, the
+                        direction steepest descent actually takes is visibly <em>not</em> aimed at
+                        the center: the method is optimizing the wrong geometry.</figcaption>
+                    </figure>
+
+                    <p>Two remarks before you play with this picture interactively. (Readers who
+                    want this picture drawn many more times, from many more angles, will find it
+                    developed at length in Shewchuk&rsquo;s classic tutorial
+                    <a href="#ref-she94">[She94]</a>.)</p>
+
+                    <p>First: \(A\)-orthogonality demystifies completely in the \(w\)-world.
+                    Two directions \(p, q\) are \(A\)-orthogonal exactly when their images
+                    \(A^{1/2}p,\ A^{1/2}q\) are <em>ordinary</em>-orthogonal:
+                    \[\ipA{p}{q} = \ip{A^{1/2}p}{A^{1/2}q}.\]
+                    Conjugate directions are simply directions that are perpendicular <em>on the
+                    honest map</em>. The exotic-sounding condition \(\ip{Aq}{p}=0\) is the most
+                    familiar condition in geometry, seen through a distorting lens.</p>
+
+                    <p>Second: it is tempting to conclude &ldquo;just compute \(A^{1/2}\), work in
+                    \(w\), win.&rdquo; But our toolkit does not contain \(A^{1/2}\) &mdash; we
+                    cannot even apply it without an eigendecomposition, which is far more
+                    expensive than the problem we are trying to solve. The stretched world is a
+                    <em>thinking</em> device, not a computing device. The challenge is therefore
+                    sharply posed: achieve the round-world behaviour while computing only in the
+                    original variables, with the original toolkit.</p>
+
+                    <div class="cg-panel" data-cg="geometry" data-kappa="12">
+                        <div class="cgx-header">
+                            <span class="cgx-title">Try it: two maps of one descent</span>
+                            <span class="cgx-sub">Run a few steps, then flip between
+                            <em>our map</em> and <em>A&rsquo;s map</em>. On A&rsquo;s map the
+                            contours are circles, the dashed line shows where downhill
+                            <em>should</em> go &mdash; and you can watch the method aim
+                            elsewhere. The click-to-restart and \(\kappa\) slider still work in
+                            both views.</span>
+                        </div>
+                        <noscript><p>This interactive panel requires JavaScript.</p></noscript>
+                    </div>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The no-spoiling condition is \(\ipA{q}{p}=0\): perpendicularity in the
+                        energy inner product, i.e.\ on the map where the bowl is round. The error
+                        we are actually shrinking is \(\normA{v-u}\), and it is the same thing as
+                        the height of \(J\).</p>
+                    </div>
+
+                    <p>The diagnosis is complete, and it comes with a prescription. We should run
+                    line searches along directions that are pairwise \(A\)-orthogonal &mdash;
+                    then, by the four-line computation that opened this act, no step can ever
+                    spoil a previous one. What does a method built on that principle look like,
+                    and what does &ldquo;progress that cannot be undone&rdquo; buy us precisely?
+                    That is Act&nbsp;4 &mdash; including a small interactive miracle: pick
+                    <em>any</em> first direction on a two-dimensional landscape, and watch the
+                    method finish in exactly two steps.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-she94">Jonathan R. Shewchuk (1994). &ldquo;An Introduction to
+                        the Conjugate Gradient Method Without the Agonizing Pain.&rdquo; Carnegie
+                        Mellon University. The stretched-coordinates picture of this act is drawn
+                        there at leisurely, generous length.
+                        <a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf" target="_blank" rel="noopener">free PDF (CMU)</a></li>
+                        <li id="ref-rs80">Michael Reed and Barry Simon (1980). <em>Methods of
+                        Modern Mathematical Physics I: Functional Analysis</em>, revised and
+                        enlarged edition. Academic Press. Spectral theorem and the square-root
+                        lemma for positive operators.
+                        <a href="https://www.sciencedirect.com/book/9780125850506/i-functional-analysis" target="_blank" rel="noopener">book page (Elsevier/ScienceDirect)</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="act-2.html"><span class="arrow">&larr;</span> Act 2: Rolling Downhill</a>
+                        <a class="part-prevnext-btn" href="act-4.html">Act 4: Never Undo Your Work <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+    <script src="../../../../js/themed-figures.js?v=20" defer></script>
+    <script src="../../../../js/cg-explorer.js?v=20" defer></script>
+    <script src="../../../../js/concept-popup.js?v=20" defer></script>
+
+    <template id="concept-energy-ip">
+        <p style="margin:0 0 10px;">An inner product on a real vector space must be bilinear,
+        symmetric, and positive definite. Check all three for
+        \(\ipA{v}{w} = \ip{Av}{w}\):</p>
+        <div class="concept-notation-row">
+            <span class="sym">bilinear</span>
+            <span class="meaning">Immediate: \(A\) is linear and \(\ip{\cdot}{\cdot}\) is
+            bilinear, so \(\ipA{\cdot}{\cdot}\) is linear in each slot.</span>
+        </div>
+        <div class="concept-notation-row">
+            <span class="sym">symmetric</span>
+            <span class="meaning">This is <strong>exactly self-adjointness</strong>:
+            \[\ipA{v}{w} = \ip{Av}{w} = \ip{Aw}{v} = \ipA{w}{v}.\]
+            A non-self-adjoint \(A\) would break symmetry, and the whole
+            energy-geometry picture with it &mdash; this is the structural reason CG requires
+            self-adjointness.</span>
+        </div>
+        <div class="concept-notation-row">
+            <span class="sym">positive definite</span>
+            <span class="meaning">This is <strong>exactly positive definiteness of
+            \(A\)</strong>: \(\ipA{v}{v} = \ip{Av}{v} \ge \gamma\norm{v}^2 &gt; 0\) for
+            \(v \neq 0\). The lower bound \(\gamma&gt;0\) additionally makes the two norms
+            equivalent,
+            \[\sqrt{\gamma}\,\norm{v} \;\le\; \normA{v} \;\le\; \sqrt{\Gamma}\,\norm{v},\]
+            so convergence in one norm is convergence in the other.</span>
+        </div>
+        <p style="margin:10px 0 0;">So the two assumptions we placed on \(A\) in Act&nbsp;1 are
+        precisely the two axioms that make \(\ipA{\cdot}{\cdot}\) an inner product. Nothing was
+        wasted.</p>
+    </template>
+</body>
+</html>

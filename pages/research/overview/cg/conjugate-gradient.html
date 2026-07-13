@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Road to Conjugate Gradients — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
+    <meta name="description" content="From gradient descent to the conjugate gradient method in six forced moves — derived in a Hilbert space, where the method actually lives.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                H: '\\mathcal{H}',
+                Kry: '\\mathcal{K}',
+                ip: ['\\left(#1,\\;#2\\right)', 2],
+                ipA: ['\\left(#1,\\;#2\\right)_{A}', 2],
+                norm: ['\\left\\lVert #1\\right\\rVert', 1],
+                normA: ['\\left\\lVert #1\\right\\rVert_{A}', 1],
+                dd: '\\,\\mathrm{d}',
+                spanop: '\\operatorname{span}',
+                argmin: '\\operatorname*{arg\\,min}',
+                kernel: '\\operatorname{ker}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="The Road to Conjugate Gradients — Adrian Mag">
+    <meta property="og:description" content="From gradient descent to the conjugate gradient method in six forced moves — derived in a Hilbert space, where the method actually lives.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/conjugate-gradient.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>The Road to Conjugate Gradients</h1>
+                <p>Gradient descent, diagnosed and repaired &mdash; until the conjugate gradient method assembles itself.</p>
+            </div>
+        </section>
+
+        <!-- ACT NAVIGATION -->
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="act-1.html"><span class="part-chip-num">1</span> The Landscape</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Rolling Downhill</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> The Right Geometry</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Never Undo Work</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Conjugate Gradients</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> The Best Descent</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>What these notes are</h2>
+
+                    <p>The conjugate gradient method is usually met as a recipe: five update
+                    formulas, memorized or copied, with a promise that they work astonishingly
+                    well. The formulas <em>do</em> work astonishingly well. But presented as a
+                    recipe, CG looks like a trick &mdash; and tricks are hard to trust, hard to
+                    remember, and impossible to adapt.</p>
+
+                    <p>These notes take the opposite route. We start from the humblest possible
+                    question &mdash; <em>how do you solve \(Au=f\) when all you can do is apply
+                    \(A\)?</em> &mdash; and let each difficulty force the next idea. Gradient
+                    descent is the obvious first attempt. Watching it fail, precisely and
+                    visually, tells us exactly what to fix. By the time the conjugate gradient
+                    method appears, there is nothing left to invent: every formula is the unique
+                    answer to a question we could not avoid asking.</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">The promise</span>
+                        <p>By the end, you will not have memorized the conjugate gradient method.
+                        You will be unable to imagine it any other way.</p>
+                    </div>
+
+                    <p>Everything is done in a real Hilbert space, not in \(\mathbb R^n\).
+                    This is not generality for its own sake: the method genuinely never needs a
+                    matrix, a basis, or a mesh &mdash; only the action of an operator. Seeing
+                    that clearly is half the point, and it connects directly to the
+                    <a href="../think-first/think-first-discretize-later.html">Think First,
+                    Discretize Later</a> series: the method belongs to the problem, not to its
+                    discretization.</p>
+
+                    <h2>The road, in one paragraph</h2>
+
+                    <p>An operator equation is secretly a landscape: solving \(Au=f\) is the same
+                    as finding the bottom of a bowl (Act&nbsp;1). The obvious move is to walk
+                    downhill (Act&nbsp;2) &mdash; but downhill zigzags, and the autopsy shows why:
+                    it measures &ldquo;perpendicular&rdquo; with the wrong ruler (Act&nbsp;3). The
+                    repair is a single design rule &mdash; never undo finished work &mdash; which
+                    forces a new geometry on the search directions (Act&nbsp;4). Feeding that rule
+                    with the only raw material the problem provides, the residuals, collapses into
+                    a two-term recurrence (Act&nbsp;5). What remains is to understand why the
+                    result is not merely good but <em>optimal</em>, and what survives in infinite
+                    dimensions (Act&nbsp;6).</p>
+
+                    <h2>What you need to bring</h2>
+
+                    <p>Comfort with inner products and norms, and a willingness to read slowly.
+                    Everything else &mdash; energy functionals, conjugacy, Krylov subspaces,
+                    convergence bounds &mdash; is built on the page, from scratch. If you have
+                    read any of the other series on this site you will recognize the style: no
+                    step is allowed to feel like magic.</p>
+
+                    <h2>Notation and conventions</h2>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; Notation</span>
+                        <p>We follow the same typographic doctrine as the other series on this
+                        site.</p>
+                        <ul>
+                            <li><strong>The space.</strong> \(\H\) is a real Hilbert space with
+                            inner product \(\ip{\cdot}{\cdot}\) and norm
+                            \(\norm{\cdot}=\sqrt{\ip{\cdot}{\cdot}}\). Elements of \(\H\)
+                            (which may be functions) are lightface italic: \(u\), \(v\), \(r_k\),
+                            \(p_k\).</li>
+                            <li><strong>Operators.</strong> Lightface capitals, e.g.
+                            \(A:\H\to\H\). We never write a matrix until we explicitly
+                            discretize; boldface (\(\mathbf A\), \(\mathbf u\)) is reserved for
+                            finite-dimensional objects, and appears only in Act&nbsp;6.</li>
+                            <li><strong>The energy inner product.</strong> Once earned (Act&nbsp;3),
+                            \(\ipA{u}{v} := \ip{Au}{v}\) and
+                            \(\normA{v}=\sqrt{\ipA{v}{v}}\).</li>
+                            <li><strong>Iterates.</strong> Subscripts count iterations:
+                            \(u_k\) is the \(k\)th iterate, \(r_k = f - Au_k\) its residual,
+                            \(p_k\) the \(k\)th search direction.</li>
+                        </ul>
+                    </div>
+
+                    <h2>The six acts</h2>
+
+                    <p><strong>Act&nbsp;1 &mdash; <a href="act-1.html">The Landscape Hidden in the
+                    Equation</a>.</strong>
+                    Operator equations are everywhere, and the operator is usually a black box:
+                    we can apply it, never invert it. The equation \(Au=f\) is reformulated as
+                    the minimization of a quadratic functional \(J\) &mdash; a bowl whose unique
+                    bottom is the solution, and whose downhill direction is the computable
+                    residual.</p>
+
+                    <p><strong>Act&nbsp;2 &mdash; <a href="act-2.html">Rolling Downhill</a>.</strong>
+                    Gradient descent with exact line search, derived completely: the step length
+                    is where a parabola bottoms out. An interactive panel lets you feel the
+                    zigzag, and the convergence rate \((\kappa-1)/(\kappa+1)\) quantifies the
+                    pain. The autopsy begins: every turn is a perfect right angle.</p>
+
+                    <p><strong>Act&nbsp;3 &mdash; <a href="act-3.html">The Right
+                    Geometry</a>.</strong>
+                    Why right angles betray us: the landscape measures distance with
+                    \(A\), not with the Euclidean ruler. The energy inner product
+                    \(\ipA{\cdot}{\cdot}\) is earned, the bowl becomes round in stretched
+                    coordinates, and &ldquo;don&rsquo;t spoil finished work&rdquo; acquires an
+                    exact mathematical form: \(A\)-orthogonality.</p>
+
+                    <p><strong>Act&nbsp;4 &mdash; <a href="act-4.html">Never Undo Your
+                    Work</a>.</strong>
+                    The method of conjugate directions: line searches along pairwise
+                    \(A\)-orthogonal directions make progress permanent &mdash; each direction is
+                    dealt with once, forever. In \(n\) dimensions the method terminates in \(n\)
+                    steps. An interactive panel: pick <em>any</em> first direction; two steps
+                    finish the job.</p>
+
+                    <p><strong>Act&nbsp;5 &mdash; <a href="act-5.html">The Conjugate Gradient
+                    Method</a>.</strong>
+                    Where do conjugate directions come from? The residuals are the only new
+                    information the operator ever gives us. Orthogonalizing them, almost every
+                    Gram&ndash;Schmidt term vanishes &mdash; a structural miracle that leaves a
+                    two-term recurrence. The full algorithm assembles itself, and a race panel
+                    shows it demolishing gradient descent.</p>
+
+                    <p><strong>Act&nbsp;6 &mdash; <a href="act-6.html">The Best Possible
+                    Descent</a>.</strong>
+                    CG is optimal &mdash; no method using the same information can do better in
+                    the energy norm. The polynomial picture explains the famous
+                    \(\sqrt{\kappa}\) convergence and why clustered spectra collapse in a few
+                    steps. Finally: what survives in infinite dimensions, what discretization
+                    does and does not change, and where the honest boundary of the theory lies.</p>
+
+                    <h2>Sources &amp; further reading</h2>
+
+                    <p>The series is self-contained, but nothing in it is new &mdash; only the
+                    staging is. Each act closes with the references behind its specific claims;
+                    the landmarks, all clickable and all worth the detour, are these:</p>
+
+                    <ul style="font-size:0.95rem; line-height:1.75;">
+                        <li id="ref-hs52">Magnus R. Hestenes and Eduard Stiefel (1952).
+                        &ldquo;Methods of Conjugate Gradients for Solving Linear Systems.&rdquo;
+                        <em>Journal of Research of the National Bureau of Standards</em> 49(6),
+                        409&ndash;436. The original paper &mdash; still remarkably readable.
+                        <a href="https://doi.org/10.6028/jres.049.044" target="_blank" rel="noopener">doi:10.6028/jres.049.044</a> &middot;
+                        <a href="https://nvlpubs.nist.gov/nistpubs/jres/049/jresv49n6p409_A1b.pdf" target="_blank" rel="noopener">free PDF (NIST)</a></li>
+                        <li id="ref-she94">Jonathan R. Shewchuk (1994). &ldquo;An Introduction to
+                        the Conjugate Gradient Method Without the Agonizing Pain.&rdquo; Carnegie
+                        Mellon University. The kindred spirit of these notes, with many more
+                        pictures.
+                        <a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf" target="_blank" rel="noopener">free PDF (CMU)</a></li>
+                        <li id="ref-go89">Gene H. Golub and Dianne P. O&rsquo;Leary (1989).
+                        &ldquo;Some History of the Conjugate Gradient and Lanczos Algorithms:
+                        1948&ndash;1976.&rdquo; <em>SIAM Review</em> 31(1), 50&ndash;102. Who did
+                        what, when, and why &mdash; the full story.
+                        <a href="https://doi.org/10.1137/1031003" target="_blank" rel="noopener">doi:10.1137/1031003</a> &middot;
+                        <a href="https://www.cs.umd.edu/users/oleary/reprints/j28.pdf" target="_blank" rel="noopener">author&rsquo;s reprint PDF</a></li>
+                        <li id="ref-saa03">Yousef Saad (2003). <em>Iterative Methods for Sparse
+                        Linear Systems</em>, 2nd edition. SIAM. The standard modern reference for
+                        everything Krylov.
+                        <a href="https://doi.org/10.1137/1.9780898718003" target="_blank" rel="noopener">doi:10.1137/1.9780898718003</a> &middot;
+                        <a href="https://www-users.cse.umn.edu/~saad/IterMethBook_2ndEd.pdf" target="_blank" rel="noopener">free PDF (author&rsquo;s edition)</a></li>
+                        <li id="ref-tb97">Lloyd N. Trefethen and David Bau III (1997).
+                        <em>Numerical Linear Algebra</em>. SIAM. The best-written background for
+                        the linear-algebra side.
+                        <a href="https://doi.org/10.1137/1.9780898719574" target="_blank" rel="noopener">doi:10.1137/1.9780898719574</a></li>
+                        <li id="ref-nw06">Jorge Nocedal and Stephen J. Wright (2006).
+                        <em>Numerical Optimization</em>, 2nd edition. Springer. The optimization
+                        side: line searches, steepest descent, CG and beyond.
+                        <a href="https://doi.org/10.1007/978-0-387-40065-5" target="_blank" rel="noopener">doi:10.1007/978-0-387-40065-5</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+</body>
+</html>

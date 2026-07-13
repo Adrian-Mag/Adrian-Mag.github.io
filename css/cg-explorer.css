@@ -1,0 +1,162 @@
+/* Interactive descent panels for "The Road to Conjugate Gradients".
+   Same visual chrome as the kernel game: a token-styled card that works
+   in both themes. */
+
+.cg-panel {
+    max-width: 860px;
+    margin: 2.5rem auto;
+    padding: 1.4rem 1.6rem 1.6rem;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line-2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.30);
+}
+
+.cgx-header { margin-bottom: 1rem; }
+
+.cgx-title {
+    display: block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    margin-bottom: 0.3rem;
+}
+
+.cgx-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.cgx-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px 18px;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+
+.cgx-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 210px;
+}
+
+.cgx-slider-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.cgx-slider {
+    flex: 1;
+    accent-color: var(--accent);
+    min-width: 0;
+    appearance: auto;
+}
+
+.cgx-slider-value {
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    min-width: 38px;
+    text-align: right;
+}
+
+.cgx-btn {
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.cgx-btn:hover { background: color-mix(in srgb, var(--text) 16%, transparent); }
+
+.cgx-btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+
+.cgx-btn-primary:hover { filter: brightness(1.12); }
+
+.cgx-viewtoggle {
+    display: inline-flex;
+    border: 1px solid var(--line-2);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.cgx-view-btn {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--muted);
+    border: none;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.cgx-view-btn.is-on {
+    background: var(--accent);
+    color: #fff;
+}
+
+.cgx-check {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+}
+
+.cgx-check input { accent-color: var(--accent); }
+
+.cgx-canvas,
+.cgx-chart {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--text) 3%, transparent);
+    cursor: crosshair;
+}
+
+.cgx-chart {
+    margin-top: 10px;
+    cursor: default;
+}
+
+.cgx-status {
+    margin-top: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--muted);
+    border-left: 3px solid var(--line-2);
+    padding-left: 12px;
+    min-height: 2.5em;
+}
+
+.cgx-hint {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+    .cg-panel { padding: 1rem; }
+    .cgx-slider-row { min-width: 160px; }
+}

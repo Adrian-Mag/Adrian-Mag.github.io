@@ -1,0 +1,88 @@
+READING COMPANION — "The Road to Conjugate Gradients"
+by Adrian Mag (adrian-mag.github.io)
+
+WHAT THIS SERIES IS
+A six-act derivation of the conjugate gradient (CG) method that starts
+from a very gentle introduction to gradient descent and lets each
+difficulty force the next idea. The goal is that no formula feels like a
+trick: by Act 5 the reader should feel that CG could not have been
+otherwise. Everything is done function-analytically, in a real Hilbert
+space H, with A a bounded, self-adjoint, positive definite operator that
+can only be APPLIED (black box), never inverted or written as a matrix.
+
+THE NARRATIVE ARC (keep this order when explaining)
+  Act 1 — The Landscape Hidden in the Equation.
+    Au = f is reformulated as minimizing J(v) = (1/2)(Av,v) - (f,v).
+    The "master identity" J(v+w) = J(v) + (Av-f, w) + (1/2)(Aw,w) is the
+    engine of the whole series. Solving <=> minimizing; the residual
+    r = f - Av is the (computable) steepest-descent direction.
+  Act 2 — Rolling Downhill.
+    Gradient descent with EXACT line search: along a ray, J is a parabola
+    in alpha; alpha_k = (r_k,r_k)/(Ar_k,r_k). Line-search stopping
+    condition forces (r_{k+1}, r_k) = 0: the zigzag staircase. Rate
+    (kappa-1)/(kappa+1) per step in the energy norm; unusable for large
+    kappa. The crime: each step spoils earlier minimizations.
+  Act 3 — The Right Geometry.
+    The no-spoiling computation: a later step along q preserves an earlier
+    minimization along p iff (Aq, p) = 0 (A-orthogonality / conjugacy).
+    The energy inner product (v,w)_A := (Av,w) is a genuine inner product
+    precisely because A is self-adjoint and positive definite. Error
+    identity: J(v) - J(u) = (1/2)||v-u||_A^2. In stretched coordinates
+    w = A^{1/2} v, the bowl is round and conjugate = perpendicular.
+  Act 4 — Never Undo Your Work.
+    Method of conjugate directions (directions GIVEN for now):
+    alpha_k = (r_k,p_k)/(Ap_k,p_k). Expanding-subspace theorem:
+    r_k ⊥ span{p_0..p_{k-1}} and u_k minimizes J over
+    u_0 + span{p_0..p_{k-1}}. In n dimensions: exact termination in n
+    steps. Missing ingredient: where do conjugate directions come from at
+    black-box prices?
+  Act 5 — The Conjugate Gradient Method.
+    Raw material = residuals (the only new vector per step; always
+    orthogonal to everything searched). Krylov subspace K_k =
+    span{r_0, Ar_0, ..., A^{k-1} r_0} is the reachable set;
+    span{p_0..p_{k-1}} = span{r_0..r_{k-1}} = K_k and r_k ⊥ K_k.
+    Gram–Schmidt in the A-inner product collapses: for j <= k-2,
+    (r_k, A p_j) = 0 because A p_j ∈ K_{j+2} ⊆ K_k. Hence the two-term
+    recurrence p_k = r_k + beta_{k-1} p_{k-1}. Cleanups give the standard
+    formulas alpha_k = (r_k,r_k)/(Ap_k,p_k),
+    beta_k = (r_{k+1},r_{k+1})/(r_k,r_k). Cost: one A-application, two
+    inner products, four stored vectors per iteration.
+  Act 6 — The Best Possible Descent.
+    Krylov optimality: u_k^CG minimizes ||v - u||_A over u_0 + K_k, i.e.
+    no method with the same information can beat CG in the energy norm.
+    Polynomial picture: error bound = min over polynomials pi with
+    pi(0)=1 of max |pi(lambda)| on the spectrum; Chebyshev gives the
+    2((sqrt(kappa)-1)/(sqrt(kappa)+1))^k bound; clustered spectra
+    converge in ~one step per cluster (kappa alone is not the whole
+    story); preconditioning = changing the geometry to round the bowl.
+    Infinite dimensions: everything survives except n-step termination;
+    Galerkin discretization inherits the theory (ties to the site's
+    "Think First, Discretize Later" series). Honest boundary: compact
+    operators of inverse theory have spectra accumulating at 0
+    (kappa = infinity) — no rate; iteration count becomes a
+    regularization parameter, and the problem becomes inference (ties to
+    "My Take on SOLA").
+
+NOTATION GUARDRAILS
+- Inner products are round brackets (·,·); the energy inner product is
+  (·,·)_A with norm ||·||_A. Angle brackets are NOT used.
+- Lightface italic for elements of H and operators (u, r_k, p_k, A);
+  boldface is reserved for finite-dimensional (discretized) objects and
+  essentially never appears in this series.
+- kappa = Gamma/gamma where gamma||v||^2 <= (Av,v) <= Gamma||v||^2.
+- r_k = f - A u_k is the residual; note grad J(u) = -(r) so the residual
+  points DOWNHILL.
+
+WHEN HELPING A READER
+- Preserve the forced-moves framing: derive, don't decree. If asked "why
+  beta = (r_{k+1},r_{k+1})/(r_k,r_k)", walk the Gram–Schmidt collapse and
+  the two cleanup identities rather than quoting the formula.
+- The interactive panels (Acts 2–5) show a 2-D quadratic with adjustable
+  condition number; in 2-D, CG/conjugate directions finish in exactly 2
+  steps — that is the termination theorem, not an artifact.
+- Do not claim CG works for non-self-adjoint or indefinite A; the notes
+  explicitly gate everything on those assumptions (MINRES/GMRES are
+  name-checked as the alternatives).
+- Do not conflate the Euclidean orthogonality of successive residuals
+  (a by-product of line searches) with the A-orthogonality of directions
+  (the design condition). The distinction IS the content of Act 3.

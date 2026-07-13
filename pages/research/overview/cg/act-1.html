@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Act 1: The Landscape Hidden in the Equation — The Road to Conjugate Gradients — Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=20">
+    <meta name="description" content="Act 1 of The Road to Conjugate Gradients: operator equations as black boxes, and the quadratic landscape whose unique bottom is the solution.">
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+                H: '\\mathcal{H}',
+                Kry: '\\mathcal{K}',
+                ip: ['\\left(#1,\\;#2\\right)', 2],
+                ipA: ['\\left(#1,\\;#2\\right)_{A}', 2],
+                norm: ['\\left\\lVert #1\\right\\rVert', 1],
+                normA: ['\\left\\lVert #1\\right\\rVert_{A}', 1],
+                dd: '\\,\\mathrm{d}',
+                spanop: '\\operatorname{span}',
+                argmin: '\\operatorname*{arg\\,min}',
+                kernel: '\\operatorname{ker}'
+            },
+            tags: 'ams'
+        }
+    };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="Act 1: The Landscape Hidden in the Equation — Adrian Mag">
+    <meta property="og:description" content="Operator equations as black boxes, and the quadratic landscape whose unique bottom is the solution.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-1.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position: relative; overflow: hidden;">
+            <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <h1>Act 1: The Landscape Hidden in the Equation</h1>
+                <p>Operator equations, black boxes, and the bowl whose bottom is the solution.</p>
+                <p style="font-size:1rem;margin-top:0.8em;">
+                    Part of <a href="conjugate-gradient.html">The Road to Conjugate Gradients</a>.
+                </p>
+            </div>
+        </section>
+
+        <nav class="part-nav" aria-label="Act navigation">
+            <div class="part-nav-inner">
+                <a class="part-chip" href="conjugate-gradient.html"><span class="part-chip-num">&laquo;</span> Overview</a>
+                <a class="part-chip" href="act-1.html" aria-current="page"><span class="part-chip-num">1</span> The Landscape</a>
+                <a class="part-chip" href="act-2.html"><span class="part-chip-num">2</span> Rolling Downhill</a>
+                <a class="part-chip" href="act-3.html"><span class="part-chip-num">3</span> The Right Geometry</a>
+                <a class="part-chip" href="act-4.html"><span class="part-chip-num">4</span> Never Undo Work</a>
+                <a class="part-chip" href="act-5.html"><span class="part-chip-num">5</span> Conjugate Gradients</a>
+                <a class="part-chip" href="act-6.html"><span class="part-chip-num">6</span> The Best Descent</a>
+            </div>
+        </nav>
+
+        <section class="research-content">
+            <div class="container">
+                <div class="math-article">
+
+                    <h2>One Equation, Everywhere</h2>
+
+                    <h3>The problem</h3>
+
+                    <p>Almost every quantitative field eventually runs into an equation of the
+                    following shape. There is a real Hilbert space \(\H\), a known right-hand side
+                    \(f\in\H\), a linear operator \(A:\H\to\H\), and we must find the element
+                    \(u\in\H\) satisfying</p>
+
+                    <span class="concept-term eq-tappable" data-concept="assumptions"
+                          data-concept-title="The standing assumptions">
+                        \[A u = f.\]
+                        <span class="eq-tap-hint">tap for the standing assumptions on \(\H\) and \(A\) &#10148;</span>
+                    </span>
+
+                    <p>Throughout these notes, \(A\) is <em>bounded</em>, <em>self-adjoint</em>,
+                    and <em>positive definite</em>. Press the equation above to see precisely what
+                    these three assumptions say and what each one buys us. They are not decoration:
+                    every act of this series will lean on all three.</p>
+
+                    <p>Where do such equations come from? A few examples, deliberately drawn from
+                    different worlds:</p>
+
+                    <ul>
+                        <li><strong>Least squares and inverse problems.</strong> Fitting
+                        observations \(d = Gm\) in the least-squares sense leads to the normal
+                        equation \(G^*G\,m = G^*d\) (see <a href="#ref-saa03">[Saa03]</a>,
+                        Ch.&nbsp;8). The operator \(G^*G\) is automatically
+                        self-adjoint and positive semi-definite; add the slightest regularization
+                        and it becomes positive definite. Readers of
+                        <a href="../sola/my-take-on-sola.html">My Take on SOLA</a> have met
+                        operators of exactly this form.</li>
+                        <li><strong>Equilibrium physics.</strong> Steady-state heat flow, elastic
+                        deformation, electrostatics: the weak form of each is
+                        \(\ip{Au}{v}=\ip{f}{v}\) for all test elements \(v\), with \(A\) a
+                        self-adjoint positive operator built from the physics (a Laplacian-like
+                        object).</li>
+                        <li><strong>Gaussian inference.</strong> Computing a posterior mean in a
+                        linear-Gaussian model requires solving a system whose operator is a sum of
+                        inverse covariances &mdash; again self-adjoint and positive
+                        definite.</li>
+                    </ul>
+
+                    <p>The examples share more than a shape. In each of them, \(A\) is
+                    <em>enormous</em>. After discretization it might be a matrix with billions of
+                    entries; before discretization it is not a matrix at all, but a genuinely
+                    infinite-dimensional operator acting on functions.</p>
+
+                    <h3>The black box</h3>
+
+                    <p>Here is the constraint that drives everything that follows. In all the
+                    interesting cases, we cannot write \(A\) down. What we <em>can</em> do is
+                    apply it: given \(v\), some computation &mdash; a simulation, a convolution,
+                    a sparse product, a physical model &mdash; returns \(Av\). The operator is a
+                    black box with an input slot and an output slot.</p>
+
+                    <p>Take stock of our toolkit. We can:</p>
+                    <ul>
+                        <li>apply \(A\) to any element we hold;</li>
+                        <li>add elements of \(\H\) and scale them;</li>
+                        <li>compute inner products \(\ip{v}{w}\).</li>
+                    </ul>
+                    <p>And that is all. There is no &ldquo;divide by \(A\)&rdquo; button.</p>
+
+                    <div class="sola-callout callout-warning">
+                        <span class="sola-callout-label">Warning</span>
+                        <p>Under our assumptions, \(A^{-1}\) exists as a bounded operator &mdash;
+                        that is a theorem. But <em>existing</em> is not the same as
+                        <em>computable</em>. &ldquo;\(u = A^{-1}f\)&rdquo; is a true statement and
+                        a useless algorithm. Whatever method we build must be assembled entirely
+                        from applications of \(A\), vector arithmetic, and inner products.</p>
+                    </div>
+
+                    <p>This single observation already dictates the form of the answer: the method
+                    will be an <em>iteration</em>. We will start from a guess \(u_0\), and
+                    repeatedly use applications of \(A\) to improve it. The entire question
+                    becomes: <em>improve it how?</em></p>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>The problem is \(Au=f\); the toolkit is apply-\(A\), add, scale, inner
+                        product. Everything from here on is forced by that mismatch.</p>
+                    </div>
+
+                    <h2>From Equation to Landscape</h2>
+
+                    <h3>A functional with an agenda</h3>
+
+                    <p>Now comes the reformulation on which the whole series stands &mdash; it is
+                    as old as the subject itself, and it powers every treatment of this material
+                    from the original 1952 paper to the modern classics
+                    <a href="#ref-hs52">[HS52]</a>, <a href="#ref-she94">[She94]</a>. Define the
+                    quadratic functional
+                    \[J:\H\to\mathbb R, \qquad J(v) = \tfrac12\ip{Av}{v} - \ip{f}{v}.\]
+                    At first sight this seems to come from nowhere. Bear with it for exactly one
+                    computation; the payoff is immediate.</p>
+
+                    <p>Take any point \(v\in\H\) and any perturbation \(w\in\H\), and expand
+                    \(J(v+w)\) using linearity of \(A\), bilinearity of the inner product, and the
+                    self-adjointness of \(A\) (which lets us merge the two cross terms
+                    \(\ip{Av}{w}\) and \(\ip{Aw}{v}\)):
+                    \begin{align}
+                    J(v+w) &= \tfrac12\ip{A(v+w)}{v+w} - \ip{f}{v+w}\notag\\
+                    &= \tfrac12\ip{Av}{v} + \ip{Av}{w} + \tfrac12\ip{Aw}{w}
+                       - \ip{f}{v} - \ip{f}{w}\notag\\
+                    &= J(v) \;+\; \ip{Av-f}{w} \;+\; \tfrac12\ip{Aw}{w}.
+                    \label{eq:master}
+                    \end{align}</p>
+
+                    <div class="sola-callout callout-lesson">
+                        <span class="sola-callout-label">Lesson &mdash; the master identity</span>
+                        <p>\[J(v+w) = J(v) + \ip{Av-f}{w} + \tfrac12\ip{Aw}{w}.\]
+                        Every derivation in this series &mdash; the line search, the zigzag
+                        autopsy, the conjugacy condition, the error norm &mdash; is this one
+                        identity, read in different ways. It is worth a full minute of staring:
+                        a linear term that can have either sign, plus a quadratic term that is
+                        always positive.</p>
+                    </div>
+
+                    <h3>Solving is minimizing</h3>
+
+                    <p>Read the master identity at a solution. Suppose \(Au = f\), and perturb:
+                    \[J(u+w) = J(u) + \underbrace{\ip{Au-f}{w}}_{=\,0} + \tfrac12\ip{Aw}{w}
+                    = J(u) + \tfrac12\ip{Aw}{w}.\]
+                    Positive definiteness says \(\ip{Aw}{w}>0\) for every \(w\neq 0\). So moving
+                    away from \(u\) in <em>any</em> direction strictly increases \(J\): the
+                    solution is a global minimizer, and it is the only one.</p>
+
+                    <p>Now read the identity at a non-solution. Suppose \(Av \neq f\), and write
+                    \(r = f - Av \neq 0\) for the discrepancy. Perturb by a small multiple of it,
+                    \(w = t\,r\) with \(t>0\):
+                    \[J(v + t r) = J(v) - t\ip{r}{r} + \tfrac{t^2}{2}\ip{Ar}{r}.\]
+                    The linear term pulls \(J\) <em>down</em> at rate \(\norm{r}^2>0\), and for
+                    \(t\) small enough it beats the quadratic term. So every non-solution has
+                    strictly lower ground next to it.</p>
+
+                    <p>Together, the two readings say:
+                    \[\boxed{\;Au = f \quad\Longleftrightarrow\quad u = \argmin_{v\in\H} J(v).\;}\]
+                    The equation and the minimization problem are the same problem. We have not
+                    made the problem easier &mdash; but we have made it <em>geometric</em>. \(J\)
+                    is a bowl-shaped landscape over \(\H\), and the solution of our equation is
+                    the unique point at the bottom of the bowl.</p>
+
+                    <figure class="sola-figure">
+                        <img data-themed="1" src="../../../../media/research/cg/fig_cg1_landscape.png"
+                             alt="Left: the quadratic functional J drawn as a bowl-shaped surface. Right: its elliptical contour map with residual arrows pointing downhill and the solution marked at the center.">
+                        <figcaption><span class="sola-figure-label">Figure FC1-1.</span>The functional
+                        \(J\) over a two-dimensional slice of \(\H\). Left: a bowl with a unique
+                        bottom. Right: the same bowl as a contour map &mdash; the view we will use
+                        for the rest of the series. At every point, the residual \(r = f - Av\)
+                        points downhill.</figcaption>
+                    </figure>
+
+                    <div class="sola-callout callout-intuition">
+                        <span class="sola-callout-label">Intuition</span>
+                        <p>Why did the reformulation help? Because an equation gives only a
+                        yes/no verdict &mdash; either \(Av=f\) or not &mdash; while a landscape
+                        gives a <em>direction</em>. Standing anywhere on a hillside, you may not
+                        know where the valley floor is, but you always know which way is
+                        down.</p>
+                    </div>
+
+                    <h3>The residual is the downhill direction</h3>
+
+                    <p>Look once more at the linear term of the master identity, now giving the
+                    discrepancy its permanent name. At the current point \(v\), the
+                    <em>residual</em> is
+                    \[r := f - Av,\]
+                    and for a small step \(w\),
+                    \[J(v+w) - J(v) \approx \ip{Av - f}{w} = -\ip{r}{w}.\]
+                    The first-order change of \(J\) is controlled by the angle between the step
+                    and the residual. Steps with \(\ip{r}{w}>0\) descend. Among all steps of a
+                    given length, the one that descends fastest is the one aligned with \(r\)
+                    itself &mdash; in the language of calculus, \(\nabla J(v) = Av - f = -r\),
+                    and the residual is exactly the direction of steepest descent.</p>
+
+                    <p>Pause on how remarkable this is from the black-box point of view. The
+                    bottom of the bowl is unknown &mdash; that is the whole problem. But the
+                    downhill direction at our feet is
+                    \[r = f - Av,\]
+                    computable with a single application of \(A\). The landscape does not just
+                    reward progress; it hands us a compass at every step, built from the only
+                    operation we can afford.</p>
+
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; for the calculus-minded</span>
+                        <p>In infinite dimensions the gradient deserves one careful sentence. The
+                        directional derivative of \(J\) at \(v\) is the linear map
+                        \(w\mapsto\ip{Av-f}{w}\), read off from the master identity. It is a
+                        bounded linear functional on \(\H\), and the Riesz representation theorem
+                        identifies it with the element \(Av-f\in\H\). It is <em>this</em>
+                        element we call \(\nabla J(v)\). No coordinates, no partial derivatives
+                        &mdash; and the conclusion \(\nabla J(v) = -r\) is exact, not merely
+                        first-order. (For the Riesz representation theorem and its friends, the
+                        reference of choice is Brezis <a href="#ref-bre11">[Bre11]</a>.)</p>
+                    </div>
+
+                    <div class="sola-callout callout-checkpoint">
+                        <span class="sola-callout-label">Checkpoint</span>
+                        <p>Solving \(Au=f\) is finding the bottom of the bowl \(J\). We cannot see
+                        the bottom, but at any point the residual \(r=f-Av\) is a computable arrow
+                        pointing downhill.</p>
+                    </div>
+
+                    <p>At this point the next move writes itself, and that is precisely the spirit
+                    of this series: <em>walk downhill</em>. Start somewhere, follow the residual,
+                    stop at the lowest point along that line, look around, repeat. Every choice in
+                    that sentence seems obvious. In the next act we make each choice precise,
+                    build the resulting algorithm &mdash; gradient descent with exact line search
+                    &mdash; and then watch, interactively, as this perfectly sensible method
+                    embarrasses itself.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-hs52">Magnus R. Hestenes and Eduard Stiefel (1952).
+                        &ldquo;Methods of Conjugate Gradients for Solving Linear Systems.&rdquo;
+                        <em>Journal of Research of the National Bureau of Standards</em> 49(6),
+                        409&ndash;436.
+                        <a href="https://doi.org/10.6028/jres.049.044" target="_blank" rel="noopener">doi:10.6028/jres.049.044</a> &middot;
+                        <a href="https://nvlpubs.nist.gov/nistpubs/jres/049/jresv49n6p409_A1b.pdf" target="_blank" rel="noopener">free PDF (NIST)</a></li>
+                        <li id="ref-she94">Jonathan R. Shewchuk (1994). &ldquo;An Introduction to
+                        the Conjugate Gradient Method Without the Agonizing Pain.&rdquo; Carnegie
+                        Mellon University.
+                        <a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf" target="_blank" rel="noopener">free PDF (CMU)</a></li>
+                        <li id="ref-bre11">Haim Brezis (2011). <em>Functional Analysis, Sobolev
+                        Spaces and Partial Differential Equations</em>. Springer. For the Hilbert
+                        space toolkit used here: Riesz representation, Lax&ndash;Milgram.
+                        <a href="https://doi.org/10.1007/978-0-387-70914-7" target="_blank" rel="noopener">doi:10.1007/978-0-387-70914-7</a></li>
+                        <li id="ref-saa03">Yousef Saad (2003). <em>Iterative Methods for Sparse
+                        Linear Systems</em>, 2nd edition. SIAM. Normal equations: Ch.&nbsp;8.
+                        <a href="https://doi.org/10.1137/1.9780898718003" target="_blank" rel="noopener">doi:10.1137/1.9780898718003</a> &middot;
+                        <a href="https://www-users.cse.umn.edu/~saad/IterMethBook_2ndEd.pdf" target="_blank" rel="noopener">free PDF (author&rsquo;s edition)</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
+                    <div class="part-prevnext">
+                        <a class="part-prevnext-btn" href="conjugate-gradient.html"><span class="arrow">&larr;</span> Overview</a>
+                        <a class="part-prevnext-btn" href="act-2.html">Act 2: Rolling Downhill <span class="arrow">&rarr;</span></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var progressBar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var height = doc.scrollHeight - doc.clientHeight;
+            var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+            if (progressBar) progressBar.style.width = pct.toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+    <script src="../../../../js/themed-figures.js?v=20" defer></script>
+    <script src="../../../../js/concept-popup.js?v=20" defer></script>
+
+    <template id="concept-assumptions">
+        <p style="margin:0 0 10px;">Three standing assumptions, and what each one buys:</p>
+        <div class="concept-notation-row">
+            <span class="sym">\(\H\) real Hilbert</span>
+            <span class="meaning"><strong>A complete inner-product space.</strong> The inner
+            product \(\ip{\cdot}{\cdot}\) gives us lengths and angles &mdash; the geometry these
+            notes run on &mdash; and completeness guarantees that the limits our iterations
+            approach actually exist in the space. \(\H\) may be \(\mathbb R^n\), or
+            \(L^2(\Omega)\), or a Sobolev space: nothing below cares.</span>
+        </div>
+        <div class="concept-notation-row">
+            <span class="sym">\(A\) bounded &amp; self-adjoint</span>
+            <span class="meaning"><strong>\(\ip{Av}{w} = \ip{v}{Aw}\) for all \(v,w\).</strong>
+            Boundedness makes \(A\) continuous. Self-adjointness is the symmetry that lets an
+            energy landscape exist at all: it is exactly what allows the two cross terms in
+            \(\ip{A(v+w)}{v+w}\) to merge, so that \(J\) has \(Au-f\) as its gradient. Without
+            it, no bowl &mdash; and no CG (one then reaches for MINRES or GMRES instead).</span>
+        </div>
+        <div class="concept-notation-row">
+            <span class="sym">\(A\) positive definite</span>
+            <span class="meaning"><strong>\(\ip{Av}{v} \ge \gamma\norm{v}^2\) for some
+            \(\gamma&gt;0\).</strong> This makes the bowl curve upward in every direction, so the
+            minimizer exists and is unique &mdash; and it guarantees \(Au=f\) is solvable for
+            every \(f\) (the Lax&ndash;Milgram theorem; see
+            <a href="https://doi.org/10.1007/978-0-387-70914-7" target="_blank" rel="noopener">Brezis&nbsp;2011</a>). In finite dimensions &ldquo;all eigenvalues
+            positive&rdquo; suffices; in infinite dimensions we insist on the uniform bound
+            \(\gamma&gt;0\), i.e.\ the spectrum stays away from zero. The ratio of the largest to
+            smallest spectral bound will return in Act&nbsp;2 as the condition number
+            \(\kappa\).</span>
+        </div>
+        <p style="margin:10px 0 0;">Operators failing these assumptions are not exotic &mdash;
+        they are a large part of inverse theory. We return to that honestly in Act&nbsp;6.</p>
+    </template>
+</body>
+</html>

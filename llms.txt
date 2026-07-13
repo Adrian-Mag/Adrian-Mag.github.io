@@ -42,6 +42,13 @@ with a page from that series.
   following Neyman (1937).
   AI companion: https://adrian-mag.github.io/pages/research/overview/frequentist/ai-companion.txt
 
+- [The Road to Conjugate Gradients](https://adrian-mag.github.io/pages/research/overview/cg/conjugate-gradient.html):
+  Six-act derivation of the conjugate gradient method as a sequence of
+  forced moves, from gradient descent onward, done in a real Hilbert
+  space with the operator as a black box. Interactive descent panels;
+  every claim carries verified, clickable citations.
+  AI companion: https://adrian-mag.github.io/pages/research/overview/cg/ai-companion.txt
+
 ## Other research pages
 
 - [Research overview](https://adrian-mag.github.io/pages/research/overview/index.html):
