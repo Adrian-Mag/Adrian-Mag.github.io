@@ -360,7 +360,7 @@
                     <p>This is old knowledge. Classical inversion has carried this scar for
                     decades: the method does not return the true model, it returns a
                     resolved version of it. Everyone who uses least squares or regularized
-                    inversion knows this. It is part of the working knowledge of the field.</p>
+                    inversion knows this. It is part of the working knowledge of the field. The resolution matrix is a fixture of every inverse-theory course &mdash; see Menke <a href="#ref-men18">[Men18]</a> for the discrete story and Nolet <a href="#ref-nol08">[Nol08]</a> for its life in seismic tomography.</p>
 
                     <h3>SOLA resolving kernels</h3>
 
@@ -405,6 +405,8 @@
 
                     <p>This identity is the bridge:
                     \[\boxed{\text{SOLA resolving map} = \text{target map after a model-space resolution operator}.}\]</p>
+
+                    <p>Making this bridge precise &mdash; and then exploiting it to combine the strengths of both traditions &mdash; is the subject of our paper on SOLA and deterministic linear inference <a href="#ref-mkz25">[MKZ25]</a>; this act is its narrative version.</p>
 
                     <p>At the kernel level, if
                     \([\Tau(m)]_k = (T_k,m)_{\M},\)
@@ -533,6 +535,17 @@
                     pillar. Once again, the theme will be the same: the formula is
                     mathematically correct, but its interpretation needs careful
                     labels.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-men18">William Menke (2018). <em>Geophysical Data Analysis: Discrete Inverse Theory</em>, 4th edition. Elsevier. The resolution matrix in discrete inverse theory.
+                        <a href="https://doi.org/10.1016/C2016-0-05203-8" target="_blank" rel="noopener">doi:10.1016/C2016-0-05203-8</a></li>
+                        <li id="ref-nol08">Guust Nolet (2008). <em>A Breviary of Seismic Tomography</em>. Cambridge University Press. Resolution analysis in seismic tomography.
+                        <a href="https://doi.org/10.1017/CBO9780511984709" target="_blank" rel="noopener">doi:10.1017/CBO9780511984709</a></li>
+                        <li id="ref-mkz25">Adrian M. Mag, Christophe Zaroli, and Paula Koelemeijer (2025). &ldquo;Bridging the gap between SOLA and deterministic linear inferences in the context of seismic tomography.&rdquo; <em>Geophysical Journal International</em> 242(1), ggaf131. Open access. The SOLA&ndash;DLI bridge that this act narrates.
+                        <a href="https://doi.org/10.1093/gji/ggaf131" target="_blank" rel="noopener">doi:10.1093/gji/ggaf131</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

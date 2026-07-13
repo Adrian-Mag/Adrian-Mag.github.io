@@ -176,7 +176,7 @@
 
                     <p>The kernel
                     \[R(r) := \sum_{i=1}^{N_d}x_iK_i(r)\]
-                    is called the resolving kernel associated with the weights \(\mathbf x\).</p>
+                    is called the resolving kernel associated with the weights \(\mathbf x\). This object is the heart of the whole tradition: Backus and Gilbert built their method around it under the name <em>averaging kernel</em> <a href="#ref-bg68">[BG68]</a>, and the subtractive variant we are constructing &mdash; SOLA &mdash; kept the object and changed how the weights are found <a href="#ref-pt94">[PT94]</a>.</p>
 
                     <p>With this notation, the weighted data sum becomes
                     \[\sum_{i=1}^{N_d}x_i [\mathbf d]_i = \int_\Omega R(r)m(r)\dd r.\]
@@ -397,6 +397,12 @@
                         <span class="eq-tap-hint">what is \(\|\cdot\|_{\HS}\)? tap &#10148;</span>
                     </span>
 
+                    <p>(Matching the resolving kernel to a chosen target by least squares is
+                    SOLA&rsquo;s defining move &mdash; it is how Pijpers and Thompson introduce
+                    the method <a href="#ref-pt94">[PT94]</a>, Sect.&nbsp;2. The operator form
+                    used throughout these notes follows our SOLA&ndash;DLI framework
+                    <a href="#ref-mkz25">[MKZ25]</a>.)</p>
+
                     <p>A word about the subscript. The \(0\) marks this as the <em>raw,
                     uncorrected</em> solution: the best reshuffling of the data with no further
                     demands imposed on it. In Act 3 we will impose calibration constraints and
@@ -525,6 +531,18 @@
                     are supposed to represent averages, then the resolving kernels should behave
                     like averages too. Shape alone is not enough. The kernels also need the right
                     mass.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bg68">George Backus and Freeman Gilbert (1968). &ldquo;The Resolving Power of Gross Earth Data.&rdquo; <em>Geophysical Journal of the Royal Astronomical Society</em> 16(2), 169&ndash;205. The averaging kernel and the original (multiplicative) way of shaping it.
+                        <a href="https://doi.org/10.1111/j.1365-246X.1968.tb00216.x" target="_blank" rel="noopener">doi:10.1111/j.1365-246X.1968.tb00216.x</a></li>
+                        <li id="ref-pt94">Frank P. Pijpers and Michael J. Thompson (1994). &ldquo;The SOLA method for helioseismic inversion.&rdquo; <em>Astronomy &amp; Astrophysics</em> 281, 231&ndash;240. SOLA: shape the kernel by minimizing its squared distance to a target form (Sect. 2).
+                        <a href="https://ui.adsabs.harvard.edu/abs/1994A%26A...281..231P/abstract" target="_blank" rel="noopener">ADS</a> &middot;
+                        <a href="https://articles.adsabs.harvard.edu/pdf/1994A%26A...281..231P" target="_blank" rel="noopener">free scan (ADS)</a></li>
+                        <li id="ref-mkz25">Adrian M. Mag, Christophe Zaroli, and Paula Koelemeijer (2025). &ldquo;Bridging the gap between SOLA and deterministic linear inferences in the context of seismic tomography.&rdquo; <em>Geophysical Journal International</em> 242(1), ggaf131. Open access. The operator/Hilbert&ndash;Schmidt formulation of SOLA used in these notes.
+                        <a href="https://doi.org/10.1093/gji/ggaf131" target="_blank" rel="noopener">doi:10.1093/gji/ggaf131</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

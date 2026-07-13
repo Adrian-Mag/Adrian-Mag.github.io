@@ -295,6 +295,17 @@
                         resolution-noise dial is desired.</p>
                     </div>
 
+                    <div class="sola-callout callout-remark">
+                        <span class="sola-callout-label">Remark &mdash; the oldest trade-off in the business</span>
+                        <p>This tension is not a modern discovery. The resolution&ndash;variance
+                        trade-off curve is the centrepiece of Backus and Gilbert&rsquo;s 1970
+                        treatment of inaccurate data <a href="#ref-bg70">[BG70]</a>; it reappears
+                        as the explicit trade-off parameter in the founding SOLA paper
+                        <a href="#ref-pt92">[PT92]</a>, and tuning it is a central practical
+                        concern when SOLA is run at tomographic scale
+                        <a href="#ref-zar16">[Zar16]</a>.</p>
+                    </div>
+
                     <p>The minimizer of \(J(\mathbf X)\) is the unconstrained noise-aware SOLA
                     operator.</p>
 
@@ -480,6 +491,18 @@
                     resolving kernels, calibration constraints, noise-aware optimization, and
                     propagated covariance. The next act asks what the resulting SOLA numbers
                     actually estimate.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bg70">George Backus and Freeman Gilbert (1970). &ldquo;Uniqueness in the Inversion of Inaccurate Gross Earth Data.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 266(1173), 123&ndash;192. The resolution&ndash;variance trade-off for inaccurate data.
+                        <a href="https://doi.org/10.1098/rsta.1970.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1970.0005</a></li>
+                        <li id="ref-pt92">Frank P. Pijpers and Michael J. Thompson (1992). &ldquo;Faster formulations of the optimally localized averages method for helioseismic inversions.&rdquo; <em>Astronomy &amp; Astrophysics</em> 262, L33&ndash;L36. The paper that coined SOLA. The SOLA objective with its noise term and trade-off parameter (their eq. 6).
+                        <a href="https://ui.adsabs.harvard.edu/abs/1992A%26A...262L..33P/abstract" target="_blank" rel="noopener">ADS</a> &middot;
+                        <a href="https://articles.adsabs.harvard.edu/pdf/1992A%26A...262L..33P" target="_blank" rel="noopener">free scan (ADS)</a></li>
+                        <li id="ref-zar16">Christophe Zaroli (2016). &ldquo;Global seismic tomography using Backus&ndash;Gilbert inversion.&rdquo; <em>Geophysical Journal International</em> 207(2), 876&ndash;888. Noise-aware SOLA at global tomography scale.
+                        <a href="https://doi.org/10.1093/gji/ggw315" target="_blank" rel="noopener">doi:10.1093/gji/ggw315</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

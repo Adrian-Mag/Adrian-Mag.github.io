@@ -145,7 +145,7 @@
                     \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*,\]
                     shown as error bars
                     \([\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}}.\)
-                    This is the advertised uncertainty quantification — the third pillar.</p>
+                    This is the advertised uncertainty quantification — the third pillar. (The display itself is standard across the SOLA literature, from the original error propagation <a href="#ref-pt92">[PT92]</a> to tomographic practice <a href="#ref-zar16">[Zar16]</a>.)</p>
 
                     <p>Now here is the observation. Once the data \(\widetilde{\mathbf d}\)
                     have been observed, one can construct a probability measure on data
@@ -197,7 +197,9 @@
                     through \(\mathcal{A}\) would give a posterior on the approximate property
                     \(\mathcal{A}(m_{\mathrm{true}})\). That is the Bayesian route, and it is the only route
                     that produces a genuine posterior probability measure on the model or its
-                    properties.</p>
+                    properties. (For the Bayesian formulation of inverse problems &mdash; and the
+                    central, non-negotiable role of the prior in it &mdash; the standard reference
+                    is Tarantola <a href="#ref-tar05">[Tar05]</a>.)</p>
 
                     <p>But SOLA, by design, does not introduce a prior. Without a prior, the
                     observation cannot be turned into a posterior statement about the approximate
@@ -313,6 +315,8 @@
                     <p>Before observation, define the random transformed confidence set
                     \[C_{\alpha}^{\mathbf X}(\Prand) = \left\{\mathbf p\in\Pspace : \Prand - \mathbf p \in F_{\alpha}\right\}.\]</p>
 
+                    <p>Coverage in this pre-observation sense is exactly Neyman&rsquo;s original construction of confidence sets <a href="#ref-ney37">[Ney37]</a> &mdash; the construction these notes examine at length in the frequentist series.</p>
+
                     <p>By definition,
                     \(\AX(m_{\mathrm{true}}) \in C_{\alpha}^{\mathbf X}(\Prand)\)
                     if and only if
@@ -385,6 +389,20 @@
                     pushforward &mdash; the object SOLA reports by default &mdash; is not wrong, but
                     it is not a posterior. It is a frequentist object that happens to look like one.
                     The frequentist interpretation makes its meaning precise.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-pt92">Frank P. Pijpers and Michael J. Thompson (1992). &ldquo;Faster formulations of the optimally localized averages method for helioseismic inversions.&rdquo; <em>Astronomy &amp; Astrophysics</em> 262, L33&ndash;L36. The paper that coined SOLA. Propagated error covariance in the original SOLA formulation.
+                        <a href="https://ui.adsabs.harvard.edu/abs/1992A%26A...262L..33P/abstract" target="_blank" rel="noopener">ADS</a> &middot;
+                        <a href="https://articles.adsabs.harvard.edu/pdf/1992A%26A...262L..33P" target="_blank" rel="noopener">free scan (ADS)</a></li>
+                        <li id="ref-zar16">Christophe Zaroli (2016). &ldquo;Global seismic tomography using Backus&ndash;Gilbert inversion.&rdquo; <em>Geophysical Journal International</em> 207(2), 876&ndash;888. Propagated SOLA uncertainties in global tomography.
+                        <a href="https://doi.org/10.1093/gji/ggw315" target="_blank" rel="noopener">doi:10.1093/gji/ggw315</a></li>
+                        <li id="ref-tar05">Albert Tarantola (2005). <em>Inverse Problem Theory and Methods for Model Parameter Estimation</em>. SIAM. The Bayesian formulation of inverse problems: no prior, no posterior.
+                        <a href="https://doi.org/10.1137/1.9780898717921" target="_blank" rel="noopener">doi:10.1137/1.9780898717921</a></li>
+                        <li id="ref-ney37">Jerzy Neyman (1937). &ldquo;Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 236(767), 333&ndash;380. Confidence sets and pre-observation coverage.
+                        <a href="https://doi.org/10.1098/rsta.1937.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1937.0005</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

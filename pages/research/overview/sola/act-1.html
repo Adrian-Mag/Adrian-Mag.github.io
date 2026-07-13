@@ -168,7 +168,7 @@
                     <p>Suppose that our experiment gives us \(N_d\) data values. Associated with
                     these data values are functions
                     \[K_1(r),K_2(r),\dots,K_{N_d}(r).\]
-                    These are called sensitivity kernels.</p>
+                    These are called sensitivity kernels. In the founding papers of this subject, the numbers such kernels produce were called &ldquo;gross Earth data&rdquo; <a href="#ref-bg68">[BG68]</a>; how sensitivity kernels arise in seismology is a story of its own, told at length in Nolet&rsquo;s breviary <a href="#ref-nol08">[Nol08]</a>.</p>
 
                     <p>Each kernel \(K_i\) describes how the \(i\)th datum responds to the model. If
                     \(K_i(r)\) is large near some location, then the \(i\)th datum is sensitive to
@@ -308,7 +308,7 @@
                     <p>This is not a defect of SOLA. It is a structural fact about inverse problems
                     with indirect, finite data. The data only constrain the parts of the model that
                     interact with the sensitivity kernels. Everything orthogonal to those
-                    measurements is left unresolved.</p>
+                    measurements is left unresolved. The definitive early study of this nonuniqueness &mdash; what finite, inaccurate data can and cannot determine &mdash; is Backus and Gilbert&rsquo;s <a href="#ref-bg70">[BG70]</a>.</p>
 
                     <p>This observation will matter later. For now, it tells us that asking for the
                     whole model \(m\) may be too ambitious. The data do not constrain the whole model.
@@ -495,6 +495,17 @@
                     <p>The next act turns this idea into algebra. The key observation will be almost
                     embarrassingly simple: because the data are linear integrals, combining data is
                     the same as combining kernels. That is where the kernel game truly begins.</p>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bg68">George Backus and Freeman Gilbert (1968). &ldquo;The Resolving Power of Gross Earth Data.&rdquo; <em>Geophysical Journal of the Royal Astronomical Society</em> 16(2), 169&ndash;205. The founding formulation: data as linear functionals of an unknown Earth model, and what can be resolved from them.
+                        <a href="https://doi.org/10.1111/j.1365-246X.1968.tb00216.x" target="_blank" rel="noopener">doi:10.1111/j.1365-246X.1968.tb00216.x</a></li>
+                        <li id="ref-bg70">George Backus and Freeman Gilbert (1970). &ldquo;Uniqueness in the Inversion of Inaccurate Gross Earth Data.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 266(1173), 123&ndash;192. Nonuniqueness and inference under finite, inaccurate data.
+                        <a href="https://doi.org/10.1098/rsta.1970.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1970.0005</a></li>
+                        <li id="ref-nol08">Guust Nolet (2008). <em>A Breviary of Seismic Tomography</em>. Cambridge University Press. Seismic tomography background, including where sensitivity kernels come from.
+                        <a href="https://doi.org/10.1017/CBO9780511984709" target="_blank" rel="noopener">doi:10.1017/CBO9780511984709</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

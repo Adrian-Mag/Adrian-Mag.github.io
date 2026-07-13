@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act 7: A Synthetic Cautionary Tale — My Take on SOLA — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=19">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=19">
-    <link rel="stylesheet" href="../../../../css/sola.css?v=19">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=20">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=20">
+    <link rel="stylesheet" href="../../../../css/sola.css?v=20">
     <meta name="description" content="Act 7 of My Take on SOLA: A synthetic example where SOLA's resolving kernels look great, but the true target properties are the negative of the estimates. The cautionary tale.">
     <script>
     MathJax = {
@@ -59,6 +59,7 @@
                         <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
                         <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
                         <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
                     </div>
                 </div>
                 <a class="hide-sm" href="../../../cv.html">CV</a>
@@ -313,7 +314,7 @@
                     SOLA estimates. The correlation between the estimates and the
                     truth is about
                     \(-0.99.\)
-                    Every single true property lies far outside the nominal
+                    Almost every single true property lies far outside the nominal
                     \(\pm2\sigma\)
                     uncertainty bands.</p>
 
@@ -391,7 +392,7 @@
                     worked around. They are the marks left by hard cases that
                     were once new and surprising. SOLA has not yet accumulated
                     those marks, because it has not yet been tested this way in
-                    public.</p>
+                    public. (The mathematics of the boundary itself is thoroughly documented: what finite, inaccurate data can never determine is the founding theme of <a href="#ref-bg70">[BG70]</a>.)</p>
 
                     <p>So let us be precise about what the objection is really
                     saying. If one believes that the true model cannot look like
@@ -495,7 +496,7 @@
                     \(\mathcal{A}(\bar m)\)
                     correctly, up to propagated data noise. The resolving kernels
                     are honest. The method is not broken. It has done exactly
-                    what it was designed to do.</p>
+                    what it was designed to do. Reading the outputs through the resolving kernels is exactly the practice recommended in the tomography literature <a href="#ref-zkl17">[ZKL17]</a>.</p>
 
                     <p>But the gap between
                     \(\mathcal{A}(\bar m)\)
@@ -527,6 +528,15 @@
                         not an attack on the method — it is the beginning of
                         knowing where it can be trusted.</p>
                     </div>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bg70">George Backus and Freeman Gilbert (1970). &ldquo;Uniqueness in the Inversion of Inaccurate Gross Earth Data.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 266(1173), 123&ndash;192. Nonuniqueness under finite, inaccurate data: the boundary this act dramatizes.
+                        <a href="https://doi.org/10.1098/rsta.1970.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1970.0005</a></li>
+                        <li id="ref-zkl17">Christophe Zaroli, Paula Koelemeijer, and Sophie Lambotte (2017). &ldquo;Toward Seeing the Earth&rsquo;s Interior Through Unbiased Tomographic Lenses.&rdquo; <em>Geophysical Research Letters</em> 44(22). The resolving-kernel reading of SOLA outputs.
+                        <a href="https://doi.org/10.1002/2017GL074996" target="_blank" rel="noopener">doi:10.1002/2017GL074996</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">
@@ -566,10 +576,10 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=19" defer></script>
-    <script src="../../../../js/notes-extras.js?v=19" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=19" defer></script>
-    <script src="../../../../js/nav-menu.js?v=19" defer></script>
-    <script src="../../../../js/themed-figures.js?v=19" defer></script>
+    <script src="../../../../js/ai-assist.js?v=20" defer></script>
+    <script src="../../../../js/notes-extras.js?v=20" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=20" defer></script>
+    <script src="../../../../js/nav-menu.js?v=20" defer></script>
+    <script src="../../../../js/themed-figures.js?v=20" defer></script>
 </body>
 </html>

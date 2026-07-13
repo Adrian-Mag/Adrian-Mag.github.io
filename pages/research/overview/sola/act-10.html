@@ -160,7 +160,7 @@
                     and reports
                     \(\widetilde{\mathbf p} = \mathbf X\widetilde{\mathbf d}.\)
                     Because the map is linear, the output is easy to compute, easy to inspect,
-                    and easy to propagate data noise through.</p>
+                    and easy to propagate data noise through. None of this is hypothetical: SOLA has been run at global-tomography scale, delivering models with resolving kernels and propagated uncertainties attached <a href="#ref-zar16">[Zar16]</a>, <a href="#ref-zkl17">[ZKL17]</a>.</p>
 
                     <p>Although the resolving kernels are simply target kernels filtered through a resolution operator that is not fundamentally different from what normal linear inversions produce, they still provide a more principled analysis of targeted properties.</p>
 
@@ -384,7 +384,9 @@
                     It may be probabilistic:
                     \(m\sim\muprior.\)
                     It may come from physics, geology, smoothness, boundedness, or earlier
-                    experiments. But it should be stated, not smuggled in.</p>
+                    experiments. But it should be stated, not smuggled in. (The deterministic
+                    route &mdash; SOLA plus an explicit model-side bound &mdash; is developed in
+                    full in our SOLA&ndash;DLI framework <a href="#ref-mkz25">[MKZ25]</a>.)</p>
 
                     <p>So my take on SOLA is not that it should be discarded. Far from it. SOLA is
                     a neat and useful method precisely because it focuses on properties, exposes
@@ -411,6 +413,17 @@
                         confidence, and explicit model assumptions when exact target properties or
                         posterior beliefs are claimed.</p>
                     </div>
+
+                    <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-zar16">Christophe Zaroli (2016). &ldquo;Global seismic tomography using Backus&ndash;Gilbert inversion.&rdquo; <em>Geophysical Journal International</em> 207(2), 876&ndash;888. SOLA demonstrated at global tomography scale.
+                        <a href="https://doi.org/10.1093/gji/ggw315" target="_blank" rel="noopener">doi:10.1093/gji/ggw315</a></li>
+                        <li id="ref-zkl17">Christophe Zaroli, Paula Koelemeijer, and Sophie Lambotte (2017). &ldquo;Toward Seeing the Earth&rsquo;s Interior Through Unbiased Tomographic Lenses.&rdquo; <em>Geophysical Research Letters</em> 44(22). The resolving-kernel interpretation, demonstrated.
+                        <a href="https://doi.org/10.1002/2017GL074996" target="_blank" rel="noopener">doi:10.1002/2017GL074996</a></li>
+                        <li id="ref-mkz25">Adrian M. Mag, Christophe Zaroli, and Paula Koelemeijer (2025). &ldquo;Bridging the gap between SOLA and deterministic linear inferences in the context of seismic tomography.&rdquo; <em>Geophysical Journal International</em> 242(1), ggaf131. Open access. Where to go when model-side information is available: the SOLA&ndash;DLI framework.
+                        <a href="https://doi.org/10.1093/gji/ggaf131" target="_blank" rel="noopener">doi:10.1093/gji/ggaf131</a></li>
+                    </ul>
 
                     <div class="part-prevnext-spacer"></div>
                     <div class="part-prevnext">

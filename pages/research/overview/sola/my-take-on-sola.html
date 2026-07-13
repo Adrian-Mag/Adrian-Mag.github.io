@@ -124,6 +124,20 @@
                     <p>The main purpose of these notes is to explain that idea from the ground up,
                     and then to examine carefully what the resulting numbers mean.</p>
 
+                    <p>The idea has a distinguished lineage, and these notes stand on it. The
+                    method of optimally localized averages was created by Backus and Gilbert in a
+                    remarkable series of papers <a href="#ref-bg67">[BG67]</a>,
+                    <a href="#ref-bg68">[BG68]</a>, <a href="#ref-bg70">[BG70]</a>. The
+                    <em>subtractive</em> variant &mdash; SOLA, the subject of these notes &mdash;
+                    was introduced for helioseismology by Pijpers and Thompson
+                    <a href="#ref-pt92">[PT92]</a>, <a href="#ref-pt94">[PT94]</a>, and brought
+                    into seismic tomography by Zaroli and colleagues
+                    <a href="#ref-zar16">[Zar16]</a>, <a href="#ref-zkl17">[ZKL17]</a>. The
+                    operator-theoretic framing used throughout, and several of the critical
+                    questions these notes pursue, grew out of our own work connecting SOLA to
+                    deterministic linear inference <a href="#ref-mkz25">[MKZ25]</a>. Full
+                    references, with links, close each act.</p>
+
                     <div class="sola-callout callout-lesson">
                         <span class="sola-callout-label">Lesson</span>
                         <p>SOLA is best understood as a method for reshuffling linear data
@@ -208,6 +222,32 @@
                             \([\mathbf\alpha]_i=\alpha_i\).</li>
                         </ul>
                     </div>
+
+                    <h2>Sources &amp; the lineage</h2>
+
+                    <p>Every act closes with the references behind its specific claims. The
+                    landmarks of the subject, all clickable, are these:</p>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bg67">George Backus and Freeman Gilbert (1967). &ldquo;Numerical Applications of a Formalism for Geophysical Inverse Problems.&rdquo; <em>Geophysical Journal of the Royal Astronomical Society</em> 13(1&ndash;3), 247&ndash;276.
+                        <a href="https://doi.org/10.1111/j.1365-246X.1967.tb02159.x" target="_blank" rel="noopener">doi:10.1111/j.1365-246X.1967.tb02159.x</a></li>
+                        <li id="ref-bg68">George Backus and Freeman Gilbert (1968). &ldquo;The Resolving Power of Gross Earth Data.&rdquo; <em>Geophysical Journal of the Royal Astronomical Society</em> 16(2), 169&ndash;205. The founding paper: averaging kernels, unimodularity, and the question of what data can resolve.
+                        <a href="https://doi.org/10.1111/j.1365-246X.1968.tb00216.x" target="_blank" rel="noopener">doi:10.1111/j.1365-246X.1968.tb00216.x</a></li>
+                        <li id="ref-bg70">George Backus and Freeman Gilbert (1970). &ldquo;Uniqueness in the Inversion of Inaccurate Gross Earth Data.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 266(1173), 123&ndash;192. Nonuniqueness and the resolution&ndash;variance trade-off.
+                        <a href="https://doi.org/10.1098/rsta.1970.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1970.0005</a></li>
+                        <li id="ref-pt92">Frank P. Pijpers and Michael J. Thompson (1992). &ldquo;Faster formulations of the optimally localized averages method for helioseismic inversions.&rdquo; <em>Astronomy &amp; Astrophysics</em> 262, L33&ndash;L36. The paper that coined SOLA.
+                        <a href="https://ui.adsabs.harvard.edu/abs/1992A%26A...262L..33P/abstract" target="_blank" rel="noopener">ADS</a> &middot;
+                        <a href="https://articles.adsabs.harvard.edu/pdf/1992A%26A...262L..33P" target="_blank" rel="noopener">free scan (ADS)</a></li>
+                        <li id="ref-pt94">Frank P. Pijpers and Michael J. Thompson (1994). &ldquo;The SOLA method for helioseismic inversion.&rdquo; <em>Astronomy &amp; Astrophysics</em> 281, 231&ndash;240. The full development: target forms, trade-offs, blind tests.
+                        <a href="https://ui.adsabs.harvard.edu/abs/1994A%26A...281..231P/abstract" target="_blank" rel="noopener">ADS</a> &middot;
+                        <a href="https://articles.adsabs.harvard.edu/pdf/1994A%26A...281..231P" target="_blank" rel="noopener">free scan (ADS)</a></li>
+                        <li id="ref-zar16">Christophe Zaroli (2016). &ldquo;Global seismic tomography using Backus&ndash;Gilbert inversion.&rdquo; <em>Geophysical Journal International</em> 207(2), 876&ndash;888. SOLA at global tomography scale.
+                        <a href="https://doi.org/10.1093/gji/ggw315" target="_blank" rel="noopener">doi:10.1093/gji/ggw315</a></li>
+                        <li id="ref-zkl17">Christophe Zaroli, Paula Koelemeijer, and Sophie Lambotte (2017). &ldquo;Toward Seeing the Earth&rsquo;s Interior Through Unbiased Tomographic Lenses.&rdquo; <em>Geophysical Research Letters</em> 44(22). The case for interpreting estimates through resolving kernels.
+                        <a href="https://doi.org/10.1002/2017GL074996" target="_blank" rel="noopener">doi:10.1002/2017GL074996</a></li>
+                        <li id="ref-mkz25">Adrian M. Mag, Christophe Zaroli, and Paula Koelemeijer (2025). &ldquo;Bridging the gap between SOLA and deterministic linear inferences in the context of seismic tomography.&rdquo; <em>Geophysical Journal International</em> 242(1), ggaf131. Open access. The paper these notes grew alongside.
+                        <a href="https://doi.org/10.1093/gji/ggaf131" target="_blank" rel="noopener">doi:10.1093/gji/ggaf131</a></li>
+                    </ul>
 
                     <h2>The ten acts</h2>
 
