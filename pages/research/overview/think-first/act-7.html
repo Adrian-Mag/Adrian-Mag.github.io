@@ -485,6 +485,10 @@
 
                 <div class="tfdl-prose">
                     <p>The naive workflow was:</p>
+                    <p>(This corrected workflow is not ours alone: it is exactly the design of
+                    modern large-scale Bayesian inversion frameworks, which discretize the
+                    function-space posterior so that refinement converges by construction
+                    <a href="#ref-bui13">[Bui13]</a>, <a href="#ref-stu10">[Stu10]</a>.)</p>
                     <p>
                         mesh \(\Rightarrow\) basis \(\Rightarrow\) coefficient vector \(\Rightarrow\)
                         matrix prior \(\Rightarrow\) posterior.
@@ -516,6 +520,20 @@
                         The cure is choosing the mathematical object first and
                         discretizing it second.
                     </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>References</h3>
+                </div>
+
+                <div class="tfdl-prose">
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bui13">Tan Bui-Thanh, Omar Ghattas, James Martin, and Georg Stadler (2013). &ldquo;A Computational Framework for Infinite-Dimensional Bayesian Inverse Problems Part I: The Linearized Case.&rdquo; <em>SIAM Journal on Scientific Computing</em> 35(6), A2494&ndash;A2523. The corrected workflow at scale: discretizations that converge to the function-space posterior.
+                        <a href="https://doi.org/10.1137/12089586X" target="_blank" rel="noopener">doi:10.1137/12089586X</a></li>
+                        <li id="ref-stu10">Andrew M. Stuart (2010). &ldquo;Inverse problems: A Bayesian perspective.&rdquo; <em>Acta Numerica</em> 19, 451&ndash;559. Why the corrected workflow is guaranteed to settle.
+                        <a href="https://doi.org/10.1017/S0962492910000061" target="_blank" rel="noopener">doi:10.1017/S0962492910000061</a> &middot;
+                        <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/587A3A0D480A1A7C2B1B284BCEDF7E23/S0962492910000061a.pdf/inverse-problems-a-bayesian-perspective.pdf" target="_blank" rel="noopener">free PDF (Cambridge Core)</a></li>
+                    </ul>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>

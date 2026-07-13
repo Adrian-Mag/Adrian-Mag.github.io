@@ -226,6 +226,11 @@
                         density. But a density is not a probability measure by itself. A density is
                         always a density with respect to some reference measure.
                     </p>
+                    <p>(On infinite-dimensional spaces there is no Lebesgue measure to be a
+                    density <em>with respect to</em> &mdash; which is why measures, not
+                    densities, must carry the theory. The rigorous home of this material is
+                    Bogachev <a href="#ref-bog98">[Bog98]</a>; its use in inversion is
+                    <a href="#ref-stu10">[Stu10]</a>.)</p>
                     <p>
                         If \(\mu\) is absolutely continuous with respect to \(\nu\), then there exists a
                         density \(\rho\) such that \(d\mu = \rho\,d\nu\). The density \(\rho\) is the
@@ -856,6 +861,11 @@
                         spatial modes: \(-\Delta e_j = \rho_j e_j\), where
                         \(0\leq \rho_1\leq \rho_2\leq\cdots\), \(\rho_j\to\infty\).
                     </p>
+                    <p>(Building covariances as inverse powers of differential operators is
+                    standard practice in function-space inversion
+                    <a href="#ref-stu10">[Stu10]</a>, and the precise link between such
+                    operators and familiar covariance families is the SPDE connection of
+                    Lindgren, Rue and Lindstr&ouml;m <a href="#ref-lrl11">[LRL11]</a>.)</p>
                 </div>
 
                 <div class="tfdl-subsection-heading">
@@ -970,6 +980,9 @@
                         called kernels. A covariance function \(k:\Omega\times\Omega\to\R\) is defined
                         by \(k(x,x') = \Cov(m(x),m(x'))\).
                     </p>
+                    <p>(The kernel view is the native language of Gaussian processes; the
+                    standard reference &mdash; free from its authors &mdash; is Rasmussen
+                    and Williams <a href="#ref-rw06">[RW06]</a>.)</p>
                     <p>
                         A covariance kernel can define an integral operator:
                         \((C_0 f)(x) = \int_\Omega k(x,x')\,f(x')\,dx'\). Under suitable assumptions
@@ -1171,6 +1184,25 @@
                         the opening toy problem, where the pathologies of the naive posterior disappear
                         once the formulation is done in the right order.
                     </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>References</h3>
+                </div>
+
+                <div class="tfdl-prose">
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bog98">Vladimir I. Bogachev (1998). <em>Gaussian Measures</em>. American Mathematical Society. Gaussian measures on infinite-dimensional spaces, in full rigor.
+                        <a href="https://doi.org/10.1090/surv/062" target="_blank" rel="noopener">doi:10.1090/surv/062</a></li>
+                        <li id="ref-stu10">Andrew M. Stuart (2010). &ldquo;Inverse problems: A Bayesian perspective.&rdquo; <em>Acta Numerica</em> 19, 451&ndash;559. Gaussian priors, covariance operators, and trace-class conditions for inversion.
+                        <a href="https://doi.org/10.1017/S0962492910000061" target="_blank" rel="noopener">doi:10.1017/S0962492910000061</a> &middot;
+                        <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/587A3A0D480A1A7C2B1B284BCEDF7E23/S0962492910000061a.pdf/inverse-problems-a-bayesian-perspective.pdf" target="_blank" rel="noopener">free PDF (Cambridge Core)</a></li>
+                        <li id="ref-lrl11">Finn Lindgren, H&aring;vard Rue, and Johan Lindstr&ouml;m (2011). &ldquo;An Explicit Link between Gaussian Fields and Gaussian Markov Random Fields: The Stochastic Partial Differential Equation Approach.&rdquo; <em>Journal of the Royal Statistical Society, Series B</em> 73(4), 423&ndash;498. Covariances from differential operators: the SPDE link.
+                        <a href="https://doi.org/10.1111/j.1467-9868.2011.00777.x" target="_blank" rel="noopener">doi:10.1111/j.1467-9868.2011.00777.x</a></li>
+                        <li id="ref-rw06">Carl E. Rasmussen and Christopher K. I. Williams (2006). <em>Gaussian Processes for Machine Learning</em>. MIT Press. The kernel view of covariances (free from the authors).
+                        <a href="https://gaussianprocess.org/gpml/" target="_blank" rel="noopener">book page</a> &middot;
+                        <a href="https://gaussianprocess.org/gpml/chapters/RW.pdf" target="_blank" rel="noopener">free PDF (authors&rsquo; edition)</a></li>
+                    </ul>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>

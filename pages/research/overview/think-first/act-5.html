@@ -449,6 +449,11 @@
                         \[ \inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M} \]
                         for all \(m\in\M\), \(d\in\D\).
                     </p>
+                    <p>(The mismatch between the matrix transpose and the true adjoint is a
+                    well-documented trap wherever continuous problems are discretized; the
+                    PDE-constrained optimization literature treats it under the heading of
+                    adjoint consistency and &ldquo;optimize-then-discretize&rdquo;
+                    <a href="#ref-hpuu09">[HPUU09]</a>.)</p>
                     <p>
                         This equation is the definition. It is not a computational trick. It says that
                         the same pairing can be evaluated either by pushing the model forward into data
@@ -682,6 +687,10 @@
                         orthonormal. Hat functions overlap with neighbouring hat functions, so their
                         inner products are not zero for neighbouring indices.
                     </p>
+                    <p>(In the finite element world the Gram matrix is the <em>mass
+                    matrix</em>, and its role in transporting inner products to coefficient
+                    space is classical &mdash; see Brenner and Scott
+                    <a href="#ref-bs08">[BS08]</a>.)</p>
                 </div>
 
                 <div class="tfdl-subsection-heading">
@@ -1065,6 +1074,19 @@
                         ingredient: the prior measure. This is where the phrase "the prior is not just
                         a matrix" finally gets its full teeth.
                     </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>References</h3>
+                </div>
+
+                <div class="tfdl-prose">
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-hpuu09">Michael Hinze, Ren&eacute; Pinnau, Michael Ulbrich, and Stefan Ulbrich (2009). <em>Optimization with PDE Constraints</em>. Springer. Adjoint consistency and the discretize-vs-optimize question, in the PDE-constrained setting.
+                        <a href="https://doi.org/10.1007/978-1-4020-8839-1" target="_blank" rel="noopener">doi:10.1007/978-1-4020-8839-1</a></li>
+                        <li id="ref-bs08">Susanne C. Brenner and L. Ridgway Scott (2008). <em>The Mathematical Theory of Finite Element Methods</em>, 3rd edition. Springer. Gram and mass matrices: the finite element view.
+                        <a href="https://doi.org/10.1007/978-0-387-75934-0" target="_blank" rel="noopener">doi:10.1007/978-0-387-75934-0</a></li>
+                    </ul>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>

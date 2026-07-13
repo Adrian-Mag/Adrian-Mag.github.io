@@ -820,6 +820,14 @@
                         Indeed,
                         \[ \E\norm{\mathbf{u}}_2^2 = \E[\mathbf{u}^{\top}\mathbf{u}] = \E[\Tr(\mathbf{u}\mathbf{u}^{\top})] = \Tr(\E[\mathbf{u}\mathbf{u}^{\top}]) = \Tr(\mathbf{C}_N). \]
                     </p>
+                    <p>(Divergence under refinement is not a quirk of our toy problem. The
+                    canonical example is Lassas and Siltanen&rsquo;s proof that the
+                    total-variation prior loses its edge-preserving character as
+                    \(N\to\infty\) <a href="#ref-ls04">[LS04]</a>; the cure &mdash;
+                    demanding <em>discretization invariance</em> from the start &mdash; was
+                    developed in <a href="#ref-lss09">[LSS09]</a> and is the heart of the
+                    function-space program <a href="#ref-stu10">[Stu10]</a> that the rest of
+                    these notes follow.)</p>
                     <p>
                         For a non-centred Gaussian
                         \[ \mathbf{u} \sim \N(\bar{\mathbf{u}},\mathbf{C}_N), \]
@@ -1058,6 +1066,22 @@
                         basis, before we build a matrix, and before we sample anything, we must ask:
                         what is the mathematical problem we are actually trying to solve?
                     </p>
+                </div>
+
+                <div class="tfdl-chapter">
+                    <h3>References</h3>
+                </div>
+
+                <div class="tfdl-prose">
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-ls04">Matti Lassas and Samuli Siltanen (2004). &ldquo;Can one use total variation prior for edge-preserving Bayesian inversion?&rdquo; <em>Inverse Problems</em> 20(5), 1537&ndash;1563. The classic proof that a discretize-first prior can degenerate under refinement (total variation).
+                        <a href="https://doi.org/10.1088/0266-5611/20/5/013" target="_blank" rel="noopener">doi:10.1088/0266-5611/20/5/013</a></li>
+                        <li id="ref-lss09">Matti Lassas, Eero Saksman, and Samuli Siltanen (2009). &ldquo;Discretization-invariant Bayesian inversion and Besov space priors.&rdquo; <em>Inverse Problems and Imaging</em> 3(1), 87&ndash;122. Discretization invariance named, formalized, and repaired with Besov priors.
+                        <a href="https://doi.org/10.3934/ipi.2009.3.87" target="_blank" rel="noopener">doi:10.3934/ipi.2009.3.87</a></li>
+                        <li id="ref-stu10">Andrew M. Stuart (2010). &ldquo;Inverse problems: A Bayesian perspective.&rdquo; <em>Acta Numerica</em> 19, 451&ndash;559. The function-space program that makes refinement safe by construction.
+                        <a href="https://doi.org/10.1017/S0962492910000061" target="_blank" rel="noopener">doi:10.1017/S0962492910000061</a> &middot;
+                        <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/587A3A0D480A1A7C2B1B284BCEDF7E23/S0962492910000061a.pdf/inverse-problems-a-bayesian-perspective.pdf" target="_blank" rel="noopener">free PDF (Cambridge Core)</a></li>
+                    </ul>
                 </div>
 
                 <div class="act-prevnext-spacer"></div>
