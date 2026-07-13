@@ -39,7 +39,7 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=(8, 6))
     im = ax.imshow(g_mat, aspect="auto", cmap=PALETTE["mako"],
                    origin="upper", interpolation="nearest")
-    ax.set_title(rf"Discrete forward matrix $[\mathbf{{G}}]_{{ij}}$ ($K={ps.N_D}$, $N={N_CELLS}$)")
+    ax.set_title(rf"Discrete forward matrix $[\mathbf{{G}}]_{{ij}}$ ($N_d={ps.N_D}$, $N={N_CELLS}$)")
     ax.set_xlabel(r"basis index $j$")
     ax.set_ylabel(r"observation index $i$")
     cbar = fig.colorbar(im, ax=ax, shrink=0.85)

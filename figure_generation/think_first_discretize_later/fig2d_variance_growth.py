@@ -65,7 +65,7 @@ def main() -> None:
     ax.plot(ns, traces, "o-", color=PALETTE["mako_dark"], lw=2.2, ms=5,
             label=r"$\operatorname{Tr}(\mathbf{C}_N^{\tilde{\mathbf{d}}})$ (naive prior)")
     ax.plot(ns, lower_bound, "--", color=PALETTE["true"], lw=2.0,
-            label=rf"lower bound $\sigma^2(N - K)$ ($\sigma={sigma}$, $K={K}$)")
+            label=rf"lower bound $\sigma^2(N - N_d)$ ($\sigma={sigma}$, $N_d={K}$)")
     ax.fill_between(ns, lower_bound, traces, alpha=0.12, color=PALETTE["mako_dark"])
     ax.set_xlabel(r"number of basis functions $N$")
     ax.set_ylabel(r"total posterior variance $\operatorname{Tr}(\mathbf{C}_N^{\tilde{\mathbf{d}}})$")

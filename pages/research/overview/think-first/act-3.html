@@ -202,7 +202,7 @@
                     <figcaption>
                         <strong>F3a &mdash; Where does everything live?</strong>
                         The model \(m\) lives in a function space \(\M\). The data
-                        \(\obs\) live in a finite-dimensional space \(\D=\R^K\).
+                        \(\obs\) live in a finite-dimensional space \(\D=\R^{N_d}\).
                         The forward map \(G:\M\to\D\) connects them. The prior
                         \(\prior\) is a measure on \(\M\), not a matrix. The noise
                         \(\noise\sim\N(0,\Cd)\) lives in \(\D\).
@@ -263,14 +263,14 @@
                     <p>
                         The second question is: \(\text{What is } \obs?\)
                         In the toy problem, the data are finitely many real numbers:
-                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_K \end{pmatrix} \in \R^K. \]
+                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_{N_d} \end{pmatrix} \in \R^{N_d}. \]
                         Thus, a natural data space is
-                        \[ \D = \R^K. \]
+                        \[ \D = \R^{N_d}. \]
                     </p>
                     <p>
                         This looks simple, and in many ways it is. Finite-dimensional spaces are
-                        mathematically friendly. All norms on \(\R^K\) induce the same topology,
-                        linear maps into and out of \(\R^K\) are easier to control, and
+                        mathematically friendly. All norms on \(\R^{N_d}\) induce the same topology,
+                        linear maps into and out of \(\R^{N_d}\) are easier to control, and
                         completeness is automatic.
                     </p>
                     <p>
@@ -304,7 +304,7 @@
                         This is the role of the forward map
                         \[ G : \M \to \D. \]
                         In the toy example,
-                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,K. \]
+                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,N_d. \]
                     </p>
                     <p>
                         The forward map is the mathematical description of the experiment. It tells us
@@ -542,7 +542,7 @@
                     <p>
                         The data space is the mathematical home of the observations:
                         \[ \obs \in \D. \]
-                        In the toy problem, \(\D = \R^K\).
+                        In the toy problem, \(\D = \R^{N_d}\).
                         This finite-dimensional choice is convenient, but it does not remove all
                         modelling decisions. We still need to decide how data residuals are measured.
                     </p>

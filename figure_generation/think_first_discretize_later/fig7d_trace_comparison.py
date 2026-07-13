@@ -71,7 +71,7 @@ def main() -> None:
     ax.plot(ns, naive_traces, "o-", color=PALETTE["naive"], lw=2.4, ms=5,
             label=r"naive  $\operatorname{Tr}(\mathbf{C}_N^{\tilde{d}})$")
     ax.plot(ns, lower_bound, "--", color=PALETTE["true"], lw=1.8,
-            label=rf"naive lower bound  $\sigma^2(N-K)$  ($\sigma={ps.NAIVE_SIGMA}$, $K={ps.N_D}$)")
+            label=rf"naive lower bound  $\sigma^2(N-N_d)$  ($\sigma={ps.NAIVE_SIGMA}$, $N_d={ps.N_D}$)")
     ax.plot(ns, bessel_traces, "s-", color=PALETTE["correct"], lw=2.4, ms=5,
             label=r"corrected  $\operatorname{Tr}(\mathbf{C}_{0,N}^{\tilde{d}})$")
     ax.fill_between(ns, lower_bound, naive_traces, alpha=0.08, color=PALETTE["naive"])

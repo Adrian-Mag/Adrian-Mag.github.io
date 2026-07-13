@@ -117,14 +117,14 @@
                 <div class="tfdl-prose">
                     <p>
                         In the toy inverse problem, the data consist of finitely many real numbers:
-                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_K \end{pmatrix}. \]
-                        Thus, the natural data space is \(\D = \R^K\).
+                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_{N_d} \end{pmatrix}. \]
+                        Thus, the natural data space is \(\D = \R^{N_d}\).
                     </p>
                     <p>
                         This is already a major simplification. The model may live in an
                         infinite-dimensional function space, but the observations live in a
                         finite-dimensional vector space. The forward map therefore compresses a model
-                        into finitely many numbers: \(G : \M \to \R^K\).
+                        into finitely many numbers: \(G : \M \to \R^{N_d}\).
                     </p>
                     <p>
                         The data equation is
@@ -156,7 +156,7 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        On \(\R^K\), many different norms can be defined. In finite dimensions, all norms
+                        On \(\R^{N_d}\), many different norms can be defined. In finite dimensions, all norms
                         induce the same topology. This means that they give the same notion of convergence.
                         This is not true in infinite-dimensional spaces.
                     </p>
@@ -165,7 +165,7 @@
                 <div class="tfdl-callout callout-remark">
                     <span class="tfdl-callout-label">Remark</span>
                     <p>
-                        Although all norms on \(\R^K\) induce the same topology, they do not define the
+                        Although all norms on \(\R^{N_d}\) induce the same topology, they do not define the
                         same geometry. They may measure length and angle differently. For inverse
                         problems, this distinction matters.
                     </p>
@@ -194,7 +194,7 @@
                         guaranteed. A linear map \(G:\M\to\D\) must be checked.
                     </p>
                     <p>
-                        Since \(\D=\R^K\) is finite-dimensional, checking continuity of \(G\) often
+                        Since \(\D=\R^{N_d}\) is finite-dimensional, checking continuity of \(G\) often
                         reduces to checking the continuity of its individual components. For example, if
                         \(G_i m = \int_\Omega K_i(x)\,m(x)\,dx\) and \(\M=L^2(\Omega)\),
                         \(K_i\in L^2(\Omega)\), then by Cauchy-Schwarz,
@@ -212,9 +212,9 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        A general inner product on \(\R^K\) can be written as
-                        \(\inner{a}{b}_{\D} = a^{\top} \Wb_D b\), where \(\Wb_D\in\R^{K\times K}\) is symmetric
-                        positive definite. If \(\Wb_D=\mathbf{I}_K\), this is the usual Euclidean inner product.
+                        A general inner product on \(\R^{N_d}\) can be written as
+                        \(\inner{a}{b}_{\D} = a^{\top} \Wb_D b\), where \(\Wb_D\in\R^{N_d\times N_d}\) is symmetric
+                        positive definite. If \(\Wb_D=\mathbf{I}_{N_d}\), this is the usual Euclidean inner product.
                     </p>
                     <p>
                         This choice affects the adjoint of the forward map. In particular, if the model
@@ -563,7 +563,7 @@
                     <p>
                         Suppose the data-space inner product is \(\inner{a}{b}_{\D}=a^{\top} \Wb_D b\), and the
                         model-space inner product is \(\inner{u}{v}_{\M}=u^{\top} \Mb v\). Let the forward map
-                        be represented by a matrix \(\Gb\in\R^{K\times N}\). The adjoint matrix \(A\) must
+                        be represented by a matrix \(\Gb\in\R^{N_d\times N}\). The adjoint matrix \(A\) must
                         satisfy \(\inner{\Gb u}{d}_{\D} = \inner{u}{Ad}_{\M}\) for all \(u,d\).
                     </p>
                     <p>
@@ -573,7 +573,7 @@
                         \[ A = \Mb^{-1}\Gb^{\T} \Wb_D. \]
                     </p>
                     <p>
-                        Only when \(\Mb=\mathbf{I}_N\) and \(\Wb_D=\mathbf{I}_K\) does this reduce to \(\Gb^{\T}\).
+                        Only when \(\Mb=\mathbf{I}_N\) and \(\Wb_D=\mathbf{I}_{N_d}\) does this reduce to \(\Gb^{\T}\).
                     </p>
                 </div>
 
@@ -753,7 +753,7 @@
                         Similarly, the data-space inner product may be written as
                         \(\inner{a}{b}_{\D} = a^{\top} \Wb_D b\). The matrix \(\Wb_D\) is the Gram matrix of the
                         data-space coordinate basis. In many finite-dimensional data problems, we choose
-                        Euclidean data coordinates and therefore take \(\Wb_D=\mathbf{I}_K\). But this is still a
+                        Euclidean data coordinates and therefore take \(\Wb_D=\mathbf{I}_{N_d}\). But this is still a
                         choice, not an inevitability.
                     </p>
                 </div>
@@ -775,9 +775,9 @@
                 <div class="tfdl-callout callout-proposition">
                     <span class="tfdl-callout-label">Proposition</span>
                     <p>
-                        Let \(\Gb:\R^N\to\R^K\) be represented by a matrix \(\Gb\). Equip \(\R^N\) with the
+                        Let \(\Gb:\R^N\to\R^{N_d}\) be represented by a matrix \(\Gb\). Equip \(\R^N\) with the
                         inner product \(\inner{u}{v}_{\M}=u^{\top} \Mb v\), where \(\Mb\) is symmetric positive
-                        definite, and equip \(\R^K\) with \(\inner{a}{b}_{\D}=a^{\top} \Wb_D b\), where \(\Wb_D\)
+                        definite, and equip \(\R^{N_d}\) with \(\inner{a}{b}_{\D}=a^{\top} \Wb_D b\), where \(\Wb_D\)
                         is symmetric positive definite. Then the adjoint of \(\Gb\) with respect to these
                         inner products is represented by
                         \[ G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D. \]
@@ -788,7 +788,7 @@
                     <p>
                         The adjoint \(G^{\adj}_{\mathrm{disc}}\) is defined by
                         \(\inner{\Gb u}{d}_{\D} = \inner{u}{G^{\adj}_{\mathrm{disc}}d}_{\M}\) for all
-                        \(u\in\R^N\) and \(d\in\R^K\). Expanding both inner products gives
+                        \(u\in\R^N\) and \(d\in\R^{N_d}\). Expanding both inner products gives
                         \(u^{\top} \Gb^{\T} \Wb_D d = u^{\top} \Mb G^{\adj}_{\mathrm{disc}} d\).
                         Since this holds for all \(u\) and \(d\), we have
                         \(\Gb^{\T} \Wb_D = \Mb G^{\adj}_{\mathrm{disc}}\).

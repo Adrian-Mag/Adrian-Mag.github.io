@@ -117,7 +117,7 @@
                         them to work on the same toy problem from Acts I and II.
                     </p>
                     <p>
-                        Same domain \(\Omega = [0,1]\), same Gaussian kernels, same \(K = 20\)
+                        Same domain \(\Omega = [0,1]\), same Gaussian kernels, same \(N_d = 20\)
                         data, same hat basis, same forward matrix \(\Gb\). The physical
                         forward and data setup is unchanged. What changes is the Bayesian
                         formulation: the prior is now a function-space-consistent
@@ -243,7 +243,7 @@
                     <div class="tfdl-slider-container">
                         <label for="f7c-slider">
                             <span class="tfdl-slider-label">N = <span id="f7c-n-value">21</span></span>
-                            <span class="tfdl-slider-sublabel">(\(K=20\) data points, Bessel prior)</span>
+                            <span class="tfdl-slider-sublabel">(\(N_d=20\) data points, Bessel prior)</span>
                         </label>
                         <input type="range" id="f7c-slider" min="21" max="50" value="21" step="1"
                                class="tfdl-slider">
@@ -366,7 +366,7 @@
                 <div class="tfdl-prose">
                     <p>
                         The mathematical verdict in one plot. For the naive prior,
-                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N - K)\) &mdash; the
+                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N - N_d)\) &mdash; the
                         total posterior variance grows linearly with \(N\).
                     </p>
                     <p>
@@ -386,7 +386,7 @@
                     <figcaption>
                         <strong>F7d &mdash; Posterior trace: naive diverges, corrected converges.</strong>
                         The naive posterior trace (coral) grows linearly with \(N\),
-                        tracking the lower bound \(\sigma^2(N-K)\) (amber, dashed).
+                        tracking the lower bound \(\sigma^2(N-N_d)\) (amber, dashed).
                         The corrected posterior trace (green) levels off &mdash;
                         bounded by \(\Tr(C_0) < \infty\). Log scale reveals the
                         four-order-of-magnitude gap between the two workflows.
@@ -398,7 +398,7 @@
                     <p>
                         Let \(C_0\) be a positive symmetric trace-class covariance
                         operator on \(\M\), and let \(G:\M\to\D\) be a bounded linear
-                        map into the finite-dimensional data space \(\D=\R^K\). Then the
+                        map into the finite-dimensional data space \(\D=\R^{N_d}\). Then the
                         posterior covariance
                         \(C^{\obs} = C_0 - C_0 G^{\adj} (G C_0 G^{\adj} + \Cd)^{-1} G C_0\)
                         is positive and trace class, with

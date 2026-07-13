@@ -415,7 +415,7 @@
                     <p>
                         The discrete adjoint is
                         \(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T} \Wb_D\). Only if \(\Mb=\mathbf{I}_N\) and
-                        \(\Wb_D=\mathbf{I}_K\) do we recover \(G^{\adj}_{\mathrm{disc}}=\Gb^{\T}\).
+                        \(\Wb_D=\mathbf{I}_{N_d}\) do we recover \(G^{\adj}_{\mathrm{disc}}=\Gb^{\T}\).
                     </p>
                 </div>
 
@@ -475,10 +475,10 @@
                 <div class="tfdl-prose">
                     <ol>
                         <li>Let \(\mathbf{u}\sim\N(\bar{\mathbf{u}},\mathbf{C})\). If \(\mathbf{C}=L\mathbf{L}^{\top}\) and \(\xi\sim\N(0,\mathbf{I})\), show that \(\bar{\mathbf{u}}+\mathbf{L}\xi\) has mean \(\bar{\mathbf{u}}\) and covariance \(\mathbf{C}\).</li>
-                        <li>Let \(\Gb\in\R^{K\times N}\) with \(N>K\). Show that \(\dim\operatorname{null}(\Gb)\geq N-K\).</li>
+                        <li>Let \(\Gb\in\R^{N_d\times N}\) with \(N>N_d\). Show that \(\dim\operatorname{null}(\Gb)\geq N-N_d\).</li>
                         <li>For the naive prior \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), show that if \(\mathbf{v}\in\operatorname{null}(\Gb)\), then \(\mathbf{C}_N^{\obs}\mathbf{v}=\sigma^2\mathbf{v}\).</li>
-                        <li>Prove that \(\Tr(\mathbf{C}_N^{\obs})\geq \sigma^2(N-K)\) under the assumptions of the previous exercise.</li>
-                        <li>Explain why increasing \(N\) with fixed \(K\) creates a problem for the naive posterior.</li>
+                        <li>Prove that \(\Tr(\mathbf{C}_N^{\obs})\geq \sigma^2(N-N_d)\) under the assumptions of the previous exercise.</li>
+                        <li>Explain why increasing \(N\) with fixed \(N_d\) creates a problem for the naive posterior.</li>
                     </ol>
                 </div>
 

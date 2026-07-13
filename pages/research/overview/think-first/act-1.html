@@ -193,15 +193,15 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        Suppose we have \(K\) observations,
-                        \[ [\obs]_1,\ldots,[\obs]_K \in \R. \]
+                        Suppose we have \(N_d\) observations,
+                        \[ [\obs]_1,\ldots,[\obs]_{N_d} \in \R. \]
                         We collect them into a data vector
-                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_K \end{pmatrix} \in \R^K. \]
+                        \[ \obs = \begin{pmatrix} [\obs]_1 \\ \vdots \\ [\obs]_{N_d} \end{pmatrix} \in \R^{N_d}. \]
                     </p>
                     <p>
                         Each observation is a noisy measurement of the unknown function. A typical
                         example has the form
-                        \[ [\obs]_i = \int_{\Omega} K_i(x)\,m(x)\,dx + [\noise]_i, \qquad i=1,\ldots,K, \]
+                        \[ [\obs]_i = \int_{\Omega} K_i(x)\,m(x)\,dx + [\noise]_i, \qquad i=1,\ldots,N_d, \]
                         where \(K_i\) is a known sensitivity kernel and \([\noise]_i\) is observational noise.
                     </p>
                     <p>
@@ -228,9 +228,9 @@
                 <div class="tfdl-prose">
                     <p>
                         We define the forward operator
-                        \[ G : \M \to \R^K \]
+                        \[ G : \M \to \R^{N_d} \]
                         componentwise by
-                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,K. \]
+                        \[ [G(m)]_i = \int_{\Omega} K_i(x)\,m(x)\,dx, \qquad i=1,\ldots,N_d. \]
                         Here \(\M\) denotes the model space, although we have not yet chosen it
                         carefully. This is one of the central tensions of the story: we already know
                         how to write down the measurements, but we have not yet decided what
@@ -291,15 +291,15 @@
                 <div class="tfdl-prose">
                     <p>
                         We assume that the noise vector
-                        \[ \noise = \begin{pmatrix} [\noise]_1 \\ \vdots \\ [\noise]_K \end{pmatrix} \]
+                        \[ \noise = \begin{pmatrix} [\noise]_1 \\ \vdots \\ [\noise]_{N_d} \end{pmatrix} \]
                         is Gaussian:
                         \[ \noise \sim \N(0,\Cd), \]
-                        where \(\Cd \in \R^{K \times K}\) is symmetric positive definite.
+                        where \(\Cd \in \R^{N_d \times N_d}\) is symmetric positive definite.
                     </p>
                     <p>
                         The covariance matrix \(\Cd\) encodes the size and correlation structure of the
                         observational errors. If
-                        \[ \Cd = \sigma_D^2 \mathbf{I}_K, \]
+                        \[ \Cd = \sigma_D^2 \mathbf{I}_{N_d}, \]
                         then the noise components are independent and have the same variance
                         \(\sigma_D^2\). More generally, off-diagonal entries of \(\Cd\) allow different
                         data errors to be correlated.
@@ -325,7 +325,7 @@
                         Here
                         \[ \obs \in \D, \qquad m \in \M, \qquad \noise \sim \N(0,\Cd), \]
                         where, for this first example,
-                        \[ \D = \R^K. \]
+                        \[ \D = \R^{N_d}. \]
                     </p>
                     <p>
                         This equation is compact, but it contains almost the entire drama. The unknown
@@ -337,7 +337,7 @@
                         The inverse problem asks us to travel in the opposite direction:
                         \[ \obs \quad \leadsto \quad m. \]
                         But the arrow is not reversible. Many different functions can give essentially
-                        the same data, especially once noise is present.
+                        the same data.
                     </p>
                 </div>
 
@@ -381,7 +381,7 @@
                         The difficulty is that the data are finite and indirect. Each datum is only a
                         projection, average, or blurred measurement of the model. If the model is a
                         function, then it has infinitely many degrees of freedom, while the data vector
-                        has only \(K\) components.
+                        has only \(N_d\) components.
                     </p>
                     <p>
                         Even before noise enters, the equation
@@ -542,7 +542,7 @@
                         In vector form,
                         \[ G(m_N) = \Gb\mathbf{u}, \]
                         where
-                        \[ \Gb \in \R^{K \times N}. \]
+                        \[ \Gb \in \R^{N_d \times N}. \]
                     </p>
                 </div>
 
@@ -827,7 +827,7 @@
                     </p>
                     <p>
                         The reason is simple: the data constrain only a finite number of directions. If
-                        the number of basis functions \(N\) is larger than the number of observations \(K\),
+                        the number of basis functions \(N\) is larger than the number of observations \(N_d\),
                         then there are directions in coefficient space that are weakly constrained or
                         entirely invisible to the data. In those directions, the posterior covariance is
                         controlled mostly by the prior. If the prior was chosen without reference to a

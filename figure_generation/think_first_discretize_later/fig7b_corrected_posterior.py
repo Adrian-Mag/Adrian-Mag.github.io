@@ -90,7 +90,7 @@ def main() -> None:
     ax.plot([], [], color=PALETTE["mako_mid"], alpha=0.35, lw=1.0,
             label=f"posterior samples (n={N_SAMPLES})")
 
-    ax.set_title(rf"Corrected posterior: Bessel prior, $N={N_CELLS}$ hats, $K={ps.N_D}$ data")
+    ax.set_title(rf"Corrected posterior: Bessel prior, $N={N_CELLS}$ hats, $N_d={ps.N_D}$ data")
     ax.set_xlabel(r"depth $z$")
     ax.set_ylabel("model value")
     ax.legend(fontsize=11, loc="upper right")

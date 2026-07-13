@@ -307,19 +307,19 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        The reason is structural. The data vector has only \(K\) entries:
-                        \[ \obs \in \R^K. \]
+                        The reason is structural. The data vector has only \(N_d\) entries:
+                        \[ \obs \in \R^{N_d}. \]
                         The coefficient vector has \(N\) entries:
                         \[ \mathbf{u} \in \R^N. \]
-                        If \(N > K\), then there are more unknown coefficients than observations.
+                        If \(N > N_d\), then there are more unknown coefficients than observations.
                     </p>
                     <p>
                         The forward matrix
-                        \[ \Gb \in \R^{K\times N} \]
-                        can have rank at most \(K\):
-                        \[ \operatorname{rank}(\Gb) \leq K. \]
-                        Therefore, if \(N>K\), the nullspace of \(\Gb\) has dimension at least
-                        \[ \dim \operatorname{null}(\Gb) = N-\operatorname{rank}(\Gb) \geq N-K. \]
+                        \[ \Gb \in \R^{N_d\times N} \]
+                        can have rank at most \(N_d\):
+                        \[ \operatorname{rank}(\Gb) \leq N_d. \]
+                        Therefore, if \(N>N_d\), the nullspace of \(\Gb\) has dimension at least
+                        \[ \dim \operatorname{null}(\Gb) = N-\operatorname{rank}(\Gb) \geq N-N_d. \]
                     </p>
                     <p>
                         Every vector \(\mathbf{v} \in \operatorname{null}(\Gb)\) satisfies
@@ -361,7 +361,7 @@
                 <div class="tfdl-callout callout-warning">
                     <span class="tfdl-callout-label">Warning</span>
                     <p>
-                        The problem is not simply that \(N>K\). The problem is that the unseen directions
+                        The problem is not simply that \(N>N_d\). The problem is that the unseen directions
                         are filled with variance that has not been designed to have a meaningful
                         continuous limit.
                     </p>
@@ -379,7 +379,7 @@
                     <p>
                         In the naive discretized problem,
                         \[ \obs = \Gb\mathbf{u} + \noise, \]
-                        the matrix \(\Gb\) maps from \(\R^N\) to \(\R^K\). When \(N>K\), the
+                        the matrix \(\Gb\) maps from \(\R^N\) to \(\R^{N_d}\). When \(N>N_d\), the
                         system is underdetermined. There are more coefficient directions than data
                         directions.
                     </p>
@@ -449,13 +449,13 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        Let \(r_N = \operatorname{rank}(\Gb)\). Then \(r_N \leq K\).
+                        Let \(r_N = \operatorname{rank}(\Gb)\). Then \(r_N \leq N_d\).
                         The nullspace has dimension \(N-r_N\).
                         On this nullspace, the posterior covariance keeps the value \(\sigma^2\) in each
                         orthonormal direction.
                     </p>
                     <p>
-                        Therefore, at least \(N-K\) directions retain posterior variance \(\sigma^2\).
+                        Therefore, at least \(N-N_d\) directions retain posterior variance \(\sigma^2\).
                     </p>
                     <p>
                         This is the first precise sign that something is wrong. Refining the mesh adds
@@ -597,14 +597,14 @@
                     </p>
                     <p>
                         The data can reduce variance only in directions that affect the data. Since
-                        \(\operatorname{rank}(\Gb) \leq K\), there are at least \(N-K\) directions that the
+                        \(\operatorname{rank}(\Gb) \leq N_d\), there are at least \(N-N_d\) directions that the
                         data cannot constrain. In each of these directions, the posterior variance
                         remains exactly \(\sigma^2\).
                     </p>
                     <p>
                         Consequently,
-                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2 (N-K). \]
-                        As \(N\) increases while \(K\) is fixed,
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2 (N-N_d). \]
+                        As \(N\) increases while \(N_d\) is fixed,
                         \[ \Tr(\mathbf{C}_N^{\obs}) \to \infty. \]
                     </p>
                     <p>
@@ -638,7 +638,7 @@
                         <strong>F2d &mdash; Coefficient-space variance grows with mesh refinement.</strong>
                         The coefficient-space trace \(\Tr(\mathbf{C}_N^{\obs})\)
                         grows linearly with \(N\), tracking the lower bound
-                        \(\sigma^2(N-K)\). Each new basis function adds a direction
+                        \(\sigma^2(N-N_d)\). Each new basis function adds a direction
                         the data cannot see, and the naive prior assigns it full
                         variance \(\sigma^2\). This does not mean the pointwise
                         uncertainty band diverges &mdash; for hat functions it stays
@@ -683,7 +683,7 @@
                     <div class="tfdl-slider-container">
                         <label for="f2e-slider">
                             <span class="tfdl-slider-label">N = <span id="f2e-n-value">21</span></span>
-                            <span class="tfdl-slider-sublabel">(\(K=20\) data points, \(\sigma=1\))</span>
+                            <span class="tfdl-slider-sublabel">(\(N_d=20\) data points, \(\sigma=1\))</span>
                         </label>
                         <input type="range" id="f2e-slider" min="21" max="50" value="21" step="1"
                                class="tfdl-slider">
@@ -855,12 +855,12 @@
                     </p>
                     <p>
                         The posterior improves this only in directions seen by the data. Since the data
-                        space has dimension \(K\), the data can remove variance from at most \(K\)
-                        independent directions. At least \(N-K\) directions keep their prior variance.
+                        space has dimension \(N_d\), the data can remove variance from at most \(N_d\)
+                        independent directions. At least \(N-N_d\) directions keep their prior variance.
                     </p>
                     <p>
                         Therefore,
-                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-N_d). \]
                     </p>
                 </div>
 
@@ -870,7 +870,7 @@
 
                 <div class="tfdl-prose">
                     <p>
-                        Taking the refinement limit, \(N \to \infty\), with \(K\) fixed, we obtain
+                        Taking the refinement limit, \(N \to \infty\), with \(N_d\) fixed, we obtain
                         \[ \Tr(\mathbf{C}_N^{\obs}) \to \infty. \]
                         In particular,
                         \[ \E_{\post_N} \norm{\mathbf{u}}_2^2 = \norm{\tilde{\mathbf{u}}_N^{\obs}}_2^2 + \Tr(\mathbf{C}_N^{\obs}) \to \infty, \]
@@ -886,21 +886,21 @@
                 <div class="tfdl-callout callout-proposition">
                     <span class="tfdl-callout-label">Proposition</span>
                     <p>
-                        Let \(\Gb\in\R^{K\times N}\) and let the prior covariance be
+                        Let \(\Gb\in\R^{N_d\times N}\) and let the prior covariance be
                         \(\mathbf{C}_N=\sigma^2 \mathbf{I}_N\), with \(\sigma>0\). Assume the observational noise covariance
                         \(\Cd\) is symmetric positive definite. Then the posterior covariance
                         \[ \mathbf{C}_N^{\obs} = \sigma^2 \mathbf{I}_N - \sigma^4 \Gb^{\T} \left( \sigma^2 \Gb\Gb^{\T} + \Cd \right)^{-1} \Gb \]
                         satisfies
-                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
-                        Hence, if \(K\) is fixed and \(N\to\infty\), then
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-N_d). \]
+                        Hence, if \(N_d\) is fixed and \(N\to\infty\), then
                         \[ \Tr(\mathbf{C}_N^{\obs})\to\infty. \]
                     </p>
                 </div>
 
                 <div class="callout-proof">
                     <p>
-                        Since \(\operatorname{rank}(\Gb)\leq K\), the nullspace of \(\Gb\) has dimension at
-                        least \(N-K\). Let
+                        Since \(\operatorname{rank}(\Gb)\leq N_d\), the nullspace of \(\Gb\) has dimension at
+                        least \(N-N_d\). Let
                         \[ \{\mathbf{v}_1,\ldots,\mathbf{v}_{N-r}\} \]
                         be an orthonormal basis for \(\operatorname{null}(\Gb)\), where
                         \(r=\operatorname{rank}(\Gb)\). For each such vector,
@@ -908,8 +908,8 @@
                         Therefore,
                         \[ \mathbf{C}_N^{\obs}\mathbf{v}_j = \sigma^2\mathbf{v}_j. \]
                         Thus \(\mathbf{C}_N^{\obs}\) has at least \(N-r\) eigenvalues equal to \(\sigma^2\). Since
-                        \(r\leq K\), it has at least \(N-K\) such eigenvalues. Hence
-                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-K). \]
+                        \(r\leq N_d\), it has at least \(N-N_d\) such eigenvalues. Hence
+                        \[ \Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N-N_d). \]
                     </p>
                 </div>
 
