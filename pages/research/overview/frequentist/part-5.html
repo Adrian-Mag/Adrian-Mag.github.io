@@ -236,6 +236,11 @@
                         \right\}.
                     \]</p>
 
+                    <p>(The machinery of this section &mdash; test statistics, candidate-wise
+                    critical values, and the confidence sets they induce &mdash; is treated
+                    comprehensively in Lehmann and Romano
+                    <a href="#ref-lr05">[LR05]</a>.)</p>
+
                     <p>In the scalar Gaussian additive case
                     \(D'_{\theta} = \theta + N\), \(N \sim \mathcal{N}(0, \sigma^2)\),
                     one possible statistic is
@@ -284,6 +289,11 @@
                     decision rule \(\delta : \Dspace \to \{0, 1, \mathrm{inc}\}\)
                     maps the observation to a verdict: absent, present, or
                     inconclusive.</p>
+
+                    <p>(Judging decision rules by their worst-case guaranteed risk is
+                    Wald&rsquo;s decision theory <a href="#ref-wal45">[Wal45]</a> &mdash;
+                    the frequentist rhythm of Part&nbsp;4, extended from set-reporting to
+                    acting.)</p>
 
                     <p>If the dangerous error is a false negative, the event of
                     concern is \(\delta(\Dobsrand) = 0\) when the truth actually
@@ -348,7 +358,18 @@
                         Overview <span class="arrow">&rarr;</span>
                     </a>
                 </div>
-                <div class="part-prevnext-spacer"></div>
+                <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-lr05">Erich L. Lehmann and Joseph P. Romano (2005). <em>Testing Statistical Hypotheses</em>, 3rd edition. Springer. Test statistics, acceptance regions, and confidence sets under general sampling laws.
+                        <a href="https://doi.org/10.1007/0-387-27605-X" target="_blank" rel="noopener">doi:10.1007/0-387-27605-X</a></li>
+                        <li id="ref-wal45">Abraham Wald (1945). &ldquo;Statistical Decision Functions Which Minimize the Maximum Risk.&rdquo; <em>Annals of Mathematics</em> 46(2), 265&ndash;280. Worst-case (minimax) guarantees for decision rules.
+                        <a href="https://doi.org/10.2307/1969022" target="_blank" rel="noopener">doi:10.2307/1969022</a></li>
+                        <li id="ref-ney37">Jerzy Neyman (1937). &ldquo;Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability.&rdquo; <em>Philosophical Transactions of the Royal Society A</em> 236(767), 333&ndash;380. The coverage logic that all of these constructions inherit.
+                        <a href="https://doi.org/10.1098/rsta.1937.0005" target="_blank" rel="noopener">doi:10.1098/rsta.1937.0005</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
             </div>
         </section>
     </main>

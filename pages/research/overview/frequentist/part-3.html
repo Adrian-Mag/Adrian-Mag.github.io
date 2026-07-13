@@ -234,6 +234,12 @@
                     or equivalently
                     \(p(\mathbf d \mid \dobs) \propto p_N(\dobs - \mathbf d)\,p_{\prior}(\mathbf d)\).</p>
 
+                    <p>(This reversal is the move the whole subject is named for: it is the
+                    content of Bayes&rsquo;s 1763 essay <a href="#ref-bay63">[Bay63]</a>,
+                    developed into a full theory of inference by Jeffreys
+                    <a href="#ref-jef39">[Jef39]</a> and into modern computational practice
+                    by Gelman and co-authors <a href="#ref-gel13">[Gel13]</a>.)</p>
+
                     <p>The posterior combines two ingredients:
                     <strong>data fit</strong> \(p_N(\dobs - \mathbf d)\), which
                     measures how well candidate \(\mathbf d\) explains the observed
@@ -274,7 +280,11 @@
                     \(\muPred = \prior * \muN\). A small value of
                     \(p_{\muPred}(\dobs)\) indicates that the observed datum
                     lies in a low-density region of the prior predictive
-                    distribution.</p>
+                    distribution. Using the prior predictive this way &mdash; as a check on
+                    the whole model rather than on any parameter &mdash; is Box&rsquo;s
+                    classic proposal <a href="#ref-box80">[Box80]</a>, and it survives in
+                    modern Bayesian workflow as predictive checking
+                    <a href="#ref-gel13">[Gel13]</a>, Ch.&nbsp;6.</p>
 
                     <p>However, a prior predictive surprise can occur for several
                     reasons: the observation may require an extreme noise
@@ -384,7 +394,21 @@
                         Part 4: Frequentist Path <span class="arrow">&rarr;</span>
                     </a>
                 </div>
-                <div class="part-prevnext-spacer"></div>
+                <h2>References</h2>
+
+                    <ul style="font-size:0.92rem; line-height:1.75;">
+                        <li id="ref-bay63">Thomas Bayes (1763). &ldquo;An Essay towards solving a Problem in the Doctrine of Chances.&rdquo; (Communicated by Richard Price.) <em>Philosophical Transactions of the Royal Society</em> 53, 370&ndash;418. The reversal that the subject is named for.
+                        <a href="https://doi.org/10.1098/rstl.1763.0053" target="_blank" rel="noopener">doi:10.1098/rstl.1763.0053</a></li>
+                        <li id="ref-jef39">Harold Jeffreys (1939). <em>Theory of Probability</em>. Oxford University Press (3rd edition 1961; Oxford Classic Texts reissue 1998). The classical development of posterior reasoning.
+                        <a href="https://doi.org/10.1093/oso/9780198503682.001.0001" target="_blank" rel="noopener">doi:10.1093/oso/9780198503682.001.0001</a></li>
+                        <li id="ref-gel13">Andrew Gelman, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin (2013). <em>Bayesian Data Analysis</em>, 3rd edition. CRC Press. Modern Bayesian practice, including predictive checking (Ch. 6).
+                        <a href="http://www.stat.columbia.edu/~gelman/book/" target="_blank" rel="noopener">book page</a> &middot;
+                        <a href="http://www.stat.columbia.edu/~gelman/book/BDA3.pdf" target="_blank" rel="noopener">free PDF (authors&rsquo; edition)</a></li>
+                        <li id="ref-box80">George E. P. Box (1980). &ldquo;Sampling and Bayes&rsquo; Inference in Scientific Modelling and Robustness.&rdquo; <em>Journal of the Royal Statistical Society, Series A</em> 143(4), 383&ndash;430. Prior predictive model criticism.
+                        <a href="https://doi.org/10.2307/2982063" target="_blank" rel="noopener">doi:10.2307/2982063</a></li>
+                    </ul>
+
+                    <div class="part-prevnext-spacer"></div>
             </div>
         </section>
     </main>
