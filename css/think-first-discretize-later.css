@@ -1357,3 +1357,25 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     color: var(--sem-orange-text);
     font-weight: 600;
 }
+
+/* ── Earth mode: no space-blue shadows ─────────────────────
+   The blue glows above are space-palette flourishes; in earth mode
+   they read as hue leaks (visibly blue under the hero title). Replace
+   with neutral warm-ink equivalents. */
+:root[data-theme="earth"] .tfdl-hero { box-shadow: 0 8px 32px rgba(60, 52, 30, 0.15); }
+:root[data-theme="earth"] .tfdl-hero h1 {
+    color: #F4F6EC;
+    background: rgba(30, 34, 28, 0.40);
+    text-shadow: 0 8px 32px rgba(28, 26, 18, 0.35), 0 2px 0 rgba(48, 45, 32, 0.55);
+    box-shadow: 0 2px 12px rgba(60, 52, 30, 0.15);
+}
+:root[data-theme="earth"] .tfdl-hero p {
+    color: #DDE2CE;
+    background: rgba(30, 34, 28, 0.34);
+    box-shadow: 0 2px 12px rgba(60, 52, 30, 0.15);
+}
+:root[data-theme="earth"] .act-chip.is-active { box-shadow: 0 4px 16px rgba(92, 109, 51, 0.30); }
+:root[data-theme="earth"] .tfdl-link-btn:hover,
+:root[data-theme="earth"] .tfdl-link-btn:focus { box-shadow: 0 4px 16px rgba(92, 109, 51, 0.25); }
+:root[data-theme="earth"] .act-prevnext-btn:hover,
+:root[data-theme="earth"] .act-prevnext-btn:focus { box-shadow: 0 4px 16px rgba(92, 109, 51, 0.25); }
