@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act V: The Data Space and the Adjoint — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=23">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=23">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=23">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=23">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=24">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=24">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=24">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=24">
     <meta name="description" content="Act V of Think First, Discretize Later: The data space, the forward operator, and why the adjoint is not just a transpose.">
     <script>
     MathJax = {
@@ -335,7 +335,7 @@
                         <ellipse cx="180" cy="145" rx="40" ry="20" fill="none" stroke="rgba(52,122,162,0.15)" stroke-width="1" stroke-dasharray="2,3" transform="rotate(-25 180 145)"/>
                         <ellipse cx="180" cy="145" rx="100" ry="50" fill="none" stroke="rgba(52,122,162,0.1)" stroke-width="1" stroke-dasharray="2,3" transform="rotate(-25 180 145)"/>
 
-                        <text x="180" y="265" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">r⊤ C_D⁻¹ r ≠ ‖r‖² (anisotropic metric)</text>
+                        <foreignObject x="15" y="253" width="330" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(r^{\top} C_D^{-1} r \neq \|r\|^2\) (anisotropic metric)</div></foreignObject>
 
                         <!-- Arrow between panels -->
                         <line x1="355" y1="140" x2="380" y2="140" stroke="rgba(109,210,172,0.5)" stroke-width="2" marker-end="url(#arrowWhite5g)"/>
@@ -344,7 +344,7 @@
                                 <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.5)"/>
                             </marker>
                         </defs>
-                        <text x="367" y="130" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">L⁻¹</text>
+                        <foreignObject x="337" y="118" width="60" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(L^{-1}\)</div></foreignObject>
 
                         <!-- Right panel: whitened data space -->
                         <rect x="370" y="10" width="340" height="260" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
@@ -373,7 +373,7 @@
                         <circle cx="540" cy="145" r="28" fill="none" stroke="rgba(52,122,162,0.15)" stroke-width="1" stroke-dasharray="2,3"/>
                         <circle cx="540" cy="145" r="72" fill="none" stroke="rgba(52,122,162,0.1)" stroke-width="1" stroke-dasharray="2,3"/>
 
-                        <text x="540" y="265" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">‖r̃‖² = r⊤ C_D⁻¹ r (isotropic metric)</text>
+                        <foreignObject x="375" y="253" width="330" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(\|\tilde r\|^2 = r^{\top} C_D^{-1} r\) (isotropic metric)</div></foreignObject>
                     </svg>
                     <figcaption>
                         <strong>F5g &mdash; Whitening as coordinate change.</strong>
@@ -482,9 +482,7 @@
                         </defs>
 
                         <!-- Central balance equation -->
-                        <text x="360" y="25" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-weight="600" font-family="serif">
-                            ⟨Gm, d⟩_D  =  ⟨m, G*d⟩_M
-                        </text>
+                        <foreignObject x="160" y="6" width="400" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math head">\(\langle Gm, d\rangle_{\mathcal{D}} = \langle m, G^{*}d\rangle_{\mathcal{M}}\)</div></foreignObject>
 
                         <!-- Left side: push forward -->
                         <rect x="10" y="50" width="340" height="210" rx="8" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.15)" stroke-width="1"/>
@@ -511,7 +509,7 @@
                         <text x="290" y="180" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ D</text>
 
                         <text x="180" y="220" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">pair Gm with d in data space</text>
-                        <text x="180" y="240" text-anchor="middle" fill="rgba(52,122,162,0.5)" font-size="11" font-family="serif">⟨Gm, d⟩_D</text>
+                        <foreignObject x="70" y="228" width="220" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(\langle Gm, d\rangle_{\mathcal{D}}\)</div></foreignObject>
 
                         <!-- Right side: pull back -->
                         <rect x="370" y="50" width="340" height="210" rx="8" fill="rgba(109,210,172,0.08)" stroke="rgba(109,210,172,0.15)" stroke-width="1"/>
@@ -524,11 +522,11 @@
 
                         <!-- Arrow G* -->
                         <line x1="435" y1="140" x2="540" y2="140" stroke="rgba(109,210,172,0.6)" stroke-width="2" marker-end="url(#arrowF5a2)"/>
-                        <text x="487" y="132" text-anchor="middle" fill="rgba(109,210,172,0.7)" font-size="12" font-weight="600">G*</text>
+                        <foreignObject x="457" y="120" width="60" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(G^{*}\)</div></foreignObject>
 
                         <!-- G*d in M -->
                         <circle cx="555" cy="140" r="5" fill="rgba(109,210,172,0.8)"/>
-                        <text x="555" y="160" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">G*d</text>
+                        <foreignObject x="520" y="148" width="70" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(G^{*}d\)</div></foreignObject>
                         <text x="555" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ M</text>
 
                         <!-- Pair with m -->
@@ -537,8 +535,8 @@
                         <text x="650" y="165" text-anchor="middle" fill="rgba(52,122,162,0.8)" font-size="12" font-weight="600">m</text>
                         <text x="650" y="180" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">∈ M</text>
 
-                        <text x="540" y="220" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">pair m with G*d in model space</text>
-                        <text x="540" y="240" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="11" font-family="serif">⟨m, G*d⟩_M</text>
+                        <foreignObject x="395" y="209" width="290" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">pair \(m\) with \(G^{*}d\) in model space</div></foreignObject>
+                        <foreignObject x="430" y="228" width="220" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(\langle m, G^{*}d\rangle_{\mathcal{M}}\)</div></foreignObject>
                     </svg>
                     <figcaption>
                         <strong>F5a &mdash; The adjoint is defined by a balance.</strong>
@@ -968,7 +966,7 @@
 
                         <!-- Bottom-left: Wrong pullback G^T r -->
                         <rect x="10" y="150" width="340" height="180" rx="6" fill="rgba(239,111,108,0.04)" stroke="rgba(239,111,108,0.2)" stroke-width="1"/>
-                        <text x="180" y="170" text-anchor="middle" fill="rgba(239,111,108,0.8)" font-size="12" font-weight="600">Wrong pullback: G⊤ r</text>
+                        <foreignObject x="35" y="158" width="290" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow warn">Wrong pullback: \(G^{\top} r\)</div></foreignObject>
                         <text x="180" y="186" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">ignores Gram matrices</text>
 
                         <!-- Model space axes (skewed to show non-Euclidean geometry) -->
@@ -984,12 +982,12 @@
                                 <path d="M0,0 L0,6 L7,3 z" fill="rgba(239,111,108,0.8)"/>
                             </marker>
                         </defs>
-                        <text x="130" y="245" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">G⊤ r</text>
+                        <foreignObject x="120" y="233" width="80" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini warn">\(G^{\top} r\)</div></foreignObject>
                         <text x="180" y="315" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">residual pushed in the wrong direction</text>
 
                         <!-- Bottom-right: Correct pullback M⁻¹G⊤W_D r -->
                         <rect x="370" y="150" width="340" height="180" rx="6" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
-                        <text x="540" y="170" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Correct pullback: M⁻¹G⊤W_D r</text>
+                        <foreignObject x="385" y="158" width="310" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow ok">Correct pullback: \(M^{-1}G^{\top}W_D\, r\)</div></foreignObject>
                         <text x="540" y="186" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">geometry-aware adjoint</text>
 
                         <!-- Model space axes (same skew) -->
@@ -1005,7 +1003,7 @@
                                 <path d="M0,0 L0,6 L7,3 z" fill="rgba(109,210,172,0.8)"/>
                             </marker>
                         </defs>
-                        <text x="600" y="245" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">G* r</text>
+                        <foreignObject x="590" y="233" width="90" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(G^{*} r\)</div></foreignObject>
                         <text x="540" y="315" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="9">residual pulled back respecting both geometries</text>
                     </svg>
                     <figcaption>
@@ -1374,9 +1372,10 @@
                 svg += '<text x="' + (cx-8) + '" y="' + (cy+14) + '" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">0</text>';
 
                 /* Labels */
-                svg += '<text x="180" y="305" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">C_D ellipse (solid) &amp; misfit contours r⊤C_D⁻¹r (dashed)</text>';
+                svg += '<foreignObject x="10" y="293" width="340" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\\(C_D\\) ellipse (solid) &amp; misfit contours \\(r^{\\top}C_D^{-1}r\\) (dashed)</div></foreignObject>';
 
                 f5dPlot.innerHTML = svg;
+                if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([f5dPlot]);
             }
 
             f5dS1.addEventListener('input', drawF5d);
@@ -1612,9 +1611,9 @@
         }
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=23" defer></script>
-    <script src="../../../../js/notes-extras.js?v=23" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=23" defer></script>
-    <script src="../../../../js/nav-menu.js?v=23" defer></script>
+    <script src="../../../../js/ai-assist.js?v=24" defer></script>
+    <script src="../../../../js/notes-extras.js?v=24" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=24" defer></script>
+    <script src="../../../../js/nav-menu.js?v=24" defer></script>
 </body>
 </html>

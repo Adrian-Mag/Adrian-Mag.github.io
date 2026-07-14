@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act VIII: The Verdict — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=23">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=23">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=23">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=23">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=24">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=24">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=24">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=24">
     <meta name="description" content="Act VIII of Think First, Discretize Later: Re-solving the toy problem with the corrected workflow.">
     <script>
     MathJax = {
@@ -167,19 +167,19 @@
                         <line x1="180" y1="95" x2="180" y2="115" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
 
                         <rect x="30" y="120" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
-                        <text x="180" y="140" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">coefficient vector u in R^N</text>
+                        <foreignObject x="30" y="120" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">coefficient vector \(u \in \mathbb{R}^N\)</div></foreignObject>
                         <line x1="180" y1="155" x2="180" y2="175" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
 
                         <rect x="30" y="180" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
-                        <text x="180" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">prior: C_N = σ²I_N (invented)</text>
+                        <foreignObject x="30" y="180" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">prior: \(C_N = \sigma^2 I_N\) (invented)</div></foreignObject>
                         <line x1="180" y1="215" x2="180" y2="235" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
 
                         <rect x="30" y="240" width="300" height="30" rx="5" fill="rgba(239,111,108,0.1)" stroke="rgba(239,111,108,0.25)"/>
-                        <text x="180" y="260" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">adjoint: G^T (transpose)</text>
+                        <foreignObject x="30" y="240" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">adjoint: \(G^{\top}\) (transpose)</div></foreignObject>
                         <line x1="180" y1="275" x2="180" y2="295" stroke="rgba(239,111,108,0.5)" stroke-width="1.5" marker-end="url(#arrowF8aR)"/>
 
                         <rect x="30" y="300" width="300" height="30" rx="5" fill="rgba(239,111,108,0.15)" stroke="rgba(239,111,108,0.35)"/>
-                        <text x="180" y="320" text-anchor="middle" fill="rgba(239,111,108,0.9)" font-size="11" font-weight="600">posterior: Tr(C_N^y) → ∞</text>
+                        <foreignObject x="30" y="300" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow warn">posterior: \(\operatorname{Tr}(C_N^{y}) \to \infty\)</div></foreignObject>
 
                         <text x="180" y="355" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="9">refinement changes the problem</text>
 
@@ -189,23 +189,23 @@
                         <text x="540" y="48" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="10">think first, discretize later</text>
 
                         <rect x="390" y="60" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
-                        <text x="540" y="80" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">model space M, data space D</text>
+                        <foreignObject x="390" y="60" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">model space \(\mathcal{M}\), data space \(\mathcal{D}\)</div></foreignObject>
                         <line x1="540" y1="95" x2="540" y2="115" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
 
                         <rect x="390" y="120" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
-                        <text x="540" y="140" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">forward map G: M → D</text>
+                        <foreignObject x="390" y="120" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">forward map \(G:\mathcal{M}\to\mathcal{D}\)</div></foreignObject>
                         <line x1="540" y1="155" x2="540" y2="175" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
 
                         <rect x="390" y="180" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
-                        <text x="540" y="200" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">prior: C₀ = α(κ²I−Δ)⁻ˢ (operator)</text>
+                        <foreignObject x="390" y="180" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">prior: \(C_0 = \alpha(\kappa^2 I-\Delta)^{-s}\) (operator)</div></foreignObject>
                         <line x1="540" y1="215" x2="540" y2="235" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
 
                         <rect x="390" y="240" width="300" height="30" rx="5" fill="rgba(52,122,162,0.15)" stroke="rgba(52,122,162,0.25)"/>
-                        <text x="540" y="260" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">adjoint: M⁻¹G^T W_D (geometry-aware)</text>
+                        <foreignObject x="390" y="240" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow">adjoint: \(M^{-1}G^{\top}W_D\) (geometry-aware)</div></foreignObject>
                         <line x1="540" y1="275" x2="540" y2="295" stroke="rgba(52,122,162,0.5)" stroke-width="1.5" marker-end="url(#arrowF8a)"/>
 
                         <rect x="390" y="300" width="300" height="30" rx="5" fill="rgba(109,210,172,0.15)" stroke="rgba(109,210,172,0.35)"/>
-                        <text x="540" y="320" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="11" font-weight="600">posterior: Tr(C^y) ≤ Tr(C₀) &lt; ∞</text>
+                        <foreignObject x="390" y="300" width="300" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math flow ok">posterior: \(\operatorname{Tr}(C^{y}) \le \operatorname{Tr}(C_0) < \infty\)</div></foreignObject>
 
                         <text x="540" y="355" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="9">refinement approximates the same problem</text>
 
@@ -475,18 +475,18 @@
 
                         <!-- Two columns -->
                         <text x="180" y="70" text-anchor="middle" fill="rgba(239,111,108,0.7)" font-size="12" font-weight="600">Naive: discretize first</text>
-                        <text x="180" y="90" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">C_N = σ²I_N → Tr → ∞</text>
-                        <text x="180" y="108" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">G* = G^T (wrong)</text>
+                        <foreignObject x="55" y="78" width="250" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini warn">\(C_N = \sigma^2 I_N \Rightarrow \operatorname{Tr}\to\infty\)</div></foreignObject>
+                        <foreignObject x="55" y="96" width="250" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini warn">\(G^* = G^{\top}\) (wrong)</div></foreignObject>
                         <text x="180" y="126" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">refinement changes the problem</text>
                         <text x="180" y="144" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">samples diverge</text>
                         <text x="180" y="162" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">no continuous limit</text>
 
                         <text x="540" y="70" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Corrected: think first</text>
-                        <text x="540" y="90" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">C_{0,N} ≈ C_0 → Tr &lt; ∞</text>
-                        <text x="540" y="108" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">G* = M⁻¹G^T W_D (correct)</text>
+                        <foreignObject x="415" y="78" width="250" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(C_{0,N} \approx C_0 \Rightarrow \operatorname{Tr} < \infty\)</div></foreignObject>
+                        <foreignObject x="415" y="96" width="250" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(G^* = M^{-1}G^{\top}W_D\) (correct)</div></foreignObject>
                         <text x="540" y="126" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">refinement approximates</text>
                         <text x="540" y="144" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">samples controlled</text>
-                        <text x="540" y="162" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="10">posterior_N → posterior</text>
+                        <foreignObject x="415" y="150" width="250" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini ok">\(\text{posterior}_N \to \text{posterior}\)</div></foreignObject>
 
                         <!-- Divider -->
                         <line x1="360" y1="60" x2="360" y2="175" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
@@ -566,10 +566,10 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=23" defer></script>
-    <script src="../../../../js/notes-extras.js?v=23" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=23" defer></script>
-    <script src="../../../../js/nav-menu.js?v=23" defer></script>
-    <script src="../../../../js/themed-figures.js?v=23" defer></script>
+    <script src="../../../../js/ai-assist.js?v=24" defer></script>
+    <script src="../../../../js/notes-extras.js?v=24" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=24" defer></script>
+    <script src="../../../../js/nav-menu.js?v=24" defer></script>
+    <script src="../../../../js/themed-figures.js?v=24" defer></script>
 </body>
 </html>
