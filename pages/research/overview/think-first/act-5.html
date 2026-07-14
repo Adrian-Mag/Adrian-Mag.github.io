@@ -604,64 +604,47 @@
                     </p>
                 </div>
 
+                <style>
+                    .tfdl-compare { display: flex; gap: 16px; flex-wrap: wrap; margin: 0.5rem 0; }
+                    .tfdl-compare-col { flex: 1 1 260px; border-radius: 10px; padding: 16px 14px 14px;
+                        border: 1px solid var(--line-2); background: color-mix(in srgb, var(--text) 3%, transparent); text-align: center; }
+                    .tfdl-compare-col.ok   { border-color: var(--sem-green-line); }
+                    .tfdl-compare-col.warn { border-color: var(--sem-orange-line); }
+                    .tfdl-compare-title { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+                    .tfdl-compare-col.ok   .tfdl-compare-title { color: var(--sem-green-text); }
+                    .tfdl-compare-col.warn .tfdl-compare-title { color: var(--sem-orange-text); }
+                    .tfdl-compare-sub { color: var(--muted); font-size: 0.8rem; margin-bottom: 10px; }
+                    .tfdl-compare-eq { font-size: 0.95rem; margin: 4px 0; }
+                    .tfdl-compare-rule { border: none; border-top: 1px solid var(--line-2); margin: 12px 24px; }
+                    .tfdl-compare-result { font-size: 1.1rem; margin: 6px 0; }
+                    .tfdl-compare-verdict { font-size: 0.85rem; margin-top: 8px; }
+                    .tfdl-compare-col.ok   .tfdl-compare-verdict { color: var(--sem-green-text); }
+                    .tfdl-compare-col.warn .tfdl-compare-verdict { color: var(--sem-orange-text); }
+                    .tfdl-compare-note { color: var(--muted); font-size: 0.78rem; margin-top: 10px; line-height: 1.5; }
+                </style>
                 <figure class="tfdl-diagram">
-                    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Left column: Euclidean coordinates -->
-                        <rect x="10" y="10" width="340" height="280" rx="8" fill="rgba(52,122,162,0.2)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
-                        <text x="180" y="35" text-anchor="middle" fill="rgba(109,210,172,0.85)" font-size="14" font-weight="700">Euclidean coordinates</text>
-                        <text x="180" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">orthonormal bases: M = I, W_D = I</text>
-
-                        <!-- Inner products -->
-                        <text x="180" y="85" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
-                            ⟨u, v⟩ = u⊤v
-                        </text>
-                        <text x="180" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
-                            ⟨a, b⟩ = a⊤b
-                        </text>
-
-                        <!-- Divider -->
-                        <line x1="60" y1="130" x2="300" y2="130" stroke="rgba(52,122,162,0.15)" stroke-width="1"/>
-
-                        <!-- Result -->
-                        <text x="180" y="165" text-anchor="middle" fill="rgba(109,210,172,0.9)" font-size="16" font-weight="600" font-family="serif">
-                            G* = G⊤
-                        </text>
-
-                        <!-- Checkmark -->
-                        <text x="180" y="200" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="11">transpose = adjoint ✓</text>
-
-                        <!-- Caption -->
-                        <text x="180" y="240" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">the coincidence of orthonormal worlds</text>
-                        <text x="180" y="258" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">useful — but dangerous to generalise</text>
-
-                        <!-- Right column: General geometry -->
-                        <rect x="370" y="10" width="340" height="280" rx="8" fill="rgba(239,111,108,0.04)" stroke="rgba(239,111,108,0.2)" stroke-width="1"/>
-                        <text x="540" y="35" text-anchor="middle" fill="rgba(244,162,89,0.85)" font-size="14" font-weight="700">General geometry</text>
-                        <text x="540" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">non-orthonormal bases: M ≠ I, W_D ≠ I</text>
-
-                        <!-- Inner products -->
-                        <text x="540" y="85" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
-                            ⟨u, v⟩_M = u⊤ M v
-                        </text>
-                        <text x="540" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="13" font-family="serif">
-                            ⟨a, b⟩_D = a⊤ W_D b
-                        </text>
-
-                        <!-- Divider -->
-                        <line x1="420" y1="130" x2="660" y2="130" stroke="rgba(239,111,108,0.15)" stroke-width="1"/>
-
-                        <!-- Result -->
-                        <text x="540" y="165" text-anchor="middle" fill="rgba(244,162,89,0.9)" font-size="15" font-weight="600" font-family="serif">
-                            G*_disc = M⁻¹G⊤W_D
-                        </text>
-
-                        <!-- Warning -->
-                        <text x="540" y="200" text-anchor="middle" fill="rgba(239,111,108,0.6)" font-size="11">transpose ≠ adjoint ✗</text>
-
-                        <!-- Caption -->
-                        <text x="540" y="240" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">Gram matrices carry the geometry</text>
-                        <text x="540" y="258" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">ignoring them silently changes the problem</text>
-                    </svg>
+                    <div class="tfdl-compare">
+                        <div class="tfdl-compare-col ok">
+                            <div class="tfdl-compare-title">Euclidean coordinates</div>
+                            <div class="tfdl-compare-sub">orthonormal bases: \(\Mb=\mathbf{I},\ \Wb_D=\mathbf{I}\)</div>
+                            <div class="tfdl-compare-eq">\(\inner{u}{v} = u^{\T}v\)</div>
+                            <div class="tfdl-compare-eq">\(\inner{a}{b} = a^{\T}b\)</div>
+                            <hr class="tfdl-compare-rule">
+                            <div class="tfdl-compare-result">\(G^{\adj} = G^{\T}\)</div>
+                            <div class="tfdl-compare-verdict">transpose = adjoint ✓</div>
+                            <div class="tfdl-compare-note">the coincidence of orthonormal worlds<br>useful — but dangerous to generalise</div>
+                        </div>
+                        <div class="tfdl-compare-col warn">
+                            <div class="tfdl-compare-title">General geometry</div>
+                            <div class="tfdl-compare-sub">non-orthonormal bases: \(\Mb\neq\mathbf{I},\ \Wb_D\neq\mathbf{I}\)</div>
+                            <div class="tfdl-compare-eq">\(\inner{u}{v}_{\M} = u^{\T}\Mb\,v\)</div>
+                            <div class="tfdl-compare-eq">\(\inner{a}{b}_{\D} = a^{\T}\Wb_D\,b\)</div>
+                            <hr class="tfdl-compare-rule">
+                            <div class="tfdl-compare-result">\(G^{\adj}_{\mathrm{disc}} = \Mb^{-1}\Gb^{\T}\Wb_D\)</div>
+                            <div class="tfdl-compare-verdict">transpose ≠ adjoint ✗</div>
+                            <div class="tfdl-compare-note">Gram matrices carry the geometry<br>ignoring them silently changes the problem</div>
+                        </div>
+                    </div>
                     <figcaption>
                         <strong>F5b &mdash; Transpose versus adjoint.</strong>
                         In Euclidean coordinates with orthonormal bases (left), the
@@ -838,8 +821,8 @@
                         <strong>F5e &mdash; Interactive adjoint calculator.</strong>
                         Choose the model Gram matrix \(\Mb\), the data Gram matrix
                         \(\Wb_D\), and the forward matrix \(\Gb\). The plot shows
-                        the data vector \(d\) (amber) and two pullback arrows in
-                        model space: \(G^{\T} d\) (coral, wrong) and
+                        the data vector \(d\) (orange) and two pullback arrows in
+                        model space: \(G^{\T} d\) (red, wrong) and
                         \(\Mb^{-1}\Gb^{\T}\Wb_D d\) (green, correct). When both
                         Gram matrices are identity, the arrows coincide. Otherwise,
                         they point in visibly different directions.
@@ -1358,7 +1341,10 @@
                 } else {
                     theta = Math.atan2(lam1 - v1, cov);
                 }
-                var thetaDeg = theta * 180 / Math.PI;
+                /* SVG's y-axis points down, so a positive (counter-clockwise)
+                   math angle must be negated to rotate the ellipse the right way;
+                   otherwise positive correlation would tilt the long axis downward. */
+                var thetaDeg = -theta * 180 / Math.PI;
 
                 /* Draw covariance ellipse (1σ) */
                 var rx = scale * Math.sqrt(lam1);
@@ -1374,7 +1360,7 @@
                     var mrx = scale * Math.sqrt(c * lam1);
                     var mry = scale * Math.sqrt(c * lam2);
                     var op = 0.18 - c * 0.04;
-                    svg += '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + mrx.toFixed(1) + '" ry="' + mry.toFixed(1) + '" fill="none" stroke="rgba(52,122,162,' + op.toFixed(2) + ')" stroke-width="1" stroke-dasharray="2,3" transform="rotate(' + thetaDeg.toFixed(1) + ' ' + cx + ' ' + cy + '"/>';
+                    svg += '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + mrx.toFixed(1) + '" ry="' + mry.toFixed(1) + '" fill="none" stroke="rgba(52,122,162,' + op.toFixed(2) + ')" stroke-width="1" stroke-dasharray="2,3" transform="rotate(' + thetaDeg.toFixed(1) + ' ' + cx + ' ' + cy + ')"/>';
                 }
 
                 /* Residual vector r */
@@ -1388,7 +1374,7 @@
                 svg += '<text x="' + (cx-8) + '" y="' + (cy+14) + '" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="9">0</text>';
 
                 /* Labels */
-                svg += '<text x="180" y="305" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">C_D ellipse (amber) &amp; misfit contours r⊤C_D⁻¹r (blue)</text>';
+                svg += '<text x="180" y="305" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">C_D ellipse (solid) &amp; misfit contours r⊤C_D⁻¹r (dashed)</text>';
 
                 f5dPlot.innerHTML = svg;
             }
