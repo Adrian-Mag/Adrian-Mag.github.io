@@ -93,7 +93,7 @@
                         <p>$$\mathbf{d} \in \mathbb{R}^{N_d} \quad\text{(observed travel times, amplitudes, waveforms, \dots)}.$$</p>
 
                         <p>Between models and data there exists a mapping \(G\) that we call the <em>forward operator</em>. In this document we will assume that \(G\) is linear and bounded. Mathematically, we write:</p>
-                        <p>$$\mathbf{d} = G(m) + \boldsymbol{\eta}, \qquad G : \mathcal{M} \mapsto \mathbb{R}^{N_d},$$</p>
+                        <p>$$\mathbf{d} = G(m) + \boldsymbol{\eta}, \qquad G : \mathcal{M} \to \mathbb{R}^{N_d},$$</p>
                         <p>where \(\boldsymbol{\eta}\) denotes measurement and modelling error.</p>
 
                         <h4>Inversion vs inference (practical meaning)</h4>
@@ -101,7 +101,7 @@
 
                         <ul>
                             <li><strong>Inversion.</strong> The goal of an inversion is to find this model \(\bar{m}\).</li>
-                            <li><strong>Inference.</strong> The goal of an inference is to find one or more properties of this true model \(\bar{m}\). More specifically, we define a <em>property mapping</em> \(\mathcal{T}:\mathcal{M} \mapsto \mathcal{P}\) that acts on models to extract some property:
+                            <li><strong>Inference.</strong> The goal of an inference is to find one or more properties of this true model \(\bar{m}\). More specifically, we define a <em>property mapping</em> \(\mathcal{T}:\mathcal{M} \to \mathcal{P}\) that acts on models to extract some property:
                             $$p = \mathcal{T}(m).$$
                             These properties live in a <em>property space</em> \(\mathcal{P}\). The goal of an inference is to find the property of the true model:
                             $$\bar{p} = \mathcal{T}(\bar{m}).$$</li>
@@ -182,7 +182,7 @@
                 <span class="brand-name">Adrian Mag</span>
             </div>
             <div class="credits">
-                &copy; 2025&ndash;2026 Adrian Mag. Notes license to be decided; code samples carry their own licenses (see linked code); any papers shown or linked are subject to their own publisher or author license.<br>
+                &copy; 2025&ndash;2026 Adrian Mag. Notes and text licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent-bright)">CC BY 4.0</a> (reuse with attribution); code is open source under the license in each repository; published papers are subject to journal copyright.<br>
                 <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
             </div>
         </div>
