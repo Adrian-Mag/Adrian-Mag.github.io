@@ -97,13 +97,13 @@
                         <p>where \(\boldsymbol{\eta}\) denotes measurement and modelling error.</p>
 
                         <h4>Inversion vs inference (practical meaning)</h4>
-                        <p>Both inversion and inference can be formulated either deterministically or probabilistically. The essential difference lies in the <em>object of interest</em>. In both cases we assume that there exists a model \(\bar{m}\) that best describes reality.</p>
+                        <p>Both inversion and inference can be formulated either deterministically or probabilistically. The essential difference lies in the <em>object of interest</em>. In both cases we adopt a <em>reference model</em> \(\bar{m}\in\mathcal{M}\): the model taken to generate the data under our chosen physical idealisation. This is a working assumption—not a claim that reality has a unique, exact representative inside \(\mathcal{M}\).</p>
 
                         <ul>
-                            <li><strong>Inversion.</strong> The goal of an inversion is to find this model \(\bar{m}\).</li>
-                            <li><strong>Inference.</strong> The goal of an inference is to find one or more properties of this true model \(\bar{m}\). More specifically, we define a <em>property mapping</em> \(\mathcal{T}:\mathcal{M} \to \mathcal{P}\) that acts on models to extract some property:
+                            <li><strong>Inversion.</strong> The goal of an inversion is to <em>estimate</em> this model \(\bar{m}\). Because a finite dataset rarely pins \(\bar{m}\) down uniquely, in practice an inversion returns a regularized representative (deterministic view) or a posterior distribution over models (probabilistic view), rather than \(\bar{m}\) exactly.</li>
+                            <li><strong>Inference.</strong> The goal of an inference is to constrain one or more properties of this reference model \(\bar{m}\). More specifically, we define a <em>property mapping</em> \(\mathcal{T}:\mathcal{M} \to \mathcal{P}\) that acts on models to extract some property:
                             $$p = \mathcal{T}(m).$$
-                            These properties live in a <em>property space</em> \(\mathcal{P}\). The goal of an inference is to find the property of the true model:
+                            These properties live in a <em>property space</em> \(\mathcal{P}\). The goal of an inference is to estimate the property of the reference model:
                             $$\bar{p} = \mathcal{T}(\bar{m}).$$</li>
                         </ul>
 
