@@ -22,13 +22,20 @@ from intervalinf.operators import BesselSobolevInverse, Laplacian
 from intervalinf.core.boundary import BoundaryConditions
 from intervalinf.sampling import KLSampler
 
-from style import PALETTE, apply_style, mako_light_n, plt, save
+from style import PALETTE, apply_style, mako_light_n, plt, save, MODE
 from problem_setup import output_dir, DOMAIN
 
-ALPHA_VALUES = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
-KAPPA_VALUES = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+# The panel sliders only reach alpha>=0.5 and kappa>=0.5 (step 0.5); the
+# 0.1 rows are unreachable, so we no longer generate them.
+ALPHA_VALUES = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+KAPPA_VALUES = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
 S_VALUES = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
 BC_VALUES = ["dirichlet", "neumann", "mixed"]
+
+# Earth frames are shown only in earth mode, sitting on the interactive
+# panel's card (--ground-2 = #E4DFCF). We flatten onto that colour and
+# palette-quantize, so the frames stay small and need no alpha channel.
+EARTH_CARD = "#E4DFCF"
 
 N_SAMPLES = 3
 N_MODES = 80
@@ -76,8 +83,23 @@ def _save_panel_png(samples, x, bc_name, out_path):
             ha="right", va="top", fontsize=8, color=PALETTE["correct"],
             alpha=0.6)
     fig.tight_layout()
-    fig.savefig(out_path, dpi=200, bbox_inches="tight", transparent=True)
-    plt.close(fig)
+    if MODE == "earth":
+        # opaque on the panel card colour, then palette-quantize to keep
+        # the (many) earth frames small — they never need transparency.
+        fig.savefig(out_path, dpi=200, bbox_inches="tight",
+                    transparent=False, facecolor=EARTH_CARD)
+        plt.close(fig)
+        _quantize(out_path)
+    else:
+        fig.savefig(out_path, dpi=200, bbox_inches="tight", transparent=True)
+        plt.close(fig)
+
+
+def _quantize(path, colors=64):
+    from PIL import Image
+    im = Image.open(path).convert("RGB")
+    q = im.quantize(colors=colors, method=Image.FASTOCTREE, dither=Image.NONE)
+    q.save(path, optimize=True)
 
 
 def main() -> None:
@@ -93,12 +115,13 @@ def main() -> None:
     count = 0
     total = len(ALPHA_VALUES) * len(KAPPA_VALUES) * len(S_VALUES) * len(BC_VALUES)
 
+    suffix = "_earth" if MODE == "earth" else ""
     for alpha, kappa, s, bc_name in itertools.product(
         ALPHA_VALUES, KAPPA_VALUES, S_VALUES, BC_VALUES
     ):
         count += 1
         key = f"{alpha:.1f}_{kappa:.1f}_{s:.1f}_{bc_name}"
-        fname = out_dir / f"f6f_{key}.png"
+        fname = out_dir / f"f6f_{key}{suffix}.png"
 
         try:
             samples = _samples_for_params(alpha, kappa, s, bc_name, M, x)

@@ -125,14 +125,8 @@
 :root[data-theme="earth"] .page-hero h1 { color: #F4F6EC; }
 :root[data-theme="earth"] .page-hero .lead { color: #DDE2CE; }
 
-/* The f6f Laplacian-sampler sweep is not yet duplicated per theme, so it
-   keeps a dark instrument backdrop in earth mode to stay readable. The f6e
-   spectral-filter sweep HAS earth frames and sits on the cream ground. */
-:root[data-theme="earth"] #f6f-img {
-  background: #1B1F27;
-  border-radius: 10px;
-  padding: 8px;
-}
+/* Both sweep panels (f6e spectral filter, f6f Laplacian sampler) now have
+   earth frames and sit directly on the cream panel card in earth mode. */
 
 /* theme toggle button (inserted into the nav by js/theme-toggle.js) */
 .theme-toggle {

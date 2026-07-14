@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act VI: The Prior Is Not Just a Matrix — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=22">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=22">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=22">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=22">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=23">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=23">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=23">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=23">
     <meta name="description" content="Act VI of Think First, Discretize Later: Why the prior must be a probability measure on a function space, not just a matrix.">
     <script>
     MathJax = {
@@ -1441,7 +1441,8 @@
             f6fSVal.textContent = s.toFixed(1);
             if (f6fImg) {
                 var key = alpha.toFixed(1) + '_' + kappa.toFixed(1) + '_' + s.toFixed(1) + '_' + bc;
-                f6fImg.src = '../../../../media/research/think-first/f6f_' + key + '.png';
+                var suf = tfEarth() ? '_earth' : '';
+                f6fImg.src = '../../../../media/research/think-first/f6f_' + key + suf + '.png';
             }
         }
 
@@ -1454,13 +1455,16 @@
                 f6fResample.style.display = 'none';
             }
             drawF6f();
+            new MutationObserver(drawF6f).observe(document.documentElement, {
+                attributes: true, attributeFilter: ['data-theme']
+            });
         }
 
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=22" defer></script>
-    <script src="../../../../js/notes-extras.js?v=22" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=22" defer></script>
-    <script src="../../../../js/nav-menu.js?v=22" defer></script>
+    <script src="../../../../js/ai-assist.js?v=23" defer></script>
+    <script src="../../../../js/notes-extras.js?v=23" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=23" defer></script>
+    <script src="../../../../js/nav-menu.js?v=23" defer></script>
 </body>
 </html>
