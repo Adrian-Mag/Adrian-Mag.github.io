@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act I: A Familiar Problem — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=21">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=21">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=21">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=21">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=22">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=22">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=22">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=22">
     <meta name="description" content="Act I of Think First, Discretize Later: A simple inverse problem that looks fine on the surface but hides a silent trap.">
     <script>
     MathJax = {
@@ -502,7 +502,7 @@
 
                 <figure class="tfdl-figure">
                     <img src="../../../../media/research/think-first/fig1b_basis.svg"
-                         alt="Hat basis functions and the discretized true model at N=30 nodes.">
+                         alt="Hat basis functions and the discretized true model at N=30 nodes." data-themed="1">
                     <figcaption>
                         <strong>F1b &mdash; Basis and discretization.</strong> The \(N=30\) hat
                         functions \(\phi_j\) and the true model \(\bar{m}\) projected onto
@@ -512,7 +512,7 @@
 
                 <figure class="tfdl-figure">
                     <img src="../../../../media/research/think-first/fig1_setup.svg"
-                         alt="The true depth model, twenty smooth sensitivity kernels, and the resulting noisy data.">
+                         alt="The true depth model, twenty smooth sensitivity kernels, and the resulting noisy data." data-themed="1">
                     <figcaption>
                         <strong>F1 &mdash; The setup.</strong> The true model \(\bar{m}\),
                         the sensitivity kernels \(K_i\), and the twenty noisy data points.
@@ -530,7 +530,7 @@
                 <div class="tfdl-prose">
                     <p>
                         For each basis function \(\phi_j\), we can compute its contribution to each datum:
-                        \[ [\Gb]_{ij} = G_i \phi_j. \]
+                        \[ [\Gb]_{ij} = [G(\phi_j)]_i. \]
                         In the integral-kernel example, this means
                         \[ [\Gb]_{ij} = \int_{\Omega} K_i(x)\,\phi_j(x)\,dx. \]
                     </p>
@@ -548,7 +548,7 @@
 
                 <figure class="tfdl-figure">
                     <img src="../../../../media/research/think-first/fig1c_gmatrix.svg"
-                         alt="The discrete forward matrix G shown as a heatmap.">
+                         alt="The discrete forward matrix G shown as a heatmap." data-themed="1">
                     <figcaption>
                         <strong>F1c &mdash; The discrete forward matrix.</strong> Each entry
                         \([\Gb]_{ij}\) measures how strongly the \(j\)th hat function
@@ -660,7 +660,7 @@
 
                 <figure class="tfdl-figure">
                     <img src="../../../../media/research/think-first/fig1d_prior_samples.svg"
-                         alt="Prior coefficient samples and their function reconstructions.">
+                         alt="Prior coefficient samples and their function reconstructions." data-themed="1">
                     <figcaption>
                         <strong>F1d &mdash; Prior samples.</strong> Draws from the naive prior
                         \(\mathbf{u}\sim\N(0,\sigma^2\mathbf{I}_N)\), shown both as
@@ -778,7 +778,7 @@
 
                 <figure class="tfdl-figure">
                     <img src="../../../../media/research/think-first/fig2_naive_hat.svg"
-                         alt="Naive Bayesian posterior mean on a hat basis, closely tracking the true model.">
+                         alt="Naive Bayesian posterior mean on a hat basis, closely tracking the true model." data-themed="1">
                     <figcaption>
                         <strong>F2 &mdash; Naive recovery on hats.</strong> The posterior
                         mean under a \(\sigma_m^2\mathbf{I}\) prior tracks \(\bar{m}\).
@@ -932,9 +932,10 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=21" defer></script>
-    <script src="../../../../js/notes-extras.js?v=21" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=21" defer></script>
-    <script src="../../../../js/nav-menu.js?v=21" defer></script>
+    <script src="../../../../js/ai-assist.js?v=22" defer></script>
+    <script src="../../../../js/notes-extras.js?v=22" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=22" defer></script>
+    <script src="../../../../js/nav-menu.js?v=22" defer></script>
+    <script src="../../../../js/themed-figures.js?v=22" defer></script>
 </body>
 </html>

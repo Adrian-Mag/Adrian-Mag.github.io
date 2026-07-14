@@ -21,7 +21,7 @@ from intervalinf.operators import BesselSobolevInverse, Laplacian
 from intervalinf.core.boundary import BoundaryConditions
 from intervalinf.sampling import KLSampler
 
-from style import apply_style, mako_light_n, plt, save
+from style import apply_style, mako_light_n, plt, save, MODE
 from problem_setup import output_dir, DOMAIN
 
 S_VALUES = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
@@ -85,9 +85,10 @@ def main() -> None:
     out_dir = output_dir()
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    suffix = "_earth" if MODE == "earth" else ""
     for s in S_VALUES:
         samples = _samples_for_s(s, M, x)
-        fname = out_dir / f"f6e_s{s:.1f}.png"
+        fname = out_dir / f"f6e_s{s:.1f}{suffix}.png"
         _save_panel_png(samples, x, fname)
         trace = _compute_trace(s)
         trace_str = f"{trace:.4f}" if s > 0.5 else "→ ∞"

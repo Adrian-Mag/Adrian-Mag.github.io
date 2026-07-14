@@ -11,7 +11,7 @@
     "use strict";
 
     function variant(src, earth) {
-        var m = src.match(/^(.*?)(_earth)?(\.png)([?#].*)?$/);
+        var m = src.match(/^(.*?)(_earth)?(\.png|\.svg)([?#].*)?$/);
         if (!m) return src;
         return m[1] + (earth ? "_earth" : "") + m[3] + (m[4] || "");
     }
