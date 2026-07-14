@@ -208,7 +208,7 @@
                             title: 'Set',
                             summary: 'A set is just a collection of objects. The only question you can ask is: does this model belong to the admissible set?',
                             examples: [
-                                {q: 'What can you do?', a: 'Check membership: \(m \in \M\). Nothing else.'},
+                                {q: 'What can you do?', a: 'Check membership: \\(m \\in \\M\\). Nothing else.'},
                                 {q: 'Inverse problem role', a: 'Defines what counts as a model. Without a set, there is nothing to estimate.'},
                                 {q: 'What is missing?', a: 'No notion of distance, no notion of size, no way to say one model is "close" to another. You cannot define continuity, perturbations, or convergence.'}
                             ]
@@ -217,35 +217,35 @@
                             title: 'Topological space',
                             summary: 'A topology specifies which subsets are "open". This gives notions of continuity and convergence without requiring a distance.',
                             examples: [
-                                {q: 'What can you do?', a: 'Define continuous maps: \(G: \M \to \D\) is continuous if preimages of open sets are open. Talk about convergence: \(m_n \to m\) if every open neighbourhood of \(m\) eventually contains \(m_n\).'},
-                                {q: 'Inverse problem role', a: 'The forward map \(G\) must be continuous for the inverse problem to be well-posed in any sense. Continuity is the minimal requirement.'},
+                                {q: 'What can you do?', a: 'Define continuous maps: \\(G: \\M \\to \\D\\) is continuous if preimages of open sets are open. Talk about convergence: \\(m_n \\to m\\) if every open neighbourhood of \\(m\\) eventually contains \\(m_n\\).'},
+                                {q: 'Inverse problem role', a: 'The forward map \\(G\\) must be continuous for the inverse problem to be well-posed in any sense. Continuity is the minimal requirement.'},
                                 {q: 'What is missing?', a: 'No distance, no angles, no linear structure. You cannot quantify how far two models are, or add them.'}
                             ]
                         },
                         {
                             title: 'Metric space',
-                            summary: 'A metric assigns a non-negative distance \(d(m_1, m_2)\) to every pair. This makes continuity and convergence quantitative.',
+                            summary: 'A metric assigns a non-negative distance \\(d(m_1, m_2)\\) to every pair. This makes continuity and convergence quantitative.',
                             examples: [
-                                {q: 'What can you do?', a: 'Measure distance: \(d(m_1, m_2)\). Define error bounds: \(\|m - m_\text{true}\| \leq \varepsilon\). Quantify convergence rates.'},
-                                {q: 'Inverse problem role', a: 'Allows you to define misfit: \(\|G(m) - d\|\). Allows you to ask whether an iterative method converges to the true model.'},
-                                {q: 'What is missing?', a: 'No way to add models or scale them. No notion of "direction". You cannot form \(m + \delta m\) or talk about linear operators.'}
+                                {q: 'What can you do?', a: 'Measure distance: \\(d(m_1, m_2)\\). Define error bounds: \\(\\|m - m_\\text{true}\\| \\leq \\varepsilon\\). Quantify convergence rates.'},
+                                {q: 'Inverse problem role', a: 'Allows you to define misfit: \\(\\|G(m) - d\\|\\). Allows you to ask whether an iterative method converges to the true model.'},
+                                {q: 'What is missing?', a: 'No way to add models or scale them. No notion of "direction". You cannot form \\(m + \\delta m\\) or talk about linear operators.'}
                             ]
                         },
                         {
                             title: 'Vector space',
-                            summary: 'A vector space allows addition and scalar multiplication. You can form perturbations \(m + \delta m\) and linear combinations \(\alpha m_1 + \beta m_2\).',
+                            summary: 'A vector space allows addition and scalar multiplication. You can form perturbations \\(m + \\delta m\\) and linear combinations \\(\\alpha m_1 + \\beta m_2\\).',
                             examples: [
-                                {q: 'What can you do?', a: 'Form perturbations: \(m + \delta m\). Define linear operators: \(G(m_1 + m_2) = Gm_1 + Gm_2\). Linearise: \(G(m + \delta m) \approx Gm + G\delta m\).'},
-                                {q: 'Inverse problem role', a: 'The forward map can be linearised. Perturbations \(\delta m\) are the objects of sensitivity analysis. Without vector structure, there is no Jacobian, no gradient, no Newton step.'},
+                                {q: 'What can you do?', a: 'Form perturbations: \\(m + \\delta m\\). Define linear operators: \\(G(m_1 + m_2) = Gm_1 + Gm_2\\). Linearise: \\(G(m + \\delta m) \\approx Gm + G\\delta m\\).'},
+                                {q: 'Inverse problem role', a: 'The forward map can be linearised. Perturbations \\(\\delta m\\) are the objects of sensitivity analysis. Without vector structure, there is no Jacobian, no gradient, no Newton step.'},
                                 {q: 'What is missing?', a: 'No notion of size. You can add models but cannot say which is "bigger". No guarantee that limits exist.'}
                             ]
                         },
                         {
                             title: 'Normed space',
-                            summary: 'A norm \(\|m\|\) assigns a size to each model. This enables Lipschitz continuity, bounded operators, and error estimates.',
+                            summary: 'A norm \\(\\|m\\|\\) assigns a size to each model. This enables Lipschitz continuity, bounded operators, and error estimates.',
                             examples: [
-                                {q: 'What can you do?', a: 'Measure size: \(\|m\|\). Define bounded operators: \(\|Gm\| \leq C\|m\|\). Quantify perturbation size: \(\|\delta m\|\).'},
-                                {q: 'Inverse problem role', a: 'The misfit \(\|Gm - d\|\) becomes a concrete number. Regularisation terms like \(\|m\|^2\) can be defined. Operator norms bound the sensitivity of the forward map.'},
+                                {q: 'What can you do?', a: 'Measure size: \\(\\|m\\|\\). Define bounded operators: \\(\\|Gm\\| \\leq C\\|m\\|\\). Quantify perturbation size: \\(\\|\\delta m\\|\\).'},
+                                {q: 'Inverse problem role', a: 'The misfit \\(\\|Gm - d\\|\\) becomes a concrete number. Regularisation terms like \\(\\|m\\|^2\\) can be defined. Operator norms bound the sensitivity of the forward map.'},
                                 {q: 'What is missing?', a: 'No guarantee that Cauchy sequences converge. The space may have "holes" — limits that should exist but do not.'}
                             ]
                         },
@@ -260,10 +260,10 @@
                         },
                         {
                             title: 'Inner-product space',
-                            summary: 'An inner product \(\langle u, v \rangle\) gives angles, orthogonality, and projections. It is the structure that makes geometry work.',
+                            summary: 'An inner product \\(\\langle u, v \\rangle\\) gives angles, orthogonality, and projections. It is the structure that makes geometry work.',
                             examples: [
-                                {q: 'What can you do?', a: 'Define orthogonality: \(\langle u, v \rangle = 0\). Project onto subspaces. Define adjoints via \(\langle Gu, v \rangle = \langle u, G^*v \rangle\). Decompose into orthogonal modes.'},
-                                {q: 'Inverse problem role', a: 'The adjoint \(G^*\) is defined by the inner product. Orthogonal decompositions enable spectral methods. The Gram matrix \(M_{ij} = \langle \phi_i, \phi_j \rangle\) encodes geometry.'},
+                                {q: 'What can you do?', a: 'Define orthogonality: \\(\\langle u, v \\rangle = 0\\). Project onto subspaces. Define adjoints via \\(\\langle Gu, v \\rangle = \\langle u, G^*v \\rangle\\). Decompose into orthogonal modes.'},
+                                {q: 'Inverse problem role', a: 'The adjoint \\(G^*\\) is defined by the inner product. Orthogonal decompositions enable spectral methods. The Gram matrix \\(M_{ij} = \\langle \\phi_i, \\phi_j \\rangle\\) encodes geometry.'},
                                 {q: 'What is missing?', a: 'Completeness is not guaranteed. Infinite orthonormal expansions may not converge. The spectral theorem for covariance operators requires completeness.'}
                             ]
                         },
@@ -271,7 +271,7 @@
                             title: 'Hilbert space',
                             summary: 'A Hilbert space is a complete inner-product space. It is the setting for adjoints, spectral theory, Gaussian measures, and covariance operators.',
                             examples: [
-                                {q: 'What can you do?', a: 'Define the adjoint operator \(G^*\) rigorously. Use the spectral theorem: \(C_0 = \sum_j \lambda_j e_j \otimes e_j\). Define Gaussian measures \(\N(m_0, C_0)\) with trace-class covariance. Use Karhunen–Loève expansions.'},
+                                {q: 'What can you do?', a: 'Define the adjoint operator \\(G^*\\) rigorously. Use the spectral theorem: \\(C_0 = \\sum_j \\lambda_j e_j \\otimes e_j\\). Define Gaussian measures \\(\\N(m_0, C_0)\\) with trace-class covariance. Use Karhunen–Loève expansions.'},
                                 {q: 'Inverse problem role', a: 'This is the full setting for the function-space Bayesian inverse problem. The prior is a Gaussian measure on a Hilbert space. The posterior is another measure on the same space. The adjoint, the Gram matrices, and the covariance operators all live here.'},
                                 {q: 'Why this is the target', a: 'Everything in this essay — the adjoint identity, the Gram matrix, the trace-class condition, the Gaussian prior — requires Hilbert space structure. Working in a Hilbert space from the start ensures that discretization inherits the right geometry, rather than inventing a new one at each mesh size.'}
                             ]
@@ -289,9 +289,25 @@
                             html += '</div>';
                         }
                         detail.innerHTML = html;
+                        typesetWhenReady(detail);
+                    }
+
+                    // MathJax loads async; the initial auto-rendered detail can be
+                    // injected before it is ready, so wait for typesetPromise to exist.
+                    function typesetWhenReady(el) {
                         if (window.MathJax && MathJax.typesetPromise) {
-                            MathJax.typesetPromise([detail]);
+                            MathJax.typesetPromise([el]);
+                            return;
                         }
+                        var tries = 0;
+                        var timer = setInterval(function () {
+                            if (window.MathJax && MathJax.typesetPromise) {
+                                clearInterval(timer);
+                                MathJax.typesetPromise([el]);
+                            } else if (++tries > 200) {
+                                clearInterval(timer);
+                            }
+                        }, 50);
                     }
 
                     rungs.forEach(function(rung) {

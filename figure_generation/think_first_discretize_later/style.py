@@ -43,8 +43,8 @@ if MODE == "space":
         "mako_light": _MAKO_COLORS[9],  # pale mako - tertiary / fills
         "mako_pale": _MAKO_COLORS[9],   # palest mako - backgrounds / bands
     }
-    _FG = "#dce6f5"   # light foreground for text/ticks
-    _SPINE = "#5a6675"
+    _FG = "#f2f6fd"   # bright foreground for text/ticks (crisp on dark bg)
+    _SPINE = "#8b98ad"   # brighter axes so the plot frame reads clearly
 else:
     # Earth mode: same semantic roles, deepened to read on the cream
     # ground (#EDE9DD) of the site's earth palette. The blue mako family
@@ -89,7 +89,7 @@ def apply_style() -> None:
             "ytick.color": _FG,
             "axes.titlecolor": _FG,
             "grid.color": _SPINE,
-            "grid.alpha": 0.3,
+            "grid.alpha": 0.45,
             "grid.linestyle": ":",
             "axes.grid": True,
             "font.size": 13,
@@ -97,7 +97,7 @@ def apply_style() -> None:
             "axes.labelsize": 14,
             "legend.fontsize": 12,
             "legend.framealpha": 0.0,
-            "lines.linewidth": 2.2,
+            "lines.linewidth": 2.4,
             "svg.fonttype": "none",
             "figure.dpi": 150,
             "image.cmap": "mako",
@@ -128,6 +128,9 @@ def mako_light_n(n: int, start: float = 0.3) -> list:
         # terra family, darker portion (the light end vanishes on cream)
         full = sns.blend_palette(_TERRA_ANCHORS, int(n / (1.0 - start)) + 2)
         return full[:n]
+    # Skip more of the dark end in space mode: the near-navy start of mako
+    # is nearly invisible on the dark panel, so lift the floor to ~0.42.
+    start = max(start, 0.42)
     full = sns.color_palette("mako", int(n / (1.0 - start)) + 2)
     return full[int(len(full) * start):][:n]
 
