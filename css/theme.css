@@ -39,6 +39,7 @@
   --accent:        #6791BE;
   --accent-bright: #9BC1E8;
   --accent-deep:   #3C536F;
+  --accent-btn:    #3F5F88;   /* deeper blue: white text reaches AA (6.5:1); for filled buttons/chips */
 
   /* restrained warm secondary, used only for small details */
   --warm: #E0B978;
@@ -81,6 +82,7 @@
   --accent:        #5C6D33;   /* moss */
   --accent-bright: #46571F;   /* deeper moss — the emphasis/link ink on cream */
   --accent-deep:   #C9CDA6;   /* pale moss tint for gradient tails */
+  --accent-btn:    #5C6D33;   /* = moss --accent; white text already passes AA (5.7:1) */
 
   --warm: #8A611C;            /* ochre, deep enough for text on cream */
 
@@ -275,7 +277,7 @@ a { color: inherit; text-decoration: none; }
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
   display: inline-flex; align-items: center; gap: 9px;
 }
-.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--accent) 70%, transparent); }
+.btn-primary { background: var(--accent-btn); color: #fff; box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--accent) 70%, transparent); }
 .btn-primary:hover { transform: translateY(-2px); background: var(--accent-bright); }
 .btn-ghost { background: rgba(255,255,255,0.06); color: #EAF1F9; border-color: rgba(255,255,255,0.28); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.13); }
@@ -315,6 +317,7 @@ a { color: inherit; text-decoration: none; }
 .foot .wrap { padding: 44px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-start; }
 .foot .brand-name { font-size: 1rem; }
 .foot .credits { color: var(--muted); font-size: 0.8rem; max-width: 62ch; line-height: 1.7; }
+.foot .credits a { color: var(--accent-bright); text-decoration: underline; }
 .foot .credits .warm { color: var(--warm); }
 
 /* ---------- interior pages: slim photographic header ---------- */

@@ -120,7 +120,7 @@
 }
 
 .act-chip.is-active {
-    background: var(--accent);
+    background: var(--accent-btn);
     color: #fff;
     border-color: var(--accent-bright);
     box-shadow: 0 4px 16px rgba(103,145,190,0.25);
@@ -711,7 +711,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     margin: 2.5rem auto 1.5rem auto;
 }
 
-.tfdl-chapter h3 {
+.tfdl-chapter h2 {
     font-size: 1.6rem;
     font-weight: 800;
     color: var(--accent-bright);
@@ -726,7 +726,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     margin: 2rem auto 1rem auto;
 }
 
-.tfdl-section-heading h4 {
+.tfdl-section-heading h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text);
@@ -739,7 +739,7 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
     margin: 1.5rem auto 0.8rem auto;
 }
 
-.tfdl-subsection-heading h5 {
+.tfdl-subsection-heading h4 {
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--text);
@@ -864,11 +864,11 @@ mjx-container[jax="CHTML"]:not([display="true"]) {
         font-size: 1rem;
     }
 
-    .tfdl-chapter h3 {
+    .tfdl-chapter h2 {
         font-size: 1.3rem;
     }
 
-    .tfdl-section-heading h4 {
+    .tfdl-section-heading h3 {
         font-size: 1.1rem;
     }
 

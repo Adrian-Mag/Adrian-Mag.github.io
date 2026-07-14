@@ -5,10 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Act III: What Problem Are We Actually Solving? — Think First, Discretize Later — Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=25">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=25">
-    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=25">
-    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=25">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=26">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=26">
+    <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=26">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=26">
     <meta name="description" content="Act III of Think First, Discretize Later: Stepping back to define the function-space inverse problem before discretizing.">
     <script>
     MathJax = {
@@ -107,11 +107,11 @@
             <div class="container">
 
                 <div class="tfdl-chapter">
-                    <h3>Stepping Back</h3>
+                    <h2>Stepping Back</h2>
                 </div>
 
                 <div class="tfdl-section-heading">
-                    <h4>The real question</h4>
+                    <h3>The real question</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -210,7 +210,7 @@
                 </figure>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>What is the unknown object?</h5>
+                    <h4>What is the unknown object?</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -256,7 +256,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>What kind of data do we observe?</h5>
+                    <h4>What kind of data do we observe?</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -295,7 +295,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>What is the forward map?</h5>
+                    <h4>What is the forward map?</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -336,7 +336,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>What does prior information mean?</h5>
+                    <h4>What does prior information mean?</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -375,7 +375,7 @@
                 </div>
 
                 <div class="tfdl-section-heading">
-                    <h4>The ingredients of a well-posed Bayesian inverse problem</h4>
+                    <h3>The ingredients of a well-posed Bayesian inverse problem</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -393,7 +393,7 @@
                     </div>
                     <div class="tfdl-ingredient-grid">
                         <div class="tfdl-ingredient-card">
-                            <label>Model space M</label>
+                            <label for="f3e-model-space">Model space M</label>
                             <select id="f3e-model-space">
                                 <option value="l2">L²(Ω) — square-integrable</option>
                                 <option value="h1">H¹(Ω) — one weak derivative</option>
@@ -401,14 +401,14 @@
                             </select>
                         </div>
                         <div class="tfdl-ingredient-card">
-                            <label>Data type</label>
+                            <label for="f3e-data-type">Data type</label>
                             <select id="f3e-data-type">
                                 <option value="integral">Integral averages</option>
                                 <option value="point">Point samples</option>
                             </select>
                         </div>
                         <div class="tfdl-ingredient-card">
-                            <label>Prior covariance</label>
+                            <label for="f3e-prior">Prior covariance</label>
                             <select id="f3e-prior">
                                 <option value="identity">Identity (σ²I)</option>
                                 <option value="bessel">Bessel-Sobolev (trace-class)</option>
@@ -416,7 +416,7 @@
                             </select>
                         </div>
                         <div class="tfdl-ingredient-card">
-                            <label>Noise level</label>
+                            <label for="f3e-noise">Noise level</label>
                             <select id="f3e-noise">
                                 <option value="small">Small (1%)</option>
                                 <option value="medium">Medium (5%)</option>
@@ -508,7 +508,7 @@
                 </script>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Model space</h5>
+                    <h4>Model space</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -535,7 +535,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Data space</h5>
+                    <h4>Data space</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -559,7 +559,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Forward map</h5>
+                    <h4>Forward map</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -585,7 +585,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Noise model</h5>
+                    <h4>Noise model</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -613,7 +613,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Prior measure</h5>
+                    <h4>Prior measure</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -653,7 +653,7 @@
                 </div>
 
                 <div class="tfdl-section-heading">
-                    <h4>The posterior measure</h4>
+                    <h3>The posterior measure</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -781,7 +781,7 @@
                 </div>
 
                 <div class="tfdl-section-heading">
-                    <h4>The order matters</h4>
+                    <h3>The order matters</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -908,7 +908,7 @@
                 </figure>
 
                 <div class="tfdl-section-heading">
-                    <h4>Well-posedness</h4>
+                    <h3>Well-posedness</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -928,7 +928,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Existence</h5>
+                    <h4>Existence</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -962,7 +962,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Uniqueness in the probabilistic sense</h5>
+                    <h4>Uniqueness in the probabilistic sense</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -997,7 +997,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Stability with respect to data</h5>
+                    <h4>Stability with respect to data</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -1034,7 +1034,7 @@
                 </div>
 
                 <div class="tfdl-subsection-heading">
-                    <h5>Convergence under discretization</h5>
+                    <h4>Convergence under discretization</h4>
                 </div>
 
                 <div class="tfdl-prose">
@@ -1162,7 +1162,7 @@
                 </figure>
 
                 <div class="tfdl-section-heading">
-                    <h4>The moral of Act III</h4>
+                    <h3>The moral of Act III</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -1197,7 +1197,7 @@
                 </div>
 
                 <div class="tfdl-chapter">
-                    <h3>References</h3>
+                    <h2>References</h2>
                 </div>
 
                 <div class="tfdl-prose">
@@ -1248,9 +1248,9 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/ai-assist.js?v=25" defer></script>
-    <script src="../../../../js/notes-extras.js?v=25" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=25" defer></script>
-    <script src="../../../../js/nav-menu.js?v=25" defer></script>
+    <script src="../../../../js/ai-assist.js?v=26" defer></script>
+    <script src="../../../../js/notes-extras.js?v=26" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=26" defer></script>
+    <script src="../../../../js/nav-menu.js?v=26" defer></script>
 </body>
 </html>

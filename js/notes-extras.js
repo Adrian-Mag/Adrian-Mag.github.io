@@ -41,7 +41,7 @@
             ".notes-resume a:hover{text-decoration:underline;}" +
             ".notes-errlink{max-width:760px;margin:2rem auto 0;padding:0 1rem;" +
             "font-size:0.85rem;color:var(--muted);text-align:center;}" +
-            ".notes-errlink a{color:var(--accent-bright);text-decoration:none;}" +
+            ".notes-errlink a{color:var(--accent-bright);text-decoration:underline;}" +
             ".notes-errlink a:hover{text-decoration:underline;color:var(--accent-bright);}";
         var el = document.createElement("style");
         el.textContent = css;
