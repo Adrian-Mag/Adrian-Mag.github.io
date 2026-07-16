@@ -17,6 +17,10 @@ __pycache__/
 # in-prep paper drafts must only ever be committed encrypted (tools/encrypt_papers.py)
 media/papers/*.pdf
 
+# job application sources + their build artefacts: local only, never published.
+# Only the encrypted PDFs (media/papers/*.enc) are ever committed.
+applications/
+
 # full-resolution photo originals (kept locally, never served/committed)
 photo-originals/
 

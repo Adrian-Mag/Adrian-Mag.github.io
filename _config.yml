@@ -1,0 +1,22 @@
+# GitHub Pages (Jekyll) configuration.
+#
+# This site is plain static HTML — Jekyll is not used to build anything. The
+# only job of this file is `exclude`: on Pages, anything committed is served,
+# so development files would otherwise be publicly downloadable. Listing them
+# here keeps them in git but off the public site.
+#
+# NOTE: do not add a .nojekyll file. That disables Jekyll entirely, which would
+# serve every path below verbatim again.
+#
+# Files/directories starting with "." or "_" are already ignored by Jekyll,
+# so .gitignore, .githooks/ and .vscode/ need no entry here.
+
+exclude:
+  - manuscripts/          # LaTeX sources behind the notes series
+  - docs/                 # agent plans, protocol, commit convention
+  - figure_generation/    # matplotlib scripts that emit media/ figures
+  - tools/                # build_search_index.py, encrypt_papers.py, rekey_vault.py
+  - references/           # local reference copies (also gitignored)
+  - applications/         # job application sources (also gitignored)
+  - AGENTS.md
+  - README.md

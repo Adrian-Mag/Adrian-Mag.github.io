@@ -23,7 +23,7 @@ This file contains the page layout, CSS conventions, and file mappings for the e
 
 ## Commit Convention
 
-See `COMMIT_CONVENTION.md` for the full commit message format. All feature/fix commits must include plan references.
+See `docs/COMMIT_CONVENTION.md` for the full commit message format. All feature/fix commits must include plan references.
 
 ## Environment
 

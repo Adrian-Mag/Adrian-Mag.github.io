@@ -37,8 +37,9 @@ done. The page presents a heavily simplified slice of its ideas.
 - **Discoverability:** a new card under **Featured Theory Topics** on
   `research_overview.html` + the EGU poster card ("Supplementary material") — **not** the
   global nav dropdown.
-- **`discretization.tex`:** agent-only scratch reference; not linked/compiled/shipped;
-  delete after completion.
+- **`discretization.tex`:** now `manuscripts/discretization.tex`. Superseded 2026-07-16:
+  it is KEPT as the source manuscript for this series, not deleted. Not linked or
+  compiled; `_config.yml` excludes `manuscripts/` so Pages does not serve it.
 
 ### Example problem (shared across all figures)
 
@@ -178,5 +179,5 @@ done. The page presents a heavily simplified slice of its ideas.
 **Resolved decisions**
 1. Discoverability: a new card under **Featured Theory Topics** on `research_overview.html`
    + the EGU poster card; not the global nav dropdown.
-2. `discretization.tex`: agent-only scratch reference; not shipped; delete after completion.
+2. `discretization.tex`: moved to `manuscripts/` and KEPT (superseded 2026-07-16); not shipped.
 3. Hero background: `triangulum.jpg`.
