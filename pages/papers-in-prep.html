@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papers in Preparation — Adrian Mag</title>
+    <title>Private Documents — Adrian Mag</title>
     <link rel="stylesheet" href="../css/styles.css?v=26">
     <link rel="stylesheet" href="../css/theme.css?v=26">
     <meta name="robots" content="noindex, nofollow">
@@ -77,13 +77,24 @@
             box-shadow: var(--shadow, 0 18px 46px -20px rgba(0,0,0,0.7));
         }
         .paper-card:hover::before { transform: scaleY(1); opacity: 1; }
-        .paper-card h2 {
+        .paper-card h3 {
             font-family: var(--serif, Georgia, serif);
             font-size: 1.3rem;
             font-weight: 700;
             color: var(--text, #EAEFF6);
             margin-bottom: 0.5rem;
         }
+        .section-divider {
+            font-family: var(--mono, monospace);
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted, #9AA7B7);
+            padding-bottom: 0.6rem;
+            margin: 2.4rem 0 1.4rem;
+            border-bottom: 1px solid var(--line, rgba(143,180,221,0.14));
+        }
+        .papers-list > .section-divider:first-of-type { margin-top: 0; }
         .paper-card .paper-meta {
             font-family: var(--mono, monospace);
             font-size: 0.72rem;
@@ -105,9 +116,9 @@
             gap: 0.4rem;
             padding: 0.5rem 1.2rem;
             border-radius: 999px;
-            background: var(--accent, #6791BE);
+            background: var(--accent-btn, #3F5F88);
             border: 1px solid transparent;
-            color:var(--text);
+            color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
@@ -135,7 +146,7 @@
         .papers-footer a { color: var(--accent-bright, #9BC1E8); text-decoration: none; }
     </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Papers in Preparation — Adrian Mag">
+    <meta property="og:title" content="Private Documents — Adrian Mag">
     <meta property="og:description" content="Adrian Mag's academic website: seismology, inverse theory, and long-form notes on inference.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/papers-in-prep.html">
@@ -152,12 +163,38 @@
     </div>
 
     <div class="papers-list">
-        <h1>Papers in Preparation</h1>
-        <p class="subtitle">These manuscripts are works in progress. Please do not distribute without permission.</p>
+        <h1>Private Documents</h1>
+        <p class="subtitle">Shared in confidence. These materials are unpublished works in progress &mdash; please do not distribute without permission.</p>
+
+        <h2 class="section-divider">Application Documents</h2>
+
+        <!-- CV -->
+        <div class="paper-card">
+            <h3>Curriculum Vitae</h3>
+            <p class="paper-meta">Application document &middot; 2026</p>
+            <p>Geophysics, inverse problems, and scientific computing.</p>
+            <div class="paper-links">
+                <a href="#" data-enc="../media/papers/cv.pdf.enc" data-name="Adrian_Mag_CV.pdf" data-mode="view">View PDF</a>
+                <a href="#" data-enc="../media/papers/cv.pdf.enc" data-name="Adrian_Mag_CV.pdf" data-mode="download">Download</a>
+            </div>
+        </div>
+
+        <!-- Cover letter -->
+        <div class="paper-card">
+            <h3>Cover Letter</h3>
+            <p class="paper-meta">Application document &middot; 2026</p>
+            <p>Research background and motivation.</p>
+            <div class="paper-links">
+                <a href="#" data-enc="../media/papers/cover_letter.pdf.enc" data-name="Adrian_Mag_Cover_Letter.pdf" data-mode="view">View PDF</a>
+                <a href="#" data-enc="../media/papers/cover_letter.pdf.enc" data-name="Adrian_Mag_Cover_Letter.pdf" data-mode="download">Download</a>
+            </div>
+        </div>
+
+        <h2 class="section-divider">Papers in Preparation</h2>
 
         <!-- Paper 1 -->
         <div class="paper-card">
-            <h2>A Function-Space Framework for Property-Focused Inference in Geophysics</h2>
+            <h3>A Function-Space Framework for Property-Focused Inference in Geophysics</h3>
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear Bayesian inference, but for properties of models rather than models themselves.</p>
             <div class="paper-links">
@@ -168,7 +205,7 @@
 
         <!-- Paper 2 -->
         <div class="paper-card">
-            <h2>A Geometric Framework for Multi-Parameter Linear Inference</h2>
+            <h3>A Geometric Framework for Multi-Parameter Linear Inference</h3>
             <p class="paper-meta">Status: In preparation &middot; 2026</p>
             <p>Linear inference with set-theoretic constraints.</p>
             <div class="paper-links">
@@ -222,7 +259,7 @@
     </script>
 
     <div class="papers-footer">
-        <p>&copy; 2025&ndash;2026 Adrian Mag. &middot; <a href="../index.html">adrianmag.github.io</a></p>
+        <p>&copy; 2025&ndash;2026 Adrian Mag. &middot; <a href="../index.html">adrian-mag.github.io</a></p>
     </div>
 </body>
 </html>
