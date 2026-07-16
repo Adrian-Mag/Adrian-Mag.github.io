@@ -19,7 +19,10 @@ media/papers/*.pdf
 
 # job application sources + their build artefacts: local only, never published.
 # Only the encrypted PDFs (media/papers/*.enc) are ever committed.
+# The kobold_* patterns are a safety net: building from the repo root
+# (pdflatex applications/kobold/x.tex) drops the pdf/aux/log into the root.
 applications/
+kobold_*
 
 # full-resolution photo originals (kept locally, never served/committed)
 photo-originals/
