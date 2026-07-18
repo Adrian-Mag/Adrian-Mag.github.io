@@ -31,6 +31,7 @@ SERIES_DIRS = [
     ("pages/research/overview/bayes", "Bayes, Measure-Theoretically"),
     ("pages/research/overview/frequentist", "Bayesian vs Frequentist"),
     ("pages/research/overview/cg", "The Road to Conjugate Gradients"),
+    ("pages/research/overview/harness", "The Machine Around the Model"),
 ]
 EXTRA_PAGES = [
     ("pages/research/overview/index.html", None),

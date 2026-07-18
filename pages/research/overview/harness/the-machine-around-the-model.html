@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Machine Around the Model - Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=26">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=26">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=26">
+    <meta name="description" content="How agentic AI systems actually work: what the model is, what the harness around it does, and which parts of that harness you can build or change.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="The Machine Around the Model - Adrian Mag">
+    <meta property="og:description" content="How agentic AI systems actually work: what the model is, what the harness around it does, and which parts of that harness you can build or change.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <span class="nav-drop-label">AI in Practice</span>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <main>
+        <section class="page-header" style="position:relative; overflow:hidden;">
+            <div class="page-header-bg" data-hero="harness" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/whirlpool.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
+            <div class="container" style="position:relative; z-index:2;">
+                <h1>The Machine Around the Model</h1>
+                <p>The language model is the CPU. Almost everything that made it useful
+                   is the computer built around it.</p>
+            </div>
+        </section>
+
+    <nav class="act-nav" aria-label="Series navigation">
+        <div class="container act-nav-inner">
+                <a class="act-chip" href="act-1.html"><span class="act-chip-num">1</span> Box</a>
+                <a class="act-chip" href="act-2.html"><span class="act-chip-num">2</span> Kernel</a>
+                <a class="act-chip" href="act-3.html"><span class="act-chip-num">3</span> Chat box</a>
+                <a class="act-chip" href="act-4.html"><span class="act-chip-num">4</span> CPU</a>
+                <a class="act-chip" href="act-5.html"><span class="act-chip-num">5</span> Anatomy</a>
+                <a class="act-chip" href="act-6.html"><span class="act-chip-num">6</span> AGENTS.md</a>
+                <a class="act-chip" href="act-7.html"><span class="act-chip-num">7</span> Skills</a>
+                <a class="act-chip" href="act-8.html"><span class="act-chip-num">8</span> Hooks</a>
+                <a class="act-chip" href="act-9.html"><span class="act-chip-num">9</span> Tools</a>
+                <a class="act-chip" href="act-10.html"><span class="act-chip-num">10</span> Context</a>
+                <a class="act-chip" href="act-11.html"><span class="act-chip-num">11</span> Orchestration</a>
+                <a class="act-chip" href="summary.html"><span class="act-chip-num">S</span> Summary</a>
+        </div>
+    </nav>
+
+        <section class="act act-band-a" id="overview">
+            <div class="container">
+                <div class="act-head">
+                    <span class="act-kicker">Notes on AI in Practice</span>
+                    <h2>What this series is</h2>
+                    <p class="act-lede">
+                        If you have used a chatbot, been unimpressed, and concluded the
+                        technology is oversold &mdash; this series is written for you. That
+                        experience was real. But its usual cause has changed.
+                    </p>
+                </div>
+
+                <div class="hz-prose">
+                    <p>The models did get better; the era of confidently wrong arithmetic is
+                    behind us. Bad experiences did not disappear, though &mdash; they moved.
+                    The model can usually answer the question it was asked. The harder
+                    problems are whether it was the right question, and whether it arrived
+                    with enough of the situation attached to be answerable: the same question
+                    has many correct answers depending on context, and by default a model has
+                    almost none of it.</p>
+
+                    <p>Expecting a bare model to handle a hard problem consistently is a
+                    mistake on our side of the screen. The capability has to be harnessed
+                    &mdash; and the machinery that harnesses it is what this series is about.</p>
+
+                    <p>Eleven acts in three movements, from the chat box everyone knows to the
+                    machinery a user can actually build and change. Written by someone learning
+                    it while writing it, with working examples drawn from a real setup &mdash;
+                    and no examples invented for illustration.</p>
+                </div>
+
+                <div class="hz-draft" style="margin:26px 0">
+                    <b>Series in progress.</b> Structure and navigation are in place; the acts
+                    are being written. Plan and verified sources live in
+                    <code>docs/agent-docs/active-plans/</code>.
+                </div>
+
+                <div class="hz-prose">
+                    <h3 style="margin:30px 0 6px">Movement I &middot; What you are actually talking to</h3>
+                    <p><strong>Act 1 &mdash; <a href="act-1.html">The Box Everyone Knows</a>.</strong> Start where the reader is: text in, text out, magic between. Name the common experience honestly — confident nonsense, and the conclusion that the technology is oversold. Promise: that experience was real, and it measured the scaffolding, not the intelligence.</p>
+                    <p><strong>Act 2 &mdash; <a href="act-2.html">Inside the Kernel</a>.</strong> What an LLM is: a function from a token sequence to a distribution over next tokens. Name the two meanings of &ldquo;layer&rdquo; — transformer layers inside, harness layers outside — and then leave the inside alone. The model has no memory, no filesystem, no clock, no ability to act.</p>
+                    <p><strong>Act 3 &mdash; <a href="act-3.html">Even the Chat Box Is a Harness</a>.</strong> The hinge of the series. A chat product is already several systems around the model. The reveal: the API is stateless — the whole conversation is re-sent every turn. &ldquo;Memory&rdquo; is an illusion assembled by software. Argued from necessity, not from undocumented internals.</p>
+                    <h3 style="margin:30px 0 6px">Movement II &middot; The harness</h3>
+                    <p><strong>Act 4 &mdash; <a href="act-4.html">The CPU and the Computer</a>.</strong> The metaphor formalised, then the mechanism: the model never executes anything. It emits a request; the harness executes and appends the result; the loop repeats. That loop is what &ldquo;agent&rdquo; means.</p>
+                    <p><strong>Act 5 &mdash; <a href="act-5.html">Anatomy of a Coding Agent</a>.</strong> Concrete inventory of a large harness: tool suite, permission system, context management, subagents, session persistence. Same kernel, different machine. The capability gap is an engineering gap.</p>
+                    <h3 style="margin:30px 0 6px">Movement III &middot; What you can change</h3>
+                    <p><strong>Act 6 &mdash; <a href="act-6.html">Steering by Text</a>.</strong> The cheapest lever: a file the harness reads and injects into context. Not enforced — guidance, not law. Why that is both its weakness and its strength.</p>
+                    <p><strong>Act 7 &mdash; <a href="act-7.html">Packaging Expertise</a>.</strong> Progressive disclosure: a short description sits in context permanently; the body loads on demand. Context is a scarce, paid resource, and everything loaded competes with everything else.</p>
+                    <p><strong>Act 8 &mdash; <a href="act-8.html">Mechanism, Not Trust</a>.</strong> Where text stops being enough. Deterministic interception that runs whether or not the model cooperates. Includes the honest limitation: this is a blocklist, it over-blocks, and it has gaps. A mechanism without a stated threat model is marketing.</p>
+                    <p><strong>Act 9 &mdash; <a href="act-9.html">New Senses: How a Capability Becomes Available</a>.</strong> Tool design. Definitions as interface contracts; why descriptions are load-bearing. The promote-to-a-dedicated-tool heuristic: gate, render, audit, parallelize. Closes with a short MCP section — host/client/server, and the one real invocation on record.</p>
+                    <p><strong>Act 10 &mdash; <a href="act-10.html">What It Knows</a>.</strong> Context as the budget everything competes for. Retrieval as context assembly, not magic. Memory as files. Compaction, and why long sessions degrade.</p>
+                    <p><strong>Act 11 &mdash; <a href="act-11.html">Orchestration</a>.</strong> When one loop is not enough: graphs, subagent delegation, who supplies the harness versus who supplies the deployment. With the counterweight — most tasks do not need this.</p>
+                    <h3 style="margin:30px 0 6px">Closing</h3>
+                    <p><strong>Summary &mdash; <a href="summary.html">The Instrument</a>.</strong> What the machinery is for: verification, audit, honest limits — and a frank account of where it is still bad.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes and text licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent-bright)">CC BY 4.0</a> (reuse with attribution); code is open source under the license in each repository; published papers are subject to journal copyright.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var bar = document.getElementById("reading-progress-bar");
+        function onScroll() {
+            var doc = document.documentElement;
+            var top = window.scrollY || doc.scrollTop;
+            var h = doc.scrollHeight - doc.clientHeight;
+            if (bar) bar.style.width = (h > 0 ? (top / h) * 100 : 0).toFixed(2) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
+    <script src="../../../../js/theme-toggle.js?v=26" defer></script>
+    <script src="../../../../js/nav-menu.js?v=26" defer></script>
+</body>
+</html>

@@ -30,3 +30,6 @@ photo-originals/
 # local reference copies for citation checking (never publish)
 references/
 citation-audit/
+
+# Playwright MCP scratch output (screenshots, page snapshots)
+.playwright-mcp/
