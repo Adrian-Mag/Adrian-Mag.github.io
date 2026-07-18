@@ -146,6 +146,36 @@
     background: color-mix(in srgb, var(--accent) 16%, transparent);
 }
 
+/* ---------- tables ---------- */
+.hz-table {
+    width: 100%;
+    max-width: 760px;
+    border-collapse: collapse;
+    margin: 1.6em 0;
+    font-size: 0.94rem;
+    display: block;
+    overflow-x: auto;
+}
+.hz-table th,
+.hz-table td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+.hz-table thead th {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    border-bottom: 1.5px solid var(--line);
+    white-space: nowrap;
+}
+.hz-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
 /* ---------- status stamp (D3: date-marked, decay-aware) ---------- */
 .hz-asof {
     display: inline-block;
@@ -384,6 +414,108 @@
     vertical-align: middle;
     margin: 0 8px;
     accent-color: var(--accent-bright);
+}
+
+/* ---------- Act 4: tool-loop stepper ---------- */
+.hz-loop {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.hz-loop-step {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm, 6px);
+    border: 1px solid var(--line);
+    animation: hz-fade 0.28s ease;
+}
+@keyframes hz-fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+}
+.hz-loop-model {
+    background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.hz-loop-harness {
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+.hz-loop-step.is-current {
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 0 1px var(--accent-bright);
+}
+.hz-loop-gutter {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-right: 1px solid var(--line);
+    padding-right: 10px;
+}
+.hz-loop-actor {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+.hz-loop-model .hz-loop-actor { color: var(--accent-bright); }
+.hz-loop-harness .hz-loop-actor { color: var(--muted); }
+.hz-loop-verb {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--muted);
+}
+.hz-loop-body { min-width: 0; }
+.hz-loop-tool {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+.hz-loop-mcp {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--accent-btn);
+    color: #fff;
+}
+.hz-loop-server {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+.hz-loop-toolname {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+.hz-loop-text {
+    font-family: var(--mono);
+    font-size: 0.79rem;
+    line-height: 1.55;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+.hz-loop-elided {
+    margin-top: 6px;
+    font-size: 0.74rem;
+    font-style: italic;
+    color: var(--sem-orange-text, #e0a86a);
+}
+
+@media (max-width: 640px) {
+    .hz-loop-step { grid-template-columns: 1fr; gap: 6px; }
+    .hz-loop-gutter {
+        flex-direction: row;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+        padding: 0 0 5px;
+    }
 }
 
 /* ---------- Act 3: statelessness panel ---------- */

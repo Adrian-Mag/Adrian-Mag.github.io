@@ -85,13 +85,123 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 5</span>
                     <span class="hz-asof">Current as of &mdash; (set at publication)</span>
-                    <p class="act-lede">Concrete inventory of a large harness: tool suite, permission system, context management, subagents, session persistence. Same kernel, different machine. The capability gap is an engineering gap.</p>
+                    <p class="act-lede">
+                        The same model sits behind the chat box and behind the tool that
+                        refactors a codebase overnight. If the processor is identical, the
+                        difference has to be somewhere else. It is, and it is not hidden
+                        &mdash; it is a list of components, each of which someone decided
+                        to build.
+                    </p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Small vs large harness</li></ul>
+                <div class="hz-prose">
+                    <p>This act is an inventory. It is the least conceptual part of the
+                    series, and possibly the most useful, because once you can name the
+                    components you can ask which ones you have.</p>
+
+                    <h3>Tools: the entire surface between the model and the world</h3>
+
+                    <p>Everything a model can affect, it affects through a tool. There is no
+                    other channel. A coding harness typically exposes something like: read a
+                    file, write a file, edit part of a file, list files matching a pattern,
+                    search file contents, run a shell command, fetch a URL, search the web.</p>
+
+                    <p>That list looks mundane, and its mundanity is the point. There is no
+                    &ldquo;understand the codebase&rdquo; tool. What looks like understanding
+                    is a great many small requests &mdash; search for this, read that, look at
+                    the file the first search pointed to &mdash; assembled in the loop from
+                    Act 4. The capability is emergent from a boring inventory plus a lot of
+                    round trips.</p>
+
+                    <p>Notice also what granularity buys. A harness that offers only
+                    &ldquo;run a shell command&rdquo; can technically do everything, since
+                    editing a file is a shell command. But then every action arrives as an
+                    opaque string, and the harness cannot tell a harmless search from a
+                    destructive delete. Promoting an action to its own tool &mdash; with named
+                    arguments &mdash; is what makes it possible to gate it, display it
+                    properly, log it, or run several in parallel. That trade-off is Act 9.</p>
+
+                    <h3>Permissions: which requests are honoured</h3>
+
+                    <p>The harness sits between the request and the execution, so it can
+                    refuse. Typically: some tools run freely, some require confirmation, some
+                    are forbidden outright, and the rules can vary by directory or by
+                    argument.</p>
+
+                    <p>This is the first component that is a genuine safety mechanism rather
+                    than a capability, and it has a property worth pausing on: it does not
+                    depend on the model&rsquo;s cooperation. A model that has been talked into
+                    something by a malicious web page still only <em>emits a request</em>, and
+                    that request still hits the same gate. Act 8 is about what follows from
+                    that &mdash; and about how much less it guarantees than it first appears.</p>
+
+                    <h3>Context management: deciding what the model is allowed to know</h3>
+
+                    <p>The loop appends. Every request and every result joins the transcript,
+                    and the transcript is re-sent every turn. On a long task it will outgrow
+                    the context window &mdash; not might, will.</p>
+
+                    <p>So something must decide what to drop: summarise the middle, discard
+                    old tool output, keep the current file and forget the one from an hour
+                    ago. Those decisions are invisible, unglamorous, and they largely determine
+                    whether a long session stays coherent. Act 10 is entirely about this.</p>
+
+                    <h3>Subagents: buying a second context window</h3>
+
+                    <p>A harness can start a second loop with its own fresh context, hand it a
+                    narrow task, and receive only the answer. The expensive intermediate
+                    reading never enters the main transcript.</p>
+
+                    <p>Read that again as a resource-management move rather than a clever
+                    trick, because that is what it is: the scarce resource is context, and a
+                    subagent is how you spend someone else&rsquo;s.</p>
+
+                    <h3>Persistence: what survives the session</h3>
+
+                    <p>Files on disk, notes the model was told to keep, a project instruction
+                    file read at startup. The model has no memory; a harness can give it a
+                    filing cabinet. Acts 6 and 10 cover the two ends of this.</p>
+
+                    <h3>The comparison</h3>
+
+                    <p>Same processor. Different machine.</p>
+
+                    <table class="hz-table">
+                        <thead>
+                            <tr><th>Component</th><th>Consumer chat box</th><th>Coding harness</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Tools</td><td>Few, generic — often web search and a sandboxed interpreter</td><td>A dozen or more, aimed at a filesystem and a shell</td></tr>
+                            <tr><td>Reaches your machine</td><td>No</td><td>Yes — that is the entire point</td></tr>
+                            <tr><td>Permissions</td><td>Fixed by the vendor</td><td>Configurable by you, per tool and per project</td></tr>
+                            <tr><td>Context management</td><td>Automatic, opaque</td><td>Configurable, inspectable, often noisy about it</td></tr>
+                            <tr><td>Subagents</td><td>No</td><td>Commonly</td></tr>
+                            <tr><td>Persistence</td><td>Vendor-managed memory, if any</td><td>Files, instruction files, notes you can read and edit</td></tr>
+                            <tr><td>You can change</td><td>Your wording</td><td>Nearly all of the above</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>The last row is the one that matters, and it is the hinge of this
+                    series. In a chat box, the only variable under your control is how you
+                    phrase things &mdash; which is why prompt-wording advice became a genre.
+                    In a harness, the wording is one small input among many, and it is usually
+                    not the one that is limiting you.</p>
+
+                    <h3>An honest caveat</h3>
+
+                    <p>Bigger is not better by default. Every component above is a place to
+                    misconfigure something: a tool nobody needed, a permission rule that fires
+                    on the wrong thing (Act 8 has a real example of exactly that), a context
+                    strategy that discards the thing you were about to need, a subagent
+                    dispatched for work that would have taken one search.</p>
+
+                    <p>A large harness is not a more powerful assistant. It is a more powerful
+                    <em>instrument</em> &mdash; which is a different claim, and it includes the
+                    possibility of using it badly.</p>
+
+                    <p>The rest of this series takes the components one at a time, cheapest
+                    first. The next one costs nothing: a text file the harness reads before it
+                    does anything else.</p>
                 </div>
 
                 <div class="hz-actnav-foot">

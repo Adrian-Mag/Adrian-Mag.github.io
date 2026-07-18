@@ -385,6 +385,42 @@ therefore missing from the printed sequence** — e.g. no `RES` appears after ea
 which violates D4. Regenerate without the size filter, or mark the elisions explicitly the way
 the poster marks them.
 
+### Act 4 panel — REAL, no mock **[V, extracted 2026-07-18]**
+
+The only panel in Movement I–II running on genuine data. Two traces, extracted by
+`figure_generation/harness/extract_toolloop.py` into
+`media/research/harness/toolloop.json`:
+
+- **minimal** (3 steps, session `5288737a…`, 2026-07-16): `Bash: pwd` → result → the model
+  reading its own answer back. The entire mechanism with nothing in the way.
+- **iterating** (15 steps, session `6f674b3c…`, 2026-07-18): scroll → screenshot → read
+  image, cycling. Three round trips per screenful to do what a person does with one glance.
+
+**Both drawn from the website repo's sessions deliberately** — that repo is public by
+construction, so unlike the paper workspaces there is no unpublished content to screen. The
+extractor additionally aborts if it finds anything matching an IP, `sk-ant-`, or `ghp_`
+pattern in its own output.
+
+Two extraction bugs found and fixed, worth recording because both would have produced a
+quietly wrong exhibit:
+
+1. **Wrong date** on the minimal trace's window (07-18 vs the real 07-16) — the trace simply
+   did not extract, which at least failed loudly.
+2. **7 of 15 steps extracted blank.** MCP tool inputs are not in `command`/`file_path`, and
+   image results are not text, so both flattened to `""`. Blank rows read as *nothing
+   happened* rather than *we looked in the wrong field* — worse than an elision, because it
+   is invisible. Now: inputs fall back through a wider key list then to a key summary, and
+   non-text results are labelled `[image content returned to the model]`.
+
+Elision policy is enforced in the data, not just the prose: every truncation carries
+`"elided": true` and the original length, and the panel renders it. Current extract has
+**0 truncations** — everything fits under the 240-character limit.
+
+**Bonus for Act 9:** the MCP namespacing is visible in the tool names
+(`mcp__plugin_playwright_playwright__browser_take_screenshot`), and the panel renders the
+server as a badge. A real MCP invocation is on the page even though the MCP deployment is
+thin.
+
 ### Act 2 panels — illustrative, for two different reasons
 
 Both carry an on-screen **ILLUSTRATIVE** badge and a closing note.

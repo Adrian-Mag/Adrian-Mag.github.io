@@ -1,0 +1,182 @@
+{
+  "_comment": "Extracted verbatim from real Claude Code session logs by figure_generation/harness/extract_toolloop.py. Long tool results are truncated, and every truncation is flagged 'elided' and shown as such in the panel. No step is silently dropped.",
+  "extracted_at": "2026-07-18T17:50:57+00:00",
+  "traces": [
+    {
+      "id": "minimal",
+      "label": "The whole mechanism, in three steps",
+      "note": "The model did not run pwd. It asked; the harness ran it and appended the answer; the model then read that answer and spoke.",
+      "source": "~/.claude/projects/.../5288737a….jsonl",
+      "steps": [
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "Bash",
+          "text": "pwd",
+          "elided": false,
+          "full_len": 3,
+          "at": "16:44:18"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "/home/adrian/PhD/Adrian-Mag.github.io",
+          "elided": false,
+          "full_len": 37,
+          "non_text": false,
+          "at": "16:44:18"
+        },
+        {
+          "actor": "model",
+          "kind": "say",
+          "text": "Same workspace as before: `/home/adrian/PhD/Adrian-Mag.github.io` — your Adrian-Mag.github.io git repo on the `main` branch, running on your laptop under WSL2.",
+          "elided": false,
+          "full_len": 159,
+          "at": "16:44:20"
+        }
+      ]
+    },
+    {
+      "id": "iterating",
+      "label": "The loop, iterating",
+      "note": "Looking at a web page: the model cannot see one. It asks for a scroll, asks for a screenshot, then asks to read the resulting file — three round trips for what a person does with one glance.",
+      "source": "~/.claude/projects/.../6f674b3c….jsonl",
+      "steps": [
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "mcp__plugin_playwright_playwright__browser_take_screenshot",
+          "text": "ai-page-5.png",
+          "elided": false,
+          "full_len": 13,
+          "at": "12:18:23"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "### Result - [Screenshot of viewport](./ai-page-5.png) ### Ran Playwright code ```js // Screenshot viewport and save it as ./ai-page-5.png await page.screenshot({ path: './ai-page-5.png', scale: 'css', type: 'png' }); ```",
+          "elided": false,
+          "full_len": 221,
+          "non_text": false,
+          "at": "12:18:25"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "Read",
+          "text": "/home/adrian/PhD/Adrian-Mag.github.io/ai-page-5.png",
+          "elided": false,
+          "full_len": 51,
+          "at": "12:18:28"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "[image content returned to the model]",
+          "elided": false,
+          "full_len": 37,
+          "non_text": true,
+          "at": "12:18:28"
+        },
+        {
+          "actor": "model",
+          "kind": "say",
+          "text": "This \"Exhibit 1\" screenshot renders crisply — great concrete evidence. Continuing through the rest of the exhibits.",
+          "elided": false,
+          "full_len": 115,
+          "at": "12:18:33"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "mcp__plugin_playwright_playwright__browser_run_code_unsafe",
+          "text": "async (page) => { await page.evaluate((y) => window.scrollTo(0,y), 4400); await page.waitForTimeout(200); return 'ok'; }",
+          "elided": false,
+          "full_len": 120,
+          "at": "12:18:33"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "### Result \"ok\" ### Ran Playwright code ```js await (async (page) => { await page.evaluate((y) => window.scrollTo(0,y), 4400); await page.waitForTimeout(200); return 'ok'; })(page); ```",
+          "elided": false,
+          "full_len": 185,
+          "non_text": false,
+          "at": "12:18:36"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "mcp__plugin_playwright_playwright__browser_take_screenshot",
+          "text": "ai-page-6.png",
+          "elided": false,
+          "full_len": 13,
+          "at": "12:18:40"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "### Result - [Screenshot of viewport](./ai-page-6.png) ### Ran Playwright code ```js // Screenshot viewport and save it as ./ai-page-6.png await page.screenshot({ path: './ai-page-6.png', scale: 'css', type: 'png' }); ```",
+          "elided": false,
+          "full_len": 221,
+          "non_text": false,
+          "at": "12:18:46"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "Read",
+          "text": "/home/adrian/PhD/Adrian-Mag.github.io/ai-page-6.png",
+          "elided": false,
+          "full_len": 51,
+          "at": "12:18:49"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "[image content returned to the model]",
+          "elided": false,
+          "full_len": 37,
+          "non_text": true,
+          "at": "12:18:49"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "mcp__plugin_playwright_playwright__browser_run_code_unsafe",
+          "text": "async (page) => { await page.evaluate((y) => window.scrollTo(0,y), 5300); await page.waitForTimeout(200); return 'ok'; }",
+          "elided": false,
+          "full_len": 120,
+          "at": "12:18:53"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "### Result \"ok\" ### Ran Playwright code ```js await (async (page) => { await page.evaluate((y) => window.scrollTo(0,y), 5300); await page.waitForTimeout(200); return 'ok'; })(page); ```",
+          "elided": false,
+          "full_len": 185,
+          "non_text": false,
+          "at": "12:18:57"
+        },
+        {
+          "actor": "model",
+          "kind": "request",
+          "tool": "mcp__plugin_playwright_playwright__browser_take_screenshot",
+          "text": "ai-page-7.png",
+          "elided": false,
+          "full_len": 13,
+          "at": "12:19:00"
+        },
+        {
+          "actor": "harness",
+          "kind": "result",
+          "text": "### Result - [Screenshot of viewport](./ai-page-7.png) ### Ran Playwright code ```js // Screenshot viewport and save it as ./ai-page-7.png await page.screenshot({ path: './ai-page-7.png', scale: 'css', type: 'png' }); ```",
+          "elided": false,
+          "full_len": 221,
+          "non_text": false,
+          "at": "12:19:01"
+        }
+      ]
+    }
+  ]
+}
