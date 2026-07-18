@@ -385,6 +385,51 @@ therefore missing from the printed sequence** — e.g. no `RES` appears after ea
 which violates D4. Regenerate without the size filter, or mark the elisions explicitly the way
 the poster marks them.
 
+### Act 2 panels — illustrative, for two different reasons
+
+Both carry an on-screen **ILLUSTRATIVE** badge and a closing note.
+
+**Tokenizer** — illustrative *by decision* (R4). A hand-built vocabulary reproduces the
+behaviours that matter (leading space belongs to the token, common words survive, technical
+words fragment, digits split, case matters) without shipping a real BPE table. Verified:
+`seismology` → `seism|ology` bare and `·seis|molo|gy` in a sentence; `the` vs `·The` differ;
+no orphan space tokens. **Upgradeable** if a real vocabulary is ever wanted.
+
+**Next-token distribution** — illustrative *by constraint*, which is different and worth
+recording. This is a static site; obtaining real next-token probabilities would require a
+model that returns per-token probabilities, which the page cannot call. Unlike the Act 3
+recording, **there is no script that would make this real** — it would need an open-weights
+model run locally. The panel's on-screen note states this plainly rather than implying the
+numbers were measured.
+
+⚠️ **Unverified claim to check before publication:** whether the Anthropic API exposes
+per-token probabilities at all. The panel text avoids asserting anything about any specific
+API — it says only that *this page* cannot obtain them, which is true regardless. Do not
+strengthen that wording without checking.
+
+### ⚠️ OUTSTANDING — Act 3 panel is running on an illustrative mock
+
+`media/research/harness/statelessness.mock.json` is **hand-written placeholder data**, not a
+recording. It exists so Act 3 reads end-to-end before the real transcript can be captured.
+
+**This must be replaced before publication.** Guards currently in place:
+
+1. The file carries `"_mock": true` and a `_comment` saying so in the first line.
+2. The panel renders an **ILLUSTRATIVE** badge in its header and a closing note: *"These
+   replies and token counts are written by hand to show the shape of the demonstration —
+   they are not measured output."*
+3. It lives at a **separate path** from the real file, so a recording can never silently
+   overwrite-and-hide it, and the mock can never be mistaken for the real one on disk.
+4. The panel **prefers** `statelessness.json` (the real file) and only falls back to the mock.
+
+**To replace:** run `figure_generation/harness/record_statelessness.py` with an API key. The
+panel picks up the real file automatically — no code change — and the badge disappears on its
+own. Optionally delete the mock afterwards.
+
+Mock token counts (29 → 74 → 145 stateful; 29 → 25 → 27 stateless) are plausible but invented.
+**Do not quote these numbers anywhere in prose** — the act's text deliberately refers to the
+counter climbing rather than to specific values, so no prose changes when the real data lands.
+
 ### Still missing
 
 - **Session transcripts showing a live hook denial.** The poster's Exhibit 2 used real session

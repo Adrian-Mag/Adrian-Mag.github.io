@@ -85,13 +85,83 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 3</span>
                     <span class="hz-asof">Current as of &mdash; (set at publication)</span>
-                    <p class="act-lede">The hinge of the series. A chat product is already several systems around the model. The reveal: the API is stateless — the whole conversation is re-sent every turn. &ldquo;Memory&rdquo; is an illusion assembled by software. Argued from necessity, not from undocumented internals.</p>
+                    <p class="act-lede">
+                        Tell a chatbot your name. Ten messages later it still knows. That
+                        feels like memory, and it is the most reasonable thing in the world
+                        to assume it is. It is not. It is a re-reading &mdash; performed
+                        every single turn, by software you never see, of a transcript being
+                        kept on your behalf.
+                    </p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Statelessness demo</li></ul>
+                <div class="hz-prose">
+                    <p>The previous act left the model with an uncomfortable property: it is a
+                    function. Context goes in, a distribution over next tokens comes out. A
+                    function does not remember what you asked it last time.</p>
+
+                    <p>So how does a conversation work?</p>
+
+                    <p>We do not need anyone inside a frontier lab to tell us. The answer is
+                    forced. If the model cannot remember, and a conversation nonetheless
+                    coheres, then <em>something else is doing the remembering</em> &mdash; and
+                    there is only one place that something can put what it remembers: back
+                    into the input, on the next call. The conversation has to be re-sent.
+                    Every turn. In full.</p>
+
+                    <p>This is not an implementation detail. It is the fact from which nearly
+                    everything else in this series follows, and it is worth watching happen
+                    rather than taking on my word.</p>
+                </div>
+
+                <div class="hz-panel" id="statelessness-panel"
+                     data-src="../../../../media/research/harness/statelessness.json"
+                     data-mock-src="../../../../media/research/harness/statelessness.mock.json">
+                    <div class="hz-panel-body">
+                        <p class="hz-panel-fallback">Loading the recorded runs&hellip;</p>
+                    </div>
+                </div>
+
+                <div class="hz-prose">
+                    <p>Both runs put the same three questions to the same model. The only
+                    difference is one line in the client: whether the earlier turns are
+                    included in the request. With them, the model knows what
+                    &ldquo;resolution&rdquo; means in your field, and what you told it first.
+                    Without them it is meeting you for the first time, three times in a row.</p>
+
+                    <p>Watch the token counter as you step through. In the first run it
+                    climbs, because the whole conversation is being re-sent &mdash; and
+                    re-billed &mdash; every turn. In the second it stays flat. That number is
+                    not an argument, it is an invoice: you are demonstrably paying to send
+                    your own conversation back to a model that did not keep it.</p>
+
+                    <h3>What else the chat box is doing</h3>
+
+                    <p>Re-sending the transcript is the minimum. A production chat product
+                    does more on every turn: prepending a system prompt you never see,
+                    deciding which older turns to drop as the conversation outgrows the
+                    context window, sometimes retrieving things you said in previous sessions,
+                    sometimes deciding a question warrants a web search or a code interpreter,
+                    and passing the exchange through safety classification.</p>
+
+                    <p>I am describing the general case deliberately. The internals of a
+                    closed consumer product are not public, and I am not going to recite
+                    details I cannot check. But none of the above is speculation about any
+                    particular company. Each item is forced by the same constraint as before:
+                    a stateless model, plus a conversation that is coherent, personalised and
+                    tool-using, <em>requires</em> that something assemble all of it before the
+                    model sees a single token.</p>
+
+                    <p>That assembling machine is the harness. You have been using one all
+                    along.</p>
+
+                    <p>Here is why it matters for everything that follows. The harness around
+                    a consumer chat box is small, because it is built for one job: keep a
+                    conversation going, safely, for a stranger. Swap it for a bigger one and
+                    the same model does dramatically more &mdash; not because it got smarter,
+                    but because it was finally given hands, eyes, and a memory that outlives
+                    the conversation.</p>
+
+                    <p>That is the next act.</p>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,6 +199,7 @@
         onScroll();
     })();
     </script>
+    <script src="../../../../js/harness-statelessness.js?v=26" defer></script>
     <script src="../../../../js/theme-toggle.js?v=26" defer></script>
     <script src="../../../../js/nav-menu.js?v=26" defer></script>
 </body>

@@ -1,0 +1,98 @@
+{
+  "_mock": true,
+  "_comment": "ILLUSTRATIVE MOCK — NOT A REAL RECORDING. Hand-written placeholder so Act 3 reads end-to-end before the real transcript exists. The model replies and token counts here are invented and plausible, not measured. The panel labels this visibly to the reader. To replace: run figure_generation/harness/record_statelessness.py, which writes the real transcript to statelessness.json — the panel prefers that file automatically and the illustrative label disappears.",
+  "recorded_at": null,
+  "model": "claude-opus-4-8",
+  "system": "Answer in at most two sentences. Be direct.",
+  "user_turns": [
+    "I work on linear inverse problems in seismology.",
+    "What does resolution mean here?",
+    "What was the first thing I told you?"
+  ],
+  "runs": {
+    "stateful": {
+      "label": "History re-sent every turn",
+      "note": "What a chat product does for you, invisibly.",
+      "turns": [
+        {
+          "n": 1,
+          "user": "I work on linear inverse problems in seismology.",
+          "request_messages": [
+            { "role": "user", "content": "I work on linear inverse problems in seismology." }
+          ],
+          "reply": "Good area to be in — recovering Earth structure from finite, noisy observations. What are you working on specifically?",
+          "input_tokens": 29,
+          "output_tokens": 24,
+          "stop_reason": "end_turn"
+        },
+        {
+          "n": 2,
+          "user": "What does resolution mean here?",
+          "request_messages": [
+            { "role": "user", "content": "I work on linear inverse problems in seismology." },
+            { "role": "assistant", "content": "Good area to be in — recovering Earth structure from finite, noisy observations. What are you working on specifically?" },
+            { "role": "user", "content": "What does resolution mean here?" }
+          ],
+          "reply": "In a linear inverse problem, resolution describes how tightly your data constrain the model at a given point — formally, how close the averaging (resolution) kernel is to a delta function there. Broad kernels mean your estimate is a smeared average of the true structure rather than a local value.",
+          "input_tokens": 74,
+          "output_tokens": 58,
+          "stop_reason": "end_turn"
+        },
+        {
+          "n": 3,
+          "user": "What was the first thing I told you?",
+          "request_messages": [
+            { "role": "user", "content": "I work on linear inverse problems in seismology." },
+            { "role": "assistant", "content": "Good area to be in — recovering Earth structure from finite, noisy observations. What are you working on specifically?" },
+            { "role": "user", "content": "What does resolution mean here?" },
+            { "role": "assistant", "content": "In a linear inverse problem, resolution describes how tightly your data constrain the model at a given point — formally, how close the averaging (resolution) kernel is to a delta function there. Broad kernels mean your estimate is a smeared average of the true structure rather than a local value." },
+            { "role": "user", "content": "What was the first thing I told you?" }
+          ],
+          "reply": "That you work on linear inverse problems in seismology.",
+          "input_tokens": 145,
+          "output_tokens": 12,
+          "stop_reason": "end_turn"
+        }
+      ]
+    },
+    "stateless": {
+      "label": "Only the latest turn sent",
+      "note": "The same API, asked the same questions, with nothing carried forward.",
+      "turns": [
+        {
+          "n": 1,
+          "user": "I work on linear inverse problems in seismology.",
+          "request_messages": [
+            { "role": "user", "content": "I work on linear inverse problems in seismology." }
+          ],
+          "reply": "Good area to be in — recovering Earth structure from finite, noisy observations. What are you working on specifically?",
+          "input_tokens": 29,
+          "output_tokens": 24,
+          "stop_reason": "end_turn"
+        },
+        {
+          "n": 2,
+          "user": "What does resolution mean here?",
+          "request_messages": [
+            { "role": "user", "content": "What does resolution mean here?" }
+          ],
+          "reply": "I'm not sure what \"here\" refers to — could you say which context you mean? Resolution means quite different things in imaging, in measurement, and in dispute settlement.",
+          "input_tokens": 25,
+          "output_tokens": 36,
+          "stop_reason": "end_turn"
+        },
+        {
+          "n": 3,
+          "user": "What was the first thing I told you?",
+          "request_messages": [
+            { "role": "user", "content": "What was the first thing I told you?" }
+          ],
+          "reply": "This is the first message I've received from you — there's nothing earlier in this conversation for me to look back on.",
+          "input_tokens": 27,
+          "output_tokens": 26,
+          "stop_reason": "end_turn"
+        }
+      ]
+    }
+  }
+}

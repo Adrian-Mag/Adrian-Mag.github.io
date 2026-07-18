@@ -85,13 +85,162 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 2</span>
                     <span class="hz-asof">Current as of &mdash; (set at publication)</span>
-                    <p class="act-lede">What an LLM is: a function from a token sequence to a distribution over next tokens. Name the two meanings of &ldquo;layer&rdquo; — transformer layers inside, harness layers outside — and then leave the inside alone. The model has no memory, no filesystem, no clock, no ability to act.</p>
+                    <p class="act-lede">
+                        Strip away the interface, the memory, the tools, the safety
+                        systems, and the personality, and what remains is smaller and
+                        stranger than the word &ldquo;intelligence&rdquo; suggests. It is a
+                        function. Text goes in; a probability distribution over the next
+                        chunk of text comes out. That is the whole of it.
+                    </p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Next-token predictor + tokenizer (illustrative)</li></ul>
+                <div class="hz-prose">
+                    <p>We are going to spend one act on the model itself and then leave it
+                    alone. Not because it is uninteresting &mdash; the inside of these things
+                    is one of the more remarkable objects of the last decade &mdash; but
+                    because almost nothing in the rest of this series depends on it. You need
+                    a working picture, not a full one, and the working picture is genuinely
+                    simple.</p>
+
+                    <h3>It does not read words</h3>
+
+                    <p>Before anything else happens, your text is chopped into
+                    <em>tokens</em>: fragments, roughly sub-word sized, drawn from a fixed
+                    vocabulary decided before training. Common words usually survive intact.
+                    Unusual ones shatter. A leading space is generally part of the token
+                    rather than a separator, so <code>&middot;the</code> and <code>the</code>
+                    are different tokens entirely.</p>
+
+                    <p>This sounds like trivia. It is not: it is the unit in which everything
+                    is counted, billed, and limited. Every context window, every price, every
+                    truncation you will meet later in this series is measured in these things.
+                    Type something into the panel &mdash; ideally something from your own
+                    field &mdash; and watch where it breaks.</p>
+                </div>
+
+                <div class="hz-panel" id="tokenizer-panel">
+                    <div class="hz-panel-body">
+                        <p class="hz-panel-fallback">This panel needs JavaScript.</p>
+                    </div>
+                </div>
+
+                <div class="hz-prose">
+                    <h3>It does not produce an answer</h3>
+
+                    <p>Given a sequence of tokens, the model returns a probability
+                    distribution over what the next one might be. Not a decision &mdash; a
+                    distribution. Every token in its vocabulary receives some share, most of
+                    them vanishingly small.</p>
+
+                    <p>Something outside the model then picks one. That choice is a policy,
+                    not a fact: take the most likely token every time and you get flat,
+                    repetitive text; sample from further down the tail and you get variety and
+                    more mistakes. The dial governing that trade is temperature, and it lives
+                    in the software around the model, not in the model.</p>
+
+                    <p>Then the chosen token is appended to the input, and the whole thing runs
+                    again. And again. That loop &mdash; predict, pick, append, repeat &mdash;
+                    is how a paragraph gets written, one fragment at a time, with no plan for
+                    the sentence it is halfway through.</p>
+                </div>
+
+                <div class="hz-panel" id="nexttoken-panel">
+                    <div class="hz-panel-body">
+                        <p class="hz-panel-fallback">This panel needs JavaScript.</p>
+                    </div>
+                </div>
+
+                <div class="hz-prose">
+                    <p>Notice what the second and third prompts do that the first does not.
+                    &ldquo;The capital of France is&rdquo; has one overwhelming continuation;
+                    the distribution barely has a tail. &ldquo;My favourite colour is&rdquo;
+                    spreads across several perfectly good answers, because there is no fact of
+                    the matter &mdash; and so the same question, asked twice, can honestly
+                    give you two different replies. Much of what people experience as
+                    unreliability is this, seen from the outside.</p>
+
+                    <h3>Two different things called &ldquo;layers&rdquo;</h3>
+
+                    <p>Here is the confusion I most want to defuse, because it makes the rest
+                    of this series either obvious or impenetrable depending on which way it
+                    falls.</p>
+
+                    <p><strong>Inside</strong> the model there are layers: dozens of stacked
+                    arithmetic operations that the input passes through, each refining a
+                    numerical representation of the text. They were shaped during training,
+                    they are frozen afterwards, and you cannot change them. When someone
+                    mentions a &ldquo;96-layer model&rdquo;, this is what they mean.</p>
+
+                    <p><strong>Outside</strong> the model there are also layers: the system
+                    prompt, the conversation being replayed, retrieved documents, tool
+                    definitions, memory files, permission checks. These were written by
+                    engineers, they change weekly, and &mdash; the important part &mdash; you
+                    can change them too.</p>
+
+                    <p>The two have nothing to do with each other beyond the shared word. This
+                    series is about the second kind, exclusively. If you have been carrying a
+                    vague sense that understanding the first kind is a prerequisite for
+                    understanding the second: it is not, and you can set it down.</p>
+
+                    <h3>What the model does not have</h3>
+
+                    <p>Worth stating flatly, because every later act is a consequence of one
+                    of these.</p>
+
+                    <p>It has <strong>no memory</strong>. Two calls are unrelated events; the
+                    second does not know the first happened. It has <strong>no access to your
+                    files</strong>, or to the internet, or to anything else &mdash; it emits
+                    text and nothing more. It has <strong>no clock</strong>: it cannot tell
+                    whether a second or a year passed between calls, or what today&rsquo;s
+                    date is. And it <strong>cannot act</strong>. It cannot run a command, send
+                    a message, or edit a file. It can produce text that <em>describes</em>
+                    doing so, and something else may choose to act on that text &mdash; but
+                    that something else is not the model.</p>
+
+                    <p>Every one of those absences is filled, later, by machinery. That
+                    machinery is the subject of this series.</p>
+
+                    <h3>One thing that did happen inside</h3>
+
+                    <p>A raw predictor trained on text is not helpful. Continue
+                    &ldquo;How do I sort a list in Python?&rdquo; by pure prediction and a
+                    plausible continuation is three more forum questions, because that is what
+                    such text looks like in the wild.</p>
+
+                    <p>Turning a predictor into something that answers rather than continues
+                    took additional training: demonstrations of desired behaviour, then
+                    tuning against human comparisons of competing outputs.<sup><a href="#ref-ouyang">1</a></sup>
+                    That work is genuinely inside the model, and it is why the box responds to
+                    a question instead of writing more questions. It is also, more or less,
+                    where the inside stops mattering for us.</p>
+
+                    <p>So: a function, with no memory, no senses, no hands, and no clock,
+                    that returns a distribution over text fragments. Everything you have
+                    seen it do beyond that &mdash; remember your name, read your file, search
+                    the web, run your code &mdash; was something else, wrapped around it.</p>
+
+                    <p>The next act starts with the smallest such wrapper, the one you have
+                    already used.</p>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-ouyang">Ouyang, L., Wu, J., Jiang, X., <em>et al.</em>
+                        (2022). &ldquo;Training language models to follow instructions with
+                        human feedback.&rdquo; arXiv:2203.02155.
+                        <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener">arxiv.org/abs/2203.02155</a>
+                        &mdash; the InstructGPT paper. Its headline result is worth the detour:
+                        a 1.3B-parameter tuned model was preferred by human raters to the
+                        175B-parameter model it was derived from, &ldquo;despite having 100x
+                        fewer parameters&rdquo;.</li>
+                        <li id="ref-vaswani">Vaswani, A., Shazeer, N., Parmar, N.,
+                        <em>et al.</em> (2017). &ldquo;Attention Is All You Need.&rdquo;
+                        arXiv:1706.03762.
+                        <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">arxiv.org/abs/1706.03762</a>
+                        &mdash; where the transformer architecture was introduced. Cited here
+                        for that origin only: the paper describes an encoder&ndash;decoder
+                        model for machine translation, and is <em>not</em> a description of
+                        how a modern chat model is built. The two are frequently conflated.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,6 +278,7 @@
         onScroll();
     })();
     </script>
+    <script src="../../../../js/harness-kernel.js?v=26" defer></script>
     <script src="../../../../js/theme-toggle.js?v=26" defer></script>
     <script src="../../../../js/nav-menu.js?v=26" defer></script>
 </body>
