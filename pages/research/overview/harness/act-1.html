@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Box Everyone Knows - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=26">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=26">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=26">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=27">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=27">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=27">
     <meta name="description" content="The Box Everyone Knows — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The Box Everyone Knows - Adrian Mag">
@@ -84,28 +84,26 @@
             <div class="container">
                 <div class="act-head">
                     <span class="act-kicker">Act 1</span>
-                    <span class="hz-asof">Current as of &mdash; (set at publication)</span>
+                    <span class="hz-asof">Current as of July 2026</span>
                     <p class="act-lede">
                         You have used one. A box, a cursor, an answer. Perhaps it was
                         useful. Perhaps it told you something false with complete
-                        confidence, and you have not been back since. Both of those
-                        things happened, and neither of them is evidence of what you
-                        probably concluded from it.
+                        confidence and you have not been back since. That failure is
+                        probably not evidence of what you think it is.
                     </p>
                 </div>
 
                 <div class="hz-prose">
                     <p>The interface is the same everywhere. One box. You type into it, an
                     answer appears, and that is the whole of the machine as far as anyone can
-                    see. It is a remarkably honest interface in one respect: it hides nothing
-                    on purpose. It is also, for the same reason, deeply misleading &mdash;
-                    because there is no visible difference between the box that has almost
-                    nothing behind it and the box that has a great deal.</p>
+                    see. In one respect it is a remarkably honest interface: it hides nothing
+                    on purpose. For exactly that reason it is also deeply misleading. There is
+                    no visible difference between the box with almost nothing behind it and the
+                    box with a great deal.</p>
 
                     <p>Most people&rsquo;s judgement of this technology was formed at that box.
-                    That is a reasonable place to form it. It is also, I want to argue, a bit
-                    like judging an engine by driving a car around a car park: everything you
-                    observed was real, and almost none of it was about the engine.</p>
+                    That is a reasonable place to form it. It is also a bit like judging an
+                    engine by driving the car around a car park.</p>
 
                     <h3>Two bad experiences that look identical</h3>
 
@@ -113,22 +111,59 @@
                     probably one of two failures, and they have almost nothing in common.</p>
 
                     <p><strong>The first is the famous one.</strong> You asked for a fact and
-                    got a confident fabrication &mdash; a citation that does not exist, a
-                    function that was never in the library, a date off by three years. This is
-                    the failure everyone can name, and it is the one that has genuinely
-                    receded. Not vanished. Receded.</p>
+                    got a confident fabrication: a citation that does not exist, a function that
+                    was never in the library, a date off by three years. Everyone can name this
+                    one. It is a hallucination. It may never disappear entirely, though it has
+                    receded a long way in the past two years.</p>
 
-                    <p><strong>The second is quieter and, I think, far more common now.</strong>
+                    <div class="hz-exhibit">
+                        <div class="hz-exhibit-bar">screenshot &middot; ChatGPT web interface</div>
+                        <figure class="hz-exhibit-shot">
+                            <img src="../../../../media/ai-fail.png"
+                                 width="641" height="259"
+                                 alt="A ChatGPT conversation. The user types: 241 minus open bracket
+                                      minus 241 close bracket, plus 1. The reply reads: 241 minus
+                                      open bracket minus 241 close bracket plus 1 is equivalent to
+                                      241 plus 241 plus 1, which simplifies to 483 plus 1. So 241
+                                      minus open bracket minus 241 close bracket plus 1 is equal
+                                      to 484.">
+                        </figure>
+                        <div class="hz-exhibit-cap">
+                            <span class="exno">Exhibit 1</span>
+                            The answer is 483. Look at where it goes wrong: the setup is
+                            <em>correct</em>. Subtracting a negative does give
+                            241&nbsp;+&nbsp;241&nbsp;+&nbsp;1. Then 241&nbsp;+&nbsp;241 becomes
+                            483, which is 482 with the final 1 already folded in, and the 1 is
+                            then added a second time. Two errors, one cause. Nothing in the tone
+                            marks any of it.
+                        </div>
+                    </div>
+
+                    <p class="hz-versioned"><b>Ages quickly</b>Undated screenshot. Model version
+                    not recorded, so treat it as an illustration of a failure mode, not as a
+                    claim about any current model. This particular sum may well be answered
+                    correctly today. The mechanism behind it has not changed.</p>
+
+                    <p>That is worth sitting with, because it is not the failure the word
+                    &ldquo;hallucination&rdquo; usually conjures. Nothing was invented. The
+                    algebra was reasoned through correctly and stated correctly. What failed was
+                    the arithmetic, in the middle, silently, while the sentence around it stayed
+                    fluent. The prose does not slow down at the point of the error, because
+                    fluency and correctness are produced by the same process and neither one
+                    checks the other. Act 2 is about why that is the expected behaviour of the
+                    thing in the box rather than a bug in it.</p>
+
+                    <p><strong>The second is quieter, and I think far more common now.</strong>
                     You asked something reasonable and got an answer that was not wrong,
                     exactly, but was useless. Generic. Correct for someone, somewhere, in some
-                    situation &mdash; just not for you, in yours. You wanted advice about
-                    <em>your</em> codebase, and got advice about codebases. You wanted to know
-                    what a term means <em>in your field</em>, and got the meaning it has in
+                    situation, just not for you in yours. You wanted advice about
+                    <em>your</em> codebase and got advice about codebases. You wanted to know
+                    what a term means <em>in your field</em> and got the meaning it has in
                     someone else&rsquo;s.</p>
 
-                    <p>The first failure is a defect in the model. The second is not a defect
-                    at all. It is the entirely correct behaviour of a system that was never
-                    told which situation it was in &mdash; and had no way to find out.</p>
+                    <p>The first failure is a defect in the model. The second is not a defect at
+                    all. It is the correct behaviour of a system that was never told which
+                    situation it was in, and had no way to find out.</p>
 
                     <h3>The question this series is actually about</h3>
 
@@ -143,9 +178,8 @@
                     <p>None of that arrived, because nothing was there to bring it. The box
                     does not know about your files. It cannot look anything up unless someone
                     built it a way to look things up. It has no memory of yesterday unless
-                    someone gave it one. Everything a capable assistant would need to know, it
-                    does not have &mdash; and the interface gives you no hint that this is
-                    what is missing.</p>
+                    someone gave it one. It has none of what a capable assistant would need,
+                    and the interface gives you no hint that this is what is missing.</p>
 
                     <p>So the interesting question is not <em>how smart is the model?</em>
                     That question has a moving answer and everyone is already shouting about
@@ -158,9 +192,9 @@
                     People who get startling results are not, for the most part, using a
                     different model from you. They are using a different machine around it.</p>
 
-                    <p>To see why that machine is necessary &mdash; and why it takes the
-                    peculiar shape it does &mdash; it helps to know exactly what sits at the
-                    centre of it. That is the next act, and it is shorter than you might fear.</p>
+                    <p>To see why that machine is necessary, and why it takes the peculiar shape
+                    it does, you need to know exactly what sits at the centre of it. That is the
+                    next act. It is shorter than you might fear.</p>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -198,7 +232,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=26" defer></script>
-    <script src="../../../../js/nav-menu.js?v=26" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=27" defer></script>
+    <script src="../../../../js/nav-menu.js?v=27" defer></script>
 </body>
 </html>

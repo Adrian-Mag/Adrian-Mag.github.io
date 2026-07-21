@@ -466,6 +466,27 @@ Mock token counts (29 → 74 → 145 stateful; 29 → 25 → 27 stateless) are p
 **Do not quote these numbers anywhere in prose** — the act's text deliberately refers to the
 counter climbing rather than to specific values, so no prose changes when the real data lands.
 
+### Act 1 — Exhibit 1, the arithmetic failure **[V, supplied by author 2026-07-21]**
+
+`media/ai-fail.png` (641×259). A ChatGPT screenshot supplied by the author. Prompt
+`241 - (-241) + 1`; reply: *"…is equivalent to 241 + 241 + 1, which simplifies to 483 + 1.
+So 241 - (-241) + 1 is equal to 484."* The correct answer is 483.
+
+Why it earns its place over a fabricated-citation example: the *algebra is right*. Subtracting
+a negative is handled correctly and stated correctly. The failure is arithmetic, mid-sentence,
+with no change in the register of the prose around it. It sets up Act 2 (fluency and
+correctness come out of the same forward pass and neither audits the other) far better than a
+made-up reference would, because nothing here is invented.
+
+The two errors have one cause: `241 + 241` is rendered as 483, which is the true sum 482 with
+the trailing `+ 1` already absorbed, and the `+ 1` is then applied a second time.
+
+**Provenance gap — recorded, not papered over.** No date and no model version. The page carries
+an `.hz-versioned` note saying exactly that, and frames it as an illustration of a *failure
+mode* rather than a claim about any current model. Per rule 2 this is the weakest exhibit in
+the series on provenance. If the author can supply the date and model, tighten the note; if
+not, it stays as is, because the mechanism claim does not depend on the version.
+
 ### Still missing
 
 - **Session transcripts showing a live hook denial.** The poster's Exhibit 2 used real session
