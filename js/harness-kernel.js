@@ -152,9 +152,9 @@
         var note = el("p", "hz-panel-fallback");
         note.style.marginTop = "12px";
         note.innerHTML = "A small hand-built vocabulary, not a real one. It reproduces the " +
-            "<em>behaviours</em> that matter &mdash; a leading space belongs to the token " +
+            "<em>behaviours</em> that matter: a leading space belongs to the token " +
             "(shown as &middot;), common words survive whole, unfamiliar and technical words " +
-            "shatter &mdash; but the pieces and the counts are illustrative, not measured.";
+            "shatter. The pieces and the counts are illustrative, not measured.";
         body.appendChild(note);
 
         root.appendChild(body);
@@ -291,7 +291,7 @@
         var note = el("p", "hz-panel-fallback");
         note.style.marginTop = "12px";
         note.innerHTML = "The probabilities here are hand-authored to show the shape of the " +
-            "thing, not measured from a model &mdash; a static page cannot obtain real ones. " +
+            "thing, not measured from a model. A static page cannot obtain real ones. " +
             "What is faithful: the model returns a <em>distribution over next tokens</em>, " +
             "something downstream picks one, and temperature controls how much of the tail " +
             "is in play. Press sample repeatedly on the second and third prompts.";

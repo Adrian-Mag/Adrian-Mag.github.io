@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inside the Kernel - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=27">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=27">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=27">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=28">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=28">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=28">
     <meta name="description" content="Inside the Kernel — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Inside the Kernel - Adrian Mag">
@@ -96,11 +96,10 @@
 
                 <div class="hz-prose">
                     <p>We are going to spend one act on the model itself and then leave it
-                    alone. Not because it is uninteresting &mdash; the inside of these things
-                    is one of the more remarkable objects of the last decade &mdash; but
-                    because almost nothing in the rest of this series depends on it. You need
-                    a working picture, not a full one, and the working picture is genuinely
-                    simple.</p>
+                    alone. Not because it is uninteresting. The inside of these things is one
+                    of the more remarkable objects of the last decade. But almost nothing in
+                    the rest of this series depends on it. You need a working picture, not a
+                    full one, and the working picture is simple.</p>
 
                     <h3>It does not read words</h3>
 
@@ -114,8 +113,8 @@
                     <p>This sounds like trivia. It is not: it is the unit in which everything
                     is counted, billed, and limited. Every context window, every price, every
                     truncation you will meet later in this series is measured in these things.
-                    Type something into the panel &mdash; ideally something from your own
-                    field &mdash; and watch where it breaks.</p>
+                    Type something into the panel, ideally something from your own field, and
+                    watch where it breaks.</p>
                 </div>
 
                 <div class="hz-panel" id="tokenizer-panel">
@@ -128,7 +127,7 @@
                     <h3>It does not produce an answer</h3>
 
                     <p>Given a sequence of tokens, the model returns a probability
-                    distribution over what the next one might be. Not a decision &mdash; a
+                    distribution over what the next one might be. Not a decision. A
                     distribution. Every token in its vocabulary receives some share, most of
                     them vanishingly small.</p>
 
@@ -139,9 +138,9 @@
                     in the software around the model, not in the model.</p>
 
                     <p>Then the chosen token is appended to the input, and the whole thing runs
-                    again. And again. That loop &mdash; predict, pick, append, repeat &mdash;
-                    is how a paragraph gets written, one fragment at a time, with no plan for
-                    the sentence it is halfway through.</p>
+                    again. And again. That loop (predict, pick, append, repeat) is how a
+                    paragraph gets written, one fragment at a time, with no plan for the
+                    sentence it is halfway through.</p>
                 </div>
 
                 <div class="hz-panel" id="nexttoken-panel">
@@ -155,9 +154,9 @@
                     &ldquo;The capital of France is&rdquo; has one overwhelming continuation;
                     the distribution barely has a tail. &ldquo;My favourite colour is&rdquo;
                     spreads across several perfectly good answers, because there is no fact of
-                    the matter &mdash; and so the same question, asked twice, can honestly
-                    give you two different replies. Much of what people experience as
-                    unreliability is this, seen from the outside.</p>
+                    the matter. So the same question, asked twice, can honestly give you two
+                    different replies. Much of what people experience as unreliability is
+                    this, seen from the outside.</p>
 
                     <h3>Two different things called &ldquo;layers&rdquo;</h3>
 
@@ -174,7 +173,7 @@
                     <p><strong>Outside</strong> the model there are also layers: the system
                     prompt, the conversation being replayed, retrieved documents, tool
                     definitions, memory files, permission checks. These were written by
-                    engineers, they change weekly, and &mdash; the important part &mdash; you
+                    engineers, and they change weekly. And here is the part that matters: you
                     can change them too.</p>
 
                     <p>The two have nothing to do with each other beyond the shared word. This
@@ -189,13 +188,13 @@
 
                     <p>It has <strong>no memory</strong>. Two calls are unrelated events; the
                     second does not know the first happened. It has <strong>no access to your
-                    files</strong>, or to the internet, or to anything else &mdash; it emits
-                    text and nothing more. It has <strong>no clock</strong>: it cannot tell
-                    whether a second or a year passed between calls, or what today&rsquo;s
-                    date is. And it <strong>cannot act</strong>. It cannot run a command, send
-                    a message, or edit a file. It can produce text that <em>describes</em>
-                    doing so, and something else may choose to act on that text &mdash; but
-                    that something else is not the model.</p>
+                    files</strong>, or to the internet, or to anything else. It emits text and
+                    nothing more. It has <strong>no clock</strong>: it cannot tell whether a
+                    second or a year passed between calls, or what today&rsquo;s date is. And
+                    it <strong>cannot act</strong>. It cannot run a command, send a message,
+                    or edit a file. It can produce text that <em>describes</em> doing so, and
+                    something else may choose to act on that text, but that something else is
+                    not the model.</p>
 
                     <p>Every one of those absences is filled, later, by machinery. That
                     machinery is the subject of this series.</p>
@@ -215,9 +214,9 @@
                     where the inside stops mattering for us.</p>
 
                     <p>So: a function, with no memory, no senses, no hands, and no clock,
-                    that returns a distribution over text fragments. Everything you have
-                    seen it do beyond that &mdash; remember your name, read your file, search
-                    the web, run your code &mdash; was something else, wrapped around it.</p>
+                    that returns a distribution over text fragments. Everything you have seen
+                    it do beyond that was something else, wrapped around it: remembering your
+                    name, reading your file, searching the web, running your code.</p>
 
                     <p>The next act starts with the smallest such wrapper, the one you have
                     already used.</p>
@@ -278,8 +277,8 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/harness-kernel.js?v=27" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=27" defer></script>
-    <script src="../../../../js/nav-menu.js?v=27" defer></script>
+    <script src="../../../../js/harness-kernel.js?v=28" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=28" defer></script>
+    <script src="../../../../js/nav-menu.js?v=28" defer></script>
 </body>
 </html>

@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The CPU and the Computer - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=27">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=27">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=27">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=28">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=28">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=28">
     <meta name="description" content="The CPU and the Computer — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The CPU and the Computer - Adrian Mag">
@@ -95,13 +95,13 @@
                 </div>
 
                 <div class="hz-prose">
-                    <p>The comparison is not mine, and it is worth being precise about whose
-                    it is. Andrej Karpathy popularised the framing of a language model as
+                    <p>The comparison is not mine, and whose it is matters. Andrej Karpathy
+                    popularised the framing of a language model as
                     &ldquo;not a chatbot, but the kernel process of a new Operating
-                    System&rdquo;.<sup><a href="#ref-karpathy">1</a></sup> What I want to do
-                    here is narrow it, because the narrower version is more useful: the model
+                    System&rdquo;.<sup><a href="#ref-karpathy">1</a></sup> I want to narrow
+                    it, because the narrower version is more useful: the model
                     is the <em>processor</em>, and the harness is the rest of the computer.
-                    Locating it that way makes the interesting question obvious &mdash; not
+                    Locating it that way makes the interesting question obvious. It is not
                     &ldquo;how fast is the chip?&rdquo; but &ldquo;what has been wired to
                     it?&rdquo;</p>
 
@@ -111,9 +111,9 @@
                     <table class="hz-table">
                         <thead><tr><th>The machine needs</th><th>Supplied by</th></tr></thead>
                         <tbody>
-                            <tr><td>Somewhere to hold what it is working on</td><td>The context window &mdash; small, fast, wiped between runs</td></tr>
+                            <tr><td>Somewhere to hold what it is working on</td><td>The context window: small, fast, wiped between runs</td></tr>
                             <tr><td>Storage that outlives the run</td><td>Files, databases, memory directories</td></tr>
-                            <tr><td>Input and output</td><td>Tools &mdash; the only way anything reaches the world</td></tr>
+                            <tr><td>Input and output</td><td>Tools, the only way anything reaches the world</td></tr>
                             <tr><td>A clock</td><td>The harness, which knows what time it is</td></tr>
                             <tr><td>Something to decide what runs, and whether it may</td><td>The agent loop and its permission system</td></tr>
                         </tbody>
@@ -125,11 +125,11 @@
                     <h3>The mechanism: it asks, it never acts</h3>
 
                     <p>Here is the part that surprises people who have watched one of these
-                    systems edit a file, and it is worth stating as flatly as possible.</p>
+                    systems edit a file. I will state it as flatly as I can.</p>
 
                     <p><strong>The model cannot run anything.</strong> When it &ldquo;runs a
                     command&rdquo;, what actually happens is that it emits text in a structured
-                    form &mdash; a request naming a tool and its arguments. That request goes
+                    form: a request naming a tool and its arguments. That request goes
                     to the harness. The harness decides whether to honour it, executes it,
                     captures the output, and appends that output to the conversation. Then the
                     whole enlarged conversation goes back to the model, which reads the result
@@ -145,8 +145,8 @@
                     The distinction is about who chooses the next step, not about how clever
                     the system is.</p>
 
-                    <p>The interleaving of reasoning and acting &mdash; think a little, do a
-                    little, look at what came back, think again &mdash; was studied under the
+                    <p>The interleaving of reasoning and acting (think a little, do a little,
+                    look at what came back, think again) was studied under the
                     name ReAct well before any of this reached
                     products.<sup><a href="#ref-react">3</a></sup> Nearly every coding agent
                     you can use today is a descendant of that shape.</p>
@@ -169,18 +169,18 @@
                     read back.</p>
 
                     <p>The longer trace is the same mechanism doing something that feels much
-                    more capable, and it is worth noticing how expensive that feeling is. To
-                    <em>look at a web page</em> &mdash; something you do in a fraction of a
-                    second, continuously, without noticing &mdash; the model must ask for a
+                    more capable. Notice how expensive that feeling is. To
+                    <em>look at a web page</em> (something you do in a fraction of a second,
+                    continuously, without noticing) the model must ask for a
                     scroll, then ask for a screenshot, then ask to read the resulting image
                     file. Three round trips, repeated for each screenful. It is not seeing the
                     page. It is requesting narrow slices of evidence about the page and
                     assembling a belief from them.</p>
 
-                    <p>That is worth holding onto, because it generalises. Everything these
+                    <p>Hold onto that, because it generalises. Everything these
                     systems appear to <em>do</em> decomposes into asking for evidence and
                     asking for effects. The apparent capability is a property of what they are
-                    permitted to ask for &mdash; which is to say, a property of the harness.</p>
+                    permitted to ask for, which is to say a property of the harness.</p>
 
                     <h3>Why this makes the harness the interesting object</h3>
 
@@ -197,8 +197,8 @@
                     to decide what to drop.</p>
 
                     <p>None of those are questions about intelligence. They are questions
-                    about wiring &mdash; and every one of them has an answer you can inspect,
-                    and usually change.</p>
+                    about wiring. Every one of them has an answer you can inspect, and
+                    usually change.</p>
 
                     <p>Which raises the obvious next question: what is actually in one of
                     these things?</p>
@@ -259,8 +259,8 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/harness-toolloop.js?v=27" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=27" defer></script>
-    <script src="../../../../js/nav-menu.js?v=27" defer></script>
+    <script src="../../../../js/harness-toolloop.js?v=28" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=28" defer></script>
+    <script src="../../../../js/nav-menu.js?v=28" defer></script>
 </body>
 </html>

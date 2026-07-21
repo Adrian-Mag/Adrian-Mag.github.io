@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anatomy of a Coding Agent - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=27">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=27">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=27">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=28">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=28">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=28">
     <meta name="description" content="Anatomy of a Coding Agent — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Anatomy of a Coding Agent - Adrian Mag">
@@ -88,8 +88,8 @@
                     <p class="act-lede">
                         The same model sits behind the chat box and behind the tool that
                         refactors a codebase overnight. If the processor is identical, the
-                        difference has to be somewhere else. It is, and it is not hidden
-                        &mdash; it is a list of components, each of which someone decided
+                        difference has to be somewhere else. It is, and it is not hidden.
+                        It is a list of components, each of which someone decided
                         to build.
                     </p>
                 </div>
@@ -108,8 +108,8 @@
 
                     <p>That list looks mundane, and its mundanity is the point. There is no
                     &ldquo;understand the codebase&rdquo; tool. What looks like understanding
-                    is a great many small requests &mdash; search for this, read that, look at
-                    the file the first search pointed to &mdash; assembled in the loop from
+                    is a great many small requests (search for this, read that, look at the
+                    file the first search pointed to) assembled in the loop from
                     Act 4. The capability is emergent from a boring inventory plus a lot of
                     round trips.</p>
 
@@ -117,8 +117,8 @@
                     &ldquo;run a shell command&rdquo; can technically do everything, since
                     editing a file is a shell command. But then every action arrives as an
                     opaque string, and the harness cannot tell a harmless search from a
-                    destructive delete. Promoting an action to its own tool &mdash; with named
-                    arguments &mdash; is what makes it possible to gate it, display it
+                    destructive delete. Promoting an action to its own tool, with named
+                    arguments, is what makes it possible to gate it, display it
                     properly, log it, or run several in parallel. That trade-off is Act 9.</p>
 
                     <h3>Permissions: which requests are honoured</h3>
@@ -133,13 +133,13 @@
                     depend on the model&rsquo;s cooperation. A model that has been talked into
                     something by a malicious web page still only <em>emits a request</em>, and
                     that request still hits the same gate. Act 8 is about what follows from
-                    that &mdash; and about how much less it guarantees than it first appears.</p>
+                    that, and about how much less it guarantees than it first appears.</p>
 
                     <h3>Context management: deciding what the model is allowed to know</h3>
 
                     <p>The loop appends. Every request and every result joins the transcript,
                     and the transcript is re-sent every turn. On a long task it will outgrow
-                    the context window &mdash; not might, will.</p>
+                    the context window. Not might. Will.</p>
 
                     <p>So something must decide what to drop: summarise the middle, discard
                     old tool output, keep the current file and forget the one from an hour
@@ -171,8 +171,8 @@
                             <tr><th>Component</th><th>Consumer chat box</th><th>Coding harness</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Tools</td><td>Few, generic — often web search and a sandboxed interpreter</td><td>A dozen or more, aimed at a filesystem and a shell</td></tr>
-                            <tr><td>Reaches your machine</td><td>No</td><td>Yes — that is the entire point</td></tr>
+                            <tr><td>Tools</td><td>Few, generic: often web search and a sandboxed interpreter</td><td>A dozen or more, aimed at a filesystem and a shell</td></tr>
+                            <tr><td>Reaches your machine</td><td>No</td><td>Yes. That is the entire point</td></tr>
                             <tr><td>Permissions</td><td>Fixed by the vendor</td><td>Configurable by you, per tool and per project</td></tr>
                             <tr><td>Context management</td><td>Automatic, opaque</td><td>Configurable, inspectable, often noisy about it</td></tr>
                             <tr><td>Subagents</td><td>No</td><td>Commonly</td></tr>
@@ -183,7 +183,7 @@
 
                     <p>The last row is the one that matters, and it is the hinge of this
                     series. In a chat box, the only variable under your control is how you
-                    phrase things &mdash; which is why prompt-wording advice became a genre.
+                    phrase things, which is why prompt-wording advice became a genre.
                     In a harness, the wording is one small input among many, and it is usually
                     not the one that is limiting you.</p>
 
@@ -196,7 +196,7 @@
                     dispatched for work that would have taken one search.</p>
 
                     <p>A large harness is not a more powerful assistant. It is a more powerful
-                    <em>instrument</em> &mdash; which is a different claim, and it includes the
+                    <em>instrument</em>, which is a different claim, and it includes the
                     possibility of using it badly.</p>
 
                     <p>The rest of this series takes the components one at a time, cheapest
@@ -239,7 +239,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=27" defer></script>
-    <script src="../../../../js/nav-menu.js?v=27" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=28" defer></script>
+    <script src="../../../../js/nav-menu.js?v=28" defer></script>
 </body>
 </html>

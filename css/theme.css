@@ -116,6 +116,9 @@
 :root[data-theme="earth"] [data-hero="frequentist"]  { background-image: url('../media/backgrounds/earth/frequentist.jpg') !important; background-position: center 50% !important; }
 :root[data-theme="earth"] [data-hero="misc"]         { background-image: url('../media/backgrounds/earth/misc.jpg') !important; background-position: center 50% !important; }
 :root[data-theme="earth"] [data-hero="cg"]           { background-image: url('../media/backgrounds/earth/cg.jpg') !important; background-position: center 55% !important; }
+/* harness: borrowing misc.jpg until a dedicated earth/harness.jpg exists.
+   Drop one in with that name and change only the filename below. */
+:root[data-theme="earth"] [data-hero="harness"]      { background-image: url('../media/backgrounds/earth/misc.jpg') !important; background-position: center 50% !important; }
 
 /* Text overlaid on hero PHOTOS keeps light ink in both themes — the photo
    scrims are dark regardless of palette. Earth's accent inks are too dark

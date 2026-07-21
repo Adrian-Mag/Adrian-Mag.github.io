@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Machine Around the Model - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=27">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=27">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=27">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=28">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=28">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=28">
     <meta name="description" content="How agentic AI systems actually work: what the model is, what the harness around it does, and which parts of that harness you can build or change.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The Machine Around the Model - Adrian Mag">
@@ -88,28 +88,28 @@
                     <h2>What this series is</h2>
                     <p class="act-lede">
                         If you have used a chatbot, been unimpressed, and concluded the
-                        technology is oversold &mdash; this series is written for you. That
+                        technology is oversold, this series is written for you. That
                         experience was real. But its usual cause has changed.
                     </p>
                 </div>
 
                 <div class="hz-prose">
                     <p>The models did get better; the era of confidently wrong arithmetic is
-                    behind us. Bad experiences did not disappear, though &mdash; they moved.
-                    The model can usually answer the question it was asked. The harder
-                    problems are whether it was the right question, and whether it arrived
-                    with enough of the situation attached to be answerable: the same question
-                    has many correct answers depending on context, and by default a model has
-                    almost none of it.</p>
+                    behind us. Bad experiences did not disappear. They moved. The model can
+                    usually answer the question it was asked. The harder problems are whether
+                    it was the right question, and whether it arrived with enough of the
+                    situation attached to be answerable: the same question has many correct
+                    answers depending on context, and by default a model has almost none of
+                    it.</p>
 
                     <p>Expecting a bare model to handle a hard problem consistently is a
-                    mistake on our side of the screen. The capability has to be harnessed
-                    &mdash; and the machinery that harnesses it is what this series is about.</p>
+                    mistake on our side of the screen. The capability has to be harnessed, and
+                    the machinery that harnesses it is what this series is about.</p>
 
                     <p>Eleven acts in three movements, from the chat box everyone knows to the
                     machinery a user can actually build and change. Written by someone learning
-                    it while writing it, with working examples drawn from a real setup &mdash;
-                    and no examples invented for illustration.</p>
+                    it while writing it, with working examples drawn from a real setup. No
+                    examples invented for illustration.</p>
                 </div>
 
                 <div class="hz-draft" style="margin:26px 0">
@@ -120,21 +120,21 @@
 
                 <div class="hz-prose">
                     <h3 style="margin:30px 0 6px">Movement I &middot; What you are actually talking to</h3>
-                    <p><strong>Act 1 &mdash; <a href="act-1.html">The Box Everyone Knows</a>.</strong> Start where the reader is: text in, text out, magic between. Name the common experience honestly — confident nonsense, and the conclusion that the technology is oversold. Promise: that experience was real, and it measured the scaffolding, not the intelligence.</p>
-                    <p><strong>Act 2 &mdash; <a href="act-2.html">Inside the Kernel</a>.</strong> What an LLM is: a function from a token sequence to a distribution over next tokens. Name the two meanings of &ldquo;layer&rdquo; — transformer layers inside, harness layers outside — and then leave the inside alone. The model has no memory, no filesystem, no clock, no ability to act.</p>
-                    <p><strong>Act 3 &mdash; <a href="act-3.html">Even the Chat Box Is a Harness</a>.</strong> The hinge of the series. A chat product is already several systems around the model. The reveal: the API is stateless — the whole conversation is re-sent every turn. &ldquo;Memory&rdquo; is an illusion assembled by software. Argued from necessity, not from undocumented internals.</p>
+                    <p><strong>Act 1: <a href="act-1.html">The Box Everyone Knows</a>.</strong> Start where the reader is: text in, text out, magic between. Name the common experience honestly: confident nonsense, and the conclusion that the technology is oversold. Promise: that experience was real, and it measured the scaffolding, not the intelligence.</p>
+                    <p><strong>Act 2: <a href="act-2.html">Inside the Kernel</a>.</strong> What an LLM is: a function from a token sequence to a distribution over next tokens. Name the two meanings of &ldquo;layer&rdquo; (transformer layers inside, harness layers outside), then leave the inside alone. The model has no memory, no filesystem, no clock, no ability to act.</p>
+                    <p><strong>Act 3: <a href="act-3.html">Even the Chat Box Is a Harness</a>.</strong> The hinge of the series. A chat product is already several systems around the model. The reveal: the API is stateless, so the whole conversation is re-sent every turn. &ldquo;Memory&rdquo; is an illusion assembled by software. Argued from necessity, not from undocumented internals.</p>
                     <h3 style="margin:30px 0 6px">Movement II &middot; The harness</h3>
-                    <p><strong>Act 4 &mdash; <a href="act-4.html">The CPU and the Computer</a>.</strong> The metaphor formalised, then the mechanism: the model never executes anything. It emits a request; the harness executes and appends the result; the loop repeats. That loop is what &ldquo;agent&rdquo; means.</p>
-                    <p><strong>Act 5 &mdash; <a href="act-5.html">Anatomy of a Coding Agent</a>.</strong> Concrete inventory of a large harness: tool suite, permission system, context management, subagents, session persistence. Same kernel, different machine. The capability gap is an engineering gap.</p>
+                    <p><strong>Act 4: <a href="act-4.html">The CPU and the Computer</a>.</strong> The metaphor formalised, then the mechanism: the model never executes anything. It emits a request; the harness executes and appends the result; the loop repeats. That loop is what &ldquo;agent&rdquo; means.</p>
+                    <p><strong>Act 5: <a href="act-5.html">Anatomy of a Coding Agent</a>.</strong> Concrete inventory of a large harness: tool suite, permission system, context management, subagents, session persistence. Same kernel, different machine. The capability gap is an engineering gap.</p>
                     <h3 style="margin:30px 0 6px">Movement III &middot; What you can change</h3>
-                    <p><strong>Act 6 &mdash; <a href="act-6.html">Steering by Text</a>.</strong> The cheapest lever: a file the harness reads and injects into context. Not enforced — guidance, not law. Why that is both its weakness and its strength.</p>
-                    <p><strong>Act 7 &mdash; <a href="act-7.html">Packaging Expertise</a>.</strong> Progressive disclosure: a short description sits in context permanently; the body loads on demand. Context is a scarce, paid resource, and everything loaded competes with everything else.</p>
-                    <p><strong>Act 8 &mdash; <a href="act-8.html">Mechanism, Not Trust</a>.</strong> Where text stops being enough. Deterministic interception that runs whether or not the model cooperates. Includes the honest limitation: this is a blocklist, it over-blocks, and it has gaps. A mechanism without a stated threat model is marketing.</p>
-                    <p><strong>Act 9 &mdash; <a href="act-9.html">New Senses: How a Capability Becomes Available</a>.</strong> Tool design. Definitions as interface contracts; why descriptions are load-bearing. The promote-to-a-dedicated-tool heuristic: gate, render, audit, parallelize. Closes with a short MCP section — host/client/server, and the one real invocation on record.</p>
-                    <p><strong>Act 10 &mdash; <a href="act-10.html">What It Knows</a>.</strong> Context as the budget everything competes for. Retrieval as context assembly, not magic. Memory as files. Compaction, and why long sessions degrade.</p>
-                    <p><strong>Act 11 &mdash; <a href="act-11.html">Orchestration</a>.</strong> When one loop is not enough: graphs, subagent delegation, who supplies the harness versus who supplies the deployment. With the counterweight — most tasks do not need this.</p>
+                    <p><strong>Act 6: <a href="act-6.html">Steering by Text</a>.</strong> The cheapest lever: a file the harness reads and injects into context. Not enforced: guidance, not law. Why that is both its weakness and its strength.</p>
+                    <p><strong>Act 7: <a href="act-7.html">Packaging Expertise</a>.</strong> Progressive disclosure: a short description sits in context permanently; the body loads on demand. Context is a scarce, paid resource, and everything loaded competes with everything else.</p>
+                    <p><strong>Act 8: <a href="act-8.html">Mechanism, Not Trust</a>.</strong> Where text stops being enough. Deterministic interception that runs whether or not the model cooperates. Includes the honest limitation: this is a blocklist, it over-blocks, and it has gaps. A mechanism without a stated threat model is marketing.</p>
+                    <p><strong>Act 9: <a href="act-9.html">New Senses: How a Capability Becomes Available</a>.</strong> Tool design. Definitions as interface contracts; why descriptions are load-bearing. The promote-to-a-dedicated-tool heuristic: gate, render, audit, parallelize. Closes with a short MCP section on host/client/server, and the one real invocation on record.</p>
+                    <p><strong>Act 10: <a href="act-10.html">What It Knows</a>.</strong> Context as the budget everything competes for. Retrieval as context assembly, not magic. Memory as files. Compaction, and why long sessions degrade.</p>
+                    <p><strong>Act 11: <a href="act-11.html">Orchestration</a>.</strong> When one loop is not enough: graphs, subagent delegation, who supplies the harness versus who supplies the deployment. With the counterweight: most tasks do not need this.</p>
                     <h3 style="margin:30px 0 6px">Closing</h3>
-                    <p><strong>Summary &mdash; <a href="summary.html">The Instrument</a>.</strong> What the machinery is for: verification, audit, honest limits — and a frank account of where it is still bad.</p>
+                    <p><strong>Summary: <a href="summary.html">The Instrument</a>.</strong> What the machinery is for: verification, audit, honest limits, and a frank account of where it is still bad.</p>
                 </div>
             </div>
         </section>
@@ -167,7 +167,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=27" defer></script>
-    <script src="../../../../js/nav-menu.js?v=27" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=28" defer></script>
+    <script src="../../../../js/nav-menu.js?v=28" defer></script>
 </body>
 </html>

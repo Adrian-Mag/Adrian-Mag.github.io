@@ -61,7 +61,7 @@
         body.appendChild(el("div", "hz-loop-text", s.text));
         if (s.elided) {
             body.appendChild(el("div", "hz-loop-elided",
-                "⋮ truncated for display — " + s.full_len.toLocaleString() +
+                "⋮ truncated for display: " + s.full_len.toLocaleString() +
                 " characters were returned to the model"));
         }
         row.appendChild(body);
@@ -141,7 +141,7 @@
         tally.appendChild(el("span", "hz-trend-v", String(acts)));
         tally.appendChild(el("span", "hz-trend-sep", "executions by the harness"));
         tally.appendChild(el("span", "hz-trend-note",
-            "  the model has executed nothing — it has no way to"));
+            "  the model has executed nothing, it has no way to"));
         body.appendChild(tally);
 
         var note = el("p", "hz-panel-fallback");

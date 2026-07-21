@@ -270,8 +270,12 @@
 }
 
 /* ---------- interactive panel shell (Q3: maximise interaction) ---------- */
+/* Panels share the reading column's 760px measure. Without this they inherit
+   the 1200px container while every text block around them stops at 760, so
+   they hang off the right-hand edge of an otherwise straight column. */
 .hz-panel {
     margin: 30px 0;
+    max-width: 760px;
     border: 1.5px solid var(--line);
     border-radius: var(--radius, 10px);
     background: var(--surface);

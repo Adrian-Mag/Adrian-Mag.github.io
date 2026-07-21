@@ -56,7 +56,7 @@
         p.innerHTML =
             "<b>Recording pending.</b> This panel shows a real pair of API runs, " +
             "not a simulation. The transcript has not been recorded yet, so there is " +
-            "nothing to display &mdash; deliberately, rather than filling the space " +
+            "nothing to display. That is deliberate, rather than filling the space " +
             "with invented model output." +
             (msg ? " <span style='opacity:.7'>(" + msg + ")</span>" : "");
         body.appendChild(p);
@@ -143,8 +143,8 @@
         });
         var grew = series[series.length - 1] > series[0];
         trend.appendChild(el("span", "hz-trend-note",
-            grew ? "  climbing — the history is re-sent, and re-paid for, every turn"
-                 : "  flat — nothing is carried, so nothing is re-paid for"));
+            grew ? "  climbing: the history is re-sent, and re-paid for, every turn"
+                 : "  flat: nothing is carried, so nothing is re-paid for"));
         right.appendChild(trend);
         cols.appendChild(right);
 
@@ -180,8 +180,8 @@
         if (data._mock) {
             prov.innerHTML =
                 "<b>Illustrative placeholder.</b> These replies and token counts are " +
-                "written by hand to show the shape of the demonstration &mdash; they are " +
-                "not measured output. A real recorded pair of runs replaces this before " +
+                "written by hand to show the shape of the demonstration. They are not " +
+                "measured output. A real recorded pair of runs replaces this before " +
                 "publication.";
         } else {
             prov.textContent = "Recorded " + (data.recorded_at || "").slice(0, 10) +
