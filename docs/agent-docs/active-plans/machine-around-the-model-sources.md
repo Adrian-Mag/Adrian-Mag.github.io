@@ -123,6 +123,30 @@ real provenance, so it should be *cited* rather than presented as your own coina
 Popularised the framing. ⚠️ A social-media post is a weak citation — cite it as the
 popularisation, not as the source of record.
 
+**[V] Karpathy, A. (2023). "LLM OS" diagram, post on X, 11 November 2023.**
+<https://x.com/karpathy/status/1723140519554105733>
+→ Source of Act 4, Figure 1. The block diagram placing the LLM in the CPU position with the
+context window drawn inside it as RAM, plus tools, disk, network and other models as attached
+boxes. Post text supplied by the author 2026-07-21 and the URL confirmed by web search.
+
+**Date verification.** x.com returns HTTP 402 to automated fetches, so the date could not be
+read off the page. It is derived from the Twitter snowflake ID instead: `id >> 22` plus the
+Twitter epoch `1288834974657` ms gives 2023-11-11T00:48Z. The method self-validates, because
+applying it to the already-verified 28 September post above reproduces that date exactly.
+Note the UTC boundary: in US time zones this post reads as 10 November.
+
+**Why it earns a figure.** The specs quoted in the post (GPT-4 Turbo at 20 tok/s, 128K RAM,
+Ada002 filesystem) are now all obsolete while the boxes and arrows are not. That contrast is
+used in the act as evidence for the series' own date-stamping discipline, so the exhibit
+argues the method as well as the metaphor.
+
+**⚠️ RIGHTS — third-party image, the only one in the series.** Not the author's work and not
+covered by the site's CC BY 4.0 licence. Reproduced for commentary and criticism (the act
+explicitly critiques the CPU framing). Attribution appears in three places: the exhibit bar,
+the caption, and reference 2. **If Karpathy or X objects, remove the image; the act's argument
+survives without it, since the prose describes the diagram.** Do not add further third-party
+images without the same treatment.
+
 **[P] Ge, Y., et al. (2023). "LLM as OS, Agents as Apps."**
 → Search results credit this with the earliest systematic articulation. **Not yet verified —
 I have not fetched it, and the author list and arXiv ID are unconfirmed.** Must be verified

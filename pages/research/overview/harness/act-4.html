@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The CPU and the Computer - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=28">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=28">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=28">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
     <meta name="description" content="The CPU and the Computer — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The CPU and the Computer - Adrian Mag">
@@ -105,8 +105,51 @@
                     &ldquo;how fast is the chip?&rdquo; but &ldquo;what has been wired to
                     it?&rdquo;</p>
 
-                    <p>Line up what Act 2 established against what a processor lacks and the
-                    correspondence is almost embarrassing.</p>
+                    <p>He drew it, which saves a great deal of description.</p>
+
+                    <div class="hz-exhibit">
+                        <div class="hz-exhibit-bar">diagram &middot; Andrej Karpathy, X, 11 November 2023</div>
+                        <figure class="hz-exhibit-shot">
+                            <img src="../../../../media/llm-os.webp"
+                                 width="748" height="422" loading="lazy"
+                                 alt="A block diagram laid out like a computer architecture chart. At the
+                                      centre a large box labelled CPU contains the letters LLM, and inside
+                                      it a smaller box labelled RAM contains 'context window'. Boxes
+                                      connect to it with double-headed arrows: above, 'Peripheral devices
+                                      I/O' holding video and audio; to the left, 'Software 1.0 tools,
+                                      classical computer' holding calculator, Python interpreter and
+                                      terminal, and below it 'Disk' holding 'File system (+embeddings)';
+                                      to the right, 'Ethernet' holding Browser, and below it 'Other LLMs'.">
+                        </figure>
+                        <div class="hz-exhibit-cap">
+                            <span class="exno">Figure 1</span>
+                            The model sits where the processor sits, and the context window is
+                            drawn <em>inside</em> it, labelled RAM. Everything else in the
+                            picture is a box wired to that one: storage, tools, a network, other
+                            models. That is the whole argument of this act in one diagram, and I
+                            am borrowing it rather than restating it.
+                            <br><br>
+                            Diagram by Andrej Karpathy, reproduced here for commentary under fair
+                            dealing. It is not covered by this site&rsquo;s CC BY licence, and
+                            rights remain with the author.<sup><a href="#ref-karpathy-llmos">2</a></sup>
+                        </div>
+                    </div>
+
+                    <p class="hz-versioned"><b>Read the specs, not just the boxes</b>The post
+                    that carried this diagram listed specifications: a GPT-4 Turbo processor at
+                    20 tokens per second, 128K tokens of RAM, and Ada002 as the filesystem.
+                    Every one of those lines is now obsolete. That model is superseded, that
+                    embedding model is superseded, generation is faster, and context windows an
+                    order of magnitude larger are ordinary. The boxes and the arrows have not
+                    aged at all. That gap, between an architecture that holds and the numbers
+                    inside it that do not, is the reason this series date-stamps everything and
+                    argues from structure wherever it can.</p>
+
+                    <p>My one quarrel with the picture is the CPU box itself, and it is the
+                    reason for the narrowing. Drawing the LLM as the CPU invites you to read the
+                    diagram as a portrait of the model. It is not. It is a portrait of
+                    everything the model is missing. Line up what Act 2 established against what
+                    a processor lacks and the correspondence is almost embarrassing.</p>
 
                     <table class="hz-table">
                         <thead><tr><th>The machine needs</th><th>Supplied by</th></tr></thead>
@@ -141,14 +184,14 @@
                     &ldquo;systems where LLMs dynamically direct their own processes and tool
                     usage, maintaining control over how they accomplish tasks&rdquo;, as
                     against workflows, where those steps are &ldquo;orchestrated through
-                    predefined code paths&rdquo;.<sup><a href="#ref-anthropic">2</a></sup>
+                    predefined code paths&rdquo;.<sup><a href="#ref-anthropic">3</a></sup>
                     The distinction is about who chooses the next step, not about how clever
                     the system is.</p>
 
                     <p>The interleaving of reasoning and acting (think a little, do a little,
                     look at what came back, think again) was studied under the
                     name ReAct well before any of this reached
-                    products.<sup><a href="#ref-react">3</a></sup> Nearly every coding agent
+                    products.<sup><a href="#ref-react">4</a></sup> Nearly every coding agent
                     you can use today is a descendant of that shape.</p>
 
                     <p>Below is a real one, taken from this website&rsquo;s own session logs.
@@ -210,6 +253,14 @@
                         &mdash; the LLM-as-operating-system framing. Cited as the popularisation
                         rather than the source of record; a social-media post is a weak citation,
                         and the idea has been articulated more systematically elsewhere.</li>
+                        <li id="ref-karpathy-llmos">Karpathy, A. (2023). &ldquo;LLM OS&rdquo;
+                        diagram, post on X, 11 November 2023.
+                        <a href="https://x.com/karpathy/status/1723140519554105733" target="_blank" rel="noopener">x.com/karpathy/status/1723140519554105733</a>
+                        &mdash; source of Figure 1, reproduced for commentary. The post lists
+                        specifications alongside the diagram: GPT-4 Turbo at 20 tokens per
+                        second, 128K tokens of RAM, Ada002 as the filesystem. Rights in the
+                        diagram remain with the author; it is not covered by this site&rsquo;s
+                        CC BY licence.</li>
                         <li id="ref-anthropic">Anthropic (2024). &ldquo;Building Effective
                         Agents&rdquo;, 19 December 2024.
                         <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">anthropic.com/engineering/building-effective-agents</a>
@@ -259,8 +310,8 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/harness-toolloop.js?v=28" defer></script>
-    <script src="../../../../js/theme-toggle.js?v=28" defer></script>
-    <script src="../../../../js/nav-menu.js?v=28" defer></script>
+    <script src="../../../../js/harness-toolloop.js?v=29" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
+    <script src="../../../../js/nav-menu.js?v=29" defer></script>
 </body>
 </html>

@@ -247,10 +247,14 @@
     display: flex;
     justify-content: center;
 }
+/* width:auto means a replaced element renders at its intrinsic size, so an
+   image is never upscaled past its own resolution, while max-width still
+   shrinks anything too wide for the column. Do not pin a pixel max-width
+   here: it would be one image's native size imposed on every other. */
 .hz-exhibit-shot img {
     display: block;
-    width: 100%;
-    max-width: 641px;      /* native width; never upscaled */
+    width: auto;
+    max-width: 100%;
     height: auto;
     border-radius: 4px;
 }
