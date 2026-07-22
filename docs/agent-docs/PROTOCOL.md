@@ -11,10 +11,12 @@ it, this file wins.
 ```
 docs/agent-docs/
   PROTOCOL.md          this file
+  COMMIT_CONVENTION.md  commit-message format and plan traceability details
   active-plans/        plans currently being executed
   completed-plans/     finished plans + phase-completion summaries (append-only)
   references/living/   curated, up-to-date architecture/API references
   references/legacy/   archived references — never consult unless explicitly asked
+  control/             ignored local continuity overlay; never stage or publish
 ```
 
 ## Plans
@@ -41,11 +43,15 @@ docs/agent-docs/
 
 - **Phase completion:** when a phase lands, write
   `completed-plans/<name>-phase-N-complete.md`: what was done, deviations from the plan,
-  evidence (tests run, builds, figures).
+  decisions that became settled, and evidence (tests run, builds, figures).
 - **Plan completion:** move the plan file to `completed-plans/`, set Status, append a short
   closing note (what changed vs the original plan, follow-ups spawned).
 - **Abandonment:** move to `completed-plans/` prefixed `abandoned-`, with a note saying why.
 - **Never delete a plan.** The history is the point.
+- An active plan is a current working contract, not a session diary. Keep the
+  goal, current phase, open questions, and only the decisions that still
+  constrain unfinished work. Move resolved phase decisions and their evidence
+  into the phase-completion record when that phase lands.
 
 ## Living references
 
@@ -58,7 +64,30 @@ docs/agent-docs/
   which is how references stop being trustworthy.
 - Never consult `references/legacy/`.
 
+## Local control overlay
+
+This worktree may contain a private continuity layer at `docs/agent-docs/control/`. It is
+ignored by Git and is not part of the tracked plan/reference hierarchy above. Its purpose is
+to record exact live Git applicability, concise current workspace knowledge, verification,
+risks, and a provider-neutral handoff between sessions.
+
+- When `control/BOOTSTRAP.md` exists, engage its declared workflow once at task start or resume
+  and again at a meaningful close or handoff.
+- `control/CURRENT.md` is a compact orientation cache, not an authority or a history. Source,
+  reproducible behavior, Git state, and human-approved tracked documentation outrank it.
+- `control/HANDOFF.json` is one replaceable current snapshot: Git applicability, active
+  objective and plan/phase, live decisions and risks, recent relevant checks, and one next safe
+  action. It does not replace a required plan in `active-plans/` or `completed-plans/`, and it
+  does not archive resolved decisions or old verification logs.
+- Never stage, commit, publish, serve, or package `control/`, `.agents/`, `.claude/`, or
+  `.codex/`. Provider-specific files may discover the workflow but may not own canonical facts.
+- A branch, commit, worktree, or dirty-state mismatch makes the live record stale until it is
+  reviewed against source.
+
 ## Commit traceability
+
+`COMMIT_CONVENTION.md` gives the complete message format and examples. This protocol
+defines when a plan reference is required and which plan path is authoritative.
 
 Feature/fix/refactor commits reference the plan that directed them:
 
