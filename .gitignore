@@ -28,8 +28,19 @@ kobold_*
 photo-originals/
 
 # local reference copies for citation checking (never publish)
-references/
-citation-audit/
+/references/
+docs/agent-docs/citation-audit/library/
 
 # Playwright MCP scratch output (screenshots, page snapshots)
 .playwright-mcp/
+
+# Private, provider-neutral AI continuity state and discovery adapters.
+# Canonical project plans/references under docs/agent-docs remain tracked;
+# only the live control overlay is local to this worktree.
+docs/agent-docs/control/
+# Private Agent Ledger events, state, and reports. The tracked ledger protocol,
+# schemas, script, and tests remain under docs/agent-docs/agent-ledger/.
+docs/agent-docs/agent-ledger/runtime/
+.agents/
+.claude/
+.codex/

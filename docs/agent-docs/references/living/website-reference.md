@@ -31,6 +31,7 @@ pages/
         overview/                  # Research overview + theory topics
             index.html               # (was research_overview.html)
             inversions-inferences.html
+            ai-in-practice.html          # Landing for AI-related notes and teaching material
             bayes/                       # Bayes, Measure-Theoretically (landing + multi-page parts)
                 bayes-measure-theoretically.html
                 part-1.html
@@ -75,6 +76,12 @@ pages/
                 act-10.html
                 act-11.html
                 summary.html
+            harness/                     # The Machine Around the Model (landing + 11 acts)
+                the-machine-around-the-model.html
+                act-1.html ... act-11.html
+                agentic-structure-map.html # interactive workspace-control map
+                workspace-explorer.html    # recursive VS Code-style agent-infrastructure tree
+                summary.html
         publications/
             papers.html
         posters/
@@ -96,12 +103,22 @@ media/
         think-first/                # Think First, Discretize Later figures + JSON
 docs/
     agent-docs/
+        COMMIT_CONVENTION.md       # Commit-message format and plan traceability
+        PROTOCOL.md                # Cross-protocol map for agent documentation
+        plans/
+            PROTOCOL.md            # Plan lifecycle rules
+            active/                # Current, durable plans
+            completed/             # Completed and archived plan records
         references/
+            PROTOCOL.md            # Reference lifecycle rules
+            INDEX.md               # Need-to-record registry
             living/
                 website-reference.md   # ← this file
-plans/
-    active-plans/                   # Agent plans in progress
-    completed-plans/                # Archived finished plans
+                agent-docs-reference.md # Agent-document protocol map
+            sources/               # Claim and artifact evidence dossiers
+        citation-audit/            # Private local citation-evidence protocol + library
+        agent-ledger/              # Soft procedure-observation protocol
+        control/                   # Ignored local continuity state and canonical workflow
 figure_generation/                  # Python scripts for generating page figures (conda env: inferences)
     think_first_discretize_later/   # Figures + interactive data for the Think First page
 ```
@@ -121,6 +138,7 @@ Every page loads **two CSS files**:
    - `pages/contacts.html` → `css/contacts.css`
    - `pages/research/overview/index.html` → `css/research_overview.css` (three levels up: `../../../css/`)
    - `pages/research/overview/inversions-inferences.html` → *(no dedicated stylesheet)*
+   - `pages/research/overview/ai-in-practice.html` → `css/harness.css` (three levels up: `../../../css/`)
    - `pages/research/overview/bayes/bayes-measure-theoretically.html` → `css/bayes-measure-theoretically.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/bayes/part-*.html` → `css/bayes-measure-theoretically.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/think-first/think-first-discretize-later.html` → `css/think-first-discretize-later.css` + `css/concept-popup.css` + `css/refinement-panel.css`
@@ -131,6 +149,7 @@ Every page loads **two CSS files**:
    - `pages/research/overview/sola/my-take-on-sola.html` → `css/sola.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/sola/act-*.html` → `css/sola.css` (four levels up: `../../../../css/`)
    - `pages/research/overview/sola/summary.html` → same as act pages
+   - `pages/research/overview/harness/*.html` → `css/harness.css` (four levels up: `../../../../css/`); Acts 6–9 also load `css/concept-popup.css`
    - `pages/research/publications/papers.html` → *(no dedicated stylesheet; uses `styles.css` only)*
    - `pages/research/posters/posters.html` → `css/posters.css`
    - `pages/research/posters/BSM24/BSM24.html` → `css/BSM24.css`
@@ -143,6 +162,7 @@ Pages in `pages/research/overview/think-first/` link CSS with `../../../../css/s
 Pages in `pages/research/overview/bayes/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/frequentist/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/sola/` link CSS with `../../../../css/styles.css`.
+Pages in `pages/research/overview/harness/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/publications/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/BSM24/` link CSS with `../../../../css/styles.css`.
@@ -237,6 +257,11 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/research/overview/sola/act-10.html` | Act 10: Generative SOLA — pushing model-data relations through SOLA, where priors belong |
 | `pages/research/overview/sola/act-11.html` | Act 11: What SOLA Is Good For — fair summary, ratios, final slogan |
 | `pages/research/overview/sola/summary.html` | Summary of the Argument + Appendices A–C (algebra of minimizers, proxy model derivation, suggested figures) |
+| `pages/research/overview/harness/the-machine-around-the-model.html` | The Machine Around the Model — landing page for the agentic-AI harness series |
+| `pages/research/overview/harness/act-1.html` … `act-11.html` | Acts 1–11: model mechanics, chat harnesses, tool loops, coding-agent anatomy, AGENTS.md, skills, hooks, tools, context, and orchestration |
+| `pages/research/overview/harness/agentic-structure-map.html` | Interactive relationship graph for this workspace's agentic components: context, abilities, the agent-documents SSD, evidence, and the live legacy continuity bridge |
+| `pages/research/overview/harness/workspace-explorer.html` | Recursive VS Code-style explorer of selected real agent-related paths; it distinguishes the `docs/agent-docs` durable record store from separately selected abilities, and shows names and roles only, never file contents |
+| `pages/research/overview/harness/summary.html` | Closing summary for The Machine Around the Model |
 | `pages/research/publications/papers.html` | Publications list |
 | `pages/research/posters/posters.html` | Presentations / posters gallery |
 | `pages/research/posters/BSM24/BSM24.html` | BSM24 conference poster page |
@@ -250,7 +275,7 @@ Vanilla JS (no framework) is used for page-specific interactivity. Scripts live 
 
 | File | Used by | Purpose |
 |------|---------|---------|
-| `js/concept-popup.js` | `overview/think-first/think-first-discretize-later.html` | Accessible modal dialog for concept-term popups (click/Esc/overlay close, focus trap, MathJax re-typeset on open) |
+| `js/concept-popup.js` | Concept-enabled notes pages, including `overview/harness/act-6.html` through `act-9.html` | Accessible modal dialog for concept or source-document popups (click/Esc/overlay close, focus trap, MathJax re-typeset on open) |
 | `js/refinement-panel.js` | `overview/think-first/think-first-discretize-later.html` | Interactive Plotly panel reading `refinement_sweep.json` (N-slider, naive/Bessel toggles, summary subplot) |
 | `js/ai-assist.js` | All notes pages in `overview/sola/`, `overview/think-first/`, `overview/bayes/`, `overview/frequentist/` | "Read with AI" toolbar: Copy-for-AI button (fetches raw page HTML so LaTeX survives MathJax, prepends context preamble + macros), Open-in-ChatGPT prefill link, and AI companion link. Series auto-detected from URL path; per-series config (title, landing page, intent) lives in the `SERIES` map inside the script. Styles are injected by the script itself (no CSS file). |
 
@@ -318,6 +343,81 @@ The My Take on SOLA page is discoverable via:
 The landing page includes a multi-page navigation bar linking to `act-1.html`
 through `act-11.html` and `summary.html`. Each act page includes its own nav bar
 (part-chip links) and prev/next buttons.
+
+The Machine Around the Model is discoverable from the site navigation under **AI in
+Practice**. Its landing page links to eleven acts and a summary. Act 6 reuses the shared
+concept-popup component for one verbatim, scrollable snapshot of this website's own `AGENTS.md`
+and contains an inline, static-data context inspector. Act 7 uses the same popup component for
+real local skill files and contains an inline progressive-disclosure inspector. No file
+contents are fetched at runtime. Act 8 exposes a website-local hook policy, wiring, and live
+denial alongside a recorded interceptor. Act 9 exposes a website-local tool contract, handler
+gate, and recorded calls, then reuses the screened Act 4 trace for its MCP example.
+
+Two companion pages expose the workspace from different angles. `agentic-structure-map.html`
+uses an original hardware-inspired board for readers who can code but are new to agents: context
+injection, the next-token model, actions and selected skill kits, the `docs/agent-docs` SSD,
+evidence checks, and the live legacy continuity bridge occupy distinct labelled regions. Skills
+appear with abilities, not as SSD memory: the board links `website-control` to the private
+bridge and `pdf-source-reading` to Citation Audit. Its interactive nodes open plain-language role
+explanations; it does not fetch or reproduce private file contents. The context region separates
+system prompt, ordinary tool descriptions, project/memory files, short skill metadata, retained
+conversation, current prompt, and client-loaded-on-demand MCP tools; it marks the last as a
+dated Claude-client observation rather than universal behaviour. The board visibly records the
+date of its latest workspace review. Before a prompt, the
+host supplies its session rules, tools, and short skill descriptions; a trusted Codex project
+also supplies `.codex/config.toml` and `AGENTS.md`, while Claude reaches the shared bootstrap
+through its unscoped rule. No workspace command runs merely from that context. In this workspace,
+a prompt then starts the softly required `website-control` routine, which verifies the local
+continuity packet before selecting any task records. A failed applicability check records only a
+redacted local category and blocks ordinary workspace work until Git/source-based repair passes
+the validator again. After that check, a general conversation may
+need no further workspace material; other tasks may select the relevant plan, dossier, or living
+reference before reaching the conditional site-change checklist, explicitly
+run search/figure/mobile scripts, an optional browser ability, or the independent automatic Git
+check. A blue outer return path makes the normal conversation loop visible: it is host/session
+behaviour, not a local control-file rule, and returns one agent response to the next user prompt
+without repeating bootstrap in the same continuous task. The
+checklist distinguishes notes prose/search refresh, CSS or JavaScript/cache refresh,
+navigation/manual copies, and browser validation; it does not imply that every branch runs for
+every edit. The start-or-resume procedure does not repeat for every prompt. During a continuous
+task, a new request or discovery triggers a smaller reassessment only when it materially changes
+the objective, scope, evidence, or phase: the agent then continues small work, creates or uses a
+plan, or updates the relevant active plan before returning to focused work. A meaningful close
+refreshes the handoff for the next start-or-resume route. The map deliberately omits ordinary
+source files and the Act 8–9 teaching exhibits.
+`workspace-explorer.html` presents a
+curated real file tree with recursive folder controls and a plain-language detail pane. The
+explorer embeds names and role descriptions only; it never reads or serves workspace file
+contents at runtime. Directory symlinks remain visibly labelled as shortcuts but can be
+expanded like folders; the initially open `.agents/` route exposes the shared skill's bundled
+`validate_control.py` without implying that a second copy exists. The desktop grid row and its
+left and right panes are explicitly allowed to shrink; the tree and detail pane then own their
+scrolling, so recursively expanded content is not clipped by the fixed-height shell. Each
+explorer selection also explains whether it is automatically loaded, selected for a task, read
+only when relevant, or explicitly run as a program. The relationship map adds selectable Codex,
+Claude, and script routes: in a trusted project, Codex begins with both its project
+`.codex/config.toml` layer and `AGENTS.md`, which point to the same bootstrap; Claude begins
+from its unscoped `.claude/rules/` bootstrap adapter before both clients reach the shared skill.
+The same routing guide also includes the independent Git commit route: this clone's configured
+`.githooks/commit-msg` program runs automatically for local commits, including agent-made
+commits, but is a warn-only Git check rather than an agent instruction or a universal server
+policy. A separate Playwright MCP node is deliberately styled as an optional browser ability:
+an enabled compatible client can make its tools visible to an agent, but no tracked workspace
+workflow selects it or directs when to use it. Its ignored `.playwright-mcp/` folder is browser
+scratch output, not automatic or durable agent memory. Selecting that folder in the explorer
+adds a direct link back to the Playwright-MCP ability node and a route explanation that separates
+the optional ability from the evidence it may leave behind.
+
+Inside the website-control popup, the entrance sequence is directional: automatically supplied
+workspace guidance leads a new or resumed task to `BOOTSTRAP.md`; that short note names
+`website-control`; the agent then reads `SKILL.md`, which selects the remaining policy, state,
+handoff, maintenance, and validator resources. The bootstrap is the first explicitly opened
+local control file on that route, not a support file discovered after the skill starts and not a
+file reread before every message in one continuous task. The popup continues with a scrollable,
+numbered top-to-bottom spine that mirrors the skill's real start-or-resume order: resolve the
+canonical skill/repository; read principles and handoff; compare identity with Git; run the
+validator; conditionally fall back to source and Git if it fails; choose task scale; then read
+current and only the tracked records needed for the task.
 
 ---
 

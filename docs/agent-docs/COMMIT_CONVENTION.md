@@ -37,7 +37,7 @@ Related: <path-to-phase-complete-document>
 - Keep each bullet concise (40–60 characters)
 
 **Plan**: Workspace-relative path to the plan document
-- Example: `plans/active-plans/research-page-redesign-plan.md`
+- Example: `docs/agent-docs/plans/active/research-page-redesign-plan.md`
 - Use relative paths from workspace root
 
 **Phase**: Current phase being completed (use `N/A` if not applicable)
@@ -45,7 +45,7 @@ Related: <path-to-phase-complete-document>
 - Examples: `1 of 1`, `2 of 4`, `N/A`
 
 **Related**: Workspace-relative path to the phase-complete markdown
-- Example: `plans/completed-plans/research-page-redesign-phase-1-complete.md`
+- Example: `docs/agent-docs/plans/completed/research-page-redesign-phase-1-complete.md`
 - Include this **only if a phase-complete document exists**
 
 ## Examples
@@ -58,9 +58,9 @@ feat(research): add SOLA-DLI research page
 - Add sola-dli.css for page-specific styling
 - Link new page in site-wide navigation
 
-Plan: plans/completed-plans/sola-dli-page-plan.md
+Plan: docs/agent-docs/plans/completed/sola-dli-page-plan.md
 Phase: 1 of 1
-Related: plans/completed-plans/sola-dli-page-phase-1-complete.md
+Related: docs/agent-docs/plans/completed/sola-dli-page-phase-1-complete.md
 ```
 
 ### Multi-Phase Redesign
@@ -71,9 +71,9 @@ style(index): redesign hero section layout
 - Update typography scale for headings
 - Add responsive breakpoints for mobile
 
-Plan: plans/active-plans/homepage-redesign-plan.md
+Plan: docs/agent-docs/plans/active/homepage-redesign-plan.md
 Phase: 2 of 3
-Related: plans/completed-plans/homepage-redesign-phase-2-complete.md
+Related: docs/agent-docs/plans/completed/homepage-redesign-phase-2-complete.md
 ```
 
 ### Content Update (No Plan Needed)

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inside an Agentic Workspace - Adrian Mag</title>
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
+    <meta name="description" content="A VS Code-style interactive explorer of the files and folders that support agent-assisted work in this website workspace.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+    .wx-shell { display:grid; grid-template-columns:minmax(310px,43%) minmax(0,57%); grid-template-rows:minmax(0,1fr); min-height:650px; height:min(76vh,760px); margin:28px 0 20px; overflow:hidden; border:1px solid #3a3a3a; border-radius:10px; background:#181818; box-shadow:var(--shadow-lg); color:#d4d4d4; }
+    .wx-explorer { min-width:0; min-height:0; display:flex; flex-direction:column; border-right:1px solid #333; background:#181818; }
+    .wx-titlebar { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:42px; padding:0 12px 0 16px; border-bottom:1px solid #2b2b2b; color:#bbbbbb; font:600 .7rem/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+    .wx-collapse { border:0; border-radius:4px; padding:5px 7px; background:transparent; color:#a7a7a7; font:500 .68rem/1 var(--mono); cursor:pointer; }.wx-collapse:hover,.wx-collapse:focus{background:#2a2d2e;color:#fff;outline:1px solid #6aa9df}
+    .wx-tree-wrap { flex:1 1 0; min-height:0; overflow:auto; overscroll-behavior:contain; padding:5px 0 18px; scrollbar-color:#555 transparent; scrollbar-gutter:stable; }
+    .wx-tree,.wx-group { list-style:none; margin:0; padding:0; }.wx-tree li,.wx-group li{margin:0;padding:0}
+    .wx-group[hidden] { display:none; }
+    .wx-row { box-sizing:border-box; width:100%; min-height:27px; display:flex; align-items:center; gap:5px; border:0; padding:3px 10px 3px calc(8px + var(--depth) * 17px); background:transparent; color:#cccccc; text-align:left; font:400 .78rem/1.35 var(--mono); cursor:pointer; white-space:normal; overflow-wrap:anywhere; }
+    .wx-row:hover { background:#2a2d2e; }.wx-row:focus{position:relative;z-index:1;outline:1px solid #007acc;outline-offset:-1px}.wx-row.is-selected{background:#37373d;color:#fff}.wx-row[data-local="true"] .wx-name{font-style:italic;color:#c9c9c9}
+    .wx-caret { flex:0 0 13px; width:13px; color:#b7b7b7; text-align:center; font-size:.78rem; transform-origin:50% 52%; transition:transform .12s ease; }.wx-row[aria-expanded="true"] .wx-caret{transform:rotate(90deg)}.wx-caret.is-empty{visibility:hidden}
+    .wx-icon { position:relative; flex:0 0 14px; width:14px; height:14px; }
+    .wx-icon.folder::before { content:""; position:absolute; left:1px; top:4px; width:12px; height:8px; border:1px solid #dcb67a; border-radius:1px; background:rgba(220,182,122,.12); }.wx-icon.folder::after{content:"";position:absolute;left:2px;top:2px;width:6px;height:3px;border:1px solid #dcb67a;border-bottom:0;border-radius:1px 1px 0 0}.wx-icon.folder.shortcut::before{border-color:#c6a0f6;background:rgba(198,160,246,.1)}.wx-icon.folder.shortcut::after{content:"↗";left:7px;top:-2px;width:auto;height:auto;border:0;color:#c6a0f6;font:bold 10px/10px var(--mono)}
+    .wx-icon.file::before { content:""; position:absolute; left:2px; top:1px; width:9px; height:12px; border:1px solid #9cc3d5; border-radius:1px; background:rgba(156,195,213,.08); }.wx-icon.file::after{content:"";position:absolute;right:2px;top:1px;border-left:4px solid transparent;border-bottom:4px solid #9cc3d5}
+    .wx-icon.link::before { content:"↗"; position:absolute; inset:-1px 0 0; color:#c6a0f6; font:bold 14px/14px var(--mono); text-align:center; }
+    .wx-name { min-width:0; }.wx-badge { flex:0 0 auto; margin-left:auto; border:1px solid #555; border-radius:3px; padding:1px 4px; color:#999; font:500 .58rem/1.2 var(--mono); text-transform:uppercase; }
+    .wx-detail { min-width:0; min-height:0; overflow:auto; padding:clamp(24px,5vw,58px); background:linear-gradient(145deg,#1f1f1f,#181818 72%); }
+    .wx-detail-kicker { margin:0 0 12px; color:#75beff; font:600 .7rem/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+    .wx-detail h2 { margin:0; color:#f0f0f0; font:600 clamp(1.35rem,3vw,2.15rem)/1.15 var(--mono); overflow-wrap:anywhere; }
+    .wx-path { margin:13px 0 0; padding:9px 11px; border:1px solid #383838; border-radius:5px; background:#141414; color:#bcbcbc; font:.75rem/1.45 var(--mono); overflow-wrap:anywhere; }
+    .wx-meta { display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 26px; }.wx-pill{border:1px solid #4b4b4b;border-radius:999px;padding:4px 8px;color:#bdbdbd;font:600 .63rem/1 var(--mono);text-transform:uppercase}.wx-pill.local{border-style:dashed;color:#d7ba7d}.wx-pill.shortcut{color:#c6a0f6}.wx-pill.generated{color:#89d185}.wx-pill.tracked{color:#9cdcfe}.wx-pill.draft{color:#f1c77b}
+    .wx-detail h3 { margin:27px 0 8px; color:#dedede; font:600 .78rem/1.2 var(--mono); text-transform:uppercase; letter-spacing:.07em; }.wx-detail p{max-width:660px;margin:0;color:#c5c5c5;font-size:.96rem;line-height:1.7}.wx-detail-note{margin-top:28px!important;padding:13px 15px;border-left:3px solid #007acc;background:#202a31;color:#d7e8f3!important;font-size:.84rem!important}.wx-related-link{display:inline-block;color:#f1c77b;font:600 .86rem/1.35 var(--mono);text-decoration:none}.wx-related-link:hover,.wx-related-link:focus{text-decoration:underline;color:#fff;outline:none}.wx-related-copy{margin-top:6px!important;color:#aaa!important;font-size:.85rem!important}
+    .wx-route { display:grid; gap:8px; margin:0; padding:0; list-style:none; }.wx-route li{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px;align-items:start;padding:9px 10px;border:1px solid #383838;border-radius:5px;background:#1b1b1b;color:#c5c5c5;font-size:.84rem;line-height:1.5}.wx-route-tag{padding:3px 5px;border:1px solid #4b4b4b;border-radius:3px;color:#9cdcfe;font:600 .58rem/1 var(--mono);text-transform:uppercase;white-space:nowrap}.wx-route-tag.selected{color:#d7ba7d}.wx-route-tag.run{color:#89d185}.wx-route-tag.conditional{color:#c6a0f6}.wx-route-tag.event{color:#f1c77b}.wx-route-tag.available{color:#f1c77b}
+    .wx-legend { display:flex; flex-wrap:wrap; gap:14px; margin:12px 0 0; color:var(--muted); font-size:.82rem; }.wx-legend span{display:inline-flex;align-items:center;gap:6px}.wx-dot{width:9px;height:9px;border-radius:50%;background:#9cdcfe}.wx-dot.local{background:#d7ba7d}.wx-dot.generated{background:#89d185}.wx-dot.shortcut{background:#c6a0f6}.wx-dot.draft{background:#f1c77b}
+    @media (max-width:800px) { .wx-shell{grid-template-columns:1fr;grid-template-rows:520px auto;height:auto;min-height:0}.wx-explorer{height:auto;border-right:0;border-bottom:1px solid #333}.wx-detail{min-height:430px;padding:28px 22px}.wx-badge{display:none} }
+    @media (prefers-reduced-motion:reduce){.wx-caret{transition:none}}
+    </style>
+</head>
+<body>
+    <nav class="nav"><div class="nav-inner"><a class="brand" href="../../../../index.html"><span class="monogram">AM</span><span class="brand-name">Adrian Mag</span></a><div class="nav-links"><a class="hide-sm" href="../../../about.html">About</a><div class="nav-drop hide-sm"><a href="../../../research/overview/index.html">Research</a><div class="nav-drop-menu"><a href="../../../research/publications/papers.html">Publications</a><a href="../../../research/posters/posters.html">Presentations</a><a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a><a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a><a href="the-machine-around-the-model.html">The Machine Around the Model</a></div></div><a class="hide-sm" href="../../../cv.html">CV</a><a class="nav-cta" href="../../../contacts.html">Contact</a><button class="theme-toggle" type="button" aria-label="Switch theme" title="Switch theme"></button><a class="nav-search" href="../../../search.html" aria-label="Search">⌕</a></div></div></nav>
+    <main>
+        <section class="page-header" style="position:relative;overflow:hidden"><div class="page-header-bg" data-hero="harness" style="position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(30,34,40,.62),rgba(30,34,40,.45)),url('../../../../media/backgrounds/whirlpool.jpg') center/cover;filter:brightness(.95) blur(1.2px)"></div><div class="container" style="position:relative;z-index:2"><h1>Inside an Agentic Workspace</h1><p>A real, curated file tree showing how AI-related instructions, checks, notes, scripts, and outputs are spread across this website workspace.</p></div></section>
+        <section class="act act-band-a"><div class="container">
+            <div class="hz-prose"><p><strong>Last reviewed:</strong> 24 July 2026, against the live workspace structure. This is a curated structural view, so it deliberately leaves out folders unrelated to agent-assisted work. Select a folder to open it recursively, just as in a code editor, or select any file or shortcut to learn its role.</p><p><code>docs/agent-docs/</code> is the workspace&rsquo;s durable record store: the cross-protocol map, commit convention, plans, references, Citation Audit, Agent Ledger, and ignored legacy continuity bridge live there. Skills are different. They are selected abilities, visible through agent discovery folders and physically stored with their recipes and helper programs; some abilities read or update a durable record, but they are not that record.</p><p>No file contents are loaded or copied into this page. Local-only entries are named because their position matters, but the explanation on the right replaces their contents.</p></div>
+            <div class="wx-shell" aria-label="Interactive explorer of selected agent-related workspace paths">
+                <section class="wx-explorer" aria-label="Workspace Explorer">
+                    <div class="wx-titlebar"><span>Explorer</span><button type="button" class="wx-collapse" id="wx-collapse">Collapse folders</button></div>
+                    <div class="wx-tree-wrap"><ul class="wx-tree" id="wx-tree" role="tree" aria-label="Selected workspace filesystem"></ul></div>
+                </section>
+                <aside class="wx-detail" id="wx-detail" aria-live="polite">
+                    <p class="wx-detail-kicker" id="wx-detail-kicker">Curated workspace root</p>
+                    <h2 id="wx-detail-name">Adrian-Mag.github.io</h2>
+                    <p class="wx-path" id="wx-detail-path">Adrian-Mag.github.io/</p>
+                    <div class="wx-meta" id="wx-detail-meta"></div>
+                    <h3>What it does</h3><p id="wx-detail-description"></p>
+                    <h3>Why an agent needs it</h3><p id="wx-detail-why"></p>
+                    <section id="wx-related-wrap" hidden><h3>Connected to</h3><a class="wx-related-link" id="wx-related-link"></a><p class="wx-related-copy" id="wx-related-copy"></p></section>
+                    <h3>How an agent reaches it</h3><ol class="wx-route" id="wx-route"></ol>
+                    <p class="wx-detail-note">This explorer publishes names, relationships, and plain-language roles only. It never displays the contents of a workspace file.</p>
+                </aside>
+            </div>
+            <div class="wx-legend" aria-label="Explorer legend"><span><i class="wx-dot"></i>tracked project file</span><span><i class="wx-dot draft"></i>untracked worktree draft</span><span><i class="wx-dot local"></i>local-only</span><span><i class="wx-dot generated"></i>generated output</span><span><i class="wx-dot shortcut"></i>shortcut to one real file</span></div>
+            <div class="hz-prose"><p>The main lesson is spatial: durable agent records do have one canonical home, <code>docs/agent-docs/</code>, but the rest of the machinery is deliberately spread out. Entry instructions begin at the root, provider shortcuts sit in hidden folders, skills are abilities rather than memory, Git checks live with Git, and generated evidence lands beside the normal website assets it supports.</p><p><a class="hz-btn" href="agentic-structure-map.html">Return to the relationship map</a></p></div>
+        </div></section>
+    </main>
+    <script>
+    (function () {
+        "use strict";
+        function folder(name, visibility, description, why, children, open, related) { return { name:name, type:"folder", visibility:visibility, description:description, why:why, children:children || [], open:!!open, related:related || null }; }
+        function shortcutFolder(name, description, why, children, open) { return { name:name, type:"folder", visibility:"shortcut", shortcut:true, description:description, why:why, children:children || [], open:!!open }; }
+        function file(name, visibility, description, why) { return { name:name, type:"file", visibility:visibility, description:description, why:why }; }
+        function link(name, description, why) { return { name:name, type:"link", visibility:"shortcut", description:description, why:why }; }
+
+        var root = folder("Adrian-Mag.github.io", "mixed", "This is the root of the real website workspace. The explorer shows only the paths that help agents understand, change, check, or explain the site.", "An agent needs a clear starting point. Root-level instructions and configuration tell it what kind of workspace it has entered before it follows paths deeper into the tree.", [
+            file("AGENTS.md", "tracked", "The first local instruction file. It explains the shape of the website and the working rules that apply across the repository.", "It stops every new session from having to rediscover basic facts such as where plans live and which checks follow a page edit."),
+            file(".gitignore", "tracked", "A list of paths that Git must leave out, including private control notes, browser scratch files, and local citation material.", "It marks an important publication boundary: useful local material can exist in the workspace without being sent to the public website."),
+            folder(".agents", "local", "A hidden local folder used to help an agent find reusable skills.", "Codex can follow the shortcut here to the one real website-control ability instead of keeping another copy. The shortcut makes an ability discoverable; it is not part of the durable record store.", [
+                folder("skills", "local", "A discovery folder containing abilities made visible to compatible agents.", "It gives the agent a predictable place to see a short skill description, then to select the full recipe only when the task calls for it.", [
+                    shortcutFolder("website-control", "An expandable shortcut to the website-control ability's one physical recipe under docs/agent-docs/control/skills/website-control.", "It makes the same ability and its bundled helper visible here while leaving one original to maintain. The ability may use the legacy continuity bridge, but it is not itself an SSD record.", [
+                        file("SKILL.md", "local", "The main instructions reached through the website-control shortcut.", "The agent reads this recipe when the skill is selected."),
+                        folder("scripts", "local", "The helper-program folder reached through the skill shortcut.", "It keeps repeatable checks beside the instructions that call for them.", [
+                            file("controlctl.py", "local", "The real entry command reached through the agent's skill-discovery path.", "The agent runs it to begin, classify, record skill use, and close meaningful work; it calls the validator and records redacted local receipts."),
+                            file("validate_control.py", "local", "The structural checker reached through the entry command or direct diagnostics.", "It checks the control pack before the agent trusts the handoff and again when closing meaningful work.")
+                        ], true)
+                    ], true)
+                ], true)
+            ], true),
+            folder(".claude", "local", "A hidden local folder containing Claude-facing discovery shortcuts.", "It lets Claude find the same shared ability and start rule without moving the real files into a provider-owned folder.", [
+                folder("rules", "local", "A place where Claude looks for workspace rules.", "Its shortcut points Claude to the short bootstrap note at the start of a task.", [
+                    link("website-control.md", "A shortcut to docs/agent-docs/control/BOOTSTRAP.md.", "It tells Claude to enter the same website-control workflow used by other agents.")
+                ]),
+                folder("skills", "local", "Claude's local ability-discovery folder.", "It exposes the shared website-control ability to Claude without making the ability part of the SSD.", [
+                    shortcutFolder("website-control", "An expandable shortcut to the website-control ability's one physical recipe.", "It avoids a second, drifting copy while still exposing the recipe and its helper program.", [
+                        file("SKILL.md", "local", "The shared website-control instructions reached through Claude's shortcut.", "Claude can follow the same recipe as another compatible agent."),
+                        folder("scripts", "local", "The helper-program folder reached through the shared skill.", "The script remains bundled with the workflow that explains when to run it.", [
+                            file("controlctl.py", "local", "The same real entry command, reached through Claude's discovery path.", "It records begin, classify, skill-use, and close events while calling the validator."),
+                            file("validate_control.py", "local", "The same structural checker, reached through the entry command or direct diagnostics.", "It checks that the control pack belongs to this repository before its notes are trusted.")
+                        ])
+                    ])
+                ])
+            ]),
+            folder(".codex", "local", "A hidden folder for local Codex workspace configuration.", "Some agent settings belong to the working environment rather than the public website, so this folder stays local.", [
+                file("config.toml", "local", "The local Codex configuration file for this workspace. Its project instruction setting tells Codex to start the shared control workflow.", "In a trusted project, Codex loads this configuration at the start of a run. It gives Codex an always-on local starting direction without placing it in public page source.")
+            ]),
+            folder(".githooks", "tracked", "Checked-in programs that Git can run automatically at named moments.", "They are Git automation, not agent instructions. In this configured clone, Git uses this folder when a local commit is made, so the same check applies to people and agents.", [
+                file("commit-msg", "tracked", "An automatic Git check for the format of a local commit message and its link back to a plan.", "It checks agent-made commits too, but does not depend on an agent being involved. This version only warns: it reminds the committer about a missing or broken Plan: trailer without blocking the commit.")
+            ]),
+            folder(".playwright-mcp", "local", "A scratch drawer for browser outputs made while the optional Playwright MCP ability checks pages.", "It is not a second workflow or memory store. It keeps temporary evidence from a chosen browser action local, so the evidence is neither published nor automatically reused later.", [
+                file("harness-landing.png", "local", "A browser screenshot made while the optional browser ability checked the series landing page.", "It is temporary visual evidence, not a public figure, page asset, or durable memory."),
+                file("harness-act8.png", "local", "A browser screenshot made while the optional browser ability checked Act 8.", "It is temporary visual evidence, not a public figure, page asset, or durable memory."),
+                file("page-2026-07-21T17-37-15-222Z.yml", "local", "A browser page snapshot captured during an optional browser check.", "A structured snapshot can help with the immediate check without becoming automatic context for a later agent."),
+                file("console-2026-07-21T17-08-33-839Z.log", "local", "A browser console log from an optional browser check.", "It helps find JavaScript errors during that check and remains local scratch material.")
+            ], false, { href:"agentic-structure-map.html#playwright-mcp", label:"Playwright MCP ability", copy:"Open the relationship-map node to see why this browser ability can be visible to an agent without being required by a workspace workflow." }),
+            folder("docs", "mixed", "The main home for written project records.", "Long-running work needs notes that survive beyond a single conversation.", [
+                folder("agent-docs", "mixed", "The workspace's durable agent-document store: protocols, plans, references, evidence routes, observation rules, and the local legacy continuity bridge.", "This is the SSD in the relationship map. It keeps the records that must survive a session in one canonical place. Skills can point here or use a record here, but skills are selected abilities, not SSD contents.", [
+                    file("COMMIT_CONVENTION.md", "tracked", "The agreed pattern for naming and describing saved Git changes.", "It connects implementation history to the plan that led to it."),
+                    file("PROTOCOL.md", "tracked", "The rules for creating, updating, finishing, and finding agent documentation.", "It prevents plans and reference notes from becoming a pile of unrelated files."),
+                    folder("plans", "tracked", "The self-contained home for planning rules, live plans, and settled plan history.", "Plans are kept together because deciding, following, and completing work is its own protocol.", [
+                        file("PROTOCOL.md", "tracked", "The rules for creating, revising, completing, abandoning, and finding plans.", "It keeps plans useful as live work contracts without turning them into session diaries."),
+                        folder("active", "tracked", "Plans for substantial work that is still under way.", "The agent can recover the current goal, phase, and open choices without reconstructing an old chat.", [
+                            file("machine-around-the-model-plan.md", "draft", "The active worktree draft of the plan for this long-form series and its interactive companions.", "It keeps the series structure, files, phases, and open choices in one place. It becomes an ordinary tracked record when the current series work is committed."),
+                            file("agentic-harness-architecture-plan.md", "draft", "The active worktree draft of the plan for redesigning the workspace's agentic structures.", "It records the still-open architecture questions before another protocol is changed. It becomes an ordinary tracked record when the current architecture work is committed.")
+                        ]),
+                        folder("completed", "tracked", "Finished and abandoned plans, with completion notes for individual phases.", "Old decisions remain inspectable instead of disappearing when the active task changes.", [
+                            file("machine-around-the-model-phase-1-complete.md", "tracked", "A completion record for the first phase of this series.", "It says what actually landed and how that phase was checked."),
+                            file("website-ai-control-plan.md", "tracked", "The preserved plan used to create this workspace's former control system.", "It explains why the structure exists and how it was designed."),
+                            file("website-ai-control-complete.md", "tracked", "The completion note for that former system.", "It records the result and the evidence used to check it.")
+                        ])
+                    ]),
+                    folder("references", "tracked", "The self-contained home for current workspace maps and source-evidence dossiers.", "The protocol and compact index let an agent find the right detail without loading every reference.", [
+                        file("PROTOCOL.md", "tracked", "The rules for creating, renewing, checking, and retiring references.", "It keeps a current map distinct from plans, handoffs, and the source code it describes."),
+                        file("INDEX.md", "tracked", "A compact guide from a task need to its first relevant reference record.", "It is a dispatcher, not a command to load the whole reference library."),
+                        folder("living", "tracked", "Reference notes that are kept up to date as the website changes.", "They reduce repeated exploration and are updated alongside structural changes.", [
+                            file("website-reference.md", "tracked", "The maintained map of pages, styles, scripts, navigation, and site conventions.", "It tells an agent where to look before changing the public website."),
+                            file("agent-docs-reference.md", "tracked", "The maintained map of plans, references, entry bridges, and the legacy local continuity folder.", "It explains which agent-document protocol owns a question without exposing private live state.")
+                        ]),
+                        folder("sources", "tracked", "Evidence dossiers that support public claims, dates, and real examples.", "A dossier is evidence rather than a plan, so it remains available without being mistaken for a work instruction.", [
+                            file("machine-around-the-model-sources.md", "tracked", "The source dossier for this long-form series.", "It prevents the agent from citing memory or presenting a made-up example as real.")
+                        ])
+                    ]),
+                    folder("citation-audit", "mixed", "The durable route to the private long-term evidence library for checking citations and research claims.", "Its protocol is SSD material: it tells a later agent how to return to local papers and earlier verdicts instead of relying on memory. When a PDF must be opened, the separate pdf-source-reading ability does that local reading.", [
+                        file("PROTOCOL.md", "tracked", "The route and privacy rules for private citation evidence.", "It tells an agent to start with the smallest relevant source dossier or reference, then to use this library only when local paper evidence is needed."),
+                        folder("library", "local", "The ignored local audit report, PDFs, extracts, summaries, and matching records moved from the old root citation-audit folder.", "It is never served or published. Before an agent opens, extracts, or renders one of its PDFs, it must use the local pdf-source-reading skill.", [
+                            file("VERIFICATION.md", "local", "The private record of which citations and claims were checked.", "It lets a later agent find an earlier verdict without claiming that the verdict is automatically current."),
+                            folder("pdfs", "local", "Local paper copies used during citation checking.", "The PDF-reading skill reads them locally and can produce page-specific evidence without uploading source content.", [file("bg67.pdf", "local", "One real local source copy from the audit set.", "Its name shows the structure while its contents remain completely outside this page.")]),
+                            folder("summaries", "local", "Short working notes made from checked sources.", "They help an agent navigate the library, while the original PDF or publisher record remains the evidence.", [file("bg67.md", "local", "One real source-summary filename from the audit set.", "Only its place in the tree is shown here.")]),
+                            folder("_txt", "local", "Plain-text extracts made from local papers for searching and checking.", "The files remain private working material; they are never inserted into this public page.", [file("bg67.txt", "local", "One real extracted-text filename from the audit set.", "The explorer does not load or reveal the extracted text.")])
+                        ])
+                    ], false, { href:"agentic-structure-map.html", label:"Citation Audit attachment", copy:"The map shows pdf-source-reading as a separate on-demand ability with a link to this durable evidence route." }),
+                    folder("agent-ledger", "mixed", "The durable protocol and small private runtime for making agent-work procedures inspectable later.", "It is an SSD member, not an ability or a route chooser. It keeps agent-reported steps and host-observed events distinct, so a report can reveal gaps without pretending to read the agent's mind.", [
+                        file("PROTOCOL.md", "tracked", "The boundary and ownership rules for soft observation of agent work.", "It explains what the ledger is for, what it never does, and why it is not yet a tamper-proof audit trail."),
+                        file("PROCEDURES.md", "tracked", "Expected evidence sequences for different kinds of work.", "It gives a report something concrete to compare with a declared or observed work phase, without granting the agent extra permission."),
+                        file("EVENT_SCHEMA.md", "tracked", "The small, privacy-safe vocabulary for future declared and host-observed events.", "It prevents the future ledger from quietly becoming a store of prompts, commands, files, outputs, or private conversations."),
+                        file("REPORTING.md", "tracked", "Rules for explaining a gap or mismatch honestly.", "It ensures a report says whether evidence came from the agent, the host, or a derived check instead of overstating what happened."),
+                        folder("scripts", "tracked", "The canonical small program that validates and writes Ledger records.", "A single checked-in writer makes the format repeatable and prevents agents from editing the private JSON records by hand.", [
+                            file("ledgerctl.py", "tracked", "The local command for opening, updating, checking, closing, and reporting a safe Ledger work phase.", "It writes controlled categories and opaque tokens only. The Codex adapter can call its safe host-observation functions, but Claude, Git, and browser tools are not connected yet.")
+                        ]),
+                        folder("adapters", "tracked", "Thin translators from a particular agent host's hook payload into the Ledger's safe categories.", "They keep provider-specific event names at the edge, while the Ledger itself stays focused on plain, safe evidence.", [
+                            folder("codex", "tracked", "The Codex shadow observer used by this workspace's trusted local hook configuration.", "It links a submitted prompt, exposed local tool events, and a later declared route using one opaque token. It runs beside the older control telemetry rather than replacing it.", [
+                                file("codex_observer.py", "tracked", "The reducer that throws away prompts, transcript paths, tool arguments, and raw tool names before recording an observation.", "It provides real host-side evidence only when Codex has trusted the configured project hook. Its coverage remains partial because some tool paths do not use local hooks.")
+                            ])
+                        ]),
+                        folder("tests", "tracked", "Focused automated checks for the Ledger writer.", "The tests use a temporary private runtime, so they can verify the format without reading or changing a real agent's records.", [
+                            file("test_ledgerctl.py", "tracked", "Tests for valid writes, rejected unsafe work-phase input, state transitions, and conservative reports.", "They help ensure that the Ledger's safety boundary does not rely only on prose.")
+                        ]),
+                        folder("runtime", "local", "Private events, compact state, and derived report files written by the Ledger command and trusted Codex shadow adapter.", "The rules, writer, and adapter are tracked, but `events.jsonl`, `state.json`, and `report.json` stay local. The adapter observes only supported local hook paths and never blocks work.", [
+                            file("events.jsonl", "local", "A newline-by-line record of safe declared or adapter-observed event metadata.", "It is normally appended by the canonical script, but is not a tamper-proof log."),
+                            file("state.json", "local", "The compact current or most-recent work-phase state.", "It makes the open route and declared evidence inspectable without retaining a conversation transcript."),
+                            file("report.json", "local", "A regenerated diagnostic summary of conservative evidence gaps.", "It is derived from the event stream and state, not independent proof of what an agent understood.")
+                        ])
+                    ], false, { href:"agentic-structure-map.html", label:"Agent Ledger evidence", copy:"The map places this durable protocol in SSD and draws its evidence path into Observe and verify." }),
+                    folder("control", "local", "The private, still-live legacy continuity bridge used at the start and end of agent tasks.", "It is locally stored under agent-docs because its handoff and control records must persist, but it is a legacy bridge rather than the future architecture. The website-control ability reads this bridge; the bridge is not the ability.", [
+                        file("BOOTSTRAP.md", "local", "The short entrance sign that sends an agent starting or resuming work to the website-control skill.", "Automatically supplied workspace guidance tells the agent to open this file once at task start or resume; the file then names the skill to use next."),
+                        file("CONTROL.json", "local", "The label that identifies which repository and control structure these notes belong to.", "It helps detect an old or misplaced handoff before it is trusted."),
+                        file("CURRENT.md", "local", "A short, changeable summary of the workspace as it currently stands.", "It saves orientation time, but the agent must check it against Git and source."),
+                        file("HANDOFF.json", "local", "The note left for the next session: task, checks, risks, and next safe step.", "It carries continuity across sessions without pretending that the model itself remembers."),
+                        file("MAINTENANCE.md", "local", "The guide for deciding when work needs a full plan and what a good handoff contains.", "It keeps the control system useful instead of letting it grow without rules."),
+                        file("PRINCIPLES.md", "local", "The human-set boundaries for privacy, authority, evidence, and control.", "It states what the automation must not quietly change or overrule."),
+                        folder("skills", "local", "The physical home of the legacy website-control ability's recipe and helper.", "The recipe is stored beside the bridge it uses, but conceptually it belongs with Action: it is selected when needed and may read or update bridge records. The relationship map shows that distinction.", [
+                            folder("website-control", "local", "The one real copy of the workflow used by the provider shortcuts near the root.", "One shared copy prevents Codex and Claude instructions from drifting apart.", [
+                                file("SKILL.md", "local", "The recipe that tells an agent how to start, work, check, and leave a handoff.", "It points to the other control files and explains when each one matters."),
+                                folder("scripts", "local", "Small programs bundled with the skill.", "Code can repeat narrow checks more reliably than prose alone.", [
+                                    file("controlctl.py", "local", "The command-line entry point for the website-control workflow.", "It begins and closes work, records route choices, invokes the validator, and writes only redacted local receipts."),
+                                    file("validate_control.py", "local", "The checker for the control folder, Git match, privacy boundary, and provider shortcuts.", "It catches simple structural mistakes before an agent trusts the working notes.")
+                                ])
+                            ])
+                        ])
+                    ], false, { href:"agentic-structure-map.html", label:"website-control attachment", copy:"The map places website-control among Action abilities and links it back to this still-live legacy bridge." })
+                ], true, { href:"agentic-structure-map.html", label:"SSD and abilities map", copy:"The relationship map separates these durable records from the skills that may use them." })
+            ]),
+            folder("figure_generation", "tracked", "Offline Python tools that create or record figures and demonstrations for the site.", "Agents can reproduce an exhibit from code instead of editing a generated result by hand.", [
+                file("README.md", "tracked", "The orientation and running instructions for the offline figure tools.", "It tells an agent how generated assets differ from the no-build public site."),
+                folder("harness", "mixed", "Generators and recorders for The Machine Around the Model series.", "This is where real tool, hook, and model-loop demonstrations are prepared before safe outputs are placed under media.", [
+                    file("extract_toolloop.py", "tracked", "A tool for extracting a screened tool-loop sequence.", "It turns a large working record into a smaller exhibit while applying safety checks."),
+                    file("record_statelessness.py", "tracked", "A recorder intended to capture a real stateless-model demonstration.", "It can replace the clearly labelled mock once the required API access is available."),
+                    file("record_hook_demo.py", "tracked", "A recorder for the website-local hook demonstration.", "It creates repeatable evidence of which sample actions are allowed or denied."),
+                    folder("hook_demo", "tracked", "The hook's small rule and its wiring.", "Keeping the rule beside its setup makes the example inspectable and reproducible.", [
+                        file("hooks.json", "tracked", "The configuration that connects an event to the hook program.", "It shows how the surrounding tool knows when to run the check."),
+                        file("public_asset_guard.py", "tracked", "The small program that decides whether a sample action should be allowed.", "It demonstrates a narrow automatic boundary in real code.")
+                    ]),
+                    file("record_tool_demo.py", "tracked", "A recorder that invokes the website-local tool example and saves its results.", "It keeps the displayed request and response tied to a repeatable run."),
+                    folder("tool_demo", "tracked", "The contract and implementation for one read-only website inspection tool.", "It shows how an agent-facing action is split into a clear description and the code that performs it.", [
+                        file("tool.json", "tracked", "The description of the tool's name, inputs, and outputs.", "It tells the model when and how the tool can be used."),
+                        file("inspect_site_page.py", "tracked", "The Python program that safely inspects one HTML page inside the repository.", "It performs the limited action promised by the tool description.")
+                    ])
+                ])
+            ]),
+            folder("js", "tracked", "Browser-side JavaScript used by the public website.", "These files turn static pages into small interactive teaching and reading tools.", [
+                file("ai-assist.js", "tracked", "The site's Read with AI helper used by long-form notes.", "It prepares page context for a reader who chooses to continue in an AI chat."),
+                file("concept-popup.js", "tracked", "The shared popup behaviour used to open accessible explanations and source excerpts.", "It avoids rebuilding the same modal interaction separately on every page."),
+                file("harness-statelessness.js", "tracked", "The browser interaction for the statelessness demonstration.", "It lets readers step through a prepared example without making live API calls."),
+                file("harness-toolloop.js", "tracked", "The browser interaction for the tool-loop exhibit.", "It makes a recorded request-and-result sequence explorable on a static page."),
+                file("site-search.js", "tracked", "The client-side search program for the website.", "It reads the generated search index so readers can find notes without a server.")
+            ]),
+            folder("media", "generated", "Public assets and generated data read by the static website.", "Agent-run offline tools place checked outputs here when a page needs them.", [
+                file("search-index.json", "generated", "The pre-built list used by client-side search.", "It must be rebuilt after prose changes so new text can be found."),
+                folder("research", "generated", "Public research figures and demonstration data grouped by topic.", "It separates served outputs from the scripts that create them.", [
+                    folder("harness", "generated", "Recorded or generated data used by The Machine Around the Model pages.", "These are the screened outputs that the browser may load; their source programs live under figure_generation.", [
+                        file("hook-live-denial.txt", "generated", "A screened record of one real hook denial.", "It lets the page show genuine behaviour without publishing a whole private session log."),
+                        file("hook-probes.json", "generated", "The recorded results of several safe hook test cases.", "Readers can compare allowed and denied cases using fixed data."),
+                        file("statelessness.mock.json", "generated", "A hand-written placeholder for the statelessness panel, clearly marked as a mock.", "It keeps the interaction usable until a real recording can replace it."),
+                        file("tool-demo.json", "generated", "Recorded successful and rejected calls to the website-local tool.", "It gives the page real, reproducible examples without running Python in a visitor's browser."),
+                        file("toolloop.json", "generated", "A screened tool-loop trace used by the series.", "It turns the model request, tool action, and returned result into inspectable static data.")
+                    ])
+                ])
+            ]),
+            folder("pages", "tracked", "The HTML pages served directly by GitHub Pages.", "This is where the public explanation of agentic systems ultimately appears.", [
+                folder("research", "tracked", "Research pages and long-form explanatory series.", "It groups the public material by purpose.", [
+                    folder("overview", "tracked", "Long-form topic overviews and their multi-page acts.", "The agent follows the established series structure here when adding or revising an act.", [
+                        folder("harness", "tracked", "The pages for The Machine Around the Model and its workspace maps.", "This folder turns the scattered infrastructure elsewhere in the repository into a public explanation.", [
+                            file("act-6.html", "tracked", "The act about workspace instruction files.", "It explains how AGENTS.md enters the model's context."),
+                            file("act-7.html", "tracked", "The act about reusable skills and bundled scripts.", "It explains the website-control skill shown elsewhere in this tree."),
+                            file("act-8.html", "tracked", "The act about hooks and enforceable checks.", "It uses the real hook demo under figure_generation."),
+                            file("act-9.html", "tracked", "The act about tools and MCP-shaped interfaces.", "It uses the real tool demo and its recorded calls."),
+                            file("agentic-structure-map.html", "draft", "The current untracked worktree draft of the relationship graph showing how the main control pieces connect.", "It explains connections that are hard to see from folders alone, and becomes a tracked project file with the series release."),
+                            file("workspace-explorer.html", "draft", "The current untracked worktree draft of this VS Code-style filesystem explorer.", "It shows where the same pieces physically sit without revealing any file contents, and becomes a tracked project file with the series release.")
+                        ])
+                    ])
+                ])
+            ]),
+            folder("tools", "tracked", "Small repository-wide maintenance programs.", "These scripts automate routine checks and generated files that do not belong in the served JavaScript.", [
+                file("build_search_index.py", "tracked", "The offline script that rebuilds media/search-index.json from page text.", "Agents must run it after editing notes so the public search stays current."),
+                file("mobile_audit.py", "tracked", "A helper for checking pages at mobile sizes.", "It helps catch horizontal overflow and other narrow-screen problems before publication.")
+            ])
+        ], true);
+
+        var tree = document.getElementById("wx-tree");
+        var detailName = document.getElementById("wx-detail-name");
+        var detailPath = document.getElementById("wx-detail-path");
+        var detailKicker = document.getElementById("wx-detail-kicker");
+        var detailMeta = document.getElementById("wx-detail-meta");
+        var detailDescription = document.getElementById("wx-detail-description");
+        var detailWhy = document.getElementById("wx-detail-why");
+        var relatedWrap = document.getElementById("wx-related-wrap");
+        var relatedLink = document.getElementById("wx-related-link");
+        var relatedCopy = document.getElementById("wx-related-copy");
+        var detailRoute = document.getElementById("wx-route");
+        var selectedRow = null;
+
+        function labelFor(visibility) {
+            return { tracked:"Tracked", draft:"Worktree draft", local:"Local only", generated:"Generated", shortcut:"Shortcut", mixed:"Mixed" }[visibility] || visibility;
+        }
+        function typeFor(node) { return node.shortcut ? "Shortcut folder" : node.type === "folder" ? "Folder" : node.type === "link" ? "Shortcut" : "File"; }
+        function routeFor(path) {
+            var codexStart = [{ type:"Automatic", text:"In a trusted project, Codex loads its project configuration layer at the start of a run." }, { type:"Automatic", text:"Codex also builds its project AGENTS.md instruction chain for the working directory." }];
+            if (path.indexOf("/.playwright-mcp") !== -1) return [{ type:"Available", text:"A compatible agent client can expose Playwright MCP as an optional browser ability. It is visible to the agent, but no workspace workflow automatically selects it." }, { type:"Conditional", text:"The agent chooses a browser tool only when a visual, responsive, or interaction check would help." }, { type:"Result", text:"This folder receives scratch outputs such as screenshots, page snapshots, and console logs. They stay local and are not automatically reused as memory." }];
+            if (path.endsWith("/.githooks/commit-msg")) return [{ type:"Event", text:"A person or an agent begins a local git commit. This starts Git's commit process, not a model or skill workflow." }, { type:"Automatic", text:"This clone configures core.hooksPath as .githooks, so Git automatically runs this executable commit-message hook." }, { type:"Read", text:"Git passes the proposed commit-message file to the hook." }, { type:"Conditional", text:"The script checks feature, fix, and refactor messages for a Plan: trailer and checks whether the named plan file exists." }, { type:"Result", text:"The script is warn-only and exits successfully, so Git records the commit even after a warning. --no-verify can bypass local commit hooks." }];
+            if (path.indexOf("/.githooks") !== -1) return [{ type:"Event", text:"A local git commit reaches Git's hook stage." }, { type:"Automatic", text:"Because this clone points core.hooksPath at this folder, Git looks here for an executable hook with the matching event name." }];
+            if (path.endsWith("/.codex/config.toml")) return [{ type:"Automatic", text:"In a trusted project, Codex loads this project configuration file at the start of a run." }, { type:"Loaded", text:"Its developer instructions are added before the AGENTS.md instruction chain. Here, they direct Codex to the same website-control bootstrap." }];
+            if (path.endsWith("/AGENTS.md")) return codexStart.concat([{ type:"Loaded", text:"This project instruction file also tells the agent where the control workflow begins. It is a second, matching direction alongside the Codex configuration." }]);
+            if (path.endsWith("/controlctl.py")) return [{ type:"Selected", text:"The website-control recipe reaches a begin, classify, skill-use, or close step." }, { type:"Run", text:"The agent invokes this command through an execution tool. It calls the validator and writes a redacted local receipt, but the script source is not automatically added as instructions." }];
+            if (path.endsWith("/validate_control.py")) return [{ type:"Selected", text:"The website-control entry command or a direct diagnostic reaches structural validation." }, { type:"Run", text:"The validator checks repository identity, dirty-state applicability, privacy boundaries, and shortcuts. Its result returns to context, but the script source is not automatically added as instructions." }];
+            if (path.indexOf("/.claude/rules/") !== -1) return [{ type:"Automatic", text:"Claude Code starts in this workspace and loads this unscoped project rule at launch." }, { type:"Shortcut", text:"The rule is a symlink, so Claude resolves it to the canonical BOOTSTRAP.md rather than reading a copied version." }];
+            if (path.indexOf("/.claude/skills/") !== -1) return [{ type:"Catalogue", text:"Claude Code can see this skill as a task-specific option." }, { type:"Selected", text:"The bootstrap rule or a matching task leads Claude to select it; the shortcut then resolves to the one canonical skill." }];
+            if (path.indexOf("/.agents/skills/") !== -1) return codexStart.concat([{ type:"Catalogue", text:"Codex sees the short website-control description at startup through this skill-discovery path." }, { type:"Selected", text:"The AGENTS.md instruction or a matching task leads Codex to the canonical skill behind this shortcut." }]);
+            if (path.indexOf("/control/BOOTSTRAP.md") !== -1) return codexStart.concat([{ type:"Read", text:"Both the Codex configuration and AGENTS.md direct Codex to this entrance note. Claude reaches the same note through its project-rule shortcut." }, { type:"Selected", text:"The note names website-control as the workflow to use next." }]);
+            if (path.indexOf("/skills/website-control/SKILL.md") !== -1) return [{ type:"Selected", text:"A start instruction or a matching skill description chooses website-control." }, { type:"Read", text:"The agent reads this full recipe only after the skill has been selected." }];
+            if (path.indexOf("/control/") !== -1) return [{ type:"Selected", text:"The website-control recipe names this control record at the appropriate start or closing step." }, { type:"Check", text:"The agent compares live Git state and uses the control entry command and validator before relying on changing summaries." }];
+            if (path.endsWith("/agent-ledger/PROTOCOL.md")) return [{ type:"Conditional", text:"AGENTS.md points an agent here only when audit, procedure, ledger, or host-observation work is relevant." }, { type:"Read", text:"The protocol explains soft observation and its privacy boundary; it does not begin an automatic work route." }];
+            if (path.indexOf("/agent-ledger/runtime/") !== -1) return [{ type:"Selected", text:"The canonical Ledger command writes safe event metadata or derives its report here; a trusted Codex hook may add supported host observations." }, { type:"Read", text:"This runtime folder is ignored and must not be manually edited. The shadow adapter sees only local hook coverage, not a complete activity trace." }];
+            if (path.indexOf("/agent-ledger/scripts/") !== -1) return [{ type:"Conditional", text:"A ledger-relevant work phase selects the canonical writer instead of editing private JSON by hand." }, { type:"Run", text:"The agent explicitly invokes the script; its safe result and opaque work-phase token return to immediate context." }];
+            if (path.indexOf("/agent-ledger/adapters/codex/") !== -1) return [{ type:"Automatic", text:"When this trusted Codex project accepts the local hook configuration, matching lifecycle hooks call this adapter." }, { type:"Result", text:"The adapter keeps only safe event categories and opaque correlation tokens. It runs in shadow mode alongside legacy control telemetry and does not block work." }];
+            if (path.indexOf("/agent-ledger/tests/") !== -1) return [{ type:"Conditional", text:"A Ledger runtime change selects its focused tests." }, { type:"Run", text:"The tests create a temporary runtime, so they do not read or change the real local Ledger state." }];
+            if (path.indexOf("/agent-ledger/") !== -1) return [{ type:"Conditional", text:"A ledger or procedure task selects the relevant schema, procedure, or reporting record." }, { type:"Read", text:"It supplies task context only; the ledger itself does not choose the agent's route or grant authority." }];
+            if (path.endsWith("/citation-audit/PROTOCOL.md")) return [{ type:"Conditional", text:"AGENTS.md and the reference index point an agent here when a citation or research claim needs local paper evidence." }, { type:"Selected", text:"Before opening, extracting, or rendering a library PDF, the agent selects the local pdf-source-reading skill; the source stays on this computer." }];
+            if (path.indexOf("/citation-audit/library/") !== -1) return [{ type:"Selected", text:"The citation-audit protocol has identified a local paper or previous audit record as relevant." }, { type:"Run", text:"The pdf-source-reading skill handles a PDF locally and returns page-specific evidence. The library is ignored, never served, and never automatically loaded as context." }];
+            if (path.indexOf("/citation-audit/") !== -1) return [{ type:"Conditional", text:"A citation or claim-verification task selects this private evidence route after the relevant dossier or reference." }, { type:"Read", text:"The protocol keeps local evidence separate from public source dossiers and from a general conversation." }];
+            if (path.endsWith("/references/INDEX.md")) return [{ type:"Conditional", text:"AGENTS.md tells the agent to use this compact index when it needs a workspace reference." }, { type:"Read", text:"The index selects the first relevant record; it does not make every reference automatic context." }];
+            if (path.endsWith("/references/PROTOCOL.md")) return [{ type:"Conditional", text:"An agent creating, renewing, or retiring a reference needs this protocol." }, { type:"Read", text:"Ordinary tasks usually go from the index straight to the matching reference." }];
+            if (path.indexOf("/plans/active/") !== -1 || path.indexOf("/plans/completed/") !== -1 || path.indexOf("/references/living/") !== -1 || path.indexOf("/references/sources/") !== -1) return [{ type:"Conditional", text:"The workflow and AGENTS.md tell the agent to open the plan, reference, or source dossier that matches the task." }, { type:"Read", text:"This is task context, not automatic startup context: an unrelated task need not load it." }];
+            if (path.indexOf("/figure_generation/") !== -1 || path.indexOf("/tools/") !== -1) return [{ type:"Conditional", text:"A task or the active plan identifies a repeatable job that needs this helper." }, { type:"Run", text:"The agent explicitly invokes the script through a tool; its output, not its whole source, becomes the immediate result." }];
+            return [{ type:"Conditional", text:"This is not silently loaded at startup. The agent reaches it when the task, an active plan, or an inspected page makes it relevant." }, { type:"Read", text:"It is opened with an ordinary file-reading tool or used through the narrow program that names it." }];
+        }
+        function showRoute(path) {
+            detailRoute.replaceChildren();
+            routeFor(path).forEach(function (step) { var item=document.createElement("li"), tag=document.createElement("span"), text=document.createElement("span"); tag.className="wx-route-tag "+step.type.toLowerCase(); tag.textContent=step.type; text.textContent=step.text; item.appendChild(tag); item.appendChild(text); detailRoute.appendChild(item); });
+        }
+        function showDetail(node, path, row) {
+            if (selectedRow) { selectedRow.classList.remove("is-selected"); selectedRow.setAttribute("aria-selected", "false"); }
+            selectedRow = row;
+            if (row) { row.classList.add("is-selected"); row.setAttribute("aria-selected", "true"); }
+            detailKicker.textContent = typeFor(node);
+            detailName.textContent = node.name;
+            detailPath.textContent = path + (node.type === "folder" ? "/" : "");
+            detailDescription.textContent = node.description;
+            detailWhy.textContent = node.why;
+            relatedWrap.hidden = !node.related;
+            if (node.related) {
+                relatedLink.href = node.related.href;
+                relatedLink.textContent = node.related.label;
+                relatedCopy.textContent = node.related.copy;
+            } else {
+                relatedLink.removeAttribute("href");
+                relatedLink.textContent = "";
+                relatedCopy.textContent = "";
+            }
+            showRoute(path);
+            detailMeta.innerHTML = "";
+            var typePill = document.createElement("span"); typePill.className = "wx-pill"; typePill.textContent = typeFor(node); detailMeta.appendChild(typePill);
+            var statePill = document.createElement("span"); statePill.className = "wx-pill " + node.visibility; statePill.textContent = labelFor(node.visibility); detailMeta.appendChild(statePill);
+        }
+        function setOpen(node, row, group, open) {
+            node.open = open;
+            row.setAttribute("aria-expanded", String(open));
+            group.hidden = !open;
+        }
+        function renderNode(node, parentPath, depth) {
+            var item = document.createElement("li"); item.setAttribute("role", "none");
+            var path = parentPath ? parentPath + "/" + node.name : node.name;
+            var row = document.createElement("button"); row.type = "button"; row.className = "wx-row"; row.style.setProperty("--depth", depth); row.setAttribute("role", "treeitem"); row.setAttribute("data-path", path); row.setAttribute("data-local", String(node.visibility === "local"));
+            var hasChildren = node.type === "folder" && node.children && node.children.length;
+            var caret = document.createElement("span"); caret.className = "wx-caret" + (hasChildren ? "" : " is-empty"); caret.setAttribute("aria-hidden", "true"); caret.textContent = "›";
+            var icon = document.createElement("span"); icon.className = "wx-icon " + (node.type === "link" ? "link" : node.type) + (node.shortcut ? " shortcut" : ""); icon.setAttribute("aria-hidden", "true");
+            var name = document.createElement("span"); name.className = "wx-name"; name.textContent = node.name;
+            var badge = document.createElement("span"); badge.className = "wx-badge"; badge.textContent = labelFor(node.visibility);
+            row.appendChild(caret); row.appendChild(icon); row.appendChild(name); row.appendChild(badge); item.appendChild(row);
+            var group = null;
+            if (hasChildren) {
+                row.setAttribute("aria-expanded", String(node.open));
+                group = document.createElement("ul"); group.className = "wx-group"; group.setAttribute("role", "group"); group.hidden = !node.open;
+                node.children.forEach(function (child) { group.appendChild(renderNode(child, path, depth + 1)); }); item.appendChild(group);
+            }
+            row._wxNode = node; row._wxGroup = group;
+            row.addEventListener("click", function () { showDetail(node, path, row); if (hasChildren) setOpen(node, row, group, !node.open); });
+            row.addEventListener("keydown", function (event) {
+                if (event.key === "ArrowRight" && hasChildren) { event.preventDefault(); if (!node.open) setOpen(node, row, group, true); else { var first = group.querySelector(".wx-row"); if (first) first.focus(); } }
+                if (event.key === "ArrowLeft") { event.preventDefault(); if (hasChildren && node.open) setOpen(node, row, group, false); else { var parent = item.parentElement.closest("li"); var parentRow = parent && parent.querySelector(":scope > .wx-row"); if (parentRow) parentRow.focus(); } }
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") { event.preventDefault(); var visible = Array.prototype.filter.call(tree.querySelectorAll(".wx-row"), function (candidate) { return candidate.offsetParent !== null; }); var index = visible.indexOf(row); var next = event.key === "ArrowDown" ? visible[index + 1] : visible[index - 1]; if (next) next.focus(); }
+            });
+            return item;
+        }
+        tree.appendChild(renderNode(root, "", 0));
+        var rootRow = tree.querySelector(".wx-row"); showDetail(root, root.name, rootRow);
+        document.getElementById("wx-collapse").addEventListener("click", function () {
+            tree.querySelectorAll(".wx-row").forEach(function (row) { if (row._wxGroup) setOpen(row._wxNode, row, row._wxGroup, false); });
+            rootRow.focus();
+        });
+    })();
+    </script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script><script src="../../../../js/nav-menu.js?v=38" defer></script>
+</body>
+</html>

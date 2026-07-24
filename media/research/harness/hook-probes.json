@@ -1,0 +1,55 @@
+{
+  "recorded_on": "2026-07-21",
+  "method": "Each documented PreToolUse payload was sent to the exact public hook process on stdin. Candidate commands were classified, never executed.",
+  "hook": "figure_generation/harness/hook_demo/public_asset_guard.py",
+  "records": [
+    {
+      "name": "approved-rebuild",
+      "command": "python3 tools/build_search_index.py",
+      "observed_verdict": "allow",
+      "exit_code": 0,
+      "stdout": null,
+      "stderr": "",
+      "note": "The one explicitly approved way to replace the generated file."
+    },
+    {
+      "name": "direct-delete",
+      "command": "rm -f media/search-index.json",
+      "observed_verdict": "deny",
+      "exit_code": 0,
+      "stdout": {
+        "hookSpecificOutput": {
+          "hookEventName": "PreToolUse",
+          "permissionDecision": "deny",
+          "permissionDecisionReason": "Direct access to media/search-index.json is blocked. Regenerate it with python3 tools/build_search_index.py."
+        }
+      },
+      "stderr": "",
+      "note": "The protected path appears, so the hook denies the call before execution."
+    },
+    {
+      "name": "read-only-false-positive",
+      "command": "rg -l title media/search-index.json",
+      "observed_verdict": "deny",
+      "exit_code": 0,
+      "stdout": {
+        "hookSpecificOutput": {
+          "hookEventName": "PreToolUse",
+          "permissionDecision": "deny",
+          "permissionDecisionReason": "Direct access to media/search-index.json is blocked. Regenerate it with python3 tools/build_search_index.py."
+        }
+      },
+      "stderr": "",
+      "note": "A safe read is denied because this small blocklist only sees the path string."
+    },
+    {
+      "name": "constructed-path-gap",
+      "command": "python3 -c 'from pathlib import Path; Path(\"media/search-\" + \"index.json\").unlink()'",
+      "observed_verdict": "allow",
+      "exit_code": 0,
+      "stdout": null,
+      "stderr": "",
+      "note": "The full path never appears contiguously, so the blocklist misses the intent."
+    }
+  ]
+}

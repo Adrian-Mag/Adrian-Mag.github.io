@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Instrument - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
     <meta name="description" content="The Instrument — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The Instrument - Adrian Mag">
@@ -30,7 +30,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +88,55 @@
                     <p class="act-lede">What the machinery is for: verification, audit, honest limits, and a frank account of where it is still bad.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    
+                <div class="hz-prose">
+                    <p>The model is not the whole machine. It predicts the next token from the
+                    context it receives. The harness decides what that context contains, which
+                    tools may be called, what checks run, where results are stored, and whether
+                    a later session can recover the work.</p>
+
+                    <p>That is why a bare chat box can feel brittle while a carefully built
+                    workspace can feel surprisingly capable. The difference is not mystical
+                    memory or a secret second model. It is ordinary machinery: instructions,
+                    files, retrieval, permissions, tools, validation, and a loop that puts the
+                    result of one action into the next request.</p>
+
+                    <h3>The levers, in order</h3>
+                    <table class="hz-table">
+                        <thead><tr><th>Need</th><th>Workspace lever</th><th>What it cannot promise</th></tr></thead>
+                        <tbody>
+                            <tr><td>Persistent guidance</td><td><code>AGENTS.md</code></td><td>That the model follows every word</td></tr>
+                            <tr><td>A reusable procedure</td><td>A skill with instructions and optional scripts</td><td>Permission to bypass the harness</td></tr>
+                            <tr><td>A rule that must run</td><td>Hook, sandbox, test, or approval</td><td>Complete security without a threat model</td></tr>
+                            <tr><td>A new capability</td><td>A tool contract and handler</td><td>Correct selection or correct results by itself</td></tr>
+                            <tr><td>Continuity</td><td>Files, plans, evidence, and a checked handoff</td><td>Perfect memory or an unchanging summary</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Build an instrument, not a story</h3>
+
+                    <p>The public examples in this series come from this website workspace:
+                    instructions, a skill and validator, a hook policy, a tool handler, recorded
+                    checks, and the relationships between them. They are useful precisely
+                    because they can be inspected, tested, or corrected. The interactive map
+                    gathers that structure on one page.</p>
+
+                    <p><a class="hz-btn" href="agentic-structure-map.html">Explore the workspace&rsquo;s agentic structure</a></p>
+
+                    <p>Use the smallest lever that makes the behaviour legible. Add a file
+                    before a framework. Add a test before a second agent. Add a tool only when
+                    a named operation needs a contract. Add orchestration only when the graph
+                    buys a boundary, evidence, or parallelism that a single loop cannot.</p>
+
+                    <h3>The honest limit</h3>
+
+                    <p>None of this turns a language model into an authority. It can still
+                    misunderstand a request, select the wrong file, invent a claim, or follow a
+                    plausible route through the wrong graph. The remedy is not confidence. It is
+                    a design that leaves evidence behind: inspectable source, narrow checks,
+                    explicit uncertainty, and a human who can stop or reverse the change.</p>
+
+                    <p>That is the machine around the model. Not a promise that the model will
+                    be right, but an instrument for finding out when it is not.</p>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +174,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Box Everyone Knows - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
     <meta name="description" content="The Box Everyone Knows — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The Box Everyone Knows - Adrian Mag">
@@ -30,7 +30,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -121,37 +121,27 @@
                         <figure class="hz-exhibit-shot">
                             <img src="../../../../media/ai-fail.png"
                                  width="641" height="259"
-                                 alt="A ChatGPT conversation. The user types: 241 minus open bracket
-                                      minus 241 close bracket, plus 1. The reply reads: 241 minus
-                                      open bracket minus 241 close bracket plus 1 is equivalent to
-                                      241 plus 241 plus 1, which simplifies to 483 plus 1. So 241
-                                      minus open bracket minus 241 close bracket plus 1 is equal
-                                      to 484.">
+                                 alt="A ChatGPT conversation. The user types: 241 minus open bracket minus 241 close bracket, plus 1. The reply says this is 241 plus 241 plus 1, then incorrectly calculates 483 plus 1 as 484.">
                         </figure>
                         <div class="hz-exhibit-cap">
                             <span class="exno">Exhibit 1</span>
-                            The answer is 483. Look at where it goes wrong: the setup is
-                            <em>correct</em>. Subtracting a negative does give
-                            241&nbsp;+&nbsp;241&nbsp;+&nbsp;1. Then 241&nbsp;+&nbsp;241 becomes
-                            483, which is 482 with the final 1 already folded in, and the 1 is
-                            then added a second time. Two errors, one cause. Nothing in the tone
-                            marks any of it.
+                            The answer is 483. The setup is <em>correct</em>: subtracting a negative does give 241&nbsp;+&nbsp;241&nbsp;+&nbsp;1. Then 241&nbsp;+&nbsp;241 becomes 483, which is 482 with the final 1 already folded in, and the 1 is added a second time. Nothing in the tone marks either error.
                         </div>
                     </div>
 
-                    <p class="hz-versioned"><b>Ages quickly</b>Undated screenshot. Model version
-                    not recorded, so treat it as an illustration of a failure mode, not as a
-                    claim about any current model. This particular sum may well be answered
-                    correctly today. The mechanism behind it has not changed.</p>
+                    <p class="hz-versioned"><b>Ages quickly</b>Undated screenshot. The model version was not recorded, so treat it as an illustration of a failure mode, not as a claim about any current model. This particular sum may well be answered correctly today. The mechanism behind it has not changed.</p>
 
-                    <p>That is worth sitting with, because it is not the failure the word
-                    &ldquo;hallucination&rdquo; usually conjures. Nothing was invented. The
-                    algebra was reasoned through correctly and stated correctly. What failed was
-                    the arithmetic, in the middle, silently, while the sentence around it stayed
-                    fluent. The prose does not slow down at the point of the error, because
-                    fluency and correctness are produced by the same process and neither one
-                    checks the other. Act 2 is about why that is the expected behaviour of the
-                    thing in the box rather than a bug in it.</p>
+                    <p>Fluent text does not mark its own failures. A response can state a
+                    plausible route, invent a source, or make a quiet mistake in the middle of
+                    a calculation while its tone stays completely steady. The system has no
+                    built-in signal that distinguishes a well-formed sentence from a checked
+                    answer. Later acts add workspace examples with inspectable source, recorded
+                    checks, and explicit limits alongside this small, honest exhibit.</p>
+
+                    <p>That is worth sitting with, because it is not only the failure the word
+                    &ldquo;hallucination&rdquo; usually conjures. Sometimes the problem is invented
+                    material; sometimes it is an unverified step that sounds ordinary. Act 2 is
+                    about why fluent prediction and correctness are different jobs.</p>
 
                     <p><strong>The second is quieter, and I think far more common now.</strong>
                     You asked something reasonable and got an answer that was not wrong,
@@ -232,7 +222,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

@@ -1,18 +1,29 @@
 # Agent Configuration
 
+## Local Control Bootstrap
+
+When `docs/agent-docs/control/BOOTSTRAP.md` exists, read it once at the start or resumption of every task in this worktree and use the canonical `website-control` workflow it identifies. Validate the recorded repository, branch, commit, and dirty state before trusting `CURRENT.md` or `HANDOFF.json`. If that applicability check fails, stop workspace work, rebuild those notes from Git and source evidence, and revalidate before continuing. Refresh the handoff at meaningful task boundaries. The control overlay and its redacted validation-incident record are local-only and must never be staged, committed, served, or copied into public documentation.
+
 ## What This Repository Is
 
 A personal academic website for Adrian Mag, hosted on GitHub Pages. It contains static HTML pages, CSS stylesheets, and media assets presenting research, publications, CV, and contact information. It also carries **offline research tooling** that is *not* served: LaTeX sources for the long-form notes (`*.tex` at the repo root) and a Python figure-generation pipeline under `figure_generation/` (see its `README.md`).
 
-## Plan Directory
+## Plans
 
-Agent planning follows the unified agent-docs protocol (`docs/agent-docs/PROTOCOL.md`). Plan files live under:
-- `docs/agent-docs/active-plans/` — current plans being worked on
-- `docs/agent-docs/completed-plans/` — archived finished plans
+Plan records and their lifecycle rules live under
+`docs/agent-docs/plans/`. Read `docs/agent-docs/plans/PROTOCOL.md` before
+creating, revising, completing, or archiving a substantial-work plan.
 
-(The old top-level `plans/` directory has been retired.)
+- `docs/agent-docs/plans/active/` — current plans being worked on
+- `docs/agent-docs/plans/completed/` — archived plans and phase-completion records
 
-## Living Reference Documents
+## Reference Documents
+
+Reference records and their update rules live under
+`docs/agent-docs/references/`. Use `docs/agent-docs/references/INDEX.md` to
+locate the smallest relevant record; read
+`docs/agent-docs/references/PROTOCOL.md` before creating, renewing, or retiring
+a reference.
 
 Before modifying any page or stylesheet, read:
 ```
@@ -21,9 +32,30 @@ docs/agent-docs/references/living/website-reference.md
 
 This file contains the page layout, CSS conventions, and file mappings for the entire site.
 
+## Citation Audit Library
+
+The private citation evidence library is described by
+`docs/agent-docs/citation-audit/PROTOCOL.md`. Read it when verifying or
+revising a citation or research claim using local source material. Before
+opening, extracting, or rendering one of its local PDFs, use the
+`pdf-source-reading` skill; it keeps source content on this machine and records
+page-specific evidence. Never stage, serve, or upload the library contents.
+
+## Agent Ledger
+
+The soft Agent Ledger protocol lives under `docs/agent-docs/agent-ledger/`.
+It records declared procedural evidence and independently observed events when
+an adapter exists; it does not grant authority or replace plans and references.
+Read its `PROTOCOL.md` when auditing or changing agent procedures, ledger
+reporting, runtime, or a host-observation adapter. Use its canonical
+`scripts/ledgerctl.py` for a ledger-relevant work phase; never manually edit
+its ignored `runtime/` records. A trusted Codex project may add shadow
+host observations through the local provider configuration; those are partial
+evidence, not a complete activity trace.
+
 ## Commit Convention
 
-See `docs/COMMIT_CONVENTION.md` for the full commit message format. All feature/fix commits must include plan references.
+See `docs/agent-docs/COMMIT_CONVENTION.md` for the full commit message format. All feature/fix commits must include plan references.
 
 ## Environment
 

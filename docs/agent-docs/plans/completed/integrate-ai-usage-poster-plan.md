@@ -1,6 +1,6 @@
 ## Plan: Integrate the "AI Usage" Poster into the Website
 
-**Status:** active   **Created:** 2026-07-10
+**Status:** completed   **Created:** 2026-07-10   **Archived:** 2026-07-22
 
 ### Goal
 
@@ -113,14 +113,17 @@ labelled "AI-Assisted Research". No CSS file was modified.
 3. **Phase 2 (done)** — Added `<a href="...">AI-Assisted Research</a>` to the
    `dropdown-content` after "Presentations" on all 48 pages, with correct
    relative paths per directory depth.
-4. **Phase 3 — verify.** Open the site in a browser; confirm the dropdown now
-   shows three items (Publications, Presentations, AI-Assisted Research) and
-   that the poster renders at its URL.
-5. **Phase 4 — commit.** Use `feat(...)` per `COMMIT_CONVENTION.md` with a
-   `Plan:` trailer pointing at this file, then move it to `completed-plans/`
-   with a closing note.
+4. **Phase 3 (complete)** — Static status check on 2026-07-22 confirmed the
+   poster title, `main`, and footer landmarks; all 21 local page assets; and
+   all 71 current site links labelled “AI-Assisted Research” resolve to the
+   poster. This records the available verification without claiming a new
+   browser run.
+5. **Phase 4 (complete)** — The delivered poster and its navigation wiring are
+   already in Git history (`997ce93`, with later poster refinements). The user
+   confirmed the page is done; this plan is therefore archived without a new
+   product commit.
 
-### Open questions (for the human, or a judgment call the next agent can make)
+### Optional follow-up ideas (not part of this completed plan)
 
 - **Standalone vs. reskinned:** the poster currently has its own header/footer and
   does *not* share the site's `<nav>`/`styles.css` (unlike `BSM24.html`, which is
@@ -134,3 +137,8 @@ labelled "AI-Assisted Research". No CSS file was modified.
 - **Thumbnail:** the shipped one is a quick header crop, functional but plain. Not
   needed for the dropdown link (no thumbnail shown there), but could be useful if
   the page is ever referenced from a card grid. Not blocking.
+
+### Closing note
+
+The standalone poster remains the approved final form. The reskin and thumbnail
+ideas are optional future work, not open requirements for this delivery.

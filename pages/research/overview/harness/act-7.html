@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Packaging Expertise - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
     <meta name="description" content="Packaging Expertise — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Packaging Expertise - Adrian Mag">
@@ -30,7 +31,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -85,13 +86,223 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 7</span>
                     <span class="hz-asof">Current as of July 2026</span>
-                    <p class="act-lede">Progressive disclosure: a short description sits in context permanently; the body loads on demand. Context is a scarce, paid resource, and everything loaded competes with everything else.</p>
+                    <p class="act-lede">Progressive disclosure: a short description sits in the initial catalogue; the body loads on demand. Context is finite, and everything loaded competes with everything else.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Progressive disclosure</li><li><b>Artifact:</b> slidev skill: 34 words / 190 lines / 3,721 lines</li></ul>
+                <div class="hz-prose">
+                    <p>At the end of the previous act, a small instruction file reached a
+                    natural limit. One repository fact belongs in <code>AGENTS.md</code>.
+                    A detailed continuity procedure, a state validator, and the instructions
+                    for interpreting its result do not. Loading all of that before every task
+                    would make the model read a maintenance manual while it was trying to
+                    change one sentence.</p>
+
+                    <p>A skill is a way to put that material on a shelf and give the harness
+                    a good index card. The index card is designed to be cheap enough to show.
+                    The book comes down only when the task needs it.</p>
+
+                    <h3>A directory, not a new intelligence</h3>
+
+                    <p>In the open Agent Skills format, a skill is a directory with one
+                    required file: <code>SKILL.md</code>. Its frontmatter gives the skill a
+                    name and describes what it does and when it applies. The Markdown body
+                    contains the working instructions. Optional directories can hold scripts,
+                    references, templates, images, or other resources.<sup><a href="#ref-agent-skills">1</a></sup></p>
+
+                    <p>Nothing in that definition changes the model. A skill is not training,
+                    memory, or a new model capability. It is a package the harness knows how
+                    to discover and reveal. The useful idea is not the filename. It is
+                    <em>progressive disclosure</em>.</p>
+
+                    <div class="hz-panel" id="skill-disclosure-panel">
+                        <div class="hz-panel-head">
+                            <span class="hz-panel-title">How much of one skill enters context?</span>
+                            <span class="hz-illustrative">Measured files &middot; mechanism diagram</span>
+                        </div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls" role="group" aria-label="Progressive disclosure stage">
+                                <button class="hz-btn is-on" type="button" data-skill-stage="0" aria-pressed="true">1. Session starts</button>
+                                <button class="hz-btn" type="button" data-skill-stage="1" aria-pressed="false">2. Website task</button>
+                                <button class="hz-btn" type="button" data-skill-stage="2" aria-pressed="false">3. Validate state</button>
+                            </div>
+
+                            <div class="hz-skill-stack">
+                                <div class="hz-skill-tier is-loaded" data-skill-tier="0">
+                                    <div class="hz-skill-tier-head">
+                                        <span class="hz-skill-tier-num">Tier 1</span>
+                                        <span class="hz-skill-tier-name">Catalogue entry</span>
+                                        <span class="hz-skill-tier-state">In context</span>
+                                    </div>
+                                    <pre class="hz-skill-payload">website-control
+docs/agent-docs/control/skills/website-control/SKILL.md
+Mandatory continuity and handoff workflow for every development, analysis, review, planning, resume, or handoff task in this worktree.</pre>
+                                    <span class="hz-skill-measure">70 whitespace-delimited words in the full description</span>
+                                </div>
+
+                                <div class="hz-skill-tier" data-skill-tier="1">
+                                    <div class="hz-skill-tier-head">
+                                        <span class="hz-skill-tier-num">Tier 2</span>
+                                        <span class="hz-skill-tier-name">SKILL.md instructions</span>
+                                        <span class="hz-skill-tier-state">On disk</span>
+                                    </div>
+                                    <pre class="hz-skill-payload"># Website Control
+...
+## Start or resume
+4. Run controlctl.py --repo . begin
+5. If that check fails, stop and rebuild the notes
+...
+## Close or hand off</pre>
+                                    <span class="hz-skill-measure">120 lines in the local skill body</span>
+                                </div>
+
+                                <div class="hz-skill-tier" data-skill-tier="2">
+                                    <div class="hz-skill-tier-head">
+                                        <span class="hz-skill-tier-num">Tier 3</span>
+                                    <span class="hz-skill-tier-name">Bundled validator</span>
+                                        <span class="hz-skill-tier-state">On disk</span>
+                                    </div>
+                                    <pre class="hz-skill-payload">scripts/validate_control.py
+Validate the local control pack without dependencies.
+Checks manifest, handoff applicability,
+private-path rules, and bootstrap wiring.</pre>
+                                    <span class="hz-skill-measure">487 lines; invoked only when the workflow reaches validation</span>
+                                </div>
+                            </div>
+
+                            <p class="hz-skill-note" id="skill-stage-note" aria-live="polite">The harness can see enough metadata to consider the skill. Its instructions and validator remain on disk.</p>
+                        </div>
+                    </div>
+
+                    <p>This panel is built from a real local skill used to maintain this
+                    website. The snippets and file counts were checked on 24 July 2026.
+                    The buttons show the documented loading mechanism; they are not a recorded
+                    conversation. Lines are an inspectable measure of the files, not a claim
+                    about their token count.</p>
+
+                    <p>At the first stage, the description has one job: help the harness decide
+                    whether this skill belongs in the task. A website task is a plausible match;
+                    an unrelated calculation is not. At the second stage, the body supplies the
+                    workflow. Only when the workflow reaches validation does the third component
+                    become useful.</p>
+
+                    <p>That is not compression. The missing text has not been squeezed into
+                    the description. It is absent from context until the harness or agent
+                    goes to fetch it.</p>
+
+                    <h3>Open the working parts</h3>
+
+                    <p>The control pack itself is intentionally local-only. These are screened
+                    teaching excerpts and a real run, published by request. Live handoff, state,
+                    and configuration records are not included.</p>
+
+                    <div class="hz-doc-grid" aria-label="Real local skill artifacts">
+                        <button type="button" class="concept-term hz-doc-card" data-concept="skill-control" data-concept-title="website-control skill">
+                            <span class="hz-doc-path">docs/agent-docs/control/skills/website-control/SKILL.md</span>
+                            <span class="hz-doc-name">Selection metadata and workflow</span>
+                            <span class="hz-doc-summary">The exact catalogue frontmatter and the workflow that enters through <code>controlctl.py --repo . begin</code>.</span>
+                            <span class="hz-doc-open">Open excerpt</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="skill-validator" data-concept-title="Bundled validator">
+                            <span class="hz-doc-path">docs/agent-docs/control/skills/website-control/scripts/validate_control.py</span>
+                            <span class="hz-doc-name">A script beside the instructions</span>
+                            <span class="hz-doc-summary">Selected source from the 487-line standard-library validator and its main check sequence.</span>
+                            <span class="hz-doc-open">Open excerpt</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="skill-run" data-concept-title="A real validation run">
+                            <span class="hz-doc-path">python3 &hellip;/controlctl.py --repo . begin</span>
+                            <span class="hz-doc-name">Instructions become an action</span>
+                            <span class="hz-doc-summary">The actual entry command and its one-line structural result, captured 24 July 2026.</span>
+                            <span class="hz-doc-open">Open record</span>
+                        </button>
+                    </div>
+
+                    <h3>The description is a routing rule</h3>
+
+                    <p>The description is not a miniature manual. It needs to say what the
+                    skill does and when to use it. In current Codex, the initial catalogue
+                    contains the name, description, and file path. The full body is loaded
+                    after explicit selection or when the task matches the description.
+                    <sup><a href="#ref-codex-skills">2</a></sup></p>
+
+                    <div class="hz-versioned">
+                        <b>Implementations checked 24 July 2026</b>
+                        The three-tier shape comes from the open Agent Skills specification.
+                        Exact search paths, catalogue budgets, invocation controls, and context
+                        lifecycle are harness behaviour. The shared file format does not make
+                        any one client&rsquo;s loading behaviour a law of language models.
+                    </div>
+
+                    <p>A vague description such as &ldquo;helps with documents&rdquo; saves words
+                    but destroys the signal used for routing. A useful description names the
+                    task, the relevant inputs, and the boundaries. It is closer to the label
+                    on a laboratory drawer than to the contents of the drawer.</p>
+
+                    <p>Automatic selection is still a model decision. A good skill can fail to
+                    trigger, or trigger for the wrong request. Most supporting harnesses also
+                    offer an explicit invocation for cases where the user wants certainty.
+                    Triggering and quality are separate tests: first ask whether the right
+                    tasks load the skill, then ask whether the loaded workflow improves the
+                    result.</p>
+
+                    <h3>The body can carry a runnable procedure</h3>
+
+                    <p>The website-control body does not put every check in its frontmatter.
+                    Its 120 lines say which state files matter, when to record a handoff, and
+                    when to invoke the local entry command that performs validation. The body
+                    is the bridge between a natural-language trigger and an actual command.</p>
+
+                    <p>Optional scripts change the shape again. They let a skill package a
+                    repeatable calculation, validator, or converter beside the instructions.
+                    Here, the instructions say when to run the validator and how much to trust
+                    its result; the script checks structural facts deterministically. The agent
+                    must still run it through a tool, and the harness&rsquo;s permissions still
+                    decide whether that request is honoured. A skill can explain a procedure
+                    and carry its implements; it does not bypass the machine around the model.</p>
+
+                    <p>The validator does not certify prose, citations, or visual quality. It
+                    checks only the control structure it was written to check. This division of
+                    labour is useful: prose tells the agent what the result means, while code
+                    makes a narrow, repeatable test harder to forget or improvise.</p>
+
+                    <p>The complete control pack remains local. The public page shows only safe
+                    excerpts needed to teach the pattern, not its live handoff, current-state,
+                    or configuration records. A skill can therefore bundle useful local
+                    machinery without turning every working file into public documentation.</p>
+
+                    <h3>Choose the smallest durable lever</h3>
+
+                    <table class="hz-table">
+                        <thead>
+                            <tr><th>If the need is...</th><th>Put it in...</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>A fact or rule that should accompany nearly every task in one repository</td><td><code>AGENTS.md</code></td></tr>
+                            <tr><td>A reusable workflow with task-specific instructions, references, or scripts</td><td>A skill</td></tr>
+                            <tr><td>A property that must hold even when the model ignores its instructions</td><td>A hook, permission, test, or sandbox</td></tr>
+                            <tr><td>A new way to sense or change the world</td><td>A tool</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>A skill occupies the useful middle. It is richer than one always-loaded
+                    instruction file and cheaper than putting an encyclopedia into every
+                    prompt. It packages the part of expertise that can be written down: the
+                    order of work, the questions to ask, the references to consult, the checks
+                    that catch familiar errors.</p>
+
+                    <p>It still asks the model to follow text. When following text is not good
+                    enough, the next lever changes from advice to interception.</p>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-agent-skills">Agent Skills. &ldquo;Specification.&rdquo;
+                        Checked 24 July 2026.
+                        <a href="https://agentskills.io/specification" target="_blank" rel="noopener">agentskills.io/specification</a>.
+                        Used for the shared directory format and the three progressive-disclosure tiers.</li>
+                        <li id="ref-codex-skills">OpenAI. &ldquo;Build skills.&rdquo; Codex
+                        documentation, checked 24 July 2026.
+                        <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener">learn.chatgpt.com/docs/build-skills</a>.
+                        Used for current Codex catalogue, activation, and discovery behaviour.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +340,121 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script>
+    (function () {
+        "use strict";
+        var buttons = document.querySelectorAll("[data-skill-stage]");
+        var tiers = document.querySelectorAll("[data-skill-tier]");
+        var note = document.getElementById("skill-stage-note");
+        var notes = [
+            "The harness can see enough metadata to consider the skill. Its 120-line body and 487-line validator remain on disk.",
+            "A website task has selected the skill. Its 120-line SKILL.md is now available to the model, while the validator remains on disk.",
+            "The workflow has reached validation. controlctl.py --repo . begin invokes the validator; its output returns to context without loading the entire script as instructions."
+        ];
+
+        function showStage(stage) {
+            for (var i = 0; i < buttons.length; i++) {
+                var selected = Number(buttons[i].getAttribute("data-skill-stage")) === stage;
+                buttons[i].classList.toggle("is-on", selected);
+                buttons[i].setAttribute("aria-pressed", selected ? "true" : "false");
+            }
+            for (var j = 0; j < tiers.length; j++) {
+                var tier = Number(tiers[j].getAttribute("data-skill-tier"));
+                var loaded = tier <= stage;
+                var state = tiers[j].querySelector(".hz-skill-tier-state");
+                tiers[j].classList.toggle("is-loaded", loaded);
+                if (state) state.textContent = loaded ? "In context" : "On disk";
+            }
+            if (note) note.textContent = notes[stage];
+        }
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function () {
+                showStage(Number(this.getAttribute("data-skill-stage")));
+            });
+        }
+    })();
+    </script>
+
+    <template id="concept-skill-control">
+        <div class="hz-file-meta">
+            <span>Screened teaching excerpt</span>
+            <span>120-line local skill &middot; checked 24 July 2026</span>
+        </div>
+        <pre class="hz-file-view hz-file-view-wrap">---
+name: website-control
+description: Mandatory continuity and handoff workflow for every development, analysis, review, planning, resume, or handoff task in the Adrian-Mag.github.io worktree. Use automatically once at task start or resumption, validate the exact Git identity and dirty state before trusting current knowledge, preserve unrelated work, connect substantial changes to tracked plans, and refresh the structured handoff at meaningful close. Also use when auditing control drift or updating workspace knowledge after a verified change.
+---
+
+# Website Control
+
+## Start or resume
+
+1. Resolve the canonical skill and identify the repository that owns the control pack.
+2. Read the principles, then the handoff.
+3. Compare the recorded root, branch, commit, and dirty state with Git.
+4. Run:
+   python3 docs/agent-docs/control/skills/website-control/scripts/controlctl.py --repo . begin
+5. If applicability fails, stop workspace work, rebuild the local notes from
+   Git and source evidence, then run the validator again through the same entry.
+
+## Close or hand off
+
+1. Refresh the structured handoff with state, evidence, risks, and one next safe action.
+2. Run:
+   python3 docs/agent-docs/control/skills/website-control/scripts/controlctl.py --repo . close</pre>
+        <p>The original skill remains in ignored local control. This popup exposes only the
+        catalogue frontmatter and safe workflow excerpts needed to teach the pattern.</p>
+    </template>
+
+    <template id="concept-skill-validator">
+        <div class="hz-file-meta">
+            <span>Screened teaching excerpt</span>
+            <span>487-line bundled script &middot; checked 24 July 2026</span>
+        </div>
+        <pre class="hz-file-view">#!/usr/bin/env python3
+"""Validate the local Adrian-Mag.github.io control pack without dependencies."""
+
+def main() -> int:
+    args = parse_args()
+    requested = args.repo.expanduser().resolve()
+    repo = Path(git(requested, "rev-parse", "--show-toplevel").stdout.strip())
+    control = repo / "docs" / "agent-docs" / "control"
+
+    missing_control = [name for name in CONTROL_FILES if not (control / name).is_file()]
+    if missing_control:
+        fail("missing required control files: " + ", ".join(missing_control))
+
+    manifest = validate_manifest(repo, control)
+    handoff_path = args.handoff.resolve() if args.handoff else control / "HANDOFF.json"
+    validate_handoff(repo, control, handoff_path, args.allow_stale)
+    validate_privacy_and_adapters(repo, control)
+
+    print(
+        "PASS: control pack is structurally valid for "
+        f"{git(repo, 'branch', '--show-current').stdout.strip()} at "
+        f"{git(repo, 'rev-parse', '--short', 'HEAD').stdout.strip()} "
+        f"({manifest['control_id']})"
+    )
+    return 0</pre>
+        <p>These are verbatim, non-contiguous source excerpts; the ellipsis marks omitted code.
+        The instructions tell the agent when to run it; the script makes those narrow checks
+        reproducible.</p>
+    </template>
+
+    <template id="concept-skill-run">
+        <div class="hz-file-meta">
+            <span>Screened live run</span>
+            <span>Captured 24 July 2026</span>
+        </div>
+        <pre class="hz-file-view">$ python3 docs/agent-docs/control/skills/website-control/scripts/controlctl.py --repo . begin
+control receipt: validated</pre>
+        <p>This result certifies the control pack's structure and applicability. It does not
+        certify prose, citations, visual rendering, or the quality of an agent's decisions.</p>
+    </template>
+
+    <script src="../../../../js/concept-popup.js?v=38" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

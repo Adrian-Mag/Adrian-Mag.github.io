@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mechanism, Not Trust - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
     <meta name="description" content="Mechanism, Not Trust — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Mechanism, Not Trust - Adrian Mag">
@@ -30,7 +31,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +89,171 @@
                     <p class="act-lede">Where text stops being enough. Deterministic interception that runs whether or not the model cooperates. Includes the honest limitation: this is a blocklist, it over-blocks, and it has gaps. A mechanism without a stated threat model is marketing.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Hook interceptor</li><li><b>Artifact:</b> privacy_guard.py + live denial events</li></ul>
+                <div class="hz-prose">
+                    <p>Suppose an instruction says, &ldquo;Do not edit the generated search
+                    index directly.&rdquo; That is useful guidance. It can also be forgotten,
+                    displaced by a long conversation, or ignored by a model that has found
+                    what it thinks is a quicker route.</p>
+
+                    <p>A hook changes the location of the decision. Instead of asking the
+                    model to remember a rule, the harness pauses at a lifecycle event and
+                    runs ordinary code. For a tool call, that code can inspect the proposed
+                    input before the tool runs and return a verdict. The model proposes;
+                    the mechanism decides.</p>
+
+                    <h3>A real hook, built for this page</h3>
+
+                    <p>The exhibit below comes entirely from this public website repository.
+                    It protects <code>media/search-index.json</code>, a generated file that
+                    should normally be replaced by running
+                    <code>python3 tools/build_search_index.py</code>. The policy is deliberately
+                    small: permit that exact rebuild command, deny every other Bash command
+                    containing the protected path, and allow everything else.</p>
+
+                    <div class="hz-panel" id="hook-interceptor-panel">
+                        <div class="hz-panel-head">
+                            <span class="hz-panel-title">PreToolUse interceptor</span>
+                            <span class="hz-illustrative">Recorded protocol probes</span>
+                        </div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls" role="group" aria-label="Recorded hook probe">
+                                <button class="hz-btn is-on" type="button" data-hook-case="0" aria-pressed="true">Approved rebuild</button>
+                                <button class="hz-btn" type="button" data-hook-case="1" aria-pressed="false">Direct delete</button>
+                                <button class="hz-btn" type="button" data-hook-case="2" aria-pressed="false">Safe read</button>
+                                <button class="hz-btn" type="button" data-hook-case="3" aria-pressed="false">Constructed path</button>
+                            </div>
+
+                            <div class="hz-hook-flow" aria-label="Hook decision flow">
+                                <div class="hz-hook-node">
+                                    <span class="hz-hook-step">1 &middot; model</span>
+                                    <b>Proposes Bash</b>
+                                </div>
+                                <span class="hz-hook-arrow" aria-hidden="true">&rarr;</span>
+                                <div class="hz-hook-node is-active">
+                                    <span class="hz-hook-step">2 &middot; harness</span>
+                                    <b>Runs PreToolUse</b>
+                                </div>
+                                <span class="hz-hook-arrow" aria-hidden="true">&rarr;</span>
+                                <div class="hz-hook-node" id="hook-outcome-node">
+                                    <span class="hz-hook-step">3 &middot; verdict</span>
+                                    <b id="hook-outcome-label">Allow</b>
+                                </div>
+                            </div>
+
+                            <pre class="hz-hook-command" id="hook-command">python3 tools/build_search_index.py</pre>
+                            <div class="hz-hook-result is-allow" id="hook-result" aria-live="polite">
+                                <span class="hz-hook-verdict" id="hook-verdict">ALLOW</span>
+                                <span id="hook-note">The one explicitly approved way to replace the generated file.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>These are not invented outcomes. On 21 July 2026, a recorder sent four
+                    documented <code>PreToolUse</code> payloads to the exact hook process on
+                    standard input and captured its output. It classified the candidate
+                    commands but never executed them. One additional ephemeral Codex session
+                    produced a live denial: the harmless <code>rg</code> command in the third
+                    button was stopped before it ran.</p>
+
+                    <div class="hz-versioned">
+                        <b>Codex-specific, checked 24 July 2026.</b> The event name, JSON fields,
+                        discovery rules, and denial response shown here belong to the current
+                        Codex hook interface. They are harness behaviour, not a property of a
+                        language model or a universal agent protocol.<sup><a href="#ref-codex-hooks">1</a></sup>
+                    </div>
+
+                    <h3>Open the mechanism</h3>
+
+                    <p>The cards expose the complete public artifacts. The first is the policy
+                    code. The second is the wiring that asks Codex to run it before Bash. The
+                    third is a screened extract of the live denial. They are text, not
+                    screenshots, so the exact rule and event can be inspected.</p>
+
+                    <div class="hz-doc-grid" aria-label="Real website-local hook artifacts">
+                        <button type="button" class="concept-term hz-doc-card" data-concept="hook-policy" data-concept-title="public_asset_guard.py">
+                            <span class="hz-doc-path">figure_generation/harness/hook_demo/public_asset_guard.py</span>
+                            <span class="hz-doc-name">The complete policy</span>
+                            <span class="hz-doc-summary">A small executable blocklist with one protected path and one approved rebuild.</span>
+                            <span class="hz-doc-open">Open file</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="hook-wiring" data-concept-title="hooks.json">
+                            <span class="hz-doc-path">figure_generation/harness/hook_demo/hooks.json</span>
+                            <span class="hz-doc-name">The complete wiring</span>
+                            <span class="hz-doc-summary">A Bash matcher connected to the policy at the PreToolUse event.</span>
+                            <span class="hz-doc-open">Open file</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="hook-live" data-concept-title="Live denial extract">
+                            <span class="hz-doc-path">media/research/harness/hook-live-denial.txt</span>
+                            <span class="hz-doc-name">The intercepted event</span>
+                            <span class="hz-doc-summary">The requested command, Codex router event, model-facing report, and screening note.</span>
+                            <span class="hz-doc-open">Open recording</span>
+                        </button>
+                    </div>
+
+                    <h3>The threat model is the product</h3>
+
+                    <p>This hook is designed to reduce one narrow failure: an agent
+                    accidentally touching a generated file through a plainly written Bash
+                    command. It is not designed to stop a hostile program. The two right-hand
+                    buttons make the boundary visible.</p>
+
+                    <p>The safe read is a false positive. It contains the protected path, so
+                    the hook blocks it even though <code>rg</code> would not write anything.
+                    The constructed-path example is a false negative. The full filename never
+                    appears as one string, so the hook allows a command whose apparent intent
+                    is deletion. That command was only classified by the recorder; it was not
+                    executed.</p>
+
+                    <p>More careful parsing could shrink both errors, but it would not turn
+                    this particular hook into a complete security boundary. In current Codex,
+                    some specialised paths may bypass the normal hook path, hosted tools such
+                    as web search are not covered, project hooks depend on trust, and malformed
+                    responses using unsupported fields can fail to block.<sup><a href="#ref-codex-hooks">1</a></sup>
+                    Matching command hooks for the same event can also run concurrently, so one
+                    hook is not a global ordering mechanism for all other hooks.
+                    The useful claim is smaller: for an event the harness exposes, valid code
+                    can make a deterministic decision outside the model.</p>
+
+                    <h3>Permissions are not just another hook</h3>
+
+                    <p>A hook is user-supplied lifecycle code. A sandbox is an enforced
+                    boundary around what spawned commands may read, write, or reach over the
+                    network. An approval policy decides when the agent must stop and ask before
+                    crossing that boundary. Current Codex documentation treats these as two
+                    controls that work together.<sup><a href="#ref-codex-sandbox">2</a></sup></p>
+
+                    <div class="hz-compare">
+                        <div>
+                            <h4>Hook</h4>
+                            <p>Custom policy at a named event. Flexible, inspectable, and only
+                            as complete as its matcher, code, response, trust, and event
+                            coverage.</p>
+                        </div>
+                        <div>
+                            <h4>Sandbox and approval</h4>
+                            <p>Harness controls around execution. The sandbox constrains the
+                            command; the approval flow mediates requests to cross the chosen
+                            boundary.</p>
+                        </div>
+                    </div>
+
+                    <p>The sequence now has three distinct levers. <code>AGENTS.md</code> puts
+                    durable advice into context. A skill reveals a detailed procedure when it
+                    is relevant. A hook or permission boundary moves a decision out of prose.
+                    None changes the model. Each changes the machine around it.</p>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-codex-hooks">OpenAI. &ldquo;Hooks.&rdquo; Codex documentation,
+                        checked 24 July 2026.
+                        <a href="https://learn.chatgpt.com/docs/hooks" target="_blank" rel="noopener">learn.chatgpt.com/docs/hooks</a>.
+                        Used for discovery, trust, tool coverage, event input, and denial
+                        semantics.</li>
+                        <li id="ref-codex-sandbox">OpenAI. &ldquo;Sandbox.&rdquo; Codex documentation,
+                        checked 24 July 2026.
+                        <a href="https://learn.chatgpt.com/docs/sandboxing" target="_blank" rel="noopener">learn.chatgpt.com/docs/sandboxing</a>.
+                        Used for the separation between sandbox boundaries and approval policy.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +291,201 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <template id="concept-hook-policy">
+        <div class="hz-file-meta">
+            <span>Complete public file</span>
+            <span>recorded 21 July 2026</span>
+        </div>
+        <pre class="hz-file-view">#!/usr/bin/env python3
+&quot;&quot;&quot;Codex PreToolUse demo: guard one generated website asset.
+
+Threat model: reduce accidental direct changes to the generated search index.
+This is deliberately a small string blocklist, not a security boundary. It
+blocks every Bash command that contains the protected path unless the command
+is the one approved rebuild command. That makes its false positives and its
+easy string-construction bypass visible enough to teach from.
+&quot;&quot;&quot;
+
+from __future__ import annotations
+
+import json
+import sys
+
+
+PROTECTED_PATH = &quot;media/search-index.json&quot;
+APPROVED_REBUILD = &quot;python3 tools/build_search_index.py&quot;
+DENIAL_REASON = (
+    &quot;Direct access to media/search-index.json is blocked. &quot;
+    &quot;Regenerate it with python3 tools/build_search_index.py.&quot;
+)
+
+
+def verdict(payload: object) -&gt; dict[str, object] | None:
+    &quot;&quot;&quot;Return a Codex denial object, or ``None`` to allow the event.&quot;&quot;&quot;
+    if not isinstance(payload, dict):
+        return None
+    if payload.get(&quot;hook_event_name&quot;) != &quot;PreToolUse&quot;:
+        return None
+    if payload.get(&quot;tool_name&quot;) != &quot;Bash&quot;:
+        return None
+
+    tool_input = payload.get(&quot;tool_input&quot;)
+    if not isinstance(tool_input, dict):
+        return None
+    command = tool_input.get(&quot;command&quot;)
+    if not isinstance(command, str):
+        return None
+
+    if command.strip() == APPROVED_REBUILD:
+        return None
+    if PROTECTED_PATH not in command:
+        return None
+
+    return {
+        &quot;hookSpecificOutput&quot;: {
+            &quot;hookEventName&quot;: &quot;PreToolUse&quot;,
+            &quot;permissionDecision&quot;: &quot;deny&quot;,
+            &quot;permissionDecisionReason&quot;: DENIAL_REASON,
+        }
+    }
+
+
+def main() -&gt; int:
+    try:
+        payload = json.load(sys.stdin)
+    except (json.JSONDecodeError, OSError):
+        return 0
+
+    decision = verdict(payload)
+    if decision is not None:
+        json.dump(decision, sys.stdout, separators=(&quot;,&quot;, &quot;:&quot;))
+        sys.stdout.write(&quot;\n&quot;)
+    return 0
+
+
+if __name__ == &quot;__main__&quot;:
+    raise SystemExit(main())</pre>
+    </template>
+
+    <template id="concept-hook-wiring">
+        <div class="hz-file-meta">
+            <span>Complete public file</span>
+            <span>Codex hooks.json</span>
+        </div>
+        <pre class="hz-file-view">{
+  &quot;description&quot;: &quot;Public teaching exhibit: protect the generated search index.&quot;,
+  &quot;hooks&quot;: {
+    &quot;PreToolUse&quot;: [
+      {
+        &quot;matcher&quot;: &quot;^Bash$&quot;,
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;/usr/bin/python3 \&quot;$(git rev-parse --show-toplevel)/figure_generation/harness/hook_demo/public_asset_guard.py\&quot;&quot;,
+            &quot;timeout&quot;: 10,
+            &quot;statusMessage&quot;: &quot;Checking generated website assets&quot;
+          }
+        ]
+      }
+    ]
+  }
+}</pre>
+    </template>
+
+    <template id="concept-hook-live">
+        <div class="hz-file-meta">
+            <span>Screened live extract</span>
+            <span>21 July 2026</span>
+        </div>
+        <pre class="hz-file-view">ACT 8 HOOK EXHIBIT - SCREENED LIVE EXTRACT
+Captured 21 July 2026 in this website repository.
+
+Invocation
+  Codex CLI, ephemeral session, project hook trust bypassed for this vetted
+  one-off capture. The requested Bash command was read-only.
+
+Requested command
+  rg -l title media/search-index.json
+
+Observed Codex event
+  ERROR codex_core::tools::router: error=Command blocked by PreToolUse hook:
+  Direct access to media/search-index.json is blocked. Regenerate it with
+  python3 tools/build_search_index.py.. Command: rg -l title
+  media/search-index.json
+
+Model-facing report
+  The command was blocked by a `PreToolUse` hook:
+
+  &gt; Direct access to `media/search-index.json` is blocked. Regenerate it with
+  &gt; `python3 tools/build_search_index.py`.
+
+Result
+  The command did not run. This is also a real false positive: `rg -l` would
+  only have read the generated file, but the intentionally small blocklist
+  rejects every mention of the path except the approved rebuild command.
+
+Screening note
+  Session and turn identifiers, token-usage metadata, and startup warnings are
+  omitted. The command, hook reason, and model-facing report above are copied
+  from the live event; no denial text was reconstructed from memory.</pre>
+    </template>
+
+    <script>
+    (function () {
+        "use strict";
+        var cases = [
+            {
+                command: "python3 tools/build_search_index.py",
+                verdict: "ALLOW",
+                note: "The one explicitly approved way to replace the generated file."
+            },
+            {
+                command: "rm -f media/search-index.json",
+                verdict: "DENY",
+                note: "The protected path appears, so the hook denies the call before execution. This was a protocol probe; the command was not run."
+            },
+            {
+                command: "rg -l title media/search-index.json",
+                verdict: "DENY",
+                note: "False positive: a safe read is denied because the blocklist only sees the path string. A live Codex capture confirmed this class of denial."
+            },
+            {
+                command: "python3 -c 'from pathlib import Path; Path(\"media/search-\" + \"index.json\").unlink()'",
+                verdict: "ALLOW",
+                note: "Gap: the full path never appears contiguously, so the blocklist misses the apparent intent. This command was classified, never executed."
+            }
+        ];
+        var buttons = document.querySelectorAll("[data-hook-case]");
+        var command = document.getElementById("hook-command");
+        var result = document.getElementById("hook-result");
+        var verdict = document.getElementById("hook-verdict");
+        var note = document.getElementById("hook-note");
+        var outcome = document.getElementById("hook-outcome-label");
+
+        function showCase(index) {
+            var item = cases[index];
+            for (var i = 0; i < buttons.length; i++) {
+                var selected = Number(buttons[i].getAttribute("data-hook-case")) === index;
+                buttons[i].classList.toggle("is-on", selected);
+                buttons[i].setAttribute("aria-pressed", selected ? "true" : "false");
+            }
+            command.textContent = item.command;
+            verdict.textContent = item.verdict;
+            outcome.textContent = item.verdict === "DENY" ? "Block tool" : "Allow tool";
+            note.textContent = item.note;
+            result.classList.toggle("is-deny", item.verdict === "DENY");
+            result.classList.toggle("is-allow", item.verdict === "ALLOW");
+        }
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function () {
+                showCase(Number(this.getAttribute("data-hook-case")));
+            });
+        }
+    })();
+    </script>
+    <script src="../../../../js/concept-popup.js?v=38" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

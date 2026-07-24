@@ -1,7 +1,8 @@
 ## Plan: "The Machine Around the Model" — a series on agentic AI usage
 **Status:** active   **Created:** 2026-07-18
+**Drafting progress:** Acts 1–11 and the summary complete; final series review and accessibility checks remain.
 
-> Companion: `machine-around-the-model-sources.md` — the verified source dossier and artifact
+> Companion: `docs/agent-docs/references/sources/machine-around-the-model-sources.md` — the verified source dossier and artifact
 > inventory. No citation enters the series without an entry there.
 
 ### Goal
@@ -13,7 +14,7 @@ The arc runs from the chat box everyone knows, through the LLM-as-CPU / harness-
 framing, to the concrete levers — AGENTS.md, skills, hooks, tools/MCP, retrieval, memory,
 orchestration.
 
-Aimed at people who have used AI "a little" and concluded it is unimpressive. The thesis is
+Aimed at people who have used AI "a little" and concluded it is unimpressive. The central claim is
 that their experience was accurate but was a measurement of the *harness*, not the *model*.
 
 ---
@@ -105,15 +106,16 @@ out) and its strength (costless to write, instantly changeable). What distinguis
 one from decoration.
 
 **Act 7 — Packaging Expertise: Skills.**
-Progressive disclosure: a short description sits in context permanently, the full body is
-loaded only when relevant. Why this beats one enormous system prompt — context is a scarce,
-paid resource, and everything you load competes with everything else.
+Progressive disclosure: a short description sits in the initial catalogue, and the full body
+loads only when relevant. Why this beats one enormous system prompt: context is finite, and
+everything loaded competes with everything else.
 
 **Act 8 — Mechanism, Not Trust: Hooks and Permissions.**
 Where text stops being enough. Deterministic interception that runs whether or not the model
-cooperates. **Text can be argued with; code cannot.** This is the natural home for the
-privacy-guard exhibit from the poster — including the false positive, which is the proof the
-rule actually runs.
+cooperates for the events the harness exposes. Code moves the decision outside the model, but
+the hook is only as strong as its event coverage, matcher, response, trust, and threat model.
+The exhibit must be created or captured inside this public website workspace. Do not use
+artifacts or session logs from private workspaces.
 
 **Act 9 — New Senses: How a Capability Becomes Available.** *(narrowed — see Resolved, 2nd pass)*
 Tool design. Tool definitions as an interface contract; why descriptions are load-bearing —
@@ -135,7 +137,7 @@ most tasks do not need this, and reaching for orchestration early is the most co
 expensive mistake.
 
 **Summary — The Instrument.**
-Ties back to the poster's thesis: what all this machinery is *for*. Verification, audit,
+Ties back to the poster's central claim: what all this machinery is *for*. Verification, audit,
 honest limits, and a frank section on where it is still bad.
 
 > **11 acts is one or two more than any existing series on the site.** Merge candidates, if
@@ -177,6 +179,10 @@ vendor documentation for tool use, context management, and agent architecture.
 | `pages/research/overview/harness/the-machine-around-the-model.html` | Landing: hero, act nav, overview, sources |
 | `pages/research/overview/harness/act-1.html` … `act-11.html` | The acts |
 | `pages/research/overview/harness/summary.html` | Summary + the closing argument |
+| `pages/research/overview/harness/agentic-structure-map.html` | House-building robot analogy plus an original hardware-inspired interactive board: context, next-token model, action tools, persistent records, evidence checks, the full prompt-triggered control/recovery loop, optional abilities, and an explicit monitoring gap |
+| `pages/research/overview/harness/workspace-explorer.html` | VS Code-style recursive explorer of selected real agent-related paths, showing explanations but never file contents |
+| `pages/research/overview/ai-in-practice.html` | Landing for the series, its two interactive maps, and AI-assisted-research material |
+| Both workspace maps | Per-file routing explanations: how a Codex or Claude session reaches a file, including their distinct pre-prompt project-context routes; when a skill loads, when a script is actually run, Git's automatic local commit-message check, and Playwright MCP as an optional visible browser ability rather than a workflow. The relationship page uses the same house-building robot analogy, then shows the literal workspace mechanics on a hardware-inspired board. Its control region keeps the whole route visible: bootstrap, skill, provisional continuity note, Git comparison, validator, pass/fail, redacted incident plus repair/revalidate, selected records, four-way plan decision, work, phase landing, refreshed handoff, and revalidation. The blue host/session loop remains separate from the orange workspace routine, and the board marks the absence of permanent monitoring. A workspace task may lead to conditional site maintenance (notes prose/search, CSS or JavaScript/cache, navigation/manual copies, browser validation), a figure or audit script, an optional browser ability, or an independent Git event. It deliberately omits ordinary source files plus the Act 8–9 teaching exhibits. The explorer's `.playwright-mcp/` selection links directly to that ability and labels its contents as scratch output |
 | `pages/research/overview/harness/ai-companion.txt` | Reading-companion brief (narrative arc, guardrails) |
 | `css/harness.css` | Series stylesheet, following `think-first-discretize-later.css` |
 | `index.html` | New homepage section (see Q1) |
@@ -201,10 +207,41 @@ Each is independently committable.
 - **Phase 2 — Movement I** (Acts 1–3). Includes the statelessness demonstration, which is
   the piece most worth getting right.
 - **Phase 3 — Movement II** (Acts 4–5) + the loop and anatomy diagrams.
-- **Phase 4 — Movement III, part one** (Acts 6–8). Reuses poster exhibits for the hooks act.
+- **Phase 4 — Movement III, part one** (Acts 6–8). The hooks exhibit must come from this
+  public website workspace.
 - **Phase 5 — Movement III, part two** (Acts 9–11).
 - **Phase 6 — Summary, companion file, citation verification pass, search index rebuild,
   accessibility check** (the site is at Lighthouse 100 on other pages; hold that bar).
+
+### Companion-map review (2026-07-24)
+
+The relationship map and curated explorer were checked against the live workspace and reviewed
+with Playwright at desktop and narrow widths. The map now visibly records its review date,
+routes all non-terminal arrows around cards, has no node overlap, and returns to Act 11, where
+the map is introduced. Every map popup opens with a non-empty explanation; pan, zoom, reset,
+and the return link were exercised. The explorer now records its review date, labels its two
+active plans and two companion pages honestly as untracked worktree drafts, resolves all 126
+curated paths against the workspace, opens every detail pane with route information, and scrolls
+when fully expanded. The remaining Phase 6 work is series-wide review, accessibility checks,
+and replacing Act 3's labelled mock with a real recording.
+
+### Map layout follow-up (2026-07-24)
+
+The board's Persist/SSD region was moved below Action so their boundaries no longer overlap;
+the Observe region now clears the model; the Control frame shifted left; and the downstream
+control steps moved down to make the new/resumed-task entry legible. Connectors were rerouted
+to the new destinations. A Playwright render confirmed zero node overlaps and no horizontal
+overflow at a 390px viewport.
+
+The next routing pass widened Action, left a visible Control-to-Persist gap, and made the
+blue host-session return a short top-of-model loop to Conversation so it does not cross the
+current-prompt input. The two yellow skill links now terminate at their distinct durable
+records: Citation Audit and the Legacy continuity bridge.
+
+The AI material now has a dedicated `ai-in-practice.html` landing beside the research
+overview. It gathers the series, its two maps, and AI-assisted-research material; the
+homepage and the global dropdown both link to it. The Act 4 map link carries an explicit
+source marker, so the map swaps its default Act 11 return button for an Act 4 return.
 
 Drafting note: I write a technically-grounded draft, you revise for voice and for what you
 actually believe. Where I am uncertain, the draft will say so inline rather than bluffing —
@@ -282,3 +319,35 @@ standard, and here is the one place I actually use it."
 **Q8 — Act count.** Still 11, which is one or two more than any shipped series on the site.
 Merge candidates remain Act 4 + Act 5, or Act 10 + Act 11. Deferred until drafting reveals
 whether the length is real.
+
+### Implementation note (2026-07-21) — Act 6 artifacts
+
+Act 6 uses accessible text popups, reusing the existing `concept-popup.js` modal, rather than
+an image of an instruction file. The sole exhibit is a verbatim snapshot of this website's own
+`AGENTS.md`. It includes the no-build setup, living-reference routing, cache busting, search-
+index rebuild, and local-control bootstrap without exposing unrelated workspaces. The settings/
+guidance distinction remains in prose and leads into the mechanisms of Act 8. The interactive
+context inspector is explicitly labelled as a mechanism diagram, not a recorded transcript.
+
+### Implementation note (2026-07-24) — Act 7 artifacts
+
+Act 7 uses the open Agent Skills specification as the vendor-neutral spine and dated Codex
+documentation for current client behaviour. Its progressive-disclosure panel is a mechanism
+diagram built from the real local `website-control` skill: a 70-word description routes to a
+120-line `SKILL.md`, whose workflow can invoke a bundled 281-line entry command and 487-line
+validator. The page uses screened excerpts rather than complete private control files and
+records one real `controlctl.py --repo . begin` result. Live handoff, state, and configuration
+records remain local-only. The source dossier
+records the publication boundary, exact measures, product boundaries, and verification date.
+
+### Implementation note (2026-07-21) — Act 8 artifacts
+
+Act 8 uses a website-local Codex `PreToolUse` policy protecting the generated search index.
+The interactive panel replays four outputs measured by invoking the exact hook process with
+documented JSON payloads: one allowed rebuild, one denied deletion, a denied read-only false
+positive, and an allowed string-construction gap. Candidate commands were classified and not
+executed. A separate ephemeral Codex run produced the live denial extract for the harmless
+read, proving that the configuration was wired into the real lifecycle rather than only
+tested as a standalone script. Accessible popups expose the complete policy, complete
+`hooks.json`, and complete screened live extract. The prose keeps hooks, sandboxing, and
+approvals distinct and dates current Codex hook and sandbox behaviour to 24 July 2026.

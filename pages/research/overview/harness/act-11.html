@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orchestration - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
     <meta name="description" content="Orchestration — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Orchestration - Adrian Mag">
@@ -30,7 +30,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +88,73 @@
                     <p class="act-lede">When one loop is not enough: graphs, subagent delegation, who supplies the harness versus who supplies the deployment. With the counterweight: most tasks do not need this.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    
+                <div class="hz-prose">
+                    <p>Orchestration begins when one loop is no longer enough. Instead of one
+                    agent choosing the next action, a harness can route work through several
+                    steps, branches, or agents. A graph is a useful picture: nodes do work or
+                    hold state; edges say what can happen next.</p>
+
+                    <p>That picture can become theatrical very quickly. A graph is not proof
+                    that a system needs many agents, and a second model call does not repair a
+                    vague task. In the small website workflow used throughout these acts, the
+                    useful graph is mostly ordinary engineering: instructions route to a plan,
+                    the plan routes to source and page files, checks feed evidence back into a
+                    handoff, and the next task starts from verified state.</p>
+
+                    <div class="hz-panel">
+                        <div class="hz-panel-head"><span class="hz-panel-title">A single-agent control graph</span><span class="hz-illustrative">Workspace structure</span></div>
+                        <div class="hz-panel-body">
+                            <p>One agent can follow a graph without spawning another agent:</p>
+                            <pre class="hz-skill-payload">request
+  ↓
+AGENTS.md and selected skill
+  ↓
+plan + source dossier + page files
+  ↓
+change → focused checks → handoff
+  ↘                 ↙
+     next verified task</pre>
+                            <p class="hz-skill-note">Every box is represented by a real component in this workspace. The map below makes the relationships inspectable.</p>
+                            <p><a class="hz-btn" href="agentic-structure-map.html">Open the interactive workspace map</a></p>
+                        </div>
+                    </div>
+
+                    <h3>When a graph earns its cost</h3>
+
+                    <p>Split work only when the split gives something concrete: independent
+                    evidence, a different permission boundary, a separate tool contract, or a
+                    review point with a named owner. The public hook and tool demonstrations in
+                    this workspace are good examples of boundary nodes. They do not make a
+                    multi-agent system; they make particular operations inspectable and
+                    repeatable.</p>
+
+                    <p>Multiple agents add queues, duplicated context, conflicting summaries,
+                    and a new question: who checks the checker? For most changes, a single
+                    well-informed loop with retrieval, tests, and a handoff is cheaper and
+                    easier to audit. Anthropic&rsquo;s current workflow guidance makes the same
+                    caution: improve a single call and its context before adding orchestration.
+                    <sup><a href="#ref-workflows">1</a></sup></p>
+
+                    <h3>Control is not deployment</h3>
+
+                    <p>The map is a description of this workspace&rsquo;s agent-facing structure,
+                    not a deployed service architecture. The browser serves static files. The
+                    agent-docs library holds plans, references, citation evidence, and the
+                    soft Agent Ledger. The local control overlay helps an agent resume work
+                    through a legacy continuity bridge. The figure-generation scripts create
+                    assets on demand. None of those facts imply background workers, autonomous
+                    changes, or a hidden team of agents.</p>
+
+                    <p>That is the final discipline of the series: name the loop, name the
+                    boundary, and name the evidence. If a box cannot be pointed to in source or
+                    observed in a check, it belongs in a proposal, not in a capability claim.</p>
+
+                    <h3>Reference</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-workflows">Anthropic. &ldquo;Building effective agents.&rdquo; Checked 24 July 2026.
+                        <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">anthropic.com/engineering/building-effective-agents</a>.
+                        Used for the workflow/agent distinction and the caution against premature orchestration.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +192,7 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

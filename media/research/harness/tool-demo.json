@@ -1,0 +1,76 @@
+{
+  "_comment": "Recorded by invoking the public inspect_site_page.py handler. The traversal case was rejected before any outside path was read.",
+  "recorded_on": "2026-07-21",
+  "tool_definition": "figure_generation/harness/tool_demo/tool.json",
+  "handler": "figure_generation/harness/tool_demo/inspect_site_page.py",
+  "cases": [
+    {
+      "id": "inspect-act-8",
+      "label": "Allowed page inspection",
+      "arguments": {
+        "page": "pages/research/overview/harness/act-8.html"
+      },
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "result": {
+          "page": "pages/research/overview/harness/act-8.html",
+          "title": "Mechanism, Not Trust - Adrian Mag",
+          "description": "Mechanism, Not Trust — part of The Machine Around the Model, a series on how agentic AI systems actually work.",
+          "headings": [
+            {
+              "level": 1,
+              "text": "Mechanism, Not Trust"
+            },
+            {
+              "level": 3,
+              "text": "A real hook, built for this page"
+            },
+            {
+              "level": 3,
+              "text": "Open the mechanism"
+            },
+            {
+              "level": 3,
+              "text": "The threat model is the product"
+            },
+            {
+              "level": 3,
+              "text": "Permissions are not just another hook"
+            },
+            {
+              "level": 3,
+              "text": "References"
+            }
+          ],
+          "stylesheets": [
+            "../../../../css/theme.css?v=34",
+            "../../../../css/styles.css?v=34",
+            "../../../../css/harness.css?v=34",
+            "../../../../css/concept-popup.css?v=34"
+          ],
+          "scripts": [
+            "../../../../js/concept-popup.js?v=34",
+            "../../../../js/theme-toggle.js?v=34",
+            "../../../../js/nav-menu.js?v=34"
+          ]
+        }
+      }
+    },
+    {
+      "id": "reject-traversal",
+      "label": "Rejected path traversal",
+      "arguments": {
+        "page": "../outside.html"
+      },
+      "exit_code": 2,
+      "response": {
+        "ok": false,
+        "error": {
+          "code": "outside_repository",
+          "message": "page resolves outside the website repository."
+        }
+      }
+    }
+  ]
+}

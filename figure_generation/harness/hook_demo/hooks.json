@@ -1,0 +1,18 @@
+{
+  "description": "Public teaching exhibit: protect the generated search index.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/figure_generation/harness/hook_demo/public_asset_guard.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking generated website assets"
+          }
+        ]
+      }
+    ]
+  }
+}

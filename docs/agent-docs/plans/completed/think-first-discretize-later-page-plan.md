@@ -1,5 +1,7 @@
 ## Plan: "Think First, Discretize Later" — Website Explainer Page
 
+**Status:** completed   **Archived:** 2026-07-22
+
 A new research explainer page on `Adrian-Mag.github.io` that serves as **supplementary
 material for the EGU 2026 poster** (`media/research/posters/poster_EGU_26.pdf`). It walks
 a calculus-plus-linear-algebra audience from a naive boxcar inversion that "looks fine" to
@@ -181,3 +183,9 @@ done. The page presents a heavily simplified slice of its ideas.
    + the EGU poster card; not the global nav dropdown.
 2. `discretization.tex`: moved to `manuscripts/` and KEPT (superseded 2026-07-16); not shipped.
 3. Hero background: `triangulum.jpg`.
+
+### Closing note
+
+All eight phases are recorded complete. The explainer was delivered in
+`55f739d` and later focused fixes; this plan is archived as a status
+reconciliation, with no new product change.

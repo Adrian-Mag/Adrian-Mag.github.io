@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Senses: How a Capability Becomes Available - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
     <meta name="description" content="New Senses: How a Capability Becomes Available — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="New Senses: How a Capability Becomes Available - Adrian Mag">
@@ -30,7 +31,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +89,208 @@
                     <p class="act-lede">Tool design. Definitions as interface contracts; why descriptions are load-bearing. The promote-to-a-dedicated-tool heuristic: gate, render, audit, parallelize. Closes with a short MCP section: host, client, server, and the one real invocation on record.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Artifact:</b> Tool definitions; one real MCP invocation</li></ul>
+                <div class="hz-prose">
+                    <p>A model can ask for a capability only if the harness tells it that the
+                    capability exists. Usually that introduction is a compact definition: a
+                    name, a description, and a schema for the arguments. The implementation
+                    remains outside the model. What enters context is the interface.</p>
+
+                    <p>That makes a tool definition more than API paperwork. It is a contract
+                    between three parties. The model sees what it may request. The harness
+                    learns how to validate and route the request. The implementation promises
+                    what it will return. If the contract is vague, all three can disagree
+                    while every component is behaving exactly as specified.</p>
+
+                    <h3>A real tool for this website</h3>
+
+                    <p>The tool below was built inside this public repository for this act.
+                    <code>inspect_site_page</code> accepts one repository-relative HTML path
+                    and returns a page title, meta description, heading outline, and local CSS
+                    and JavaScript dependencies. It cannot edit a file, return the page's body
+                    prose, inspect another file type, or follow a path outside the repository.</p>
+
+                    <div class="hz-panel" id="tool-contract-panel">
+                        <div class="hz-panel-head">
+                            <span class="hz-panel-title">One contract, three visible layers</span>
+                            <span class="hz-illustrative">Explanatory view of real contract</span>
+                        </div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls" role="group" aria-label="Tool contract layer">
+                                <button class="hz-btn is-on" type="button" data-tool-layer="identity" aria-pressed="true">Identity</button>
+                                <button class="hz-btn" type="button" data-tool-layer="selection" aria-pressed="false">Selection</button>
+                                <button class="hz-btn" type="button" data-tool-layer="structure" aria-pressed="false">Structure</button>
+                            </div>
+                            <div class="hz-tool-contract" aria-live="polite">
+                                <span class="hz-tool-contract-key" id="tool-contract-key">name + title</span>
+                                <code id="tool-contract-value">inspect_site_page</code>
+                                <p id="tool-contract-note">A distinct, action-shaped identity gives the model and router an unambiguous handle.</p>
+                            </div>
+                            <div class="hz-tool-route" aria-label="Tool request route">
+                                <span>model request</span><b>&rarr;</b><span>schema validation</span><b>&rarr;</b><span>handler</span><b>&rarr;</b><span>structured result</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>The middle button contains the exact 50-word description in the public
+                    definition. It states the job, the circumstances in which it is useful,
+                    and four things it must not be used for. That text is load-bearing because
+                    it is part of what the model receives when deciding whether the capability
+                    fits a request. Current OpenAI function-calling guidance likewise defines
+                    a description as explaining when and how to use a function, and recommends
+                    stating purpose, output shape, and when not to use it.<sup><a href="#ref-openai-tools">1</a></sup></p>
+
+                    <p>The schema carries a different kind of meaning. It says that
+                    <code>page</code> is required, that extra properties are not accepted, and
+                    that the input must look like a relative <code>.html</code> path. The
+                    handler then performs the security-relevant check that a regular expression
+                    cannot: it resolves the path and verifies that the result still lies under
+                    the repository root.</p>
+
+                    <div class="hz-panel" id="tool-call-panel">
+                        <div class="hz-panel-head">
+                            <span class="hz-panel-title">The handler, actually called</span>
+                            <span class="hz-illustrative">Recorded 21 July 2026</span>
+                        </div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls" role="group" aria-label="Recorded tool call">
+                                <button class="hz-btn is-on" type="button" data-tool-call="success" aria-pressed="true">Inspect Act 8</button>
+                                <button class="hz-btn" type="button" data-tool-call="rejected" aria-pressed="false">Try ../outside.html</button>
+                            </div>
+                            <pre class="hz-tool-call" id="tool-call-input">{"page":"pages/research/overview/harness/act-8.html"}</pre>
+                            <div class="hz-tool-result is-ok" id="tool-call-result">
+                                <span class="hz-tool-status" id="tool-call-status">EXIT 0</span>
+                                <div>
+                                    <b id="tool-call-heading">Mechanism, Not Trust - Adrian Mag</b>
+                                    <p id="tool-call-detail">6 headings &middot; 4 stylesheets &middot; 3 scripts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>These outcomes are recorded, not hypothetical. A recorder launched the
+                    complete public handler as a subprocess for both inputs. The first call
+                    parsed the real Act 8 file. The second was rejected with
+                    <code>outside_repository</code> before any outside path was read. Open the
+                    artifacts to inspect the complete contract, the gating code, and the full
+                    capture.</p>
+
+                    <div class="hz-doc-grid" aria-label="Real website-local tool artifacts">
+                        <button type="button" class="concept-term hz-doc-card" data-concept="tool-definition" data-concept-title="tool.json">
+                            <span class="hz-doc-path">figure_generation/harness/tool_demo/tool.json</span>
+                            <span class="hz-doc-name">The complete contract</span>
+                            <span class="hz-doc-summary">Description, input and output schemas, and behavioural hints in one public definition.</span>
+                            <span class="hz-doc-open">Open file</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="tool-gate" data-concept-title="inspect_site_page.py: input gate">
+                            <span class="hz-doc-path">figure_generation/harness/tool_demo/inspect_site_page.py</span>
+                            <span class="hz-doc-name">The path gate</span>
+                            <span class="hz-doc-summary">The complete validation function that rejects absolute, non-HTML, outside, and missing paths.</span>
+                            <span class="hz-doc-open">Open function</span>
+                        </button>
+                        <button type="button" class="concept-term hz-doc-card" data-concept="tool-recording" data-concept-title="tool-demo.json">
+                            <span class="hz-doc-path">media/research/harness/tool-demo.json</span>
+                            <span class="hz-doc-name">The complete recording</span>
+                            <span class="hz-doc-summary">Both inputs, exit codes, structured responses, and the files that produced them.</span>
+                            <span class="hz-doc-open">Open recording</span>
+                        </button>
+                    </div>
+
+                    <h3>When a command deserves a dedicated tool</h3>
+
+                    <p>A general shell is an excellent starting point. It already knows how to
+                    combine small programs, so there is little value in wrapping every command.
+                    Promotion becomes useful when repetition reveals a boundary that deserves
+                    a name. Four pressures are especially practical:</p>
+
+                    <div class="hz-tool-reasons">
+                        <div><b>Gate</b><span>Constrain paths, fields, actions, or permissions before implementation code runs.</span></div>
+                        <div><b>Render</b><span>Turn a messy source into the small structured result the next step actually needs.</span></div>
+                        <div><b>Audit</b><span>Give repeated work a stable request and response shape that can be logged and tested.</span></div>
+                        <div><b>Parallelize</b><span>Split independent units into separate calls that a harness can schedule concurrently.</span></div>
+                    </div>
+
+                    <p>This exhibit earns promotion on the first three grounds. The path check
+                    gates access. The parser renders HTML as a compact outline. The schema and
+                    recorder make calls auditable. A harness could issue independent page
+                    inspections concurrently, but this single handler does not itself run work
+                    in parallel.</p>
+
+                    <p>A dedicated tool is not automatically safer. Its description can be
+                    misleading, its schema can admit dangerous inputs, and its implementation
+                    can ignore both. Even the read-only and idempotent annotations in this
+                    contract are hints. The stable MCP specification tells clients not to trust
+                    tool annotations unless the server itself is trusted.<sup><a href="#ref-mcp-tools">2</a></sup>
+                    Enforcement still belongs in code and in the harness boundary around it.</p>
+
+                    <h3>MCP: a standard connection, not another model</h3>
+
+                    <p>Tool definitions solve the local interface problem. The Model Context
+                    Protocol standardizes how an application connects to external providers of
+                    tools and context. In the stable 2025-11-25 architecture, a <b>host</b> is
+                    the LLM application coordinating the experience and security boundaries. A
+                    <b>client</b> inside that host maintains an isolated connection to one
+                    server. The <b>server</b> exposes a focused set of capabilities.<sup><a href="#ref-mcp-architecture">3</a></sup></p>
+
+                    <div class="hz-mcp-flow" aria-label="MCP host client server relationship">
+                        <div><span>Host</span><b>LLM application</b><small>coordinates clients, context, consent</small></div>
+                        <b aria-hidden="true">contains &rarr;</b>
+                        <div><span>Client</span><b>one connection</b><small>speaks the protocol to one server</small></div>
+                        <b aria-hidden="true">connects &rarr;</b>
+                        <div><span>Server</span><b>capability provider</b><small>publishes tools, resources, prompts</small></div>
+                    </div>
+
+                    <p>There is one real MCP-mediated invocation already in this series. On 18
+                    July 2026, while this website was being inspected, a Claude Code session
+                    requested the Playwright screenshot tool and the harness returned the saved
+                    viewport. The exact request and result below are reused from the screened
+                    Act 4 trace.</p>
+
+                    <button type="button" class="concept-term hz-mcp-call" data-concept="mcp-call" data-concept-title="Real MCP-mediated invocation">
+                        <span>MODEL REQUEST</span>
+                        <code>mcp__plugin_playwright_playwright__browser_take_screenshot</code>
+                        <small>argument: ai-page-5.png</small>
+                        <b>Open the recorded request and result</b>
+                    </button>
+
+                    <div class="hz-versioned">
+                        <b>Protocol and product boundary, checked 24 July 2026.</b> Host, client,
+                        server, tool schema, and connection behaviour above refer to the stable
+                        MCP 2025-11-25 specification. The long
+                        <code>mcp__plugin_playwright_playwright__...</code> name is product-side
+                        namespacing visible in this particular trace, not a naming format
+                        required by MCP. A release candidate targeting 28 July 2026 was already
+                        available when this page was rechecked, but <code>/specification/latest</code>
+                        still resolved to 2025-11-25, so the candidate was not yet the stable
+                        specification.<sup><a href="#ref-mcp-rc">4</a></sup>
+                    </div>
+
+                    <p>Nothing in this sequence changes the model. A tool definition makes a
+                    capability legible. A handler makes it real. A harness validates, executes,
+                    and returns the result. MCP gives hosts and capability providers a shared
+                    way to connect those pieces. The new sense belongs to the machine around
+                    the model.</p>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-openai-tools">OpenAI. &ldquo;Function calling.&rdquo; API
+                        documentation, checked 24 July 2026.
+                        <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener">developers.openai.com/api/docs/guides/function-calling</a>.
+                        Used for the role and recommended content of a function-tool definition.</li>
+                        <li id="ref-mcp-tools">Model Context Protocol. &ldquo;Tools.&rdquo;
+                        Specification version 2025-11-25, checked 24 July 2026.
+                        <a href="https://modelcontextprotocol.io/specification/2025-11-25/server/tools" target="_blank" rel="noopener">modelcontextprotocol.io/specification/2025-11-25/server/tools</a>.
+                        Used for tool-definition fields, structured output, and annotation trust.</li>
+                        <li id="ref-mcp-architecture">Model Context Protocol.
+                        &ldquo;Architecture.&rdquo; Specification version 2025-11-25, checked 24
+                        July 2026.
+                        <a href="https://modelcontextprotocol.io/specification/2025-11-25/architecture" target="_blank" rel="noopener">modelcontextprotocol.io/specification/2025-11-25/architecture</a>.
+                        Used for the host, client, and server roles.</li>
+                        <li id="ref-mcp-rc">Model Context Protocol. &ldquo;The 2026-07-28 MCP
+                        Specification Release Candidate.&rdquo; Published 21 May 2026, checked
+                        24 July 2026.
+                        <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" target="_blank" rel="noopener">blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate</a>.
+                        Used only to date the forthcoming draft against the stable version.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +328,258 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <template id="concept-tool-definition">
+        <div class="hz-file-meta"><span>Complete public file</span><span>MCP 2025-11-25 shape</span></div>
+        <pre class="hz-file-view">{
+  &quot;name&quot;: &quot;inspect_site_page&quot;,
+  &quot;title&quot;: &quot;Inspect a static-site page&quot;,
+  &quot;description&quot;: &quot;Inspect one repository-relative HTML page from this public static website. Use it when you need the page title, meta description, heading outline, and local CSS or JavaScript dependencies as structured data. Do not use it to edit files, return page prose, inspect non-HTML files, or access paths outside the repository.&quot;,
+  &quot;inputSchema&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;page&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;description&quot;: &quot;Repository-relative path to one existing .html file, for example pages/research/overview/harness/act-8.html.&quot;,
+        &quot;pattern&quot;: &quot;^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+\\.html$&quot;
+      }
+    },
+    &quot;required&quot;: [&quot;page&quot;],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;outputSchema&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;page&quot;: {&quot;type&quot;: &quot;string&quot;},
+      &quot;title&quot;: {&quot;type&quot;: &quot;string&quot;},
+      &quot;description&quot;: {&quot;type&quot;: &quot;string&quot;},
+      &quot;headings&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;items&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;properties&quot;: {
+            &quot;level&quot;: {&quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 1, &quot;maximum&quot;: 3},
+            &quot;text&quot;: {&quot;type&quot;: &quot;string&quot;}
+          },
+          &quot;required&quot;: [&quot;level&quot;, &quot;text&quot;],
+          &quot;additionalProperties&quot;: false
+        }
+      },
+      &quot;stylesheets&quot;: {&quot;type&quot;: &quot;array&quot;, &quot;items&quot;: {&quot;type&quot;: &quot;string&quot;}},
+      &quot;scripts&quot;: {&quot;type&quot;: &quot;array&quot;, &quot;items&quot;: {&quot;type&quot;: &quot;string&quot;}}
+    },
+    &quot;required&quot;: [&quot;page&quot;, &quot;title&quot;, &quot;description&quot;, &quot;headings&quot;, &quot;stylesheets&quot;, &quot;scripts&quot;],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;annotations&quot;: {
+    &quot;readOnlyHint&quot;: true,
+    &quot;destructiveHint&quot;: false,
+    &quot;idempotentHint&quot;: true,
+    &quot;openWorldHint&quot;: false
+  }
+}</pre>
+    </template>
+
+    <template id="concept-tool-gate">
+        <div class="hz-file-meta"><span>Complete validation function</span><span>public handler</span></div>
+        <pre class="hz-file-view">def inspect_site_page(arguments: object) -&gt; dict[str, Any]:
+    &quot;&quot;&quot;Validate the contract and return its promised structured result.&quot;&quot;&quot;
+    if not isinstance(arguments, dict) or set(arguments) != {&quot;page&quot;}:
+        raise ToolInputError(&quot;invalid_arguments&quot;, &quot;Expected one field named 'page'.&quot;)
+
+    page = arguments.get(&quot;page&quot;)
+    if not isinstance(page, str) or not page or Path(page).is_absolute():
+        raise ToolInputError(&quot;invalid_page&quot;, &quot;page must be a repository-relative path.&quot;)
+    if Path(page).suffix.lower() != &quot;.html&quot;:
+        raise ToolInputError(&quot;invalid_page&quot;, &quot;page must name an .html file.&quot;)
+
+    candidate = (ROOT / page).resolve()
+    try:
+        candidate.relative_to(ROOT)
+    except ValueError as exc:
+        raise ToolInputError(
+            &quot;outside_repository&quot;, &quot;page resolves outside the website repository.&quot;
+        ) from exc
+    if not candidate.is_file():
+        raise ToolInputError(&quot;not_found&quot;, &quot;page does not name an existing file.&quot;)
+
+    parser = PageParser()
+    parser.feed(candidate.read_text(encoding=&quot;utf-8&quot;))
+    return {
+        &quot;page&quot;: candidate.relative_to(ROOT).as_posix(),
+        &quot;title&quot;: &quot; &quot;.join(part for part in parser.title_parts if part),
+        &quot;description&quot;: parser.description,
+        &quot;headings&quot;: parser.headings,
+        &quot;stylesheets&quot;: parser.stylesheets,
+        &quot;scripts&quot;: parser.scripts,
+    }</pre>
+    </template>
+
+    <template id="concept-tool-recording">
+        <div class="hz-file-meta"><span>Complete generated recording</span><span>21 July 2026</span></div>
+        <pre class="hz-file-view">{
+  &quot;_comment&quot;: &quot;Recorded by invoking the public inspect_site_page.py handler. The traversal case was rejected before any outside path was read.&quot;,
+  &quot;recorded_on&quot;: &quot;2026-07-21&quot;,
+  &quot;tool_definition&quot;: &quot;figure_generation/harness/tool_demo/tool.json&quot;,
+  &quot;handler&quot;: &quot;figure_generation/harness/tool_demo/inspect_site_page.py&quot;,
+  &quot;cases&quot;: [
+    {
+      &quot;id&quot;: &quot;inspect-act-8&quot;,
+      &quot;label&quot;: &quot;Allowed page inspection&quot;,
+      &quot;arguments&quot;: {&quot;page&quot;: &quot;pages/research/overview/harness/act-8.html&quot;},
+      &quot;exit_code&quot;: 0,
+      &quot;response&quot;: {
+        &quot;ok&quot;: true,
+        &quot;result&quot;: {
+          &quot;page&quot;: &quot;pages/research/overview/harness/act-8.html&quot;,
+          &quot;title&quot;: &quot;Mechanism, Not Trust - Adrian Mag&quot;,
+          &quot;description&quot;: &quot;Mechanism, Not Trust — part of The Machine Around the Model, a series on how agentic AI systems actually work.&quot;,
+          &quot;headings&quot;: [
+            {&quot;level&quot;: 1, &quot;text&quot;: &quot;Mechanism, Not Trust&quot;},
+            {&quot;level&quot;: 3, &quot;text&quot;: &quot;A real hook, built for this page&quot;},
+            {&quot;level&quot;: 3, &quot;text&quot;: &quot;Open the mechanism&quot;},
+            {&quot;level&quot;: 3, &quot;text&quot;: &quot;The threat model is the product&quot;},
+            {&quot;level&quot;: 3, &quot;text&quot;: &quot;Permissions are not just another hook&quot;},
+            {&quot;level&quot;: 3, &quot;text&quot;: &quot;References&quot;}
+          ],
+          &quot;stylesheets&quot;: [
+            &quot;../../../../css/theme.css?v=38&quot;,
+            &quot;../../../../css/styles.css?v=38&quot;,
+            &quot;../../../../css/harness.css?v=38&quot;,
+            &quot;../../../../css/concept-popup.css?v=38&quot;
+          ],
+          &quot;scripts&quot;: [
+            &quot;../../../../js/concept-popup.js?v=38&quot;,
+            &quot;../../../../js/theme-toggle.js?v=38&quot;,
+            &quot;../../../../js/nav-menu.js?v=38&quot;
+          ]
+        }
+      }
+    },
+    {
+      &quot;id&quot;: &quot;reject-traversal&quot;,
+      &quot;label&quot;: &quot;Rejected path traversal&quot;,
+      &quot;arguments&quot;: {&quot;page&quot;: &quot;../outside.html&quot;},
+      &quot;exit_code&quot;: 2,
+      &quot;response&quot;: {
+        &quot;ok&quot;: false,
+        &quot;error&quot;: {
+          &quot;code&quot;: &quot;outside_repository&quot;,
+          &quot;message&quot;: &quot;page resolves outside the website repository.&quot;
+        }
+      }
+    }
+  ]
+}</pre>
+    </template>
+
+    <template id="concept-mcp-call">
+        <div class="hz-file-meta"><span>Screened Act 4 trace extract</span><span>18 July 2026 at 12:18:23</span></div>
+        <pre class="hz-file-view">MODEL REQUEST
+tool: mcp__plugin_playwright_playwright__browser_take_screenshot
+input: ai-page-5.png
+
+HARNESS RESULT
+### Result
+- [Screenshot of viewport](./ai-page-5.png)
+### Ran Playwright code
+```js
+// Screenshot viewport and save it as ./ai-page-5.png
+await page.screenshot({ path: './ai-page-5.png', scale: 'css', type: 'png' });
+```
+
+Source: media/research/harness/toolloop.json
+The request, result, filename, and timestamp are copied from the screened trace.
+The layout and labels above are explanatory.</pre>
+    </template>
+
+    <script>
+    (function () {
+        "use strict";
+        var layers = {
+            identity: {
+                key: "name + title",
+                value: "inspect_site_page",
+                note: "A distinct, action-shaped identity gives the model and router an unambiguous handle."
+            },
+            selection: {
+                key: "description",
+                value: "Inspect one repository-relative HTML page from this public static website. Use it when you need the page title, meta description, heading outline, and local CSS or JavaScript dependencies as structured data. Do not use it to edit files, return page prose, inspect non-HTML files, or access paths outside the repository.",
+                note: "This is selection guidance: purpose, useful circumstances, output shape, and explicit non-goals."
+            },
+            structure: {
+                key: "inputSchema + outputSchema",
+                value: "page: required relative .html path  →  title, description, headings, stylesheets, scripts",
+                note: "The schemas make valid arguments and structured results machine-checkable; annotations describe intended behaviour but do not enforce it."
+            }
+        };
+        var layerButtons = document.querySelectorAll("[data-tool-layer]");
+        var layerKey = document.getElementById("tool-contract-key");
+        var layerValue = document.getElementById("tool-contract-value");
+        var layerNote = document.getElementById("tool-contract-note");
+
+        function showLayer(id) {
+            var item = layers[id];
+            for (var i = 0; i < layerButtons.length; i++) {
+                var selected = layerButtons[i].getAttribute("data-tool-layer") === id;
+                layerButtons[i].classList.toggle("is-on", selected);
+                layerButtons[i].setAttribute("aria-pressed", selected ? "true" : "false");
+            }
+            layerKey.textContent = item.key;
+            layerValue.textContent = item.value;
+            layerNote.textContent = item.note;
+        }
+        for (var i = 0; i < layerButtons.length; i++) {
+            layerButtons[i].addEventListener("click", function () {
+                showLayer(this.getAttribute("data-tool-layer"));
+            });
+        }
+
+        var calls = {
+            success: {
+                input: '{"page":"pages/research/overview/harness/act-8.html"}',
+                status: "EXIT 0",
+                heading: "Mechanism, Not Trust - Adrian Mag",
+                detail: "6 headings · 4 stylesheets · 3 scripts",
+                ok: true
+            },
+            rejected: {
+                input: '{"page":"../outside.html"}',
+                status: "EXIT 2",
+                heading: "outside_repository",
+                detail: "page resolves outside the website repository.",
+                ok: false
+            }
+        };
+        var callButtons = document.querySelectorAll("[data-tool-call]");
+        var callInput = document.getElementById("tool-call-input");
+        var callResult = document.getElementById("tool-call-result");
+        var callStatus = document.getElementById("tool-call-status");
+        var callHeading = document.getElementById("tool-call-heading");
+        var callDetail = document.getElementById("tool-call-detail");
+
+        function showCall(id) {
+            var item = calls[id];
+            for (var i = 0; i < callButtons.length; i++) {
+                var selected = callButtons[i].getAttribute("data-tool-call") === id;
+                callButtons[i].classList.toggle("is-on", selected);
+                callButtons[i].setAttribute("aria-pressed", selected ? "true" : "false");
+            }
+            callInput.textContent = item.input;
+            callStatus.textContent = item.status;
+            callHeading.textContent = item.heading;
+            callDetail.textContent = item.detail;
+            callResult.classList.toggle("is-ok", item.ok);
+            callResult.classList.toggle("is-error", !item.ok);
+        }
+        for (var j = 0; j < callButtons.length; j++) {
+            callButtons[j].addEventListener("click", function () {
+                showCall(this.getAttribute("data-tool-call"));
+            });
+        }
+    })();
+    </script>
+    <script src="../../../../js/concept-popup.js?v=38" defer></script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

@@ -5,9 +5,9 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What It Knows - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
     <meta name="description" content="What It Knows — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="What It Knows - Adrian Mag">
@@ -30,7 +30,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +88,78 @@
                     <p class="act-lede">Context as the budget everything competes for. Retrieval as context assembly, not magic. Memory as files. Compaction, and why long sessions degrade.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Context budget</li></ul>
+                <div class="hz-prose">
+                    <p>A model only knows the material that arrives with the request. In this
+                    workspace, that material can include the task, selected instructions,
+                    source files, tool results, and a small amount of state. None of it is the
+                    model&rsquo;s memory. It is a packet assembled by the harness, then discarded
+                    when that request ends.</p>
+
+                    <p>That makes context a budget, not a library. An instruction that helps on
+                    every task earns a place near the start. A detailed procedure belongs in a
+                    skill until it applies. A source file is read when the task makes it useful.
+                    The order matters as well as the size: long-context research finds that
+                    relevant material can be used less reliably in the middle of an input.<sup><a href="#ref-lost-middle">1</a></sup></p>
+
+                    <div class="hz-panel" id="context-budget-panel">
+                        <div class="hz-panel-head"><span class="hz-panel-title">One workspace task, assembled in stages</span><span class="hz-illustrative">Mechanism diagram</span></div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls" role="group" aria-label="Context assembly stage">
+                                <button class="hz-btn is-on" type="button" data-context-stage="0" aria-pressed="true">1. Start</button>
+                                <button class="hz-btn" type="button" data-context-stage="1" aria-pressed="false">2. Inspect</button>
+                                <button class="hz-btn" type="button" data-context-stage="2" aria-pressed="false">3. Preserve</button>
+                            </div>
+                            <pre class="hz-skill-payload" id="context-budget-payload">Task request
+AGENTS.md bootstrap
+Skill catalogue metadata
+
+The detailed files remain on disk.</pre>
+                            <p class="hz-skill-note" id="context-budget-note" aria-live="polite">The first packet supplies routing information, not every fact in the repository.</p>
+                        </div>
+                    </div>
+
+                    <h3>Retrieval is context assembly</h3>
+
+                    <p>Retrieval is the act of choosing what to add next. It can be a search
+                    over embeddings and chunks, but it can also be a direct file lookup. This
+                    workspace uses the second form constantly: the task points to a plan, the
+                    plan points to a source dossier, and the agent reads only the relevant
+                    section. The result is still retrieval because it changes the next context
+                    packet.</p>
+
+                    <p>The historical RAG paper paired generated text with retrieved material;
+                    the modern phrase is often used more loosely for chunk, search, and prompt
+                    assembly. The important distinction is practical: retrieval does not make
+                    the model remember a repository. It gives a particular request a carefully
+                    selected view of one.<sup><a href="#ref-rag">2</a></sup></p>
+
+                    <h3>Memory has a place to live</h3>
+
+                    <p>For this workspace, durable continuity lives in files. The tracked plan
+                    and source dossier record public decisions and evidence. The local control
+                    pack records the current handoff and checks whether it still applies to the
+                    Git state. The split is deliberate: a public plan should be reviewable;
+                    live control state should not silently become a public exhibit.</p>
+
+                    <p>Long sessions eventually need compression. A summary can retain a next
+                    safe action and discard a long trail of intermediate work, but it is not a
+                    replacement for source. The website-control workflow therefore checks Git
+                    before trusting its handoff. When the state and the files disagree, the
+                    files win.</p>
+
+                    <div class="hz-versioned"><b>Context engineering, checked 24 July 2026</b>
+                    Context windows, retrieval mechanisms, compaction, and prompt caching are
+                    harness behaviour, not a new faculty of the language model. The practical
+                    design question is always the same: what should this next request see, and
+                    what evidence lets us correct it when it is wrong?</div>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-lost-middle">Liu, N. F. et al. (2023). &ldquo;Lost in the Middle.&rdquo; <em>TACL</em>.
+                        <a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener">arXiv:2307.03172</a>. Used for the position-sensitivity finding.</li>
+                        <li id="ref-rag">Lewis, P. et al. (2020). &ldquo;Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.&rdquo;
+                        <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener">arXiv:2005.11401</a>. Used for the original RAG framing.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +197,30 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script>
+    (function () {
+        "use strict";
+        var payload = document.getElementById("context-budget-payload");
+        var note = document.getElementById("context-budget-note");
+        var stages = [
+            ["Task request\nAGENTS.md bootstrap\nSkill catalogue metadata\n\nThe detailed files remain on disk.", "The first packet supplies routing information, not every fact in the repository."],
+            ["Task request\nAGENTS.md bootstrap\nSelected website-control SKILL.md\nRelevant plan and source-dossier section\n\nOther files remain on disk.", "The agent fetches the few files that explain this task, rather than treating the repository as one prompt."],
+            ["Completed change\nFocused checks and evidence\nStructured handoff\nTracked plan update\n\nA later session can retrieve this summary, then verify it against Git.", "Durable continuity is stored outside the model and reassembled when a later task needs it."]
+        ];
+        var buttons = document.querySelectorAll("[data-context-stage]");
+        function select(stage) {
+            payload.textContent = stages[stage][0];
+            note.textContent = stages[stage][1];
+            for (var i = 0; i < buttons.length; i++) {
+                var on = Number(buttons[i].getAttribute("data-context-stage")) === stage;
+                buttons[i].classList.toggle("is-on", on);
+                buttons[i].setAttribute("aria-pressed", on ? "true" : "false");
+            }
+        }
+        for (var i = 0; i < buttons.length; i++) buttons[i].addEventListener("click", function () { select(Number(this.getAttribute("data-context-stage"))); });
+    })();
+    </script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
 </body>
 </html>

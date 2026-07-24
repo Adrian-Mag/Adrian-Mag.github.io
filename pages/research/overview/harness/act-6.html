@@ -5,9 +5,10 @@
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steering by Text - Adrian Mag</title>
-    <link rel="stylesheet" href="../../../../css/theme.css?v=29">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=29">
-    <link rel="stylesheet" href="../../../../css/harness.css?v=29">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
+    <link rel="stylesheet" href="../../../../css/harness.css?v=38">
     <meta name="description" content="Steering by Text — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Steering by Text - Adrian Mag">
@@ -30,7 +31,7 @@
                     <div class="nav-drop-menu">
                         <a href="../../../research/publications/papers.html">Publications</a>
                         <a href="../../../research/posters/posters.html">Presentations</a>
-                        <span class="nav-drop-label">AI in Practice</span>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
                         <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
                         <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
                         <span class="nav-drop-label">Notes</span>
@@ -88,10 +89,167 @@
                     <p class="act-lede">The cheapest lever: a file the harness reads and injects into context. Not enforced: guidance, not law. Why that is both its weakness and its strength.</p>
                 </div>
 
-                <div class="hz-draft">
-                    <b>Not yet written.</b> This page is a Phase&nbsp;1 skeleton: structure and
-                    navigation only. Prose, exhibits, and panels land in a later phase.
-                    <ul style='margin:10px 0 0;padding-left:20px;line-height:1.8'><li><b>Interactive panel:</b> Context inspector</li><li><b>Artifact:</b> AGENTS.md + settings.json (this repo)</li></ul>
+                <div class="hz-prose">
+                    <p>Here is the first thing I changed when I wanted an agent to stop treating
+                    every repository as the same repository. I added a text file.</p>
+
+                    <p>The file is called <code>AGENTS.md</code>. It is not a model, a plug-in,
+                    or a program. It is ordinary Markdown containing the facts and working
+                    agreements that would otherwise have to be repeated at the start of every
+                    conversation: where the real source lives, how to run the tests, what must
+                    never leave the machine, and what &ldquo;finished&rdquo; means here.</p>
+
+                    <p>A supporting harness finds the file and places its contents in the
+                    context it assembles for the model. That is the whole mechanism. Nothing is
+                    trained, and no weight inside the model changes. The machine from Acts 4 and
+                    5 simply adds one more piece of text before asking the model what to do.</p>
+
+                    <div class="hz-panel" id="agents-context-panel">
+                        <div class="hz-panel-head">
+                            <span class="hz-panel-title">What enters the context?</span>
+                            <span class="hz-illustrative">Mechanism diagram</span>
+                        </div>
+                        <div class="hz-panel-body">
+                            <div class="hz-panel-controls">
+                                <button class="hz-btn is-on" id="agents-context-toggle" type="button" aria-pressed="true">AGENTS.md included</button>
+                            </div>
+                            <div class="hz-context-stack">
+                                <div class="hz-context-layer">
+                                    <span class="hz-context-kind">Harness</span>
+                                    <span class="hz-context-text">You are a coding agent working in this repository.</span>
+                                </div>
+                                <div class="hz-context-layer is-guidance" id="agents-context-guidance">
+                                    <span class="hz-context-kind">AGENTS.md</span>
+                                    <span class="hz-context-text">After editing a notes page, rebuild media/search-index.json.</span>
+                                </div>
+                                <div class="hz-context-layer">
+                                    <span class="hz-context-kind">User</span>
+                                    <span class="hz-context-text">Draft the next act of the series.</span>
+                                </div>
+                            </div>
+                            <p class="hz-context-note" id="agents-context-note">The project rule is present as input to the model. The harness has not turned it into executable code.</p>
+                        </div>
+                    </div>
+
+                    <p>Use the button. With the file absent, the model receives the same task but
+                    loses the repository-specific fact. It might discover the search-index
+                    command by exploring. It might not. With the file present, the work begins
+                    with that fact already available.</p>
+
+                    <h3>The file for this website</h3>
+
+                    <p>The example below is not an idealised template. It is a verbatim
+                    snapshot of this website&rsquo;s own <code>AGENTS.md</code>, screened for
+                    credentials, addresses, hostnames, and private material on 24 July 2026.
+                    Open it and read it as a working document. It is deliberately mundane.</p>
+
+                    <div class="hz-doc-grid is-single" aria-label="Real AGENTS.md example">
+                        <button type="button" class="concept-term hz-doc-card" data-concept="agents-website" data-concept-title="Website AGENTS.md">
+                            <span class="hz-doc-path">Adrian-Mag.github.io/AGENTS.md</span>
+                            <span class="hz-doc-name">The website</span>
+                            <span class="hz-doc-summary">Page maps, cache busting, search indexing, and the site&rsquo;s no-build setup.</span>
+                            <span class="hz-doc-open">Open file</span>
+                        </button>
+                    </div>
+
+                    <p>The useful parts answer some combination of five questions:</p>
+
+                    <table class="hz-table">
+                        <thead>
+                            <tr><th>Question</th><th>What the file supplies</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Where am I?</td><td>The purpose of the repository and the files that actually matter</td></tr>
+                            <tr><td>How is work done?</td><td>Commands, environments, paths, and established workflows</td></tr>
+                            <tr><td>What is forbidden?</td><td>Privacy boundaries, dangerous operations, and integrity rules</td></tr>
+                            <tr><td>Where should I look first?</td><td>Living references, source inventories, and routing instructions</td></tr>
+                            <tr><td>How do I know I am finished?</td><td>Builds, tests, regenerated assets, and other verification steps</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>This is why a useful file looks more like an operations note than a
+                    personality prompt. &ldquo;Be careful&rdquo; does not identify a risk.
+                    &ldquo;After editing any notes page, run <code>python3
+                    tools/build_search_index.py</code>&rdquo; identifies an action, its trigger,
+                    and the artifact that should change. One can be checked. The other can only
+                    be admired.</p>
+
+                    <h3>Which file applies?</h3>
+
+                    <p>The filename is a convention interpreted by the harness, so the precise
+                    discovery rules are product features rather than properties of language
+                    models. They have to be dated.</p>
+
+                    <div class="hz-versioned">
+                        <b>Codex behaviour, checked 24 July 2026</b>
+                        Codex reads an instruction chain once at the start of a run. It first
+                        checks the user&rsquo;s Codex home, then walks from the project root down to
+                        the working directory. A file closer to the work appears later in the
+                        combined instructions and overrides broader guidance where they conflict.
+                        Empty files are skipped; the default combined project-instruction limit
+                        is 32 KiB. Other harnesses may discover or order instruction files
+                        differently.<sup><a href="#ref-codex-agents">1</a></sup>
+                    </div>
+
+                    <p>That nesting is more important than it first sounds. A repository can say
+                    &ldquo;run the test suite before stopping&rdquo; at its root, while a directory
+                    containing slow numerical experiments can give the exact command and
+                    resource limits that apply only there. The reader gets a route from general
+                    to specific instead of one enormous manual for every possible task.</p>
+
+                    <h3>Guidance is not enforcement</h3>
+
+                    <p>The file in the panel is text. The harness may give it a privileged place
+                    in context, but no separate process watches the model and forces the search
+                    index to be rebuilt. The instruction can be ambiguous. It can conflict with
+                    something more specific. It can be truncated from an overgrown instruction
+                    chain. The model can simply make a mistake.</p>
+
+                    <p>This is the weakness of <code>AGENTS.md</code>: it changes the evidence
+                    and instructions available to a probabilistic system, not the laws of the
+                    computer around it. Writing &ldquo;never stage the private control
+                    overlay&rdquo; is useful, but it does not alter the Git index. Writing
+                    &ldquo;run the tests&rdquo; does not make a failing test prevent a commit.</p>
+
+                    <p>It is also the strength. The file costs almost nothing to create, can be
+                    reviewed in the same pull request as the code, travels with the repository,
+                    and changes on the next run. You do not need to build a tool or retrain a
+                    model to teach the harness that this website has no build step.</p>
+
+                    <p>The right division is simple: use text to state intent, context, and
+                    working practice. Use settings, permissions, hooks, tests, and sandboxes for
+                    properties that must hold even when the model is confused. Official Codex
+                    guidance makes the same separation, recommending that project guidance be
+                    paired with enforcing infrastructure such as hooks, linters, and type
+                    checkers.<sup><a href="#ref-codex-agents">1</a></sup> Act 8 will make that
+                    boundary concrete.</p>
+
+                    <h3>Write the scar tissue</h3>
+
+                    <p>The best rule usually begins with a mistake that actually happened. An
+                    agent edited a notes page and left the search index stale. The next sentence
+                    in <code>AGENTS.md</code> says exactly when and how to rebuild it. A command
+                    was run from the wrong directory, so the file records the correct working
+                    directory. A reviewer had to ask twice for source-grounded claims. The
+                    instruction becomes durable on the second occurrence.</p>
+
+                    <p>Start with those scars. Keep the file short enough to be read, concrete
+                    enough to be followed, and close enough to the relevant work to stay true.
+                    If a rule needs a page of explanation, point to that page. If it needs
+                    expertise, examples, scripts, and references that should load only for one
+                    kind of task, a flat instruction file has reached its limit.</p>
+
+                    <p>That larger package has a name. It is the subject of the next act.</p>
+
+                    <h3>References</h3>
+                    <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
+                        <li id="ref-codex-agents">OpenAI. &ldquo;Custom instructions
+                        with AGENTS.md.&rdquo; Codex documentation, checked 24 July 2026.
+                        <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener">learn.chatgpt.com/docs/agent-configuration/agents-md</a>
+                        (official OpenAI documentation). Used for Codex&rsquo;s current discovery,
+                        precedence, size-limit, and verification behaviour. These details are
+                        product-specific and date-stamped above.</li>
+                    </ol>
                 </div>
 
                 <div class="hz-actnav-foot">
@@ -129,7 +287,109 @@
         onScroll();
     })();
     </script>
-    <script src="../../../../js/theme-toggle.js?v=29" defer></script>
-    <script src="../../../../js/nav-menu.js?v=29" defer></script>
+    <script>
+    (function () {
+        "use strict";
+        var button = document.getElementById("agents-context-toggle");
+        var guidance = document.getElementById("agents-context-guidance");
+        var note = document.getElementById("agents-context-note");
+        if (!button || !guidance || !note) return;
+        button.addEventListener("click", function () {
+            var included = button.getAttribute("aria-pressed") !== "true";
+            button.setAttribute("aria-pressed", included ? "true" : "false");
+            button.classList.toggle("is-on", included);
+            button.textContent = included ? "AGENTS.md included" : "AGENTS.md omitted";
+            guidance.classList.toggle("is-removed", !included);
+            note.textContent = included
+                ? "The project rule is present as input to the model. The harness has not turned it into executable code."
+                : "The task is unchanged, but the repository-specific rule is no longer in this assembled context.";
+        });
+    })();
+    </script>
+
+    <template id="concept-agents-website">
+        <div class="hz-file-meta">
+            <span>Verbatim local snapshot</span>
+            <span>73 lines &middot; screened 24 July 2026</span>
+        </div>
+        <pre class="hz-file-view hz-file-view-wrap"># Agent Configuration
+
+## Local Control Bootstrap
+
+When `docs/agent-docs/control/BOOTSTRAP.md` exists, read it once at the start or resumption of every task in this worktree and use the canonical `website-control` workflow it identifies. Validate the recorded repository, branch, commit, and dirty state before trusting `CURRENT.md` or `HANDOFF.json`. If that applicability check fails, stop workspace work, rebuild those notes from Git and source evidence, and revalidate before continuing. Refresh the handoff at meaningful task boundaries. The control overlay and its redacted validation-incident record are local-only and must never be staged, committed, served, or copied into public documentation.
+
+## What This Repository Is
+
+A personal academic website for Adrian Mag, hosted on GitHub Pages. It contains static HTML pages, CSS stylesheets, and media assets presenting research, publications, CV, and contact information. It also carries **offline research tooling** that is *not* served: LaTeX sources for the long-form notes (`*.tex` at the repo root) and a Python figure-generation pipeline under `figure_generation/` (see its `README.md`).
+
+## Plans
+
+Plan records and their lifecycle rules live under
+`docs/agent-docs/plans/`. Read `docs/agent-docs/plans/PROTOCOL.md` before
+creating, revising, completing, or archiving a substantial-work plan.
+
+- `docs/agent-docs/plans/active/` — current plans being worked on
+- `docs/agent-docs/plans/completed/` — archived plans and phase-completion records
+
+## Reference Documents
+
+Reference records and their update rules live under
+`docs/agent-docs/references/`. Use `docs/agent-docs/references/INDEX.md` to
+locate the smallest relevant record; read
+`docs/agent-docs/references/PROTOCOL.md` before creating, renewing, or retiring
+a reference.
+
+Before modifying any page or stylesheet, read:
+```
+docs/agent-docs/references/living/website-reference.md
+```
+
+This file contains the page layout, CSS conventions, and file mappings for the entire site.
+
+## Citation Audit Library
+
+The private citation evidence library is described by
+`docs/agent-docs/citation-audit/PROTOCOL.md`. Read it when verifying or
+revising a citation or research claim using local source material. Before
+opening, extracting, or rendering one of its local PDFs, use the
+`pdf-source-reading` skill; it keeps source content on this machine and records
+page-specific evidence. Never stage, serve, or upload the library contents.
+
+## Agent Ledger
+
+The soft Agent Ledger protocol lives under `docs/agent-docs/agent-ledger/`.
+It records declared procedural evidence and independently observed events when
+an adapter exists; it does not grant authority or replace plans and references.
+Read its `PROTOCOL.md` when auditing or changing agent procedures, ledger
+reporting, runtime, or a host-observation adapter. Use its canonical
+`scripts/ledgerctl.py` for a ledger-relevant work phase; never manually edit
+its ignored `runtime/` records. A trusted Codex project may add shadow
+host observations through the local provider configuration; those are partial
+evidence, not a complete activity trace.
+
+## Commit Convention
+
+See `docs/agent-docs/COMMIT_CONVENTION.md` for the full commit message format. All feature/fix commits must include plan references.
+
+## Environment
+
+The **served site** has no build step, no package manager, and no bundler — validate page/CSS changes by opening the HTML in a browser. The **figure-generation pipeline** (`figure_generation/`) is separate: it is Python, runs offline on demand through the `inferences` conda environment, writes assets into `media/`, and has its own pytest suite. It is never part of the deployed site.
+
+One small offline step feeds the site: the client-side search (`pages/search.html`) reads a pre-built index at `media/search-index.json`. After editing any notes page, regenerate it with `python3 tools/build_search_index.py` (stdlib only, no conda env needed) and commit the refreshed JSON alongside the content change.
+
+## Key Conventions
+
+- **No frameworks**: Plain HTML5 and CSS3 only. No JavaScript frameworks, no preprocessors.
+- **Consistent styling**: Each page links its own CSS file (e.g., `about.css`) plus the shared `styles.css`.
+- **Media paths**: Images and PDFs live under `media/`. Use relative paths from the page's location.
+- **Navigation**: The site-wide navigation bar is replicated in each HTML page's `&lt;nav&gt;` section. Any nav change must be applied to all pages.
+
+Cache busting: local CSS/JS references carry a `?v=N` query. After changing any stylesheet or script, bump the version on its references (site-wide search-replace) so phones don't serve stale assets.
+</pre>
+    </template>
+
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
+    <script src="../../../../js/concept-popup.js?v=38" defer></script>
 </body>
 </html>

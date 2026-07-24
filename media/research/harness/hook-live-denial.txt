@@ -1,0 +1,31 @@
+ACT 8 HOOK EXHIBIT - SCREENED LIVE EXTRACT
+Captured 21 July 2026 in this website repository.
+
+Invocation
+  Codex CLI, ephemeral session, project hook trust bypassed for this vetted
+  one-off capture. The requested Bash command was read-only.
+
+Requested command
+  rg -l title media/search-index.json
+
+Observed Codex event
+  ERROR codex_core::tools::router: error=Command blocked by PreToolUse hook:
+  Direct access to media/search-index.json is blocked. Regenerate it with
+  python3 tools/build_search_index.py.. Command: rg -l title
+  media/search-index.json
+
+Model-facing report
+  The command was blocked by a `PreToolUse` hook:
+
+  > Direct access to `media/search-index.json` is blocked. Regenerate it with
+  > `python3 tools/build_search_index.py`.
+
+Result
+  The command did not run. This is also a real false positive: `rg -l` would
+  only have read the generated file, but the intentionally small blocklist
+  rejects every mention of the path except the approved rebuild command.
+
+Screening note
+  Session and turn identifiers, token-usage metadata, and startup warnings are
+  omitted. The command, hook reason, and model-facing report above are copied
+  from the live event; no denial text was reconstructed from memory.

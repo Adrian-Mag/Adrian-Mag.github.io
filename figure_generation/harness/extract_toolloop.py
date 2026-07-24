@@ -8,8 +8,8 @@ model-asks / harness-answers alternation as JSON for the Act 4 panel.
 WHY THESE SESSIONS
 ------------------
 Both traces are taken from sessions in the *website* repository, which is
-public by construction. Paper workspaces are deliberately not used: their
-logs contain unpublished manuscript content.
+public by construction. Sessions from every other workspace are deliberately
+excluded.
 
 ELISION POLICY
 --------------

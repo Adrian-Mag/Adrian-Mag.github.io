@@ -1,6 +1,6 @@
 ## Compact control-record retention — Phase 1 complete
 
-**Plan:** `docs/agent-docs/completed-plans/control-record-retention-plan.md`
+**Plan:** `docs/agent-docs/plans/completed/control-record-retention-plan.md`
 **Completed:** 2026-07-22
 
 ### Done

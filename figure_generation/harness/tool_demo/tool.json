@@ -1,0 +1,81 @@
+{
+  "name": "inspect_site_page",
+  "title": "Inspect a static-site page",
+  "description": "Inspect one repository-relative HTML page from this public static website. Use it when you need the page title, meta description, heading outline, and local CSS or JavaScript dependencies as structured data. Do not use it to edit files, return page prose, inspect non-HTML files, or access paths outside the repository.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "page": {
+        "type": "string",
+        "description": "Repository-relative path to one existing .html file, for example pages/research/overview/harness/act-8.html.",
+        "pattern": "^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+\\.html$"
+      }
+    },
+    "required": [
+      "page"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "page": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "headings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "level",
+            "text"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "stylesheets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "scripts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "page",
+      "title",
+      "description",
+      "headings",
+      "stylesheets",
+      "scripts"
+    ],
+    "additionalProperties": false
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+  }
+}

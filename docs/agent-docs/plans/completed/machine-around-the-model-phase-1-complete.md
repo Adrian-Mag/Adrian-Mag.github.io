@@ -1,6 +1,6 @@
 # Phase 1 complete — "The Machine Around the Model"
 
-**Plan:** `active-plans/machine-around-the-model-plan.md`
+**Plan:** `docs/agent-docs/plans/active/machine-around-the-model-plan.md`
 **Phase:** 1 — Skeleton
 **Completed:** 2026-07-18
 

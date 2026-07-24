@@ -35,6 +35,7 @@ SERIES_DIRS = [
 ]
 EXTRA_PAGES = [
     ("pages/research/overview/index.html", None),
+    ("pages/research/overview/ai-in-practice.html", None),
     ("pages/research/overview/inversions-inferences.html", None),
     ("pages/research/publications/papers.html", None),
     ("pages/research/posters/posters.html", None),
