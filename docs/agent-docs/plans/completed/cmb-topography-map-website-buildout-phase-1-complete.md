@@ -126,6 +126,52 @@ where they belong until the user chooses to publish each node.
 ## Follow-ups
 
 - Phase 2 board recompute and geometry generator, before any queued paper is added.
-- Run a browser and narrow-viewport check on the page at the next opportunity.
+- ~~Run a browser and narrow-viewport check on the page at the next opportunity.~~ Done; see
+  the addendum below.
 - Consider whether the dialog `details` data should move into markup so the richest text on the
   page becomes searchable; recorded as an open question in the plan.
+
+---
+
+## Addendum — 2026-07-28: deferred browser check run, one bug found and fixed
+
+Playwright was repaired after this phase was committed. The diagnosis carried in the control
+handoff — that the Python binding failed before launch — was wrong. The binding and Node driver
+worked; the browser binaries had simply never been downloaded
+(`playwright install chromium`, Chromium 130.0.6723.31). No version change was needed, and the
+Playwright 1.48 pin was left alone because it is one of the last releases supporting this
+Ubuntu 20.04 / glibc 2.31 host.
+
+The deferred check was then run and found a genuine interaction bug.
+
+**Bug.** `.cmb-status` and `.cmb-flow` are non-interactive text labels positioned over the
+board at `z-index:3`, while `.cmb-node` chips sit at `z-index:2`. Neither label set
+`pointer-events:none`, so any node panned underneath the zoom readout or the flow label became
+unclickable — the label swallowed the click. The SVG edge layer already guarded against exactly
+this on line 21 of the stylesheet; these two labels were missed.
+
+Playwright surfaced it by exhausting 60+ retries on one node with
+`<p id="cmb-status"> intercepts pointer events`.
+
+**Fix.** Added `pointer-events:none` to both rules in `css/cmb-topography-map.css`, and bumped
+the stylesheet cache version from `?v=38` to `?v=39`. `.cmb-controls` deliberately keeps its
+pointer events because its buttons are real controls.
+
+**Verification after the fix**, at 1440x900 and 390x844:
+
+| Check | Result |
+|---|---|
+| Nodes found | 11 |
+| Clicks blocked | none |
+| Dialogs empty after click | none |
+| Literal unrendered entities in dialogs | none |
+| Console errors | none |
+| Uncaught page errors | none |
+| Horizontal overflow at 390px | none (`scrollWidth` 390 = `innerWidth` 390) |
+
+Every one of the 11 nodes was clicked and its dialog inspected, which also confirms the
+`details` object has no missing or misspelled keys.
+
+**Still not verified.** Edge-path coordinates were counted but never re-derived against node
+positions; Phase 2 will regenerate them. The page's factual claims still rest on the upstream
+verification studies and cannot be re-checked from this worktree.
