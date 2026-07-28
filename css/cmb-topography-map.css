@@ -1,0 +1,105 @@
+/* ============================================================
+   cmb-topography-map.css — "A Map of CMB Topography Studies"
+   Interactive timeline of CMB topography literature decoded
+   through THE ELEMENTS framework.
+   Follows the interactive-board pattern from harness.css
+   (agentic-structure-map.html), adapted for a timeline.
+   ============================================================ */
+
+/* ---------- page intro ---------- */
+.cmb-intro{max-width:810px}
+.cmb-intro .eyebrow{display:block;margin-bottom:9px;color:var(--accent-bright);font:700 .7rem/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.cmb-intro h2{margin:0 0 14px;font-size:clamp(1.6rem,3vw,2.25rem)}
+.cmb-intro p{color:var(--muted);line-height:1.75}
+.cmb-note{margin:24px 0;padding:17px 20px;border-left:3px solid var(--sem-orange-line,#c98a4b);background:color-mix(in srgb,var(--surface) 90%,transparent);line-height:1.7}
+.cmb-note p{margin:0}
+
+/* ---------- interactive timeline board ---------- */
+.cmb-map{position:relative;height:min(90vh,900px);min-height:560px;margin:30px 0 14px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--surface) 91%,transparent);touch-action:none;cursor:grab}
+.cmb-map.dragging{cursor:grabbing}
+.cmb-board{position:absolute;width:1200px;height:3320px;transform-origin:0 0;will-change:transform}
+.cmb-board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+/* timeline axis */
+.cmb-board .axis{fill:none;stroke:var(--line-2);stroke-width:2}
+.cmb-board .axis-tick{stroke:var(--line);stroke-width:1}
+.cmb-board .axis-label{fill:var(--muted);font:11px var(--mono);letter-spacing:.06em}
+.cmb-board .phase-label{fill:var(--text);font:700 13px var(--mono);letter-spacing:.08em}
+.cmb-board .phase-sub{fill:var(--muted);font:11px var(--mono)}
+.cmb-board .lane-head{fill:var(--accent-bright);font:700 11px var(--mono);letter-spacing:.12em;opacity:.8}
+
+/* citation edges — each type has its own coloured arrowhead marker */
+.cmb-board .edge{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.cmb-board .edge.builds-on{stroke:#79a7da;marker-end:url(#cmb-arrow-builds)}
+.cmb-board .edge.critiques{stroke:#c87850;marker-end:url(#cmb-arrow-critiques)}
+.cmb-board .edge.compares{stroke:#d9bd6c;stroke-dasharray:7 7;marker-end:url(#cmb-arrow-compares)}
+.cmb-board .edge.applies{stroke:#70cbb5;marker-end:url(#cmb-arrow-applies)}
+
+/* phase region backgrounds */
+.cmb-board .phase-region{fill:color-mix(in srgb,var(--ground) 75%,transparent);stroke:var(--line);stroke-width:1.5}
+.cmb-board .phase-region.founding{stroke:#79a7da}
+.cmb-board .phase-region.critique{stroke:#c87850}
+.cmb-board .phase-region.absorption{stroke:#d9bd6c}
+.cmb-board .phase-region.probabilistic{stroke:#bf95eb}
+
+/* ---------- paper nodes (the "chips") ---------- */
+.cmb-node{position:absolute;z-index:2;box-sizing:border-box;width:220px;min-height:80px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--ground);color:var(--text);text-align:left;box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .18s ease,border-color .18s ease}
+.cmb-node:hover,.cmb-node:focus{border-color:var(--accent-bright);outline:none;transform:translateY(-2px)}
+.cmb-node .cmb-year{display:block;font:700 .72rem var(--mono);color:var(--accent-bright);letter-spacing:.08em;margin-bottom:4px}
+.cmb-node .cmb-title{display:block;font-size:.82rem;font-weight:700;line-height:1.3;margin-bottom:4px}
+.cmb-node .cmb-authors{display:block;font-size:.68rem;color:var(--muted);line-height:1.35;margin-bottom:6px}
+.cmb-node .cmb-amp{display:inline-block;font:700 .7rem var(--mono);padding:2px 7px;border-radius:4px;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent-bright)}
+.cmb-node .cmb-elements{display:block;margin-top:6px;font:.62rem/1.4 var(--mono);color:var(--muted)}
+
+/* node type colours */
+.cmb-node.founding{border-color:#79a7da;background:color-mix(in srgb,#79a7da 10%,var(--ground))}
+.cmb-node.critique{border-color:#c87850;background:color-mix(in srgb,#c87850 10%,var(--ground))}
+.cmb-node.absorption{border-color:#d9bd6c;background:color-mix(in srgb,#d9bd6c 10%,var(--ground))}
+.cmb-node.probabilistic{border-color:#bf95eb;background:color-mix(in srgb,#bf95eb 10%,var(--ground))}
+.cmb-node.verified{border-width:2px}
+.cmb-node.verified::after{content:"V";position:absolute;top:6px;right:8px;font:700 .55rem var(--mono);color:var(--sem-green-text,#9ed49e);border:1px solid var(--sem-green-line,#78b478);border-radius:3px;padding:1px 3px}
+
+/* ---------- map controls ---------- */
+.cmb-controls{position:absolute;right:12px;bottom:12px;z-index:4;display:flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--ground) 93%,transparent)}
+.cmb-controls button{width:32px;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text);font-size:1.05rem;cursor:pointer}
+.cmb-controls button:hover,.cmb-controls button:focus{border-color:var(--accent-bright);outline:none}
+.cmb-status{position:absolute;z-index:3;bottom:13px;left:13px;margin:0;padding:5px 8px;border-radius:5px;background:color-mix(in srgb,var(--ground) 90%,transparent);color:var(--muted);font:.68rem var(--mono)}
+.cmb-flow{position:absolute;z-index:3;top:13px;right:13px;margin:0;padding:5px 9px;border-radius:5px;border:1px solid var(--line);background:color-mix(in srgb,var(--ground) 90%,transparent);color:var(--accent-bright);font:700 .68rem var(--mono);letter-spacing:.1em}
+
+/* ---------- legend ---------- */
+.cmb-legend{display:flex;flex-wrap:wrap;gap:13px 19px;margin:14px 0 32px;color:var(--muted);font-size:.83rem}
+.cmb-key{display:inline-flex;align-items:center;gap:6px}
+.cmb-swatch{width:18px;border-top:2px solid var(--line)}
+.cmb-swatch.builds{border-color:#79a7da}
+.cmb-swatch.critiques{border-color:#c87850}
+.cmb-swatch.compares{border-color:#d9bd6c;border-top-style:dashed}
+.cmb-swatch.applies{border-color:#70cbb5}
+.cmb-swatch.verified{border-color:var(--sem-green-line,#78b478);border-top-style:none;font:700 .6rem var(--mono);text-align:center;line-height:18px;color:var(--sem-green-text,#9ed49e)}
+
+/* ---------- detail dialog (same pattern as harness) ---------- */
+.cmb-dialog{position:fixed;z-index:30;inset:0;display:grid;place-items:center;padding:20px;border:0;background:color-mix(in srgb,#000 48%,transparent)}
+.cmb-dialog[hidden]{display:none}
+.cmb-dialog-box{position:relative;max-width:640px;max-height:min(78vh,720px);overflow:auto;padding:27px 30px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow-lg)}
+.cmb-dialog-box h3{margin:0 40px 12px 0;font-size:1.2rem}
+.cmb-dialog-box .cmb-dialog-sub{margin:0 0 16px;color:var(--muted);font:.78rem var(--mono);letter-spacing:.04em}
+.cmb-dialog-box .cmb-dialog-amp{display:inline-block;font:700 .85rem var(--mono);padding:3px 10px;border-radius:5px;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent-bright);margin-bottom:14px}
+.cmb-dialog-box p{margin:0 0 12px;color:var(--muted);line-height:1.72}
+.cmb-dialog-box .cmb-elements-grid{display:grid;grid-template-columns:7rem 1fr;gap:8px 14px;margin:16px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--text) 6%,transparent)}
+.cmb-dialog-box .cmb-el-key{font:700 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-bright)}
+.cmb-dialog-box .cmb-el-val{font-size:.82rem;line-height:1.55;color:var(--text)}
+.cmb-dialog-close{position:absolute;right:14px;top:13px;width:31px;height:31px;border:1px solid var(--line);border-radius:6px;background:var(--ground);color:var(--text);font-size:1.1rem;cursor:pointer}
+.cmb-dialog-close:hover,.cmb-dialog-close:focus{border-color:var(--accent-bright);outline:none}
+
+/* ---------- reading cards below the map ---------- */
+.cmb-reading{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0}
+.cmb-card{min-width:0;padding:21px;border:1px solid var(--line);border-radius:11px;background:color-mix(in srgb,var(--surface) 91%,transparent)}
+.cmb-card h3{margin:0 0 10px;font-size:1rem}
+.cmb-card p{margin:0;color:var(--muted);line-height:1.65}
+.cmb-card code{overflow-wrap:anywhere}
+
+@media(max-width:760px){
+    .cmb-map{height:580px;min-height:0}
+    .cmb-reading{grid-template-columns:1fr}
+    .cmb-dialog-box{padding:23px 20px}
+    .cmb-status{right:145px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+}

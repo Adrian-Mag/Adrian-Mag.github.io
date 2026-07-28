@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="space">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMB Topography Studies — Adrian Mag</title>
+    <meta name="description" content="An interactive timeline of core-mantle boundary topography studies, decoded through the ELEMENTS framework.">
+    <link rel="stylesheet" href="../../../../css/theme.css?v=38">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=38">
+    <link rel="stylesheet" href="../../../../css/cmb-topography-map.css?v=38">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:title" content="CMB Topography Studies - Adrian Mag">
+    <meta property="og:description" content="An interactive timeline of core-mantle boundary topography studies, decoded through the ELEMENTS framework.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cmb/cmb-topography-map.html">
+    <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="../../../../index.html">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </a>
+            <div class="nav-links">
+                <a class="hide-sm" href="../../../about.html">About</a>
+                <div class="nav-drop hide-sm">
+                    <a href="../../../research/overview/index.html">Research</a>
+                    <div class="nav-drop-menu">
+                        <a href="../../../research/publications/papers.html">Publications</a>
+                        <a href="../../../research/posters/posters.html">Presentations</a>
+                        <a class="nav-drop-label" href="/pages/research/overview/ai-in-practice.html">AI in Practice</a>
+                        <a href="../../../research/posters/ai-usage-poster/ai-usage-poster.html">AI-Assisted Research</a>
+                        <a href="../../../research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a>
+                        <span class="nav-drop-label">Notes</span>
+                        <a href="../../../research/overview/sola/my-take-on-sola.html">My Take on SOLA</a>
+                        <a href="../../../research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a>
+                        <a href="../../../research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>
+                        <a href="../../../research/overview/frequentist/bayesian-frequentist.html">Bayesian vs Frequentist</a>
+                        <a href="../../../research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a>
+                        <a href="cmb-topography-map.html">CMB Topography Map</a>
+                    </div>
+                </div>
+                <a class="hide-sm" href="../../../cv.html">CV</a>
+                <a class="nav-cta" href="../../../contacts.html">Contact</a>
+                <a class="nav-search" href="../../../search.html" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header" style="position:relative;overflow:hidden">
+            <div class="page-header-bg" data-hero="research" style="position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(30,34,40,.62),rgba(30,34,40,.45)),url('../../../../media/backgrounds/hero-nebula.jpg') center/cover;filter:brightness(.95) blur(1.2px)"></div>
+            <div class="container" style="position:relative;z-index:2">
+                <h1>CMB Topography Studies</h1>
+                <p>An interactive timeline of core-mantle boundary topography papers, decoded through the ELEMENTS framework.</p>
+            </div>
+        </section>
+
+        <section class="act act-band-a">
+            <div class="container">
+                <div class="cmb-intro">
+                    <span class="eyebrow">Scientific notes</span>
+                    <h2>A map of CMB topography studies</h2>
+                    <p>How hard is it to measure the shape of the core-mantle boundary? The literature has been arguing about this for forty years, and the argument has not converged. This interactive timeline places each study on a shared coordinate system: the ELEMENTS framework, which separates the model space, the data space, the model-data relation, the property map, the prior, the output type, and the calibration. When two papers disagree, the framework shows <em>where</em> the disagreement lives, not just that it exists.</p>
+                </div>
+                <aside class="cmb-note">
+                    <p><strong>How to read it.</strong> <strong>Time runs downward</strong>: the oldest paper is at the top, the newest at the bottom, with years marked on the axis at the left. The three columns are the method branches &mdash; body-wave mapping, normal modes, and the statistical line &mdash; and the tinted bands group the eras. Drag to pan down through the timeline; use the wheel or controls to zoom, and the middle button to re-fit. On a narrow screen the view opens on the body-wave column, so <strong>drag sideways</strong> to reach the normal-mode and statistical branches. Click a paper card for its ELEMENTS breakdown: model space, data, relation, property, prior, output, and calibration. Blue edges mean one paper builds on another; orange edges mean a critique; dashed yellow edges mean an analytical comparison added by the campaign, not a real citation. A green <strong>V</strong> badge means the paper has been through the full evidence-backed verification pass.</p>
+                    <p><strong>Last reviewed:</strong> 27 July 2026. The timeline is under construction; papers are being added as their verification studies complete.</p>
+                </aside>
+
+                <div class="cmb-map" id="cmb-map" aria-label="Interactive timeline of CMB topography studies" tabindex="0">
+                    <div class="cmb-board" id="cmb-board">
+                        <svg viewBox="0 0 1200 3320" aria-hidden="true">
+                            <defs>
+                                <marker id="cmb-arrow-builds" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="#79a7da"/>
+                                </marker>
+                                <marker id="cmb-arrow-critiques" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="#c87850"/>
+                                </marker>
+                                <marker id="cmb-arrow-compares" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="#d9bd6c"/>
+                                </marker>
+                                <marker id="cmb-arrow-applies" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                                    <path d="M0,0 L0,6 L7,3 z" fill="#70cbb5"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Branch lane headers -->
+                            <text class="lane-head" x="200" y="84">BODY-WAVE MAPPING</text>
+                            <text class="lane-head" x="560" y="84">NORMAL MODES</text>
+                            <text class="lane-head" x="880" y="84">STATISTICAL</text>
+
+                            <!-- Era bands: time runs top to bottom -->
+                            <rect class="phase-region founding" x="185" y="110" width="960" height="830" rx="16"/>
+                            <rect class="phase-region absorption" x="185" y="970" width="960" height="830" rx="16"/>
+                            <rect class="phase-region probabilistic" x="185" y="1830" width="960" height="830" rx="16"/>
+                            <rect class="phase-region critique" x="185" y="2690" width="960" height="560" rx="16"/>
+
+                            <!-- Era names, rotated into the empty left gutter so no edge can cross them -->
+                            <text class="phase-label" text-anchor="middle" transform="translate(172,525) rotate(-90)">FOUNDING MAPPERS</text>
+                            <text class="phase-sub" text-anchor="middle" transform="translate(154,525) rotate(-90)">1986-1989 &middot; body-wave CMB maps</text>
+                            <text class="phase-label" text-anchor="middle" transform="translate(172,1385) rotate(-90)">NORMAL MODES</text>
+                            <text class="phase-sub" text-anchor="middle" transform="translate(154,1385) rotate(-90)">1991-1999 &middot; splitting functions, isostasy as closure</text>
+                            <text class="phase-label" text-anchor="middle" transform="translate(172,2245) rotate(-90)">THE CRITICAL TURN</text>
+                            <text class="phase-sub" text-anchor="middle" transform="translate(154,2245) rotate(-90)">2000-2003 &middot; bounds, non-uniqueness, joint inversion</text>
+                            <text class="phase-label" text-anchor="middle" transform="translate(172,2970) rotate(-90)">COUPLING AND SETS</text>
+                            <text class="phase-sub" text-anchor="middle" transform="translate(154,2970) rotate(-90)">2012-2017 &middot; feasible sets</text>
+
+                            <!-- Time axis: oldest at the top, newest at the bottom -->
+                            <line class="axis" x1="110" y1="110" x2="110" y2="3260"/>
+                            <line class="axis-tick" x1="100" y1="277" x2="120" y2="277"/>
+                            <text class="axis-label" x="44" y="281">1986</text>
+                            <line class="axis-tick" x1="100" y1="547" x2="120" y2="547"/>
+                            <text class="axis-label" x="44" y="551">1987</text>
+                            <line class="axis-tick" x1="100" y1="817" x2="120" y2="817"/>
+                            <text class="axis-label" x="44" y="821">1989</text>
+                            <line class="axis-tick" x1="100" y1="1137" x2="120" y2="1137"/>
+                            <text class="axis-label" x="44" y="1141">1991</text>
+                            <line class="axis-tick" x1="100" y1="1407" x2="120" y2="1407"/>
+                            <text class="axis-label" x="44" y="1411">1997</text>
+                            <line class="axis-tick" x1="100" y1="1677" x2="120" y2="1677"/>
+                            <text class="axis-label" x="44" y="1681">1999</text>
+                            <line class="axis-tick" x1="100" y1="1997" x2="120" y2="1997"/>
+                            <text class="axis-label" x="44" y="2001">2000</text>
+                            <line class="axis-tick" x1="100" y1="2267" x2="120" y2="2267"/>
+                            <text class="axis-label" x="44" y="2271">2000</text>
+                            <line class="axis-tick" x1="100" y1="2537" x2="120" y2="2537"/>
+                            <text class="axis-label" x="44" y="2541">2003</text>
+                            <line class="axis-tick" x1="100" y1="2857" x2="120" y2="2857"/>
+                            <text class="axis-label" x="44" y="2861">2012</text>
+                            <line class="axis-tick" x1="100" y1="3127" x2="120" y2="3127"/>
+                            <text class="axis-label" x="44" y="3131">2017</text>
+
+                            <!-- Citation edges -->
+                            <path class="edge compares" d="M310 360 L310 462"/>
+                            <path class="edge builds-on" d="M310 630 L310 732"/>
+                            <path class="edge compares" d="M420 490 C520 490 670 800 670 1052"/>
+                            <path class="edge builds-on" d="M310 900 L310 1322"/>
+                            <path class="edge compares" d="M420 520 L470 520 L470 1407 L424 1407"/>
+                            <path class="edge compares" d="M670 1220 L670 1592"/>
+                            <path class="edge builds-on" d="M420 1420 C760 1440 990 1560 990 1912"/>
+                            <path class="edge compares" d="M420 240 L830 240 L830 2220 L424 2220"/>
+                            <path class="edge builds-on" d="M930 2080 C800 2180 570 2290 424 2290"/>
+                            <path class="edge builds-on" d="M420 590 L520 590 L520 2420 L372 2420 L372 2456"/>
+                            <path class="edge builds-on" d="M420 845 L495 845 L495 2400 L262 2400 L262 2456"/>
+                            <path class="edge builds-on" d="M420 620 L855 620 L855 2857 L424 2857"/>
+                            <path class="edge compares" d="M310 2620 L310 2776"/>
+                            <path class="edge critiques" d="M670 1780 L670 3042"/>
+                        </svg>
+
+                        <!-- Paper nodes -->
+                        <button class="cmb-node founding verified" style="left:200px;top:200px" data-node="creager1986">
+                            <span class="cmb-year">1986</span>
+                            <span class="cmb-title">Aspherical structure of the CMB from PKP travel times</span>
+                            <span class="cmb-authors">Creager &amp; Jordan</span>
+                            <span class="cmb-amp">20 km</span>
+                            <span class="cmb-elements">PKP only &middot; non-estimable target &middot; no calibration</span>
+                        </button>
+
+                        <button class="cmb-node founding verified" style="left:200px;top:470px" data-node="morelli1987">
+                            <span class="cmb-year">1987</span>
+                            <span class="cmb-title">CMB topography from PcP + PKP travel times</span>
+                            <span class="cmb-authors">Morelli &amp; Dziewonski</span>
+                            <span class="cmb-amp">6 km</span>
+                            <span class="cmb-elements">PcP+PKP &middot; deg-4 SH &middot; frequentist</span>
+                        </button>
+
+                        <button class="cmb-node founding verified" style="left:200px;top:740px" data-node="doornbos1989">
+                            <span class="cmb-year">1989</span>
+                            <span class="cmb-title">CMB models from internally reflected core phases</span>
+                            <span class="cmb-authors">Doornbos &amp; Hilton</span>
+                            <span class="cmb-amp">smooth</span>
+                            <span class="cmb-elements">PKKP &middot; joint topo+velocity &middot; no calibration</span>
+                        </button>
+
+                        <button class="cmb-node absorption verified" style="left:560px;top:1060px" data-node="li1991">
+                            <span class="cmb-year">1991</span>
+                            <span class="cmb-title">Even-degree structure from normal-mode splitting</span>
+                            <span class="cmb-authors">Li, Giardini &amp; Woodhouse</span>
+                            <span class="cmb-amp">~3 km</span>
+                            <span class="cmb-elements">normal modes &middot; even-degree &middot; velocity-density tied</span>
+                        </button>
+
+                        <button class="cmb-node critique verified" style="left:200px;top:1330px" data-node="obayashi1997">
+                            <span class="cmb-year">1997</span>
+                            <span class="cmb-title">P and PcP travel time tomography for the CMB</span>
+                            <span class="cmb-authors">Obayashi &amp; Fukao</span>
+                            <span class="cmb-amp">3 km</span>
+                            <span class="cmb-elements">PcP &middot; isostasy &middot; cross-validated</span>
+                        </button>
+
+                        <button class="cmb-node probabilistic verified" style="left:880px;top:1920px" data-node="garciaSouriau2000">
+                            <span class="cmb-year">2000</span>
+                            <span class="cmb-title">CMB topography amplitude by stochastic analysis</span>
+                            <span class="cmb-authors">Garcia &amp; Souriau</span>
+                            <span class="cmb-amp">&plusmn;4 km (95%)</span>
+                            <span class="cmb-elements">PcP+PKP+PKKP &middot; stochastic &middot; no map</span>
+                        </button>
+
+                        <button class="cmb-node critique verified" style="left:200px;top:2190px" data-node="boschi2000">
+                            <span class="cmb-year">2000</span>
+                            <span class="cmb-title">Whole Earth tomography: anisotropy or outer core?</span>
+                            <span class="cmb-authors">Boschi &amp; Dziewonski</span>
+                            <span class="cmb-amp">~1 km (nuisance)</span>
+                            <span class="cmb-elements">P+PcP+PKP &middot; 4 model classes &middot; non-unique</span>
+                        </button>
+
+                        <button class="cmb-node founding verified" style="left:200px;top:2460px" data-node="sze2003">
+                            <span class="cmb-year">2003</span>
+                            <span class="cmb-title">CMB topography from short-period PcP, PKP, PKKP</span>
+                            <span class="cmb-authors">Sze &amp; van der Hilst</span>
+                            <span class="cmb-amp">3 km (joint)</span>
+                            <span class="cmb-elements">5&deg; cells &middot; joint topo+velocity &middot; bootstrap</span>
+                        </button>
+
+                        <button class="cmb-node absorption verified" style="left:560px;top:3050px" data-node="koelemeijer2017">
+                            <span class="cmb-year">2017</span>
+                            <span class="cmb-title">Lowermost-mantle density from Stoneley mode splitting</span>
+                            <span class="cmb-authors">Koelemeijer, Deuss &amp; Ritsema</span>
+                            <span class="cmb-amp">&plusmn;1 km</span>
+                            <span class="cmb-elements">Stoneley modes &middot; model-space search &middot; feasible set</span>
+                        </button>
+
+                        <button class="cmb-node critique verified" style="left:200px;top:2780px" data-node="soldati2012">
+                            <span class="cmb-year">2012</span>
+                            <span class="cmb-title">CMB tomography coupled by geodynamics</span>
+                            <span class="cmb-authors">Soldati, Boschi &amp; Forte</span>
+                            <span class="cmb-amp">~30% lower</span>
+                            <span class="cmb-elements">flow-tied &middot; T vs TG &middot; no error bars</span>
+                        </button>
+
+                        <button class="cmb-node absorption verified" style="left:560px;top:1600px" data-node="ishii1999">
+                            <span class="cmb-year">1999</span>
+                            <span class="cmb-title">Normal-mode and gravity constraints on velocity and density</span>
+                            <span class="cmb-authors">Ishii &amp; Tromp</span>
+                            <span class="cmb-amp">&plusmn;5 km (imported)</span>
+                            <span class="cmb-elements">normal modes + gravity &middot; density model &middot; no flow</span>
+                        </button>
+                    </div>
+                    <p class="cmb-status" id="cmb-status">100% &middot; drag to pan &middot; wheel or controls to zoom</p>
+                    <p class="cmb-flow" aria-hidden="true">1986 &darr; 2017</p>
+                    <div class="cmb-controls" aria-label="Map controls">
+                        <button type="button" data-map-control="out" aria-label="Zoom out">&minus;</button>
+                        <button type="button" data-map-control="reset" aria-label="Reset map">&#x2316;</button>
+                        <button type="button" data-map-control="in" aria-label="Zoom in">+</button>
+                    </div>
+                </div>
+
+                <div class="cmb-legend">
+                    <span class="cmb-key"><i class="cmb-swatch builds"></i>builds on</span>
+                    <span class="cmb-key"><i class="cmb-swatch critiques"></i>critiques</span>
+                    <span class="cmb-key"><i class="cmb-swatch compares"></i>analytical comparison</span>
+                    <span class="cmb-key"><i class="cmb-swatch applies"></i>applies method of</span>
+                    <span class="cmb-key"><i class="cmb-swatch verified">V</i>verified under audit</span>
+                </div>
+
+                <div class="cmb-reading">
+                    <article class="cmb-card">
+                        <h3>The 20 km nobody believed</h3>
+                        <p>Creager &amp; Jordan's 20 km is the number the later literature quotes as "the Creager-Jordan model", but the authors themselves judged it too large for dynamic support and preferred a chemical boundary layer interpretation. The 20 km is what you get when you assume the other two fields (mantle-side and core-side velocity) are identically zero, a prior choice dressed as a result.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>Different problems, not different answers</h3>
+                        <p>The apparent "20 km vs 6 km" disagreement between Creager (1986) and Morelli (1987) is not a contradiction. Both papers invert for topography only, assuming velocity fields are zero. The difference is the data: Creager's PKP-only data cannot separate topography from velocity (same-sign kernels), so his "assume velocity is zero" is doing all the work. Morelli added PcP, whose topography kernel has the opposite sign to PKP's, so topography and velocity produce distinguishably different data patterns. The 6 km is smaller because the signal that was actually velocity contamination is no longer attributed to topography. In ELEMENTS terms: different data spaces, different property separability &mdash; different problems, not different answers.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The 99.99% that wasn't</h3>
+                        <p>Morelli's headline quantitative claim is that PcP-only and PKP-only maps correlate at r = 0.701 (23 dof), rejecting a sub-CMB layer hypothesis at 99.99%. The verification study found that the 25 coefficient pairs include c₀⁰, the spherically symmetric mean core-radius term, which both inversions constrain well regardless of lateral structure. A shared c₀⁰ with zero lateral agreement already produces r ≈ 0.5–0.75. Remove degree 0 and the lateral correlation drops to r ≈ 0–0.4 (p ≈ 0.05–1.0). The qualitative agreement is real; the 99.99% level is not supported by the test as run.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The coupling axis begins</h3>
+                        <p>Doornbos &amp; Hilton made the first move on the coupling axis: instead of assuming velocity is zero (Creager, Morelli), they enlarged the model space to carry topography and a laterally varying boundary-layer velocity jointly. The key finding is subtle: the smooth CMB (topographic variance ~1.5 km² vs Morelli's ~6 km²) comes from the data-space move (adding bottomside PKKP, which sees the boundary from below), not from the model-space enlargement itself. The joint inversion's role is to re-admit the velocity-contaminated phases without dragging topography up &mdash; a correct partition, not a smaller number.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>PKKP: the phase that sees from below</h3>
+                        <p>PKKP reflects off the underside of the CMB &mdash; from inside the core. It is sensitive to topography but not to the mantle structure above the boundary, making it the cleanest topography channel in the body-wave family. The variance ladder tells the story: PcP 21.5 km², PKP 6.5-11.7 km², PKKP 1.3 km². The sixteenfold drop from PcP to PKKP is a data-space move, not a model-space move. Adding the velocity coordinate (model 5 → model 6) leaves the topographic variance unchanged at 1.5 km² &mdash; the coupling coordinate carries the partition, not the amplitude reduction.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>A different datum: normal modes</h3>
+                        <p>Li, Giardini &amp; Woodhouse (1991) brought a fundamentally independent data type to the CMB topography problem: free-oscillation spectral splitting, not body-wave travel times. Normal-mode splitting functions are even-degree, long-wavelength functionals of the whole Earth, sensing structure to degree 2l for a mode of degree l. The CMB topography is one component of a multi-field model space that also holds mantle heterogeneity and inner-core anisotropy. The modal CMB agrees with the even-degree body-wave map &lsquo;to a fair extent&rsquo; but is smaller by a factor of order two &mdash; an independent confirmation of pattern, not amplitude.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The proportionality prior</h3>
+                        <p>Normal-mode splitting coefficients sense a single combination of bulk modulus, shear modulus and density (eq. 9), so P velocity, S velocity and density cannot be separated. LGW impose a hard proportionality prior (&delta;ln &beta; = 2 &delta;ln &alpha; = 4 &delta;ln &rho;, eq. 37) that collapses three fields to one scalar. The CMB topographic amplitude is conditional on this prior &mdash; change the ratio and the amplitude changes. Ishii &amp; Tromp (1999) take the opposite route: they carry Vp, Vs, and density as separate fields with no proportionality and no flow relation, paying for it in under-determinacy and needing the gravity constraint. The within-normal-mode disagreement (LGW vs Ishii-Tromp) is thus a prior difference, not a physics difference.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>Isostasy: the third closure</h3>
+                        <p>Obayashi &amp; Fukao (1997) stated the velocity-topography ambiguity explicitly: the spherical average of their PcP anomaly is satisfiable by either a 3% velocity reduction in a 20 km basal layer or a 3 km CMB depression. To break it they assume isostatic compensation &mdash; a physical assumption that the CMB layer floats in equilibrium with the core &mdash; and the amplitude drops from &plusmn;7 km to &plusmn;1&ndash;2 km. This is the third distinct prior on the coupling axis (after Doornbos&rsquo;s joint coordinate and LGW&rsquo;s proportionality), and it confirms the thesis pattern: the topography number is set by which physical closure you assume, not by the data alone.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>Cross-validation: the first predictive rule</h3>
+                        <p>Obayashi&rsquo;s roughness parameter is selected by out-of-sample cross-validation &mdash; the only predictive prior-selection rule in the corpus. Every other paper tunes the prior against something already believed (a target resolution, an external geodetic value, a synthetic, or agreement with earlier maps). Cross-validation tunes it against data the inversion did not see, which is the only rule that could in principle be wrong in a way the paper would notice. The minima are shallow (&sim;0.1 s in a 2.1 s residual), and the three readings are tuned separately, so the maps are not directly comparable &mdash; but the rule itself is a genuine predictive check.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The imported amplitude</h3>
+                        <p>Ishii &amp; Tromp (1999) is often cited as an independent normal-mode confirmation of &plusmn;5 km CMB topography. The verification study found that the amplitude is <strong>imported, not measured</strong>: p. 1235 states the data admit a range of amplitudes and the CMB &lsquo;was required&rsquo; to have an overall amplitude of &plusmn;5 km to be compatible with Morelli &amp; Dziewonski (1987). So the two are not independent &mdash; the &plusmn;5 km is a hard set prior, not an inference. The paper&rsquo;s genuine contribution is the first whole-mantle density model (dense LLSVPs beneath Pacific and Africa), not a CMB topography measurement.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>No flow relation</h3>
+                        <p>The reading note had recorded a &lsquo;density &rarr; dynamic-topography flow relation (viscosity-dependent)&rsquo; in this paper. The verification study retracted it: there is <strong>no viscosity and no flow relation</strong> anywhere in the inversion. p. 1232 says the whole construction exists to circumvent needing one. Density and the three boundary topographies are independent parameters that enter eqs. (2) and (3) linearly and separately. The note had imported soldati2012&rsquo;s architecture onto a paper that explicitly declines it. The LGW proportionality is also absent &mdash; Ishii &amp; Tromp carry Vp, Vs, and density as separate fields, which is why their model is under-determined and needs the gravity constraint.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The statistical turn: amplitude without a map</h3>
+                        <p>Garcia &amp; Souriau (2000) refused to invert for a map at all. Instead they estimate the <em>statistical amplitude</em> of CMB topography by stochastic analysis of PcP, PKP and PKKP residuals, reporting &plusmn;4 km at 95%. The verification study corrected the headline: the &plusmn;4 km is exactly 2&sigma; of an assumed Gaussian for the topography field itself (p. 358: &lsquo;If the CMB topography has a Gaussian distribution, it implies that 95% &hellip;&rsquo;), not a computed quantile. The genuine inference is &sigma;<sub>CMB</sub> = 2.0 &plusmn; 0.7 km rms above 300 km, falling to ~1.0 km at 1000&ndash;1500 km where &lsquo;the error bar is nearly of the same order as the topography amplitude&rsquo;. The &plusmn;4 km is a property-map closure (carrying &sigma; to a range under a distributional assumption), not a calibration. This is the corpus&rsquo;s clearest instance of retreating to a property the data can support.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The checkerboard verdict</h3>
+                        <p>Garcia &amp; Souriau ran a <strong>two-way checkerboard</strong> &mdash; topography-only input and D''-only input &mdash; with no damping. Both directions leak: &lsquo;In each case, a strong signal is present in D'' and a weak signal is present in the topography.&rsquo; Their conclusion (p. 358): &lsquo;it is hopeless to try to invert our data for mapping the CMB topography&rsquo; and &lsquo;this result casts serious doubts on the validity of the CMB topographic models published up to now.&rsquo; The verification study notes the truncated SVD (100 of 440 singular values) is itself a prior acting on exactly the ill-conditioned directions where topography and D'' trade off, so the leakage is not fully independent of a regularisation choice &mdash; but it runs in both directions, which no single-direction smoothing artefact would produce. The stochastic estimate separates topography from D'' by an assumed mantle cancellation in eq. (4), which is exactly the separation the checkerboard proves these data cannot deliver.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The non-uniqueness node</h3>
+                        <p>Boschi &amp; Dziewonski (2000) made the model space itself the object under test: four model classes (isotropic, anisotropic, +outer-core, both), each with free CMB topography. The PcP-vs-PKP CMB-map discrepancy is &lsquo;evident and systematic&rsquo; and survives all four classes and the independent Engdahl 1998 data. CMB topography is a <strong>tradeoff nuisance, not a deliverable</strong>: a flat-CMB synthetic returns fictitious topography under ~1 km, ten times below the observed signal. The model-selection criterion (eq. 11) is morelli1987&rsquo;s correlation-agreement device re-used in the <em>negative</em> direction (low r = 0.16 vs ~0.5 for PKPbc-vs-PKPdf), now filed as a diagnostic consistent-with, not diagnostic-of, inadequacy. The verification study&rsquo;s breaker demolished the first draft&rsquo;s claim that this negative use is &lsquo;sound/safer&rsquo;: a low r can arise from unequal coverage or a common-mode systematic with no inadequacy present.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The wrong kernel and the joint inversion</h3>
+                        <p>Sze &amp; van der Hilst (2003) ran the largest short-period body-wave inversion to date (839,369 residuals &rarr; 29,837 summary rays). Separate-phase inversions disagree badly (up to 13 km for PKPdf), proving topography alone cannot explain the signal. The joint inversion for topography + basal 290 km velocity gives ~3 km. The verification study found the <strong>printed PKKP kernel is wrong</strong> &mdash; in sign and magnitude &mdash; against the verified underside-reflection kernel +2&eta;<sub>&minus;</sub>, surviving five alternative readings. The ~0.2 km excess ellipticity quoted on p. 45 is the <em>initial, untuned</em> model&rsquo;s value; the published model carries ~0.39 km, so the &lsquo;agrees well with 0.38&rsquo; statement spans a factor 1.9. The bootstrap calibration is frequentist and exercised, but the authors themselves declare the blind spot: unsampled cells have small SDs and &lsquo;give misleading sense of a satisfactory result&rsquo;.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>Geodynamic coupling: relation, not prior</h3>
+                        <p>Soldati, Boschi &amp; Forte (2012) tied CMB topography to mantle velocity through flow, making dc a deterministic functional of dv. The verification study&rsquo;s key correction: the geodynamic coupling is <strong>not a prior</strong> on the model space the method uses &mdash; it connects two spaces, making it a relation commitment that sits inside the forward operator and is the property map. It becomes prior information only on a larger space the method never forms. The calibration is <strong>none exercised</strong> &mdash; &lsquo;deterministic point estimate&rsquo; was the standard conflation this corpus keeps producing. The synthetic tests that support the headline comparison were built so that the coupling holds exactly, so they measure how much a <em>correct</em> relation helps rather than how well the method resolves the CMB. Four coordinates move between the T and TG procedures (model space, prior, MPR, MDR), not one as the paper states.</p>
+                    </article>
+                    <article class="cmb-card">
+                        <h3>The first feasible set</h3>
+                        <p>Koelemeijer, Deuss &amp; Ritsema (2017) used Stoneley modes &mdash; the sharpest available property map for the CMB &mdash; to test whether LLSVPs are dense or light. The model space is <strong>three real numbers</strong> (R_LL, R_SR, H), not a family of fields; CMB topography is one scalar H multiplying a density-shaped field. The reported &plusmn;1 km degree-2 CMB amplitude is five times smaller than the corpus&rsquo;s standing &plusmn;5 km. The verification study&rsquo;s headline: this is the <strong>first paper in the corpus to occupy the worst-case column</strong> &mdash; P_s is a feasible set of a bounded-error data model (eq. 2), not a likelihood. It saturates at 1.0 over whole regions and falls to 0.53 when modes are combined. The decisive prior is the <strong>post-hoc isostatic sign constraint H &lt; 0</strong>, which selects between two classes the seismology leaves degenerate. With ALL available modes the sign of R_LL cannot be determined robustly.</p>
+                    </article>
+                </div>
+
+                <p class="hz-prose" style="max-width:760px">
+                    <a class="hz-btn" href="../index.html">Back to Research Overview</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div class="cmb-dialog" id="cmb-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="cmb-dialog-title">
+        <div class="cmb-dialog-box">
+            <button class="cmb-dialog-close" type="button" aria-label="Close">&times;</button>
+            <h3 id="cmb-dialog-title"></h3>
+            <div class="cmb-dialog-sub" id="cmb-dialog-sub"></div>
+            <div class="cmb-dialog-amp" id="cmb-dialog-amp"></div>
+            <p id="cmb-dialog-summary"></p>
+            <div class="cmb-elements-grid" id="cmb-dialog-elements"></div>
+        </div>
+    </div>
+
+    <footer class="foot">
+        <div class="wrap">
+            <div class="brand">
+                <span class="monogram">AM</span>
+                <span class="brand-name">Adrian Mag</span>
+            </div>
+            <div class="credits">
+                &copy; 2025&ndash;2026 Adrian Mag. Notes and text licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--accent-bright)">CC BY 4.0</a> (reuse with attribution); code is open source under the license in each repository; published papers are subject to journal copyright.<br>
+                <span class="warm">Background photography by Adrian Mag, also published on Unsplash.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function(){"use strict";
+    var map=document.getElementById("cmb-map"),board=document.getElementById("cmb-board"),status=document.getElementById("cmb-status"),dialog=document.getElementById("cmb-dialog"),title=document.getElementById("cmb-dialog-title"),sub=document.getElementById("cmb-dialog-sub"),amp=document.getElementById("cmb-dialog-amp"),summary=document.getElementById("cmb-dialog-summary"),elementsGrid=document.getElementById("cmb-dialog-elements"),closeBtn=dialog.querySelector(".cmb-dialog-close"),last=null,BOARD_W=1200,scale=.75,x=0,y=0,drag=null;
+
+    /* Phones open on the year axis plus the first lane at readable size; wider
+       screens fit the whole board. Time runs downward either way, so the user
+       pans vertically to move through the corpus. */
+    function fitWidth(){
+        var w=map.clientWidth;
+        if(w<760){var READ=440;scale=clamp(w/READ,0.15,2);x=-30*scale;}
+        else{scale=clamp((w-24)/BOARD_W,0.15,2);x=(w-BOARD_W*scale)/2;}
+        y=12;
+    }
+
+    var details={
+    "creager1986":{
+    title:"Creager & Jordan 1986",
+    sub:"GRL 13(13), 1497-1500 \u00b7 doi:10.1029/GL013i013p01497",
+    amp:"20 km peak-to-peak",
+    summary:"Tomographic maps of near-CMB aspherical structure from ISC PKP(AB) and PKP(DF) travel times, distance 150-180\u00b0. Peak-to-peak signal ~1 s in vertical travel time. Read as pure CMB topography this is ~20 km, which the authors themselves judged too large for dynamic support and instead preferred to explain as a chemical boundary layer ('continents on the core'). The 20 km that the later literature quotes is thus a number the authors did not believe was topography.",
+    elements:{
+    "Model space":"Not L\u00b2 (Dirac rows: point evaluation unbounded there). Two admissible reconstructions, and the paper selects neither: H^s(S\u00b2) for s>1, and C(S\u00b2). The Fisherian native space H_K is also admissible under the best-linear prior reading. The paper names no function space anywhere.",
+    "Data space":"\u211d\u00b9\u00b9\u2074\u00b3 summary-ray PKP residuals (657 DF/PKIKP + 486 AB/PKP), ISC 1971-81. Variance = standard error of mean + 0.1 s correlated-error floor.",
+    "Relation":"Not point-valued: a noise covariance C_nn is carried, so the MDR is not a map into D. Deterministic core G is a weighted two-point Dirac sampler. MDR type undecidable from the paper: measure-valued under the Gaussian reading, a family of laws under the best-linear one, point-valued under Tikhonov.",
+    "Property map":"Not identity for the headline result. For \u03b4\u03c4_r: P = topography in km, T = multiplication by approx +19.2 km/s. Not estimable: ker T = {0} while ker G is infinite-dimensional, so ker G is not contained in ker T.",
+    "Prior":"Not simply a measure. Shape: Fisherian kernel \u03ba=8 (stated). Amplitude: set by \u03b1 via a 36-dof resolution target. Hard prior: two of three fields set identically zero. The cited 1984 method source says the estimator is best-linear, calls C_ss a smoothing operator, states its normalization is arbitrary, and never says Gaussian.",
+    "Output":"A bare point on the property space. Variance reductions R_T are a data-side goodness-of-fit diagnostic, not an output on P. No uncertainty statement of any kind.",
+    "Calibration":"None exercised. The output is a bare point, so no set or measure is reported for a reading to be imposed on: neither deterministic, frequentist, nor Bayesian. The cited 1984 method supplies a variance operator (eqs 27-28) which this paper declines to use."
+    }},
+    "morelli1987":{
+    title:"Morelli & Dziewonski 1987",
+    sub:"Nature 325, 678-683 \u00b7 doi:10.1038/325678a0",
+    amp:"\u00b16 km (half peak-to-peak)",
+    summary:"The first CMB topography map from joint PcP + PKP data. Both kernels are topography sensitivities: PcP reflection (-0.146 s/km) and PKP transmission (+0.052 s/km per crossing), opposite in sign. A mantle-velocity anomaly moves both data sets in the same direction; a topography perturbation moves them oppositely. This sign difference is what lets the two data sets distinguish topography from velocity contamination \u2014 not by jointly estimating velocity, but by providing a channel where the two signals produce distinguishably different patterns. The 6 km is smaller than Creager's 20 km because the data can now separate the signals, so less of the velocity contamination is misattributed to topography.",
+    elements:{
+    "Model space":"\u211d\u00b2\u2075: SH coefficients of \u03b4r through degree and order 4, in km. The continuous space behind the truncation is never named; nothing forces one. The truncation is implicit prior information carried by the model-space choice, argued from coverage and signal-to-noise.",
+    "Data space":"\u211d\u2075\u00b9\u2078\u00b2 PcP summary residuals + \u211d\u2074\u00b9\u2076\u2070 PKP_BC summary residuals; joint \u211d\u2079\u00b3\u2074\u00b2. ISC/BISC data, 5\u00b0-equivalent source-receiver regions. DF/PKIKP excluded (inner core suspected heterogeneous).",
+    "Relation":"Measure-valued type, refined to the two-moment family (no member committed). Deterministic core is linear: Ac, with one-point sampling rows (PcP, reflection kernel -0.146 s/km) and two-point sampling rows (PKP_BC, transmission kernel +0.052 s/km per crossing). Both are topography kernels with opposite signs. Noise variances from eq. (5): \u03c3\u00b2_E/N + \u03c3\u00b2_H, fitted by regression per phase. Conditional on HELM46 (declared mantle substitution).",
+    "Property map":"For the maps: synthesis S : \u211d\u00b2\u2075 \u2192 C\u221e(S\u00b2), not the identity. For scalars: linear functionals of c (c\u2080\u2070 = core radius, c\u00b2\u2070 = flattening). The \u00b16 km relief is a nonlinear half-peak-to-peak functional of the synthesised degree-4 field (12.2 km ptp / 2 = 6.11 km). Maps carry no uncertainty; the two scalar functionals carry \u03c3.",
+    "Prior":"None explicit on \u211d\u00b2\u2075 (no set constraint, no measure, no damping). The L=4 truncation is implicit prior via model-space choice. HELM46 and PKIKP exclusion are MDR commitments, not priors.",
+    "Output":"Point \u0109 \u2208 \u211d\u00b2\u2075 with per-coefficient \u03c3 (Table 1); three published maps; derived scalars with errors (core radius 3477.4 \u00b1 0.2 km).",
+    "Calibration":"Frequentist, exercised: per-coefficient standard errors and a significance statement. Two qualifications: (i) the exact levels (\u2018significant\u2019, \u201899.99%\u2019) presuppose a noise-law member (e.g. Gaussian) that the paper never commits \u2014 it declares only the two-moment family of eq. (5), which licenses only conservative levels (Chebyshev: \u00b1100\u03c3 for 99.99% vs \u00b13.9\u03c3 for Gaussian). (ii) The 99.99% map-correlation test (r=0.701, 23 dof) is dominated by the shared spherically symmetric c\u2080\u2070 term: with degree 0 removed, lateral agreement drops to r \u2248 0\u20130.4 (p \u2248 0.05\u20131.0)."
+    }},
+    "li1991":{
+    title:"Li, Giardini & Woodhouse 1991",
+    sub:"JGR 96(B1), 551-577 \u00b7 doi:10.1029/90JB02008",
+    amp:"~3 km (factor ~2 below Morelli)",
+    summary:"CMB topography from free-oscillation spectral splitting of 33 isolated multiplets (IDA network) \u2014 a datum fundamentally independent of body-wave travel times. Normal-mode splitting functions are even-degree, long-wavelength functionals sensing structure to degree 2l for a mode of degree l. The CMB topography is one component of a multi-field model space (mantle heterogeneity + CMB topography + inner-core anisotropy). Because splitting coefficients sense a single combination of bulk modulus, shear modulus and density, a hard proportionality prior (\u03b4ln \u03b2 = 2 \u03b4ln \u03b1 = 4 \u03b4ln \u03c1) collapses three fields to one scalar. The modal CMB agrees with the even-degree body-wave map \u2018to a fair extent\u2019 but is smaller by a factor of order two \u2014 an independent confirmation of pattern, not amplitude.",
+    elements:{
+    "Model space":"Multi-component and even-degree: mantle heterogeneity \u03b6 (s=0,2,4, a 6th-order depth polynomial), CMB topography \u03b4h (degree \u2264 4 SH), inner-core anisotropy, and spherical perturbations. CMB topography is one block; the mantle block is a single scalar \u03b6 after the proportionality collapse of three fields (Vp, Vs, density) to one.",
+    "Data space":"Free-oscillation spectral splitting, in two representations: splitting-function coefficients c_st (SAF approach) or the raw split spectra u(t) (SAT approach). 33 isolated multiplets, ~1000 spectra, 10 events, IDA accelerometer network. A fundamentally different datum from body-wave travel times.",
+    "Relation":"Measure-valued: an observation kernel carrying an additive-noise law (data covariance C_e, eqs. 48-49). Deterministic core is eq. (4): splitting coefficient = ellipticity + mantle-volume integral + boundary-undulation terms (the CMB one boundary). Kernels eqs. 7-9, 36. For SAT, the nonlinear spectra-to-model map.",
+    "Property map":"Basis-coefficient map onto degree-\u22644 SH coefficients of \u03b4h (and of \u03b6). The CMB deliverable is those coefficients (Table 4 row k=c for SAF, Table 7a for SAT).",
+    "Prior":"Three pieces. Hard: the proportionality \u03b4ln\u03b2 = 2\u03b4ln\u03b1 = 4\u03b4ln\u03c1 (eq. 37), collapsing three fields to one \u2014 the CMB amplitude is conditional on this ratio. Explicit point-form: stochastic damping toward smallness (model covariance C_x and parameter \u03c2, eqs. 49-52). Implicit: the s\u22644 and K=6 truncations. A separate hard constraint Bx=g imposes PKIKP traveltimes on inner-core anisotropy.",
+    "Output":"Degree-\u22644 CMB topography (and mantle, inner-core) coefficient point maps, with disclaimed formal-error diagnostics alongside. A point on P. The deliverable reading: \u2018an independent confirmation of the long-wavelength CMB pattern at reduced amplitude\u2019.",
+    "Calibration":"None exercised. The stochastic inversion tabulates formal errors and resolution diagonals (Tables 4, 7a), but C_x is used as damping (a point-form cost), not a prior probability measure \u2014 so no framework posterior exists. The authors disclaim the errors (\u2018far too small\u2019, \u2018very likely to lose meaning\u2019). SAF-versus-SAT consistency is an estimator check, not a calibration. The structurally identical case is rodgersWahr1993 (formal errors tabulated then declared unlicensed)."
+    }},
+    "doornbos1989":{
+    title:"Doornbos & Hilton 1989",
+    sub:"JGR 94(B11), 15741-15751 \u00b7 doi:10.1029/JB094iB11p15741",
+    amp:"\u03c3\u00b2_r \u2248 1.5 km\u00b2 (smooth)",
+    summary:"The first CMB inversion to enlarge the model space from topography alone to topography + a laterally varying boundary-layer velocity, estimated jointly. The key new data is PKKP: a bottomside reflection off the underside of the CMB, sensitive to topography but not to mantle structure above the boundary. The variance ladder (PcP 21.5, PKP 6.5-11.7, PKKP 1.3 km\u00b2) shows the amplitude drop is a data-space move (adding the clean phase), not the model-space enlargement. The joint inversion's role is to re-admit the velocity-contaminated phases without dragging topography up \u2014 a correct partition, not a smaller number. The paper's own verdict: topography is an upper bound at the noise floor, and the data are \u2018not necessarily incompatible with small CMB topography\u2019 from geodesy.",
+    elements:{
+    "Model space":"Enlarged: CMB topography \u03b4r (degree-4 SH) + a laterally varying boundary layer above it. Two alternative parameterisations of the layer: model 6 as velocity perturbation \u03b4v, model 7 as variable layer thickness (upper boundary \u03b4r', the top of the D\u2019\u2019 region \u2014 not a second CMB topography, but the other side of the same layer). The two are alternatives, not simultaneous. The 20 km layer thickness is a hard clamp (degenerate-singleton constraint), not a regularisation. The topography-velocity coupling itself carries no prior form: both coordinates are free and jointly estimated from shared data.",
+    "Data space":"ISC summary-ray residuals for PcP, PKP(AB/BC), PKKP(BC), PnKP, referenced to PREM. Two data-space moves: per-phase mean residual bias removed (eq. 1), and PKKP (bottomside reflection) added as a boundary-clean channel.",
+    "Relation":"Linearised ray theory (Dziewonski & Gilbert 1976), enlarged to carry both topography and boundary-layer kernels. Not point-valued: an additive-noise stochastic law is carried (intrinsic variance \u03c3\u2080\u00b2 + noise model eqs. 2-3), with second moments declared but no full likelihood. The prior failure mode (substitution: a topography-only operator omits the velocity term, so overlying structure maps onto relief) is here repaired by including the omitted term.",
+    "Property map":"Basis-coefficient property map onto degree-4 harmonic coefficients of \u03b4r (and \u03b4v). The headline property \u03c3\u00b2_r (topographic variance) is read from the recovered models (Table 1); the variance-sensitivity relations (eqs. 2-3) are a separate data-side estimate, not the property map itself.",
+    "Prior":"Implicit and structural, three pieces. Implicit: the degree-4 SH truncation (a model-space choice). Explicit point-form: LSQR damping on the block inversion. Hard: the 20 km layer thickness is a clamp, not a regularisation. The 10\u00b0\u00d710\u00b0 blocks are for data binning and cross-validation (the block inversion is low-pass filtered and correlated with the SH result at 80-99%), not a model-space parameterisation. The topography-velocity coupling carries no prior form \u2014 both coordinates are free.",
+    "Output":"Degree-4 topography and boundary-layer maps (Figs 7-9), point estimates on P. The paper's deliverable reading: \u2018the CMB is smooth and the earlier roughness is overlying structure\u2019.",
+    "Calibration":"None exercised. The coefficient maps are bare point estimates; nothing on P carries a set, measure, or guarantee. The random-data test (50 inversions of noise at the observed variance) is a significance audit of the estimator's noise floor, not a calibration: it sets no level, builds no data-dependent set with a coverage property, and quantifies over no class of admissible models."
+    }},
+    "obayashi1997":{
+    title:"Obayashi & Fukao 1997",
+    sub:"JGR 102(B8), 17825-17841 \u00b7 doi:10.1029/97JB00397",
+    amp:"3 km (or \u00b11-2 km under isostasy)",
+    summary:"Iterative P + PcP tomography: first the 3-D mantle and hypocentres from ~2 million P arrivals, then PcP residuals (corrected for both) inverted for a CMB vertical travel-time anomaly. The anomaly is explicitly acknowledged as \u2018due either to velocity anomaly or topographic anomaly\u2019: the spherical average is satisfiable by a 3% velocity reduction in a 20 km basal layer OR a 3 km CMB depression. To break the ambiguity the authors assume isostatic compensation, and the amplitude drops from \u00b17 km to \u00b11-2 km. The roughness parameter is selected by out-of-sample cross-validation \u2014 the only predictive prior-selection rule in the corpus.",
+    elements:{
+    "Model space":"\u211d\u00b2\u2070\u2074\u2078: one vertical travel-time anomaly per 5.6\u00b0\u00d75.6\u00b0 cell (32\u00d764), in seconds. Three readings (velocity, undulation, isostatic) share this one model space; they differ in the MDR kernel, the tuned prior strength, and the property map, not in the space. No continuous space is named; the discretisation precedes the problem statement.",
+    "Data space":"\u211d\u00b2\u00b9\u00b3\u2070\u2070 PcP residuals in two distance windows (30\u00b0-38\u00b0 and 45\u00b0-75\u00b0), after relocation and 3-D mantle correction from ~2\u00d710\u2076 P arrivals. Noise weights: 0.1, 0.3, 1.0 s for iPcP, PcP, ePcP. A Tukey biweight M-estimator handles outliers (iterative reweighting on residuals).",
+    "Relation":"Measure-valued. The noise is stated not to be Gaussian and is later fitted with a Lorentzian (no finite second moment). Deterministic core: one point evaluation per ray at its bounce point, with kernel 2/cos i for the velocity reading and 2 cos i for the undulation reading \u2014 the two are reciprocal, so the readings are formally separable (factor ~11 across the distance windows), not degenerate. Conditional on a declared substitution: mantle and hypocentre corrections taken as exact.",
+    "Property map":"Multiplication by a constant then cell synthesis: \u03b4s = \u03b4t_v/h (velocity), or \u03b4r = \u03b4t_u/s (undulation), or the eq.-(5) isostatic pair. The choice among the three is the paper\u2019s central act, made on external grounds (isostasy), not on data.",
+    "Prior":"Explicit form: penalty, a first-order roughness functional on the sphere, strength \u03c3_h. Implicit: the cell discretisation, and in the isostatic run the assumption of an iron-rich layer in equilibrium with the core. \u03b1-selection by out-of-sample cross-validation \u2014 the first predictive rule in the corpus, with a different optimum for each reading (factor ~7 apart).",
+    "Output":"Three maps with per-cell standard-deviation maps (Fig. 8), plus tabulated per-region errors (Table 1) and scalar solution errors (\u00b10.03 s for \u03b4t_v, \u00b10.2 s for \u03b4t_u). The three headline amplitudes (\u00b17%, \u00b17 km, \u00b11-2 km) are quoted without error bars.",
+    "Calibration":"Frequentist, exercised. A 50-realisation Monte Carlo under the declared Lorentzian noise law, reported as per-cell standard-deviation maps. Table 1 gives two further error columns. The abstract imposes a significance reading (\u2018the significant, resolvable features\u2019). A sampling distribution of the estimator under a stated noise law, read for significance, is a frequentist calibration exercised."
+    }},
+    "ishii1999":{
+    title:"Ishii & Tromp 1999",
+    sub:"Science 285, 1231-1236 \u00b7 doi:10.1126/science.285.5431.1231",
+    amp:"\u00b15 km (imported from Morelli)",
+    summary:"The first whole-mantle density model, from a joint inversion of free-oscillation splitting functions and the free-air gravity anomaly for Vs, Vp, density, and topography at the surface, 660 km, and the CMB. Finds denser-than-average material beneath the Pacific and African upwellings (dense LLSVPs). The CMB topography amplitude is NOT measured: p. 1235 states the data admit a range and the CMB \u2018was required\u2019 to have an overall amplitude of \u00b15 km to be compatible with Morelli & Dziewonski (1987). There is no viscosity and no flow relation anywhere in the inversion \u2014 p. 1232 says the construction exists to circumvent needing one. The LGW proportionality is also absent: Vp, Vs, and density are separate fields, which is why the model is under-determined and needs gravity.",
+    elements:{
+    "Model space":"Six fields on one discretisation: \u03b4\u03b2/\u03b2, \u03b4\u03b1/\u03b1, \u03b4\u03c1/\u03c1 each in spherical harmonics to degree and order 6 laterally and Chebyshev to order 13 radially, plus dimensionless topography \u03b4h/h at the free surface, the 660 and the CMB to degree 6. 2160 real parameters at degrees 1\u20136. The 410 is NOT in the space (fixed to a travel-time model). 945 odd-degree parameters are excluded from every misfit and carried from the starting model.",
+    "Data space":"2850 even-degree generalised splitting-function coefficients pooled from three studies (duplicates counted as independent), plus free-air gravity coefficients from EGM96. 96 odd-degree splitting coefficients exist and enter no reported misfit. A relative weight W between the two blocks was varied and never reported.",
+    "Relation":"Linear and point-valued as stated (eqs. 2 and 3), two stacked blocks with different null spaces: modes see Vs, Vp, density and all three topographies; gravity sees density and topography only. The zero block (gravity blind to velocity) is why density and boundary topography trade off. No ray geometry anywhere. Noise budget undeclared, though \u03c7\u00b2, Table 1 and the Monte Carlo all presuppose one.",
+    "Property map":"Three different maps. (i) The paper\u2019s own: T = identity, SPRD6 is the answer. (ii) The campaign\u2019s: projection onto the CMB block. (iii) The paper\u2019s second: field-to-field correlations (Fig. 4\u2019s \u22120.63), a nonlinear functional for which estimability is a separate question nobody poses.",
+    "Prior":"Four forms. Penalty: size plus gradient plus radial damping, with an ordering constraint \u03bb_\u03c1 \u2265 \u03bb_\u03b2 = \u03bb_\u03b1 between fields. Point: the centre of the penalty (SKS12WM13 starting model). Set: one hard amplitude constraint on the CMB, imported from Morelli & Dziewonski (\u00b15 km). Hidden: the degree-6 and Chebyshev-order-13 truncation defining M. No viscosity, no flow relation.",
+    "Output":"Point estimate SPRD6: six fields, one (density) with a dispersion, one amplitude (CMB) imported and two (surface, 660) damped toward external targets. The converse failure mode: a hard set prior plus a stated range of permissible amplitudes licenses a feasible set, and a point was reported.",
+    "Calibration":"None exercised, for the CMB or for anything else. Table 1\u2019s density error is a reported dispersion with no level and no ensemble. The 0.24 correlation threshold is a one-sided t-test (n=48) that assumes an independence the paper\u2019s own damping denies. The resolution-matrix trace, Backus-Gilbert kernels, checkerboards and the 30% noise Monte Carlo are diagnostics, not calibrations."
+    }},
+    "garciaSouriau2000":{
+    title:"Garcia & Souriau 2000",
+    sub:"Phys. Earth Planet. Inter. 117, 345-359 \u00b7 doi:10.1016/S0031-9201(99)00106-5",
+    amp:"\u00b14 km (95% range)",
+    summary:"Instead of inverting for a map, Garcia & Souriau estimate the statistical amplitude of CMB topography by stochastic analysis of PcP, PKP and PKKP residuals. They report \u00b14 km at 95% (exactly 2\u03c3 of an assumed Gaussian for the topography field itself). The verification study corrected this: the \u00b14 km is not a computed quantile but 2\u00d7sigma_CMB with sigma_CMB = 2.0 \u00b1 0.7 km rms. The paper's own two-way checkerboard (topography-in and D''-in, with no damping) shows leakage in both directions, leading the authors to conclude it is 'hopeless to try to invert our data for mapping the CMB topography' and that this 'casts serious doubts on the validity of the CMB topographic models published up to now'. The stochastic estimate separates topography from D'' by an assumed mantle cancellation in eq. (4) \u2014 exactly the separation the checkerboard proves these data cannot deliver.",
+    elements:{
+    "Model space":"Two, for two procedures. For the stochastic estimate: a random field of CMB topography characterised only by its variance at a length scale, with no basis and no parametrisation. For the abandoned inversion: ~310 CMB topography blocks plus ~300 D'' velocity blocks on 10\u00b0 equal-area cells.",
+    "Data space":"EHB residuals (Engdahl et al. 1998) against ak135, corrected for elevation, ellipticity and station term: PcP2, PKPbc, PKKPbc after ray-parameter windowing and a \u00b16 s cut. The summary-ray construction is the data-space commitment, chosen to make eq. (3) hold.",
+    "Relation":"A variance relation (eq. 4), not a travel-time relation. Measure-valued, refined to a family and not to a member: eq. (3) carries \u03c3_R\u00b2/N explicitly (second-moment commitment). Three unpriced commitments ride inside eq. (4), the load-bearing one being an imported S_underside from Doornbos & Hilton 1989.",
+    "Property map":"A statistical functional: m \u2192 \u03c3_CMB at a given length scale. Not a synthesis, not a point evaluation; the corpus's clearest instance of a property map that discards the field and keeps one number. The Gaussian closure to \u00b14 km is a second property map, carrying \u03c3_CMB to the range.",
+    "Prior":"Set form, not measure form: the assumed shape of the topography's value histogram over the sphere is a constraint on the range of m, not a measure on model space, and does no work in any update. Also the stationarity and zero-correlation-with-sampling conditions. For the abandoned inversion: model-vector weights of 2 km and 3%, and a truncated SVD (100 of 440 singular values).",
+    "Output":"A point in property space with an error bar, per length scale. The abandoned map is not a second output: nothing is formed. The checkerboard test shows leakage in both directions \u2014 topography input leaks into D'' and vice versa \u2014 confirming non-separability.",
+    "Calibration":"Frequentist, exercised, on the r.m.s. only. \u03c3_CMB carries a stated error (\u00b10.69 km at \u03b8=5\u00b0) from the least-squares fit of eq. (3). p. 358 judges the long-scale estimate uninformative because 'the error bar is nearly of the same order as the topography amplitude'. The \u00b14 km is not part of this reading \u2014 it is 2\u03c3 of an assumed Gaussian, not a computed quantile."
+    }},
+    "boschi2000":{
+    title:"Boschi & Dziewonski 2000",
+    sub:"J. Geophys. Res. 105(B6), 13675-13696 \u00b7 doi:10.1029/2000JB900059",
+    amp:"~1 km (nuisance)",
+    summary:"Whole-mantle P-velocity tomography with CMB topography as free parameters, testing whether core-phase signal reflects outer-core lateral heterogeneity or mantle radial anisotropy. The corpus's non-uniqueness node: four model classes (isotropic, anisotropic, +outer-core, both), each with free CMB topography. The PcP-vs-PKP CMB-map discrepancy is 'evident and systematic' (Table 1) and survives the independent Engdahl 1998 data. CMB topography is a tradeoff nuisance, not a deliverable: a flat-CMB synthetic returns fictitious topography under ~1 km, ten times below the observed. The model-selection criterion (eq. 11) is morelli1987's correlation-agreement device re-used in the NEGATIVE direction (low r=0.16 vs ~0.5 for PKPbc-vs-PKPdf), now filed as a diagnostic consistent-with, not diagnostic-of, inadequacy.",
+    elements:{
+    "Model space":"Four, by design, and the choice among them is the paper's subject: (1) isotropic mantle, (2) radially anisotropic mantle (V_PH, V_PV inverted), (3) isotropic + 3-D outer core, (4) both; each with free CMB topography. Sizes from ~2500+648 to ~5000+648+648. The corpus's first paper where the model space itself is the object under test.",
+    "Data space":"P, PcP, PKPbc, PKPdf summary-ray delays from ISC 1964-1993 (over 10^6 raw, reduced tenfold on 2\u00b0 cells), PREM reference, PKPdf inner-core-anisotropy corrected; repeated on Engdahl et al. (1998) EHB data as a second, independent reduction.",
+    "Relation":"Linearised ray theory, radially anisotropic (eqs. 2-8), measure-valued at family level: the \u03c7\u00b2 reading assumes a 1 s measurement-error moment (p. 13,687), a second-moment commitment. CMB kernels are morelli1987's. The misfit is unweighted.",
+    "Property map":"Block synthesis to CMB, mantle and outer-core maps. The correlation r(m_1,m_2) of eq. (11) is NOT a property map: it takes two models to a scalar, M\u00d7M\u2192[-1,1], not M\u2192P, so it is a diagnostic on the output family.",
+    "Prior":"Penalty form: norm and roughness damping, separately on V_PH and V_PV (the former damped about twice as hard), on the outer core, and on the CMB (roughness favoured, 'to focus on the large wavelength component'). Plus the minimum-anisotropy constraint eq. (10), extra rows forcing \u03b4c_1k=\u03b4c_2k so isotropy is preferred where data are weak. Damping held fixed across models sharing a parameterization.",
+    "Output":"Fourteen point-estimate maps, one per inversion (plus fourteen on the Engdahl data). Each model is a single point output; the family of them, and its internal disagreement, is the campaign's comparison object. The deliverable is the negative result: the discrepancy survives all four model classes. The outer-core map is disclaimed as 'not a real feature of the Earth'.",
+    "Calibration":"None exercised. No output carries a set or a measure, and the paper says so ('no error bars on the maps'). The variance reductions, \u03c7\u00b2, and the cross-subset correlation r are diagnostics, not calibrations: they assess the adequacy of the machinery."
+    }},
+    "sze2003":{
+    title:"Sze & van der Hilst 2003",
+    sub:"Phys. Earth Planet. Inter. 135, 27-46 \u00b7 doi:10.1016/S0031-9201(02)00204-2",
+    amp:"3 km (joint)",
+    summary:"Large short-period body-wave data set (839,369 residuals \u2192 29,837 summary rays) inverted for CMB topography. Separate-phase inversions disagree badly (up to 5 km for PcP/PKP/PKKP, 13 km for PKPdf), proving 'the travel-time residuals cannot be explained by topography alone'. A joint inversion for topography + basal 290 km velocity gives ~3 km topography with \u00b15% basal velocity. The verification study found: (1) the printed PKKP kernel is WRONG against the verified underside-reflection kernel, in sign and magnitude; (2) the ~0.2 km excess ellipticity is the INITIAL, UNTUNED model's value \u2014 the published model carries ~0.39 km; (3) degree 0 is demeaned out then fit from the removed means; (4) the relation is measure-valued at an independence family, incomparable with the siblings' two-moment families. The bootstrap calibration is frequentist, exercised, with the blind spot declared by the authors themselves.",
+    elements:{
+    "Model space":"Exp. 1: \u211d\u00b2\u2075\u2079\u00b2 (5\u00b0 cells, km). Exp. 2: \u211d\u00b2\u2075\u2079\u00b2 \u2295 \u211d\u207f_v (basal 290 km velocity, n_v unstated). Cell basis chosen against SH explicitly, citing Pulliam & Stark 1993. No continuous space named.",
+    "Data space":"Per phase, \u211d^N_phase summary residuals (total 29,837 from 839,369), demeaned per data set; joint run stacks them. EHB data (Engdahl et al. 1998), corrected for mantle structure and inner-core anisotropy. Homogeneous outer core assumed.",
+    "Relation":"Measure-valued, refined only to an INDEPENDENCE family (no moments, no law declared anywhere). Incomparable with the siblings' two-moment families, not coarser. Deterministic core: cell-sampling rows with kernels -2\u03b7_+ (PcP) / {\u03b7_- - \u03b7_+} (PKP) / printed -{\u03b7_+ + \u03b7_-} (PKKP). The PKKP kernel as printed is WRONG against the verified underside-reflection kernel +2\u03b7_-, in sign and magnitude. Conditional on four substitutions, one redrawn between experiments.",
+    "Property map":"Cell synthesis for maps (piecewise-constant fields, L^\u221e(S\u00b2)). Scalars: excess ellipticity (SH expansion then degree-2-zonal functional) and a mean core radius fit from THE REMOVED SPHERICAL AVERAGES THEMSELVES (p. 42), outside the demeaned inversion by construction.",
+    "Prior":"Explicit and refined: Tikhonov second-difference smoothing + norm damping on both blocks, in PENALTY form. Only the BASAL-LAYER VELOCITY damping was adjusted, post hoc, against Mathews et al. (2002), after an initial untuned run \u2014 in tension with p. 36's 'same Tikhonov regularization and norm damping for all calculations'. Fourth \u03b1-selection rule for the corpus: external-datum adjustment.",
+    "Output":"Maps with per-cell bootstrap SD maps (delete-10%, 100 repeats); two scalars without stated uncertainties (~0.2 km ellipticity is the INITIAL, UNTUNED value; the published model carries ~0.39 km; 3478 km core radius). Separate-phase maps disagree up to 13 km.",
+    "Calibration":"Frequentist, exercised, by resampling: per-cell bootstrap SDs attached to the maps and used inferentially. The bootstrap's noise model is the empirical distribution \u2014 the paper declares no noise moments or law. The blind spot is declared by the authors: unsampled cells have small SDs and 'give misleading sense of a satisfactory result'. The random-data permutation null is a data-space adequacy device, not a calibration of the output."
+    }},
+    "soldati2012":{
+    title:"Soldati, Boschi & Forte 2012",
+    sub:"Geophys. J. Int. 189, 730-746 \u00b7 doi:10.1111/j.1365-246X.2012.05413.x",
+    amp:"~30% lower",
+    summary:"An 'innovative' CMB-topography inversion that stops treating mantle velocity and CMB topography as independent unknowns and instead ties them by mantle flow (Forte & Peltier). CMB topography dc becomes a deterministic functional of the velocity field dv, so the only free parameters are velocity coefficients. The resulting maps resolve the long-standing PcP/PKP discrepancy and are 'physically sound'. The verification study found: (1) the geodynamic coupling is NOT a prior on the model space the method uses \u2014 it connects two spaces, making it a relation commitment (it sits inside the forward operator and is the property map); (2) the calibration is none exercised \u2014 'deterministic point estimate' was the standard conflation; (3) the synthetic tests that support the headline comparison were built so that the coupling holds exactly, so they measure how much a correct relation helps rather than how well the method resolves the CMB; (4) the CMB density jump attributed to PREM is not PREM's; (5) four coordinates move between T and TG procedures, not one.",
+    elements:{
+    "Model space":"TG: \u211d^24840, 15 layers \u00d7 1656 velocity voxels. T: \u211d^26496, the same plus 1656 free CMB pixels. NOT spherical harmonics (SH is an auxiliary change of basis, l_max=89). Four coordinates move between procedures: model space, prior, MPR, and MDR's deterministic core.",
+    "Data space":"~700,000 PcP + ~30,000 PKPbc + ~150,000 PKPdf + ~630,000 P summary rays from Antolik et al. (2001), ISC relocated against a 3-D mantle model and Crust5.1; PKPab declined. Geometry: W(dt) = diag exp(dt_ref - |dt_j|), eq. (21), a datum-dependent weighting, so the misfit metric is fixed by the realised data rather than by an error budget.",
+    "Relation":"Measure-valued, refined to a member: Gaussian, with a stated per-phase scale (three readings spanning a factor 1.95). Two deterministic cores: G_T (path integral + point evaluations of dc) and G_TG = G_seis + K\u2218C (topography sensitivity composed with geodynamic operator). Replacing the first by the second is a DECLARED MDR SUBSTITUTION, the cleanest in the corpus. Kernels from Dziewonski & Gilbert (1976), no value printed.",
+    "Property map":"T: projection onto the CMB block, then pixel synthesis. TG: T = C, the geodynamic coupling operator, whose values are the harmonic coefficients of dc. C is selected post hoc: four different C are run and one is chosen by which matches the geodetic datum. Since the same C is a factor of G_TG, that selection is a commitment in the MDR too.",
+    "Prior":"Explicit form: penalty. Roughness minimisation on dv_P and dc, plus norm damping on dc (the latter two in T only). Implicit: the model-space choice. The geodynamic coupling is NOT in this row under Reading A; under Reading B it is a set prior (the graph \u0393). \u03b1-selection: synthetic-recovery optimisation plus agreement with previously published models.",
+    "Output":"Maps without uncertainties; one scalar per model per data subset, without uncertainties (Table 5); an amplitude statement ('about 30 per cent' lower than T) without an uncertainty. NOTHING IN THE PAPER CARRIES AN ERROR BAR. The T-versus-TG comparison (Fig. 12) is the headline.",
+    "Calibration":"None exercised. The outputs are bare points throughout, so there is no reported set or measure for a reading to be imposed on. 'Deterministic point estimate' was the standard conflation this corpus keeps producing. The variance reductions, input-output rms and correlations, and the T-versus-TG comparison are diagnostics, not guarantees."
+    }},
+    "koelemeijer2017":{
+    title:"Koelemeijer, Deuss & Ritsema 2017",
+    sub:"Nature Communications 8, 15241 \u00b7 doi:10.1038/ncomms15241",
+    amp:"\u00b11 km",
+    summary:"Uses anomalous splitting of Stoneley modes (CMB-focused normal modes) to test whether LLSVPs are dense or light. A forward model-space search over three scalars (R_LL, R_SR, H) finds the data fit best by LOW-density LLSVPs \u2014 the opposite sign to Ishii-Tromp 1999. CMB topography is not a field here but one scalar H multiplying a density-shaped field. The reported degree-2 CMB amplitude is \u00b11 km, five times smaller than the corpus's standing \u00b15 km. The verification study found: (1) the model space is THREE REAL NUMBERS, not a family of fields; (2) the calibration is deterministic and exercised \u2014 the first paper in the corpus to occupy the worst-case column (P_s is a feasible set of a bounded-error data model, not a likelihood); (3) the decisive prior is the explicit, post-hoc isostatic sign constraint H < 0, which selects between two classes the seismology leaves degenerate; (4) with ALL available modes the sign of R_LL cannot be determined robustly.",
+    elements:{
+    "Model space":"\u211d\u00b3: (R_LL, R_SR, H) on a grid over [-4,4]\u00b2 \u00d7 [-10,10]. Velocity fixed to SP12RTS, scaling fixed to 0.3 above 2500 km, regions fixed by velocity contours, topography shape slaved to density shape. CMB topography is not a field \u2014 it is one scalar H = dln(h_CMB)/dln(rho) multiplying a field determined by something else. Contrast ishii1999: 2160 parameters for the same target and the same class of data.",
+    "Data space":"Splitting-function coefficients at degree s from nine Stoneley modes (KDR13), within a catalogue of 146 mantle-sensitive modes to 10 mHz from 93 earthquakes. The selection of the nine is the paper's decisive choice. Per-coefficient bounds \u03c3_st, estimated as a maximum spread.",
+    "Relation":"Eq. (1), linear, used strictly FORWARD: predictions are computed for every grid point and compared. No operator is inverted anywhere. Point-valued splitting functionals.",
+    "Property map":"The three scalars themselves, and derived from them the degree-2 CMB amplitude. The campaign's target is a one-parameter function of the model, not a field.",
+    "Prior":"Set form throughout: the grid bounds; the fixed velocity, scaling and region definitions; the <5 km peak-to-peak topography ceiling; and, decisively, the post-hoc sign constraint H < 0 from isostasy, which selects between two classes the data leave degenerate (light LLSVPs over elevated CMB with H<0 vs dense LLSVPs over elevated CMB with H>0).",
+    "Output":"A SET, reported as level sets of P_s over the grid, plus a selected point within it: R_LL = +0.9, R_SR = +0.2, H = -2, P_s = 0.57, equivalent to degree-2 CMB undulations of \u00b11 km. Qualifications the abstract does not carry: with ALL available modes the sign of R_LL cannot be determined robustly; Table 1's degree-6 best fit is R_LL = -2.2 (DENSE); and the CMB is elevated under the LLSVPs in BOTH surviving classes.",
+    "Calibration":"Deterministic, AND exercised \u2014 the first paper in this corpus to occupy the worst-case column. Eq. (2) defines P_s as an inverse-uncertainty-weighted INDICATOR that the prediction lies inside a \u00b1\u03c3 box around the observation, with \u03c3 the MAXIMUM SPREAD in cross-validation runs, so {P_s = 1} is the feasible set of a bounded-error data model. It is not a likelihood or a posterior: it saturates at 1.0 over whole regions, and it FALLS to 0.53 when modes are combined. Bayesian vocabulary, deterministic object."
+    }}
+    };
+
+    function applyTransform(){board.style.transform="translate("+x+"px,"+y+"px) scale("+scale+")";status.textContent=Math.round(scale*100)+"% \u00b7 drag to pan \u00b7 wheel or controls to zoom"}
+
+    function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v))}
+
+    map.addEventListener("pointerdown",function(e){if(e.target.closest(".cmb-node")||e.target.closest(".cmb-controls"))return;drag={sx:e.clientX,sy:e.clientY,ox:x,oy:y};map.classList.add("dragging");map.setPointerCapture(e.pointerId)});
+    map.addEventListener("pointermove",function(e){if(!drag)return;x=drag.ox+(e.clientX-drag.sx);y=drag.oy+(e.clientY-drag.sy);applyTransform()});
+    map.addEventListener("pointerup",function(e){drag=null;map.classList.remove("dragging")});
+    map.addEventListener("pointercancel",function(){drag=null;map.classList.remove("dragging")});
+
+    map.addEventListener("wheel",function(e){e.preventDefault();var r=map.getBoundingClientRect();var mx=e.clientX-r.left,my=e.clientY-r.top;var ns=clamp(scale*(e.deltaY<0?1.12:0.89),0.15,2);var fx=(mx-x)/scale,fy=(my-y)/scale;x=mx-fx*ns;y=my-fy*ns;scale=ns;applyTransform()},{passive:false});
+
+    var ctrls=map.querySelectorAll("[data-map-control]");
+    ctrls.forEach(function(b){b.addEventListener("click",function(){var a=b.getAttribute("data-map-control");if(a==="in")scale=clamp(scale*1.2,0.15,2);else if(a==="out")scale=clamp(scale/1.2,0.15,2);else fitWidth();applyTransform()})});
+
+    function openDialog(key){var d=details[key];if(!d)return;last=key;title.textContent=d.title;sub.textContent=d.sub;amp.textContent=d.amp;amp.style.display=d.amp?"inline-block":"none";summary.textContent=d.summary;elementsGrid.innerHTML="";var el=d.elements;for(var k in el){var rk=document.createElement("div");rk.className="cmb-el-key";rk.textContent=k;var rv=document.createElement("div");rv.className="cmb-el-val";rv.textContent=el[k];elementsGrid.appendChild(rk);elementsGrid.appendChild(rv)}dialog.hidden=false;dialog.focus()}
+    function closeDialog(){dialog.hidden=true;last=null}
+
+    board.querySelectorAll(".cmb-node").forEach(function(n){n.addEventListener("click",function(){openDialog(n.getAttribute("data-node"))})});
+    closeBtn.addEventListener("click",closeDialog);
+    dialog.addEventListener("click",function(e){if(e.target===dialog)closeDialog()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!dialog.hidden)closeDialog()});
+
+    var userMoved=false;
+    map.addEventListener("pointerdown",function(){userMoved=true},{once:true});
+    window.addEventListener("resize",function(){if(!userMoved){fitWidth();applyTransform()}});
+
+    fitWidth();
+    applyTransform();
+    })();
+    </script>
+    <script src="../../../../js/theme-toggle.js?v=38" defer></script>
+    <script src="../../../../js/nav-menu.js?v=38" defer></script>
+</body>
+</html>
