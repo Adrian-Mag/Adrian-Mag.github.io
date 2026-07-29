@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 3a: From Points to Events — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <title>Part 3a: From Points to Events | Bayes, Measure-Theoretically | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 3a: From Points to Events — Bayes, Measure-Theoretically — Adrian Mag">
+    <meta property="og:title" content="Part 3a: From Points to Events, Bayes, Measure-Theoretically | Adrian Mag">
     <meta property="og:description" content="Part 3a of Bayes, Measure-Theoretically: Why probability must be assigned to events, not outcomes, and why sigma-algebras are the natural language for questions about an experiment.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/bayes/part-3a.html">
@@ -83,7 +83,7 @@
             <div class="page-header-bg" data-hero="bayes" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/hero-nebula.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Part 3a: From Points to Events</h1>
-                <p>Why probability lives on sets, not on points &mdash; and why that forces us to think about sigma-algebras.</p>
+                <p>Why probability lives on sets, not on points, and why that forces us to think about sigma-algebras.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
                 </p>
@@ -159,12 +159,12 @@
 
                     \[m=(m_1,m_2)\in[0,1]^2.\]
 
-                    <p>The forward map and the noise model are the same in spirit &mdash; the
-                    reporter observes a noisy function of \(m\) &mdash; but the model space is now
+                    <p>The forward map and the noise model are the same in spirit, the
+                    reporter observes a noisy function of \(m\), but the model space is now
                     a continuum.</p>
 
                     <p>Assume, as is natural here, that our uncertainty about \(m\) is described
-                    by a smooth density over the square &mdash; a prior with no lumps of
+                    by a smooth density over the square, a prior with no lumps of
                     probability concentrated at individual points. We might try to ask the same
                     question as before:</p>
 
@@ -188,7 +188,7 @@
                     probability zero?</p>
 
                     <p>Two remarks make this precise. First, a probability measure can have at
-                    most countably many <em>atoms</em> &mdash; points carrying strictly positive
+                    most countably many <em>atoms</em>, points carrying strictly positive
                     mass. (If uncountably many points each had positive probability, then for some
                     \(n\) uncountably many would carry mass at least \(1/n\), and the total would
                     exceed one.) So on an uncountable space, <em>most</em> points must have
@@ -197,7 +197,7 @@
                     space can perfectly well support atoms (a prior that puts mass \(1/2\)
                     exactly on \((0.3,0.7)\) and spreads the rest smoothly is a legitimate
                     probability measure). A measure with no atoms is called <em>atomless</em>,
-                    and our smooth-density prior is atomless &mdash; that is why every singleton
+                    and our smooth-density prior is atomless, that is why every singleton
                     gets zero. &ldquo;Continuous model space&rdquo; and &ldquo;atomless
                     prior&rdquo; are different statements, and it is the second one doing the
                     work here.</p>
@@ -242,7 +242,7 @@
                             <text x="450" y="190" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">cannot condition by division</text>
                         </svg>
                         <figcaption>
-                            <strong>F3a-1 &mdash; The continuous shock.</strong> In the discrete
+                            <strong>F3a-1, The continuous shock.</strong> In the discrete
                             switch problem, each hidden state carries positive probability. Under
                             an atomless prior on a continuous model space, every individual point
                             has probability zero. Point masses stop carrying information;
@@ -253,7 +253,7 @@
 
                     <p>This does not mean that &ldquo;nothing happens.&rdquo; It means that
                     individual outcomes are no longer <em>useful</em> carriers of probability.
-                    To be precise: probability was always assigned to measurable sets &mdash; a
+                    To be precise: probability was always assigned to measurable sets, a
                     singleton \(\{m\}\) is itself a perfectly good measurable set, in finite and
                     continuous problems alike. The real change is that in the finite problem the
                     singleton masses <em>characterized</em> the whole measure, whereas under an
@@ -265,7 +265,7 @@
                         <span class="bayes-callout-label">Key shift</span>
                         <p>
                             Probability is not about individual outcomes. It is about
-                            <em>events</em> &mdash; sets of outcomes.
+                            <em>events</em>, sets of outcomes.
                         </p>
                     </div>
 
@@ -366,7 +366,7 @@
                             <text x="200" y="225" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">Each step builds a new question from old ones</text>
                         </svg>
                         <figcaption>
-                            <strong>F3a-2 &mdash; Building events from singletons.</strong>
+                            <strong>F3a-2, Building events from singletons.</strong>
                             Starting with \(\{00\}\), the operations of negation (complement) and
                             either/or (union) generate new events. Each new event is a new question
                             we can ask about the hidden state.
@@ -381,14 +381,14 @@
                     <p>But the continuous case is different. There, it turns out that we
                     <em>cannot</em> consistently attach probabilities to every subset of the model
                     space. Instead, we must specify <em>which</em> subsets count as legitimate
-                    events &mdash; that is, which questions we agree are meaningful to ask and
+                    events, that is, which questions we agree are meaningful to ask and
                     answer.</p>
 
                     <div class="bayes-callout callout-intuition">
                         <span class="bayes-callout-label">Intuition</span>
                         <p>
                             A &sigma;-algebra is a self-contained language of questions about the
-                            experiment. It is not an arbitrary definition &mdash; it is forced by
+                            experiment. It is not an arbitrary definition, it is forced by
                             the logic of combining questions through negation and either/or.
                         </p>
                     </div>
@@ -426,12 +426,12 @@
                     triples, and \(\M\) itself. Every subset is an event.</p>
 
                     <p>In continuous spaces, the full power set is no longer a workable choice
-                    &mdash; not because no measure could ever live on it (a point mass
+                   , not because no measure could ever live on it (a point mass
                     \(\delta_x\) is happily defined on <em>every</em> subset), but because the
                     measures we actually want are ruled out. If we ask for the usual atomless,
                     translation-invariant notion of &ldquo;area&rdquo; on \([0,1]^2\) (or length
                     on \(\mathbb{R}\)), then it is impossible to extend it to <em>all</em>
-                    subsets while keeping countable additivity &mdash; this is the content of
+                    subsets while keeping countable additivity, this is the content of
                     the classical Vitali construction of a non-measurable set. The mainstream
                     resolution is to shrink the domain: the natural choice
                     is the <em>Borel &sigma;-algebra</em>, which is the smallest &sigma;-algebra
@@ -446,23 +446,23 @@
                                 </marker>
                             </defs>
                             <!-- Three panels: complement, union, empty/full -->
-                            <!-- Panel 1: complement — A inside B (Omega), A^c = B \ A -->
+                            <!-- Panel 1: complement, A inside B (Omega), A^c = B \ A -->
                             <rect x="10" y="20" width="180" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
                             <text x="100" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Complement</text>
                             <text x="100" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">"not A"</text>
-                            <!-- B (Omega) — larger container -->
+                            <!-- B (Omega), larger container -->
                             <ellipse cx="100" cy="105" rx="60" ry="42" fill="rgba(120,180,120,0.08)" stroke="rgba(120,180,120,0.4)" stroke-width="1.5"/>
                             <text x="155" y="72" text-anchor="start" fill="rgba(120,180,120,0.6)" font-size="9">&#937;</text>
                             <!-- A inside B -->
                             <circle cx="85" cy="100" r="20" fill="rgba(244,162,89,0.35)" stroke="rgba(244,162,89,0.7)" stroke-width="2"/>
                             <text x="85" y="104" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">A</text>
-                            <!-- A^c region: the part of B not covered by A — indicated by shading with a path -->
+                            <!-- A^c region: the part of B not covered by A, indicated by shading with a path -->
                             <path d="M 40 105 A 60 42 0 0 1 160 105 A 60 42 0 0 1 40 105 Z M 65 100 A 20 20 0 0 1 105 100 A 20 20 0 0 1 65 100 Z" fill="rgba(120,180,120,0.2)" fill-rule="evenodd" stroke="none"/>
                             <text x="130" y="130" text-anchor="middle" fill="rgba(120,180,120,0.8)" font-size="10" font-weight="600">A&#8742;</text>
                             <text x="100" y="160" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">if A &#8712; F,</text>
                             <text x="100" y="174" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">then A&#8742; = &#937; \ A &#8712; F</text>
 
-                            <!-- Panel 2: union — A and B intersect, arrow to A∪B -->
+                            <!-- Panel 2: union, A and B intersect, arrow to A∪B -->
                             <rect x="210" y="20" width="180" height="160" rx="8" fill="rgba(52,122,162,0.06)" stroke="rgba(52,122,162,0.2)" stroke-width="1"/>
                             <text x="300" y="42" text-anchor="middle" fill="rgba(160,196,232,0.8)" font-size="11" font-weight="600">Union</text>
                             <text x="300" y="58" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">"A or B"</text>
@@ -492,7 +492,7 @@
                             <text x="500" y="174" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">and &#937; &#8712; F</text>
                         </svg>
                         <figcaption>
-                            <strong>F3a-3 &mdash; The three axioms of a &sigma;-algebra.</strong>
+                            <strong>F3a-3, The three axioms of a &sigma;-algebra.</strong>
                             Each axiom corresponds to a natural operation on questions: negation
                             (complement), either/or (union), and the trivial questions (empty set
                             and full set).
@@ -518,7 +518,7 @@
                     </ol>
 
                     <p>The first axiom says that total probability is one. The second says that
-                    probabilities of mutually exclusive events add &mdash; the &ldquo;either/or&rdquo;
+                    probabilities of mutually exclusive events add, the &ldquo;either/or&rdquo;
                     principle, extended to countably many alternatives.</p>
 
                     <p>In the switch problem, the prior is a probability measure
@@ -538,7 +538,7 @@
                     probabilistic experiment. It captures:</p>
 
                     <ul>
-                        <li><strong>\(\Omega\)</strong>: the universe &mdash; all possible outcomes.</li>
+                        <li><strong>\(\Omega\)</strong>: the universe, all possible outcomes.</li>
                         <li><strong>\(\mathcal{F}\)</strong>: the questions we allow ourselves to
                         ask (events).</li>
                         <li><strong>\(\mu\)</strong>: the rule that assigns answers to those
@@ -546,7 +546,7 @@
                     </ul>
 
                     <p>(This triple, and the axioms behind it, are Kolmogorov&rsquo;s 1933
-                    axiomatization of probability <a href="#ref-kol33">[Kol33]</a> &mdash;
+                    axiomatization of probability <a href="#ref-kol33">[Kol33]</a>,
                     the moment probability theory became a branch of measure theory. Every
                     modern textbook, e.g. Kallenberg <a href="#ref-kal21">[Kal21]</a>,
                     begins exactly here.)</p>
@@ -558,7 +558,7 @@
                     <div class="bayes-callout callout-intuition">
                         <span class="bayes-callout-label">Why this matters</span>
                         <p>
-                            Conditioning &mdash; the heart of Bayesian inference &mdash; will turn
+                            Conditioning, the heart of Bayesian inference, will turn
                             out to be fundamentally about <em>restricting or refining the
                             collection of questions</em> \(\mathcal{F}\), rather than about fixing
                             individual outcomes. This viewpoint is the key to avoiding paradoxes
@@ -605,7 +605,7 @@
                             </marker>
                         </defs>
                         <figcaption>
-                            <strong>F3a-4 &mdash; The probability space for the switch problem.</strong>
+                            <strong>F3a-4, The probability space for the switch problem.</strong>
                             The universe \(\M\) lists all possible hidden states. The
                             &sigma;-algebra \(\SigmaM\) lists all legitimate questions. The prior
                             measure \(\muMzero\) assigns numerical answers to those questions.
@@ -624,7 +624,7 @@
                     not to points, and this works equally well whether \(\M\) has four elements or
                     uncountably many.</p>
 
-                    <p>In <a href="part-3b.html">Part&nbsp;3b</a>, we turn to conditioning &mdash;
+                    <p>In <a href="part-3b.html">Part&nbsp;3b</a>, we turn to conditioning,
                     the operation at the heart of Bayesian inference. We will see that conditioning
                     works perfectly in the finite switch problem, works for positive-measure sets
                     in continuous spaces, but <em>breaks down</em> for individual observations in

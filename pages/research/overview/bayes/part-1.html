@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 1: The Game — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <title>Part 1: The Game | Bayes, Measure-Theoretically | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 1: The Game — Bayes, Measure-Theoretically — Adrian Mag">
+    <meta property="og:title" content="Part 1: The Game, Bayes, Measure-Theoretically | Adrian Mag">
     <meta property="og:description" content="Part 1 of Bayes, Measure-Theoretically: A small guessing game with hidden switches, a lightbulb, and an unreliable reporter.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/bayes/part-1.html">
@@ -180,7 +180,7 @@
                             <text x="615" y="220" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="10">= noisy version of G(m)</text>
                         </svg>
                         <figcaption>
-                            <strong>F1a &mdash; The physical setup.</strong> Two hidden switches
+                            <strong>F1a, The physical setup.</strong> Two hidden switches
                             determine a lightbulb state via the forward map \(G\). An unreliable
                             reporter tells us the bulb state, but may lie with probability
                             \(1-\ptrust\). We only hear the report \(d\); we never see the
@@ -284,7 +284,7 @@
                             <text x="350" y="310" text-anchor="middle" fill="rgba(200,120,80,0.8)" font-size="10" font-style="italic">many-to-one: information is lost</text>
                         </svg>
                         <figcaption>
-                            <strong>F1b &mdash; The forward operator \(G\).</strong> Both
+                            <strong>F1b, The forward operator \(G\).</strong> Both
                             \(00\) and \(11\) map to \(G=1\) (bulb on); both \(01\) and
                             \(10\) map to \(G=0\) (bulb off). The map is many-to-one, so even
                             a noise-free observation of \(G(m)\) cannot distinguish \(00\)
@@ -347,7 +347,7 @@
                             <text x="530" y="115" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">reported value</text>
                         </svg>
                         <figcaption>
-                            <strong>F1c &mdash; The unreliable reporter as a binary symmetric
+                            <strong>F1c, The unreliable reporter as a binary symmetric
                             channel.</strong> The true bulb state \(G(m)\) passes through a
                             noisy channel: the reporter tells the truth with probability
                             \(\ptrust=0.8\) and lies with probability \(1-\ptrust=0.2\).
@@ -408,7 +408,7 @@
                             <text x="300" y="235" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Prior distribution P(m)</text>
                         </svg>
                         <figcaption>
-                            <strong>F1d &mdash; The prior distribution.</strong> Before hearing
+                            <strong>F1d, The prior distribution.</strong> Before hearing
                             any report, \(00\) and \(11\) are each assigned probability
                             \(0.4\), while \(01\) and \(10\) are each assigned \(0.1\).
                             The prior favours configurations where both switches agree.
@@ -459,7 +459,7 @@
                             <line x1="70" y1="95" x2="70" y2="82" stroke="rgba(160,120,190,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
                         </svg>
                         <figcaption>
-                            <strong>F1e &mdash; All ingredients of the Bayesian problem.</strong>
+                            <strong>F1e, All ingredients of the Bayesian problem.</strong>
                             The model space \(\M\), the forward map \(G\), the data space
                             \(\D\), the noise model, and the prior distribution together
                             specify the finite Bayesian inverse problem completely.
@@ -516,7 +516,7 @@
                             <text x="500" y="22" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="11" font-weight="600">↓ d_obs arrives</text>
                         </svg>
                         <figcaption>
-                            <strong>F1f &mdash; The key ordering.</strong> The update rule
+                            <strong>F1f, The key ordering.</strong> The update rule
                             \(d \mapsto \mathbb{P}(m\mid d)\) is constructed before the
                             observation arrives. When \(\dobs\) is heard, we simply evaluate
                             the rule at \(d=\dobs\).
@@ -542,7 +542,7 @@
                     </div>
 
                     <p>If you keep asking, the posterior sharpens onto a <em>pair</em> of
-                    configurations &mdash; \(\{00,11\}\) or \(\{01,10\}\) &mdash; and then stops.
+                    configurations, \(\{00,11\}\) or \(\{01,10\}\), and then stops.
                     Within the pair, the two members remain in the prior&rsquo;s ratio forever. The
                     reports describe only the bulb, and the bulb cannot tell \(00\) from \(11\):
                     no amount of data can recover what \(G\) never carried. Keep this picture; it

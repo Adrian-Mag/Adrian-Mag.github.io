@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act II: Something Is Wrong — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act II: Something Is Wrong | Think First, Discretize Later | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act II: Something Is Wrong — Think First, Discretize Later — Adrian Mag">
+    <meta property="og:title" content="Act II: Something Is Wrong, Think First, Discretize Later | Adrian Mag">
     <meta property="og:description" content="Act II of Think First, Discretize Later: Sampling the naive posterior reveals that uncertainty explodes under mesh refinement.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/think-first/act-2.html">
@@ -299,7 +299,7 @@
                     <img src="../../../../media/research/think-first/fig2b_posterior_samples.svg"
                          alt="Naive Bayesian posterior on a hat basis, posterior mean and samples, showing large spread." data-themed="1">
                     <figcaption>
-                        <strong>F2b &mdash; Posterior samples on hats.</strong> The posterior
+                        <strong>F2b, Posterior samples on hats.</strong> The posterior
                         mean is plausible, but the samples fluctuate wildly around it.
                     </figcaption>
                 </figure>
@@ -407,7 +407,7 @@
                     <img src="../../../../media/research/think-first/fig2c_nullspace.svg"
                          alt="Null-space coefficient vectors of G and their function reconstructions, all invisible to the data." data-themed="1">
                     <figcaption>
-                        <strong>F2c &mdash; The null space of \(\Gb\).</strong> Each
+                        <strong>F2c, The null space of \(\Gb\).</strong> Each
                         row in (a) is a coefficient vector \(\mathbf{v}_k\) with
                         \(\Gb\mathbf{v}_k \approx 0\). The corresponding functions
                         in (b) can be added to any model without changing the
@@ -627,7 +627,7 @@
                         cloud of coefficient vectors spreads out in \(\R^N\), even though the
                         reconstructed functions may not oscillate with unbounded amplitude at any
                         fixed point. The pathology is that the sequence of coefficient posteriors
-                        does not correspond to a coherent sequence of function-space measures &mdash;
+                        does not correspond to a coherent sequence of function-space measures,
                         the Euclidean coefficient geometry is not the \(L^2\) geometry, and without
                         a trace-class prior there is no guarantee that the posterior measures
                         converge to a well-defined limit on any function space.
@@ -638,14 +638,14 @@
                     <img src="../../../../media/research/think-first/fig2d_variance_growth.svg"
                          alt="Total posterior variance trace vs number of basis functions, showing linear growth." data-themed="1">
                     <figcaption>
-                        <strong>F2d &mdash; Coefficient-space variance grows with mesh refinement.</strong>
+                        <strong>F2d, Coefficient-space variance grows with mesh refinement.</strong>
                         The coefficient-space trace \(\Tr(\mathbf{C}_N^{\obs})\)
                         grows linearly with \(N\), tracking the lower bound
                         \(\sigma^2(N-N_d)\). Each new basis function adds a direction
                         the data cannot see, and the naive prior assigns it full
                         variance \(\sigma^2\). This does not mean the pointwise
-                        uncertainty band diverges &mdash; for hat functions it stays
-                        bounded by \(\sigma\) &mdash; but it does mean the sequence
+                        uncertainty band diverges, for hat functions it stays
+                        bounded by \(\sigma\), but it does mean the sequence
                         of coefficient posteriors has no coherent function-space
                         limit.
                     </figcaption>
@@ -678,10 +678,10 @@
 
                 <div class="tfdl-interactive">
                     <div class="tfdl-interactive-header">
-                        <strong>F2e &mdash; Refinement slider.</strong>
+                        <strong>F2e, Refinement slider.</strong>
                         Drag the slider to change the number of basis functions \(N\).
                         The posterior mean barely moves, but the coefficient-space
-                        variance grows &mdash; the posterior does not converge.
+                        variance grows, the posterior does not converge.
                     </div>
                     <div class="tfdl-slider-container">
                         <label for="f2e-slider">
@@ -826,8 +826,8 @@
                     <p>(Divergence under refinement is not a quirk of our toy problem. The
                     canonical example is Lassas and Siltanen&rsquo;s proof that the
                     total-variation prior loses its edge-preserving character as
-                    \(N\to\infty\) <a href="#ref-ls04">[LS04]</a>; the cure &mdash;
-                    demanding <em>discretization invariance</em> from the start &mdash; was
+                    \(N\to\infty\) <a href="#ref-ls04">[LS04]</a>; the cure,
+                    demanding <em>discretization invariance</em> from the start, was
                     developed in <a href="#ref-lss09">[LSS09]</a> and is the heart of the
                     function-space program <a href="#ref-stu10">[Stu10]</a> that the rest of
                     these notes follow.)</p>

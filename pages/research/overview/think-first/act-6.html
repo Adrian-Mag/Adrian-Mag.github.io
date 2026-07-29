@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act VI: The Prior Is Not Just a Matrix — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act VI: The Prior Is Not Just a Matrix | Think First, Discretize Later | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act VI: The Prior Is Not Just a Matrix — Think First, Discretize Later — Adrian Mag">
+    <meta property="og:title" content="Act VI: The Prior Is Not Just a Matrix, Think First, Discretize Later | Adrian Mag">
     <meta property="og:description" content="Act VI of Think First, Discretize Later: Why the prior must be a probability measure on a function space, not just a matrix.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/think-first/act-6.html">
@@ -230,7 +230,7 @@
                         always a density with respect to some reference measure.
                     </p>
                     <p>(On infinite-dimensional spaces there is no Lebesgue measure to be a
-                    density <em>with respect to</em> &mdash; which is why measures, not
+                    density <em>with respect to</em>, which is why measures, not
                     densities, must carry the theory. The rigorous home of this material is
                     Bogachev <a href="#ref-bog98">[Bog98]</a>; its use in inversion is
                     <a href="#ref-stu10">[Stu10]</a>.)</p>
@@ -302,7 +302,7 @@
                         <text x="535" y="250" text-anchor="middle" fill="rgba(239,111,108,0.7)" font-size="9">the density has no background to lean on</text>
                     </svg>
                     <figcaption>
-                        <strong>F6a &mdash; Density is not probability.</strong>
+                        <strong>F6a, Density is not probability.</strong>
                         A probability measure \(\mu\) is the fundamental object.
                         A density \(\rho\) is always a density <em>with respect to</em>
                         a reference measure \(\nu\): \(d\mu = \rho\,d\nu\). In finite
@@ -371,13 +371,13 @@
                         <path d="M 30 110 Q 55 130 80 100 Q 105 140 130 115 Q 155 145 190 125" fill="none" stroke="rgba(52,122,162,0.25)" stroke-width="1.5"/>
                         <text x="110" y="175" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">cloud of random functions</text>
                         <text x="110" y="195" text-anchor="middle" fill="rgba(52,122,162,0.6)" font-size="9">all samples equally probable</text>
-                        <text x="110" y="225" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="9">μ₀ assigns mass — no density needed</text>
+                        <text x="110" y="225" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="9">μ₀ assigns mass, no density needed</text>
 
                         <!-- Arrow -->
                         <line x1="215" y1="130" x2="295" y2="130" stroke="rgba(52,122,162,0.5)" stroke-width="2" marker-end="url(#arrowF6h)"/>
                         <text x="255" y="122" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="9">reweight by L(m)</text>
 
-                        <!-- Right: Posterior — prior cloud reweighted by likelihood -->
+                        <!-- Right: Posterior, prior cloud reweighted by likelihood -->
                         <rect x="300" y="10" width="200" height="240" rx="8" fill="rgba(109,210,172,0.1)" stroke="rgba(109,210,172,0.3)" stroke-width="1"/>
                         <text x="400" y="30" text-anchor="middle" fill="rgba(109,210,172,0.8)" font-size="12" font-weight="600">Posterior</text>
                         <text x="400" y="46" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="serif">dμ^y = L(m) dμ₀</text>
@@ -397,15 +397,15 @@
                         <text x="338" y="160" fill="rgba(109,210,172,0.5)" font-size="9">low posterior mass</text>
 
                         <text x="400" y="195" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9">prior cloud tilted by likelihood</text>
-                        <text x="400" y="225" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="9">not a density w.r.t. dm —</text>
+                        <text x="400" y="225" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="9">not a density w.r.t. dm</text>
                         <text x="400" y="240" text-anchor="middle" fill="rgba(109,210,172,0.6)" font-size="9">a measure reweighted by L(m)</text>
                     </svg>
                     <figcaption>
-                        <strong>F6h &mdash; The posterior reweights the prior, not Lebesgue volume.</strong>
+                        <strong>F6h, The posterior reweights the prior, not Lebesgue volume.</strong>
                         The prior \(\prior\) assigns mass to model-space sets.
                         The posterior \(\post\) is the prior measure reweighted by
                         the likelihood: \(d\post = L\,d\prior\). No Lebesgue density is
-                        involved — the prior is the reference measure.
+                        involved, the prior is the reference measure.
                     </figcaption>
                 </figure>
 
@@ -466,7 +466,7 @@
                         <foreignObject x="385" y="224" width="320" height="30"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math">\(m \sim \mu_0 = \mathcal{N}(m_0, C_0)\)</div></foreignObject>
                     </svg>
                     <figcaption>
-                        <strong>F6b &mdash; Finite-dimensional density versus function-space measure.</strong>
+                        <strong>F6b, Finite-dimensional density versus function-space measure.</strong>
                         In finite dimensions (left), a Gaussian is visualized by its
                         density contours with respect to Lebesgue measure. In
                         function space (right), the prior is better understood
@@ -517,7 +517,7 @@
                     <p>
                         In finite dimensions, almost any symmetric positive semidefinite matrix gives a
                         Gaussian covariance. In infinite dimensions, the covariance operator must
-                        satisfy stronger conditions. Most importantly, it must be trace class if the
+                        satisfy stronger conditions. It must be trace class if the
                         Gaussian is to live on the Hilbert space itself.
                     </p>
                 </div>
@@ -664,10 +664,10 @@
                     </div>
                     <div class="tfdl-trace-gate-status" id="f6c-status"></div>
                     <figcaption>
-                        <strong>F6c &mdash; The trace-class gate.</strong>
+                        <strong>F6c, The trace-class gate.</strong>
                         Eigenvalues \(\lambda_j = j^{-p}\) and their running sum
                         \(\sum_{j=1}^{N} \lambda_j\). When \(p \leq 1\), the trace
-                        diverges — the operator is not trace class and cannot define
+                        diverges, the operator is not trace class and cannot define
                         a Gaussian measure on the Hilbert space. When \(p > 1\), the
                         running sum converges. Trace class is a visible gatekeeper,
                         not a cryptic condition.
@@ -777,7 +777,7 @@
                         <text x="360" y="262" text-anchor="middle" fill="rgba(239,111,108,0.5)" font-size="10">the continuous analogue of the naive failure from Act II</text>
                     </svg>
                     <figcaption>
-                        <strong>F6d &mdash; Identity covariance explosion.</strong>
+                        <strong>F6d, Identity covariance explosion.</strong>
                         Prior samples \(m_N(x) = \sum_{j=1}^{N} \sigma\,\xi_j\,e_j(x)\)
                         with identity covariance. As \(N\) grows, all modes receive
                         equal variance and samples become increasingly violent.
@@ -834,7 +834,7 @@
                     </div>
                     <div class="tfdl-spectral-filter-info" id="f6e-info"></div>
                     <figcaption>
-                        <strong>F6e &mdash; Covariance operator as a spectral filter.</strong>
+                        <strong>F6e, Covariance operator as a spectral filter.</strong>
                         The Karhunen-Loève expansion
                         \(m(x) = m_0 + \sum_j \sqrt{\lambda_j}\,\xi_j\,e_j(x)\)
                         with \(\lambda_j = (\kappa^2 + \rho_j)^{-s}\), where \(\rho_j\) are the eigenvalues of \(-\Delta\). As \(s\) increases,
@@ -963,7 +963,7 @@
                         </div>
                     </div>
                     <figcaption>
-                        <strong>F6f &mdash; Laplacian covariance as a smoothing prior.</strong>
+                        <strong>F6f, Laplacian covariance as a smoothing prior.</strong>
                         The covariance \(C_0 = \alpha(\kappa^2 I - \Delta)^{-s}\)
                         has three knobs: \(\alpha\) controls amplitude, \(\kappa\)
                         controls correlation length, and \(s\) controls smoothness.
@@ -984,7 +984,7 @@
                         by \(k(x,x') = \Cov(m(x),m(x'))\).
                     </p>
                     <p>(The kernel view is the native language of Gaussian processes; the
-                    standard reference &mdash; free from its authors &mdash; is Rasmussen
+                    standard reference, free from its authors, is Rasmussen
                     and Williams <a href="#ref-rw06">[RW06]</a>.)</p>
                     <p>
                         A covariance kernel can define an integral operator:
@@ -1139,7 +1139,7 @@
                         <text x="360" y="343" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">two languages for the same covariance object</text>
                     </svg>
                     <figcaption>
-                        <strong>F6g &mdash; Kernel view versus operator view.</strong>
+                        <strong>F6g, Kernel view versus operator view.</strong>
                         The kernel view (left) describes covariance through a
                         spatial correlation function \(k(x,x')\). The operator
                         view (right) treats covariance as an integral operator

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 3: The Right Geometry — The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>Act 3: The Right Geometry | The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
     <link rel="stylesheet" href="../../../../css/cg-explorer.css?v=38">
     <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
-    <meta name="description" content="Act 3 of The Road to Conjugate Gradients: the zigzag autopsied — the landscape measures perpendicularity with A, and the energy inner product is born.">
+    <meta name="description" content="Act 3 of The Road to Conjugate Gradients: the zigzag autopsied, the landscape measures perpendicularity with A, and the energy inner product is born.">
     <script>
     MathJax = {
         tex: {
@@ -36,7 +36,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 3: The Right Geometry — Adrian Mag">
+    <meta property="og:title" content="Act 3: The Right Geometry | Adrian Mag">
     <meta property="og:description" content="The zigzag autopsied: the landscape measures perpendicularity with A, and the energy inner product is born.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-3.html">
@@ -115,18 +115,18 @@
 
                     <p>Act&nbsp;2 ended with an accusation: each step of steepest descent spoils
                     the minimizations before it. Accusations deserve precision. So let us compute,
-                    in general, when one line search damages another &mdash; the calculation takes
+                    in general, when one line search damages another, the calculation takes
                     four lines and its answer is the pivot of the entire series.</p>
 
                     <p>Suppose that at the point \(v\in\H\) we have just finished an exact line
                     search along a direction \(p\): among all points \(v + tp\), our \(v\) has the
                     least \(J\). From the parabola picture of Act&nbsp;2, that fact has an exact
-                    algebraic expression &mdash; the derivative along \(p\) vanishes:
+                    algebraic expression, the derivative along \(p\) vanishes:
                     \[\ip{Av - f}{p} = 0.\]</p>
 
                     <p>Now the method moves on: it takes a step of size \(\beta\) along some new
                     direction \(q\), arriving at \(v' = v + \beta q\). Question: standing at
-                    \(v'\), are we <em>still</em> at a minimum along \(p\)? Same test &mdash;
+                    \(v'\), are we <em>still</em> at a minimum along \(p\)? Same test,
                     differentiate \(J\) along \(p\) at the new point:
                     \[\ip{Av' - f}{p}
                     = \ip{A(v+\beta q) - f}{p}
@@ -136,7 +136,7 @@
 
                     <p>Read the result. The old minimization survives the new step if and only if
                     \[\ip{Aq}{p} = 0.\]
-                    Not \(\ip{q}{p}=0\) &mdash; the Euclidean right angles that steepest descent
+                    Not \(\ip{q}{p}=0\), the Euclidean right angles that steepest descent
                     so scrupulously produces are simply <em>not the relevant condition</em>. The
                     landscape inserts an \(A\) between the two directions before judging them
                     perpendicular.</p>
@@ -158,7 +158,7 @@
                     <span class="concept-term concept-term-inline" data-concept="energy-ip"
                     data-concept-title="Why this is a legitimate inner product">self-adjoint and
                     positive definite, \(\ipA{\cdot}{\cdot}\) is a genuine inner product</span>
-                    on \(\H\) &mdash; symmetric, bilinear, and positive &mdash; with its own
+                    on \(\H\), symmetric, bilinear, and positive, with its own
                     induced norm
                     \[\normA{v} = \sqrt{\ipA{v}{v}} = \sqrt{\ip{Av}{v}}.\]
                     It is called the <em>energy inner product</em>, and \(\normA{\cdot}\) the
@@ -174,11 +174,11 @@
                     \[J(v) - J(u) = \tfrac12\ip{A(v-u)}{v-u} = \tfrac12\,\normA{v-u}^2.\]</p>
 
                     <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Lesson &mdash; the error identity</span>
+                        <span class="sola-callout-label">Lesson: the error identity</span>
                         <p>\[J(v) - J(u) = \tfrac12\normA{v-u}^2.\]
                         The height of the landscape above its floor <em>is</em> the squared
                         energy-norm distance to the solution. Descending \(J\) and shrinking the
-                        \(A\)-norm error are not two goals that happen to align &mdash; they are
+                        \(A\)-norm error are not two goals that happen to align, they are
                         the same number. Every convergence statement in this series
                         (including the \((\kappa-1)/(\kappa+1)\) rate quoted in Act&nbsp;2) is
                         naturally a statement about \(\normA{\cdot}\).</p>
@@ -199,7 +199,7 @@
                     geometry&rdquo;. Since \(A\) is self-adjoint and positive definite, it has a
                     unique self-adjoint positive square root \(A^{1/2}\) (in finite dimensions:
                     keep the eigenvectors, take square roots of the eigenvalues; the operator case
-                    is the spectral theorem doing the same thing &mdash; the classical
+                    is the spectral theorem doing the same thing, the classical
                     &ldquo;square-root lemma&rdquo; of operator theory, see Reed &amp; Simon
                     <a href="#ref-rs80">[RS80]</a>). Change variables:
                     \[w = A^{1/2} v.\]
@@ -211,9 +211,9 @@
                     \qquad w_\star = A^{1/2}u.\]
                     A perfectly round bowl. Every contour a circle.</p>
 
-                    <p>And now recall the very first experiment from the panel of Act&nbsp;2: on
+                    <p>Recall the first experiment from the panel of Act&nbsp;2: on
                     a round bowl (\(\kappa=1\)), steepest descent converges in a single step,
-                    from anywhere &mdash; in a round bowl, downhill points straight at the
+                    from anywhere, in a round bowl, downhill points straight at the
                     center. So in the \(w\)-world our problem is <em>trivial</em>. The
                     entire difficulty of the original problem is the mismatch between two rulers:
                     the Euclidean ruler our method used, and the \(A\)-ruler in which the bowl is
@@ -223,7 +223,7 @@
                         <img data-themed="1" src="../../../../media/research/cg/fig_cg3_stretch.png"
                              alt="Left: elliptical contours with the zigzagging descent path. Right: the same problem in stretched coordinates where contours are circles; the mapped path visibly aims away from the center while the true downhill points straight at it.">
                         <figcaption><span class="sola-figure-label">Figure FC3-1.</span>One descent,
-                        two maps. Left: our coordinates &mdash; elliptical contours, right-angled
+                        two maps. Left: our coordinates, elliptical contours, right-angled
                         staircase. Right: the same iterates replotted in \(w = A^{1/2}v\)
                         coordinates, where the landscape is round. In this honest map, the
                         direction steepest descent actually takes is visibly <em>not</em> aimed at
@@ -244,7 +244,7 @@
                     familiar condition in geometry, seen through a distorting lens.</p>
 
                     <p>Second: it is tempting to conclude &ldquo;just compute \(A^{1/2}\), work in
-                    \(w\), win.&rdquo; But our toolkit does not contain \(A^{1/2}\) &mdash; we
+                    \(w\), win.&rdquo; But our toolkit does not contain \(A^{1/2}\), we
                     cannot even apply it without an eigendecomposition, which is far more
                     expensive than the problem we are trying to solve. The stretched world is a
                     <em>thinking</em> device, not a computing device. The challenge is therefore
@@ -257,7 +257,7 @@
                             <span class="cgx-sub">Run a few steps, then flip between
                             <em>our map</em> and <em>A&rsquo;s map</em>. On A&rsquo;s map the
                             contours are circles, the dashed line shows where downhill
-                            <em>should</em> go &mdash; and you can watch the method aim
+                            <em>should</em> go, and you can watch the method aim
                             elsewhere. The click-to-restart and \(\kappa\) slider still work in
                             both views.</span>
                         </div>
@@ -273,11 +273,11 @@
                     </div>
 
                     <p>The diagnosis is complete, and it comes with a prescription. We should run
-                    line searches along directions that are pairwise \(A\)-orthogonal &mdash;
+                    line searches along directions that are pairwise \(A\)-orthogonal,
                     then, by the four-line computation that opened this act, no step can ever
                     spoil a previous one. What does a method built on that principle look like,
                     and what does &ldquo;progress that cannot be undone&rdquo; buy us precisely?
-                    That is Act&nbsp;4 &mdash; including a small interactive miracle: pick
+                    That is Act&nbsp;4, including a small interactive miracle: pick
                     <em>any</em> first direction on a two-dimensional landscape, and watch the
                     method finish in exactly two steps.</p>
 
@@ -357,7 +357,7 @@
             <span class="meaning">This is <strong>exactly self-adjointness</strong>:
             \[\ipA{v}{w} = \ip{Av}{w} = \ip{Aw}{v} = \ipA{w}{v}.\]
             A non-self-adjoint \(A\) would break symmetry, and the whole
-            energy-geometry picture with it &mdash; this is the structural reason CG requires
+            energy-geometry picture with it, this is the structural reason CG requires
             self-adjointness.</span>
         </div>
         <div class="concept-notation-row">

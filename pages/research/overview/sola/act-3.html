@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 3: Averages Need Mass — My Take on SOLA — Adrian Mag</title>
+    <title>Act 3: Averages Need Mass | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 3: Averages Need Mass — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 3: Averages Need Mass, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 3 of My Take on SOLA: Unimodularity, the average vector, constrained SOLA for averages, and the rank-one correction.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-3.html">
@@ -323,7 +323,7 @@
                     <p>This is the constrained SOLA condition for averages.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; What the symbols mean</span>
+                        <span class="sola-callout-label">Remark: What the symbols mean</span>
                         <p>The operator \(G:\M\to\D\) is lightface because it acts on the model
                         function space. The vector \(\mathbf v=G(1_\Omega)\) is bold because it is a
                         finite-dimensional data-space object. The matrix \(\mathbf X:\D\to\Pspace\)
@@ -414,7 +414,7 @@
                     So the correction does exactly what it should.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Where the correction comes from</span>
+                        <span class="sola-callout-label">Remark: Where the correction comes from</span>
                         <p>One way to derive the formula is to introduce a Lagrange multiplier
                         \(\boldsymbol\lambda\in\Pspace\) and solve
                         \[\mathbf X_c = \argmin_{\mathbf X} \left\| \Tau-\mathbf XG \right\|_{\HS}^2 \quad \text{subject to} \quad \mathbf X\mathbf v=\mathbf w.\]
@@ -516,24 +516,24 @@
     <template id="concept-unimodularity-objection">
         <p style="margin:0 0 12px;">If you have a statistics background, you may want to object:
         <em>&ldquo;This is a step backwards. If \(\widetilde p\) is meant to estimate the target
-        property \((T,m)_{\M}\), plain SOLA is already biased &mdash; the resolving kernel
+        property \((T,m)_{\M}\), plain SOLA is already biased, the resolving kernel
         \(R\) is not \(T\), so the output is \((R,m)_{\M}\), not the number I asked for.
         Bolting on an extra constraint shrinks the feasible set and pushes \(R\) even further
         from \(T\). Why make a biased estimator worse?&rdquo;</em></p>
-        <p><strong>The objection is correct &mdash; inside its own frame.</strong> If SOLA is read
+        <p><strong>The objection is correct, inside its own frame.</strong> If SOLA is read
         as an estimator of the target property, unimodularity does not help and can genuinely hurt.
         No argument there.</p>
         <p><strong>But that frame is not what SOLA is.</strong> The target was never available. The
         data only carry the quantities \((K_i, m)_{\M}\), so anything you report is a combination
-        of those &mdash; something built from \(\operatorname{span}\{K_i\}\), full stop. SOLA
+        of those, something built from \(\operatorname{span}\{K_i\}\), full stop. SOLA
         does not create information; it <em>reshuffles</em> it. The honest reading of every SOLA
-        output is: &ldquo;this is \((R,m)_{\M}\), for the \(R\) actually achieved &mdash;
+        output is: &ldquo;this is \((R,m)_{\M}\), for the \(R\) actually achieved,
         interpret it through that kernel, imperfections and all.&rdquo;</p>
         <p><strong>Seen that way, constraints are a wish list, not a statistical move.</strong>
         You cannot have the target, but you can state requirements on the kernel you will be
         interpreted through: <em>I want \(R\) concentrated here; I want it to be a genuine
         average.</em> Unimodularity is the second wish. It does not improve the estimate of an
-        unreachable number &mdash; it changes <em>what kind of number</em> you report, guaranteeing
+        unreachable number, it changes <em>what kind of number</em> you report, guaranteeing
         it passes the constant-model test and can honestly be called an average.</p>
         <p style="margin-bottom:0;">This &ldquo;reshuffling, not creating&rdquo; view is the running
         thesis of these notes; Acts 6 and 9 return to it when noise and uncertainty enter the

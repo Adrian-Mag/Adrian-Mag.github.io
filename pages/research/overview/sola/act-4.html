@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 4: Beyond Averages — My Take on SOLA — Adrian Mag</title>
+    <title>Act 4: Beyond Averages | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 4: Beyond Averages — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 4: Beyond Averages, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 4 of My Take on SOLA: Derivative targets, basis coefficient targets, contrasts, and the general idea of resolving constraints.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-4.html">
@@ -121,7 +121,7 @@
                     \[[\mathbf p]_k = [\Tau(m)]_k = \int_\Omega T_k(r)m(r)\dd r\]
                     can be interpreted as a weighted average of \(m\).</p>
 
-                    <p>But not every useful property is an average. (The original SOLA papers already advertised this freedom &mdash; &ldquo;great versatility in the choice of target form&rdquo; <a href="#ref-pt94">[PT94]</a>; the systematic treatment of general linear properties that this act follows is developed in <a href="#ref-mkz25">[MKZ25]</a>.)</p>
+                    <p>But not every useful property is an average. (The original SOLA papers already advertised this freedom, &ldquo;great versatility in the choice of target form&rdquo; <a href="#ref-pt94">[PT94]</a>; the systematic treatment of general linear properties that this act follows is developed in <a href="#ref-mkz25">[MKZ25]</a>.)</p>
 
                     <p>Sometimes we may want to estimate something more like a local derivative. For
                     example, we may want to know whether the model is increasing or decreasing near
@@ -166,13 +166,13 @@
                     So a derivative target is just the derivative of an averaging target, with a
                     sign change from integration by parts.</p>
 
-                    <p>This works cleanly when \(T_k\) is a smooth compactly supported function —
+                    <p>This works cleanly when \(T_k\) is a smooth compactly supported function,
                     a bump function, or more generally a test function in the sense of
                     distribution theory. The compact support guarantees that no boundary terms
                     appear, regardless of where the target is placed.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Why compact support matters</span>
+                        <span class="sola-callout-label">Remark: Why compact support matters</span>
                         <p>A Gaussian is not compactly supported. On a bounded interval
                         \([0,1]\), a Gaussian centred near the edge is clipped by the boundary.
                         The clipped tail is simply lost, so the effective target kernel depends on
@@ -180,7 +180,7 @@
                         normalization, one centred at \(r=0.5\) and one at \(r=0.12\), are
                         <em>different</em> kernels with different total mass and different
                         averaging properties. That means the interpretation of the corresponding
-                        property changes with position — an undesirable side effect.</p>
+                        property changes with position, an undesirable side effect.</p>
                         <p style="margin-top:0.6em;">A careful reader will already be smiling at
                         this argument. <span class="concept-term concept-term-inline"
                         data-concept="touche-targets"
@@ -199,7 +199,7 @@
                     <p>Compact-support targets avoid this problem entirely. A bump function that
                     fits inside \(\Omega\) is unaffected by the boundary, no matter where it is
                     placed, as long as its support is fully inside the domain. The same kernel shape means the same question at every location. This
-                    is one reason why test functions — smooth, compactly supported functions — are
+                    is one reason why test functions, smooth, compactly supported functions, are
                     the natural building blocks for target kernels in SOLA.</p>
 
                     <div class="sola-callout callout-intuition">
@@ -215,7 +215,7 @@
                     <p>The target's meaning determines the constraint.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Point derivatives and regularity</span>
+                        <span class="sola-callout-label">Remark: Point derivatives and regularity</span>
                         <p>A true pointwise derivative, such as \(m'(r_0)\), is not defined for every
                         model in a rough function space such as \(L^2(\Omega)\). To make such a
                         target rigorous, one either works in a smoother model space or uses a
@@ -535,7 +535,7 @@
                     redundant constraints.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Rank of the correction</span>
+                        <span class="sola-callout-label">Remark: Rank of the correction</span>
                         <p>One constraint gives a rank-one correction. \(L\) constraints give a
                         rank-\(L\) correction. The constrained SOLA operator differs from the
                         unconstrained one by a finite-rank map whose rank equals the number of
@@ -659,20 +659,20 @@
     <template id="concept-smooth-compact">
         <p style="margin:0 0 12px;">Two separate requirements, each doing a specific job in the
         integration by parts below.</p>
-        <p><strong>Smooth</strong> means \(T_k\) has no kinks, jumps, or corners &mdash; it can be
+        <p><strong>Smooth</strong> means \(T_k\) has no kinks, jumps, or corners, it can be
         differentiated as often as we need. Here one continuous derivative is what matters: the
         manipulation produces \(T_k'\), and smoothness is what guarantees that \(-T_k'\) exists
         and is a legitimate kernel rather than something pathological.</p>
         <p><strong>Compactly supported inside \(\Omega\)</strong> means \(T_k\) is <em>exactly
-        zero</em> outside some region that sits strictly inside the domain &mdash; the kernel
+        zero</em> outside some region that sits strictly inside the domain, the kernel
         switches off before it ever reaches the boundary. Not &ldquo;small near the edge&rdquo;,
         not &ldquo;decaying&rdquo;: identically zero. That is what kills the boundary term
-        \(\bigl[T_k\,m\bigr]_{\partial\Omega}\) in the integration by parts &mdash; with
+        \(\bigl[T_k\,m\bigr]_{\partial\Omega}\) in the integration by parts, with
         \(T_k\) vanishing near \(\partial\Omega\), there is nothing to evaluate there.</p>
         <p>The two conditions are independent, and the classic near-miss shows why both are stated:
         a Gaussian is perfectly smooth but <em>never</em> exactly zero, so its boundary terms only
-        approximately vanish. Kernels that are both smooth and compactly supported &mdash;
-        &ldquo;bump functions&rdquo; &mdash; are exactly the test functions of distribution theory,
+        approximately vanish. Kernels that are both smooth and compactly supported,
+        &ldquo;bump functions&rdquo;, are exactly the test functions of distribution theory,
         and they make the manipulation exact rather than approximate.</p>
         <p style="margin-bottom:0;">Act 3&rsquo;s compact-vs-Gaussian figure is the same
         distinction drawn for averaging kernels; here it decides whether a derivative target can be
@@ -680,24 +680,24 @@
     </template>
 
     <template id="concept-touche-targets">
-        <p style="margin:0 0 12px;"><em>&ldquo;Haha &mdash; as if the resolving kernels won&rsquo;t
+        <p style="margin:0 0 12px;"><em>&ldquo;Haha, as if the resolving kernels won&rsquo;t
         have different shapes from one location to another anyway! You tidy up the targets so that
         &lsquo;the same kernel means the same thing everywhere&rsquo;, but the kernels that are
         actually achieved vary from place to place no matter what. The position-independent
         interpretation this remark promises is precisely what SOLA cannot deliver.&rdquo;</em></p>
         <p><strong>Touch&eacute;.</strong> For SOLA itself, this truly does not matter much. The
-        targets are auxiliary objects &mdash; they model our <em>wishes</em> about the resolving
+        targets are auxiliary objects, they model our <em>wishes</em> about the resolving
         kernels, nothing more. What carries the interpretation of a SOLA output is the achieved
         kernel \(R_k\), and the achieved kernels will differ from location to location however
         tidy the wish list is.</p>
         <p><strong>Where the argument has real force</strong> is in methods that can genuinely
-        constrain the desired property &mdash; for instance, in the presence of prior information.
+        constrain the desired property, for instance, in the presence of prior information.
         There the target is not merely a wish: comparability of targets across locations translates
         into comparability of the reported quantities themselves, and a position-dependent effective
         target is a genuine defect rather than an aesthetic one.</p>
         <p style="margin-bottom:0;">Even so, it is a good habit for SOLA users too. When you hold
         \(R_k\) up against \(T_k\) to judge how well a wish was granted, an easily interpretable
-        target &mdash; a clean bump rather than a clipped Gaussian &mdash; keeps the yardstick
+        target, a clean bump rather than a clipped Gaussian, keeps the yardstick
         meaning the same thing everywhere, even though the achieved kernels do not.</p>
     </template>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 3f: Back to Finite Land — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <title>Part 3f: Back to Finite Land | Bayes, Measure-Theoretically | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 3f: Back to Finite Land — Bayes, Measure-Theoretically — Adrian Mag">
+    <meta property="og:title" content="Part 3f: Back to Finite Land, Bayes, Measure-Theoretically | Adrian Mag">
     <meta property="og:description" content="Part 3f of Bayes, Measure-Theoretically: Applying the integral Bayes formula to the finite switch problem, bringing everything back to finite land.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/bayes/part-3f.html">
@@ -83,7 +83,7 @@
             <div class="page-header-bg" data-hero="bayes" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/hero-nebula.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Part 3f: Back to Finite Land</h1>
-                <p>Applying the integral Bayes formula to the finite switch problem &mdash; bringing everything home.</p>
+                <p>Applying the integral Bayes formula to the finite switch problem, bringing everything home.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a>.
                 </p>
@@ -118,7 +118,7 @@
 
                     <p>This is an identity between two disintegrations of the same joint law.
                     It works in both finite and continuous spaces. Now we apply it to the
-                    finite switch problem &mdash; the same problem we started with in
+                    finite switch problem, the same problem we started with in
                     <a href="part-1.html">Part&nbsp;1</a> and solved with ratios in
                     <a href="part-2.html">Part&nbsp;2</a>.</p>
 
@@ -169,8 +169,8 @@
                         <span class="bayes-callout-label">The formula in finite land</span>
                         <p>
                             This is the integral Bayes formula applied to the finite case. The
-                            numerator is an integral over \(A\) &mdash; in finite land, a
-                            weighted sum. The denominator is the evidence \(Z(d)\) &mdash;
+                            numerator is an integral over \(A\), in finite land, a
+                            weighted sum. The denominator is the evidence \(Z(d)\),
                             also a sum. The ratio is exactly the normalized column of the
                             joint table.
                         </p>
@@ -192,14 +192,14 @@
 
                     <p>When the reporter says &ldquo;0&rdquo;, the posterior is uniform. Note
                     carefully what makes it uniform: it is <em>not</em> that \(d=0\) is equally
-                    likely under every model state &mdash; the likelihoods are
+                    likely under every model state, the likelihoods are
                     \(L(m,\{0\})=(0.2,\,0.8,\,0.8,\,0.2)\) across \((00,01,10,11)\), far from
                     equal. And the uniform posterior does <em>not</em> coincide with the prior
                     \((0.4,\,0.1,\,0.1,\,0.4)\). What happens is that the likelihood exactly
                     <em>cancels the nonuniformity of the prior</em>: the products
                     \(L(m,\{0\})\,\muMzero(\{m\})\) all equal \(0.08\), so normalization
                     flattens everything to \(1/4\). This is the same observation we made in
-                    <a href="part-2.html">Part&nbsp;2</a> &mdash; equal <em>products</em>, not
+                    <a href="part-2.html">Part&nbsp;2</a>, equal <em>products</em>, not
                     equal likelihoods.</p>
 
                     <h3>Case \(d=1\): the reporter says &ldquo;1&rdquo;</h3>
@@ -254,12 +254,12 @@
                             <rect x="350" y="190" width="140" height="40" fill="rgba(52,122,162,0.85)" stroke="rgba(52,122,162,0.9)"/>
                             <text x="420" y="215" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">8/17</text>
                             <!-- Title -->
-                            <text x="300" y="265" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Posterior kernel &#956;_{M|D=d} &mdash; same numbers as Part 2, derived from the integral formula</text>
+                            <text x="300" y="265" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11">Posterior kernel &#956;_{M|D=d}, same numbers as Part 2, derived from the integral formula</text>
                         </svg>
                         <figcaption>
-                            <strong>F3f-1 &mdash; The posterior kernel for the switch
+                            <strong>F3f-1, The posterior kernel for the switch
                             problem.</strong> Left: when \(d=0\), the posterior is uniform
-                            &mdash; the likelihood exactly cancels the prior's nonuniformity.
+                           , the likelihood exactly cancels the prior's nonuniformity.
                             Right: when \(d=1\), the
                             posterior concentrates on the matching states \(\{00,11\}\).
                             These are exactly the same numbers we computed in
@@ -293,11 +293,11 @@
 
                     <ol>
                         <li><strong><a href="part-1.html">Part&nbsp;1</a>:</strong> We posed
-                        the switch problem &mdash; a finite game with hidden states and a
+                        the switch problem, a finite game with hidden states and a
                         noisy reporter.</li>
                         <li><strong><a href="part-2.html">Part&nbsp;2</a>:</strong> We solved
                         it with the elementary ratio formula
-                        \(\mathbb{P}(m\mid d)=\mathbb{P}(m,d)/\mathbb{P}(d)\) &mdash; column
+                        \(\mathbb{P}(m\mid d)=\mathbb{P}(m,d)/\mathbb{P}(d)\), column
                         normalization of the joint table.</li>
                         <li><strong><a href="part-3a.html">Parts&nbsp;3a&ndash;3b</a>:</strong>
                         We saw that the elementary formula breaks when conditioning events have
@@ -322,8 +322,8 @@
                     <div class="bayes-callout callout-lesson">
                         <span class="bayes-callout-label">The payoff</span>
                         <p>
-                            The measure-theoretic machinery &mdash; conditional expectation,
-                            disintegration, posterior kernels &mdash; reproduces the elementary
+                            The measure-theoretic machinery, conditional expectation,
+                            disintegration, posterior kernels, reproduces the elementary
                             answer in finite land, but it also works in continuous spaces
                             where the elementary formula breaks down. We climbed to infinite
                             land, built a more general framework, and descended back to find
@@ -331,7 +331,7 @@
                         </p>
                     </div>
 
-                    <p>The story ends where it began &mdash; in finite land &mdash; but we now
+                    <p>The story ends where it began, in finite land, but we now
                     carry the tools to go beyond it.</p>
 
                     <div class="part-prevnext-spacer"></div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 1: The Landscape Hidden in the Equation — The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>Act 1: The Landscape Hidden in the Equation | The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -35,7 +35,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 1: The Landscape Hidden in the Equation — Adrian Mag">
+    <meta property="og:title" content="Act 1: The Landscape Hidden in the Equation | Adrian Mag">
     <meta property="og:description" content="Operator equations as black boxes, and the quadratic landscape whose unique bottom is the solution.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-1.html">
@@ -149,7 +149,7 @@
                         object).</li>
                         <li><strong>Gaussian inference.</strong> Computing a posterior mean in a
                         linear-Gaussian model requires solving a system whose operator is a sum of
-                        inverse covariances &mdash; again self-adjoint and positive
+                        inverse covariances, again self-adjoint and positive
                         definite.</li>
                     </ul>
 
@@ -162,8 +162,8 @@
 
                     <p>Here is the constraint that drives everything that follows. In all the
                     interesting cases, we cannot write \(A\) down. What we <em>can</em> do is
-                    apply it: given \(v\), some computation &mdash; a simulation, a convolution,
-                    a sparse product, a physical model &mdash; returns \(Av\). The operator is a
+                    apply it: given \(v\), some computation, a simulation, a convolution,
+                    a sparse product, a physical model, returns \(Av\). The operator is a
                     black box with an input slot and an output slot.</p>
 
                     <p>Take stock of our toolkit. We can:</p>
@@ -176,7 +176,7 @@
 
                     <div class="sola-callout callout-warning">
                         <span class="sola-callout-label">Warning</span>
-                        <p>Under our assumptions, \(A^{-1}\) exists as a bounded operator &mdash;
+                        <p>Under our assumptions, \(A^{-1}\) exists as a bounded operator,
                         that is a theorem. But <em>existing</em> is not the same as
                         <em>computable</em>. &ldquo;\(u = A^{-1}f\)&rdquo; is a true statement and
                         a useless algorithm. Whatever method we build must be assembled entirely
@@ -198,7 +198,7 @@
 
                     <h3>A functional with an agenda</h3>
 
-                    <p>Now comes the reformulation on which the whole series stands &mdash; it is
+                    <p>Now comes the reformulation on which the whole series stands, it is
                     as old as the subject itself, and it powers every treatment of this material
                     from the original 1952 paper to the modern classics
                     <a href="#ref-hs52">[HS52]</a>, <a href="#ref-she94">[She94]</a>. Define the
@@ -220,10 +220,10 @@
                     \end{align}</p>
 
                     <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Lesson &mdash; the master identity</span>
+                        <span class="sola-callout-label">Lesson: the master identity</span>
                         <p>\[J(v+w) = J(v) + \ip{Av-f}{w} + \tfrac12\ip{Aw}{w}.\]
-                        Every derivation in this series &mdash; the line search, the zigzag
-                        autopsy, the conjugacy condition, the error norm &mdash; is this one
+                        Every derivation in this series, the line search, the zigzag
+                        autopsy, the conjugacy condition, the error norm, is this one
                         identity, read in different ways. It is worth a full minute of staring:
                         a linear term that can have either sign, plus a quadratic term that is
                         always positive.</p>
@@ -249,7 +249,7 @@
                     <p>Together, the two readings say:
                     \[\boxed{\;Au = f \quad\Longleftrightarrow\quad u = \argmin_{v\in\H} J(v).\;}\]
                     The equation and the minimization problem are the same problem. We have not
-                    made the problem easier &mdash; but we have made it <em>geometric</em>. \(J\)
+                    made the problem easier, but we have made it <em>geometric</em>. \(J\)
                     is a bowl-shaped landscape over \(\H\), and the solution of our equation is
                     the unique point at the bottom of the bowl.</p>
 
@@ -258,7 +258,7 @@
                              alt="Left: the quadratic functional J drawn as a bowl-shaped surface. Right: its elliptical contour map with residual arrows pointing downhill and the solution marked at the center.">
                         <figcaption><span class="sola-figure-label">Figure FC1-1.</span>The functional
                         \(J\) over a two-dimensional slice of \(\H\). Left: a bowl with a unique
-                        bottom. Right: the same bowl as a contour map &mdash; the view we will use
+                        bottom. Right: the same bowl as a contour map, the view we will use
                         for the rest of the series. At every point, the residual \(r = f - Av\)
                         points downhill.</figcaption>
                     </figure>
@@ -266,7 +266,7 @@
                     <div class="sola-callout callout-intuition">
                         <span class="sola-callout-label">Intuition</span>
                         <p>Why did the reformulation help? Because an equation gives only a
-                        yes/no verdict &mdash; either \(Av=f\) or not &mdash; while a landscape
+                        yes/no verdict, either \(Av=f\) or not, while a landscape
                         gives a <em>direction</em>. Standing anywhere on a hillside, you may not
                         know where the valley floor is, but you always know which way is
                         down.</p>
@@ -283,11 +283,11 @@
                     The first-order change of \(J\) is controlled by the angle between the step
                     and the residual. Steps with \(\ip{r}{w}>0\) descend. Among all steps of a
                     given length, the one that descends fastest is the one aligned with \(r\)
-                    itself &mdash; in the language of calculus, \(\nabla J(v) = Av - f = -r\),
+                    itself, in the language of calculus, \(\nabla J(v) = Av - f = -r\),
                     and the residual is exactly the direction of steepest descent.</p>
 
                     <p>Pause on how remarkable this is from the black-box point of view. The
-                    bottom of the bowl is unknown &mdash; that is the whole problem. But the
+                    bottom of the bowl is unknown, that is the whole problem. But the
                     downhill direction at our feet is
                     \[r = f - Av,\]
                     computable with a single application of \(A\). The landscape does not just
@@ -295,14 +295,14 @@
                     operation we can afford.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; for the calculus-minded</span>
+                        <span class="sola-callout-label">Remark: for the calculus-minded</span>
                         <p>In infinite dimensions the gradient deserves one careful sentence. The
                         directional derivative of \(J\) at \(v\) is the linear map
                         \(w\mapsto\ip{Av-f}{w}\), read off from the master identity. It is a
                         bounded linear functional on \(\H\), and the Riesz representation theorem
                         identifies it with the element \(Av-f\in\H\). It is <em>this</em>
                         element we call \(\nabla J(v)\). No coordinates, no partial derivatives
-                        &mdash; and the conclusion \(\nabla J(v) = -r\) is exact, not merely
+                       , and the conclusion \(\nabla J(v) = -r\) is exact, not merely
                         first-order. (For the Riesz representation theorem and its friends, the
                         reference of choice is Brezis <a href="#ref-bre11">[Bre11]</a>.)</p>
                     </div>
@@ -318,8 +318,8 @@
                     of this series: <em>walk downhill</em>. Start somewhere, follow the residual,
                     stop at the lowest point along that line, look around, repeat. Every choice in
                     that sentence seems obvious. In the next act we make each choice precise,
-                    build the resulting algorithm &mdash; gradient descent with exact line search
-                    &mdash; and then watch, interactively, as this perfectly sensible method
+                    build the resulting algorithm, gradient descent with exact line search
+                   , and then watch, interactively, as this perfectly sensible method
                     embarrasses itself.</p>
 
                     <h2>References</h2>
@@ -396,8 +396,8 @@
         <div class="concept-notation-row">
             <span class="sym">\(\H\) real Hilbert</span>
             <span class="meaning"><strong>A complete inner-product space.</strong> The inner
-            product \(\ip{\cdot}{\cdot}\) gives us lengths and angles &mdash; the geometry these
-            notes run on &mdash; and completeness guarantees that the limits our iterations
+            product \(\ip{\cdot}{\cdot}\) gives us lengths and angles, the geometry these
+            notes run on, and completeness guarantees that the limits our iterations
             approach actually exist in the space. \(\H\) may be \(\mathbb R^n\), or
             \(L^2(\Omega)\), or a Sobolev space: nothing below cares.</span>
         </div>
@@ -407,13 +407,13 @@
             Boundedness makes \(A\) continuous. Self-adjointness is the symmetry that lets an
             energy landscape exist at all: it is exactly what allows the two cross terms in
             \(\ip{A(v+w)}{v+w}\) to merge, so that \(J\) has \(Au-f\) as its gradient. Without
-            it, no bowl &mdash; and no CG (one then reaches for MINRES or GMRES instead).</span>
+            it, no bowl, and no CG (one then reaches for MINRES or GMRES instead).</span>
         </div>
         <div class="concept-notation-row">
             <span class="sym">\(A\) positive definite</span>
             <span class="meaning"><strong>\(\ip{Av}{v} \ge \gamma\norm{v}^2\) for some
             \(\gamma&gt;0\).</strong> This makes the bowl curve upward in every direction, so the
-            minimizer exists and is unique &mdash; and it guarantees \(Au=f\) is solvable for
+            minimizer exists and is unique, and it guarantees \(Au=f\) is solvable for
             every \(f\) (the Lax&ndash;Milgram theorem; see
             <a href="https://doi.org/10.1007/978-0-387-70914-7" target="_blank" rel="noopener">Brezis&nbsp;2011</a>). In finite dimensions &ldquo;all eigenvalues
             positive&rdquo; suffices; in infinite dimensions we insist on the uniform bound
@@ -421,7 +421,7 @@
             smallest spectral bound will return in Act&nbsp;2 as the condition number
             \(\kappa\).</span>
         </div>
-        <p style="margin:10px 0 0;">Operators failing these assumptions are not exotic &mdash;
+        <p style="margin:10px 0 0;">Operators failing these assumptions are not exotic,
         they are a large part of inverse theory. We return to that honestly in Act&nbsp;6.</p>
     </template>
 </body>

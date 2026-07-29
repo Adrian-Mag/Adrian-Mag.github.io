@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 1: The Kernel Game — My Take on SOLA — Adrian Mag</title>
+    <title>Act 1: The Kernel Game | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -43,7 +43,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 1: The Kernel Game — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 1: The Kernel Game, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 1 of My Take on SOLA: Sensitivity kernels, data as weighted integrals, what finite data cannot see, and the target property.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-1.html">
@@ -201,7 +201,7 @@
                         <img data-themed="1" src="../../../../media/research/sola/fig_kernels.png"
                              alt="Three panels: two individual sensitivity kernels with annotated sensitive and insensitive regions, then all kernels together">
                         <figcaption><span class="sola-figure-label">Figure F1-1.</span>Left and centre: individual sensitivity kernels.
-                        Shaded bands mark regions where \(|K_i(r)|\) is small — the data are mostly
+                        Shaded bands mark regions where \(|K_i(r)|\) is small, the data are mostly
                         insensitive to the model there. Where the kernel is large, the datum is
                         strongly influenced by the model at that depth. Right: a family of
                         \(N_d\) kernels, as one would encounter in a real problem with many data.</figcaption>
@@ -224,7 +224,7 @@
                     </span>
                     <p>This equation says that the datum \([\mathbf d]_i\) is obtained by multiplying the model
                     \(m\) by the kernel \(K_i\), then integrating over the domain. If any of the
-                    symbols look unfamiliar, press the equation above &mdash; it explains the notation
+                    symbols look unfamiliar, press the equation above, it explains the notation
                     conventions used throughout these notes.</p>
 
                     <p>Thus each datum is a weighted integral of the model. The model \(m\) supplies
@@ -251,7 +251,7 @@
                     \[G(m) = \begin{pmatrix} \int_\Omega K_1(r)m(r)\dd r\\ \vdots\\ \int_\Omega K_{N_d}(r)m(r)\dd r \end{pmatrix}.\]</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Physical kernels versus Riesz representers</span>
+                        <span class="sola-callout-label">Remark: Physical kernels versus Riesz representers</span>
                         <p>When \(\M=L^2(\Omega)\) with the usual inner product, the function
                         \(K_i(r)\) appearing in the physical integral
                         \(\int_\Omega K_i(r)m(r)\dd r\) is also the Riesz representer of the
@@ -267,7 +267,7 @@
                     </div>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Why the data are linear</span>
+                        <span class="sola-callout-label">Remark: Why the data are linear</span>
                         <p>Each datum depends linearly on \(m\). If \(m_1\) and \(m_2\) are two models
                         and \(\alpha,\beta\in\mathbb R\), then
                         \[\int_\Omega K_i(r)\bigl(\alpha m_1(r)+\beta m_2(r)\bigr)\dd r = \alpha\int_\Omega K_i(r)m_1(r)\dd r + \beta\int_\Omega K_i(r)m_2(r)\dd r.\]
@@ -311,7 +311,7 @@
                     <p>This is not a defect of SOLA. It is a structural fact about inverse problems
                     with indirect, finite data. The data only constrain the parts of the model that
                     interact with the sensitivity kernels. Everything orthogonal to those
-                    measurements is left unresolved. The definitive early study of this nonuniqueness &mdash; what finite, inaccurate data can and cannot determine &mdash; is Backus and Gilbert&rsquo;s <a href="#ref-bg70">[BG70]</a>.</p>
+                    measurements is left unresolved. The definitive early study of this nonuniqueness, what finite, inaccurate data can and cannot determine, is Backus and Gilbert&rsquo;s <a href="#ref-bg70">[BG70]</a>.</p>
 
                     <p>This observation will matter later. For now, it tells us that asking for the
                     whole model \(m\) may be too ambitious. The data do not constrain the whole model.
@@ -472,7 +472,7 @@
                     </div>
 
                     <p>Before the algebra, play the game yourself. Below are six sensitivity kernels
-                    \(K_1,\dots,K_6\) &mdash; some smooth bumps, one broad averager, two that
+                    \(K_1,\dots,K_6\), some smooth bumps, one broad averager, two that
                     oscillate. Pick a target kernel and use the sliders to choose weights
                     \(x_1,\dots,x_6\). The teal curve is your combined kernel
                     \(x_1K_1(r)+\cdots+x_6K_6(r)\); the dashed curve is the target you are trying
@@ -490,7 +490,7 @@
                     </div>
 
                     <p>Two lessons hide in this toy. First, even the best match is imperfect
-                    &mdash; the teal curve is a <em>resolving</em> kernel, and it is the kernel the
+                   , the teal curve is a <em>resolving</em> kernel, and it is the kernel the
                     data give you, not the kernel you asked for. Second, try the target at
                     \(r=0.85\): every kernel is nearly zero there, and no choice of weights can
                     manufacture sensitivity the data never had.</p>
@@ -562,7 +562,7 @@
         them apart at a glance:</p>
         <div class="concept-notation-row">
             <span class="sym">\(\mathbf d,\ \mathbf G,\ \mathbf x\)</span>
-            <span class="meaning"><strong>Bold letters are finite-dimensional</strong> &mdash; vectors
+            <span class="meaning"><strong>Bold letters are finite-dimensional</strong>, vectors
             and matrices, the kind of object a computer can store. Here \(\mathbf d\) is the data
             vector with \(N_d\) entries.</span>
         </div>
@@ -574,14 +574,14 @@
         </div>
         <div class="concept-notation-row">
             <span class="sym">\(x_i,\ N_d,\ r\)</span>
-            <span class="meaning"><strong>Plain lowercase letters are scalars</strong> &mdash; single
+            <span class="meaning"><strong>Plain lowercase letters are scalars</strong>, single
             numbers. Scalars are never boldface, which is what keeps the system consistent:
-            \(x_i\) and \([\mathbf x]_i\) are the same number reached two ways &mdash; by its own
+            \(x_i\) and \([\mathbf x]_i\) are the same number reached two ways, by its own
             name, or extracted from the vector that collects it.</span>
         </div>
         <div class="concept-notation-row">
             <span class="sym">\(m,\ K_i\)</span>
-            <span class="meaning"><strong>Plain italic letters are functions</strong> &mdash;
+            <span class="meaning"><strong>Plain italic letters are functions</strong>,
             infinite-dimensional objects living on the domain \(\Omega\). The model \(m(r)\) and
             the kernels \(K_i(r)\) assign a value to every point \(r\), so no finite list of
             numbers can hold them exactly.</span>
@@ -589,7 +589,7 @@
         <div class="concept-notation-row">
             <span class="sym">\(\displaystyle\int_\Omega \cdot\ \dd r\)</span>
             <span class="meaning"><strong>The integral is the bridge</strong> between the two worlds:
-            it eats a function and returns a single number &mdash; one entry of the finite data
+            it eats a function and returns a single number, one entry of the finite data
             vector. That is why each datum is a <em>weighted integral</em> of the model.</span>
         </div>
     </template>

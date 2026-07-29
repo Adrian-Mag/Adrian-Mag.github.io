@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
-    <meta name="description" content="From gradient descent to the conjugate gradient method in six forced moves — derived in a Hilbert space, where the method actually lives.">
+    <meta name="description" content="From gradient descent to the conjugate gradient method in six forced moves, derived in a Hilbert space, where the method actually lives.">
     <script>
     MathJax = {
         tex: {
@@ -34,8 +34,8 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="The Road to Conjugate Gradients — Adrian Mag">
-    <meta property="og:description" content="From gradient descent to the conjugate gradient method in six forced moves — derived in a Hilbert space, where the method actually lives.">
+    <meta property="og:title" content="The Road to Conjugate Gradients | Adrian Mag">
+    <meta property="og:description" content="From gradient descent to the conjugate gradient method in six forced moves, derived in a Hilbert space, where the method actually lives.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/conjugate-gradient.html">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
@@ -85,7 +85,7 @@
             <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.55), rgba(30,34,40,0.38)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>The Road to Conjugate Gradients</h1>
-                <p>Gradient descent, diagnosed and repaired &mdash; until the conjugate gradient method assembles itself.</p>
+                <p>Gradient descent, diagnosed and repaired, until the conjugate gradient method assembles itself.</p>
             </div>
         </section>
 
@@ -110,12 +110,12 @@
                     <p>The conjugate gradient method is usually met as a recipe: five update
                     formulas, memorized or copied, with a promise that they work astonishingly
                     well. The formulas <em>do</em> work astonishingly well. But presented as a
-                    recipe, CG looks like a trick &mdash; and tricks are hard to trust, hard to
+                    recipe, CG looks like a trick, and tricks are hard to trust, hard to
                     remember, and impossible to adapt.</p>
 
                     <p>These notes take the opposite route. We start from the humblest possible
-                    question &mdash; <em>how do you solve \(Au=f\) when all you can do is apply
-                    \(A\)?</em> &mdash; and let each difficulty force the next idea. Gradient
+                    question, <em>how do you solve \(Au=f\) when all you can do is apply
+                    \(A\)?</em>, and let each difficulty force the next idea. Gradient
                     descent is the obvious first attempt. Watching it fail, precisely and
                     visually, tells us exactly what to fix. By the time the conjugate gradient
                     method appears, there is nothing left to invent: every formula is the unique
@@ -129,7 +129,7 @@
 
                     <p>Everything is done in a real Hilbert space, not in \(\mathbb R^n\).
                     This is not generality for its own sake: the method genuinely never needs a
-                    matrix, a basis, or a mesh &mdash; only the action of an operator. Seeing
+                    matrix, a basis, or a mesh, only the action of an operator. Seeing
                     that clearly is half the point, and it connects directly to the
                     <a href="../think-first/think-first-discretize-later.html">Think First,
                     Discretize Later</a> series: the method belongs to the problem, not to its
@@ -139,9 +139,9 @@
 
                     <p>An operator equation is secretly a landscape: solving \(Au=f\) is the same
                     as finding the bottom of a bowl (Act&nbsp;1). The obvious move is to walk
-                    downhill (Act&nbsp;2) &mdash; but downhill zigzags, and the autopsy shows why:
+                    downhill (Act&nbsp;2), but downhill zigzags, and the autopsy shows why:
                     it measures &ldquo;perpendicular&rdquo; with the wrong ruler (Act&nbsp;3). The
-                    repair is a single design rule &mdash; never undo finished work &mdash; which
+                    repair is a single design rule, never undo finished work, which
                     forces a new geometry on the search directions (Act&nbsp;4). Feeding that rule
                     with the only raw material the problem provides, the residuals, collapses into
                     a two-term recurrence (Act&nbsp;5). What remains is to understand why the
@@ -151,15 +151,15 @@
                     <h2>What you need to bring</h2>
 
                     <p>Comfort with inner products and norms, and a willingness to read slowly.
-                    Everything else &mdash; energy functionals, conjugacy, Krylov subspaces,
-                    convergence bounds &mdash; is built on the page, from scratch. If you have
+                    Everything else, energy functionals, conjugacy, Krylov subspaces,
+                    convergence bounds, is built on the page, from scratch. If you have
                     read any of the other series on this site you will recognize the style: no
                     step is allowed to feel like magic.</p>
 
                     <h2>Notation and conventions</h2>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; Notation</span>
+                        <span class="sola-callout-label">Remark: Notation</span>
                         <p>We follow the same typographic doctrine as the other series on this
                         site.</p>
                         <ul>
@@ -183,21 +183,21 @@
 
                     <h2>The six acts</h2>
 
-                    <p><strong>Act&nbsp;1 &mdash; <a href="act-1.html">The Landscape Hidden in the
+                    <p><strong>Act&nbsp;1: <a href="act-1.html">The Landscape Hidden in the
                     Equation</a>.</strong>
                     Operator equations are everywhere, and the operator is usually a black box:
                     we can apply it, never invert it. The equation \(Au=f\) is reformulated as
-                    the minimization of a quadratic functional \(J\) &mdash; a bowl whose unique
+                    the minimization of a quadratic functional \(J\), a bowl whose unique
                     bottom is the solution, and whose downhill direction is the computable
                     residual.</p>
 
-                    <p><strong>Act&nbsp;2 &mdash; <a href="act-2.html">Rolling Downhill</a>.</strong>
+                    <p><strong>Act&nbsp;2: <a href="act-2.html">Rolling Downhill</a>.</strong>
                     Gradient descent with exact line search, derived completely: the step length
                     is where a parabola bottoms out. An interactive panel lets you feel the
                     zigzag, and the convergence rate \((\kappa-1)/(\kappa+1)\) quantifies the
                     pain. The autopsy begins: every turn is a perfect right angle.</p>
 
-                    <p><strong>Act&nbsp;3 &mdash; <a href="act-3.html">The Right
+                    <p><strong>Act&nbsp;3: <a href="act-3.html">The Right
                     Geometry</a>.</strong>
                     Why right angles betray us: the landscape measures distance with
                     \(A\), not with the Euclidean ruler. The energy inner product
@@ -205,25 +205,25 @@
                     coordinates, and &ldquo;don&rsquo;t spoil finished work&rdquo; acquires an
                     exact mathematical form: \(A\)-orthogonality.</p>
 
-                    <p><strong>Act&nbsp;4 &mdash; <a href="act-4.html">Never Undo Your
+                    <p><strong>Act&nbsp;4: <a href="act-4.html">Never Undo Your
                     Work</a>.</strong>
                     The method of conjugate directions: line searches along pairwise
-                    \(A\)-orthogonal directions make progress permanent &mdash; each direction is
+                    \(A\)-orthogonal directions make progress permanent, each direction is
                     dealt with once, forever. In \(n\) dimensions the method terminates in \(n\)
                     steps. An interactive panel: pick <em>any</em> first direction; two steps
                     finish the job.</p>
 
-                    <p><strong>Act&nbsp;5 &mdash; <a href="act-5.html">The Conjugate Gradient
+                    <p><strong>Act&nbsp;5: <a href="act-5.html">The Conjugate Gradient
                     Method</a>.</strong>
                     Where do conjugate directions come from? The residuals are the only new
                     information the operator ever gives us. Orthogonalizing them, almost every
-                    Gram&ndash;Schmidt term vanishes &mdash; a structural miracle that leaves a
+                    Gram&ndash;Schmidt term vanishes, a structural miracle that leaves a
                     two-term recurrence. The full algorithm assembles itself, and a race panel
                     shows it demolishing gradient descent.</p>
 
-                    <p><strong>Act&nbsp;6 &mdash; <a href="act-6.html">The Best Possible
+                    <p><strong>Act&nbsp;6: <a href="act-6.html">The Best Possible
                     Descent</a>.</strong>
-                    CG is optimal &mdash; no method using the same information can do better in
+                    CG is optimal, no method using the same information can do better in
                     the energy norm. The polynomial picture explains the famous
                     \(\sqrt{\kappa}\) convergence and why clustered spectra collapse in a few
                     steps. Finally: what survives in infinite dimensions, what discretization
@@ -231,7 +231,7 @@
 
                     <h2>Sources &amp; further reading</h2>
 
-                    <p>The series is self-contained, but nothing in it is new &mdash; only the
+                    <p>The series is self-contained, but nothing in it is new, only the
                     staging is. Each act closes with the references behind its specific claims;
                     the landmarks, all clickable and all worth the detour, are these:</p>
 
@@ -239,7 +239,7 @@
                         <li id="ref-hs52">Magnus R. Hestenes and Eduard Stiefel (1952).
                         &ldquo;Methods of Conjugate Gradients for Solving Linear Systems.&rdquo;
                         <em>Journal of Research of the National Bureau of Standards</em> 49(6),
-                        409&ndash;436. The original paper &mdash; still remarkably readable.
+                        409&ndash;436. The original paper, still remarkably readable.
                         <a href="https://doi.org/10.6028/jres.049.044" target="_blank" rel="noopener">doi:10.6028/jres.049.044</a> &middot;
                         <a href="https://nvlpubs.nist.gov/nistpubs/jres/049/jresv49n6p409_A1b.pdf" target="_blank" rel="noopener">free PDF (NIST)</a></li>
                         <li id="ref-she94">Jonathan R. Shewchuk (1994). &ldquo;An Introduction to
@@ -250,7 +250,7 @@
                         <li id="ref-go89">Gene H. Golub and Dianne P. O&rsquo;Leary (1989).
                         &ldquo;Some History of the Conjugate Gradient and Lanczos Algorithms:
                         1948&ndash;1976.&rdquo; <em>SIAM Review</em> 31(1), 50&ndash;102. Who did
-                        what, when, and why &mdash; the full story.
+                        what, when, and why, the full story.
                         <a href="https://doi.org/10.1137/1031003" target="_blank" rel="noopener">doi:10.1137/1031003</a> &middot;
                         <a href="https://www.cs.umd.edu/users/oleary/reprints/j28.pdf" target="_blank" rel="noopener">author&rsquo;s reprint PDF</a></li>
                         <li id="ref-saa03">Yousef Saad (2003). <em>Iterative Methods for Sparse

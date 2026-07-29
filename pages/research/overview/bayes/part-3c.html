@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 3c: Conditional Expectation — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <title>Part 3c: Conditional Expectation | Bayes, Measure-Theoretically | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 3c: Conditional Expectation — Bayes, Measure-Theoretically — Adrian Mag">
+    <meta property="og:title" content="Part 3c: Conditional Expectation, Bayes, Measure-Theoretically | Adrian Mag">
     <meta property="og:description" content="Part 3c of Bayes, Measure-Theoretically: Conditional expectation, conditional probability, and conditioning on random variables via sigma-algebras.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/bayes/part-3c.html">
@@ -115,7 +115,7 @@
                             The next few parts are the most mathematically demanding. We are going to introduce <em>conditional expectation</em>,
                             <em>disintegration</em>, and <em>Bayesian inversion</em> in
                             measure-theoretic language. These concepts take effort to absorb, but
-                            they will click into place &mdash; trust the process.
+                            they will click into place, trust the process.
                         </p>
                         <p>
                             One stylistic choice: even though our switch problem lives in
@@ -124,7 +124,7 @@
                             the more general notation: they work in both finite and continuous
                             spaces, and they lead to cleaner derivations. If you want to stay in
                             finite land, just mentally replace every integral by a weighted sum
-                            &mdash; everything will follow exactly the same.
+                           , everything will follow exactly the same.
                         </p>
                         <p>
                             The payoff for battling the infinite case now: by the end of
@@ -148,7 +148,7 @@
                     <h3>A coarser &sigma;-algebra on \(\M\)</h3>
 
                     <p>Recall that the full &sigma;-algebra on the model space is
-                    \(\SigmaM=2^{\M}\) &mdash; every subset is an event. But we can also work with
+                    \(\SigmaM=2^{\M}\), every subset is an event. But we can also work with
                     a <em>coarser</em> &sigma;-algebra, one that cannot distinguish between certain
                     outcomes.</p>
 
@@ -228,7 +228,7 @@
                             <text x="450" y="170" text-anchor="middle" fill="rgba(244,162,89,0.7)" font-size="10">can only distinguish 2 groups</text>
                         </svg>
                         <figcaption>
-                            <strong>F3c-1 &mdash; A coarser &sigma;-algebra on \(\M\).</strong>
+                            <strong>F3c-1, A coarser &sigma;-algebra on \(\M\).</strong>
                             The full &sigma;-algebra \(\SigmaM=2^{\M}\) can distinguish all four
                             states. The coarser \(\mathcal{G}\) can only tell whether the first
                             switch is on or off. Outcomes within each group are
@@ -245,7 +245,7 @@
                     (&ldquo;Best&rdquo; here means best in the <em>mean-square</em> sense: among
                     all constants, \(\mathbb{E}[X]\) minimizes the expected squared error
                     \(\mathbb{E}[(X-c)^2]\). Other loss functions single out other summaries
-                    &mdash; absolute error is minimized by a median, for instance. Throughout
+                   , absolute error is minimized by a median, for instance. Throughout
                     this part, &ldquo;best guess&rdquo; is shorthand for the mean-square-optimal
                     predictor.)</p>
 
@@ -266,7 +266,7 @@
                     =0.4\cdot 0+0.1\cdot 2+0.1\cdot 1+0.4\cdot 3=1.5.\]
 
                     <p>This is a single number. It is the best guess for \(X\) when we have
-                    <em>no information</em> at all &mdash; when we cannot distinguish any outcome
+                    <em>no information</em> at all, when we cannot distinguish any outcome
                     from any other. In &sigma;-algebra language, this is conditioning on the
                     <em>coarsest possible</em> &sigma;-algebra
                     \(\{\varnothing,\M\}\), which cannot distinguish anything. Ordinary
@@ -277,7 +277,7 @@
                         <p>
                             If you must replace \(X\) by one number, and you know nothing,
                             then \(\mathbb{E}[X]\) is the value that preserves the average. It
-                            is a <em>one-number compression</em> of \(X\) &mdash; the best
+                            is a <em>one-number compression</em> of \(X\), the best
                             you can do when the only visible events are
                             \(\{\varnothing,\M\}\).
                         </p>
@@ -289,7 +289,7 @@
                     outcomes within each group. What is our best guess for \(X\) now?</p>
 
                     <p>The answer is the <em>conditional expectation</em>
-                    \(\mathbb{E}[X\mid\mathcal{G}]\). It is no longer a single number &mdash; it is
+                    \(\mathbb{E}[X\mid\mathcal{G}]\). It is no longer a single number, it is
                     a <em>random variable</em>, because the best guess depends on which group we
                     find ourselves in. Ordinary expectation compressed \(X\) to one number
                     because we could not distinguish anything. Conditional expectation compresses
@@ -319,14 +319,14 @@
                     </div>
 
                     <p>Formally: for an <em>integrable</em> random variable \(X\) (meaning
-                    \(\mathbb{E}[|X|]<\infty\) &mdash; automatic in our finite example, but a
+                    \(\mathbb{E}[|X|]<\infty\), automatic in our finite example, but a
                     genuine requirement in general), the conditional expectation
                     \(\mathbb{E}[X\mid\mathcal{G}]\) is the (essentially unique)
                     \(\mathcal{G}\)-measurable random variable \(Y\) such that:</p>
 
                     \[\int_H Y\,d\muMzero = \int_H X\,d\muMzero \qquad\text{for every } H\in\mathcal{G}.\]
 
-                    <p>If you just felt a slight panic at the sight of an integral &mdash; don't
+                    <p>If you just felt a slight panic at the sight of an integral, don't
                     worry. In our finite setting, an integral against a measure is simply a
                     <em>weighted sum</em>. The condition above just says:</p>
 
@@ -334,7 +334,7 @@
 
                     <p>That is: the total weighted value of \(Y\) on each group must equal the total
                     weighted value of \(X\) on that same group. We write it as an integral because the
-                    same definition works in continuous spaces, where sums become integrals &mdash;
+                    same definition works in continuous spaces, where sums become integrals,
                     but the idea is identical: <em>match the totals on each
                     indistinguishable group</em>.</p>
 
@@ -351,12 +351,12 @@
                             back to the same problem: in continuous spaces, \(\muMzero(H)\) can be
                             zero. The integral condition avoids this entirely. It only requires that
                             the <em>total mass</em> of \(Y\) and \(X\) agree on each
-                            \(\mathcal{G}\)-set &mdash; no division anywhere.
+                            \(\mathcal{G}\)-set, no division anywhere.
                         </p>
                         <p>
                             Two honest footnotes to this slogan. First, whenever we
                             <em>solve</em> the condition on a positive-mass cell, the division
-                            reappears &mdash; as it does below. Second, on a cell of measure
+                            reappears, as it does below. Second, on a cell of measure
                             zero the condition reads \(0=0\): it does not perform an illegal
                             division, but neither does it <em>determine</em> a value there. The
                             definition avoids the crash; it does not conjure information out of
@@ -370,8 +370,8 @@
                     interval \(I\subset\mathbb{R}\), the set of outcomes where
                     \(Y\in I\) must belong to \(\mathcal{G}\). In our
                     case, \(\mathcal{G}=\{\varnothing,\{00,01\},\{10,11\},\M\}\). If \(Y\) took
-                    different values on \(00\) and \(01\) &mdash; say \(Y(00)=a\) and
-                    \(Y(01)=b\) with \(a\neq b\) &mdash; then the preimage of a small interval
+                    different values on \(00\) and \(01\), say \(Y(00)=a\) and
+                    \(Y(01)=b\) with \(a\neq b\), then the preimage of a small interval
                     around \(a\) would contain \(00\) but not \(01\), i.e. \(\{00\}\). But
                     \(\{00\}\notin\mathcal{G}\). So \(Y\) cannot distinguish \(00\) from \(01\);
                     it must assign them the same value. The same argument applies to
@@ -404,14 +404,14 @@
                             dividing by nothing?&rdquo;</em>
                         </p>
                         <p>
-                            No &mdash; and this is the beauty of the definition. The integral
+                            No, and this is the beauty of the definition. The integral
                             equality is <em>meant to stay an equality</em>. If
                             \(\muMzero(H)=0\) for some \(H\in\mathcal{G}\), then every subset of
                             \(H\) also has measure zero, so the right-hand side
                             \(\sum_{m\in H} X(m)\,\muMzero(\{m\})\) is zero too. The equation
                             reads \(0=0\), which is trivially true for <em>any</em> value of \(Y\)
                             on that group. The conditional expectation is simply not determined
-                            on null sets &mdash; and it doesn't need to be, because those outcomes
+                            on null sets, and it doesn't need to be, because those outcomes
                             never occur.
                         </p>
                         <p>
@@ -432,12 +432,12 @@
                         <span class="bayes-callout-label">Intuition</span>
                         <p>
                             The ordinary expectation \(\mathbb{E}[X]\) averages over all outcomes
-                            &mdash; the best guess when you know nothing. The conditional expectation
+                           , the best guess when you know nothing. The conditional expectation
                             \(\mathbb{E}[X\mid\mathcal{G}]\) is defined by an integral condition: it
                             is the \(\mathcal{G}\)-measurable function whose integrals over
                             \(\mathcal{G}\)-sets match those of \(X\). In the discrete case this
                             simplifies to the familiar average within each group, but the definition
-                            itself involves no normalization &mdash; and that is precisely why it
+                            itself involves no normalization, and that is precisely why it
                             continues to work in continuous spaces where division would fail.
                         </p>
                     </div>
@@ -503,11 +503,11 @@
                     \[\mathbb{P}(A\mid\mathcal{G})\big|_{\{10,11\}}
     =\frac{0.4}{0.5}=0.8.\]
 
-                    <p>So \(\mathbb{P}(A\mid\mathcal{G})=0.8\) everywhere &mdash; knowing the first
+                    <p>So \(\mathbb{P}(A\mid\mathcal{G})=0.8\) everywhere, knowing the first
                     switch does not change the probability that both switches agree. The division by
                     \(0.5\) here is a <em>consequence</em> of the integral definition in the discrete
                     case, not the definition itself. In continuous spaces, where the group
-                    probability may be zero, the integral condition still works &mdash; no division is
+                    probability may be zero, the integral condition still works, no division is
                     needed.</p>
 
                     <div class="bayes-callout callout-lesson">
@@ -532,7 +532,7 @@
                     variable</em>. In our switch problem, the observation is
                     the reporter's output. Here we must be careful about
                     <em>where that random variable lives</em>. It is tempting to
-                    write \(D:\M\to\D\), a function on the model space &mdash;
+                    write \(D:\M\to\D\), a function on the model space,
                     but that would be wrong. For a fixed model state \(m\), the
                     unreliable reporter can output <em>either</em> \(0\)
                     <em>or</em> \(1\): the report is not a deterministic
@@ -541,7 +541,7 @@
 
                     <p>The correct home for both the model and the report is an
                     underlying sample space \(\Omega\) that describes the
-                    <em>complete</em> outcome &mdash; model state <em>and</em>
+                    <em>complete</em> outcome, model state <em>and</em>
                     report together. The simplest canonical choice is the
                     product</p>
 
@@ -553,7 +553,7 @@
 
                     <p>Now \(D\) is a genuine random variable, and for a fixed
                     \(m\) the pair \((m,0)\) and \((m,1)\) are distinct outcomes
-                    in \(\Omega\) &mdash; the same model state with different
+                    in \(\Omega\), the same model state with different
                     reports, each carrying its own probability. If we observe
                     \(D\), what have we learned? Not the full outcome
                     \(\omega=(m,d)\); only its report coordinate. After
@@ -608,7 +608,7 @@
                             <text x="350" y="68" text-anchor="middle" fill="rgba(103,145,190,0.5)" font-size="8">through D&#8315;&#185;</text>
                         </svg>
                         <figcaption>
-                            <strong>F3c-2 &mdash; Preimages translate data
+                            <strong>F3c-2, Preimages translate data
                             questions into sample-space events.</strong> The data
                             lives in \(\D\), but probability is assigned to
                             events in the sample space \(\Omega=\M\times\D\).
@@ -625,7 +625,7 @@
                     <p>In words: \(\sigma(D)\) is the set of all events whose
                     truth can be decided by looking only at \(D\). This
                     &sigma;-algebra partitions \(\Omega\) into the sets where
-                    \(D=0\) and where \(D=1\) &mdash; the
+                    \(D=0\) and where \(D=1\), the
                     &ldquo;indistinguishable classes&rdquo; given the report.</p>
 
                     <p>So conditioning on the random variable \(D\) means
@@ -677,13 +677,13 @@
                             <em>\(\muD\)-almost everywhere</em>: two versions of \(k_A\) may
                             disagree on a set of data values with predictive probability zero,
                             and both satisfy the definition. If
-                            \(\muD(\{\dobs\})>0\) &mdash; as in our finite switch problem
-                            &mdash; the value \(k_A(\dobs)\) is pinned down and evaluation is
+                            \(\muD(\{\dobs\})>0\), as in our finite switch problem
+                           , the value \(k_A(\dobs)\) is pinned down and evaluation is
                             harmless. But if \(\muD(\{\dobs\})=0\), the evaluation
                             \(k_A(\dobs)\) depends on <em>which version</em> of \(k_A\) one
                             uses. Conditioning on \(\sigma(D)\) removes the arbitrary geometry
                             of the Borel&ndash;Kolmogorov limits, but it does not by itself
-                            single out a value at one specific null datum &mdash; for that, one
+                            single out a value at one specific null datum, for that, one
                             needs a distinguished version of \(k_A\), typically supplied by
                             extra regularity (a continuous density, a continuous
                             disintegration, or an explicit likelihood formula). We will meet
@@ -712,7 +712,7 @@
                     <h3>Setup</h3>
 
                     <p>Let \((M_1,M_2)\) be a random vector on \(\mathbb{R}^2\) with a smooth joint
-                    density \(\rho(m_1,m_2)\) with respect to Lebesgue measure &mdash; the standard
+                    density \(\rho(m_1,m_2)\) with respect to Lebesgue measure, the standard
                     notion of &ldquo;volume&rdquo; in \(\mathbb{R}^2\), which assigns to each
                     rectangle its area and extends to more general sets. Saying that
                     \(\rho\) is a density with respect to Lebesgue measure simply means that
@@ -734,14 +734,14 @@
                     \(\mathbb{P}^{(v)}_\varepsilon(A):=\mathbb{P}(A\cap S^{(v)}_\varepsilon)/\mathbb{P}(S^{(v)}_\varepsilon)\).
                     Suppose \(A\) is regular enough that the section integral
                     \(m_1\mapsto\int_{\mathbb{R}}\mathbf{1}_A(m_1,m_2)\,\rho(m_1,m_2)\,dm_2\)
-                    is continuous at \(m_1=2\) &mdash; for instance, \(A\) open or closed
+                    is continuous at \(m_1=2\), for instance, \(A\) open or closed
                     with a well-behaved boundary. Then the limit exists and equals:</p>
 
                     \[\lim_{\varepsilon\to 0}\mathbb{P}^{(v)}_\varepsilon(A)
                     =\frac{\int_{\mathbb{R}}\mathbf{1}_A(2,m_2)\,\rho(2,m_2)\,dm_2}{\int_{\mathbb{R}}\rho(2,m_2)\,dm_2}.\]
 
                     <p>This defines a probability measure on the line \(m_1=2\) with density
-                    proportional to \(\rho(2,m_2)\). The limit exists &mdash; but it already
+                    proportional to \(\rho(2,m_2)\). The limit exists, but it already
                     depends on a geometric choice: the use of vertical strips.</p>
 
                     <div class="bayes-callout callout-warning">
@@ -754,7 +754,7 @@
                             Worse: the vertical line \(\{2\}\times\mathbb{R}\) has Lebesgue
                             measure zero in the plane, so one can modify \(A\) on that line
                             without changing <em>any</em> strip probability
-                            \(\mathbb{P}(A\cap S^{(v)}_\varepsilon)\) &mdash; yet such a
+                            \(\mathbb{P}(A\cap S^{(v)}_\varepsilon)\), yet such a
                             modification changes the section \(\mathbf{1}_A(2,\cdot)\) and
                             hence the right-hand side. The limit of strip probabilities cannot
                             possibly recover the literal section of every measurable
@@ -789,7 +789,7 @@
                         <span class="bayes-callout-label">What are Borel sets?</span>
                         <p>
                             \(\mathcal{B}(\mathbb{R})\) is the collection of <em>Borel sets</em>
-                            &mdash; the sets you can build from intervals by taking countable
+                           , the sets you can build from intervals by taking countable
                             unions, countable intersections, and complements. Think of them as
                             &ldquo;any set you might reasonably want to measure on the real
                             line.&rdquo; Intervals, open sets, closed sets, single points, and
@@ -858,13 +858,13 @@
                             <text x="485" y="230" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8">thinner interval &#8594; thinner strip</text>
                         </svg>
                         <figcaption>
-                            <strong>F3c-3 &mdash; The &sigma;-algebra \(\sigma(M_1)\).</strong>
+                            <strong>F3c-3, The &sigma;-algebra \(\sigma(M_1)\).</strong>
                             Left: the model space \(\mathbb{R}^2\) with vertical
                             strips \(B\times\mathbb{R}\). Right: the corresponding Borel sets
                             \(B\) on the real line (the \(m_1\)-axis). Each interval on
                             \(\mathbb{R}\) lifts to a vertical strip in \(\mathbb{R}^2\);
                             smaller intervals produce thinner strips. The &sigma;-algebra
-                            \(\sigma(M_1)\) consists of <em>all</em> such strips &mdash; it
+                            \(\sigma(M_1)\) consists of <em>all</em> such strips, it
                             encodes &ldquo;we know \(m_1\) but not \(m_2\).&rdquo;
                         </figcaption>
                     </figure>
@@ -893,7 +893,7 @@
                     probability, and the singleton \(\{2\}\) is such a set. So the identity
                     alone does <em>not</em> force a value at \(m_1=2\). What we do instead is
                     adopt the explicit ratio formula above as our <em>chosen version</em> of
-                    \(k_A\) &mdash; it is a perfectly valid version, defined wherever the
+                    \(k_A\), it is a perfectly valid version, defined wherever the
                     denominator \(\int\rho(m_1,m_2)\,dm_2\) is positive, and when \(\rho\) is
                     continuous it is the natural (continuous) representative. Evaluating this
                     version at \(m_1=2\) gives:</p>
@@ -905,7 +905,7 @@
                     with <em>no geometric input</em>, for almost every value of \(m_1\)
                     simultaneously, and the joint density supplies a natural version whose
                     value at \(2\) is the vertical-section formula. What it has <em>not</em>
-                    done &mdash; and what nothing can do &mdash; is force that value at the
+                    done, and what nothing can do, is force that value at the
                     null point by conditional expectation alone. The honest statement is:
                     &sigma;-algebra conditioning eliminates the arbitrary tube geometry;
                     the smooth density then singles out a canonical version; and the tilted-tube
@@ -916,7 +916,7 @@
                         <span class="bayes-callout-label">But didn't you choose the vertical strips?</span>
                         <p>
                             A natural objection: <em>&ldquo;You ended up with the vertical-strip
-                            answer. So you secretly chose that geometry &mdash; you just wrapped
+                            answer. So you secretly chose that geometry, you just wrapped
                             it in fancy notation.&rdquo;</em>
                         </p>
                         <p>
@@ -924,14 +924,14 @@
                             They are chosen because they are the <em>sets of
                             indistinguishability</em> of the observation \(D=M_1\). Two points
                             \((m_1,m_2)\) and \((m_1',m_2')\) with \(m_1=m_1'\) produce the
-                            <em>same</em> observed value &mdash; the observation cannot tell them
+                            <em>same</em> observed value, the observation cannot tell them
                             apart. The &sigma;-algebra \(\sigma(M_1)\) is built from exactly
                             these indistinguishable classes: vertical strips
                             \(B\times\mathbb{R}\).
                         </p>
                         <p>
-                            If the observation were different &mdash; say \(D=M_1\cdot M_2\)
-                            &mdash; the indistinguishable classes would be <em>hyperbolic
+                            If the observation were different, say \(D=M_1\cdot M_2\)
+                           , the indistinguishable classes would be <em>hyperbolic
                             curves</em> (for nonzero observed values; the level set of \(0\)
                             is the union of the two coordinate axes), not vertical strips. The
                             &sigma;-algebra \(\sigma(D)\) would
@@ -941,7 +941,7 @@
                         </p>
                         <p>
                             In other words: the geometry is not chosen for aesthetic reasons
-                            &mdash; it is <em>imposed</em> by what the observation can and
+                           , it is <em>imposed</em> by what the observation can and
                             cannot distinguish. This is what makes &sigma;-algebra
                             conditioning <em>canonical</em>.
                         </p>
@@ -950,7 +950,7 @@
                     <div class="bayes-callout callout-warning">
                         <span class="bayes-callout-label">But what about the &sigma;-algebra on the data space?</span>
                         <p>
-                            A deeper objection: <em>&ldquo;Fine &mdash; the &sigma;-algebra
+                            A deeper objection: <em>&ldquo;Fine, the &sigma;-algebra
                             \(\sigma(D)\) on the model space is determined by \(D\). But
                             \(\sigma(D)\) is built from preimages of sets in the data space
                             \(\D\). How do you choose the &sigma;-algebra on \(\D\)? The final
@@ -959,7 +959,7 @@
                         </p>
                         <p>
                             This is a fair point, and the answer is that the &sigma;-algebra on
-                            the data space <em>does</em> matter &mdash; but its choice is rooted
+                            the data space <em>does</em> matter, but its choice is rooted
                             in the <em>physics of the problem</em> and the <em>coarseness of
                             observations</em>. Can the measurement distinguish two data values
                             that differ by arbitrarily small difference? Then singletons are effectively
@@ -967,13 +967,13 @@
                             one). Or perhaps the instrument bins its output: all values in
                             \([0,0.1)\) are reported as &ldquo;0&rdquo;, all in \([0.1,0.2)\)
                             as &ldquo;1&rdquo;, and so on. Then the data &sigma;-algebra is
-                            <em>coarser</em> &mdash; it contains the bins, not individual
-                            points &mdash; and the induced \(\sigma(D)\) on the model space
+                            <em>coarser</em>, it contains the bins, not individual
+                            points, and the induced \(\sigma(D)\) on the model space
                             reflects that coarseness.
                         </p>
                         <p>
                             In each case, the choice is <em>defensible and canonical for the
-                            physical situation</em>. It is not arbitrary &mdash; it encodes
+                            physical situation</em>. It is not arbitrary, it encodes
                             what the instrument can actually resolve. (For a binned
                             instrument, an equivalent and often cleaner modelling choice is to
                             define the reported variable itself as the bin label,
@@ -981,11 +981,11 @@
                             the finite set of labels its full power-set &sigma;-algebra.) In
                             practice, we most often assume that observations can be
                             distinguished down to singletons (individual points in the data
-                            space), so we equip \(\D\) with the Borel &sigma;-algebra &mdash;
+                            space), so we equip \(\D\) with the Borel &sigma;-algebra,
                             the standard &sigma;-algebra generated by the topology, i.e. the
                             <em>smallest</em> &sigma;-algebra containing all open sets. (It is
-                            not the finest &sigma;-algebra on the space &mdash; the Lebesgue
-                            &sigma;-algebra and the full power set are strictly finer &mdash;
+                            not the finest &sigma;-algebra on the space, the Lebesgue
+                            &sigma;-algebra and the full power set are strictly finer,
                             but it is the standard choice, and it makes every open-set
                             question measurable.) This is the convention we adopt throughout
                             this essay.
@@ -995,7 +995,7 @@
                             here. The first is the one we choose on the data space \(\D\),
                             based on the physics of what the instrument can resolve. The second
                             is \(\sigma(D)\) on the model space, which is <em>automatically
-                            determined</em> by the random variable \(D\) &mdash; we do not
+                            determined</em> by the random variable \(D\), we do not
                             choose it, the observation mapping constructs it for us. And \(D\)
                             itself is chosen by us based on physical arguments: it encodes how
                             the model produces the data. So the chain is: physics determines
@@ -1017,7 +1017,7 @@
                             data mapping \(D=M_1\) can distinguish and the joint distribution.
                             BK ambiguity arises when conditioning on measure-zero sets via ad
                             hoc geometric limits. What remains at a single null datum is not
-                            geometric ambiguity but <em>version</em> ambiguity &mdash; and a
+                            geometric ambiguity but <em>version</em> ambiguity, and a
                             smooth joint density resolves it by supplying a natural continuous
                             version.
                         </p>

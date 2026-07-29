@@ -146,9 +146,9 @@
                     <h2>The full argument, in eight acts</h2>
                     <p class="act-lede">
                         We want to recover a function from finitely many noisy
-                        measurements. The naive approach &mdash; discretize first,
+                        measurements. The naive approach, discretize first,
                         place a diagonal prior on the coefficients, use the transpose
-                        as the adjoint &mdash; produces a posterior mean that looks
+                        as the adjoint, produces a posterior mean that looks
                         fine. But the posterior <em>samples</em> reveal the truth:
                         the prior has no continuous meaning, the variance diverges
                         under refinement, and the adjoint ignores the geometry of
@@ -159,35 +159,35 @@
                 <div class="tfdl-prose">
                     <p>
                         The cure is not a cleverer matrix. The cure is to choose the
-                        mathematical objects first &mdash; model space, data space,
-                        forward map, noise model, prior measure &mdash; and only then
+                        mathematical objects first, model space, data space,
+                        forward map, noise model, prior measure, and only then
                         discretize. Each act below builds one piece of the argument.
                     </p>
                 </div>
 
                 <div class="tfdl-prose">
-                    <p><strong>Act I &mdash; <a href="act-1.html">A Familiar Problem</a>.</strong>
+                    <p><strong>Act I, <a href="act-1.html">A Familiar Problem</a>.</strong>
                     We set up a toy inverse problem, discretize immediately, and compute a posterior that looks reasonable.</p>
 
-                    <p><strong>Act II &mdash; <a href="act-2.html">Something Is Wrong</a>.</strong>
+                    <p><strong>Act II, <a href="act-2.html">Something Is Wrong</a>.</strong>
                     Sampling the posterior reveals trouble: variance grows with mesh refinement, and the posterior does not converge.</p>
 
-                    <p><strong>Act III &mdash; <a href="act-3.html">What Problem Are We Actually Solving?</a>.</strong>
+                    <p><strong>Act III, <a href="act-3.html">What Problem Are We Actually Solving?</a>.</strong>
                     The real problem is defined on a function space, not on a coefficient vector. We identify the five modelling choices that must be made before discretization.</p>
 
-                    <p><strong>Act IV &mdash; <a href="act-4.html">A Guided Detour Through Functional Analysis</a>.</strong>
+                    <p><strong>Act IV, <a href="act-4.html">A Guided Detour Through Functional Analysis</a>.</strong>
                     From vector spaces to Hilbert spaces: norms, completeness, inner products, orthogonality, and why the choice of space matters.</p>
 
-                    <p><strong>Act V &mdash; <a href="act-5.html">The Data Space and the Adjoint</a>.</strong>
+                    <p><strong>Act V, <a href="act-5.html">The Data Space and the Adjoint</a>.</strong>
                     Finite-dimensional data, inner products, noise covariance, and why the adjoint is not just a transpose.</p>
 
-                    <p><strong>Act VI &mdash; <a href="act-6.html">The Prior Is Not Just a Matrix</a>.</strong>
+                    <p><strong>Act VI, <a href="act-6.html">The Prior Is Not Just a Matrix</a>.</strong>
                     Measure theory, Gaussian measures on Hilbert spaces, the trace-class condition, and how to build covariances from differential operators.</p>
 
-                    <p><strong>Act VII &mdash; <a href="act-7.html">The Repair</a>.</strong>
+                    <p><strong>Act VII, <a href="act-7.html">The Repair</a>.</strong>
                     The corrected computation on the same toy problem: Bessel prior, geometry-aware adjoint, and why the pathologies melt away.</p>
 
-                    <p><strong>Act VIII &mdash; <a href="act-8.html">The Verdict</a>.</strong>
+                    <p><strong>Act VIII, <a href="act-8.html">The Verdict</a>.</strong>
                     Same setup, two formulations, side by side. The full story from prior to posterior to refinement.</p>
 
                     <p><strong><a href="summary.html">Summary &amp; Appendices</a>.</strong>

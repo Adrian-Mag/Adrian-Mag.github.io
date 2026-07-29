@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 6: The Best Possible Descent — The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>Act 6: The Best Possible Descent | The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -34,7 +34,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 6: The Best Possible Descent — Adrian Mag">
+    <meta property="og:title" content="Act 6: The Best Possible Descent | Adrian Mag">
     <meta property="og:description" content="Krylov optimality, the polynomial picture behind the sqrt-kappa bound, clustered spectra, and what survives in infinite dimensions.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-6.html">
@@ -111,8 +111,8 @@
 
                     <h2>Optimal, Not Merely Good</h2>
 
-                    <p>Act&nbsp;5 built CG from one particular choice &mdash; residuals as raw
-                    material &mdash; and it is fair to be suspicious of particular choices. Could
+                    <p>Act&nbsp;5 built CG from one particular choice, residuals as raw
+                    material, and it is fair to be suspicious of particular choices. Could
                     a different construction, perhaps with look-ahead, or randomization, or some
                     cleverness not yet invented, do better with the same resources?</p>
 
@@ -128,10 +128,10 @@
                     (Act&nbsp;4) plus the span identity (Act&nbsp;5) say that the CG iterate
                     minimizes \(J\) over precisely \(u_0 + \Kry_k\); and the error identity
                     (Act&nbsp;3) converts minimal \(J\) into minimal energy-norm error. Chain the
-                    three &mdash; each act contributing exactly one link &mdash; and:</p>
+                    three, each act contributing exactly one link, and:</p>
 
                     <div class="sola-callout callout-lesson">
-                        <span class="sola-callout-label">Theorem &mdash; Krylov optimality of CG</span>
+                        <span class="sola-callout-label">Theorem: Krylov optimality of CG</span>
                         <p>\[\normA{u_k^{\mathrm{CG}} - u} \;=\; \min_{v \,\in\, u_0 + \Kry_k}
                         \normA{v - u}.\]
                         At every step, the CG iterate is the best approximation to the solution
@@ -148,7 +148,7 @@
                     <p>This is why the question &ldquo;could something do better?&rdquo; has a
                     clean answer: not in this norm, not with this information. The search for a
                     better method is over before it starts; the only remaining freedoms are to
-                    change the information (preconditioning &mdash; below) or the norm (other
+                    change the information (preconditioning, below) or the norm (other
                     Krylov methods, other trade-offs).</p>
 
                     <h2>The Polynomial Picture</h2>
@@ -181,7 +181,7 @@
                     \normA{e_0}, \qquad \kappa = \Gamma/\gamma.\]
                     There it is: the celebrated \(\sqrt{\kappa}\). Where gradient descent
                     contracts like \((\kappa-1)/(\kappa+1)\), CG contracts like the same
-                    expression with \(\kappa\) replaced by its square root &mdash; the difference
+                    expression with \(\kappa\) replaced by its square root, the difference
                     between 11,500 steps per digit and about 58 at \(\kappa = 10^4\). (The
                     Chebyshev argument is worked out in Saad <a href="#ref-saa03">[Saa03]</a>,
                     &sect;6.11.3, Theorem 6.29; the same bound in the Hilbert-space setting of
@@ -192,7 +192,7 @@
                              alt="Left: per-step contraction factors of gradient descent and CG versus condition number. Right: iterations needed for six digits, showing the kappa versus sqrt-kappa gap.">
                         <figcaption><span class="sola-figure-label">Figure FC6-1.</span>The
                         \(\kappa\)-vs-\(\sqrt{\kappa}\) gap. Left: error factor per step. Right:
-                        the same information as &ldquo;steps needed for six digits&rdquo; &mdash;
+                        the same information as &ldquo;steps needed for six digits&rdquo;,
                         note both axes are logarithmic; at \(\kappa=10^4\) the gap is a factor of
                         about 200.</figcaption>
                     </figure>
@@ -203,36 +203,36 @@
                     the polynomial picture, because it uses nothing about the spectrum except its
                     endpoints. The minimizing polynomial sees everything. Suppose the eigenvalues
                     gather in \(m\) tight clusters: a degree-\(m\) polynomial can place one root
-                    in each cluster and be tiny on the entire spectrum &mdash; so CG essentially
+                    in each cluster and be tiny on the entire spectrum, so CG essentially
                     converges in \(m\) steps, regardless of \(\kappa\). The refined theory
-                    &mdash; including the famous <em>superlinear</em> acceleration of CG as the
-                    extreme eigenvalues are progressively &ldquo;solved off&rdquo; &mdash; is due
+                   , including the famous <em>superlinear</em> acceleration of CG as the
+                    extreme eigenvalues are progressively &ldquo;solved off&rdquo;, is due
                     to van der Sluis and van der Vorst <a href="#ref-sv86">[SV86]</a>. Same
                     \(\kappa\), wildly different behaviour:</p>
 
                     <figure class="sola-figure">
                         <img data-themed="1" src="../../../../media/research/cg/fig_cg6_spectrum.png"
-                             alt="Two spectra with identical condition number 90 — one clustered into three groups, one spread out — and the corresponding CG error curves: the clustered problem converges in about three steps.">
+                             alt="Two spectra with identical condition number 90, one clustered into three groups, one spread out, and the corresponding CG error curves: the clustered problem converges in about three steps.">
                         <figcaption><span class="sola-figure-label">Figure FC6-2.</span>Two
                         60-dimensional problems with the <em>same</em> \(\kappa = 90\). Three
                         tight clusters (drawn here in their limiting case, three exactly repeated
-                        eigenvalues): machine precision in exactly three steps &mdash; one root of
+                        eigenvalues): machine precision in exactly three steps, one root of
                         the minimizing polynomial per cluster. Eigenvalues spread evenly: the
                         Chebyshev regime, dozens of steps. \(\kappa\) alone never told the whole
                         story.</figcaption>
                     </figure>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; why preconditioning is the real game</span>
+                        <span class="sola-callout-label">Remark: why preconditioning is the real game</span>
                         <p>This picture explains the word you will meet everywhere in practice:
                         <em>preconditioning</em>. If we can cheaply apply an operator
                         \(M^{-1}\approx A^{-1}\), then solving \(M^{-1}Au = M^{-1}f\)
                         (symmetrized appropriately) runs CG on an operator whose spectrum is
                         compressed and clustered near 1. Nothing about the CG iteration changes
-                        &mdash; we change <em>the geometry it runs in</em>, exactly in the spirit
+                       , we change <em>the geometry it runs in</em>, exactly in the spirit
                         of Act&nbsp;3: a good preconditioner is a change of inner product that
                         makes the bowl rounder. Designing \(M\) is problem-specific artistry, and
-                        it is where the practical battles are won &mdash; Saad
+                        it is where the practical battles are won, Saad
                         <a href="#ref-saa03">[Saa03]</a> devotes two full chapters
                         (9&ndash;10) to it.</p>
                     </div>
@@ -244,18 +244,18 @@
                     is, and is not, true when \(\dim\H = \infty\).</p>
 
                     <p><strong>What survives untouched.</strong> Every derivation in
-                    Acts&nbsp;1&ndash;5 &mdash; the master identity, the line search, conjugacy,
+                    Acts&nbsp;1&ndash;5, the master identity, the line search, conjugacy,
                     the expanding-subspace theorem, the short recurrence, Krylov optimality, the
                     Chebyshev bound. None of them ever mentioned a basis or a dimension. If the
                     spectrum of \(A\) lies in \([\gamma,\Gamma]\) with \(\gamma &gt; 0\)
                     (our standing positive-definiteness), CG converges linearly in \(\H\) at the
-                    \(\sqrt{\kappa}\) rate, full stop &mdash; this is precisely the setting of
+                    \(\sqrt{\kappa}\) rate, full stop, this is precisely the setting of
                     Daniel&rsquo;s 1967 operator-equation treatment
                     <a href="#ref-dan67">[Dan67]</a>.</p>
 
                     <p><strong>What is lost.</strong> Exactly one thing: finite termination. The
                     \(n\)-step guarantee of Act&nbsp;4 is meaningless without an \(n\). In
-                    infinite dimensions CG is honestly an iterative method &mdash; run until the
+                    infinite dimensions CG is honestly an iterative method, run until the
                     residual is small enough, like everything else. Given that the \(n\)-step
                     property was never usable in practice anyway (rounding destroys it, and
                     \(n\) is astronomically large), the loss is philosophical rather than
@@ -267,23 +267,23 @@
                     \(u_h \in V_h\) with \(\ip{Au_h}{v_h} = \ip{f}{v_h}\) for all
                     \(v_h \in V_h\). Two facts make this beautiful rather than merely necessary.
                     First, the projected operator inherits self-adjointness and positive
-                    definiteness, so the entire theory applies verbatim on \(V_h\). Second &mdash;
-                    and this is the point readers of
+                    definiteness, so the entire theory applies verbatim on \(V_h\). Second,
+                    readers of
                     <a href="../think-first/think-first-discretize-later.html">Think First,
-                    Discretize Later</a> will recognize &mdash; the method, its geometry, and its
+                    Discretize Later</a> will recognize that the method, its geometry, and its
                     convergence theory were fixed <em>before</em> the mesh appeared. The
                     discretization samples the problem; it does not define it. If your discrete
                     CG behaves qualitatively differently under mesh refinement, that is a signal
                     about your formulation, not about CG.</p>
 
                     <div class="sola-callout callout-warning">
-                        <span class="sola-callout-label">Warning &mdash; the honest boundary</span>
+                        <span class="sola-callout-label">Warning: the honest boundary</span>
                         <p>Positive definiteness with \(\gamma&gt;0\) is a real restriction. The
-                        integral operators of inverse theory &mdash; the compact, smoothing
-                        \(G^*G\) of tomography, for instance &mdash; have spectra accumulating at
+                        integral operators of inverse theory, the compact, smoothing
+                        \(G^*G\) of tomography, for instance, have spectra accumulating at
                         zero: \(\gamma = 0\), \(\kappa = \infty\). CG can still be run, and each
                         iterate is still Krylov-optimal, but there is no rate, and iterates
-                        eventually amplify data noise rather than converge &mdash; iteration
+                        eventually amplify data noise rather than converge, iteration
                         count itself becomes a regularization parameter. This regime has its own
                         careful theory: Hanke&rsquo;s monograph <a href="#ref-han95">[Han95]</a>
                         is devoted to CG-type methods for ill-posed problems, and Engl, Hanke
@@ -302,39 +302,39 @@
                     choice:</p>
 
                     <ul>
-                        <li>The black box permits only iteration &mdash; <em>(Act&nbsp;1)</em></li>
-                        <li>the equation is a bowl, and the residual points downhill &mdash;
+                        <li>The black box permits only iteration <em>(Act&nbsp;1)</em></li>
+                        <li>the equation is a bowl, and the residual points downhill
                         <em>(Act&nbsp;1)</em></li>
                         <li>greedy descent is exact on a line, and its line searches force
-                        Euclidean right angles &mdash; the staircase &mdash;
+                        Euclidean right angles, the staircase
                         <em>(Act&nbsp;2)</em></li>
                         <li>&ldquo;never spoil finished work&rdquo; is the equation
-                        \(\ipA{q}{p}=0\): the landscape&rsquo;s own geometry &mdash;
+                        \(\ipA{q}{p}=0\): the landscape&rsquo;s own geometry
                         <em>(Act&nbsp;3)</em></li>
                         <li>conjugate line searches make progress permanent and minimize over
-                        expanding subspaces &mdash; <em>(Act&nbsp;4)</em></li>
+                        expanding subspaces <em>(Act&nbsp;4)</em></li>
                         <li>the only raw material is the residual stream, and Krylov structure
-                        collapses its orthogonalization to two terms &mdash;
+                        collapses its orthogonalization to two terms
                         <em>(Act&nbsp;5)</em></li>
                         <li>the result is optimal among all methods with the same information
-                        &mdash; <em>(Act&nbsp;6)</em>.</li>
+                        <em>(Act&nbsp;6)</em>.</li>
                     </ul>
 
                     <div class="sola-callout callout-lesson">
                         <span class="sola-callout-label">The slogan</span>
                         <p>The conjugate gradient method is not an invention to be memorized. It
                         is what remains of gradient descent after every mistake is repaired in
-                        the only way the geometry allows &mdash; the last method standing when
+                        the only way the geometry allows, the last method standing when
                         all arbitrary choices are removed.</p>
                     </div>
 
-                    <p>If you now open any textbook&rsquo;s CG pseudocode &mdash; or the
-                    <a href="act-5.html">algorithm box of Act&nbsp;5</a> &mdash; you should find
+                    <p>If you now open any textbook&rsquo;s CG pseudocode, or the
+                    <a href="act-5.html">algorithm box of Act&nbsp;5</a>, you should find
                     that no line of it could have been otherwise: \(\alpha_k\) is a parabola
                     bottoming out, \(\beta_k\) is Gram&ndash;Schmidt with its corpses removed,
                     and the whole loop is a machine for keeping promises made to previous
                     directions. That was the promise of these notes; whether it was kept is for
-                    you to judge &mdash; ideally with the
+                    you to judge, ideally with the
                     <a href="act-5.html">race panel</a> still open in another tab.</p>
 
                     <h2>References</h2>

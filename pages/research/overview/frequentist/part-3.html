@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 3: The Bayesian Path — Bayesian and Frequentist Inference — Adrian Mag</title>
+    <title>Part 3: The Bayesian Path | Bayesian and Frequentist Inference | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/frequentist.css?v=38">
-    <meta name="description" content="Part 3: The Bayesian construction — prior, joint measure, posterior kernel, and what collapses without a prior.">
+    <meta name="description" content="Part 3: The Bayesian construction, prior, joint measure, posterior kernel, and what collapses without a prior.">
     <script>
     MathJax = {
         tex: {
@@ -43,8 +43,8 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 3: The Bayesian Path — Bayesian and Frequentist Inference — Adrian Mag">
-    <meta property="og:description" content="Part 3: The Bayesian construction — prior, joint measure, posterior kernel, and what collapses without a prior.">
+    <meta property="og:title" content="Part 3: The Bayesian Path, Bayesian and Frequentist Inference | Adrian Mag">
+    <meta property="og:description" content="Part 3: The Bayesian construction, prior, joint measure, posterior kernel, and what collapses without a prior.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/frequentist/part-3.html">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
@@ -94,7 +94,7 @@
             <div class="page-header-bg" data-hero="frequentist" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/hero-northamerica.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Part 3: The Bayesian Path</h1>
-                <p>Prior, joint measure, posterior &mdash; and what collapses without one.</p>
+                <p>Prior, joint measure, posterior, and what collapses without one.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="bayesian-frequentist.html">Bayesian and Frequentist Inference</a>.
                 </p>
@@ -121,7 +121,7 @@
                     <p>The observation kernel gives, for each candidate true datum
                     \(\mathbf d\), a probability law for possible observations. It
                     has the direction
-                    \(\mathbf d \longmapsto \mu_{\mathbf d}\) &mdash; from candidate
+                    \(\mathbf d \longmapsto \mu_{\mathbf d}\), from candidate
                     truth to observation law. This is not yet a probability law on
                     possible true data values.</p>
 
@@ -152,7 +152,7 @@
                         \Dobsrand = \Drand + \Nrand.
                     \]
                     This assumes that the data space \(\Dspace\) carries enough
-                    structure for addition to be meaningful &mdash; for instance,
+                    structure for addition to be meaningful, for instance,
                     \(\Dspace=\mathbb{R}^n\) or a Banach space. This differs from
                     the known-truth model
                     \(\Dobsrand = \dtrue + \Nrand\) in that the centre of the
@@ -221,7 +221,7 @@
                     When \(\Dobsrand\) is continuous, the event
                     \(\{\Dobsrand = \mathbf d'\}\) has probability zero, so the
                     posterior kernel should be understood as a <em>regular
-                    conditional distribution</em> &mdash; a version of the
+                    conditional distribution</em>, a version of the
                     conditional law defined \(\muPred\)-almost everywhere, which
                     exists under standard conditions (e.g. standard Borel or Radon
                     spaces). After the actual observation \(\dobs\), the Bayesian
@@ -272,7 +272,7 @@
                     After observation, uncertainty is represented by the posterior.
                     This is why the Bayesian can make statements such as
                     \(\Prob(\Drand \in B \mid \Dobsrand = \dobs) = \post(\dobs, B)\)
-                    &mdash; these are posterior probability statements about the
+                   , these are posterior probability statements about the
                     epistemological true-datum random variable, not statements about
                     repeated confidence-set coverage.</p>
 
@@ -283,8 +283,8 @@
                     \(\muPred = \prior * \muN\). A small value of
                     \(p_{\muPred}(\dobs)\) indicates that the observed datum
                     lies in a low-density region of the prior predictive
-                    distribution. Using the prior predictive this way &mdash; as a check on
-                    the whole model rather than on any parameter &mdash; is Box&rsquo;s
+                    distribution. Using the prior predictive this way, as a check on
+                    the whole model rather than on any parameter, is Box&rsquo;s
                     classic proposal <a href="#ref-box80">[Box80]</a>, and it survives in
                     modern Bayesian workflow as predictive checking
                     <a href="#ref-gel13">[Gel13]</a>, Ch.&nbsp;6.</p>
@@ -316,10 +316,10 @@
                         <li>No Bayesian predictive observation variable
                         \(\Dobsrand = \Drand + \Nrand\).</li>
                         <li>No prior predictive distribution \(\muPred\)
-                        &mdash; there is no measure with which to average the
+                       , there is no measure with which to average the
                         candidate-dependent observation laws.</li>
                         <li>No joint measure on \((\Drand, \Dobsrand)\).</li>
-                        <li>No posterior kernel \(\post(\mathbf d', B)\) &mdash;
+                        <li>No posterior kernel \(\post(\mathbf d', B)\),
                         there is nothing to condition.</li>
                     </ul>
 
@@ -359,7 +359,7 @@
                     object, not a random variable. For the expression to be a
                     probability statement, one must first introduce a probability
                     model in which the true datum is represented by a random
-                    variable &mdash; exactly what the Bayesian does with
+                    variable, exactly what the Bayesian does with
                     \(\Drand \sim \prior\).</p>
 
                     <p>The likelihood alone cannot fix this. The likelihood function
@@ -368,7 +368,7 @@
                     a probability density over \(\mathbf d\). It may or may not be
                     normalizable with respect to a chosen reference measure on
                     \(\Dspace\), but that reference measure is extra structure
-                    &mdash; it is not supplied by the observation kernel alone. Even
+                   , it is not supplied by the observation kernel alone. Even
                     when normalization happens to work (as in the additive location
                     model with Lebesgue measure), treating the likelihood as a
                     density over \(\mathbf d\) corresponds morally to using a flat

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 7: A Synthetic Cautionary Tale — My Take on SOLA — Adrian Mag</title>
+    <title>Act 7: A Synthetic Cautionary Tale | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 7: A Synthetic Cautionary Tale — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 7: A Synthetic Cautionary Tale, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 7 of My Take on SOLA: A synthetic example where SOLA's resolving kernels look great, but the true target properties are the negative of the estimates. The cautionary tale.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-7.html">
@@ -114,7 +114,7 @@
                     <p>Up to this point, we have been building SOLA. We laid out
                     the kernel game, constructed the matrix, added normalization
                     and noise, and carefully examined what the method actually
-                    estimates. Throughout, the tone has been constructive — here
+                    estimates. Throughout, the tone has been constructive, here
                     is how it works, here is what it does well.</p>
 
                     <p>SOLA is a relatively young method with considerable
@@ -125,7 +125,7 @@
                     no need for prior information about the model, built-in
                     uncertainty quantification through propagated noise
                     covariance, and user-controlled resolution through the
-                    choice of target kernels. These are not minor features —
+                    choice of target kernels. These are not minor features,
                     they are the central pillars on which the case for SOLA
                     rests. A method that needs no priors, reports its own
                     uncertainty, and lets the practitioner choose what to
@@ -133,7 +133,7 @@
 
                     <p>And yet, because SOLA is not yet widely known, it has not
                     been subjected to the kind of stress testing that older
-                    methods — least squares, least norm, regularization — have
+                    methods, least squares, least norm, regularization, have
                     long since absorbed. Those methods carry visible marks from
                     decades of scrutiny. Their shortcomings are well known, not
                     because they are obvious, but because they were found the hard
@@ -141,7 +141,7 @@
                     accumulation of boundaries that define where a method can be
                     trusted and where it cannot.</p>
 
-                    <p>What follows is that kind of test for SOLA. Not an attack —
+                    <p>What follows is that kind of test for SOLA. Not an attack,
                     an examination. We will build a problem where SOLA looks
                     good by every standard diagnostic, and then we will show
                     that a naive yet intuitive interpretation of its output can fail
@@ -193,7 +193,7 @@
                     <p>At this stage, nothing is unusual. We have data, uncertainty,
                     sensitivity kernels, and target kernels. A perfectly ordinary
                     inverse problem. If this were a real application, this is
-                    where the analysis would begin — and, all too often, where
+                    where the analysis would begin, and, all too often, where
                     critical questions about interpretation would be set aside
                     in favour of producing numbers.</p>
 
@@ -250,8 +250,8 @@
                         uncertainty bands. Nothing about this plot screams disaster.</figcaption>
                     </figure>
 
-                    <p>If we were to stop here — and in many practical settings,
-                    this is exactly where the analysis stops — the conclusion
+                    <p>If we were to stop here, and in many practical settings,
+                    this is exactly where the analysis stops, the conclusion
                     would be that SOLA has performed well. The data look
                     reasonable. The resolving kernels look good. The uncertainty
                     bands are computed by the standard covariance propagation
@@ -270,7 +270,7 @@
                     it was designed to do: produce resolving kernels close to the
                     targets, with modest propagated uncertainty. The question
                     now is not whether SOLA worked. The question is what we
-                    <em>think</em> these numbers mean — and whether that belief
+                    <em>think</em> these numbers mean, and whether that belief
                     is justified.</p>
 
                     <h2>So What Do We Think?</h2>
@@ -287,7 +287,7 @@
                     and falls there. The SOLA estimates suggest certain values at
                     certain locations, and the uncertainty bands tell us how much
                     to trust each one. We might even start sketching a rough model
-                    in our heads — a profile that rises where the estimates rise,
+                    in our heads, a profile that rises where the estimates rise,
                     falls where they fall, and stays within the bounds where the
                     uncertainty is small.</p>
 
@@ -375,7 +375,7 @@
                     <p>At this point, one might object: <em>you picked a ridiculous
                     true model!</em></p>
 
-                    <p>And that is exactly the point. The model is ridiculous —
+                    <p>And that is exactly the point. The model is ridiculous,
                     but SOLA does not know that. SOLA makes no prior assumptions
                     about the model. It does not assume smoothness, boundedness,
                     or physical plausibility. The model fits the data. It
@@ -383,12 +383,12 @@
                     are quite nice. There is no internal contradiction anywhere
                     in the calculation. The only thing that makes the model
                     ridiculous is a belief that true models do not look like this
-                    — and that belief, however well-founded, is model-side
+                   , and that belief, however well-founded, is model-side
                     information that SOLA does not use.</p>
 
                     <p>This is not a trick or a pathology in the method. It is a
                     boundary. Least squares and least norm have well-known
-                    boundaries of this kind — everyone knows that least squares
+                    boundaries of this kind, everyone knows that least squares
                     is sensitive to outliers, that least norm says nothing about
                     models in the data nullspace. These limitations are not held
                     against those methods. They are understood, stated, and
@@ -399,9 +399,9 @@
 
                     <p>So let us be precise about what the objection is really
                     saying. If one believes that the true model cannot look like
-                    this — that models do not oscillate with amplitude
+                    this, that models do not oscillate with amplitude
                     \(2000\)
-                    — then one has model-side information. That belief is a
+                   , then one has model-side information. That belief is a
                     prior. It is potentially correct, but it should not be
                     silently smuggled into the interpretation.</p>
 
@@ -493,7 +493,7 @@
                     <h2>What to Take Away</h2>
 
                     <p>One might say: <em>fine, I will interpret my results
-                    through the resolving kernels, not the target kernels</em> —
+                    through the resolving kernels, not the target kernels</em>,
                     that is a legitimate position. SOLA does estimate the
                     resolving-kernel properties
                     \(\mathcal{A}(\bar m)\)
@@ -513,8 +513,8 @@
                     looks good does not, by itself, close that gap.</p>
 
                     <p>This is a boundary, not a failure. Least squares has known
-                    boundaries — sensitivity to outliers, sensitivity to
-                    ill-conditioning. Least norm has known boundaries —
+                    boundaries, sensitivity to outliers, sensitivity to
+                    ill-conditioning. Least norm has known boundaries,
                     nullspace invisibility, prior dependence. These boundaries
                     were once discoveries, found the hard way. They are now part
                     of the working knowledge of anyone who uses those methods.
@@ -528,7 +528,7 @@
                         target properties, we need additional model-side
                         information that rules out, or at least controls, the
                         dangerous invisible directions. Finding this boundary is
-                        not an attack on the method — it is the beginning of
+                        not an attack on the method, it is the beginning of
                         knowing where it can be trusted.</p>
                     </div>
 

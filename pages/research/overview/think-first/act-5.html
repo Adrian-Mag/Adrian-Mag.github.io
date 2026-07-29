@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act V: The Data Space and the Adjoint — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act V: The Data Space and the Adjoint | Think First, Discretize Later | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act V: The Data Space and the Adjoint — Think First, Discretize Later — Adrian Mag">
+    <meta property="og:title" content="Act V: The Data Space and the Adjoint, Think First, Discretize Later | Adrian Mag">
     <meta property="og:description" content="Act V of Think First, Discretize Later: The data space, the forward operator, and why the adjoint is not just a transpose.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/think-first/act-5.html">
@@ -282,7 +282,7 @@
                             preserveAspectRatio="xMidYMid meet"></svg>
                     </div>
                     <figcaption>
-                        <strong>F5d &mdash; The data ellipse.</strong>
+                        <strong>F5d, The data ellipse.</strong>
                         The noise covariance \(\Cd\) defines an ellipse in data
                         space. Its shape depends on the variances \(\sigma_1^2,
                         \sigma_2^2\) and the correlation \(\rho\). The misfit
@@ -379,7 +379,7 @@
                         <foreignObject x="375" y="253" width="330" height="20"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(\|\tilde r\|^2 = r^{\top} C_D^{-1} r\) (isotropic metric)</div></foreignObject>
                     </svg>
                     <figcaption>
-                        <strong>F5g &mdash; Whitening as coordinate change.</strong>
+                        <strong>F5g, Whitening as coordinate change.</strong>
                         In the original data space (left), the noise covariance
                         \(\Cd\) produces a tilted ellipse, and the misfit
                         \(r^{\T}\Cd^{-1}r\) is measured by an anisotropic metric.
@@ -542,7 +542,7 @@
                         <foreignObject x="430" y="228" width="220" height="22"><div xmlns="http://www.w3.org/1999/xhtml" class="tfdl-svg-math mini">\(\langle m, G^{*}d\rangle_{\mathcal{M}}\)</div></foreignObject>
                     </svg>
                     <figcaption>
-                        <strong>F5a &mdash; The adjoint is defined by a balance.</strong>
+                        <strong>F5a, The adjoint is defined by a balance.</strong>
                         The defining identity \(\inner{G m}{d}_{\D} = \inner{m}{G^{\adj} d}_{\M}\)
                         says: you can either push \(m\) forward into data space and
                         pair it with \(d\), or pull \(d\) back into model space and
@@ -633,7 +633,7 @@
                             <hr class="tfdl-compare-rule">
                             <div class="tfdl-compare-result">\(G^{\adj} = G^{\T}\)</div>
                             <div class="tfdl-compare-verdict">transpose = adjoint ✓</div>
-                            <div class="tfdl-compare-note">the coincidence of orthonormal worlds<br>useful — but dangerous to generalise</div>
+                            <div class="tfdl-compare-note">the coincidence of orthonormal worlds<br>useful, but dangerous to generalise</div>
                         </div>
                         <div class="tfdl-compare-col warn">
                             <div class="tfdl-compare-title">General geometry</div>
@@ -647,7 +647,7 @@
                         </div>
                     </div>
                     <figcaption>
-                        <strong>F5b &mdash; Transpose versus adjoint.</strong>
+                        <strong>F5b, Transpose versus adjoint.</strong>
                         In Euclidean coordinates with orthonormal bases (left), the
                         adjoint coincides with the transpose. In general geometry
                         (right), the adjoint acquires Gram matrix factors
@@ -673,7 +673,7 @@
                     </p>
                     <p>(In the finite element world the Gram matrix is the <em>mass
                     matrix</em>, and its role in transporting inner products to coefficient
-                    space is classical &mdash; see Brenner and Scott
+                    space is classical, see Brenner and Scott
                     <a href="#ref-bs08">[BS08]</a>.)</p>
                 </div>
 
@@ -718,7 +718,7 @@
                         </div>
                     </div>
                     <figcaption>
-                        <strong>F5c &mdash; The Gram matrix is geometry memory.</strong>
+                        <strong>F5c, The Gram matrix is geometry memory.</strong>
                         Three overlapping hat functions \(\phi_1, \phi_2, \phi_3\)
                         on an interval. The Gram matrix \(M_{ij} = \int \phi_i\phi_j\,dx\)
                         has nonzero off-diagonal entries because neighbouring hats
@@ -819,7 +819,7 @@
                     </div>
                     <div class="tfdl-adjoint-calc-warning" id="f5e-warning"></div>
                     <figcaption>
-                        <strong>F5e &mdash; Interactive adjoint calculator.</strong>
+                        <strong>F5e, Interactive adjoint calculator.</strong>
                         Choose the model Gram matrix \(\Mb\), the data Gram matrix
                         \(\Wb_D\), and the forward matrix \(\Gb\). The plot shows
                         the data vector \(d\) (orange) and two pullback arrows in
@@ -888,7 +888,7 @@
                         </table>
                     </div>
                     <figcaption>
-                        <strong>F5h &mdash; Translation table: function-space to discrete.</strong>
+                        <strong>F5h, Translation table: function-space to discrete.</strong>
                         The target is the operator formula on the left. The
                         discrete ingredients on the right are what enter a
                         computation. The adjoint \(G^{\adj}\) becomes
@@ -1010,7 +1010,7 @@
                         <text x="540" y="315" text-anchor="middle" fill="rgba(109,210,172,0.5)" font-size="9">residual pulled back respecting both geometries</text>
                     </svg>
                     <figcaption>
-                        <strong>F5f &mdash; Residual pullback: transpose vs. adjoint.</strong>
+                        <strong>F5f, Residual pullback: transpose vs. adjoint.</strong>
                         The residual \(r = \obs - G m\) lives in data space. Pulling it
                         back into model space via \(G^{\T}\) (left) ignores the Gram
                         matrices and pushes the update in the wrong direction. The
@@ -1127,7 +1127,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           F5c — Gram Matrix as Geometry Memory
+           F5c, Gram Matrix as Geometry Memory
            ═══════════════════════════════════════════════════════ */
         var f5cPlot = document.getElementById('f5c-plot');
         var f5cMatrix = document.getElementById('f5c-matrix');
@@ -1295,7 +1295,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           F5d — The Data Ellipse
+           F5d, The Data Ellipse
            ═══════════════════════════════════════════════════════ */
         var f5dPlot = document.getElementById('f5d-plot');
         var f5dS1 = document.getElementById('f5d-s1');
@@ -1388,7 +1388,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════
-           F5e — Interactive Adjoint Calculator
+           F5e, Interactive Adjoint Calculator
            ═══════════════════════════════════════════════════════ */
         var f5ePlot = document.getElementById('f5e-plot');
         var f5eM = document.getElementById('f5e-m');
@@ -1402,7 +1402,7 @@
                 var wType = f5eW.value;
                 var gType = f5eG.value;
 
-                /* Forward matrix G — determines K (data dim) and N (model dim) */
+                /* Forward matrix G, determines K (data dim) and N (model dim) */
                 var G;
                 if (gType === 'row') {
                     G = [[1, 0.5]];           /* K=1, N=2 */

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 5: The Conjugate Gradient Method — The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>Act 5: The Conjugate Gradient Method | The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -36,7 +36,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 5: The Conjugate Gradient Method — Adrian Mag">
+    <meta property="og:title" content="Act 5: The Conjugate Gradient Method | Adrian Mag">
     <meta property="og:description" content="Residuals as raw material, Krylov subspaces, the short-recurrence miracle, and the complete CG algorithm.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-5.html">
@@ -120,18 +120,18 @@
 
                     <p>Audit one step. It computes one operator application, \(Ap_k\), and from it
                     the new residual \(r_{k+1}\). That is the complete list. The residual is the
-                    only genuinely new vector each step yields &mdash; and it is a magnificent
+                    only genuinely new vector each step yields, and it is a magnificent
                     candidate, for two independent reasons:</p>
 
                     <ul>
-                        <li><strong>Locally, it is the best direction there is</strong> &mdash;
+                        <li><strong>Locally, it is the best direction there is:</strong>
                         the steepest descent direction (Act&nbsp;1). Using it honours the
                         landscape&rsquo;s advice.</li>
                         <li><strong>Globally, it always points into new territory.</strong> By the
                         expanding-subspace theorem (Act&nbsp;4),
                         \(r_{k}\) is orthogonal to <em>every direction searched so far</em>. A
-                        residual is never a rehash of old work: it is either zero &mdash; and we
-                        are done &mdash; or it carries a component the method has never
+                        residual is never a rehash of old work: it is either zero, and we
+                        are done, or it carries a component the method has never
                         explored.</li>
                     </ul>
 
@@ -146,7 +146,7 @@
                     term are already zero.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; this is the definition, verbatim</span>
+                        <span class="sola-callout-label">Remark: this is the definition, verbatim</span>
                         <p>This construction is not a modern retelling; it is how the inventors
                         themselves characterized their method. Theorem 5:2 of Hestenes and
                         Stiefel&rsquo;s 1952 paper <a href="#ref-hs52">[HS52]</a> reads:
@@ -167,7 +167,7 @@
                     data-concept-title="Krylov subspaces">Krylov subspace</span>
                     \[\Kry_k := \spanop\{r_0,\; Ar_0,\; A^2r_0,\; \dots,\; A^{k-1}r_0\}\]
                     (named for Aleksei N. Krylov, who used such spaces in 1931 to compute
-                    characteristic polynomials &mdash; for the lineage see the history in
+                    characteristic polynomials, for the lineage see the history in
                     <a href="#ref-go89">[GO89]</a>, and for the modern framework Saad
                     <a href="#ref-saa03">[Saa03]</a>, Ch.&nbsp;6).
                     More precisely, a two-line induction on the update formulas gives
@@ -180,7 +180,7 @@
                     orthogonal to all searched directions, and we get the single most useful fact
                     of the act:
                     \[\boxed{\;r_k \perp \Kry_k\;}\]
-                    &mdash; the current residual is orthogonal to the <em>entire</em> Krylov
+                   , the current residual is orthogonal to the <em>entire</em> Krylov
                     subspace built so far, not merely to a few chosen vectors. (In particular
                     \(\ip{r_k}{r_j}=0\) for all \(j&lt;k\): the residuals form an orthogonal
                     family. File that away; it is about to earn its keep twice.)</p>
@@ -207,7 +207,7 @@
                     \[\ipA{r_k}{p_j} = 0 \qquad\text{for every } j \le k-2.\]</p>
 
                     <p>Every term of the Gram&ndash;Schmidt sum vanishes except the most recent
-                    one. Not approximately, not by clever choice &mdash; by the structure of what
+                    one. Not approximately, not by clever choice, by the structure of what
                     the iteration is able to know. The infinite recipe collapses to
                     \[p_k = r_k + \beta_{k-1}\, p_{k-1},
                     \qquad
@@ -224,7 +224,7 @@
 
                     <h3>Polishing the formulas</h3>
 
-                    <p>What remains is bookkeeping &mdash; two classical simplifications that cost
+                    <p>What remains is bookkeeping, two classical simplifications that cost
                     nothing and are used by every implementation on earth. Both are one-liners
                     given the residual orthogonality we banked above.</p>
 
@@ -250,7 +250,7 @@
                     <h2>The Algorithm, Assembled</h2>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Algorithm &mdash; the conjugate gradient method</span>
+                        <span class="sola-callout-label">Algorithm: the conjugate gradient method</span>
                         <p>Choose \(u_0\in\H\); compute \(r_0 = f - Au_0\); set \(p_0 = r_0\).
                         For \(k = 0, 1, 2, \dots\):
                         \begin{align*}
@@ -264,24 +264,24 @@
                         Stop when \(\norm{r_{k+1}}\) is below tolerance.</p>
                         <p style="font-size:0.88rem; margin-top:0.5em;">(These are, up to
                         notation, formulas (3:1)&ndash;(3:2) of the original paper
-                        <a href="#ref-hs52">[HS52]</a> &mdash; seventy years on, nothing has
+                        <a href="#ref-hs52">[HS52]</a>, seventy years on, nothing has
                         changed.)</p>
                     </div>
 
                     <p>Take a moment to appreciate the ledger. Per iteration: <em>one</em>
                     application of \(A\), <em>two</em> inner products, <em>three</em> vector
-                    updates. Memory: four vectors (\(u\), \(r\), \(p\), \(q\)) &mdash; regardless
+                    updates. Memory: four vectors (\(u\), \(r\), \(p\), \(q\)), regardless
                     of dimension, including infinite. The method carries the entire optimality of
                     conjugate directions (permanent progress, expanding subspaces,
                     \(n\)-step termination in \(n\) dimensions) at essentially the price of
                     steepest descent.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; no matrix was harmed</span>
+                        <span class="sola-callout-label">Remark: no matrix was harmed</span>
                         <p>Scan the algorithm box once more: there is no basis, no matrix entry,
                         no coordinate, no mesh. Every operation is an inner product, a scaled
                         addition, or a call to the black box. The method as derived lives
-                        natively in the Hilbert space \(\H\) &mdash; \(\mathbb R^n\) is merely a
+                        natively in the Hilbert space \(\H\), \(\mathbb R^n\) is merely a
                         special case. What discretization does to this picture (and what it
                         cannot do) is Act&nbsp;6&rsquo;s closing theme.</p>
                     </div>
@@ -289,7 +289,7 @@
                     <h2>The Race</h2>
 
                     <p>Theory delivered; now the spectacle. Same landscape, same starting point,
-                    same cost per step &mdash; one exact line search each. The only difference:
+                    same cost per step, one exact line search each. The only difference:
                     gradient descent recycles the residual as its direction; CG spends one extra
                     axpy to conjugate it first.</p>
 
@@ -304,7 +304,7 @@
                     </div>
 
                     <p>Of course, in two dimensions CG&rsquo;s victory is guaranteed by
-                    Act&nbsp;4&rsquo;s termination theorem &mdash; two steps, always. The fair
+                    Act&nbsp;4&rsquo;s termination theorem, two steps, always. The fair
                     fight happens in high dimension, where <em>both</em> methods run far fewer
                     steps than \(n\) and quality of direction is everything:</p>
 
@@ -316,7 +316,7 @@
                         Gradient descent pays the full \(\kappa\) price; conjugate gradients
                         degrades only mildly as \(\kappa\) grows from 25 to 400. And note the
                         annotated coincidence-that-isn&rsquo;t: CG on the \(\kappa=400\) problem
-                        keeps pace with gradient descent on the \(\kappa=25\) one &mdash;
+                        keeps pace with gradient descent on the \(\kappa=25\) one,
                         \(\kappa\) has effectively been square-rooted. The next act proves
                         exactly that.</figcaption>
                     </figure>
@@ -331,7 +331,7 @@
 
                     <p>One question remains, and it elevates the method from excellent to
                     canonical. We chose residuals as raw material because they were available.
-                    Could a cleverer choice &mdash; any choice &mdash; do better? Act&nbsp;6
+                    Could a cleverer choice, any choice, do better? Act&nbsp;6
                     proves the answer is <em>no</em>: among all methods that consume the same
                     black-box information, CG is optimal, every step, in the energy norm. And the
                     same lens will finally explain the \(\sqrt{\kappa}\) in its celebrated
@@ -420,7 +420,7 @@
             <span class="meaning">A black-box iteration can only combine what it has: it starts
             with \(r_0\), and each step may apply \(A\) once. After \(k\) steps, everything
             constructible is a linear combination of \(r_0, Ar_0, \dots, A^{k-1}r_0\). The
-            Krylov subspace is not a design choice &mdash; it is the reachable set.</span>
+            Krylov subspace is not a design choice, it is the reachable set.</span>
         </div>
         <div class="concept-notation-row">
             <span class="sym">how it grows</span>
@@ -428,7 +428,7 @@
             at most one dimension: \(A\Kry_k \subseteq \Kry_{k+1}\). Generically
             \(\dim \Kry_k = k\); if the dimension ever stalls
             (\(\Kry_{k+1}=\Kry_k\)), one can show the exact solution already lies in
-            \(u_0+\Kry_k\) &mdash; stalling is winning.</span>
+            \(u_0+\Kry_k\), stalling is winning.</span>
         </div>
         <div class="concept-notation-row">
             <span class="sym">polynomial view</span>

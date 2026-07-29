@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=38">
-    <meta name="description" content="Steering by Text — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="Steering by Text, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Steering by Text - Adrian Mag">
-    <meta property="og:description" content="Steering by Text — part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="Steering by Text, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -329,8 +329,8 @@ Plan records and their lifecycle rules live under
 `docs/agent-docs/plans/`. Read `docs/agent-docs/plans/PROTOCOL.md` before
 creating, revising, completing, or archiving a substantial-work plan.
 
-- `docs/agent-docs/plans/active/` — current plans being worked on
-- `docs/agent-docs/plans/completed/` — archived plans and phase-completion records
+- `docs/agent-docs/plans/active/`, current plans being worked on
+- `docs/agent-docs/plans/completed/`, archived plans and phase-completion records
 
 ## Reference Documents
 
@@ -374,7 +374,7 @@ See `docs/agent-docs/COMMIT_CONVENTION.md` for the full commit message format. A
 
 ## Environment
 
-The **served site** has no build step, no package manager, and no bundler — validate page/CSS changes by opening the HTML in a browser. The **figure-generation pipeline** (`figure_generation/`) is separate: it is Python, runs offline on demand through the `inferences` conda environment, writes assets into `media/`, and has its own pytest suite. It is never part of the deployed site.
+The **served site** has no build step, no package manager, and no bundler, validate page/CSS changes by opening the HTML in a browser. The **figure-generation pipeline** (`figure_generation/`) is separate: it is Python, runs offline on demand through the `inferences` conda environment, writes assets into `media/`, and has its own pytest suite. It is never part of the deployed site.
 
 One small offline step feeds the site: the client-side search (`pages/search.html`) reads a pre-built index at `media/search-index.json`. After editing any notes page, regenerate it with `python3 tools/build_search_index.py` (stdlib only, no conda env needed) and commit the refreshed JSON alongside the content change.
 

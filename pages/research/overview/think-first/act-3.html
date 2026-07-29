@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act III: What Problem Are We Actually Solving? — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act III: What Problem Are We Actually Solving? | Think First, Discretize Later | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act III: What Problem Are We Actually Solving? — Think First, Discretize Later — Adrian Mag">
+    <meta property="og:title" content="Act III: What Problem Are We Actually Solving?, Think First, Discretize Later | Adrian Mag">
     <meta property="og:description" content="Act III of Think First, Discretize Later: Stepping back to define the function-space inverse problem before discretizing.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/think-first/act-3.html">
@@ -203,7 +203,7 @@
                         <text x="540" y="138" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9">η</text>
                     </svg>
                     <figcaption>
-                        <strong>F3a &mdash; Where does everything live?</strong>
+                        <strong>F3a, Where does everything live?</strong>
                         The model \(m\) lives in a function space \(\M\). The data
                         \(\obs\) live in a finite-dimensional space \(\D=\R^{N_d}\).
                         The forward map \(G:\M\to\D\) connects them. The prior
@@ -390,7 +390,7 @@
 
                 <div class="tfdl-interactive">
                     <div class="tfdl-interactive-header">
-                        <strong>F3e &mdash; Choose your modelling ingredients.</strong>
+                        <strong>F3e, Choose your modelling ingredients.</strong>
                         Try different combinations. The coherence report checks
                         whether the choices are mathematically compatible.
                     </div>
@@ -398,9 +398,9 @@
                         <div class="tfdl-ingredient-card">
                             <label for="f3e-model-space">Model space M</label>
                             <select id="f3e-model-space">
-                                <option value="l2">L²(Ω) — square-integrable</option>
-                                <option value="h1">H¹(Ω) — one weak derivative</option>
-                                <option value="h2">H²(Ω) — two weak derivatives</option>
+                                <option value="l2">L²(Ω), square-integrable</option>
+                                <option value="h1">H¹(Ω), one weak derivative</option>
+                                <option value="h2">H²(Ω), two weak derivatives</option>
                             </select>
                         </div>
                         <div class="tfdl-ingredient-card">
@@ -712,15 +712,15 @@
                         <text x="150" y="273" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="9">rough</text>
 
                         <!-- Function family: smooth (top, high weight) → rough (bottom, low weight) -->
-                        <!-- f1: very smooth — high prior weight (thick, dark mako) -->
+                        <!-- f1: very smooth, high prior weight (thick, dark mako) -->
                         <path d="M 30 130 Q 90 110, 165 120 T 300 125" fill="none" stroke="rgba(64,63,128,0.85)" stroke-width="2.5"/>
-                        <!-- f2: smooth — medium-high weight -->
+                        <!-- f2: smooth, medium-high weight -->
                         <path d="M 30 145 Q 80 120, 130 135 Q 180 150, 230 130 T 300 140" fill="none" stroke="rgba(57,93,155,0.6)" stroke-width="2"/>
-                        <!-- f3: moderate — medium weight -->
+                        <!-- f3: moderate, medium weight -->
                         <path d="M 30 160 Q 70 130, 110 155 Q 150 180, 190 150 Q 230 125, 270 165 T 300 155" fill="none" stroke="rgba(52,122,162,0.45)" stroke-width="1.5"/>
-                        <!-- f4: rough — low weight -->
+                        <!-- f4: rough, low weight -->
                         <path d="M 30 175 Q 60 145, 90 175 Q 120 200, 150 165 Q 180 140, 210 180 Q 240 210, 270 160 T 300 175" fill="none" stroke="rgba(52,150,169,0.3)" stroke-width="1.2"/>
-                        <!-- f5: very rough — very low weight -->
+                        <!-- f5: very rough, very low weight -->
                         <path d="M 30 195 Q 55 160, 80 200 Q 105 230, 130 185 Q 155 150, 180 205 Q 205 235, 230 180 Q 255 145, 280 200 T 300 190" fill="none" stroke="rgba(61,179,172,0.18)" stroke-width="1"/>
 
                         <!-- m0 -->
@@ -747,15 +747,15 @@
                         <text x="540" y="273" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="9">rough</text>
 
                         <!-- Same functions, but weights flipped: rough now prominent -->
-                        <!-- f1: very smooth — now low weight -->
+                        <!-- f1: very smooth, now low weight -->
                         <path d="M 420 130 Q 480 110, 555 120 T 690 125" fill="none" stroke="rgba(64,63,128,0.18)" stroke-width="1"/>
-                        <!-- f2: smooth — now low-medium weight -->
+                        <!-- f2: smooth, now low-medium weight -->
                         <path d="M 420 145 Q 470 120, 520 135 Q 570 150, 620 130 T 690 140" fill="none" stroke="rgba(57,93,155,0.3)" stroke-width="1.2"/>
-                        <!-- f3: moderate — now medium weight -->
+                        <!-- f3: moderate, now medium weight -->
                         <path d="M 420 160 Q 460 130, 500 155 Q 540 180, 580 150 Q 620 125, 660 165 T 690 155" fill="none" stroke="rgba(52,122,162,0.45)" stroke-width="1.5"/>
-                        <!-- f4: rough — now high weight -->
+                        <!-- f4: rough, now high weight -->
                         <path d="M 420 175 Q 450 145, 480 175 Q 510 200, 540 165 Q 570 140, 600 180 Q 630 210, 660 160 T 690 175" fill="none" stroke="rgba(52,150,169,0.6)" stroke-width="2"/>
-                        <!-- f5: very rough — now highest weight -->
+                        <!-- f5: very rough, now highest weight -->
                         <path d="M 420 195 Q 445 160, 470 200 Q 495 230, 520 185 Q 545 150, 570 205 Q 595 235, 620 180 Q 645 145, 670 200 T 690 190" fill="none" stroke="rgba(61,179,172,0.85)" stroke-width="2.5"/>
 
                         <!-- Posterior mean (shifted toward rougher) -->
@@ -763,11 +763,11 @@
                         <text x="690" y="165" text-anchor="end" fill="rgba(116,198,157,0.7)" font-size="9">posterior mean</text>
                     </svg>
                     <figcaption>
-                        <strong>F3c &mdash; The posterior as reweighting.</strong>
+                        <strong>F3c, The posterior as reweighting.</strong>
                         The prior (left) assigns higher probability to smoother
                         functions. The posterior (right) contains the
-                        <em>same</em> family of functions &mdash; none are
-                        filtered out &mdash; but the weights have shifted.
+                        <em>same</em> family of functions, none are
+                        filtered out, but the weights have shifted.
                         Rougher functions, which fit the data better, now carry
                         more probability mass. The posterior is not a new set
                         of models; it is the prior reweighted by the likelihood.
@@ -901,10 +901,10 @@
                         <line x1="360" y1="15" x2="360" y2="330" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4"/>
                     </svg>
                     <figcaption>
-                        <strong>F3b &mdash; The wrong order versus the right order.</strong>
+                        <strong>F3b, The wrong order versus the right order.</strong>
                         Left: the naive route starts with a mesh and builds upward,
                         but the matrix prior has no continuous object to approximate
-                        &mdash; the chain is broken. Right: the function-space route
+                       , the chain is broken. Right: the function-space route
                         formulates the problem first, then discretizes. The discrete
                         posterior approximates a target that already exists.
                     </figcaption>
@@ -1111,7 +1111,7 @@
                         <ellipse cx="620" cy="100" rx="40" ry="30" fill="rgba(116,198,157,0.08)" stroke="rgba(116,198,157,0.3)" stroke-width="1"/>
                         <text x="620" y="103" text-anchor="middle" fill="rgba(116,198,157,0.7)" font-size="10">μ^d̃</text>
                         <text x="620" y="118" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8">unique</text>
-                        <text x="540" y="155" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">not a unique model — a unique distribution</text>
+                        <text x="540" y="155" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">not a unique model, a unique distribution</text>
 
                         <!-- Panel 3: Stability -->
                         <rect x="10" y="190" width="340" height="160" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
@@ -1154,7 +1154,7 @@
                         <text x="540" y="340" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">discrete posteriors approach the target</text>
                     </svg>
                     <figcaption>
-                        <strong>F3d &mdash; Well-posedness, Bayesian style.</strong>
+                        <strong>F3d, Well-posedness, Bayesian style.</strong>
                         Existence: the normalizing constant \(Z(\obs)\) is finite and
                         positive. Uniqueness: the inputs \(\M, \D, G, \Cd, \prior\)
                         determine one posterior measure. Stability: nearby data

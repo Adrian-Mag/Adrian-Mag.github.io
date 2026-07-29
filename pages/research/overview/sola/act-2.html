@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag</title>
+    <title>Act 2: Building SOLA from Scratch | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -42,7 +42,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 2: Building SOLA from Scratch — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 2: Building SOLA from Scratch, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 2 of My Take on SOLA: The resolving kernel, the span limitation, the noiseless unconstrained SOLA problem, and the normal equation.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-2.html">
@@ -179,7 +179,7 @@
 
                     <p>The kernel
                     \[R(r) := \sum_{i=1}^{N_d}x_iK_i(r)\]
-                    is called the resolving kernel associated with the weights \(\mathbf x\). This object is the heart of the whole tradition: Backus and Gilbert built their method around it under the name <em>averaging kernel</em> <a href="#ref-bg68">[BG68]</a>, and the subtractive variant we are constructing &mdash; SOLA &mdash; kept the object and changed how the weights are found <a href="#ref-pt94">[PT94]</a>.</p>
+                    is called the resolving kernel associated with the weights \(\mathbf x\). This object is the heart of the whole tradition: Backus and Gilbert built their method around it under the name <em>averaging kernel</em> <a href="#ref-bg68">[BG68]</a>, and the subtractive variant we are constructing, SOLA, kept the object and changed how the weights are found <a href="#ref-pt94">[PT94]</a>.</p>
 
                     <p>With this notation, the weighted data sum becomes
                     \[\sum_{i=1}^{N_d}x_i [\mathbf d]_i = \int_\Omega R(r)m(r)\dd r.\]
@@ -329,7 +329,7 @@
                     target kernel.</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; A small functional-analytic caveat</span>
+                        <span class="sola-callout-label">Remark: A small functional-analytic caveat</span>
                         <p>In a fully careful treatment, the sensitivity kernels and target kernels
                         should be placed in the correct dual or Riesz-represented Hilbert setting.
                         As noted in Act 1, the physical integral kernel \(K_i(r)\) and the Riesz
@@ -401,7 +401,7 @@
                     </span>
 
                     <p>(Matching the resolving kernel to a chosen target by least squares is
-                    SOLA&rsquo;s defining move &mdash; it is how Pijpers and Thompson introduce
+                    SOLA&rsquo;s defining move, it is how Pijpers and Thompson introduce
                     the method <a href="#ref-pt94">[PT94]</a>, Sect.&nbsp;2. The operator form
                     used throughout these notes follows our SOLA&ndash;DLI framework
                     <a href="#ref-mkz25">[MKZ25]</a>.)</p>
@@ -434,14 +434,14 @@
                     <h3>The normal equation</h3>
 
                     <div class="sola-callout callout-warning">
-                        <span class="sola-callout-label">Warning &mdash; operator algebra ahead</span>
+                        <span class="sola-callout-label">Warning: operator algebra ahead</span>
                         <p>The next derivation works with whole operators at once: we perturb
                         \(\mathbf X\), expand a Hilbert&ndash;Schmidt norm, and move an adjoint
-                        around. Buckle up &mdash; but if the manipulations feel opaque, do not stall
+                        around. Buckle up, but if the manipulations feel opaque, do not stall
                         here. Skim to the punchline,
                         \[\mathbf X_0 = \Tau G^*(GG^*)^{-1},\]
                         and carry away one idea: all those integrals and sums repackage into a few
-                        lines of operator notation. That compression is not just cosmetic &mdash;
+                        lines of operator notation. That compression is not just cosmetic,
                         the same picture generalizes far beyond this setting, and it will come in
                         handy repeatedly later in the series. Nothing that follows requires you to
                         reproduce this derivation yourself.</p>
@@ -470,7 +470,7 @@
                     \[\mathbf X_0 = \Tau G^*(GG^*)^{-1}.\]</p>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; What is \(GG^*\)?</span>
+                        <span class="sola-callout-label">Remark: What is \(GG^*\)?</span>
                         <p>The operator \(G^*:\D\to\M\) maps data-space vectors back into the model
                         space. The composition
                         \[GG^*:\D\to\D\]
@@ -603,13 +603,13 @@
         No symbol ever does double duty, and you can always tell a container from its contents at a
         glance.</p>
         <p><strong>Second, the two vectors on this page have different biographies.</strong> The
-        weights arrived as scalars first &mdash; one \(x_i\) per datum &mdash; and were only then
+        weights arrived as scalars first, one \(x_i\) per datum, and were only then
         collected into \(\mathbf x\); the equation \([\mathbf x]_i = x_i\) simply records that
         the collection contains what we started from. The data went the other way: \(\mathbf d\)
         was born a vector, so its entries are only ever reached by extraction, \([\mathbf d]_i\).
         The notation is tracking that history.</p>
         <p style="margin-bottom:0;">If you still find the brackets fussy, read \([\mathbf x]_i\)
-        as \(x_i\) everywhere &mdash; nothing downstream will break. I just prefer notation that
+        as \(x_i\) everywhere, nothing downstream will break. I just prefer notation that
         never blurs the line between a vector and its entries.</p>
     </template>
 
@@ -618,24 +618,24 @@
         Hilbert&ndash;Schmidt norm is just the Frobenius norm: unroll the matrix into one long vector
         and take the ordinary Euclidean length,
         \[\|\mathbf A\|_{\HS}^2 = \sum_{k,i} [\mathbf A]_{ki}^2.\]
-        Nothing exotic &mdash; it treats the matrix as a list of numbers.</p>
+        Nothing exotic, it treats the matrix as a list of numbers.</p>
         <p><strong>Now let the columns become functions.</strong> The object
         \(\Tau-\mathbf XG\) maps a model to \(N_p\) numbers, and its \(k\)th component is
         represented by the residual kernel \(T_k - R_k\), where
         \(R_k = \sum_i [\mathbf X]_{ki}K_i\) is the \(k\)th resolving kernel. The
-        Hilbert&ndash;Schmidt norm does exactly what Frobenius did &mdash; sum the squared sizes of
-        the rows &mdash; except each &ldquo;row&rdquo; is now a function, measured in the model-space
+        Hilbert&ndash;Schmidt norm does exactly what Frobenius did, sum the squared sizes of
+        the rows, except each &ldquo;row&rdquo; is now a function, measured in the model-space
         norm:
         \[\left\|\Tau-\mathbf XG\right\|_{\HS}^2 = \sum_{k=1}^{N_p}\left\|T_k - R_k\right\|_{\M}^2
         = \sum_{k=1}^{N_p}\int_\Omega \bigl(T_k(r)-R_k(r)\bigr)^2\,\dd r.\]</p>
         <p><strong>Why it is the right yardstick here.</strong> It treats every target kernel
         equally, and the sum decouples: minimizing over \(\mathbf X\) row by row is \(N_p\)
         independent copies of the scalar problem from earlier in this act. The operator problem is
-        the scalar problem run in parallel &mdash; which is exactly the point of the checkpoint
+        the scalar problem run in parallel, which is exactly the point of the checkpoint
         below the equation.</p>
         <p style="margin-bottom:0;">For the general definition: for an operator \(A\) between
         Hilbert spaces, \(\|A\|_{\HS}^2 = \sum_j \|Ae_j\|^2\) over any orthonormal basis
-        \(\{e_j\}\) &mdash; the value does not depend on which basis you pick, which is what
+        \(\{e_j\}\), the value does not depend on which basis you pick, which is what
         makes it a legitimate norm on operators rather than an artifact of coordinates.</p>
     </template>
 </body>

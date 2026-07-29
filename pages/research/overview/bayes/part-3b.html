@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Part 3b: Conditioning and Its Limits — Bayes, Measure-Theoretically — Adrian Mag</title>
+    <title>Part 3b: Conditioning and Its Limits | Bayes, Measure-Theoretically | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/bayes-measure-theoretically.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Part 3b: Conditioning and Its Limits — Bayes, Measure-Theoretically — Adrian Mag">
+    <meta property="og:title" content="Part 3b: Conditioning and Its Limits, Bayes, Measure-Theoretically | Adrian Mag">
     <meta property="og:description" content="Part 3b of Bayes, Measure-Theoretically: Conditioning works on positive-probability events, but breaks down for zero-probability events. The Borel-Kolmogorov paradox and how sigma-algebra conditioning addresses it up to null sets.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/bayes/part-3b.html">
@@ -113,7 +113,7 @@
 
                     <p>In <a href="part-3a.html">Part&nbsp;3a</a>, we saw why probability must be
                     assigned to events rather than individual outcomes. Now we turn to
-                    <em>conditioning</em> &mdash; the operation that updates our beliefs in light of
+                    <em>conditioning</em>, the operation that updates our beliefs in light of
                     observed data.</p>
 
                     <p>Conditioning is what Bayesian inference <em>is</em>. The posterior is a
@@ -134,7 +134,7 @@
 
                     <p>Concretely, from Part&nbsp;2 we know the joint probabilities. One point of
                     care: the event \(\{00\}\) lives in the model space \(\M\), while \(\{0\}\)
-                    lives in the data space \(\D\) &mdash; they are subsets of <em>different</em>
+                    lives in the data space \(\D\), they are subsets of <em>different</em>
                     spaces, so writing \(\{00\}\cap\{0\}\) would be ill-typed. The joint event
                     &ldquo;\(M=00\) and \(D=0\)&rdquo; lives in the <em>product space</em>
                     \(\M\times\D\), where the joint measure \(\Pi\) assigns:</p>
@@ -167,7 +167,7 @@
                             automatic: even a finite space can contain events of probability zero,
                             and the ratio is undefined for those. What discreteness buys you in
                             practice is that the data values you actually observe have positive
-                            probability &mdash; so the elementary ratio never lets you down.
+                            probability, so the elementary ratio never lets you down.
                         </p>
                     </div>
 
@@ -176,7 +176,7 @@
                     <p>Now imagine a variant of the switch problem where the reporter outputs a
                     real-valued measurement \(d\in\mathbb{R}\) rather than a binary report.
                     Assume the predictive data measure \(\muD\) is absolutely continuous with
-                    respect to Lebesgue measure, so it has a density &mdash; a smooth curve over
+                    respect to Lebesgue measure, so it has a density, a smooth curve over
                     the real line. (A real-valued observable need not have a density in general:
                     its distribution can have atoms or even a singular continuous part. We assume
                     a density here because it is the case that exhibits the difficulty most
@@ -200,7 +200,7 @@
                             </defs>
                             <!-- Continuous density curve -->
                             <path d="M 50 150 Q 120 40 200 80 Q 280 120 350 50 Q 420 90 500 140 Q 540 155 570 150" fill="none" stroke="rgba(244,162,89,0.5)" stroke-width="2"/>
-                            <!-- Shaded region [0.3, 0.7] — clipped to area under curve -->
+                            <!-- Shaded region [0.3, 0.7], clipped to area under curve -->
                             <rect x="180" y="0" width="160" height="150" fill="rgba(244,162,89,0.15)" clip-path="url(#curveClipF3b1)"/>
                             <!-- Interval boundaries -->
                             <line x1="180" y1="150" x2="180" y2="72" stroke="rgba(244,162,89,0.6)" stroke-width="1.5" stroke-dasharray="3,2"/>
@@ -215,7 +215,7 @@
                             <text x="260" y="135" text-anchor="middle" fill="rgba(120,180,120,0.7)" font-size="10">&#956;_D(B) &gt; 0 &#10003;</text>
                         </svg>
                         <figcaption>
-                            <strong>F3b-1 &mdash; Conditioning on a positive-measure region.</strong>
+                            <strong>F3b-1, Conditioning on a positive-measure region.</strong>
                             When the conditioning set \(B\) has positive probability mass,
                             &ldquo;restrict and renormalize&rdquo; works perfectly, even in
                             continuous spaces.
@@ -242,8 +242,8 @@
                         <p>
                             Conditioning on events only works when the conditioning event has
                             positive probability. As soon as we try to condition on a set that is
-                            &ldquo;too small&rdquo; &mdash; a single point in a continuous space
-                            &mdash; the idea of &ldquo;restrict and renormalize&rdquo; collapses.
+                            &ldquo;too small&rdquo;, a single point in a continuous space
+                           , the idea of &ldquo;restrict and renormalize&rdquo; collapses.
                             There is no mass to renormalize.
                         </p>
                     </div>
@@ -261,11 +261,11 @@
                             <text x="300" y="175" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">d</text>
                             <!-- Label -->
                             <text x="510" y="55" text-anchor="middle" fill="rgba(200,120,80,0.8)" font-size="12" font-weight="600">&#956;_D({d_obs}) = 0</text>
-                            <text x="510" y="72" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="11">0/0 &mdash; cannot divide</text>
+                            <text x="510" y="72" text-anchor="middle" fill="rgba(200,120,80,0.7)" font-size="11">0/0, cannot divide</text>
                             <text x="510" y="88" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">the ratio formula breaks</text>
                         </svg>
                         <figcaption>
-                            <strong>F3b-2 &mdash; The breakdown.</strong> In a continuous data
+                            <strong>F3b-2, The breakdown.</strong> In a continuous data
                             space, the observed value \(d_{\mathrm{obs}}\) has zero predictive
                             probability. The ratio formula produces \(0/0\), and conditioning on
                             events fails.
@@ -282,15 +282,15 @@
                     d_{\mathrm{obs}}+\varepsilon]\) works perfectly well for every
                     \(\varepsilon>0\). So why not take the limit \(\varepsilon\to 0\)?</p>
 
-                    <p>This instinct is reasonable &mdash; but it hides a subtle trap.
+                    <p>This instinct is reasonable, but it hides a subtle trap.
                     <em>Different ways of shrinking</em> toward the point can lead to
                     <em>different</em> limiting answers.</p>
 
                     <p>To see this concretely, consider a two-dimensional example. Suppose the
                     hidden state is \((m_1,m_2)\in\mathbb{R}^2\) with a smooth joint density
                     \(\rho(m_1,m_2)\), and we want to condition on \(m_1=2\). The set
-                    \(S=\{(m_1,m_2):m_1=2\}\) is a vertical line &mdash; a one-dimensional object
-                    in a two-dimensional space &mdash; and has zero probability.</p>
+                    \(S=\{(m_1,m_2):m_1=2\}\) is a vertical line, a one-dimensional object
+                    in a two-dimensional space, and has zero probability.</p>
 
                     <p><strong>First approach: vertical strips.</strong> Condition on
                     \(m_1\in[2-\varepsilon, 2+\varepsilon]\) and let \(\varepsilon\to 0\). This
@@ -344,7 +344,7 @@
                         </p>
                         <p>
                             The factor \(2\varepsilon\) cancels, but the \(|m_2|\) factor
-                            <em>remains</em> &mdash; it depends on the integration variable and
+                            <em>remains</em>, it depends on the integration variable and
                             does not cancel:
                         </p>
                         <p>
@@ -354,8 +354,8 @@
 
                     <p>These are <em>different</em> probability measures on the same line. Both
                     limits condition on the same measure-zero set, yet they produce different
-                    answers. The result depends on <em>how</em> the limit is taken &mdash; on the
-                    geometry of the shrinking sets &mdash; and probability theory alone does not
+                    answers. The result depends on <em>how</em> the limit is taken, on the
+                    geometry of the shrinking sets, and probability theory alone does not
                     specify which geometry to use.</p>
 
                     <p>This is the <strong>Borel&ndash;Kolmogorov (BK) paradox</strong>: the
@@ -409,7 +409,7 @@
                             <text x="450" y="210" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">limit &#8594; density &#8733; |m&#8322;| &#961;(2, m&#8322;)</text>
                         </svg>
                         <figcaption>
-                            <strong>F3b-3 &mdash; The Borel&ndash;Kolmogorov paradox.</strong>
+                            <strong>F3b-3, The Borel&ndash;Kolmogorov paradox.</strong>
                             Two different families of shrinking sets (vertical strips vs.\ tilted
                             tubes) both collapse onto the line \(m_1=2\), but they produce
                             <em>different</em> conditional distributions. The conditional on a
@@ -425,7 +425,7 @@
 
                     <p>No. The resolution is that a Bayesian inverse problem provides us with
                     <em>more structure</em> than just &ldquo;a set of measure zero.&rdquo; It
-                    provides us with a <em>random variable</em> \(D\) &mdash; the data &mdash;
+                    provides us with a <em>random variable</em> \(D\), the data,
                     and conditioning on \(D\) (via its &sigma;-algebra) gives a canonical answer
                     that does not depend on any arbitrary geometric choice.</p>
 
@@ -442,7 +442,7 @@
                             \(\muD\)-null sets</em>: it is determined for \(\muD\)-almost every
                             data value, with no geometric choices required. What it does
                             <em>not</em> do is single out a value at one specific
-                            probability-zero datum &mdash; evaluating there requires choosing a
+                            probability-zero datum, evaluating there requires choosing a
                             regular version of the conditional, a point we return to carefully in
                             Parts&nbsp;3c and 3d.
                         </p>
@@ -450,7 +450,7 @@
 
                     <p>In the switch problem, this distinction is invisible because the data space
                     is finite and every point has positive probability. But the machinery we build
-                    now &mdash; conditioning on &sigma;-algebras &mdash; is exactly what will
+                    now, conditioning on &sigma;-algebras, is exactly what will
                     make the continuous case work.</p>
 
                     <p>In <a href="part-3c.html">Part&nbsp;3c</a> through
@@ -463,18 +463,18 @@
                         from conditioning on \(\sigma(D)\).</li>
                         <li>Revisit the Borel&ndash;Kolmogorov paradox: conditioning via
                         &sigma;-algebras is canonical up to null sets, while ad hoc geometric
-                        limits are not canonical at all &mdash; and see exactly what is and is
+                        limits are not canonical at all, and see exactly what is and is
                         not pinned down at a single null datum.</li>
                         <li>Bundle eventwise conditional probabilities into conditional
                         probability measures via disintegration.</li>
                         <li>Derive Bayes' formula as the equality of two disintegrations of the
-                        same joint law &mdash; not as a postulate.</li>
+                        same joint law, not as a postulate.</li>
                         <li>Apply the integral Bayes formula back to the finite switch problem,
                         bringing everything full circle.</li>
                         <li>See that the posterior kernel is well-defined for
                         \(\muD\)-almost every datum even when individual data values have
                         probability zero, because it is constructed by disintegration, not by
-                        dividing by point probabilities &mdash; and see what extra regularity is
+                        dividing by point probabilities, and see what extra regularity is
                         needed to evaluate it at one specific datum.</li>
                     </ul>
 

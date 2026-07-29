@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act VII: The Repair — Think First, Discretize Later — Adrian Mag</title>
+    <title>Act VII: The Repair | Think First, Discretize Later | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/think-first-discretize-later.css?v=38">
@@ -33,7 +33,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act VII: The Repair — Think First, Discretize Later — Adrian Mag">
+    <meta property="og:title" content="Act VII: The Repair, Think First, Discretize Later | Adrian Mag">
     <meta property="og:description" content="Act VII of Think First, Discretize Later: Assembling the function-space Bayesian inverse problem and discretizing after formulation.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/think-first/act-7.html">
@@ -84,7 +84,7 @@
             <div class="page-header-bg" data-hero="think-first" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/hero-nebula.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Act VII: The Repair</h1>
-                <p>The corrected computation on the same toy problem &mdash; and why the pathologies melt away.</p>
+                <p>The corrected computation on the same toy problem, and why the pathologies melt away.</p>
                 <p class="tfdl-supp">
                     Part of <a href="think-first-discretize-later.html">Think First, Discretize Later</a>.
                 </p>
@@ -141,12 +141,12 @@
                 <!-- F7a: Corrected prior samples -->
 
                 <div class="tfdl-section-heading">
-                    <h3>F7a &mdash; The corrected prior</h3>
+                    <h3>F7a, The corrected prior</h3>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
-                        In Act I, the prior was \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\) &mdash; a
+                        In Act I, the prior was \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\), a
                         diagonal matrix invented at each resolution. Now the prior comes
                         from a covariance operator:
                         \[ C_0 = \alpha(\kappa^2 I - \Delta)^{-s}, \]
@@ -157,7 +157,7 @@
                         discretizing a covariance operator. The eigenvalue spectrum tells
                         the difference immediately: the naive spectrum is flat
                         (\(\sigma^2\) in every direction), while the Bessel spectrum
-                        decays &mdash; ensuring \(\Tr(C_0) < \infty\).
+                        decays, ensuring \(\Tr(C_0) < \infty\).
                     </p>
                 </div>
 
@@ -165,11 +165,11 @@
                     <img data-themed="1" src="../../../../media/research/think-first/fig7a_corrected_prior.png"
                          alt="Naive vs Bessel prior samples with eigenvalue decay">
                     <figcaption>
-                        <strong>F7a &mdash; The corrected prior on the same basis.</strong>
+                        <strong>F7a, The corrected prior on the same basis.</strong>
                         Left: naive prior samples from \(\mathbf{C}_N = \sigma^2 \mathbf{I}_N\)
-                        &mdash; uncorrelated, same variance in every direction. Right:
+                       , uncorrelated, same variance in every direction. Right:
                         samples from \(C_{0,N} \approx \alpha(\kappa^2 I - \Delta)^{-s}\)
-                        &mdash; smooth, correlated, with variance concentrated in low
+                       , smooth, correlated, with variance concentrated in low
                         modes. Bottom: eigenvalue spectra. The naive spectrum is flat;
                         the Bessel spectrum decays, ensuring \(\Tr(C_0) < \infty\).
                     </figcaption>
@@ -178,7 +178,7 @@
                 <!-- F7b: Corrected posterior samples -->
 
                 <div class="tfdl-section-heading">
-                    <h3>F7b &mdash; The corrected posterior samples</h3>
+                    <h3>F7b, The corrected posterior samples</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -199,7 +199,7 @@
                     <img data-themed="1" src="../../../../media/research/think-first/fig7b_corrected_posterior_samples.png"
                          alt="Corrected posterior samples with mean and ±1σ band">
                     <figcaption>
-                        <strong>F7b &mdash; The corrected posterior: the cloud is controlled.</strong>
+                        <strong>F7b, The corrected posterior: the cloud is controlled.</strong>
                         True model (orange), posterior mean (green), posterior samples
                         (light curves), and \(\pm 1\sigma\) band (green fill). Compare
                         with F2b: the mean still tracks the truth, but the samples no
@@ -220,7 +220,7 @@
                 <!-- F7c: Corrected refinement slider -->
 
                 <div class="tfdl-section-heading">
-                    <h3>F7c &mdash; Corrected refinement: the uncertainty settles</h3>
+                    <h3>F7c, Corrected refinement: the uncertainty settles</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -238,10 +238,10 @@
 
                 <div class="tfdl-interactive">
                     <div class="tfdl-interactive-header">
-                        <strong>F7c &mdash; Corrected refinement slider.</strong>
+                        <strong>F7c, Corrected refinement slider.</strong>
                         Drag the slider to change the number of basis functions \(N\).
                         The posterior mean barely moves, and the uncertainty band
-                        <em>stays controlled</em> &mdash; the posterior converges.
+                        <em>stays controlled</em>, the posterior converges.
                     </div>
                     <div class="tfdl-slider-container">
                         <label for="f7c-slider">
@@ -363,13 +363,13 @@
                 <!-- F7d: Trace comparison -->
 
                 <div class="tfdl-section-heading">
-                    <h3>F7d &mdash; Trace comparison: naive versus corrected</h3>
+                    <h3>F7d, Trace comparison: naive versus corrected</h3>
                 </div>
 
                 <div class="tfdl-prose">
                     <p>
                         The mathematical verdict in one plot. For the naive prior,
-                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N - N_d)\) &mdash; the
+                        \(\Tr(\mathbf{C}_N^{\obs}) \geq \sigma^2(N - N_d)\), the
                         total posterior variance grows linearly with \(N\).
                     </p>
                     <p>
@@ -387,10 +387,10 @@
                     <img src="../../../../media/research/think-first/fig7d_trace_comparison.png"
                          alt="Posterior trace comparison: naive diverges, corrected converges" data-themed="1">
                     <figcaption>
-                        <strong>F7d &mdash; Posterior trace: naive diverges, corrected converges.</strong>
+                        <strong>F7d, Posterior trace: naive diverges, corrected converges.</strong>
                         The naive posterior trace (red) grows linearly with \(N\),
                         tracking the lower bound \(\sigma^2(N-N_d)\) (orange, dashed).
-                        The corrected posterior trace (green) levels off &mdash;
+                        The corrected posterior trace (green) levels off,
                         bounded by \(\Tr(C_0) < \infty\). Log scale reveals the
                         four-order-of-magnitude gap between the two workflows.
                     </figcaption>
@@ -412,7 +412,7 @@
                 <!-- F7e: Translation table / workflow summary -->
 
                 <div class="tfdl-section-heading">
-                    <h3>F7e &mdash; From operator to matrix: the translation table</h3>
+                    <h3>F7e, From operator to matrix: the translation table</h3>
                 </div>
 
                 <div class="tfdl-prose">
@@ -443,7 +443,7 @@
                             <tr>
                                 <td>\(G: \M \to \D\)</td>
                                 <td>\(G_{ij} = [G\phi_j]_i\)</td>
-                                <td>same matrix &mdash; but wrong adjoint</td>
+                                <td>same matrix, but wrong adjoint</td>
                             </tr>
                             <tr>
                                 <td>\(G^{\adj}: \D \to \M\)</td>
@@ -469,7 +469,7 @@
                     </table>
                     </div>
                     <figcaption>
-                        <strong>F7e &mdash; Operator-to-discretization translation table.</strong>
+                        <strong>F7e, Operator-to-discretization translation table.</strong>
                         Each function-space object has a discrete representation,
                         but the mapping is not a naive symbol substitution. The
                         adjoint \(G^{\adj}\) becomes \(M^{-1}G^{\T} W_D\), not

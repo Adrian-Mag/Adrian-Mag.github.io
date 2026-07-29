@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 10: What SOLA Is Good For — My Take on SOLA — Adrian Mag</title>
+    <title>Act 10: What SOLA Is Good For | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -32,7 +32,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 10: What SOLA Is Good For — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 10: What SOLA Is Good For, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 10 of My Take on SOLA: What SOLA is genuinely good at after examining all three pillars, what it cannot do without a prior, and the final slogan.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-10.html">
@@ -128,17 +128,17 @@
                     SOLA's resolving kernels are target kernels passed through the adjoint of a
                     resolution operator:
                     \(R_k = \mathcal R^*T_k.\)
-                    This is useful — it gives visibility and design control — but it is not a
+                    This is useful, it gives visibility and design control, but it is not a
                     new species of resolution. The resolution operator has not been bypassed.
                     It has been moved to a different place in the formula.</p>
 
                     <p>The third pillar was <em>uncertainty quantification</em>. Act 9 showed
-                    that SOLA's default uncertainty — the shifted-noise pushforward
+                    that SOLA's default uncertainty, the shifted-noise pushforward
                     \(\mathcal{N}(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*)\)
-                    — is not a posterior. It is a data-space jitter centred on the observation.
-                    Without a prior, the observed data cannot be turned into a probabilistic statement (conditioned on the observed data) about the approximate property of the true model. The frequentist interpretation — pushing the noise through
+                   , is not a posterior. It is a data-space jitter centred on the observation.
+                    Without a prior, the observed data cannot be turned into a probabilistic statement (conditioned on the observed data) about the approximate property of the true model. The frequentist interpretation, pushing the noise through
                     \(\mathbf X\)
-                    and building calibrated confidence sets — gives a clean framework that does
+                    and building calibrated confidence sets, gives a clean framework that does
                     not require a prior, but it produces coverage statements, not posterior
                     beliefs.</p>
 
@@ -150,7 +150,7 @@
                         posterior beliefs.</p>
                     </div>
 
-                    <p>So where does that leave SOLA? In a perfectly good place — provided we
+                    <p>So where does that leave SOLA? In a perfectly good place, provided we
                     read its outputs with the right grammar.</p>
 
                     <h2>What SOLA Does Well</h2>
@@ -201,7 +201,7 @@
                     observation equation from data space to property space, pushing the noise
                     law through \(\mathbf X\) and building calibrated confidence sets for the
                     transformed quantities. This is the right framework for SOLA's uncertainty
-                    — not a shifted-noise cloud around the observation, but a frequentist
+                   , not a shifted-noise cloud around the observation, but a frequentist
                     procedure with repeated-sampling guarantees.</p>
 
                     <div class="sola-callout callout-intuition">
@@ -248,12 +248,12 @@
                     is the covariance of a shifted-noise pushforward. As Act 9 argued, this
                     measure is not a posterior on the model or on the target property. Without a
                     prior, the observed data cannot be turned into posterior belief. The
-                    shifted-noise measure answers &ldquo;what if we re-observed?&rdquo; — and
+                    shifted-noise measure answers &ldquo;what if we re-observed?&rdquo;, and
                     that is not the question the inverse problem asks.</p>
 
                     <p>The frequentist interpretation of Act 9 does not fix this by itself. It
-                    gives calibrated confidence sets — repeated-sampling guarantees for the
-                    transformed quantities — but confidence is not posterior probability. To
+                    gives calibrated confidence sets, repeated-sampling guarantees for the
+                    transformed quantities, but confidence is not posterior probability. To
                     turn a likelihood into a posterior, one needs a prior. That is not a
                     limitation of SOLA. It is a structural fact about inference.</p>
 
@@ -275,9 +275,9 @@
                     question, and it answers it beautifully:
                     \(\text{which resolved linear properties can I build from the available data?}\)</p>
 
-                    <p>If we want a stronger answer —
+                    <p>If we want a stronger answer,
                     \(\text{what is the exact target property of the true model?}\)
-                    — then we need stronger assumptions.</p>
+                   , then we need stronger assumptions.</p>
 
                     <div class="sola-callout callout-intuition">
                         <span class="sola-callout-label">Intuition</span>
@@ -352,8 +352,8 @@
 
                     <p>But there is a deeper frustration here. Each SOLA output comes with its own
                     resolving kernel, so each value must be interpreted through its own custom
-                    lens. If you want uniform interpretation &mdash; the ability to compare, combine,
-                    or ratio outputs without individually auditing every kernel &mdash; the only
+                    lens. If you want uniform interpretation, the ability to compare, combine,
+                    or ratio outputs without individually auditing every kernel, the only
                     way to get that is by introducing prior information. With a sufficiently
                     informative prior, one can place bounds on the actual desired target
                     properties, and then it is simply a matter of using the same target kernels
@@ -364,8 +364,8 @@
                     far from the desired one.&rdquo; But as we saw in Act 7, it can be arbitrarily
                     far off, no matter how close the resolving kernels are to the targets. Then
                     you might say: &ldquo;Sure, it could be far off if the true model is very
-                    weird, but surely it is not in my case.&rdquo; But that &mdash; the belief
-                    that the true model is not weird &mdash; is prior information. If you have it,
+                    weird, but surely it is not in my case.&rdquo; But that, the belief
+                    that the true model is not weird, is prior information. If you have it,
                     be honest and rigorous: put it in the problem.</p>
                    
                     <h2>The Final Slogan</h2>
@@ -373,22 +373,22 @@
                     <p>We can now compress the whole story:
                     \[\boxed{\text{SOLA transforms the observation problem into a more useful form.}}\]</p>
 
-                    <p>The first half — <em>transforms the observation problem</em> — is the
+                    <p>The first half, <em>transforms the observation problem</em>, is the
                     constructive heart of SOLA. The method takes a data-space observation
                     equation and transports it to property space. It builds resolving kernels
                     that make the transport visible. It lets the practitioner design the target
                     question and inspect what the data can actually deliver. That is genuinely
                     useful.</p>
 
-                    <p>If we want more — posterior beliefs, exact target properties, useful
-                    uncertainty about \(\Tau(\bar m)\) — we need to add something from the model
+                    <p>If we want more, posterior beliefs, exact target properties, useful
+                    uncertainty about \(\Tau(\bar m)\), we need to add something from the model
                     side. That something may be deterministic:
                     \(\bar m\in B\subset\M.\)
                     It may be probabilistic:
                     \(m\sim\muprior.\)
                     It may come from physics, geology, smoothness, boundedness, or earlier
                     experiments. But it should be stated, not smuggled in. (The deterministic
-                    route &mdash; SOLA plus an explicit model-side bound &mdash; is developed in
+                    route, SOLA plus an explicit model-side bound, is developed in
                     full in our SOLA&ndash;DLI framework <a href="#ref-mkz25">[MKZ25]</a>.)</p>
 
                     <p>So my take on SOLA is not that it should be discarded. Far from it. SOLA is
@@ -401,7 +401,7 @@
                     <p>A SOLA number is not just a number. It comes with a kernel.</p>
 
                     <p>A SOLA error bar is not posterior uncertainty. It is propagated
-                    data-noise — a summary of a shifted-noise pushforward, not a statement about
+                    data-noise, a summary of a shifted-noise pushforward, not a statement about
                     the true property.</p>
 
                     <p>A target kernel is not a promise. It is a design request.</p>

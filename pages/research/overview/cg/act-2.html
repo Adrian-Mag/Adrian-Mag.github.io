@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 2: Rolling Downhill — The Road to Conjugate Gradients — Adrian Mag</title>
+    <title>Act 2: Rolling Downhill | The Road to Conjugate Gradients | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
     <link rel="stylesheet" href="../../../../css/cg-explorer.css?v=38">
-    <meta name="description" content="Act 2 of The Road to Conjugate Gradients: gradient descent with exact line search, derived completely — and the zigzag pathology, experienced interactively.">
+    <meta name="description" content="Act 2 of The Road to Conjugate Gradients: gradient descent with exact line search, derived completely, and the zigzag pathology, experienced interactively.">
     <script>
     MathJax = {
         tex: {
@@ -35,8 +35,8 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 2: Rolling Downhill — Adrian Mag">
-    <meta property="og:description" content="Gradient descent with exact line search, derived completely — and the zigzag pathology, experienced interactively.">
+    <meta property="og:title" content="Act 2: Rolling Downhill | Adrian Mag">
+    <meta property="og:description" content="Gradient descent with exact line search, derived completely, and the zigzag pathology, experienced interactively.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/cg/act-2.html">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
@@ -86,7 +86,7 @@
             <div class="page-header-bg" data-hero="cg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/orion.jpg') center 45%/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Act 2: Rolling Downhill</h1>
-                <p>Gradient descent with exact line search &mdash; the obvious method, and its embarrassing gait.</p>
+                <p>Gradient descent with exact line search, the obvious method, and its embarrassing gait.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="conjugate-gradient.html">The Road to Conjugate Gradients</a>
                         <a href="../cmb/cmb-topography-map.html">CMB Topography Map</a>.
@@ -126,7 +126,7 @@
                     best. &ldquo;Best&rdquo; has an unambiguous meaning here: the \(\alpha\)
                     that makes \(J\) smallest along the ray. This is called an <em>exact line
                     search</em>, and for our quadratic landscape it is not an aspiration but a
-                    formula &mdash; the master identity of Act&nbsp;1, with \(v = u_k\) and
+                    formula, the master identity of Act&nbsp;1, with \(v = u_k\) and
                     \(w = \alpha r_k\), gives
                     \[\varphi(\alpha) := J(u_k + \alpha r_k)
                     = J(u_k) \;-\; \alpha\,\ip{r_k}{r_k} \;+\; \tfrac{\alpha^2}{2}\ip{Ar_k}{r_k},\]
@@ -134,7 +134,7 @@
 
                     <p>Look at what this says: restricted to any line, the infinite-dimensional
                     landscape \(J\) is an ordinary upward-opening parabola in the single real
-                    variable \(\alpha\) (upward-opening because \(\ip{Ar_k}{r_k}>0\) &mdash;
+                    variable \(\alpha\) (upward-opening because \(\ip{Ar_k}{r_k}>0\),
                     positive definiteness again). Minimizing a parabola is calculus at its most
                     gentle:
                     \[\varphi'(\alpha) = -\ip{r_k}{r_k} + \alpha\,\ip{Ar_k}{r_k} = 0
@@ -152,7 +152,7 @@
                     </figure>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Algorithm &mdash; steepest descent</span>
+                        <span class="sola-callout-label">Algorithm: steepest descent</span>
                         <p>Choose \(u_0\in\H\) and compute \(r_0 = f - Au_0\). Then for
                         \(k=0,1,2,\dots\):
                         \begin{align*}
@@ -165,15 +165,15 @@
                     </div>
 
                     <div class="sola-callout callout-remark">
-                        <span class="sola-callout-label">Remark &mdash; a method with a birth certificate</span>
+                        <span class="sola-callout-label">Remark: a method with a birth certificate</span>
                         <p>&ldquo;Walk downhill&rdquo; is so natural that it has a precise
                         birthday: Augustin-Louis Cauchy proposed exactly this method in a
                         four-page note to the French Academy on October 18, 1847
-                        <a href="#ref-cau47">[Cau47]</a> &mdash; motivated, pleasingly for this
+                        <a href="#ref-cau47">[Cau47]</a>, motivated, pleasingly for this
                         site, by the least-squares orbit computations of astronomy. Lemar&eacute;chal&rsquo;s
                         short commentary <a href="#ref-lem12">[Lem12]</a> tells the story and
                         reprints the argument in modern notation. What Cauchy could not know is
-                        how badly his method ages as the landscape stiffens &mdash; which is
+                        how badly his method ages as the landscape stiffens, which is
                         this act&rsquo;s main event.</p>
                     </div>
 
@@ -189,7 +189,7 @@
                         <span class="sola-callout-label">Intuition</span>
                         <p>Everything about this method is greedy and local: look down, take the
                         best possible step along the steepest line, look down again. Greedy and
-                        local is exactly what you would do lost in fog on a mountainside &mdash;
+                        local is exactly what you would do lost in fog on a mountainside,
                         and, as every hiker knows, it is not how you descend a long narrow
                         valley.</p>
                     </div>
@@ -198,7 +198,7 @@
 
                     <p>Before any more theory, drive the method yourself. The panel below shows
                     the contour map of a two-dimensional slice of the landscape. The slider
-                    controls the <em>stiffness</em> \(\kappa\) of the valley &mdash; how elongated
+                    controls the <em>stiffness</em> \(\kappa\) of the valley, how elongated
                     the contours are; its formal definition comes in a moment. Click anywhere to
                     drop a starting point, then step.</p>
 
@@ -207,7 +207,7 @@
                             <span class="cgx-title">Try it: rolling downhill</span>
                             <span class="cgx-sub">Each press of <em>Take one step</em> performs one
                             exact line search along the residual. Start with \(\kappa\) small
-                            &mdash; the method looks perfectly competent. Then raise \(\kappa\)
+                           , the method looks perfectly competent. Then raise \(\kappa\)
                             and watch the gait change.</span>
                         </div>
                         <noscript><p>This interactive panel requires JavaScript.</p></noscript>
@@ -235,7 +235,7 @@
                     </figure>
 
                     <p>The staircase pattern in the figure is not an accident of this example
-                    &mdash; it is a theorem, and its proof is one line. The line search chose
+                   , it is a theorem, and its proof is one line. The line search chose
                     \(\alpha_k\) by setting \(\varphi'(\alpha_k)=0\). But differentiate
                     \(\varphi\) directly:
                     \[\varphi'(\alpha)
@@ -247,7 +247,7 @@
                     <div class="sola-callout callout-lesson">
                         <span class="sola-callout-label">Lesson</span>
                         <p>Exact line search doesn&rsquo;t merely permit the right-angled turns
-                        &mdash; it <em>mandates</em> them. Stopping at the bottom of the parabola
+                       , it <em>mandates</em> them. Stopping at the bottom of the parabola
                         means the new downhill direction has no component along the old one.
                         Each direction is used, exhausted, abandoned&hellip; and then, two steps
                         later, needed again.</p>
@@ -261,12 +261,12 @@
                     \[\gamma\,\norm{v}^2 \;\le\; \ip{Av}{v} \;\le\; \Gamma\,\norm{v}^2
                     \qquad\text{for all } v\in\H,\]
                     and set \(\kappa = \Gamma/\gamma \ge 1\). Geometrically, \(\kappa\) is the
-                    squared aspect ratio of the contour ellipses &mdash; exactly the stiffness
+                    squared aspect ratio of the contour ellipses, exactly the stiffness
                     slider of the panel above. Steepest descent then satisfies
                     \[\normA{u_{k+1}-u} \;\le\; \frac{\kappa-1}{\kappa+1}\;\normA{u_k-u},\]
                     where \(\normA{\cdot}\) is the energy norm that Act&nbsp;3 will
                     formally introduce (for now: a norm in which descent of \(J\) is exactly
-                    shrinkage of the error). The bound is sharp &mdash; the figure above was
+                    shrinkage of the error). The bound is sharp, the figure above was
                     started at a point that achieves it. For the worst-case analysis behind this
                     bound see Shewchuk <a href="#ref-she94">[She94]</a>, &sect;6.2, or Nocedal
                     &amp; Wright <a href="#ref-nw06">[NW06]</a>, Ch.&nbsp;3.</p>
@@ -274,9 +274,9 @@
                     <p>Numbers make the formula honest. Per step, the error keeps a factor
                     \((\kappa-1)/(\kappa+1)\):</p>
                     <ul>
-                        <li>\(\kappa=10\): factor \(0.818\) &mdash; about 11 steps per decimal digit. Tolerable.</li>
-                        <li>\(\kappa=100\): factor \(0.980\) &mdash; about 114 steps per digit. Painful.</li>
-                        <li>\(\kappa=10^4\): factor \(0.9998\) &mdash; about 11,500 steps <em>per digit</em>. Unusable.</li>
+                        <li>\(\kappa=10\): factor \(0.818\), about 11 steps per decimal digit. Tolerable.</li>
+                        <li>\(\kappa=100\): factor \(0.980\), about 114 steps per digit. Painful.</li>
+                        <li>\(\kappa=10^4\): factor \(0.9998\), about 11,500 steps <em>per digit</em>. Unusable.</li>
                     </ul>
 
                     <div class="sola-callout callout-warning">
@@ -295,7 +295,7 @@
 
                     <p>Here is the observation that unlocks everything, so let us state it
                     carefully. Look at the staircase again. The method minimizes along a
-                    direction &mdash; call it \(p\) &mdash; and, at that moment, is genuinely at
+                    direction, call it \(p\), and, at that moment, is genuinely at
                     the lowest point of the landscape along \(p\). Two steps later it is walking
                     along \(p\) again. Why? Because the intervening step, taken along a different
                     direction, <em>ruined</em> the first minimization: after moving, the point is
@@ -314,7 +314,7 @@
                     </div>
 
                     <p>Is that demand even satisfiable? Surprisingly, it translates into a clean,
-                    checkable condition on pairs of directions &mdash; but seeing that requires
+                    checkable condition on pairs of directions, but seeing that requires
                     understanding first <em>why</em> the right angles of the staircase were the
                     wrong right angles. That is the business of Act&nbsp;3, and it is where the
                     true geometry of the problem finally shows itself.</p>

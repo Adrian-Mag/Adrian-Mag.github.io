@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script>(function(){try{var t=localStorage.getItem("site-theme");if(t==="earth"||t==="space")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Act 9: Uncertainty — My Take on SOLA — Adrian Mag</title>
+    <title>Act 9: Uncertainty | My Take on SOLA | Adrian Mag</title>
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/sola.css?v=38">
@@ -39,7 +39,7 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Act 9: Uncertainty — My Take on SOLA — Adrian Mag">
+    <meta property="og:title" content="Act 9: Uncertainty, My Take on SOLA | Adrian Mag">
     <meta property="og:description" content="Act 9 of My Take on SOLA: The shifted-noise pushforward, why SOLA cannot produce posteriors without a prior, and the frequentist interpretation of SOLA as a transformed observation problem with calibrated confidence sets.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/research/overview/sola/act-9.html">
@@ -90,7 +90,7 @@
             <div class="page-header-bg" data-hero="sola" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(rgba(30,34,40,0.62), rgba(30,34,40,0.45)), url('../../../../media/backgrounds/pleiades_medium.jpg') center center/cover no-repeat; filter: brightness(0.95) blur(1.2px);"></div>
             <div class="container" style="position: relative; z-index: 2;">
                 <h1>Act 9: Uncertainty</h1>
-                <p>No prior, no posterior — but a frequentist confidence story that works.</p>
+                <p>No prior, no posterior, but a frequentist confidence story that works.</p>
                 <p style="font-size:1rem;margin-top:0.8em;">
                     Part of <a href="my-take-on-sola.html">My Take on SOLA</a>.
                 </p>
@@ -122,7 +122,7 @@
                     found a boundary: without model-side information, the interpretation gap is
                     unbounded. The second act tested the &ldquo;resolution control&rdquo; pillar
                     and found that SOLA's resolving kernels are target kernels passed through
-                    the adjoint of a resolution operator — useful, but not a new species of
+                    the adjoint of a resolution operator, useful, but not a new species of
                     resolution.</p>
 
                     <p>Now we turn to the third pillar: <em>uncertainty quantification</em>.
@@ -148,7 +148,7 @@
                     \[\mathbf C_P = \mathbf X\mathbf C_D\mathbf X^*,\]
                     shown as error bars
                     \([\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}}.\)
-                    This is the advertised uncertainty quantification — the third pillar. (The display itself is standard across the SOLA literature, from the original error propagation <a href="#ref-pt92">[PT92]</a> to tomographic practice <a href="#ref-zar16">[Zar16]</a>.)</p>
+                    This is the advertised uncertainty quantification, the third pillar. (The display itself is standard across the SOLA literature, from the original error propagation <a href="#ref-pt92">[PT92]</a> to tomographic practice <a href="#ref-zar16">[Zar16]</a>.)</p>
 
                     <p>Now here is the observation. Once the data \(\widetilde{\mathbf d}\)
                     have been observed, one can construct a probability measure on data
@@ -156,7 +156,7 @@
                     \[\mathbf z_{\mathrm{shift}} = \widetilde{\mathbf d}+\boldsymbol\xi,\; \boldsymbol\xi\sim \mathcal{N}(\mathbf 0,\mathbf C_D).\]
                     This is the <em>shifted-noise measure</em>
                     \(\mathcal{N}(\widetilde{\mathbf d},\mathbf C_D)\)
-                    — the noise distribution shifted so that its mean is the observed data.
+                   , the noise distribution shifted so that its mean is the observed data.
                     Pushing it through \(\mathbf X\) gives
                     \[\mathcal{N}(\widetilde{\mathbf d},\mathbf C_D) \xrightarrow{\;\mathbf X\;} \mathcal{N}(\mathbf X\widetilde{\mathbf d},\mathbf X\mathbf C_D\mathbf X^*).\]</p>
 
@@ -184,7 +184,7 @@
 
                     <h2>What does the pushforward measure mean?</h2>
                     
-                    <p>We know by now that SOLA targets the approximate property \(\mathcal{A}(m)\), not the desired property \(\Tau(m)\). That distinction was established in earlier acts. The question now is narrower: what does the pushforward measure \(\mathcal{N}(\mathbf X\widetilde{\mathbf d}, \mathbf C_P)\) say <em>probabilistically</em> about the approximate property \(\mathcal{A}(m_{\mathrm{true}})\)? Should we interpret it as &ldquo;the approximate property of the true model is distributed according to this measure&rdquo;? It is not a posterior measure on the model or its properties &mdash; that much is clear, and we will see why shortly. But the plotted interval
+                    <p>We know by now that SOLA targets the approximate property \(\mathcal{A}(m)\), not the desired property \(\Tau(m)\). That distinction was established in earlier acts. The question now is narrower: what does the pushforward measure \(\mathcal{N}(\mathbf X\widetilde{\mathbf d}, \mathbf C_P)\) say <em>probabilistically</em> about the approximate property \(\mathcal{A}(m_{\mathrm{true}})\)? Should we interpret it as &ldquo;the approximate property of the true model is distributed according to this measure&rdquo;? It is not a posterior measure on the model or its properties, that much is clear, and we will see why shortly. But the plotted interval
                     \([\widetilde{\mathbf p}]_k \pm 2\sqrt{[\mathbf C_P]_{kk}}\)
                     does have a perfectly legitimate <em>frequentist</em> interpretation as a confidence interval for the resolved quantity \(\mathcal{A}(m_{\mathrm{true}})\). We will derive that interpretation later in this act. The point of the present discussion is not to say the interval is meaningless, but to clarify what it is and is not: it is not a Bayesian posterior, but it can be a calibrated frequentist confidence statement.</p>
 
@@ -200,8 +200,8 @@
                     through \(\mathcal{A}\) would give a posterior on the approximate property
                     \(\mathcal{A}(m_{\mathrm{true}})\). That is the Bayesian route, and it is the only route
                     that produces a genuine posterior probability measure on the model or its
-                    properties. (For the Bayesian formulation of inverse problems &mdash; and the
-                    central, non-negotiable role of the prior in it &mdash; the standard reference
+                    properties. (For the Bayesian formulation of inverse problems, and the
+                    central, non-negotiable role of the prior in it, the standard reference
                     is Tarantola <a href="#ref-tar05">[Tar05]</a>.)</p>
 
                     <p>But SOLA, by design, does not introduce a prior. Without a prior, the
@@ -215,8 +215,8 @@
                         observation cannot update what is not there.</p>
                     </div>
 
-                    <p>So where does that leave us? If the Bayesian route is closed — because SOLA
-                    does not use a prior — then we need a different framework for
+                    <p>So where does that leave us? If the Bayesian route is closed, because SOLA
+                    does not use a prior, then we need a different framework for
                     uncertainty. We need a framework that does not require a prior, that works
                     with a fixed true model and random observations, and that produces calibrated
                     statements about the quantities SOLA actually targets.</p>
@@ -231,8 +231,8 @@
                         without a prior, is naturally suited to the second question.</p>
                     </div>
 
-                    <p>If you are not familiar with the frequentist framework — or if you want to
-                    see how it differs from the Bayesian approach in more detail — I have written a
+                    <p>If you are not familiar with the frequentist framework, or if you want to
+                    see how it differs from the Bayesian approach in more detail, I have written a
                     separate series of pages on
                     <a href="../frequentist/bayesian-frequentist.html"><strong>Bayesian and Frequentist Inference</strong></a>.
                     The key idea is simple: the true model is fixed but unknown, the observation is
@@ -318,7 +318,7 @@
                     <p>Before observation, define the random transformed confidence set
                     \[C_{\alpha}^{\mathbf X}(\Prand) = \left\{\mathbf p\in\Pspace : \Prand - \mathbf p \in F_{\alpha}\right\}.\]</p>
 
-                    <p>Coverage in this pre-observation sense is exactly Neyman&rsquo;s original construction of confidence sets <a href="#ref-ney37">[Ney37]</a> &mdash; the construction these notes examine at length in the frequentist series.</p>
+                    <p>Coverage in this pre-observation sense is exactly Neyman&rsquo;s original construction of confidence sets <a href="#ref-ney37">[Ney37]</a>, the construction these notes examine at length in the frequentist series.</p>
 
                     <p>By definition,
                     \(\AX(m_{\mathrm{true}}) \in C_{\alpha}^{\mathbf X}(\Prand)\)
@@ -389,7 +389,7 @@
                     not produce a posterior distribution over models or properties. It transforms
                     the observation equation and the noise law, then uses the transformed problem
                     to build calibrated confidence and decision procedures. The shifted-noise
-                    pushforward &mdash; the object SOLA reports by default &mdash; is not wrong, but
+                    pushforward, the object SOLA reports by default, is not wrong, but
                     it is not a posterior. It is a frequentist object that happens to look like one.
                     The frequentist interpretation makes its meaning precise.</p>
 
