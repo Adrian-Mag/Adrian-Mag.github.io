@@ -61,7 +61,7 @@
                     <p class="wx-detail-note">This explorer publishes names, relationships, and plain-language roles only. It never displays the contents of a workspace file.</p>
                 </aside>
             </div>
-            <div class="wx-legend" aria-label="Explorer legend"><span><i class="wx-dot"></i>tracked project file</span><span><i class="wx-dot draft"></i>untracked worktree draft</span><span><i class="wx-dot local"></i>local-only</span><span><i class="wx-dot generated"></i>generated output</span><span><i class="wx-dot shortcut"></i>shortcut to one real file</span></div>
+            <div class="wx-legend" aria-label="Explorer legend"><span><i class="wx-dot"></i>tracked project file</span><span><i class="wx-dot local"></i>local-only</span><span><i class="wx-dot generated"></i>generated output</span><span><i class="wx-dot shortcut"></i>shortcut to one real file</span></div>
             <div class="hz-prose"><p>The main lesson is spatial: durable agent records do have one canonical home, <code>docs/agent-docs/</code>, but the rest of the machinery is deliberately spread out. Entry instructions begin at the root, provider shortcuts sit in hidden folders, skills are abilities rather than memory, Git checks live with Git, and generated evidence lands beside the normal website assets it supports.</p><p><a class="hz-btn" href="agentic-structure-map.html">Return to the relationship map</a></p></div>
         </div></section>
     </main>
@@ -120,8 +120,8 @@
                     folder("plans", "tracked", "The self-contained home for planning rules, live plans, and settled plan history.", "Plans are kept together because deciding, following, and completing work is its own protocol.", [
                         file("PROTOCOL.md", "tracked", "The rules for creating, revising, completing, abandoning, and finding plans.", "It keeps plans useful as live work contracts without turning them into session diaries."),
                         folder("active", "tracked", "Plans for substantial work that is still under way.", "The agent can recover the current goal, phase, and open choices without reconstructing an old chat.", [
-                            file("machine-around-the-model-plan.md", "draft", "The active worktree draft of the plan for this long-form series and its interactive companions.", "It keeps the series structure, files, phases, and open choices in one place. It becomes an ordinary tracked record when the current series work is committed."),
-                            file("agentic-harness-architecture-plan.md", "draft", "The active worktree draft of the plan for redesigning the workspace's agentic structures.", "It records the still-open architecture questions before another protocol is changed. It becomes an ordinary tracked record when the current architecture work is committed.")
+                            file("machine-around-the-model-plan.md", "tracked", "The plan for this long-form series and its interactive companions.", "It keeps the series structure, files, phases, and open choices in one place."),
+                            file("agentic-harness-architecture-plan.md", "tracked", "The plan for redesigning the workspace's agentic structures.", "It records the still-open architecture questions before another protocol is changed.")
                         ]),
                         folder("completed", "tracked", "Finished and abandoned plans, with completion notes for individual phases.", "Old decisions remain inspectable instead of disappearing when the active task changes.", [
                             file("machine-around-the-model-phase-1-complete.md", "tracked", "A completion record for the first phase of this series.", "It says what actually landed and how that phase was checked."),
@@ -234,8 +234,8 @@
                             file("act-7.html", "tracked", "The act about reusable skills and bundled scripts.", "It explains the website-control skill shown elsewhere in this tree."),
                             file("act-8.html", "tracked", "The act about hooks and enforceable checks.", "It uses the real hook demo under figure_generation."),
                             file("act-9.html", "tracked", "The act about tools and MCP-shaped interfaces.", "It uses the real tool demo and its recorded calls."),
-                            file("agentic-structure-map.html", "draft", "The current untracked worktree draft of the relationship graph showing how the main control pieces connect.", "It explains connections that are hard to see from folders alone, and becomes a tracked project file with the series release."),
-                            file("workspace-explorer.html", "draft", "The current untracked worktree draft of this VS Code-style filesystem explorer.", "It shows where the same pieces physically sit without revealing any file contents, and becomes a tracked project file with the series release.")
+                            file("agentic-structure-map.html", "tracked", "The relationship graph showing how the main control pieces connect.", "It explains connections that are hard to see from folders alone."),
+                            file("workspace-explorer.html", "tracked", "This VS Code-style filesystem explorer.", "It shows where the same pieces physically sit without revealing any file contents.")
                         ])
                     ])
                 ])
