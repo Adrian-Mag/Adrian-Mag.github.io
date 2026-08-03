@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV — Adrian Mag</title>
     <link rel="stylesheet" href="../css/theme.css?v=38">
-    <meta name="description" content="Curriculum Vitae of Adrian Mag - PhD candidate in Seismology at University of Oxford.">
+    <meta name="description" content="Curriculum Vitae of Adrian Mag — Oxford PhD candidate in mathematical geophysics, scientific computing and data science.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="CV - Adrian Mag">
-    <meta property="og:description" content="Curriculum Vitae of Adrian Mag - PhD candidate in Seismology at University of Oxford.">
+    <meta property="og:description" content="Curriculum Vitae of Adrian Mag — Oxford PhD candidate in mathematical geophysics, scientific computing and data science.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://adrian-mag.github.io/pages/cv.html">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
+    <style>
+        .tl-item a { color: var(--accent-bright); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+        .tl-item a:hover { color: var(--text); }
+    </style>
 </head>
 <body>
     <nav class="nav">
@@ -56,8 +60,11 @@
         <div class="wrap page-hero-inner">
             <div class="eyebrow">Curriculum Vitae</div>
             <h1>Adrian Mag</h1>
+            <p class="lead">Mathematical Geophysicist <span aria-hidden="true">&middot;</span> Inverse Problems <span aria-hidden="true">&middot;</span> Scientific Computing</p>
             <div class="cta-row" style="margin-top:20px;">
                 <a class="btn btn-primary" href="../media/Long_CV.pdf" download>Download PDF CV <span class="arrow">&darr;</span></a>
+                <a class="btn btn-ghost" href="https://github.com/Adrian-Mag" target="_blank" rel="noopener" style="padding:10px 16px;font-size:0.9rem;">GitHub</a>
+                <a class="btn btn-ghost" href="https://orcid.org/0009-0001-1424-6664" target="_blank" rel="noopener" style="padding:10px 16px;font-size:0.9rem;">ORCID</a>
             </div>
         </div>
     </header>
@@ -65,48 +72,117 @@
     <div class="content-layout">
         <main>
             <div class="tl-block">
-                <h2>Education</h2>
+                <h2>Professional Summary</h2>
                 <div class="tl-item">
-                    <div class="tl-head"><h3>PhD in Deep Earth Imaging</h3><span class="tl-date">2022 &ndash; Present</span></div>
-                    <p class="inst">University of Oxford, Oxford, UK</p>
-                    <p>Thesis: <em>&ldquo;Imaging the multi-scale topography of the Earth&rsquo;s core&rdquo;</em><br>
-                       Advisors: Dr. Paula Koelemeijer, Dr. Christophe Zaroli, Dr. Andrew Walker</p>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-head"><h3>MSci in Geophysics</h3><span class="tl-date">2018 &ndash; 2022</span></div>
-                    <p class="inst">University College London, London, UK</p>
-                    <p>First-Class Honours (Average: 82%)</p>
+                    <p>Oxford PhD candidate in mathematical geophysics who develops statistical and physics-based models to turn incomplete and noisy geophysical data into reliable estimates with quantified uncertainty. Experienced in uncertainty quantification, predictive modelling, optimisation, and tested Python research software. Published author and university tutor accustomed to owning independent technical work, collaborating across disciplines, and explaining complex results to technical and non-technical audiences.</p>
                 </div>
             </div>
 
             <div class="tl-block">
-                <h2>Research Experience</h2>
+                <h2>Relevant Capabilities</h2>
+                <div class="tl-item"><h3>Inference for decisions</h3><p>Turn sparse and noisy geophysical observations into targeted estimates of subsurface properties, quantify their uncertainty, and distinguish conclusions supported by data from those driven by modelling assumptions.</p></div>
+                <div class="tl-item"><h3>Model development</h3><p>Build and critically evaluate statistical, Bayesian, and physics-based models; test sensitivity to assumptions and data limitations, interpret predictions, and communicate their practical limitations clearly.</p></div>
+                <div class="tl-item"><h3>Scientific software</h3><p>Develop tested, documented Python tools and reproducible workflows for spatial and three-dimensional geophysical analysis, using Git and continuous integration to make methods reliable, reviewable, and reusable.</p></div>
+                <div class="tl-item"><h3>Technical delivery</h3><p>Own long-running research and software projects from problem definition through implementation, publication, and release; collaborate across institutions and explain technical trade-offs to audiences with varied backgrounds.</p></div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Experience</h2>
                 <div class="tl-item">
-                    <div class="tl-head"><h3>PhD Researcher &mdash; Theoretical Seismology &amp; Inverse Theory</h3><span class="tl-date">2022 &ndash; Present</span></div>
+                    <div class="tl-head"><h3>PhD Researcher, Mathematical Geophysics</h3><span class="tl-date">2022 &ndash; Present</span></div>
                     <p class="inst">University of Oxford, Oxford, UK</p>
                     <ul>
-                        <li>Developed 3D finite-frequency sensitivity kernel computations at global scale using the AxiSEM3D wave solver.</li>
-                        <li>Extended the SOLA inversion framework to constrain new classes of Earth properties and established formal connections with related methods (Deterministic Linear Inference, MOLA).</li>
-                        <li>Maintain a Python package for solving general linear inverse problems using the SOLA-DLI framework.</li>
-                        <li>Contribute to a scientific Python library for probabilistic linear inferences by implementing abstract function spaces, linear operators, measures, and their interrelations.</li>
+                        <li>Develop methods that turn sparse and noisy seismic observations into targeted estimates of subsurface properties, with uncertainty reported alongside each result.</li>
+                        <li>Unified two previously separate approaches to linear inference in a peer-reviewed framework and released accompanying tested Python software, enabling local averages, gradients, and spectral properties to be estimated within one reproducible workflow.</li>
+                        <li>Develop mathematical and computational methods for testing how physical constraints and prior assumptions change an inference, making clear which conclusions are supported by data and which depend on modelling choices.</li>
+                        <li>Built Python workflows that convert AxiSEM3D wavefield simulations into three-dimensional finite-frequency sensitivity kernels; the workflows are included in the official AxiSEM3D example gallery.</li>
+                        <li>Collaborate with researchers in Oxford, Cambridge, and Strasbourg, delivering peer-reviewed research, open-source software, documentation, presentations, and worked computational examples.</li>
                     </ul>
                 </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>Python Course Demonstrator</h3><span class="tl-date">2024 &ndash; 2026</span></div>
+                    <p class="inst">University of Oxford, Oxford, UK</p>
+                    <p>Supported intermediate and advanced scientific-Python courses for environmental scientists, covering NumPy, SciPy, Matplotlib, VS Code, Linux, Numba, Dask, Xarray, and Cartopy; guided practical exercises, debugging, and reproducible workflow development.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>College Tutor, Mathematics</h3><span class="tl-date">2023 &ndash; 2026</span></div>
+                    <p class="inst">Exeter &amp; Worcester Colleges, University of Oxford, Oxford, UK</p>
+                    <p>Planned and delivered tutorials in calculus, statistics, vector calculus, and continuum mechanics; translated technical material into clear explanations and provided individual feedback.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>Tutor and Teaching Developer</h3><span class="tl-date">2020 &ndash; 2021</span></div>
+                    <p class="inst">Notebook Tutors / University College London, London, UK</p>
+                    <p>Taught mathematics and physics, created interactive MATLAB notebooks for numerical methods, and developed a randomised online assessment bank for global geophysics.</p>
+                </div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Selected Open-Source Software</h2>
+                <div class="tl-item"><h3><a href="https://github.com/AxiSEMunity/AxiSEM3D_example_gallery" target="_blank" rel="noopener">AxiSEM3D sensitivity-kernel workflows</a></h3><p>Built reproducible adjoint workflows that convert AxiSEM3D simulations into three-dimensional finite-frequency sensitivity kernels for full-waveform inversion; contributions are included in the official AxiSEM3D example gallery.</p></div>
+                <div class="tl-item"><h3><a href="https://github.com/Adrian-Mag/SOLA_DLI" target="_blank" rel="noopener">SOLA&ndash;DLI</a></h3><p>Developed and released reproducible Python software for a peer-reviewed inference framework, with numerical examples, documentation, automated testing, and continuous integration.</p></div>
+                <div class="tl-item"><h3><a href="https://github.com/da380/pygeoinf" target="_blank" rel="noopener">pygeoinf</a></h3><p>Developed the core convex-geometry framework for encoding prior information about subsurface models as convex sets, including dual support equations, reusable support-function and convex-set classes, optimisation algorithms, and one-, two-, and three-dimensional visualisation. This makes prior dependence in linear-inference results explicit.</p></div>
+                <div class="tl-item"><h3><a href="https://github.com/Adrian-Mag/SensRay" target="_blank" rel="noopener">SensRay &mdash; Technical leadership</a></h3><p>Led development of a Python tool for ray-theoretical seismic sensitivity kernels, contributing most of the core code and supervising a master&rsquo;s student. Set the technical direction, reviewed proposed features, and advised their implementation.</p></div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Education</h2>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>PhD in Mathematical Geophysics</h3><span class="tl-date">2022 &ndash; Present</span></div>
+                    <p class="inst">University of Oxford, Oxford, UK</p>
+                    <p>Expected completion: December 2026. Thesis: <em>Building Inference from the Ground Up: A Framework for Linear Inverse Problems and Property Inference</em>. Develops practical mathematical and computational tools for determining what incomplete geophysical data can reliably reveal, how assumptions affect predictions, and how uncertainty should be interpreted.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>MSci in Geophysics, First-Class Honours (82%)</h3><span class="tl-date">2018 &ndash; 2022</span></div>
+                    <p class="inst">University College London, London, UK</p>
+                    <p>Thesis: <em>Towards building 3D global seismic tomography models using proximal methods</em>. Developed numerical methods for reconstructing three-dimensional Earth structure from seismic observations.</p>
+                </div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Publications &amp; Manuscripts</h2>
+                <div class="tl-item">
+                    <div class="tl-head"><h3><a href="https://doi.org/10.1093/gji/ggaf131" target="_blank" rel="noopener">Bridging the gap between SOLA and deterministic linear inferences in the context of seismic tomography</a></h3><span class="tl-date">2025</span></div>
+                    <p>Mag, A. M., Zaroli, C., &amp; Koelemeijer, P. <em>Geophysical Journal International</em>, 242(1), ggaf131.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>A geometric framework for multi-parameter linear inference</h3><span class="tl-date">In preparation</span></div>
+                    <p>Mag, A. M., Al-Attar, D., Isaac, J., &amp; Koelemeijer, P. Manuscript in preparation.</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-head"><h3>Property-based probabilistic linear inference in function space for geophysical inverse problems</h3><span class="tl-date">In preparation</span></div>
+                    <p>Mag, A. M., Zaroli, C., Koelemeijer, P., &amp; Scivier, S. Manuscript in preparation.</p>
+                </div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Selected Technical Writing</h2>
+                <div class="tl-item"><h3><a href="research/overview/think-first/think-first-discretize-later.html">Think First, Discretize Later</a></h3><p>Function-space formulation, model geometry, adjoints, and discretisation in linear inverse problems.</p></div>
+                <div class="tl-item"><h3><a href="research/overview/sola/my-take-on-sola.html">My Take on SOLA</a></h3><p>Sensitivity and resolving kernels, inference targets, noise, and the distinction between propagated noise and posterior uncertainty.</p></div>
+                <div class="tl-item"><h3><a href="research/overview/bayes/bayes-measure-theoretically.html">Bayes, Measure-Theoretically</a></h3><p>Posterior kernels and measure-theoretic Bayesian inversion developed from a finite example.</p></div>
+                <div class="tl-item"><h3><a href="research/overview/cg/conjugate-gradient.html">The Road to Conjugate Gradients</a></h3><p>A function-analytic route from gradient descent to the conjugate-gradient method.</p></div>
+                <div class="tl-item"><h3><a href="research/overview/harness/the-machine-around-the-model.html">The Machine Around the Model</a></h3><p>Auditable agentic research workflows, tool use, context, sandboxing, and verification.</p></div>
             </div>
 
             <div class="tl-block">
                 <h2>Conferences &amp; Presentations</h2>
-                <div class="tl-item"><div class="tl-head"><h3>Think First, Discretize Later</h3><span class="tl-date">2026</span></div><p>Poster &mdash; EGU, Vienna, Austria</p></div>
-                <div class="tl-item"><div class="tl-head"><h3>Beyond inversions: the flexibility of linear inference methods</h3><span class="tl-date">2025</span></div><p>Talk &mdash; PGRiP, Oxford, UK</p></div>
-                <div class="tl-item"><div class="tl-head"><h3>Combining SOLA and Deterministic Linear Inferences</h3><span class="tl-date">2025</span></div><p>Poster &mdash; Inge Lehmann Symposium, Copenhagen, Denmark</p></div>
-                <div class="tl-item"><div class="tl-head"><h3>SOLA inferences and normal modes</h3><span class="tl-date">2025</span></div><p>Poster &mdash; MODES/Deep Earth Meeting, Oxford&ndash;Cambridge, UK</p></div>
-                <div class="tl-item"><div class="tl-head"><h3>Constraining Earth model properties through Backus&ndash;Gilbert SOLA inferences</h3><span class="tl-date">2024</span></div><p>Poster &mdash; UKSEDI, Leeds, UK &middot; BSM, Reading, UK</p></div>
-                <div class="tl-item"><div class="tl-head"><h3>Mapping the Topography of Earth&rsquo;s Core</h3><span class="tl-date">2023</span></div><p>Poster &mdash; PGRiP, Edinburgh, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/poster_EGU_26.pdf" target="_blank" rel="noopener">Think First, Discretize Later</a></h3><span class="tl-date">2026</span></div><p>Poster &mdash; EGU, Vienna, Austria &middot; <a href="research/overview/think-first/think-first-discretize-later.html">Technical explainer</a></p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/marin_adrian_mag_Inference_PGRiP.pptx" download>Beyond inversions: the flexibility of linear inference methods</a></h3><span class="tl-date">2025</span></div><p>Talk &mdash; PGRiP, Oxford, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/Poster_Copenhagen_Adrian.pdf" target="_blank" rel="noopener">Combining SOLA and Deterministic Linear Inferences</a></h3><span class="tl-date">2025</span></div><p>Poster &mdash; Inge Lehmann Symposium, Copenhagen, Denmark</p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/Poster_MODES.pdf" target="_blank" rel="noopener">SOLA inferences and normal modes</a></h3><span class="tl-date">2025</span></div><p>Poster &mdash; MODES/Deep Earth Meeting, Oxford&ndash;Cambridge, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/UK-SEDI24-1.pdf" target="_blank" rel="noopener">Constraining Earth model properties through Backus&ndash;Gilbert SOLA inferences</a></h3><span class="tl-date">2024</span></div><p>Poster &mdash; UKSEDI, Leeds, UK &middot; <a href="research/posters/BSM24/BSM24.html">BSM version and supplementary material</a>, Reading, UK</p></div>
+                <div class="tl-item"><div class="tl-head"><h3><a href="../media/research/posters/poster.pdf" target="_blank" rel="noopener">Mapping the Topography of Earth&rsquo;s Core</a></h3><span class="tl-date">2023</span></div><p>Poster &mdash; PGRiP, Edinburgh, UK</p></div>
             </div>
 
             <div class="tl-block">
-                <h2>Honors &amp; Awards</h2>
+                <h2>Honours &amp; Awards</h2>
                 <div class="tl-item"><div class="tl-head"><h3>Grant for SPIN workshop</h3><span class="tl-date">2023</span></div></div>
                 <div class="tl-item"><div class="tl-head"><h3>Travel grant for SEDI conference</h3><span class="tl-date">2022</span></div></div>
+            </div>
+
+            <div class="tl-block">
+                <h2>Additional Information</h2>
+                <div class="tl-item"><h3>Work authorisation</h3><p>United Kingdom: settled status; authorised to work without employer sponsorship.</p></div>
+                <div class="tl-item"><h3>Travel</h3><p>Romanian passport holder; willing to travel internationally.</p></div>
             </div>
         </main>
 
@@ -114,32 +190,47 @@
             <div class="sidebar-card" style="margin-bottom:20px;">
                 <h3>Programming</h3>
                 <ul>
-                    <li>Python <span style="color:var(--muted)">(Intermediate)</span></li>
-                    <li>C++ <span style="color:var(--muted)">(Beginner)</span></li>
-                    <li>MATLAB <span style="color:var(--muted)">(Beginner)</span></li>
+                    <li>Python</li>
+                    <li>Working knowledge of MATLAB and C++</li>
                 </ul>
             </div>
             <div class="sidebar-card" style="margin-bottom:20px;">
-                <h3>Software &amp; Scientific Computing</h3>
+                <h3>Data &amp; Scientific Python</h3>
                 <ul>
-                    <li>Git, GitHub Actions (CI/CD)</li>
-                    <li>pytest, Sphinx, setuptools/poetry</li>
-                    <li>Extensible libraries for function spaces &amp; operators</li>
-                    <li>Numerical methods: FEM, FDM</li>
+                    <li>NumPy, SciPy, pandas, Xarray</li>
+                    <li>Matplotlib, Cartopy, Jupyter</li>
+                    <li>pytest, Sphinx</li>
                 </ul>
             </div>
             <div class="sidebar-card" style="margin-bottom:20px;">
-                <h3>Mathematics</h3>
+                <h3>Engineering &amp; Computing</h3>
                 <ul>
-                    <li>Linear algebra, ODE/PDEs</li>
-                    <li>Functional analysis, measure theory</li>
-                    <li>Bayesian inversions &amp; inferences</li>
+                    <li>Git, GitHub Actions, packaging</li>
+                    <li>Unit testing, documentation, CI workflows</li>
+                    <li>Linux; ARC and ARCHER HPC systems</li>
                 </ul>
             </div>
             <div class="sidebar-card" style="margin-bottom:20px;">
-                <h3>Other</h3>
+                <h3>Modelling</h3>
                 <ul>
-                    <li>LaTeX, Linux, Jupyter, Markdown</li>
+                    <li>Applied statistics, Bayesian inference, Gaussian processes</li>
+                    <li>Uncertainty quantification and inverse problems</li>
+                    <li>Regularisation, convex optimisation, adjoint methods</li>
+                </ul>
+            </div>
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Spatial &amp; Physical Data</h3>
+                <ul>
+                    <li>Seismic tomography and sensitivity kernels</li>
+                    <li>Spherical-harmonic analysis and wave propagation</li>
+                    <li>Travel-time modelling and scientific visualisation</li>
+                </ul>
+            </div>
+            <div class="sidebar-card" style="margin-bottom:20px;">
+                <h3>Responsible AI</h3>
+                <ul>
+                    <li>Auditable AI-assisted research and software workflows</li>
+                    <li>Source verification, sandboxed execution, human scientific review, and version-controlled provenance</li>
                 </ul>
             </div>
             <div class="sidebar-card">

@@ -91,6 +91,7 @@ pages/
             BSM24/
                 BSM24.html
 media/
+    Long_CV.pdf                     # Sanitised, evidence-linked public CV download
     earth_interior.png
     backgrounds/                    # Full-bleed hero background images
         cygnus.jpg
@@ -223,7 +224,8 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 |------|----------------|
 | `index.html` | Home — hero section + recent highlights |
 | `pages/about.html` | About — bio, background, interests |
-| `pages/cv.html` | CV — academic curriculum vitae |
+| `pages/cv.html` | General professional and research CV aligned with the current public PDF: professional summary, impact-led capabilities and experience, open-source software, current education and thesis details, technical skills, publications, manuscripts in preparation, selected technical writing, linked presentations, and work/travel information |
+| `media/Long_CV.pdf` | Three-page public CV generated from a separately maintained LaTeX source; unpublished works are titles only, with no private previews, credentials, telephone numbers, email addresses, or referee contact details |
 | `pages/contacts.html` | Contact — email and social links |
 | `pages/research/overview/index.html` | Research overview — summary of research topics + code links |
 | `pages/research/overview/inversions-inferences.html` | Explainer: what are inversions and inferences |
