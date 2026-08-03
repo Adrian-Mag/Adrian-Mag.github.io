@@ -20,3 +20,8 @@ exclude:
   - applications/         # job application sources (also gitignored)
   - AGENTS.md
   - README.md
+  # CMB Topography map — kept in the repo but withheld from the live site while
+  # the interactive timeline is still in progress. Remove these two lines to
+  # republish; also restore its nav links, index card, and search-index entry.
+  - pages/research/overview/cmb/
+  - css/cmb-topography-map.css
