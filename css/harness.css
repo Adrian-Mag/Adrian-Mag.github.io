@@ -28,8 +28,11 @@
 /* ---------- act navigation ---------- */
 .act-nav {
     position: sticky;
-    top: 0;
-    z-index: 110;
+    /* Sit just below the global site nav (~69px tall) so both bars stay visible
+       when scrolled, and keep z-index below .nav (computed 50) so the nav's
+       Research dropdown is never occluded by this strip. */
+    top: 68px;
+    z-index: 40;
     background: var(--surface);
     backdrop-filter: blur(10px);
     border-bottom: 1.5px solid var(--line);
