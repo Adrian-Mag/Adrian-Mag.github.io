@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
     <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
-    <meta name="description" content="Mechanism, Not Trust, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="How hooks, sandboxes, and approvals move selected decisions outside a language model, with a recorded blocklist example.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Mechanism, Not Trust - Adrian Mag">
-    <meta property="og:description" content="Mechanism, Not Trust, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="How hooks, sandboxes, and approvals move selected decisions outside a language model, with a recorded blocklist example.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -86,7 +86,7 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 8</span>
                     <span class="hz-asof">Current as of July 2026</span>
-                    <p class="act-lede">Where text stops being enough. Deterministic interception that runs whether or not the model cooperates. Includes the honest limitation: this is a blocklist, it over-blocks, and it has gaps. A mechanism without a stated threat model is marketing.</p>
+                    <p class="act-lede">When text is not enough, a hook can intercept an action whether or not the model cooperates. The example here is a blocklist: it over-blocks and has gaps. A mechanism without a stated threat model is marketing.</p>
                 </div>
 
                 <div class="hz-prose">
@@ -148,7 +148,7 @@
                         </div>
                     </div>
 
-                    <p>These are not invented outcomes. On 21 July 2026, a recorder sent four
+                    <p>These outcomes were recorded on 21 July 2026. A recorder sent four
                     documented <code>PreToolUse</code> payloads to the exact hook process on
                     standard input and captured its output. It classified the candidate
                     commands but never executed them. One additional ephemeral Codex session
@@ -164,7 +164,7 @@
 
                     <h3>Open the mechanism</h3>
 
-                    <p>The cards expose the complete public artifacts. The first is the policy
+                    <p>The cards contain the complete public artifacts. The first is the policy
                     code. The second is the wiring that asks Codex to run it before Bash. The
                     third is a screened extract of the live denial. They are text, not
                     screenshots, so the exact rule and event can be inspected.</p>
@@ -211,7 +211,7 @@
                     responses using unsupported fields can fail to block.<sup><a href="#ref-codex-hooks">1</a></sup>
                     Matching command hooks for the same event can also run concurrently, so one
                     hook is not a global ordering mechanism for all other hooks.
-                    The useful claim is smaller: for an event the harness exposes, valid code
+                    The defensible claim is narrower: for an event the harness exposes, valid code
                     can make a deterministic decision outside the model.</p>
 
                     <h3>Permissions are not just another hook</h3>
@@ -237,10 +237,10 @@
                         </div>
                     </div>
 
-                    <p>The sequence now has three distinct levers. <code>AGENTS.md</code> puts
+                    <p>The three levers are distinct. <code>AGENTS.md</code> puts
                     durable advice into context. A skill reveals a detailed procedure when it
                     is relevant. A hook or permission boundary moves a decision out of prose.
-                    None changes the model. Each changes the machine around it.</p>
+                    None of them changes the model. Each changes the machine around it.</p>
 
                     <h3>References</h3>
                     <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">

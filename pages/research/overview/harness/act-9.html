@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
     <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
-    <meta name="description" content="New Senses: How a Capability Becomes Available, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="How tool descriptions, schemas, handlers, and MCP connections make a capability available to a model.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="New Senses: How a Capability Becomes Available - Adrian Mag">
-    <meta property="og:description" content="New Senses: How a Capability Becomes Available, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="How tool descriptions, schemas, handlers, and MCP connections make a capability available to a model.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -86,7 +86,7 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 9</span>
                     <span class="hz-asof">Current as of July 2026</span>
-                    <p class="act-lede">Tool design. Definitions as interface contracts; why descriptions are load-bearing. The promote-to-a-dedicated-tool heuristic: gate, render, audit, parallelize. Closes with a short MCP section: host, client, server, and the one real invocation on record.</p>
+                    <p class="act-lede">A tool definition is an interface contract, and its description helps the model decide when to use it. Four pressures justify promoting a command to a dedicated tool: gating, rendering, auditing, and parallelisation. A short MCP section closes the act with one recorded invocation.</p>
                 </div>
 
                 <div class="hz-prose">
@@ -95,7 +95,7 @@
                     name, a description, and a schema for the arguments. The implementation
                     remains outside the model. What enters context is the interface.</p>
 
-                    <p>That makes a tool definition more than API paperwork. It is a contract
+                    <p>A tool definition is more than API paperwork. It is a contract
                     between three parties. The model sees what it may request. The harness
                     learns how to validate and route the request. The implementation promises
                     what it will return. If the contract is vague, all three can disagree
@@ -139,7 +139,7 @@
                     a description as explaining when and how to use a function, and recommends
                     stating purpose, output shape, and when not to use it.<sup><a href="#ref-openai-tools">1</a></sup></p>
 
-                    <p>The schema carries a different kind of meaning. It says that
+                    <p>The schema constrains the input. It says that
                     <code>page</code> is required, that extra properties are not accepted, and
                     that the input must look like a relative <code>.html</code> path. The
                     handler then performs the security-relevant check that a regular expression
@@ -167,8 +167,8 @@
                         </div>
                     </div>
 
-                    <p>These outcomes are recorded, not hypothetical. A recorder launched the
-                    complete public handler as a subprocess for both inputs. The first call
+                    <p>A recorder launched the complete public handler as a subprocess for both
+                    inputs. The first call
                     parsed the real Act 8 file. The second was rejected with
                     <code>outside_repository</code> before any outside path was read. Open the
                     artifacts to inspect the complete contract, the gating code, and the full
@@ -209,7 +209,7 @@
                         <div><b>Parallelize</b><span>Split independent units into separate calls that a harness can schedule concurrently.</span></div>
                     </div>
 
-                    <p>This exhibit earns promotion on the first three grounds. The path check
+                    <p>This exhibit meets the first three grounds for promotion. The path check
                     gates access. The parser renders HTML as a compact outline. The schema and
                     recorder make calls auditable. A harness could issue independent page
                     inspections concurrently, but this single handler does not itself run work
@@ -264,8 +264,8 @@
                         specification.<sup><a href="#ref-mcp-rc">4</a></sup>
                     </div>
 
-                    <p>Nothing in this sequence changes the model. A tool definition makes a
-                    capability legible. A handler makes it real. A harness validates, executes,
+                    <p>None of this changes the model. The definition makes a capability
+                    legible, the handler implements it, and the harness validates the request
                     and returns the result. MCP gives hosts and capability providers a shared
                     way to connect those pieces. The new sense belongs to the machine around
                     the model.</p>

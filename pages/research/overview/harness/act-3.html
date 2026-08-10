@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
-    <meta name="description" content="Even the Chat Box Is a Harness, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="How stateless model calls become coherent conversations through transcript replay and surrounding software.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Even the Chat Box Is a Harness - Adrian Mag">
-    <meta property="og:description" content="Even the Chat Box Is a Harness, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="How stateless model calls become coherent conversations through transcript replay and surrounding software.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -87,8 +87,8 @@
                     <span class="hz-asof">Current as of July 2026</span>
                     <p class="act-lede">
                         Tell a chatbot your name. Ten messages later it still knows. That
-                        feels like memory, and it is the most reasonable thing in the world
-                        to assume it is. It is not. Every single turn, software you never
+                        feels like memory, so it is reasonable to assume that it is. It is not.
+                        On every turn, software you never
                         see re-reads a transcript it is keeping on your behalf.
                     </p>
                 </div>
@@ -100,16 +100,14 @@
 
                     <p>So how does a conversation work?</p>
 
-                    <p>We do not need anyone inside a frontier lab to tell us. The answer is
-                    forced. If the model cannot remember, and a conversation nonetheless
+                    <p>The answer follows from the constraint. If the model cannot remember, and a conversation nonetheless
                     coheres, then <em>something else is doing the remembering</em>. And there
                     is only one place that something can put what it remembers: back into the
                     input, on the next call. The conversation has to be re-sent. Every turn.
                     In full.</p>
 
-                    <p>This is not an implementation detail. It is the fact from which nearly
-                    everything else in this series follows, and it is worth watching happen
-                    rather than taking on my word.</p>
+                    <p>This fact drives nearly everything else in the series. It is worth
+                    watching it happen rather than taking my word for it.</p>
                 </div>
 
                 <div class="hz-panel" id="statelessness-panel"
@@ -129,8 +127,8 @@
 
                     <p>Watch the token counter as you step through. In the first run it
                     climbs, because the whole conversation is being re-sent (and re-billed)
-                    every turn. In the second it stays flat. That number is not an argument,
-                    it is an invoice: you are demonstrably paying to send your own
+                    every turn. In the second it stays flat. The number is also an invoice:
+                    you are demonstrably paying to send your own
                     conversation back to a model that did not keep it.</p>
 
                     <h3>What else the chat box is doing</h3>
@@ -142,9 +140,8 @@
                     sometimes deciding a question warrants a web search or a code interpreter,
                     and passing the exchange through safety classification.</p>
 
-                    <p>I am describing the general case deliberately. The internals of a
-                    closed consumer product are not public. But none of the above is speculation about any
-                    particular company. Each item is forced by the same constraint as before:
+                    <p>The internals of a closed consumer product are not public, so this is the
+                    general case rather than a claim about any particular company. Each item follows from the same constraint as before:
                     a stateless model, plus a conversation that is coherent, personalised and
                     tool-using, <em>requires</em> that something assemble all of it before the
                     model sees a single token.</p>
@@ -152,14 +149,13 @@
                     <p>That assembling machine is the harness. You have been using one all
                     along.</p>
 
-                    <p>Here is why it matters for everything that follows. The harness around
+                    <p>The distinction matters for everything that follows. The harness around
                     a consumer chat box is small, because it is built for one job: keep a
                     conversation going, safely, for a stranger. Swap it for a bigger one and
-                    the same model does dramatically more. Not because it got smarter, but
-                    because it was finally given hands, eyes, and a memory that outlives the
+                    the same model does dramatically more because it gains hands, eyes, and a memory that outlives the
                     conversation.</p>
 
-                    <p>That is the next act.</p>
+                    <p>Act 4 examines that larger harness.</p>
                 </div>
 
                 <div class="hz-actnav-foot">

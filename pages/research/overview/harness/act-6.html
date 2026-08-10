@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/concept-popup.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
-    <meta name="description" content="Steering by Text, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="How AGENTS.md places repository-specific guidance in context, and why guidance is not enforcement.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Steering by Text - Adrian Mag">
-    <meta property="og:description" content="Steering by Text, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="How AGENTS.md places repository-specific guidance in context, and why guidance is not enforcement.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -86,12 +86,12 @@
                 <div class="act-head">
                     <span class="act-kicker">Act 6</span>
                     <span class="hz-asof">Current as of July 2026</span>
-                    <p class="act-lede">The cheapest lever: a file the harness reads and injects into context. Not enforced: guidance, not law. Why that is both its weakness and its strength.</p>
+                    <p class="act-lede">The cheapest lever is a file that the harness reads and injects into context. It provides guidance, not enforcement, which is both its weakness and its strength.</p>
                 </div>
 
                 <div class="hz-prose">
-                    <p>Here is the first thing I changed when I wanted an agent to stop treating
-                    every repository as the same repository. I added a text file.</p>
+                    <p>When I wanted an agent to stop treating every repository as the same
+                    repository, I added a text file.</p>
 
                     <p>The file is called <code>AGENTS.md</code>. It is not a model, a plug-in,
                     or a program. It is ordinary Markdown containing the facts and working
@@ -152,7 +152,7 @@
                         </button>
                     </div>
 
-                    <p>The useful parts answer some combination of five questions:</p>
+                    <p>A useful file answers some combination of five questions:</p>
 
                     <table class="hz-table">
                         <thead>
@@ -191,7 +191,7 @@
                         differently.<sup><a href="#ref-codex-agents">1</a></sup>
                     </div>
 
-                    <p>That nesting is more important than it first sounds. A repository can say
+                    <p>Nesting lets a repository say
                     &ldquo;run the test suite before stopping&rdquo; at its root, while a directory
                     containing slow numerical experiments can give the exact command and
                     resource limits that apply only there. The reader gets a route from general
@@ -205,18 +205,18 @@
                     something more specific. It can be truncated from an overgrown instruction
                     chain. The model can simply make a mistake.</p>
 
-                    <p>This is the weakness of <code>AGENTS.md</code>: it changes the evidence
-                    and instructions available to a probabilistic system, not the laws of the
+                    <p>The weakness of <code>AGENTS.md</code> is that it changes the evidence
+                    and instructions available to a probabilistic system rather than the laws of the
                     computer around it. Writing &ldquo;never stage the private control
                     overlay&rdquo; is useful, but it does not alter the Git index. Writing
                     &ldquo;run the tests&rdquo; does not make a failing test prevent a commit.</p>
 
-                    <p>It is also the strength. The file costs almost nothing to create, can be
+                    <p>That same property is a strength. The file costs almost nothing to create, can be
                     reviewed in the same pull request as the code, travels with the repository,
                     and changes on the next run. You do not need to build a tool or retrain a
                     model to teach the harness that this website has no build step.</p>
 
-                    <p>The right division is simple: use text to state intent, context, and
+                    <p>Use text to state intent, context, and
                     working practice. Use settings, permissions, hooks, tests, and sandboxes for
                     properties that must hold even when the model is confused. Official Codex
                     guidance makes the same separation, recommending that project guidance be
@@ -239,7 +239,7 @@
                     expertise, examples, scripts, and references that should load only for one
                     kind of task, a flat instruction file has reached its limit.</p>
 
-                    <p>That larger package has a name. It is the subject of the next act.</p>
+                    <p>Act 7 examines that larger package: a skill.</p>
 
                     <h3>References</h3>
                     <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">

@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
-    <meta name="description" content="Anatomy of a Coding Agent, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="The tools, permissions, context management, persistence, and subagents that make up a coding-agent harness.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="Anatomy of a Coding Agent - Adrian Mag">
-    <meta property="og:description" content="Anatomy of a Coding Agent, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="The tools, permissions, context management, persistence, and subagents that make up a coding-agent harness.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -88,15 +88,15 @@
                     <p class="act-lede">
                         The same model sits behind the chat box and behind the tool that
                         refactors a codebase overnight. If the processor is identical, the
-                        difference has to be somewhere else. It is, and it is not hidden.
-                        It is a list of components, each of which someone decided
+                        difference has to be somewhere else. It lies in a visible list of
+                        components, each of which someone decided
                         to build.
                     </p>
                 </div>
 
                 <div class="hz-prose">
-                    <p>This act is an inventory. It is the least conceptual part of the
-                    series, and possibly the most useful, because once you can name the
+                    <p>This act is an inventory, the least conceptual part of the series and
+                    possibly the most useful. Once you can name the
                     components you can ask which ones you have.</p>
 
                     <h3>Tools: the entire surface between the model and the world</h3>
@@ -106,14 +106,14 @@
                     file, write a file, edit part of a file, list files matching a pattern,
                     search file contents, run a shell command, fetch a URL, search the web.</p>
 
-                    <p>That list looks mundane, and its mundanity is the point. There is no
+                    <p>The list is deliberately mundane. There is no
                     &ldquo;understand the codebase&rdquo; tool. What looks like understanding
                     is a great many small requests (search for this, read that, look at the
                     file the first search pointed to) assembled in the loop from
                     Act 4. The capability is emergent from a boring inventory plus a lot of
                     round trips.</p>
 
-                    <p>Notice also what granularity buys. A harness that offers only
+                    <p>Granularity matters. A harness that offers only
                     &ldquo;run a shell command&rdquo; can technically do everything, since
                     editing a file is a shell command. But then every action arrives as an
                     opaque string, and the harness cannot tell a harmless search from a
@@ -128,8 +128,8 @@
                     are forbidden outright, and the rules can vary by directory or by
                     argument.</p>
 
-                    <p>This is the first component that is a genuine safety mechanism rather
-                    than a capability, and it has a property worth pausing on: it does not
+                    <p>This is the first component that is a safety mechanism rather than a
+                    capability. It does not
                     depend on the model&rsquo;s cooperation. A model that has been talked into
                     something by a malicious web page still only <em>emits a request</em>, and
                     that request still hits the same gate. Act 8 is about what follows from
@@ -152,8 +152,8 @@
                     narrow task, and receive only the answer. The expensive intermediate
                     reading never enters the main transcript.</p>
 
-                    <p>Read that again as a resource-management move rather than a clever
-                    trick, because that is what it is: the scarce resource is context, and a
+                    <p>This is a resource-management move rather than a clever trick: the scarce
+                    resource is context, and a
                     subagent is how you spend someone else&rsquo;s.</p>
 
                     <h3>Persistence: what survives the session</h3>
@@ -199,9 +199,9 @@
                     <em>instrument</em>, which is a different claim, and it includes the
                     possibility of using it badly.</p>
 
-                    <p>The rest of this series takes the components one at a time, cheapest
-                    first. The next one costs nothing: a text file the harness reads before it
-                    does anything else.</p>
+                    <p>The remaining acts take the components one at a time, cheapest first.
+                    Act 6 begins with a text file that the harness reads before doing anything
+                    else.</p>
                 </div>
 
                 <div class="hz-actnav-foot">

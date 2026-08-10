@@ -225,6 +225,16 @@ curated paths against the workspace, opens every detail pane with route informat
 when fully expanded. The remaining Phase 6 work is series-wide review, accessibility checks,
 and replacing Act 3's labelled mock with a real recording.
 
+### Series proofread checkpoint (2026-08-10)
+
+A deeper anti-AI-style proofread covered the landing page, Acts 1–11, the summary, relationship
+map, and workspace explorer. It removed stock transitions, rhetorical stage directions,
+fragments, inflated emphasis, and repeated boilerplate while preserving citations, examples,
+links, IDs, script behaviour, and page structure. Page-specific descriptions replaced the repeated
+metadata template, and the search index was rebuilt; exactly the 15 series entries changed.
+Phase 6 remains active for the series-wide accessibility check and replacement of Act 3's
+labelled mock with a real recording.
+
 ### Map layout follow-up (2026-07-24)
 
 The board's Persist/SSD region was moved below Action so their boundaries no longer overlap;

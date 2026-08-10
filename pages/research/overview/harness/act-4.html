@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../../../../css/theme.css?v=38">
     <link rel="stylesheet" href="../../../../css/styles.css?v=38">
     <link rel="stylesheet" href="../../../../css/harness.css?v=39">
-    <meta name="description" content="The CPU and the Computer, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta name="description" content="Why an agent's model requests tools while the harness executes them and returns evidence.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="The CPU and the Computer - Adrian Mag">
-    <meta property="og:description" content="The CPU and the Computer, part of The Machine Around the Model, a series on how agentic AI systems actually work.">
+    <meta property="og:description" content="Why an agent's model requests tools while the harness executes them and returns evidence.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://adrian-mag.github.io/media/og-card.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -95,8 +95,7 @@
                 </div>
 
                 <div class="hz-prose">
-                    <p>The comparison is not mine, and whose it is matters. Andrej Karpathy
-                    popularised the framing of a language model as
+                    <p>The comparison comes from Andrej Karpathy, who popularised the framing of a language model as
                     &ldquo;not a chatbot, but the kernel process of a new Operating
                     System&rdquo;.<sup><a href="#ref-karpathy">1</a></sup> I want to narrow
                     it, because the narrower version is more useful: the model
@@ -122,7 +121,7 @@
                         </div>
                     </div>
 
-                    <p class="hz-versioned"><b>Read the specs, not just the boxes</b>The post that carried this diagram listed GPT-4 Turbo at 20 tokens per second, 128K tokens of RAM, and Ada002 as the filesystem. Those product specifications have aged; the boxes and arrows have not. That is why this series date-stamps product detail and argues from structure wherever it can.</p>
+                    <p class="hz-versioned"><b>Read the specs, not just the boxes</b>The post that carried this diagram listed GPT-4 Turbo at 20 tokens per second, 128K tokens of RAM, and Ada002 as the filesystem. Those product specifications have aged. The boxes and arrows have not. This series date-stamps product detail and argues from structure wherever it can.</p>
 
                     <div class="hz-panel">
                         <div class="hz-panel-head"><span class="hz-panel-title">A local computer around one model</span><span class="hz-illustrative">Workspace structure</span></div>
@@ -163,8 +162,8 @@
 
                     <h3>The mechanism: it asks, it never acts</h3>
 
-                    <p>Here is the part that surprises people who have watched one of these
-                    systems edit a file. I will state it as flatly as I can.</p>
+                    <p>The mechanism is easy to miss when one of these systems appears to edit
+                    a file.</p>
 
                     <p><strong>The model cannot run anything.</strong> When it &ldquo;runs a
                     command&rdquo;, what actually happens is that it emits text in a structured
@@ -190,7 +189,7 @@
                     products.<sup><a href="#ref-react">4</a></sup> Nearly every coding agent
                     you can use today is a descendant of that shape.</p>
 
-                    <p>Below is a real one, taken from this website&rsquo;s own session logs.
+                    <p>Below is a recorded loop from this website&rsquo;s own session logs.
                     Step through it. Watch which side of the exchange ever does anything.</p>
                 </div>
 
@@ -208,7 +207,7 @@
                     read back.</p>
 
                     <p>The longer trace is the same mechanism doing something that feels much
-                    more capable. Notice how expensive that feeling is. To
+                    more capable, and it shows the cost. To
                     <em>look at a web page</em> (something you do in a fraction of a second,
                     continuously, without noticing) the model must ask for a
                     scroll, then ask for a screenshot, then ask to read the resulting image
@@ -216,15 +215,15 @@
                     page. It is requesting narrow slices of evidence about the page and
                     assembling a belief from them.</p>
 
-                    <p>Hold onto that, because it generalises. Everything these
+                    <p>The pattern generalises. Everything these
                     systems appear to <em>do</em> decomposes into asking for evidence and
                     asking for effects. The apparent capability is a property of what they are
                     permitted to ask for, which is to say a property of the harness.</p>
 
                     <h3>Why this makes the harness the interesting object</h3>
 
-                    <p>Once the loop is visible, a lot of otherwise-confusing things become
-                    ordinary engineering questions.</p>
+                    <p>Once the loop is visible, apparent mysteries become ordinary engineering
+                    questions.</p>
 
                     <p>Why can one assistant edit your files while another cannot? Because
                     someone gave the first a file-editing tool. Why does one stop and ask
@@ -239,8 +238,8 @@
                     about wiring. Every one of them has an answer you can inspect, and
                     usually change.</p>
 
-                    <p>Which raises the obvious next question: what is actually in one of
-                    these things?</p>
+                    <p>The next question is concrete: what is actually inside one of these
+                    harnesses?</p>
 
                     <h3>References</h3>
                     <ol style="font-size:0.92rem; line-height:1.8; padding-left:20px">
