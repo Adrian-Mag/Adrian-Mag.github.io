@@ -57,6 +57,11 @@ with a page from that series.
   Explainer with and without mathematics.
 - [Publications](https://adrian-mag.github.io/pages/research/publications/papers.html)
 - [Presentations & posters](https://adrian-mag.github.io/pages/research/posters/posters.html)
+- [Physical-property / inference graph (prototype, under construction)](https://adrian-mag.github.io/pages/research/overview/property-graph/index.html):
+  Interactive graph of how geological state, rock properties and geophysical
+  observations connect, with separate forward and inverse semantics on every
+  relation. Early prototype; the app itself opens full screen at
+  https://adrian-mag.github.io/pages/research/overview/property-graph/app/
 
 ## About
 

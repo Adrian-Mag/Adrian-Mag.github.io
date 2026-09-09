@@ -1,0 +1,47 @@
+/* ============================================================
+   property-graph.css — wrapper page for the physical-property /
+   geophysical-inference graph prototype (pages/research/overview/property-graph/).
+   The app itself is a prebuilt static bundle in ./app/ with its own styles.
+   ============================================================ */
+
+.pg-intro { max-width: 810px; }
+.pg-intro .eyebrow { display: block; margin-bottom: 9px; color: var(--accent-bright); font: 700 .7rem/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.pg-intro h2 { margin: 0 0 14px; font-size: clamp(1.6rem, 3vw, 2.25rem); }
+.pg-intro p { color: var(--muted); line-height: 1.75; }
+
+/* under-construction notice */
+.pg-construction {
+  margin: 22px 0; padding: 16px 20px; border-left: 3px solid var(--warm);
+  background: color-mix(in srgb, var(--warm) 12%, var(--surface)); border-radius: 0 12px 12px 0; line-height: 1.7;
+}
+.pg-construction p { margin: 0; }
+.pg-construction .pg-tag {
+  display: inline-block; margin-right: 8px; font: 700 .62rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--warm); border: 1px solid var(--warm); border-radius: 4px; padding: 3px 7px; vertical-align: middle;
+}
+
+/* actions */
+.pg-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 26px; align-items: center; }
+.pg-actions .hint { color: var(--muted); font-size: .88rem; }
+
+/* embedded preview (desktop only) */
+.pg-frame-wrap { margin: 8px 0 26px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--ground-2); box-shadow: var(--shadow-sm); }
+.pg-frame { display: block; width: 100%; height: min(82vh, 900px); border: 0; background: var(--ground-2); }
+.pg-frame-note { padding: 8px 14px; border-top: 1px solid var(--line); color: var(--muted); font: .74rem var(--mono); letter-spacing: .04em; }
+
+/* reading guide */
+.pg-guide { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 24px 0; }
+.pg-card { min-width: 0; padding: 21px; border: 1px solid var(--line); border-radius: 11px; background: color-mix(in srgb, var(--surface) 91%, transparent); }
+.pg-card h3 { margin: 0 0 10px; font-size: 1rem; }
+.pg-card p, .pg-card li { margin: 0; color: var(--muted); line-height: 1.65; }
+.pg-card ul { margin: 0; padding-left: 1.2em; }
+.pg-card li { margin-bottom: .35em; }
+.pg-swatch { display: inline-block; width: 22px; vertical-align: middle; border-top: 3px solid; margin-right: 6px; }
+.pg-swatch.dashed { border-top-style: dashed; }
+.pg-swatch.dotted { border-top-style: dotted; }
+.pg-swatch.thick { border-top-width: 5px; }
+
+@media (max-width: 760px) {
+  .pg-frame-wrap { display: none; }
+  .pg-guide { grid-template-columns: 1fr; }
+}

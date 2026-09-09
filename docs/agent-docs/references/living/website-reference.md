@@ -84,6 +84,10 @@ pages/
                 summary.html
             cmb/                        # CMB Topography Studies (interactive timeline)
                 cmb-topography-map.html
+            property-graph/              # Physical-property / inference graph (prototype, under construction)
+                index.html               # wrapper page: notice, full-screen button, desktop iframe preview
+                app/                     # prebuilt static bundle (Vite/React/Cytoscape) — do not hand-edit;
+                                         # rebuilt from the Ascension workspace with `npm run deploy:site`
         publications/
             papers.html
         posters/
@@ -154,6 +158,7 @@ Every page loads **two CSS files**:
    - `pages/research/overview/sola/summary.html` → same as act pages
    - `pages/research/overview/harness/*.html` → `css/harness.css` (four levels up: `../../../../css/`); Acts 6–9 also load `css/concept-popup.css`
    - `pages/research/overview/cmb/cmb-topography-map.html` → `css/cmb-topography-map.css` (four levels up: `../../../../css/`)
+   - `pages/research/overview/property-graph/index.html` → `css/property-graph.css` (four levels up: `../../../../css/`); the bundle in `property-graph/app/` ships its own CSS and does not use the site stylesheets
    - `pages/research/publications/papers.html` → *(no dedicated stylesheet; uses `styles.css` only)*
    - `pages/research/posters/posters.html` → `css/posters.css`
    - `pages/research/posters/BSM24/BSM24.html` → `css/BSM24.css`
@@ -168,6 +173,7 @@ Pages in `pages/research/overview/frequentist/` link CSS with `../../../../css/s
 Pages in `pages/research/overview/sola/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/harness/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/overview/cmb/` link CSS with `../../../../css/styles.css`.
+Pages in `pages/research/overview/property-graph/` link CSS with `../../../../css/styles.css`.
 Pages in `pages/research/publications/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/` link CSS with `../../../css/styles.css`.
 Pages in `pages/research/posters/BSM24/` link CSS with `../../../../css/styles.css`.
@@ -269,6 +275,7 @@ The site-wide `<nav>` is **manually replicated** in every HTML page's
 | `pages/research/overview/harness/workspace-explorer.html` | Recursive VS Code-style explorer of selected real agent-related paths; it distinguishes the `docs/agent-docs` durable record store from separately selected abilities, and shows names and roles only, never file contents |
 | `pages/research/overview/harness/summary.html` | Closing summary for The Machine Around the Model |
 | `pages/research/overview/cmb/cmb-topography-map.html` | CMB Topography Studies — interactive timeline of CMB topography papers decoded through the ELEMENTS framework |
+| `pages/research/overview/property-graph/index.html` | Physical-property / inference graph — **prototype, under construction**. Wrapper page (notice, full-screen button, desktop-only iframe) around the prebuilt bundle in `property-graph/app/`. Source and scientific database are maintained in the private Ascension workspace; the bundle is regenerated there, never edited here. Linked from the research overview card and `llms.txt`; deliberately not in the global nav yet. |
 | `pages/research/publications/papers.html` | Publications list |
 | `pages/research/posters/posters.html` | Presentations / posters gallery |
 | `pages/research/posters/BSM24/BSM24.html` | BSM24 conference poster page |
