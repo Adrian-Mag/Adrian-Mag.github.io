@@ -120,8 +120,8 @@ where they belong until the user chooses to publish each node.
   repository and Node Playwright is not installed; use headless Chrome.
 - **Edge-anchor inspection.** Not re-derived. The 14 edge paths were counted but their
   coordinates were not checked against node positions. Phase 2 will regenerate them.
-- **Upstream claim re-verification.** Impossible from this worktree by design. The page's
-  factual claims rest on the upstream verification studies and were not re-checked here.
+- **Upstream claim re-verification.** Not attempted in this phase. Recorded at the time as
+  "impossible from this worktree", which was **wrong** — see the second addendum.
 
 ## Follow-ups
 
@@ -173,5 +173,48 @@ Every one of the 11 nodes was clicked and its dialog inspected, which also confi
 `details` object has no missing or misspelled keys.
 
 **Still not verified.** Edge-path coordinates were counted but never re-derived against node
-positions; Phase 2 will regenerate them. The page's factual claims still rest on the upstream
-verification studies and cannot be re-checked from this worktree.
+positions; Phase 2 will regenerate them.
+
+---
+
+## Second addendum — 2026-07-28: the upstream repository is readable
+
+Phase 1 recorded that the upstream research repository could not be read from this worktree,
+and the design decisions in the plan said the same. **That was wrong.** It was inherited from
+the incoming handoff document, which described the constraint of *its* session, and was
+repeated here without being tested.
+
+The upstream repository is readable from this machine. `list_dir` and `read_file` both work
+against it; only `grep_search` is workspace-scoped, and a shell `grep` substitutes for it.
+
+Consequences:
+
+- The plan's provenance decision now says to read the relevant verification study directly
+  instead of working from a summary. The repository location is recorded in the local-only
+  control overlay, not here.
+- Page claims *can* be checked against their studies. That check remains unperformed, but it is
+  now possible, which changes it from a permanent limitation to an outstanding task.
+
+**Counts corrected against the upstream study index**, which is the authority:
+
+| | recorded in the incoming handoff | actual on 2026-07-28 |
+|---|---|---|
+| Papers in the corpus | 33 | 33 |
+| Verification studies closed | 24 | **25** |
+| Published on the page | 11 | 11 |
+| Closed but not published | 13 | **14** |
+| Still pending | 9 | **8** |
+
+`lau2017tidal` closed on 2026-07-28, after the incoming handoff was written. It was added to
+the Phase 3 backlog, but left unplaced: its data space is non-seismic, so it matches none of
+the three existing lanes and may need a fourth lane, an off-timeline marker, or the
+`russell2022` treatment.
+
+Any count written into a plan goes stale as studies close. Phase 3 now instructs the reader to
+re-read the upstream index rather than trust the table.
+
+**One further inherited claim did not survive checking.** The incoming handoff described the
+11 published papers as a "Tier-A disagreement core". There is no tier or importance ranking in
+the upstream literature map. The 11 are the subset an earlier session reached before stopping,
+not a curated selection, and the page's own "under construction" caveat is the accurate
+description.

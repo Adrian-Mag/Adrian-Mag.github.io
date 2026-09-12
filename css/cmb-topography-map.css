@@ -17,7 +17,7 @@
 /* ---------- interactive timeline board ---------- */
 .cmb-map{position:relative;height:min(90vh,900px);min-height:560px;margin:30px 0 14px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--surface) 91%,transparent);touch-action:none;cursor:grab}
 .cmb-map.dragging{cursor:grabbing}
-.cmb-board{position:absolute;width:1200px;height:3320px;transform-origin:0 0;will-change:transform}
+.cmb-board{position:absolute;width:1200px;height:5480px;transform-origin:0 0;will-change:transform}
 .cmb-board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
 /* timeline axis */
@@ -33,7 +33,7 @@
 .cmb-board .edge.builds-on{stroke:#79a7da;marker-end:url(#cmb-arrow-builds)}
 .cmb-board .edge.critiques{stroke:#c87850;marker-end:url(#cmb-arrow-critiques)}
 .cmb-board .edge.compares{stroke:#d9bd6c;stroke-dasharray:7 7;marker-end:url(#cmb-arrow-compares)}
-.cmb-board .edge.applies{stroke:#70cbb5;marker-end:url(#cmb-arrow-applies)}
+/* .edge.applies removed — no paper in the corpus uses this edge type */
 
 /* phase region backgrounds */
 .cmb-board .phase-region{fill:color-mix(in srgb,var(--ground) 75%,transparent);stroke:var(--line);stroke-width:1.5}
@@ -59,6 +59,13 @@
 .cmb-node.verified{border-width:2px}
 .cmb-node.verified::after{content:"V";position:absolute;top:6px;right:8px;font:700 .55rem var(--mono);color:var(--sem-green-text,#9ed49e);border:1px solid var(--sem-green-line,#78b478);border-radius:3px;padding:1px 3px}
 
+/* calibration badges — small coloured dot in the bottom-right corner */
+.cmb-node.cal-none::before,.cmb-node.cal-freq::before,.cmb-node.cal-det::before,.cmb-node.cal-bay::before{content:"";position:absolute;bottom:8px;right:8px;width:8px;height:8px;border-radius:50%;border:1px solid var(--line)}
+.cmb-node.cal-none::before{background:var(--muted);opacity:.5}
+.cmb-node.cal-freq::before{background:#79a7da}
+.cmb-node.cal-det::before{background:#c87850}
+.cmb-node.cal-bay::before{background:#bf95eb}
+
 /* ---------- map controls ---------- */
 .cmb-controls{position:absolute;right:12px;bottom:12px;z-index:4;display:flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--ground) 93%,transparent)}
 .cmb-controls button{width:32px;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text);font-size:1.05rem;cursor:pointer}
@@ -73,8 +80,31 @@
 .cmb-swatch.builds{border-color:#79a7da}
 .cmb-swatch.critiques{border-color:#c87850}
 .cmb-swatch.compares{border-color:#d9bd6c;border-top-style:dashed}
-.cmb-swatch.applies{border-color:#70cbb5}
 .cmb-swatch.verified{border-color:var(--sem-green-line,#78b478);border-top-style:none;font:700 .6rem var(--mono);text-align:center;line-height:18px;color:var(--sem-green-text,#9ed49e)}
+.cmb-cal-key{display:inline-flex;align-items:center;gap:5px}
+.cmb-cal-dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.cmb-cal-dot.none{background:var(--muted);opacity:.5}
+.cmb-cal-dot.freq{background:#79a7da}
+.cmb-cal-dot.det{background:#c87850}
+.cmb-cal-dot.bay{background:#bf95eb}
+
+/* ---------- output / calibration summary ---------- */
+.cmb-summary{margin:0 0 28px;padding:20px 22px;border:1px solid var(--line);border-radius:11px;background:color-mix(in srgb,var(--surface) 91%,transparent);overflow-x:auto}
+.cmb-summary h3{margin:0 0 14px;font-size:1rem}
+.cmb-summary table{width:100%;border-collapse:collapse;font-size:.78rem}
+.cmb-summary th,.cmb-summary td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.cmb-summary th{font:700 .68rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-bright);white-space:nowrap}
+.cmb-summary td.cal-cell{white-space:nowrap;font-weight:700}
+.cmb-summary .cal-none{color:var(--muted)}
+.cmb-summary .cal-freq{color:#79a7da}
+.cmb-summary .cal-det{color:#c87850}
+.cmb-summary .cal-bay{color:#bf95eb}
+.cmb-summary tr:hover td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+
+/* ---------- aside for non-timeline papers ---------- */
+.cmb-aside{margin:0 0 28px;padding:17px 20px;border-left:3px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);line-height:1.7}
+.cmb-aside h3{margin:0 0 8px;font-size:.92rem;color:var(--muted)}
+.cmb-aside p{margin:0;color:var(--muted);font-size:.85rem}
 
 /* ---------- detail dialog (same pattern as harness) ---------- */
 .cmb-dialog{position:fixed;z-index:30;inset:0;display:grid;place-items:center;padding:20px;border:0;background:color-mix(in srgb,#000 48%,transparent)}
