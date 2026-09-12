@@ -32,8 +32,7 @@ SERIES_DIRS = [
     ("pages/research/overview/frequentist", "Bayesian vs Frequentist"),
     ("pages/research/overview/cg", "The Road to Conjugate Gradients"),
     ("pages/research/overview/harness", "The Machine Around the Model"),
-    # CMB Topography map withheld from the live site while in progress; re-add to
-    # index its pages again. See _config.yml exclude and the CMB buildout plan.
+    ("pages/research/overview/cmb", "CMB Topography Studies"),
 ]
 EXTRA_PAGES = [
     ("pages/research/overview/index.html", None),
