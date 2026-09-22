@@ -1,5 +1,9 @@
 # Plan: Physical-property / inference graph page (under construction)
-**Status:** active
+**Status:** abandoned — taken offline 2026-09-22 at the author's request (IP containment ahead of
+employment). Page, app bundle, stylesheet, overview card and llms.txt entry removed; the tool's
+source and scientific database remain local-only in the Ascension workspace
+(`tools/physical-property-graph/`, `npm run dev`). Safe follow-up if the page ever returns: this
+plan's design decisions still hold; check git history before this date for the removed files.
 **Created:** 2026-09-09
 
 ## Goal
